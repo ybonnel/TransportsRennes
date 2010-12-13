@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="updateKeolis">Mise à jour des données</string>
+    <string name="menuListAlert">Alertes</string>
+    <string name="menuListFavoris">Arrêts favoris</string>
+    <string name="loadAllLines">Chargement de toutes les lignes</string>
+    <string name="app_name">BusRennes</string>
+    <string name="ajoutFavori">Ajouter aux favoris.</string>
+    <string name="supprimerFavori">Supprimer des favoris.</string>
+    <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
+
+    <!-- Messages -->
+    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette oppération peut être longue, voulez vous l\'effectuer maintenant.</string>
+</resources>
