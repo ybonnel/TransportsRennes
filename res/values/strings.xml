@@ -11,4 +11,23 @@
 
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette oppération peut être longue, voulez vous l\'effectuer maintenant.</string>
+
+
+    <string name="description_logo">Google I/O 2010</string>
+    <string name="description_home">Home</string>
+    <string name="description_search">Search</string>
+    <string name="description_map">Map</string>
+    <string name="description_refresh">Refresh</string>
+    <string name="description_share">Share</string>
+    <string name="description_export">Export</string>
+    <string name="description_star">Star</string>
+
+
+    <string name="btn_schedule">Schedule</string>
+    <string name="btn_map">Map</string>
+    <string name="btn_sessions">Sessions</string>
+    <string name="btn_starred">Starred</string>
+    <string name="btn_vendors">Sandbox</string>
+    <string name="btn_notes">My Notes</string>
+    <string name="now_playing_loading">Looking up nearby sessions\u2026</string>
 </resources>

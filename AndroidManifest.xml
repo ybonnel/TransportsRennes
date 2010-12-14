@@ -3,12 +3,13 @@
           package="fr.ybo.transportsrennes">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
 		android:debuggable="true" android:name="BusRennesApplication">
-		<activity android:name=".BusRennes" android:label="@string/app_name">
+		<activity android:name=".TransportsRennes" android:label="@string/app_name">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		<activity android:name="BusRennes" android:label="Liste des lignes de bus"/>
 		<activity android:name="ListAlerts" android:label="Liste des alertes" ></activity>
 		<activity android:name="DetailAlert" android:label="Detail des alertes" ></activity>
 		<activity android:name="ListArret" android:label="Detail d'une ligne" ></activity>
