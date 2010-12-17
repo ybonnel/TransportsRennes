@@ -5,6 +5,9 @@ import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 
+/**
+ * Classe de l'application permettant de stocker les attributs globaux à l'application.
+ */
 public class BusRennesApplication extends Application {
 
 	private static DataBaseHelper databaseHelper;

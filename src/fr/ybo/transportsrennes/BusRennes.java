@@ -1,35 +1,22 @@
 package fr.ybo.transportsrennes;
 
-import java.util.List;
-
-import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.util.ChangeMessage;
-import fr.ybo.transportsrennes.util.LogYbo;
+
+import java.util.List;
 
 /**
- * Activité principale affichant un menu des différentes fonctions.
- * 
+ * Activité affichant les lignes de bus..
+ *
  * @author ybonnel
- * 
  */
 public class BusRennes extends ListActivity {
 
