@@ -1,8 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import java.io.IOException;
-import java.util.Collections;
-
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -25,10 +22,13 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.io.IOException;
+import java.util.Collections;
+
 /**
- * 
+ * Liste des arrêts d'une ligne de bus.
+ *
  * @author ybonnel
- * 
  */
 public class ListArret extends ListActivity {
 
@@ -63,16 +63,16 @@ public class ListArret extends ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-                try {
-                    UpdateDataBase.chargeDetailRoute(myRoute, getApplicationContext());
-                } catch (ErreurMoteurCsv erreurMoteurCsv) {
-                    erreurMoteurCsv.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (DataBaseException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
-                return null;
+				try {
+					UpdateDataBase.chargeDetailRoute(myRoute, getApplicationContext());
+				} catch (ErreurMoteurCsv erreurMoteurCsv) {
+					erreurMoteurCsv.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				} catch (IOException e) {
+					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				} catch (DataBaseException e) {
+					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+				}
+				return null;
 			}
 
 			@Override
@@ -80,7 +80,9 @@ public class ListArret extends ListActivity {
 				construireListe();
 				myProgressDialog.dismiss();
 
-			};
+			}
+
+			;
 
 		}.execute((Void[]) null);
 
@@ -130,14 +132,14 @@ public class ListArret extends ListActivity {
 		try {
 			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 			switch (item.getItemId()) {
-			case R.id.ajoutFavori:
-				ajoutFavori((Cursor) getListAdapter().getItem(info.position));
-				return true;
-			case R.id.supprimerFavori:
-				supprimeFavori((Cursor) getListAdapter().getItem(info.position));
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+				case R.id.ajoutFavori:
+					ajoutFavori((Cursor) getListAdapter().getItem(info.position));
+					return true;
+				case R.id.supprimerFavori:
+					supprimeFavori((Cursor) getListAdapter().getItem(info.position));
+					return true;
+				default:
+					return super.onOptionsItemSelected(item);
 			}
 		} catch (final DataBaseException exception) {
 			exception.printStackTrace();
