@@ -67,39 +67,6 @@ public final class UpdateDataBase {
         BusRennesApplication.getDataBaseHelper().getWritableDatabase().update("Route", values, "id = :id", whereArgs);
         BusRennesApplication.getDataBaseHelper().endTransaction();
         LOG_YBO.debug("Chargement en base de la route terminée");
-
-        LOG_YBO.debug("Chargement de l'association entre route et arret");
-        final StringBuilder requete = new StringBuilder();
-        requete.append("select Arret.id as id,");
-        requete.append(" Trip.headSign as direction ");
-        requete.append("from Trip, HeuresArrets");
-        requete.append(route.getIdWithoutSpecCar());
-        requete.append(" as HeuresArrets, Arret ");
-        requete.append("where ");
-        requete.append(" Trip.routeId = :routeId");
-        requete.append(" and HeuresArrets.tripId = Trip.id");
-        requete.append(" and HeuresArrets.stopId = Arret.id");
-        requete.append(" group by Arret.id;");
-        final Cursor cursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
-                Collections.singletonList(route.getId()));
-        LOG_YBO.debug("Exécution de la requete permettant de récupérer l'association terminée : " + cursor.getCount());
-        final ArretRoute arretRoute = new ArretRoute();
-        arretRoute.setRouteId(route.getId());
-        BusRennesApplication.getDataBaseHelper().getWritableDatabase().delete("ArretRoute", " routeId = :routeId", whereArgs);
-        cursor.moveToFirst();
-        BusRennesApplication.getDataBaseHelper().beginTransaction();
-        do {
-            arretRoute.setArretId(cursor.getString(cursor.getColumnIndex("id")));
-            arretRoute.setDirection(cursor.getString(cursor.getColumnIndex("direction")).replace(
-                    route.getNomCourt() + " ", ""));
-            BusRennesApplication.getDataBaseHelper().insert(arretRoute);
-        } while (cursor.moveToNext());
-
-        cursor.close();
-
-        LOG_YBO.debug("Fin de la transaction");
-        BusRennesApplication.getDataBaseHelper().endTransaction();
-        LOG_YBO.debug("Chargement de l'association entre route et arret terminée");
     }
 
     private UpdateDataBase() {

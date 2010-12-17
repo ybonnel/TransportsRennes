@@ -15,16 +15,5 @@
     limitations under the License.
 -->
 <resources>
-    <item type="id" name="title_container" />
-    <item type="id" name="title_logo" />
-    <item type="id" name="title_text" />
-
-    <item type="id" name="dialog_discard_confirm" />
-
-    <item type="id" name="dialog_moderator" />
-    <item type="id" name="dialog_wave" />
-
-    <item type="id" name="blocks_ruler" />
-    <item type="id" name="blocks_now" />
 
 </resources>
