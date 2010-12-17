@@ -1,7 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,10 +14,12 @@ import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.util.List;
+
 public class ListAlerts extends ListActivity {
 
 	/**
-	 * Permet d'acc�der aux apis keolis.
+	 * Permet d'accéder aux apis keolis.
 	 */
 	private final Keolis keolis = Keolis.getInstance();
 
@@ -44,7 +44,7 @@ public class ListAlerts extends ListActivity {
 
 			});
 		} catch (final ErreurKeolis erreurKeolis) {
-			LOG_YBO.erreur("Erreur lors de l'appel � keolis", erreurKeolis);
+			LOG_YBO.erreur("Erreur lors de l'appel à keolis", erreurKeolis);
 			Toast.makeText(this, erreurKeolis.getMessage(), Toast.LENGTH_SHORT).show();
 		}
 	}

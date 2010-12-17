@@ -7,10 +7,9 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 /**
- * Activit�e permettant d'afficher les d�tails d'une station.
- * 
+ * Activitée permettant d'afficher les détails d'une station.
+ *
  * @author ybonnel
- * 
  */
 public class DetailAlert extends Activity {
 
@@ -34,7 +33,7 @@ public class DetailAlert extends Activity {
 				}
 				lignes.append(ligne);
 			}
-			((TextView) findViewById(R.id.detailAlert_Lignes)).setText("Lignes concern�e : " + lignes);
+			((TextView) findViewById(R.id.detailAlert_Lignes)).setText("Lignes concernée : " + lignes);
 		}
 		((TextView) findViewById(R.id.detailAlert_Detail)).setText(alert.getDetailFormatte(lignes.toString()));
 	}
