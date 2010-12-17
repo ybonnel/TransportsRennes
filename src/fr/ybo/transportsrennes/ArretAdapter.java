@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+/**
+ * Adapteur pour les arrêts.
+ */
 public class ArretAdapter extends CursorAdapter {
 
 	public ArretAdapter(final Context context, final Cursor cursor) {
