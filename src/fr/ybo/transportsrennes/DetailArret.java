@@ -1,9 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,11 +10,14 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 /**
- * Activit�e permettant d'afficher les d�tails d'une station.
- * 
+ * Activitée permettant d'afficher les détails d'une station.
+ *
  * @author ybonnel
- * 
  */
 public class DetailArret extends ListActivity {
 
@@ -29,22 +28,22 @@ public class DetailArret extends ListActivity {
 	private String clauseWhereForTodayCalendrier() {
 		final Calendar calendar = Calendar.getInstance();
 		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-		case Calendar.MONDAY:
-			return "Lundi = 1";
-		case Calendar.TUESDAY:
-			return "Mardi = 1";
-		case Calendar.WEDNESDAY:
-			return "Mercredi = 1";
-		case Calendar.THURSDAY:
-			return "Jeudi = 1";
-		case Calendar.FRIDAY:
-			return "Vendredi = 1";
-		case Calendar.SATURDAY:
-			return "Samedi = 1";
-		case Calendar.SUNDAY:
-			return "Dimanche = 1";
-		default:
-			return null;
+			case Calendar.MONDAY:
+				return "Lundi = 1";
+			case Calendar.TUESDAY:
+				return "Mardi = 1";
+			case Calendar.WEDNESDAY:
+				return "Mercredi = 1";
+			case Calendar.THURSDAY:
+				return "Jeudi = 1";
+			case Calendar.FRIDAY:
+				return "Vendredi = 1";
+			case Calendar.SATURDAY:
+				return "Samedi = 1";
+			case Calendar.SUNDAY:
+				return "Dimanche = 1";
+			default:
+				return null;
 		}
 	}
 
