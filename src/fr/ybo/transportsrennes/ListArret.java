@@ -19,10 +19,8 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.io.IOException;
 import java.util.Collections;
 
 /**
@@ -63,15 +61,7 @@ public class ListArret extends ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				try {
-					UpdateDataBase.chargeDetailRoute(myRoute, getApplicationContext());
-				} catch (ErreurMoteurCsv erreurMoteurCsv) {
-					erreurMoteurCsv.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				} catch (IOException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				} catch (DataBaseException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-				}
+				UpdateDataBase.chargeDetailRoute(myRoute, getApplicationContext());
 				return null;
 			}
 
@@ -81,8 +71,6 @@ public class ListArret extends ListActivity {
 				myProgressDialog.dismiss();
 
 			}
-
-			;
 
 		}.execute((Void[]) null);
 

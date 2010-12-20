@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis.gtfs.database;
 
 @SuppressWarnings("serial")
-public class DataBaseException extends Exception {
+public class DataBaseException extends RuntimeException {
 
 	public DataBaseException() {
 		super();

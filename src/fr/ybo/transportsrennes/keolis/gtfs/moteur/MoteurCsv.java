@@ -1,16 +1,5 @@
 package fr.ybo.transportsrennes.keolis.gtfs.moteur;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
@@ -19,6 +8,13 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.modele.ChampCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.modele.ClassCsv;
+
+import java.io.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MoteurCsv {
 
@@ -85,9 +81,8 @@ public class MoteurCsv {
 		return objets;
 	}
 
-	public <Objet> void parseFileAndInsert(final File file, final Class<Objet> clazz, final DataBaseHelper dataBaseHelper,
-			final String suffixeTableName) throws ErreurMoteurCsv, IOException, DataBaseException {
-		final BufferedReader bufReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)), 8 * 1024);
+	public <Objet> void parseFileAndInsert(final BufferedReader bufReader, final Class<Objet> clazz, final DataBaseHelper dataBaseHelper,
+	                                       final String suffixeTableName) throws ErreurMoteurCsv, IOException, DataBaseException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 		String ligne;
 		final Table table = dataBaseHelper.getBase().getTable(clazz);

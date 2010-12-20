@@ -14,8 +14,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.awt.datatransfer.Transferable;
-
 /**
  * Created by IntelliJ IDEA.
  * User: ybonnel
@@ -29,32 +27,31 @@ public class TransportsRennes extends Activity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(TransportsRennes.class);
 
-    @Override
-    protected void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
-        setContentView(R.layout.main);
-        verifierUpgrade();
-    }
+	@Override
+	protected void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+		setContentView(R.layout.main);
+		verifierUpgrade();
+	}
 
-    public void onAlertClick(View view) {
-        Intent intent = new Intent(TransportsRennes.this, ListAlerts.class);
-        startActivity(intent);
-    }
+	public void onAlertClick(View view) {
+		Intent intent = new Intent(TransportsRennes.this, ListAlerts.class);
+		startActivity(intent);
+	}
 
-    public void onBusClick(View view) {
-        Intent intent = new Intent(TransportsRennes.this, BusRennes.class);
-        startActivity(intent);
-    }
+	public void onBusClick(View view) {
+		Intent intent = new Intent(TransportsRennes.this, BusRennes.class);
+		startActivity(intent);
+	}
 
-    public void onBusFavoriClick( View view) {
-        Intent intent = new Intent(this, ListFavoris.class);
-        startActivity(intent);
-    }
+	public void onBusFavoriClick(View view) {
+		Intent intent = new Intent(this, ListFavoris.class);
+		startActivity(intent);
+	}
 
-    public void onVeloClick( View view) {
-        // TODO importer la partie vélo.
-    }
-
+	public void onVeloClick(View view) {
+		// TODO importer la partie vélo.
+	}
 
 
 	private void upgradeDatabase() {
@@ -66,14 +63,9 @@ public class TransportsRennes extends Activity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				try {
-					UpdateDataBase.updateIfNecessaryDatabase(
-                            BusRennesApplication.getDataBaseHelper(),
-                            TransportsRennes.this.getApplicationContext(), myProgressDialog, TransportsRennes.this);
-				} catch (final Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				UpdateDataBase.updateIfNecessaryDatabase(
+						BusRennesApplication.getDataBaseHelper(),
+						TransportsRennes.this.getApplicationContext(), myProgressDialog, TransportsRennes.this);
 				return null;
 			}
 
@@ -88,23 +80,23 @@ public class TransportsRennes extends Activity {
 
 	private void verifierUpgrade() {
 		try {
-			final DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
-			final DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+			DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+			DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 			if (dernierMiseAJour == null) {
 				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setMessage(
 						getString(R.string.premierLancement))
 						.setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-							public void onClick(final DialogInterface dialog, final int id) {
-								dialog.dismiss();
-								TransportsRennes.this.upgradeDatabase();
-							}
-						}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
-							public void onClick(final DialogInterface dialog, final int id) {
-								dialog.cancel();
-								TransportsRennes.this.finish();
-							}
-						});
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.dismiss();
+						TransportsRennes.this.upgradeDatabase();
+					}
+				}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.cancel();
+						TransportsRennes.this.finish();
+					}
+				});
 				final AlertDialog alert = builder.create();
 				alert.show();
 			}

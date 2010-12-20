@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis.gtfs.moteur;
 
 @SuppressWarnings("serial")
-public class ErreurMoteurCsv extends Exception {
+public class ErreurMoteurCsv extends RuntimeException {
 
 	public ErreurMoteurCsv(final String message) {
 		super(message);

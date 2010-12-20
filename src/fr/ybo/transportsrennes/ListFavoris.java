@@ -12,9 +12,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 
 /**
- * 
  * @author ybonnel
- * 
  */
 public class ListFavoris extends ListActivity {
 
@@ -46,11 +44,6 @@ public class ListFavoris extends ListActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
-		try {
-			construireListe();
-		} catch (final DataBaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		construireListe();
 	}
 }
