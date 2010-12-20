@@ -1,14 +1,12 @@
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.HeuresArrets;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
-import fr.ybo.transportsrennes.util.ChangeMessage;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.BufferedReader;
@@ -59,7 +57,7 @@ public final class GestionZipKeolis {
 	}
 
 	public static void getAndParseZipKeolis(final MoteurCsv moteur,
-	                                        final DataBaseHelper dataBaseHelper, final ProgressDialog progressDialog, final Activity currentActivity)
+	                                        final DataBaseHelper dataBaseHelper, final Activity currentActivity)
 			throws ErreurGestionFiles, ErreurMoteurCsv, DataBaseException {
 		try {
 			final HttpURLConnection connection = openHttpConnection();
@@ -69,10 +67,6 @@ public final class GestionZipKeolis {
 			BufferedReader bufReader;
 			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
 				LOG_YBO.debug("Debut du traitement du fichier " + zipEntry.getName());
-				if (progressDialog != null) {
-					currentActivity
-							.runOnUiThread(new ChangeMessage(progressDialog, "Traitement du fichier " + zipEntry.getName()));
-				}
 				bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
 				moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine());
 				dataBaseHelper.beginTransaction();

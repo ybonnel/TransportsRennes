@@ -1,7 +1,6 @@
 package fr.ybo.transportsrennes.keolis.gtfs;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import fr.ybo.transportsrennes.BusRennesApplication;
@@ -19,8 +18,7 @@ public final class UpdateDataBase {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	public static void updateIfNecessaryDatabase(DataBaseHelper dataBaseHelper, Context context,
-	                                             ProgressDialog progressDialog, Activity currentActivity) {
+	public static void updateIfNecessaryDatabase(DataBaseHelper dataBaseHelper, Context context, Activity currentActivity) {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
@@ -32,7 +30,7 @@ public final class UpdateDataBase {
 				dataBaseHelper.deleteAll(clazz);
 			}
 			LOG_YBO.debug("Mise à jour des donnees");
-			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), dataBaseHelper, progressDialog, currentActivity);
+			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), dataBaseHelper, currentActivity);
 			dernierMiseAJour = new DernierMiseAJour();
 			dernierMiseAJour.setDerniereMiseAJour(dateDernierFichierKeolis);
 			dataBaseHelper.insert(dernierMiseAJour);

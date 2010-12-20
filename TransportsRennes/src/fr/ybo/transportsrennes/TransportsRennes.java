@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -65,7 +64,7 @@ public class TransportsRennes extends Activity {
 			protected Void doInBackground(final Void... pParams) {
 				UpdateDataBase.updateIfNecessaryDatabase(
 						BusRennesApplication.getDataBaseHelper(),
-						TransportsRennes.this.getApplicationContext(), myProgressDialog, TransportsRennes.this);
+						TransportsRennes.this.getApplicationContext(), TransportsRennes.this);
 				return null;
 			}
 
@@ -79,30 +78,25 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		try {
-			DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
-			DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-			if (dernierMiseAJour == null) {
-				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setMessage(
-						getString(R.string.premierLancement))
-						.setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
-						dialog.dismiss();
-						TransportsRennes.this.upgradeDatabase();
-					}
-				}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
-						dialog.cancel();
-						TransportsRennes.this.finish();
-					}
-				});
-				final AlertDialog alert = builder.create();
-				alert.show();
-			}
-		} catch (final DataBaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		if (dernierMiseAJour == null) {
+			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(
+					getString(R.string.premierLancement))
+					.setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+				public void onClick(final DialogInterface dialog, final int id) {
+					dialog.dismiss();
+					TransportsRennes.this.upgradeDatabase();
+				}
+			}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
+				public void onClick(final DialogInterface dialog, final int id) {
+					dialog.cancel();
+					TransportsRennes.this.finish();
+				}
+			});
+			final AlertDialog alert = builder.create();
+			alert.show();
 		}
 	}
 
