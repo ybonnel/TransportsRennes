@@ -18,7 +18,7 @@ public final class UpdateDataBase {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	public static void updateIfNecessaryDatabase(DataBaseHelper dataBaseHelper, Context context, Activity currentActivity) {
+	public static void updateIfNecessaryDatabase(DataBaseHelper dataBaseHelper) {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
@@ -30,7 +30,7 @@ public final class UpdateDataBase {
 				dataBaseHelper.deleteAll(clazz);
 			}
 			LOG_YBO.debug("Mise à jour des donnees");
-			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), dataBaseHelper, currentActivity);
+			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), dataBaseHelper);
 			dernierMiseAJour = new DernierMiseAJour();
 			dernierMiseAJour.setDerniereMiseAJour(dateDernierFichierKeolis);
 			dataBaseHelper.insert(dernierMiseAJour);
@@ -39,10 +39,10 @@ public final class UpdateDataBase {
 		dataBaseHelper.close();
 	}
 
-	public static void chargeDetailRoute(Route route, Context context) {
+	public static void chargeDetailRoute(Route route) {
 		LOG_YBO.debug("Chargement en base de la route : " + route.getNomCourt());
 		BusRennesApplication.getDataBaseHelper().beginTransaction();
-		route.chargerHeuresArrets(context, BusRennesApplication.getDataBaseHelper());
+		route.chargerHeuresArrets(BusRennesApplication.getDataBaseHelper());
 		route.setChargee(Boolean.TRUE);
 		final ContentValues values = new ContentValues();
 		values.put("chargee", 1);

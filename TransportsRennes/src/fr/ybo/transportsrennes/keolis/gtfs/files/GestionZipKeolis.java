@@ -57,7 +57,7 @@ public final class GestionZipKeolis {
 	}
 
 	public static void getAndParseZipKeolis(final MoteurCsv moteur,
-	                                        final DataBaseHelper dataBaseHelper, final Activity currentActivity)
+	                                        final DataBaseHelper dataBaseHelper)
 			throws ErreurGestionFiles, ErreurMoteurCsv, DataBaseException {
 		try {
 			final HttpURLConnection connection = openHttpConnection();

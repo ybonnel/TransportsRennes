@@ -63,8 +63,7 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				UpdateDataBase.updateIfNecessaryDatabase(
-						BusRennesApplication.getDataBaseHelper(),
-						TransportsRennes.this.getApplicationContext(), TransportsRennes.this);
+						BusRennesApplication.getDataBaseHelper());
 				return null;
 			}
 

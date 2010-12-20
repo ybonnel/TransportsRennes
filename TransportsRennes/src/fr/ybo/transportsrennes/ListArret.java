@@ -61,7 +61,7 @@ public class ListArret extends ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.chargeDetailRoute(myRoute, getApplicationContext());
+				UpdateDataBase.chargeDetailRoute(myRoute);
 				return null;
 			}
 

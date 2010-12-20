@@ -48,7 +48,7 @@ public class Route implements Serializable {
 	@Colonne(type = TypeColonne.BOOLEAN)
 	private Boolean chargee;
 
-	public void chargerHeuresArrets(final Context context, final DataBaseHelper dataBaseHelper) {
+	public void chargerHeuresArrets(final DataBaseHelper dataBaseHelper) {
 		LOG_YBO.debug("Chargement des heures d'arrét de la ligne " + nomCourt);
 		final List<Class<?>> classes = new ArrayList<Class<?>>();
 		classes.add(HeuresArrets.class);
