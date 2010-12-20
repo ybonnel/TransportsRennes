@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <TextView android:id="@+id/detailAlert_Titre" android:layout_width="fill_parent"
+              android:layout_height="fill_parent" android:layout_weight="12"/>
+    <TextView android:id="@+id/detailAlert_Lignes" android:layout_width="fill_parent"
+              android:layout_height="fill_parent" android:layout_weight="12"/>
+    <TextView android:id="@+id/detailAlert_Detail" android:layout_width="fill_parent"
+              android:layout_height="fill_parent" android:layout_weight="1"/>
+</LinearLayout>

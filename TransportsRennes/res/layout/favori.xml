@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:id="@+id/route"
+              android:paddingLeft="5dip"
+              android:paddingTop="8dip"
+              android:paddingBottom="8dip"
+              android:paddingRight="10dip"
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:textSize="15dip"
+              android:gravity="center_vertical|left"
+              android:text="3"/>
+
+    <TextView android:id="@+id/nomArret"
+              android:paddingLeft="5dip"
+              android:paddingTop="8dip"
+              android:paddingBottom="8dip"
+              android:layout_width="150dip"
+              android:layout_height="fill_parent"
+              android:textSize="15dip"
+              android:gravity="center_vertical|left"
+              android:text="Oberthur"/>
+
+    <TextView android:id="@+id/directionArret"
+              android:paddingRight="5dip"
+              android:paddingTop="8dip"
+              android:paddingBottom="8dip"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:textSize="15dip"
+              android:gravity="center_vertical|right"
+              android:text="Alma"/>
+</LinearLayout>
