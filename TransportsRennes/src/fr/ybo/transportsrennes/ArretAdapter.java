@@ -7,14 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.util.Formatteur;
 
 /**
  * Adapteur pour les arrêts.
  */
 public class ArretAdapter extends CursorAdapter {
 
-	public ArretAdapter(final Context context, final Cursor cursor) {
+	private String nomCourtRoute;
+
+	public ArretAdapter(Context context, Cursor cursor, Route route) {
 		super(context, cursor);
+		nomCourtRoute = route.getNomCourt();
 	}
 
 	@Override
@@ -24,7 +29,7 @@ public class ArretAdapter extends CursorAdapter {
 		final int directionCol = cursor.getColumnIndex("direction");
 		final String direction = cursor.getString(directionCol);
 		((TextView) view.findViewById(R.id.nomArret)).setText(name);
-		((TextView) view.findViewById(R.id.directionArret)).setText(direction);
+		((TextView) view.findViewById(R.id.directionArret)).setText(Formatteur.formatterChaine(direction).replaceAll(nomCourtRoute, ""));
 	}
 
 	@Override

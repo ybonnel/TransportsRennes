@@ -35,53 +35,7 @@ public class Agence {
 		return id;
 	}
 
-	public String getLangue() {
-		return langue;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-	public String getTimeZone() {
-		return timeZone;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
 	public void setId(final String id) {
 		this.id = id;
-	}
-
-	public void setLangue(final String langue) {
-		this.langue = langue;
-	}
-
-	public void setNom(final String nom) {
-		this.nom = nom;
-	}
-
-	public void setTelephone(final String telephone) {
-		this.telephone = telephone;
-	}
-
-	public void setTimeZone(final String timeZone) {
-		this.timeZone = timeZone;
-	}
-
-	public void setUrl(final String url) {
-		this.url = url;
-	}
-
-	@Override
-	public String toString() {
-		return "Agence [id=" + id + ", nom=" + nom + ", url=" + url + ", timeZone=" + timeZone + ", telephone=" + telephone
-				+ ", langue=" + langue + "]";
 	}
 }

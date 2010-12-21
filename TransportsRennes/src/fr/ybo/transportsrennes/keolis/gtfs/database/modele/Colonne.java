@@ -52,7 +52,7 @@ public class Colonne {
 				throw new DataBaseException("Pour une colonne de type Enum, la classe est obligatoire.");
 			}
 			if (colonne.methode() == null || "".equals(colonne.methode())) {
-				throw new DataBaseException("Pour une colonne de type Enum, la m�thode est obligatoire.");
+				throw new DataBaseException("Pour une colonne de type Enum, la méthode est obligatoire.");
 			}
 			try {
 				valueOf = colonne.clazz().getDeclaredMethod("valueOf", int.class);
@@ -70,7 +70,7 @@ public class Colonne {
 		if (valeur != null) {
 			switch (type) {
 				case BOOLEAN:
-					values.put(name, ((Boolean) valeur).booleanValue() ? 1 : 0);
+					values.put(name, (Boolean) valeur ? 1 : 0);
 					break;
 				case DATE:
 					values.put(name, ((Date) valeur).getTime());
@@ -181,7 +181,7 @@ public class Colonne {
 				}
 				break;
 			case BOOLEAN:
-				retour = ((Boolean) valeur).booleanValue() ? "1" : "0";
+				retour = (Boolean) valeur ? "1" : "0";
 				break;
 			case DATE:
 				retour = Long.toString(((Date) valeur).getTime());
@@ -210,7 +210,7 @@ public class Colonne {
 	protected <Entite> void remplirEntite(final Cursor cursor, final Entite entite) throws DataBaseException {
 		final int index = cursor.getColumnIndex(name);
 		if (!cursor.isNull(index)) {
-			Object value = null;
+			Object value;
 			switch (type) {
 				case ENUM:
 					try {
@@ -224,16 +224,16 @@ public class Colonne {
 					}
 					break;
 				case INTEGER:
-					value = new Integer(cursor.getInt(index));
+					value = cursor.getInt(index);
 					break;
 				case NUMERIC:
-					value = new Double(cursor.getDouble(index));
+					value = cursor.getDouble(index);
 					break;
 				case TEXT:
 					value = cursor.getString(index);
 					break;
 				case BOOLEAN:
-					value = new Boolean(cursor.getInt(index) == 1);
+					value = cursor.getInt(index) == 1;
 					break;
 				case DATE:
 					value = new Date(cursor.getLong(index));

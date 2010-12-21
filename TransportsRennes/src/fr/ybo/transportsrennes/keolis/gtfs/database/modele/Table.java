@@ -102,7 +102,8 @@ public class Table {
 	}
 
 	protected <Entite> void delete(final SQLiteDatabase db, final Entite entite) throws DataBaseException {
-		db.delete(name, getPrimaryKeyWhere(), generePrimaryKeyWhere(entite).toArray(new String[0]));
+		List<String> where = generePrimaryKeyWhere(entite);
+		db.delete(name, getPrimaryKeyWhere(), where.toArray(new String[where.size()]));
 	}
 
 	public void dropTable(final SQLiteDatabase db) {

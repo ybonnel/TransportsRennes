@@ -11,11 +11,12 @@
 
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
-        données, cette oppération peut être longue, voulez vous l\'effectuer maintenant.
+        données, cette oppération peut durer quelques dixaines de secondes, voulez vous l\'effectuer maintenant.
     </string>
+    <string name="infoChargementGtfs">Chargement des données de bus...</string>
 
     <string name="btn_velo">VeloStar</string>
     <string name="btn_bus">Bus</string>
-    <string name="btn_bus_favori">Bus Favoris</string>
+    <string name="btn_bus_favori">Arrêts Favoris</string>
     <string name="btn_alert">Alertes</string>
 </resources>

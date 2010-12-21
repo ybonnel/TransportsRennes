@@ -76,34 +76,25 @@ public class RouteAdapter extends BaseAdapter {
 		convertView.setTag(holder);
 
 		Route route = routes.get(position);
-		holder.nomLong.setText(route.getNomLong());
+		holder.nomLong.setText(route.getNomLongFormate());
 		try {
-			System.out.println("Recherche de 'i" + route.getNomCourt().toLowerCase());
 			Field fieldIcon = classDrawable.getDeclaredField("i" + route.getNomCourt().toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
 			ImageView imgView = new ImageView(mInflater.getContext());
 			imgView.setImageResource(ressourceImg);
-			imgView.setPadding(5, 5, 5, 5);
 			holder.conteneur.addView(imgView);
 		} catch (NoSuchFieldException e) {
 			TextView textView = new TextView(mInflater.getContext());
-			textView.setPadding(5, 5, 5, 5);
-			textView.setTextSize(20);
+			textView.setTextSize(16);
 			textView.setText(route.getNomCourt());
 			holder.conteneur.addView(textView);
 		} catch (IllegalAccessException e) {
 			TextView textView = new TextView(mInflater.getContext());
-			textView.setPadding(5, 5, 5, 5);
-			textView.setTextSize(20);
+			textView.setTextSize(16);
 			textView.setText(route.getNomCourt());
 			holder.conteneur.addView(textView);
 		}
 
 		return convertView;
 	}
-
-	public void majRoutes(final List<Route> routes) {
-		this.routes = routes;
-	}
-
 }

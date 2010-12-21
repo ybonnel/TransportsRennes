@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <TextView android:id="@+id/detailArret_heureProchain"
               android:padding="5dip"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:textSize="15dip"
+              android:layout_width="wrap_content"
+              android:layout_height="50dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|left"
+            android:layout_alignParentLeft="true"/>
+
+    <TextView android:id="@+id/detailArret_tempsRestant"
+              android:padding="5dip"
+              android:layout_width="wrap_content"
+              android:layout_height="50dip"
+              android:textSize="20dip"
               android:gravity="center_vertical|right"
-              android:text="23 heures 57 minutes"/>
-</LinearLayout>
+            android:layout_alignParentRight="true"/>
+</RelativeLayout>

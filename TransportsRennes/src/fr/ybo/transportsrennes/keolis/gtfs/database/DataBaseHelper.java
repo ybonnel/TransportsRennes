@@ -75,11 +75,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return base.select(getReadableDatabase(), entite, null, null, null);
 	}
 
-	public <Entite> List<Entite> select(final Entite entite, final String selection, final List<String> selectionArgs)
-			throws DataBaseException {
-		return base.select(getReadableDatabase(), entite, selection, selectionArgs, null);
-	}
-
 	public <Entite> List<Entite> select(final Entite entite, final String selection, final List<String> selectionArgs,
 	                                    final String orderBy) throws DataBaseException {
 		return base.select(getReadableDatabase(), entite, selection, selectionArgs, orderBy);

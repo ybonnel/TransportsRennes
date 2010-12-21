@@ -31,7 +31,7 @@ public class ListAlerts extends ListActivity {
 		setContentView(R.layout.liste);
 		try {
 			final List<Alert> alerts = keolis.getAlerts();
-			setListAdapter(new ArrayAdapter<Alert>(this, R.layout.alert, alerts));
+			setListAdapter(new AlertAdapter(this, R.layout.alert, alerts));
 			final ListView lv = getListView();
 			lv.setTextFilterEnabled(true);
 			lv.setOnItemClickListener(new OnItemClickListener() {

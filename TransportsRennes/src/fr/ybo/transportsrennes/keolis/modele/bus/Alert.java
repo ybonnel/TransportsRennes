@@ -1,5 +1,7 @@
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
+import fr.ybo.transportsrennes.util.Formatteur;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -149,12 +151,31 @@ public class Alert implements Serializable {
 		title = pTitle;
 	}
 
+	public String getTitleFormate()
+	{
+		String titleFormate = title;
+		for (String ligneConcernee : lines) {
+			titleFormate = titleFormate.replaceAll(ligneConcernee, "");
+		}
+		if (titleFormate.startsWith(" ")) {
+			titleFormate = titleFormate.substring(1);
+		}
+		return Formatteur.formatterChaine(titleFormate);
+	}
+
 	/**
-	 * @return le nom du district.
+	 * @return le titre de l'alert formatté.
 	 */
 	@Override
 	public final String toString() {
-		return title;
+		String titleFormate = title;
+		for (String ligneConcernee : lines) {
+			titleFormate = titleFormate.replaceAll(ligneConcernee, "");
+		}
+		if (titleFormate.startsWith(" ")) {
+			titleFormate = titleFormate.substring(1);
+		}
+		return Formatteur.formatterChaine(titleFormate);
 	}
 
 }

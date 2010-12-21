@@ -11,9 +11,8 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
@@ -21,6 +20,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 
 /**
@@ -29,6 +29,8 @@ import java.util.Collections;
  * @author ybonnel
  */
 public class ListArret extends ListActivity {
+
+	private final static Class<?> classDrawable = R.drawable.class;
 
 	private static final LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
@@ -90,7 +92,7 @@ public class ListArret extends ListActivity {
 		currentCursor = getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
 
-		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor));
+		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor, myRoute));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -110,7 +112,7 @@ public class ListArret extends ListActivity {
 
 	private DataBaseHelper getDataBaseHelper() {
 		if (dataBaseHelper == null) {
-			dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+			dataBaseHelper = BusRennesApplication.getDataBaseHelper();
 		}
 		return dataBaseHelper;
 	}
@@ -140,6 +142,26 @@ public class ListArret extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
 		myRoute = (Route) getIntent().getExtras().getSerializable("route");
+		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
+		TextView nomLong = (TextView) findViewById(R.id.nomLong);
+		nomLong.setText( myRoute.getNomLongFormate());
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + myRoute.getNomCourt().toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			ImageView imgView = new ImageView(getApplicationContext());
+			imgView.setImageResource(ressourceImg);
+			conteneur.addView(imgView);
+		} catch (NoSuchFieldException e) {
+			TextView textView = new TextView(getApplicationContext());
+			textView.setTextSize(16);
+			textView.setText(myRoute.getNomCourt());
+			conteneur.addView(textView);
+		} catch (IllegalAccessException e) {
+			TextView textView = new TextView(getApplicationContext());
+			textView.setTextSize(16);
+			textView.setText(myRoute.getNomCourt());
+			conteneur.addView(textView);
+		}
 		final Route routeTmp = new Route();
 		routeTmp.setId(myRoute.getId());
 		try {
@@ -147,7 +169,7 @@ public class ListArret extends ListActivity {
 		} catch (final DataBaseException e1) {
 			e1.printStackTrace();
 		}
-		if (myRoute.getChargee() == null || !myRoute.getChargee().booleanValue()) {
+		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
 			chargerRoute();
 		} else {
 			construireListe();

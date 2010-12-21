@@ -21,7 +21,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * Classe d'acc�s aux API Keolis. Cette classe est une singletton.
+ * Classe d'accés aux API Keolis. Cette classe est une singletton.
  *
  * @author ybonnel
  */
@@ -35,7 +35,7 @@ public final class Keolis {
 	private static Keolis instance = null;
 
 	/**
-	 * URL d'acc�s au API Keolis.
+	 * URL d'accés au API Keolis.
 	 */
 	private static final String URL = "http://data.keolis-rennes.com/xml/";
 
@@ -45,55 +45,55 @@ public final class Keolis {
 	private static final String VERSION = "2.0";
 
 	/**
-	 * Cl� de l'application.
+	 * Clé de l'application.
 	 */
 	private static final String KEY = "G7JE45LI1RK3W1P";
 	/**
-	 * Commande pour r�cup�rer les districts.
+	 * Commande pour récupérer les districts.
 	 */
 	private static final String COMMANDE_DISTRICS = "getbikedistricts";
 	/**
-	 * Commande pour r�cup�rer les stations.
+	 * Commande pour récupérer les stations.
 	 */
 	private static final String COMMANDE_STATIONS = "getbikestations";
 	/**
-	 * Commande pour r�cup�rer les alerts.
+	 * Commande pour récupérer les alerts.
 	 */
 	private static final String COMMANDE_ALERTS = "getlinesalerts";
 	/**
-	 * Commande pour r�cup�rer les lignes.
+	 * Commande pour récupérer les lignes.
 	 */
 	private static final String COMMANDE_LINES = "getlines";
 	/**
-	 * Commande pour r�cup�rer les �quipements.
+	 * Commande pour récupérer les équipements.
 	 */
 	private static final String COMMANDE_EQUIPEMENTS = "getequipments";
 	/**
-	 * Commande pour r�cup�rer les status des �quipements.
+	 * Commande pour récupérer les status des équipements.
 	 */
 	private static final String COMMANDE_EQUIPEMENTS_STATUS = "getequipmentsstatus";
 	/**
-	 * Commande pour r�cup�rer les stations de m�tro.
+	 * Commande pour récupérer les stations de métro.
 	 */
 	private static final String COMMANDE_METRO_STATION = "getmetrostations";
 	/**
-	 * Commande pour r�cup�rer les status des stations de m�tros.
+	 * Commande pour récupérer les status des stations de métros.
 	 */
 	private static final String COMMANDE_METRO_STATUS = "getmetrostationsstatus";
 	/**
-	 * Commande pour r�cup�rer les Park relais.
+	 * Commande pour récupérer les Park relais.
 	 */
 	private static final String COMMANDE_PARK_RELAI = "getrelayparks";
 	/**
-	 * Commande pour r�cup�rer les points de vente.
+	 * Commande pour récupérer les points de vente.
 	 */
 	private static final String COMMANDE_POS = "getpos";
 	/**
-	 * Commande pour r�cup�rer les villes.
+	 * Commande pour récupérer les villes.
 	 */
 	private static final String COMMANDE_VILLE = "getcities";
 	/**
-	 * Commande pour r�cup�rer les districts d'un ville.
+	 * Commande pour récupérer les districts d'un ville.
 	 */
 	private static final String COMMANDE_VILLE_DISTRICT = "getcitydistricts";
 
@@ -110,7 +110,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * Constructeur priv�.
+	 * Constructeur privé.
 	 */
 	private Keolis() {
 	}
@@ -136,10 +136,9 @@ public final class Keolis {
 			final SAXParserFactory factory = SAXParserFactory.newInstance();
 			final SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(ostream.toByteArray()), handler);
-			LOG_YBO.debug("R�ponse re�ue de Keolis : " + ostream.toString());
 			answer = handler.getAnswer();
 		} catch (final Exception e) {
-			throw new ErreurKeolis("Erreur lors de l'appel � getDistricts", e);
+			throw new ErreurKeolis("Erreur lors de l'appel à getDistricts", e);
 		}
 		if (!"0".equals(answer.getStatus().getCode())) {
 			throw new ErreurKeolis(answer.getStatus().getMessage());
@@ -148,7 +147,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel les API Keolis pour r�cup�rer les alertes.
+	 * Appel les API Keolis pour récupérer les alertes.
 	 *
 	 * @return les alertes.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
@@ -158,7 +157,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel les API Keolis pour r�cup�rer les districts.
+	 * Appel les API Keolis pour récupérer les districts.
 	 *
 	 * @return la liste des districts.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
@@ -178,7 +177,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * @return les �quipements.
+	 * @return les équipements.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	public List<Equipement> getEquipments() throws ErreurKeolis {
@@ -186,7 +185,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * @return les status des �quipements.
+	 * @return les status des équipements.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	public List<Status> getEquipmentsStatus() throws ErreurKeolis {
@@ -211,7 +210,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * @return les stations de m�tros.
+	 * @return les stations de métros.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	public List<MetroStation> getMetroStations() throws ErreurKeolis {
@@ -219,7 +218,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * @return les status des m�tros.
+	 * @return les status des métros.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	public List<Status> getMetroStatus() throws ErreurKeolis {
@@ -243,9 +242,9 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel aux API Keolis pour r�cup�rer les stations.
+	 * Appel aux API Keolis pour récupérer les stations.
 	 *
-	 * @param url url � appeler.
+	 * @param url url à appeler.
 	 * @return la liste des stations.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
@@ -254,7 +253,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel aux API Keolis pour r�cup�rer les stations associ�es � un
+	 * Appel aux API Keolis pour récupérer les stations associées à un
 	 * districts.
 	 *
 	 * @param district le districs.
@@ -267,7 +266,7 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel aux API Keolis pour r�cup�rer les stations.
+	 * Appel aux API Keolis pour récupérer les stations.
 	 *
 	 * @return la listes des stations.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
@@ -277,10 +276,10 @@ public final class Keolis {
 	}
 
 	/**
-	 * Permet de r�cup�rer l'URL d'acc�s aux API Keolis en fonction de la
-	 * commande � ex�cuter.
+	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+	 * commande à exécuter.
 	 *
-	 * @param commande commande � ex�cuter.
+	 * @param commande commande à exécuter.
 	 * @return l'url.
 	 */
 	private String getUrl(final String commande) {
@@ -292,11 +291,11 @@ public final class Keolis {
 	}
 
 	/**
-	 * Permet de r�cup�rer l'URL d'acc�s aux API Keolis en fonction de la
-	 * commande � ex�cuter et d'un param�tre.
+	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+	 * commande à exécuter et d'un paramètre.
 	 *
-	 * @param commande commande � ex�cuter.
-	 * @param params   liste de param�tres de l'url.
+	 * @param commande commande à exécuter.
+	 * @param params   liste de paramètres de l'url.
 	 * @return l'url.
 	 */
 	private String getUrl(final String commande, final ParametreUrl[] params) {

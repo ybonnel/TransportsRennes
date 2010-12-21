@@ -1,6 +1,5 @@
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
-import android.app.Activity;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;

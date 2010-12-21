@@ -26,14 +26,14 @@ public class Base {
 	public <Entite> void delete(final SQLiteDatabase db, final Entite entite) throws DataBaseException {
 		final Class<?> clazz = entite.getClass();
 		if (!mapClassTable.containsKey(clazz)) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas g�r� par la base.");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");
 		}
 		mapClassTable.get(clazz).delete(db, entite);
 	}
 
 	public <Entite> void deleteAll(final SQLiteDatabase db, final Class<Entite> clazz) throws DataBaseException {
 		if (!mapClassTable.containsKey(clazz)) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas g�r� par la base.");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");
 		}
 		mapClassTable.get(clazz).delete(db);
 	}
@@ -46,7 +46,7 @@ public class Base {
 
 	public Table getTable(final Class<?> clazz) throws DataBaseException {
 		if (!mapClassTable.containsKey(clazz)) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas g�r� par la base.");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");
 		}
 		return new Table(mapClassTable.get(clazz));
 	}
@@ -54,7 +54,7 @@ public class Base {
 	public <Entite> void insert(final SQLiteDatabase db, final Entite entite) throws DataBaseException {
 		final Class<?> clazz = entite.getClass();
 		if (!mapClassTable.containsKey(clazz)) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas g�r� par la base.");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");
 		}
 		mapClassTable.get(clazz).insert(db, entite);
 	}
@@ -63,7 +63,7 @@ public class Base {
 	                                    final List<String> selectionArgs, final String orderBy) throws DataBaseException {
 		final Class<?> clazz = entite.getClass();
 		if (!mapClassTable.containsKey(clazz)) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas g�r� par la base.");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");
 		}
 		return mapClassTable.get(clazz).select(db, entite, selection, selectionArgs, orderBy);
 	}

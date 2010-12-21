@@ -21,8 +21,8 @@ public class DetailArretAdapter extends CursorAdapter {
 	public void bindView(final View view, final Context context, final Cursor cursor) {
 		final int prochainDepartCol = cursor.getColumnIndex("_id");
 		final int prochainDepart = cursor.getInt(prochainDepartCol);
-		((TextView) view.findViewById(R.id.detailArret_heureProchain)).setText("A " + formatterCalendar(prochainDepart, 0)
-				+ " dans " + formatterCalendar(prochainDepart, now));
+		((TextView) view.findViewById(R.id.detailArret_heureProchain)).setText(formatterCalendarHeure(prochainDepart, 0));
+		((TextView) view.findViewById(R.id.detailArret_tempsRestant)).setText("dans " + formatterCalendar(prochainDepart, now));
 	}
 
 	private String formatterCalendar(final int prochainDepart, final int now) {
@@ -41,6 +41,24 @@ public class DetailArretAdapter extends CursorAdapter {
 		if (stringBuilder.length() == 0) {
 			stringBuilder.append("0 minutes");
 		}
+		return stringBuilder.toString();
+	}
+	private String formatterCalendarHeure(final int prochainDepart, final int now) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final int tempsEnMinutes = prochainDepart - now;
+		final int heures = tempsEnMinutes / 60;
+		final int minutes = tempsEnMinutes - heures * 60;
+		String heuresChaine = Integer.toString(heures);
+		String minutesChaine = Integer.toString(minutes);
+		if (heuresChaine.length() < 2) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(heuresChaine);
+		stringBuilder.append(':');
+		if (minutesChaine.length() < 2) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(minutesChaine);
 		return stringBuilder.toString();
 	}
 

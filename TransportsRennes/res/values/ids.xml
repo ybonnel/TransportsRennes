@@ -15,5 +15,7 @@
     limitations under the License.
 -->
 <resources>
+    <item type="id"
+          name="lastImg"/>
 
 </resources>

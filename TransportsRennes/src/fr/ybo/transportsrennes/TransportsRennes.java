@@ -54,7 +54,7 @@ public class TransportsRennes extends Activity {
 
 
 	private void upgradeDatabase() {
-		myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", "Chargement des données Keolis...", true);
+		myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.infoChargementGtfs), true);
 
 		LOG_YBO.debug("###### Lancement de la mise à jour ");
 

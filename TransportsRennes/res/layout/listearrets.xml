@@ -1,10 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <LinearLayout android:id="@+id/conteneurImage"
+                  android:layout_width="44dip"
+                  android:paddingBottom="5dip"
+                  android:paddingTop="5dip"
+                  android:paddingLeft="2dip"
+                  android:paddingRight="2dip"
+                  android:layout_height="50dip"
+                  android:gravity="center_vertical|center_horizontal"/>
+    <TextView android:id="@+id/nomLong"
+              android:padding="5dip"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:layout_height="50dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|fill_horizontal"
+              android:layout_toRightOf="@id/conteneurImage"/>
+
+    <TextView android:id="@+id/nomArretEntete"
+              android:paddingLeft="5dip"
+              android:paddingTop="5dip"
+              android:paddingBottom="3dip"
+              android:layout_width="150dip"
+              android:layout_height="30dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|left"
+              android:text="Nom de l'arrêt"
+            android:layout_below="@id/conteneurImage"
+            android:layout_alignParentLeft="true"/>
+
+    <TextView android:id="@+id/directionArretEntete"
+              android:paddingRight="5dip"
+              android:paddingTop="5dip"
+              android:paddingBottom="3dip"
+              android:layout_width="fill_parent"
+              android:layout_height="30dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|right"
+              android:text="Direction"
+            android:layout_below="@id/nomLong"
+            android:layout_alignParentRight="true"/>
+
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:layout_below="@id/nomArretEntete"
+              android:layout_alignParentLeft="true"
             />
-</LinearLayout>
+</RelativeLayout>

@@ -3,13 +3,17 @@ package fr.ybo.transportsrennes;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.List;
 public class DetailArret extends ListActivity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DetailArret.class);
+	private final static Class<?> classDrawable = R.drawable.class;
 
 	private Cursor currentCursor;
 
@@ -62,11 +67,29 @@ public class DetailArret extends ListActivity {
 			favori.setRouteNomCourt(myRoute.getNomCourt());
 			favori.setRouteNomLong(myRoute.getNomLong());
 		}
-		((TextView) findViewById(R.id.detailArret_direction)).setText(favori.getDirection());
+		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
+		TextView nomLong = (TextView) findViewById(R.id.nomLong);
+		nomLong.setText(Formatteur.formatterChaine(favori.getRouteNomLong()));
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.getRouteNomCourt().toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			ImageView imgView = new ImageView(getApplicationContext());
+			imgView.setImageResource(ressourceImg);
+			conteneur.addView(imgView);
+		} catch (NoSuchFieldException e) {
+			TextView textView = new TextView(getApplicationContext());
+			textView.setTextSize(16);
+			textView.setText(favori.getRouteNomCourt());
+			conteneur.addView(textView);
+		} catch (IllegalAccessException e) {
+			TextView textView = new TextView(getApplicationContext());
+			textView.setTextSize(16);
+			textView.setText(favori.getRouteNomCourt());
+			conteneur.addView(textView);
+		}
+		((TextView) findViewById(R.id.detailArret_direction)).setText(Formatteur.formatterChaine(favori.getDirection()).replaceAll(favori.getRouteNomCourt(), ""));
 		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.getNomArret());
-		((TextView) findViewById(R.id.detailArret_nomLigne))
-				.setText(favori.getRouteNomCourt() + " - " + favori.getRouteNomLong());
-		final DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+		final DataBaseHelper dataBaseHelper = BusRennesApplication.getDataBaseHelper();
 
 		final Calendar calendar = Calendar.getInstance();
 
@@ -88,11 +111,11 @@ public class DetailArret extends ListActivity {
 		selectionArgs.add(favori.getRouteId());
 		selectionArgs.add(favori.getStopId());
 		selectionArgs.add(Long.toString(now));
-		LOG_YBO.debug("Ex�cution de la requete permettant de r�cup�rer les arr�ts avec les temps avant les prochains bus");
+		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec les temps avant les prochains bus");
 		LOG_YBO.debug(requete.toString());
 		LOG_YBO.debug(selectionArgs.toString());
 		currentCursor = dataBaseHelper.executeSelectQuery(requete.toString(), selectionArgs);
-		LOG_YBO.debug("Ex�cution de la requete permettant de r�cup�rer les arr�ts termin�e : " + currentCursor.getCount());
+		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
 
 		setListAdapter(new DetailArretAdapter(getApplicationContext(), currentCursor, now));
 		final ListView lv = getListView();

@@ -1,12 +1,12 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-import android.content.Context;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.*;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterTypeRoute;
+import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.Serializable;
@@ -83,6 +83,10 @@ public class Route implements Serializable {
 
 	public String getNomLong() {
 		return nomLong;
+	}
+
+	public String getNomLongFormate() {
+		return Formatteur.formatterChaine(nomLong);
 	}
 
 	public TypeRoutes getType() {

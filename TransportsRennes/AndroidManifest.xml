@@ -2,19 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="true" android:name="BusRennesApplication">
-        <activity android:name=".TransportsRennes" android:label="@string/app_name">
+                 android:debuggable="true" android:name="BusRennesApplication"
+                 android:theme="@android:style/Theme.NoTitleBar">
+        <activity android:name=".TransportsRennes">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".BusRennes" android:label="Liste des lignes de bus"/>
-        <activity android:name=".ListAlerts" android:label="Liste des alertes"></activity>
-        <activity android:name=".DetailAlert" android:label="Detail des alertes"></activity>
-        <activity android:name=".ListArret" android:label="Detail d'une ligne"></activity>
-        <activity android:name=".DetailArret" android:label="Detail d'un arret"></activity>
-        <activity android:name=".ListFavoris" android:label="Liste des arrêts favoris"></activity>
+        <activity android:name=".BusRennes"/>
+        <activity android:name=".ListAlerts"></activity>
+        <activity android:name=".DetailAlert"></activity>
+        <activity android:name=".ListArret"></activity>
+        <activity android:name=".DetailArret"></activity>
+        <activity android:name=".ListFavoris"></activity>
     </application>
     <uses-sdk android:minSdkVersion="8"/>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
