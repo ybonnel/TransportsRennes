@@ -13,13 +13,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-/**
- * Created by IntelliJ IDEA.
- * User: ybonnel
- * Date: 14/12/10
- * Time: 16:26
- * To change this template use File | Settings | File Templates.
- */
+
 public class TransportsRennes extends Activity {
 
 	private ProgressDialog myProgressDialog;
@@ -62,8 +56,7 @@ public class TransportsRennes extends Activity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.updateIfNecessaryDatabase(
-						BusRennesApplication.getDataBaseHelper());
+				UpdateDataBase.updateIfNecessaryDatabase(BusRennesApplication.getDataBaseHelper());
 				return null;
 			}
 
@@ -77,18 +70,17 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+		DataBaseHelper dataBaseHelper = BusRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		if (dernierMiseAJour == null) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(
-					getString(R.string.premierLancement))
-					.setCancelable(false).setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-				public void onClick(final DialogInterface dialog, final int id) {
-					dialog.dismiss();
-					TransportsRennes.this.upgradeDatabase();
-				}
-			}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
+			builder.setMessage(getString(R.string.premierLancement)).setCancelable(false)
+					.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+						public void onClick(final DialogInterface dialog, final int id) {
+							dialog.dismiss();
+							TransportsRennes.this.upgradeDatabase();
+						}
+					}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
 				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.cancel();
 					TransportsRennes.this.finish();

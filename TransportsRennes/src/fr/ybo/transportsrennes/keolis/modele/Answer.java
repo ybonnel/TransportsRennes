@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * R�ponse K�olis.
+ * Réponse Kéolis.
  *
- * @param <ObjectKeolis> type d'objet k�olis.
+ * @param <ObjectKeolis> type d'objet kéolis.
  * @author ybonnel
  */
 public class Answer<ObjectKeolis> {
@@ -23,7 +23,7 @@ public class Answer<ObjectKeolis> {
 	/**
 	 * @return les liste d'objet Keolis.
 	 */
-	public final List<ObjectKeolis> getData() {
+	public List<ObjectKeolis> getData() {
 		if (this.data == null) {
 			this.data = new ArrayList<ObjectKeolis>();
 		}
@@ -35,7 +35,7 @@ public class Answer<ObjectKeolis> {
 	 *
 	 * @return le status.
 	 */
-	public final StatusKeolis getStatus() {
+	public StatusKeolis getStatus() {
 		return this.status;
 	}
 
@@ -44,7 +44,7 @@ public class Answer<ObjectKeolis> {
 	 *
 	 * @param pStatus le status.
 	 */
-	public final void setStatus(final StatusKeolis pStatus) {
+	public void setStatus(StatusKeolis pStatus) {
 		this.status = pStatus;
 	}
 }

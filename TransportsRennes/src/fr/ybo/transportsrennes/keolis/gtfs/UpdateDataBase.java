@@ -1,8 +1,6 @@
 package fr.ybo.transportsrennes.keolis.gtfs;
 
-import android.app.Activity;
 import android.content.ContentValues;
-import android.content.Context;
 import fr.ybo.transportsrennes.BusRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
@@ -22,8 +20,8 @@ public final class UpdateDataBase {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
-		if (dernierMiseAJour == null || dernierMiseAJour.getDerniereMiseAJour() == null || dateDernierFichierKeolis
-				.after(dernierMiseAJour.getDerniereMiseAJour())) {
+		if (dernierMiseAJour == null || dernierMiseAJour.getDerniereMiseAJour() == null ||
+				dateDernierFichierKeolis.after(dernierMiseAJour.getDerniereMiseAJour())) {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 			LOG_YBO.debug("Suppression de toutes les tables");
 			for (final Class<?> clazz : ConstantesKeolis.LIST_CLASSES_DATABASE) {

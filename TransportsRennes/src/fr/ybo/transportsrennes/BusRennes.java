@@ -19,8 +19,7 @@ import java.util.List;
 public class BusRennes extends ListActivity {
 
 	private void constructionListe() {
-		final List<Route> routes = ((BusRennesApplication) getApplication()).getDataBaseHelper().select(new Route(), null,
-				null, "id");
+		final List<Route> routes = BusRennesApplication.getDataBaseHelper().select(new Route(), null, null, "id");
 		setListAdapter(new RouteAdapter(getApplicationContext(), routes));
 		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);

@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 
 /**
- * Handler pour r�cup�rer les parks relais.
+ * Handler pour récupérer les parks relais.
  *
  * @author ybonnel
  */

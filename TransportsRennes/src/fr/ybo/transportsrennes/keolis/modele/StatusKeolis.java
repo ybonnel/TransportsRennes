@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis.modele;
 
 /**
- * Repr�sente le status de retour des apis keolis.
+ * Représente le status de retour des apis keolis.
  *
  * @author ybonnel
  */
@@ -13,7 +13,7 @@ public class StatusKeolis {
 	private String code;
 
 	/**
-	 * M�ssage associ� au status.
+	 * Message associé au status.
 	 */
 	private String message;
 

@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 
 /**
- * Handler permettant de r�cup�rer les points de vente.
+ * Handler permettant de récupérer les points de vente.
  *
  * @author ybonnel
  */

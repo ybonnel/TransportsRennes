@@ -3,15 +3,14 @@ package fr.ybo.transportsrennes.keolis.gtfs.moteur;
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.modele.ChampCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.modele.ClassCsv;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,16 +23,15 @@ public class MoteurCsv {
 
 	private ClassCsv classCourante;
 
-	public MoteurCsv(final List<Class<?>> classes) throws ErreurMoteurCsv {
+	public MoteurCsv(final List<Class<?>> classes) {
 		for (final Class<?> clazz : classes) {
 			scannerClass(clazz);
 		}
 	}
 
-	public Object creerObjet(final String ligne) throws ErreurMoteurCsv {
+	public Object creerObjet(final String ligne) {
 		if (classCourante == null) {
-			throw new ErreurMoteurCsv(
-					"La m�thode creerObjet a �t�e appel�e sans que la m�thode nouveauFichier n'est �t� appel�e.");
+			throw new ErreurMoteurCsv("La méthode creerObjet a étée appelée sans que la méthode nouveauFichier n'est été appelée.");
 		}
 		try {
 			final Object objetCsv = classCourante.getContructeur().newInstance((Object[]) null);
@@ -53,15 +51,15 @@ public class MoteurCsv {
 			}
 			return objetCsv;
 		} catch (final Exception e) {
-			throw new ErreurMoteurCsv("Erreur � l'instanciation de la class " + classCourante.getClazz().getSimpleName()
-					+ " pour la ligne " + ligne, e);
+			throw new ErreurMoteurCsv("Erreur à l'instanciation de la class " + classCourante.getClazz().getSimpleName() + " pour la ligne " + ligne,
+					e);
 		}
 	}
 
-	public void nouveauFichier(final String nomFichier, final String entete) throws ErreurMoteurCsv {
+	public void nouveauFichier(final String nomFichier, final String entete) {
 		classCourante = mapFileClasses.get(nomFichier);
 		if (classCourante == null) {
-			throw new ErreurMoteurCsv("Le fichier " + nomFichier + " n'as pas de classe associ�e");
+			throw new ErreurMoteurCsv("Le fichier " + nomFichier + " n'as pas de classe associée");
 		}
 		enteteCourante = entete.split(classCourante.getSeparateur());
 		if (Character.isIdentifierIgnorable(enteteCourante[0].charAt(0))) {
@@ -69,20 +67,8 @@ public class MoteurCsv {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public <Objet> List<Objet> parseFile(final File file, final Class<Objet> clazz) throws ErreurMoteurCsv, IOException {
-		final List<Objet> objets = new ArrayList<Objet>();
-		final BufferedReader bufReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)), 8 * 1024);
-		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
-		String ligne;
-		while ((ligne = bufReader.readLine()) != null) {
-			objets.add((Objet) creerObjet(ligne));
-		}
-		return objets;
-	}
-
-	public <Objet> void parseFileAndInsert(final BufferedReader bufReader, final Class<Objet> clazz, final DataBaseHelper dataBaseHelper,
-	                                       final String suffixeTableName) throws ErreurMoteurCsv, IOException, DataBaseException {
+	public <Objet> void parseFileAndInsert(BufferedReader bufReader, Class<Objet> clazz, DataBaseHelper dataBaseHelper, String suffixeTableName)
+			throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 		String ligne;
 		final Table table = dataBaseHelper.getBase().getTable(clazz);
@@ -95,10 +81,10 @@ public class MoteurCsv {
 		}
 	}
 
-	private void scannerClass(final Class<?> clazz) throws ErreurMoteurCsv {
+	private void scannerClass(final Class<?> clazz) {
 		final FichierCsv fichierCsv = clazz.getAnnotation(FichierCsv.class);
 		if (fichierCsv == null) {
-			throw new ErreurMoteurCsv("Annotation FichierCsv non pr�sente sur la classe " + clazz.getSimpleName());
+			throw new ErreurMoteurCsv("Annotation FichierCsv non présente sur la classe " + clazz.getSimpleName());
 		}
 		if (mapFileClasses.get(fichierCsv.value()) != null) {
 			return;

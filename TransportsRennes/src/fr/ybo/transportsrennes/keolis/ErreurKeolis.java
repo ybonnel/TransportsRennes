@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis;
 
 /**
- * Exception sur les traitements associ�s aux API Keolis.
+ * Exception sur les traitements associés aux API Keolis.
  *
  * @author ybonnel
  */

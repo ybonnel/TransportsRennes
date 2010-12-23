@@ -13,15 +13,13 @@ public class ClassCsv {
 
 	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>();
 
-	public ClassCsv(final String separateur, final Class<?> clazz) throws ErreurMoteurCsv {
+	public ClassCsv(final String separateur, final Class<?> clazz) {
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {
 			contructeur = clazz.getDeclaredConstructor((Class<?>[]) null);
-		} catch (final SecurityException e) {
-			throw new ErreurMoteurCsv("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
-		} catch (final NoSuchMethodException e) {
-			throw new ErreurMoteurCsv("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
+		} catch (Exception e) {
+			throw new ErreurMoteurCsv("Erreur a la récupération du constructeur de " + clazz.getSimpleName(), e);
 		}
 	}
 

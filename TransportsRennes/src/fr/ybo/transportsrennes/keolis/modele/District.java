@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.modele;
 import java.io.Serializable;
 
 /**
- * Class repr�sentant un district Keolis.
+ * Class représentant un district Keolis.
  *
  * @author ybonnel
  */

@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.bus.Ville;
 
 /**
- * Handler pour r�cup�rer les villeS.
+ * Handler pour récupérer les villes.
  *
  * @author ybonnel
  */

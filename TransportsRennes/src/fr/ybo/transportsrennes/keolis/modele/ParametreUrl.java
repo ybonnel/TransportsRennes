@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis.modele;
 
 /**
- * Param�tre d'une URL.
+ * Paramètre d'une URL.
  *
  * @author ybonnel
  */

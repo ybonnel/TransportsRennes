@@ -28,37 +28,18 @@ public class RouteAdapter extends BaseAdapter {
 	private List<Route> routes;
 
 	public RouteAdapter(final Context context, final List<Route> routes) throws ErreurKeolis {
-		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.routes = routes;
 	}
 
-	/**
-	 * The number of items in the list is determined by the number of speeches
-	 * in our array.
-	 *
-	 * @see android.widget.ListAdapter#getCount()
-	 */
 	public int getCount() {
 		return routes.size();
 	}
 
-	/**
-	 * Since the data comes from an array, just returning the index is sufficent
-	 * to get at the data. If we were using a more complex data structure, we
-	 * would return whatever object represents one row in the list.
-	 *
-	 * @see android.widget.ListAdapter#getItem(int)
-	 */
 	public Route getItem(final int position) {
 		return routes.get(position);
 	}
 
-	/**
-	 * Use the array index as a unique id.
-	 *
-	 * @see android.widget.ListAdapter#getItemId(int)
-	 */
 	public long getItemId(final int position) {
 		return position;
 	}

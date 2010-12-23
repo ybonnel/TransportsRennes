@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.District;
 
 /**
- * Handler SAX pour la r�ponse du getdistrict.
+ * Handler SAX pour la réponse du getdistrict.
  *
  * @author ybonnel
  */

@@ -26,10 +26,10 @@ public class Line implements Serializable {
 	private URL urlPicto;
 
 	/**
-	 * G�n�re le URL du picto � partir d'une URL de base.
+	 * Génère l'URL du picto à partir d'une URL de base.
 	 *
 	 * @param baseUrl URL de base.
-	 * @throws MalformedURLException URL mal form�e.
+	 * @throws MalformedURLException URL mal formée.
 	 */
 	public final void genereUrl(final String baseUrl) throws MalformedURLException {
 		urlPicto = new URL(baseUrl + picto);

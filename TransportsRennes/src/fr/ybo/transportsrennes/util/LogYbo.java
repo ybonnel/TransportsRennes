@@ -15,10 +15,6 @@ public class LogYbo {
 		Log.d(tag, message);
 	}
 
-	public void erreur(final String message) {
-		Log.e(tag, message);
-	}
-
 	public void erreur(final String message, final Throwable throwable) {
 		Log.e(tag, message, throwable);
 	}

@@ -1,10 +1,10 @@
 package fr.ybo.transportsrennes.keolis.gtfs.moteur.modele;
 
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterCsv;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,10 +20,6 @@ public class ChampCsv {
 		this.field = field;
 	}
 
-	public Class<? extends AdapterCsv<?>> getAdapter() {
-		return adapter;
-	}
-
 	public Field getField() {
 		return field;
 	}
@@ -33,24 +29,8 @@ public class ChampCsv {
 			try {
 				final Constructor<? extends AdapterCsv<?>> construteur = adapter.getConstructor((Class<?>[]) null);
 				mapAdapters.put(adapter, construteur.newInstance((Object[]) null));
-			} catch (final SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (final NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (final IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (final InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (final IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (final InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (final Exception exception) {
+				throw new ErreurMoteurCsv(exception);
 			}
 		}
 		return mapAdapters.get(adapter);

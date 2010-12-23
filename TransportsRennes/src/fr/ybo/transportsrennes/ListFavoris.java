@@ -35,7 +35,7 @@ public class ListFavoris extends ListActivity {
 
 	private DataBaseHelper getDataBaseHelper() {
 		if (dataBaseHelper == null) {
-			dataBaseHelper = ((BusRennesApplication) getApplication()).getDataBaseHelper();
+			dataBaseHelper = BusRennesApplication.getDataBaseHelper();
 		}
 		return dataBaseHelper;
 	}

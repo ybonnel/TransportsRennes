@@ -5,7 +5,7 @@ import android.location.Location;
 import java.io.Serializable;
 
 /**
- * Classe repr�sentant une station de velo star.
+ * Classe représentant une station de velo star.
  *
  * @author ybonnel
  */
@@ -86,8 +86,7 @@ public class Station implements Serializable {
 	public final void calculDistance(final Location pCurrentLocation) {
 		if (pCurrentLocation != null) {
 			final float[] distanceResult = new float[1];
-			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude,
-					distanceResult);
+			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude, distanceResult);
 			distance = (int) distanceResult[0];
 		}
 	}
@@ -104,8 +103,7 @@ public class Station implements Serializable {
 		if (distance < NB_METRES_BY_KM) {
 			return distance + "m";
 		} else {
-			final double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM - MULTI_DECIMALES_FOR_KM))
-					/ MULTI_DECIMALES_FOR_KM;
+			final double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM - MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
 			return distanceKm + "km";
 		}
 	}
@@ -323,7 +321,7 @@ public class Station implements Serializable {
 	 */
 	@Override
 	public final String toString() {
-		return new StringBuilder(name).append(' ').append(bikesavailable).append('/').append((slotsavailable + bikesavailable))
-				.append("  ").append(formatDistance()).toString();
+		return new StringBuilder(name).append(' ').append(bikesavailable).append('/').append((slotsavailable + bikesavailable)).append("  ")
+				.append(formatDistance()).toString();
 	}
 }

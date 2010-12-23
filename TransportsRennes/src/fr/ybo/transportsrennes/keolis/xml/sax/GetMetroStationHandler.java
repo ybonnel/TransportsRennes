@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.bus.MetroStation;
 
 /**
- * Handler pour r�cup�rer les stations de m�tros.
+ * Handler pour récupérer les stations de métros.
  *
  * @author ybonnel
  */

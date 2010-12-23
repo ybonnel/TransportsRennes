@@ -3,7 +3,7 @@ package fr.ybo.transportsrennes.keolis.xml.sax;
 import fr.ybo.transportsrennes.keolis.modele.bus.Equipement;
 
 /**
- * Handler pour r�cup�rer les �quipements.
+ * Handler pour récupérer les équipements.
  *
  * @author ybonnel
  */

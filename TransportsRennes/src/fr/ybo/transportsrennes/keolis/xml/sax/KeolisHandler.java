@@ -7,7 +7,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * Handler pour les appels � Keolis.
+ * Handler pour les appels à Keolis.
  *
  * @param <ObjetKeolis>
  * @author ybonnel
@@ -33,7 +33,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	private static final String MESSAGE = "message";
 
 	/**
-	 * R�ponse de l'API getdistrict.
+	 * Réponse de l'API getdistrict.
 	 */
 	private Answer<ObjetKeolis> answer = null;
 
@@ -70,14 +70,14 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	/**
 	 * Getter.
 	 *
-	 * @return r�ponse de l'API getdistrict.
+	 * @return réponse de l'API getdistrict.
 	 */
 	public final Answer<ObjetKeolis> getAnswer() {
 		return this.answer;
 	}
 
 	/**
-	 * M�thode � impl�menter donnant le nom de la balise englobante.
+	 * Méthode à implémenter donnant le nom de la balise englobante.
 	 *
 	 * @return le nom de la balise englobante.
 	 */
@@ -91,14 +91,14 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	}
 
 	/**
-	 * M�thode � impl�menter cr�ant un nouvel objet Keolis.
+	 * Méthode à implémenter créant un nouvel objet Keolis.
 	 *
 	 * @return nouvel objet Keolis.
 	 */
 	protected abstract ObjetKeolis getNewObjetKeolis();
 
 	/**
-	 * M�thode � impl�menter remplissant le contenu d'un objet Keolis.
+	 * Méthode à implémenter remplissant le contenu d'un objet Keolis.
 	 *
 	 * @param currentObjectKeolis objet Keolis courant.
 	 * @param baliseName          nom de la balise.
@@ -113,8 +113,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	}
 
 	@Override
-	public final void startElement(final String uri, final String localName, final String name, final Attributes attributes)
-			throws SAXException {
+	public final void startElement(final String uri, final String localName, final String name, final Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, name, attributes);
 		if (localName.equals(ANSWER)) {
 			this.answer = new Answer<ObjetKeolis>();
@@ -129,7 +128,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	}
 
 	/**
-	 * M�thode permettant de surcharger le comportement sur endElement.
+	 * Méthode permettant de surcharger le comportement sur endElement.
 	 *
 	 * @param localName nom de la balise.
 	 */

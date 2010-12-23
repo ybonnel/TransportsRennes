@@ -137,8 +137,7 @@ public class GetAndContructZip {
 		Map<String, String> mapRouteIdByTrip = new HashMap<String, String>();
 		BufferedWriter bufWriter;
 		for (Route route : routes) {
-			bufWriter = new BufferedWriter(new FileWriter(new File(
-					repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt")));
+			bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt")));
 			routesFiles.add(bufWriter);
 			for (Trip trip : mapTripsByRoute.get(route.getId())) {
 				mapTrips.put(trip.getId(), trip);
@@ -223,8 +222,8 @@ public class GetAndContructZip {
 
 		Map<Route, List<HeuresArrets>> mapStopTimes = new HashMap<Route, List<HeuresArrets>>();
 		for (Route route : routes) {
-			mapStopTimes.put(route, moteurCsv.parseFile(new File(
-					repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt"), HeuresArrets.class));
+			mapStopTimes
+					.put(route, moteurCsv.parseFile(new File(repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt"), HeuresArrets.class));
 		}
 
 		for (File file : repertoire.listFiles(new FilenameFilter() {
@@ -304,10 +303,8 @@ public class GetAndContructZip {
 
 		System.out.println("Création des zip");
 		FileOutputStream dest = new FileOutputStream(new File(repertoire, "GTFSRennesPrincipal.zip"));
-		ZipOutputStream out = new ZipOutputStream(new
-				BufferedOutputStream(dest));
+		ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 
-		addFileToZip(new File(repertoire, "agency.txt"), out);
 		addFileToZip(new File(repertoire, "arret_route.txt"), out);
 		addFileToZip(new File(repertoire, "calendar.txt"), out);
 		addFileToZip(new File(repertoire, "routes.txt"), out);
@@ -351,12 +348,20 @@ public class GetAndContructZip {
 
 		@Override
 		public boolean equals(Object o) {
-			if (this == o) return true;
+			if (this == o) {
+				return true;
+			}
 			IdentifiantHeureArret that = (IdentifiantHeureArret) o;
 
-			if (heureDepart != null ? !heureDepart.equals(that.heureDepart) : that.heureDepart != null) return false;
-			if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-			if (stopId != null ? !stopId.equals(that.stopId) : that.stopId != null) return false;
+			if (heureDepart != null ? !heureDepart.equals(that.heureDepart) : that.heureDepart != null) {
+				return false;
+			}
+			if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) {
+				return false;
+			}
+			if (stopId != null ? !stopId.equals(that.stopId) : that.stopId != null) {
+				return false;
+			}
 
 			return true;
 		}
@@ -373,15 +378,12 @@ public class GetAndContructZip {
 	protected static void addFileToZip(File file, ZipOutputStream out) throws IOException {
 		System.out.println("Adding: " + file);
 		byte data[] = new byte[2048];
-		FileInputStream fi = new
-				FileInputStream(file);
-		BufferedInputStream origin = new
-				BufferedInputStream(fi, 2048);
+		FileInputStream fi = new FileInputStream(file);
+		BufferedInputStream origin = new BufferedInputStream(fi, 2048);
 		ZipEntry entry = new ZipEntry(file.getName());
 		out.putNextEntry(entry);
 		int count;
-		while ((count = origin.read(data, 0,
-				2048)) != -1) {
+		while ((count = origin.read(data, 0, 2048)) != -1) {
 			out.write(data, 0, count);
 		}
 		origin.close();
