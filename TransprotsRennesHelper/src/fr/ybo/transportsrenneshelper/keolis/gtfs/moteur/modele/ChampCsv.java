@@ -1,12 +1,12 @@
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.modele;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.modele;
+
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterCsv;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterCsv;
 
 public class ChampCsv {
 
@@ -28,7 +28,8 @@ public class ChampCsv {
 		return field;
 	}
 
-	public AdapterCsv<?> getNewAdapterCsv() {
+	@SuppressWarnings("unchecked")
+	public AdapterCsv<Object> getNewAdapterCsv() {
 		if (!mapAdapters.containsKey(adapter)) {
 			try {
 				final Constructor<? extends AdapterCsv<?>> construteur = adapter.getConstructor((Class<?>[]) null);
@@ -53,6 +54,6 @@ public class ChampCsv {
 				e.printStackTrace();
 			}
 		}
-		return mapAdapters.get(adapter);
+		return (AdapterCsv<Object>) mapAdapters.get(adapter);
 	}
 }

@@ -1,10 +1,9 @@
 package fr.ybo.transportsrenneshelper;
 
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Trip;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
+
+import fr.ybo.transportsrenneshelper.keolis.gtfs.modele.*;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.ErreurMoteurCsv;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.MoteurCsv;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -83,7 +82,7 @@ public class GetAndContructZip {
 
 	private final static String REPERTOIRE_SORTIE = "C:/ybonnel/GTFSRennes/";
 
-	public static void getAndParseZipKeolis() throws ParseException, IOException, ErreurMoteurCsv {
+	public static void getAndParseZipKeolis() throws ParseException, IOException, IllegalAccessException, ErreurMoteurCsv {
 		Date lastUpdate = getLastUpdate();
 		final HttpURLConnection connection = openHttpConnection(lastUpdate);
 		final ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
@@ -120,6 +119,8 @@ public class GetAndContructZip {
 		List<Class<?>> listeClassCsv = new ArrayList<Class<?>>();
 		listeClassCsv.add(Route.class);
 		listeClassCsv.add(Trip.class);
+		listeClassCsv.add(Calendrier.class);
+		listeClassCsv.add(HeuresArrets.class);
 		MoteurCsv moteurCsv = new MoteurCsv(listeClassCsv);
 
 		Map<String, BufferedWriter> mapTripIdFichier = new HashMap<String, BufferedWriter>();
@@ -133,6 +134,7 @@ public class GetAndContructZip {
 			mapTripsByRoute.get(trip.getRouteId()).add(trip);
 		}
 		Map<String, Trip> mapTrips = new HashMap<String, Trip>();
+		Map<String, String> mapRouteIdByTrip = new HashMap<String, String>();
 		BufferedWriter bufWriter;
 		for (Route route : routes) {
 			bufWriter = new BufferedWriter(new FileWriter(new File(
@@ -209,6 +211,91 @@ public class GetAndContructZip {
 
 		System.out.println("Fin de l'ecriture du fichier arret_route.txt");
 
+		System.out.println("Compression des données (regroupement de calendrier)");
+
+
+		Map<String, Calendrier> calendrierActuels = new HashMap<String, Calendrier>();
+		for (Calendrier calendrier : moteurCsv.parseFile(new File(repertoire, "calendar.txt"), Calendrier.class)) {
+			calendrierActuels.put(calendrier.getId(), calendrier);
+		}
+
+		System.out.println("Lectures des fichiers stopTimes.txt");
+
+		Map<Route, List<HeuresArrets>> mapStopTimes = new HashMap<Route, List<HeuresArrets>>();
+		for (Route route : routes) {
+			mapStopTimes.put(route, moteurCsv.parseFile(new File(
+					repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt"), HeuresArrets.class));
+		}
+
+		for (File file : repertoire.listFiles(new FilenameFilter() {
+			public boolean accept(File dir, String name) {
+				return name.startsWith("stopTimes");
+			}
+		})) {
+			file.delete();
+		}
+
+
+		System.out.println("Parcours des horaires pour compressions");
+
+
+		Map<Route, Map<IdentifiantHeureArret, HeuresArrets>> mapHeuresCompressees = new HashMap<Route, Map<IdentifiantHeureArret, HeuresArrets>>();
+
+		for (Map.Entry<Route, List<HeuresArrets>> heures : mapStopTimes.entrySet()) {
+			mapHeuresCompressees.put(heures.getKey(), new HashMap<IdentifiantHeureArret, HeuresArrets>());
+			Map<IdentifiantHeureArret, HeuresArrets> mapHeures = mapHeuresCompressees.get(heures.getKey());
+			for (HeuresArrets heure : heures.getValue()) {
+				heure.setRouteId(heures.getKey().getId());
+				IdentifiantHeureArret idHeureArret = new IdentifiantHeureArret(heure.getRouteId(), heure.getStopId(), heure.getHeureDepart());
+				Calendrier calendrierActuel = calendrierActuels.get(mapTrips.get(heure.getTripId()).getServiceId());
+				if (!mapHeures.containsKey(idHeureArret)) {
+					heure.setCalendrier(new Calendrier(calendrierActuel));
+					mapHeures.put(idHeureArret, heure);
+				} else {
+					mapHeures.get(idHeureArret).getCalendrier().merge(calendrierActuel);
+				}
+			}
+		}
+
+		List<Calendrier> newCalendriers = new ArrayList<Calendrier>();
+
+		int idCalendrier = 1;
+
+		System.out.println("Création des calendriers");
+		for (Map<IdentifiantHeureArret, HeuresArrets> heures : mapHeuresCompressees.values()) {
+			for (HeuresArrets heure : heures.values()) {
+				Calendrier newCalendrier = rechercherCalendrier(newCalendriers, heure.getCalendrier());
+				if (newCalendrier == null) {
+					heure.getCalendrier().setId(Integer.toString(idCalendrier));
+					newCalendriers.add(heure.getCalendrier());
+					idCalendrier++;
+				} else {
+					heure.setCalendrier(newCalendrier);
+				}
+				heure.setServiceId(heure.getCalendrier().getId());
+			}
+		}
+
+		System.out.println("Ecriture du fichier calendar.txt");
+		File fileCalendar = new File(repertoire, "calendar.txt");
+		moteurCsv.writeFile(fileCalendar, newCalendriers, Calendrier.class);
+
+		List<HeuresArrets> allHeures = new ArrayList<HeuresArrets>();
+
+		System.out.println("Ecriture des fichiers stopTimes");
+		for (Map.Entry<Route, Map<IdentifiantHeureArret, HeuresArrets>> entryHeures : mapHeuresCompressees.entrySet()) {
+			File fileStopTimes = new File(repertoire, "stopTimes" + entryHeures.getKey().getIdWithoutSpecCar() + ".txt");
+			List<HeuresArrets> heures = new ArrayList<HeuresArrets>();
+			heures.addAll(entryHeures.getValue().values());
+			allHeures.addAll(heures);
+			moteurCsv.writeFile(fileStopTimes, heures, HeuresArrets.class, Collections.singleton("trip_id"));
+		}
+
+		System.out.println("Ecriture du fichier principal stop_times.txt");
+
+		moteurCsv.writeFile(new File(repertoire, "stop_times.txt"), allHeures, HeuresArrets.class, Collections.singleton("trip_id"));
+
+
 		bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
 
 		bufWriter.write(SDF.format(lastUpdate));
@@ -225,7 +312,6 @@ public class GetAndContructZip {
 		addFileToZip(new File(repertoire, "calendar.txt"), out);
 		addFileToZip(new File(repertoire, "routes.txt"), out);
 		addFileToZip(new File(repertoire, "stops.txt"), out);
-		addFileToZip(new File(repertoire, "trips.txt"), out);
 		out.close();
 
 		for (File fileStopTime : repertoire.listFiles(new FilenameFilter() {
@@ -242,6 +328,46 @@ public class GetAndContructZip {
 		}
 
 
+	}
+
+	private static Calendrier rechercherCalendrier(List<Calendrier> calendriers, Calendrier calendrier) {
+		int index = calendriers.indexOf(calendrier);
+		if (index == -1) {
+			return null;
+		}
+		return calendriers.get(index);
+	}
+
+	private static class IdentifiantHeureArret {
+		private String routeId;
+		private String stopId;
+		private Integer heureDepart;
+
+		private IdentifiantHeureArret(String routeId, String stopId, Integer heureDepart) {
+			this.routeId = routeId;
+			this.stopId = stopId;
+			this.heureDepart = heureDepart;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			IdentifiantHeureArret that = (IdentifiantHeureArret) o;
+
+			if (heureDepart != null ? !heureDepart.equals(that.heureDepart) : that.heureDepart != null) return false;
+			if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
+			if (stopId != null ? !stopId.equals(that.stopId) : that.stopId != null) return false;
+
+			return true;
+		}
+
+		@Override
+		public int hashCode() {
+			int result = routeId != null ? routeId.hashCode() : 0;
+			result = 31 * result + (stopId != null ? stopId.hashCode() : 0);
+			result = 31 * result + (heureDepart != null ? heureDepart.hashCode() : 0);
+			return result;
+		}
 	}
 
 	protected static void addFileToZip(File file, ZipOutputStream out) throws IOException {
@@ -261,7 +387,7 @@ public class GetAndContructZip {
 		origin.close();
 	}
 
-	public static void main(String[] args) throws IOException, ParseException, ErreurMoteurCsv {
+	public static void main(String[] args) throws IOException, ParseException, ErreurMoteurCsv, IllegalAccessException {
 		GetAndContructZip.getAndParseZipKeolis();
 	}
 

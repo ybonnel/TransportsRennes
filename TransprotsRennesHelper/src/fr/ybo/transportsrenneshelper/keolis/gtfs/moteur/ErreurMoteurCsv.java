@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.keolis.gtfs.moteur;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.moteur;
 
 @SuppressWarnings("serial")
 public class ErreurMoteurCsv extends Exception {

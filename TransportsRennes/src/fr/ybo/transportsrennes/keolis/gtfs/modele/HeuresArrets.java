@@ -10,49 +10,21 @@ import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterTime;
 public class HeuresArrets {
 	@Colonne
 	@PrimaryKey
-	@BaliseCsv("trip_id")
-	private String tripId;
-	@Colonne
-	@PrimaryKey
 	@BaliseCsv("stop_id")
 	private String stopId;
 	@Colonne(type = TypeColonne.INTEGER)
 	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class)
 	private Integer stopSequence;
 	@Colonne(type = TypeColonne.INTEGER)
-	@Indexed
+	@PrimaryKey
 	@BaliseCsv(value = "departure_time", adapter = AdapterTime.class)
 	private Integer heureDepart;
-
-	public Integer getHeureDepart() {
-		return heureDepart;
-	}
-
-	public String getStopId() {
-		return stopId;
-	}
-
-	public Integer getStopSequence() {
-		return stopSequence;
-	}
-
-	public String getTripId() {
-		return tripId;
-	}
-
-	public void setHeureDepart(final Integer heureDepart) {
-		this.heureDepart = heureDepart;
-	}
-
-	public void setStopId(final String stopId) {
-		this.stopId = stopId;
-	}
-
-	public void setStopSequence(final Integer stopSequence) {
-		this.stopSequence = stopSequence;
-	}
-
-	public void setTripId(final String tripId) {
-		this.tripId = tripId;
-	}
+	@Colonne
+	@Indexed
+	@BaliseCsv("service_id")
+	private String serviceId;
+	@Colonne
+	@PrimaryKey
+	@BaliseCsv("route_id")
+	private String routeId;
 }

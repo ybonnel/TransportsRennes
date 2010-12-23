@@ -1,10 +1,11 @@
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.modele;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.modele;
+
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.ErreurMoteurCsv;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
+import java.util.Set;
 
 public class ClassCsv {
 	private final String separateur;
@@ -27,6 +28,10 @@ public class ClassCsv {
 
 	public ChampCsv getChampCsv(final String nomCsv) {
 		return mapOfFields.get(nomCsv);
+	}
+
+	public Set<String> getNomChamps() {
+		return mapOfFields.keySet();
 	}
 
 	public Class<?> getClazz() {

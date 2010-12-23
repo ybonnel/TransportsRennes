@@ -15,7 +15,6 @@ public class ConstantesKeolis {
 		LIST_CLASSES_DATABASE.add(Calendrier.class);
 		LIST_CLASSES_DATABASE.add(DernierMiseAJour.class);
 		LIST_CLASSES_DATABASE.add(Route.class);
-		LIST_CLASSES_DATABASE.add(Trip.class);
 		LIST_CLASSES_DATABASE.add(HeuresArrets.class);
 		LIST_CLASSES_DATABASE.add(ArretFavori.class);
 		LIST_CLASSES_DATABASE.add(ArretRoute.class);
@@ -30,7 +29,6 @@ public class ConstantesKeolis {
 		LIST_CLASSES_GTFS.add(Calendrier.class);
 		LIST_CLASSES_GTFS.add(HeuresArrets.class);
 		LIST_CLASSES_GTFS.add(Route.class);
-		LIST_CLASSES_GTFS.add(Trip.class);
 	}
 
 }

@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.keolis.gtfs.modele;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.modele;
 
 /**
  * 0 - Tram, tramway, train l�ger sur rail. Tout syst�me de m�tro l�ger ou de
@@ -12,9 +12,8 @@ package fr.ybo.transportsrennes.keolis.gtfs.modele;
  * 6 - gondole, t�l�ph�rique suspendu. G�n�ralement utilis� pour les
  * t�l�ph�riques o� la voiture est suspendu au c�ble.<br/>
  * 7 - Funiculaire. Tout syst�me ferroviaire con�u pour les pentes raides.<br/>
- * 
+ *
  * @author ybonnel
- * 
  */
 public enum TypeRoutes {
 	TRAMWAY(0), METRO(1), TRAIN(2), BUS(3), FERRY(4), TELECABINE(5), TELEPHERIQUE(6), FUNICULAIRE(7);

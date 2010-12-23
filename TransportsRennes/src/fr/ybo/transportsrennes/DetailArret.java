@@ -96,14 +96,13 @@ public class DetailArret extends ListActivity {
 		final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		final StringBuilder requete = new StringBuilder();
 		requete.append("select HeuresArrets.heureDepart as _id ");
-		requete.append("from Calendrier, Trip, HeuresArrets");
+		requete.append("from Calendrier,  HeuresArrets");
 		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
 		requete.append(" as HeuresArrets ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier());
-		requete.append(" and Trip.serviceId = Calendrier.id");
-		requete.append(" and Trip.routeId = :routeId");
-		requete.append(" and HeuresArrets.tripId = Trip.id");
+		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
+		requete.append(" and HeuresArrets.routeId = :routeId");
 		requete.append(" and HeuresArrets.stopId = :arretId");
 		requete.append(" and HeuresArrets.heureDepart >= :maintenant");
 		requete.append(" order by HeuresArrets.heureDepart limit 10;");

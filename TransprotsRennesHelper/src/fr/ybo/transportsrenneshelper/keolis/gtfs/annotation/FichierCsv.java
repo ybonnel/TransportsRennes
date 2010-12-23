@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.keolis.gtfs.annotation;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

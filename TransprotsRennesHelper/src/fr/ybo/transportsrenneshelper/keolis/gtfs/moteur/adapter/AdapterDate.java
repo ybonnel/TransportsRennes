@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,6 +14,10 @@ public class AdapterDate implements AdapterCsv<Date> {
 		} catch (final ParseException e) {
 			return null;
 		}
+	}
+
+	public String toString(Date date) {
+		return sdf.format(date);
 	}
 
 }

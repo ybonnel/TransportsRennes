@@ -1,26 +1,18 @@
-package fr.ybo.transportsrennes.keolis.gtfs.modele;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.modele;
 
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.*;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.BaliseCsv;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.FichierCsv;
 
-@Table
 @FichierCsv("trips.txt")
 public class Trip {
-	@Colonne
-	@PrimaryKey
 	@BaliseCsv("trip_id")
 	private String id;
-	@Colonne
-	@Indexed
 	@BaliseCsv("service_id")
 	private String serviceId;
-	@Colonne
-	@Indexed
 	@BaliseCsv("route_id")
 	private String routeId;
-	@Colonne
 	@BaliseCsv("trip_headsign")
 	private String headSign;
-	@Colonne
 	@BaliseCsv("direction_id")
 	private String directionId;
 

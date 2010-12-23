@@ -3,9 +3,6 @@ package fr.ybo.transportsrennes.keolis.gtfs.modele;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.*;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterBoolean;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterDate;
-
-import java.util.Date;
 
 @Table
 @FichierCsv("calendar.txt")
@@ -36,20 +33,6 @@ public class Calendrier {
 	@Colonne(type = TypeColonne.BOOLEAN)
 	@BaliseCsv(value = "sunday", adapter = AdapterBoolean.class)
 	private Boolean dimanche;
-	@Colonne(type = TypeColonne.DATE)
-	@BaliseCsv(value = "start_date", adapter = AdapterDate.class)
-	private Date dateDebut;
-	@Colonne(type = TypeColonne.DATE)
-	@BaliseCsv(value = "end_date", adapter = AdapterDate.class)
-	private Date dateFin;
-
-	public Date getDateDebut() {
-		return dateDebut;
-	}
-
-	public Date getDateFin() {
-		return dateFin;
-	}
 
 	public Boolean getDimanche() {
 		return dimanche;
@@ -83,14 +66,6 @@ public class Calendrier {
 		return vendredi;
 	}
 
-	public void setDateDebut(final Date dateDebut) {
-		this.dateDebut = dateDebut;
-	}
-
-	public void setDateFin(final Date dateFin) {
-		this.dateFin = dateFin;
-	}
-
 	public void setDimanche(final Boolean dimanche) {
 		this.dimanche = dimanche;
 	}
@@ -121,12 +96,5 @@ public class Calendrier {
 
 	public void setVendredi(final Boolean vendredi) {
 		this.vendredi = vendredi;
-	}
-
-	@Override
-	public String toString() {
-		return "Calendrier [id=" + id + ", lundi=" + lundi + ", mardi=" + mardi + ", mercredi=" + mercredi + ", jeudi=" + jeudi
-				+ ", vendredi=" + vendredi + ", samedi=" + samedi + ", dimanche=" + dimanche + ", dateDebut=" + dateDebut
-				+ ", dateFin=" + dateFin + "]";
 	}
 }

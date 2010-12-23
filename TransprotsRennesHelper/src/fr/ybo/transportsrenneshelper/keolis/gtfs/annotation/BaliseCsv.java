@@ -1,12 +1,12 @@
-package fr.ybo.transportsrennes.keolis.gtfs.annotation;
+package fr.ybo.transportsrenneshelper.keolis.gtfs.annotation;
+
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterCsv;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterString;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterString;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
