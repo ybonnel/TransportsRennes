@@ -87,7 +87,8 @@ public class DetailArret extends ListActivity {
 			textView.setText(favori.getRouteNomCourt());
 			conteneur.addView(textView);
 		}
-		((TextView) findViewById(R.id.detailArret_direction)).setText(Formatteur.formatterChaine(favori.getDirection()).replaceAll(favori.getRouteNomCourt(), ""));
+		((TextView) findViewById(R.id.detailArret_direction))
+				.setText(Formatteur.formatterChaine(favori.getDirection().replaceAll(favori.getRouteNomCourt(), "")));
 		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.getNomArret());
 		final DataBaseHelper dataBaseHelper = BusRennesApplication.getDataBaseHelper();
 

@@ -2,6 +2,7 @@ package fr.ybo.transportsrenneshelper.keolis.gtfs.modele;
 
 import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.FichierCsv;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterInteger;
 import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterTypeRoute;
 
 import java.io.Serializable;
@@ -16,31 +17,23 @@ public class Route implements Serializable {
 
 	@BaliseCsv("route_id")
 	private String id;
-	@BaliseCsv("agency_id")
-	private String agenceId;
 	@BaliseCsv("route_short_name")
 	private String nomCourt;
 	@BaliseCsv("route_long_name")
 	private String nomLong;
 
-	@BaliseCsv("route_desc")
-	private String description;
-
 	@BaliseCsv(value = "route_type", adapter = AdapterTypeRoute.class)
 	private TypeRoutes type;
 
-	private Boolean chargee;
+	@BaliseCsv(value = "route_ordre", adapter = AdapterInteger.class)
+	private Integer ordre;
 
-	public String getAgenceId() {
-		return agenceId;
-	}
+	private String nomCourtFormatte;
+
+	private Boolean chargee;
 
 	public Boolean getChargee() {
 		return chargee;
-	}
-
-	public String getDescription() {
-		return description;
 	}
 
 	public String getId() {
@@ -63,16 +56,8 @@ public class Route implements Serializable {
 		return type;
 	}
 
-	public void setAgenceId(final String agenceId) {
-		this.agenceId = agenceId;
-	}
-
 	public void setChargee(final Boolean chargee) {
 		this.chargee = chargee;
-	}
-
-	public void setDescription(final String description) {
-		this.description = description;
 	}
 
 	public void setId(final String id) {
@@ -91,14 +76,36 @@ public class Route implements Serializable {
 		this.type = type;
 	}
 
+	public Integer getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(Integer ordre) {
+		this.ordre = ordre;
+	}
+
+	public String getNomCourtFormatte() {
+		return nomCourtFormatte;
+	}
+
+	public void setNomCourtFormatte(String nomCourtFormatte) {
+		this.nomCourtFormatte = nomCourtFormatte;
+	}
+
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
 
 		Route route = (Route) o;
 
-		if (id != null ? !id.equals(route.id) : route.id != null) return false;
+		if (id != null ? !id.equals(route.id) : route.id != null) {
+			return false;
+		}
 
 		return true;
 	}

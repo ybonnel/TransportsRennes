@@ -5,6 +5,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterTypeRoute;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -33,12 +34,12 @@ public class Route implements Serializable {
 	@Colonne
 	@BaliseCsv("route_long_name")
 	private String nomLong;
-	@Colonne
-	@BaliseCsv("route_desc")
-	private String description;
 	@Colonne(type = TypeColonne.ENUM, clazz = TypeRoutes.class, methode = "getIndice")
 	@BaliseCsv(value = "route_type", adapter = AdapterTypeRoute.class)
 	private TypeRoutes type;
+	@Colonne(type = TypeColonne.INTEGER)
+	@BaliseCsv(value = "route_ordre", adapter = AdapterInteger.class)
+	private Integer ordre;
 	@Colonne(type = TypeColonne.BOOLEAN)
 	private Boolean chargee;
 

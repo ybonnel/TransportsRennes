@@ -134,7 +134,6 @@ public class GetAndContructZip {
 			mapTripsByRoute.get(trip.getRouteId()).add(trip);
 		}
 		Map<String, Trip> mapTrips = new HashMap<String, Trip>();
-		Map<String, String> mapRouteIdByTrip = new HashMap<String, String>();
 		BufferedWriter bufWriter;
 		for (Route route : routes) {
 			bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "stopTimes" + route.getIdWithoutSpecCar() + ".txt")));
@@ -293,6 +292,33 @@ public class GetAndContructZip {
 		System.out.println("Ecriture du fichier principal stop_times.txt");
 
 		moteurCsv.writeFile(new File(repertoire, "stop_times.txt"), allHeures, HeuresArrets.class, Collections.singleton("trip_id"));
+
+		System.out.println("Ajout de l'ordre dans route.txt");
+		int maxLength = 0;
+		for (Route route : routes) {
+			if (route.getNomCourt().length() > maxLength) {
+				maxLength = route.getNomCourt().length();
+			}
+		}
+		for (Route route : routes) {
+			route.setNomCourtFormatte(route.getNomCourt());
+			while (route.getNomCourtFormatte().length() < maxLength) {
+				route.setNomCourtFormatte("0" + route.getNomCourtFormatte());
+			}
+		}
+		Collections.sort(routes, new Comparator<Route>() {
+			public int compare(Route o1, Route o2) {
+				return o1.getNomCourtFormatte().compareTo(o2.getNomCourtFormatte());
+			}
+		});
+
+		int ordre = 1;
+		for (Route route : routes) {
+			route.setOrdre(ordre++);
+		}
+
+		System.out.println("Ecriture du fichier routes.txt");
+		moteurCsv.writeFile(new File(repertoire, "routes.txt"), routes, Route.class);
 
 
 		bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));

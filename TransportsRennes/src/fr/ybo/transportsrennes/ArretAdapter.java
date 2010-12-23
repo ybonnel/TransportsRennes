@@ -29,7 +29,7 @@ public class ArretAdapter extends CursorAdapter {
 		final int directionCol = cursor.getColumnIndex("direction");
 		final String direction = cursor.getString(directionCol);
 		((TextView) view.findViewById(R.id.nomArret)).setText(name);
-		((TextView) view.findViewById(R.id.directionArret)).setText(Formatteur.formatterChaine(direction).replaceAll(nomCourtRoute, ""));
+		((TextView) view.findViewById(R.id.directionArret)).setText(Formatteur.formatterChaine(direction.replaceAll(nomCourtRoute, "")));
 	}
 
 	@Override
