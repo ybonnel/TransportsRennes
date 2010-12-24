@@ -56,8 +56,8 @@ public class ListArret extends ListActivity {
 
 	private void chargerRoute() {
 
-		myProgressDialog = ProgressDialog.show(ListArret.this, "", "Premier acces à la ligne " + myRoute.getNomCourt()
-				+ ", chargement des données...", true);
+		myProgressDialog =
+				ProgressDialog.show(ListArret.this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -144,7 +144,7 @@ public class ListArret extends ListActivity {
 		myRoute = (Route) getIntent().getExtras().getSerializable("route");
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText( myRoute.getNomLongFormate());
+		nomLong.setText(myRoute.getNomLongFormate());
 		try {
 			Field fieldIcon = classDrawable.getDeclaredField("i" + myRoute.getNomCourt().toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
