@@ -11,7 +11,7 @@
 
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
-        données, cette oppération peut durer quelques dixaines de secondes, voulez vous l\'effectuer maintenant.
+        données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?
     </string>
     <string name="infoChargementGtfs">Chargement des données de bus...</string>
 
