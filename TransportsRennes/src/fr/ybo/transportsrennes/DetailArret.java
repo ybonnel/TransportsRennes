@@ -12,6 +12,7 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
@@ -34,6 +35,9 @@ public class DetailArret extends ListActivity {
 	private Cursor currentCursor;
 
 	private String clauseWhereForTodayCalendrier() {
+		if (JoursFeries.isJourFerie()) {
+			return "Dimanche = 1";
+		}
 		final Calendar calendar = Calendar.getInstance();
 		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
 			case Calendar.MONDAY:
@@ -55,7 +59,7 @@ public class DetailArret extends ListActivity {
 		}
 	}
 
-	ArretFavori favori;
+	private ArretFavori favori;
 
 	private void recuperationDonneesIntent() {
 		favori = (ArretFavori) getIntent().getExtras().getSerializable("favori");
@@ -97,6 +101,7 @@ public class DetailArret extends ListActivity {
 	}
 
 	private DetailArretAdapter construireAdapter() {
+		closeCurrentCursor();
 		if (prochainArrets) {
 			return construireAdapterProchainsDeparts();
 		}
