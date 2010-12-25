@@ -19,4 +19,7 @@
     <string name="btn_bus">Bus</string>
     <string name="btn_bus_favori">Arrêts Favoris</string>
     <string name="btn_alert">Alertes</string>
+
+    <string name="menu_prochainArrets">Prochaines horaires</string>
+    <string name="menu_allArrets">Toutes les horaires</string>
 </resources>
