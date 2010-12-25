@@ -1,14 +1,13 @@
 package fr.ybo.transportsrennes;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.*;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.Formatteur;
@@ -34,11 +33,12 @@ public class DetailArret extends ListActivity {
 
 	private Cursor currentCursor;
 
-	private String clauseWhereForTodayCalendrier() {
-		if (JoursFeries.isJourFerie()) {
+	private Calendar calendar = Calendar.getInstance();
+
+	private String clauseWhereForTodayCalendrier(Calendar calendar) {
+		if (JoursFeries.isJourFerie(calendar.getTime())) {
 			return "Dimanche = 1";
 		}
-		final Calendar calendar = Calendar.getInstance();
 		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
 			case Calendar.MONDAY:
 				return "Lundi = 1";
@@ -100,16 +100,15 @@ public class DetailArret extends ListActivity {
 				favori.getNomArret() + " vers " + Formatteur.formatterChaine(favori.getDirection().replaceAll(favori.getRouteNomCourt(), "")));
 	}
 
-	private DetailArretAdapter construireAdapter() {
+	private DetailArretAdapter construireAdapter(Calendar calendar) {
 		closeCurrentCursor();
 		if (prochainArrets) {
-			return construireAdapterProchainsDeparts();
+			return construireAdapterProchainsDeparts(calendar);
 		}
-		return construireAdapterAllDeparts();
+		return construireAdapterAllDeparts(calendar);
 	}
 
-	private DetailArretAdapter construireAdapterAllDeparts() {
-		Calendar calendar = Calendar.getInstance();
+	private DetailArretAdapter construireAdapterAllDeparts(Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select HeuresArrets.heureDepart as _id ");
@@ -117,7 +116,7 @@ public class DetailArret extends ListActivity {
 		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
 		requete.append(" as HeuresArrets ");
 		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier());
+		requete.append(clauseWhereForTodayCalendrier(calendar));
 		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
 		requete.append(" and HeuresArrets.routeId = :routeId");
 		requete.append(" and HeuresArrets.stopId = :arretId");
@@ -131,8 +130,7 @@ public class DetailArret extends ListActivity {
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
-	private DetailArretAdapter construireAdapterProchainsDeparts() {
-		Calendar calendar = Calendar.getInstance();
+	private DetailArretAdapter construireAdapterProchainsDeparts(Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select HeuresArrets.heureDepart as _id ");
@@ -140,7 +138,7 @@ public class DetailArret extends ListActivity {
 		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
 		requete.append(" as HeuresArrets ");
 		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier());
+		requete.append(clauseWhereForTodayCalendrier(calendar));
 		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
 		requete.append(" and HeuresArrets.routeId = :routeId");
 		requete.append(" and HeuresArrets.stopId = :arretId");
@@ -159,10 +157,11 @@ public class DetailArret extends ListActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		calendar = Calendar.getInstance();
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		gestionViewsTitle();
-		setListAdapter(construireAdapter());
+		setListAdapter(construireAdapter(calendar));
 		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 	}
@@ -182,11 +181,13 @@ public class DetailArret extends ListActivity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ALL_STOPS = Menu.FIRST;
+	private static final int MENU_SELECT_DAY = MENU_ALL_STOPS + 1;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets);
+		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay);
 		return true;
 	}
 
@@ -204,11 +205,38 @@ public class DetailArret extends ListActivity {
 		switch (item.getItemId()) {
 			case MENU_ALL_STOPS:
 				prochainArrets = !prochainArrets;
-				setListAdapter(construireAdapter());
+				setListAdapter(construireAdapter(calendar));
 				getListView().invalidate();
+				return true;
+			case MENU_SELECT_DAY:
+				showDialog(DATE_DIALOG_ID);
 				return true;
 		}
 		return false;
+	}
+
+	private static final int DATE_DIALOG_ID = 0;
+
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+
+		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+			calendar.set(Calendar.YEAR, year);
+			calendar.set(Calendar.MONTH, monthOfYear);
+			calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+			LOG_YBO.debug("Date choisie : " + calendar.getTime().toString());
+			setListAdapter(construireAdapter(calendar));
+			getListView().invalidate();
+		}
+	};
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+			case DATE_DIALOG_ID:
+				return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+						calendar.get(Calendar.DAY_OF_MONTH));
+		}
+		return null;
 	}
 
 }

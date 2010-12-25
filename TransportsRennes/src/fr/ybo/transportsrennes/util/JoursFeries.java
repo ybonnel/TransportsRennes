@@ -14,8 +14,8 @@ public class JoursFeries {
 
 	private final static SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
 
-	public static boolean isJourFerie() {
-		return getJoursFeries().contains(SIMPLE_DATE_FORMAT.format(new Date()));
+	public static boolean isJourFerie(Date date) {
+		return getJoursFeries().contains(SIMPLE_DATE_FORMAT.format(date));
 	}
 
 	private static Set<String> getJoursFeries() {
