@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes;
+package fr.ybo.transportsrennes.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 import java.lang.reflect.Field;

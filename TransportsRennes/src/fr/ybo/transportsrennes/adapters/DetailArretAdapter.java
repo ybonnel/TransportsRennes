@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes;
+package fr.ybo.transportsrennes.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import fr.ybo.transportsrennes.R;
 
 public class DetailArretAdapter extends CursorAdapter {
 
@@ -48,6 +49,7 @@ public class DetailArretAdapter extends CursorAdapter {
 		}
 		return stringBuilder.toString();
 	}
+
 	private String formatterCalendarHeure(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="76dip"
+                android:layout_height="76dip">
+    <ImageView android:layout_height="70dip"
+               android:layout_width="70dip"
+               android:id="@+id/dispovelo_image"
+               android:layout_x="0dip"
+               android:layout_y="3dip"/>
+
+    <TextView android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:id="@+id/dispovelo_text"
+              android:layout_x="0dip"
+              android:layout_y="3dip"
+              android:paddingTop="28dip"
+              android:textSize="12dip"
+              android:gravity="center"
+              android:textColor="#ffffff"/>
+
+</AbsoluteLayout>

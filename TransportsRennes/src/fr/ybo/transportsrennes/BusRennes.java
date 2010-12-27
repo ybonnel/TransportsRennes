@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import fr.ybo.transportsrennes.adapters.RouteAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 
 import java.util.List;

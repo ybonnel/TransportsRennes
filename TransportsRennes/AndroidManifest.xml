@@ -16,6 +16,7 @@
         <activity android:name=".ListArret"></activity>
         <activity android:name=".DetailArret"></activity>
         <activity android:name=".ListFavoris"></activity>
+        <activity android:name=".ListStationsByPosition"></activity>
     </application>
     <uses-sdk android:minSdkVersion="8"/>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>

@@ -43,7 +43,8 @@ public class TransportsRennes extends Activity {
 	}
 
 	public void onVeloClick(View view) {
-		// TODO importer la partie vélo.
+		Intent intent = new Intent(this, ListStationsByPosition.class);
+		startActivity(intent);
 	}
 
 

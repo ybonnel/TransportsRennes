@@ -1,6 +1,7 @@
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
 import android.location.Location;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.Serializable;
 
@@ -11,22 +12,24 @@ import java.io.Serializable;
  */
 public class Station implements Serializable {
 
+	private static final LogYbo LOG_YBO = new LogYbo(Station.class);
+
 	/**
 	 * Serial.
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Nombre de m�tres dans un kiloM�tre.
+	 * Nombre de mètres dans un kiloMètre.
 	 */
 	private static final double NB_METRES_BY_KM = 1000;
 	/**
-	 * Multiplicateur de d�cimales pour l'affichage d'un km (10 pour une
-	 * d�cimale).
+	 * Multiplicateur de décimales pour l'affichage d'un km (10 pour une
+	 * décimale).
 	 */
 	private static final double MULTI_DECIMALES_FOR_KM = 10;
 	/**
-	 * Num�ro de la station.
+	 * Numéro de la station.
 	 */
 	private String number;
 	/**
@@ -57,7 +60,7 @@ public class Station implements Serializable {
 	 */
 	private int slotsavailable;
 	/**
-	 * V�los libres.
+	 * Vélos libres.
 	 */
 	private int bikesavailable;
 	/**
@@ -69,11 +72,11 @@ public class Station implements Serializable {
 	 */
 	private String district;
 	/**
-	 * Date de derni�re mise � jour.
+	 * Date de dernière mise à jour.
 	 */
 	private String lastupdate;
 	/**
-	 * Distance � la position courante. Calcul�e par la m�thode
+	 * Distance à la position courante. Calculée par la méthode
 	 * {@link Station#calculDistance(Location)}.
 	 */
 	private Integer distance = null;
@@ -94,7 +97,7 @@ public class Station implements Serializable {
 	/**
 	 * Format la distance.
 	 *
-	 * @return la distance formatt�e.
+	 * @return la distance formattée.
 	 */
 	public final String formatDistance() {
 		if (distance == null) {
@@ -103,7 +106,7 @@ public class Station implements Serializable {
 		if (distance < NB_METRES_BY_KM) {
 			return distance + "m";
 		} else {
-			final double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM - MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
+			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM * MULTI_DECIMALES_FOR_KM)) * MULTI_DECIMALES_FOR_KM;
 			return distanceKm + "km";
 		}
 	}
@@ -127,7 +130,7 @@ public class Station implements Serializable {
 	/**
 	 * Getter.
 	 *
-	 * @return la distance � la position courante.
+	 * @return la distance à la position courante.
 	 */
 	public final Integer getDistance() {
 		return distance;
@@ -145,7 +148,7 @@ public class Station implements Serializable {
 	/**
 	 * Getter.
 	 *
-	 * @return la date de derni�re mise � jour.
+	 * @return la date de dernière mise à jour.
 	 */
 	public final String getLastupdate() {
 		return lastupdate;
@@ -181,7 +184,7 @@ public class Station implements Serializable {
 	/**
 	 * Getter.
 	 *
-	 * @return num�ro de la station.
+	 * @return numéro de la station.
 	 */
 	public final String getNumber() {
 		return number;
@@ -208,7 +211,7 @@ public class Station implements Serializable {
 	/**
 	 * Getter.
 	 *
-	 * @return �tat de la station.
+	 * @return état de la station.
 	 */
 	public final boolean getState() {
 		return state;
@@ -224,7 +227,7 @@ public class Station implements Serializable {
 	/**
 	 * Setter.
 	 *
-	 * @param pBikesavailable nombre de v�los libres.
+	 * @param pBikesavailable nombre de vélos libres.
 	 */
 	public final void setBikesavailable(final int pBikesavailable) {
 		bikesavailable = pBikesavailable;
@@ -246,7 +249,7 @@ public class Station implements Serializable {
 	/**
 	 * Setter.
 	 *
-	 * @param pLastupdate la date de derni�re mise � jour.
+	 * @param pLastupdate la date de dernière mise à jour.
 	 */
 	public final void setLastupdate(final String pLastupdate) {
 		lastupdate = pLastupdate;
@@ -282,7 +285,7 @@ public class Station implements Serializable {
 	/**
 	 * Setter.
 	 *
-	 * @param pNumber le num�ro de la station.
+	 * @param pNumber le numéro de la station.
 	 */
 	public final void setNumber(final String pNumber) {
 		number = pNumber;
@@ -309,7 +312,7 @@ public class Station implements Serializable {
 	/**
 	 * Setter.
 	 *
-	 * @param pState �tat de la station.
+	 * @param pState état de la station.
 	 */
 	public final void setState(final boolean pState) {
 		state = pState;
