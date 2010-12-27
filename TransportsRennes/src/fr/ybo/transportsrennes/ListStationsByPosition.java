@@ -3,17 +3,21 @@ package fr.ybo.transportsrennes;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.KeyEvent;
+import android.view.View;
+import android.widget.*;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
+import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -43,7 +47,8 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 	/**
 	 * Liste des stations.
 	 */
-	private List<Station> stations;
+	private List<Station> stations = new ArrayList<Station>();
+	private List<Station> stationsFiltrees = new ArrayList<Station>();
 
 	private Location lastLocation = null;
 
@@ -128,22 +133,69 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 
 	private ProgressDialog myProgressDialog;
 
+	@SuppressWarnings("unchecked")
+	private void metterAJourListeStations() {
+		String query = editText.getText().toString().toUpperCase();
+		stationsFiltrees.clear();
+		for (Station station : stations) {
+			if (station.getName().toUpperCase().contains(query)) {
+				stationsFiltrees.add(station);
+			}
+		}
+		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
+	}
+
+	private EditText editText;
+	private ListView listView;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.liste);
+		setContentView(R.layout.liststations);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stationsFiltrees));
+		listView = getListView();
+		editText = (EditText) findViewById(R.id.liststations_input);
+		editText.setOnKeyListener(new View.OnKeyListener() {
+			public boolean onKey(View view, int keyCode, KeyEvent event) {
+				LOG_YBO.debug("onKey : event = " + event);
+				if (KeyEvent.ACTION_DOWN == event.getAction() && KeyEvent.KEYCODE_ENTER == keyCode) {
+					return true;
+				}
+				if (KeyEvent.ACTION_UP == event.getAction()) {
+					metterAJourListeStations();
+				}
+				return false;
+			}
+		});
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				VeloAdapter veloAdapter = (VeloAdapter) ((ListView) adapterView).getAdapter();
+				Station station = veloAdapter.getItem(position);
+				String _lat = Double.toString(station.getLatitude());
+				String _lon = Double.toString(station.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + _lat + "," + _lon);
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+			}
+		});
 
-		stations = new ArrayList<Station>();
-		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stations));
-		ListView lv = getListView();
-		lv.setTextFilterEnabled(true);
+		listView.setTextFilterEnabled(true);
 		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 		new AsyncTask<Void, Void, Void>() {
 
+			private boolean erreur = false;
+
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				stations.addAll(keolis.getStations());
+				try {
+					stations = keolis.getStations();
+					stationsFiltrees.clear();
+					stationsFiltrees.addAll(stations);
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
+					erreur = true;
+				}
+
 				return null;
 			}
 
@@ -151,9 +203,15 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
-				activeGps();
-				((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
+				if (!erreur) {
+					activeGps();
+					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+				} else {
+					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
+							Toast.LENGTH_LONG);
+					toast.show();
+				}
 			}
 		}.execute();
 	}
