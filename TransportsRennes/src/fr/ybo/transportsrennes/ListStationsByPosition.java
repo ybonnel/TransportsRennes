@@ -1,22 +1,23 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
-import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -74,7 +75,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 			for (Station station : stations) {
 				station.calculDistance(location);
 			}
-			//Collections.sort(stations, new ComparatorStationDistance());
+			Collections.sort(stations, new Station.ComparatorDistance());
 			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 		}
 	}
@@ -125,29 +126,35 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 		desactiveGps();
 	}
 
+	private ProgressDialog myProgressDialog;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		try {
-			try {
-				stations = keolis.getStations();
 
-			} catch (ErreurKeolis erreurKeolis) {
-				LOG_YBO.erreur("Erreur lors de l'appel à keolis", erreurKeolis);
-				Toast.makeText(this, erreurKeolis.getMessage(), Toast.LENGTH_LONG).show();
-				stations = new ArrayList<Station>();
+		stations = new ArrayList<Station>();
+		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stations));
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+				stations.addAll(keolis.getStations());
+				return null;
 			}
-			setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stations));
-			activeGps();
-			ListView lv = getListView();
-			lv.setTextFilterEnabled(true);
-		} catch (Exception exception) {
 
-			LOG_YBO.erreur("Erreur non prévue", exception);
-			Toast.makeText(this, "Oups, erreur non prévue, regardez les logs...", Toast.LENGTH_LONG).show();
-			stations = new ArrayList<Station>();
-		}
+			@Override
+			@SuppressWarnings("unchecked")
+			protected void onPostExecute(final Void pResult) {
+				super.onPostExecute(pResult);
+				activeGps();
+				((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+				myProgressDialog.dismiss();
+			}
+		}.execute();
 	}
 }

@@ -1,9 +1,9 @@
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
 import android.location.Location;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Classe représentant une station de velo star.
@@ -12,7 +12,15 @@ import java.io.Serializable;
  */
 public class Station implements Serializable {
 
-	private static final LogYbo LOG_YBO = new LogYbo(Station.class);
+	public static class ComparatorDistance implements Comparator<Station> {
+
+		public int compare(Station o1, Station o2) {
+			if (o1 == null || o2 == null || o1.getDistance() == null || o2.getDistance() == null) {
+				return 0;
+			}
+			return o1.getDistance().compareTo(o2.getDistance());
+		}
+	}
 
 	/**
 	 * Serial.
@@ -106,7 +114,7 @@ public class Station implements Serializable {
 		if (distance < NB_METRES_BY_KM) {
 			return distance + "m";
 		} else {
-			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM * MULTI_DECIMALES_FOR_KM)) * MULTI_DECIMALES_FOR_KM;
+			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
 			return distanceKm + "km";
 		}
 	}

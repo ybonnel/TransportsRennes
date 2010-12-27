@@ -14,6 +14,7 @@
         données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?
     </string>
     <string name="infoChargementGtfs">Chargement des données de bus...</string>
+    <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
 
     <string name="btn_velo">VeloStar</string>
     <string name="btn_bus">Bus</string>

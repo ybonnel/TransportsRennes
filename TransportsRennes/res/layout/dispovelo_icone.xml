@@ -12,8 +12,6 @@
     <TextView android:layout_height="match_parent"
               android:layout_width="match_parent"
               android:id="@+id/dispovelo_text"
-              android:layout_x="0dip"
-              android:layout_y="3dip"
               android:paddingTop="28dip"
               android:textSize="12dip"
               android:gravity="center"

@@ -16,6 +16,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -123,9 +124,9 @@ public final class Keolis {
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	@SuppressWarnings("unchecked")
-	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler)
-			throws ErreurKeolis {
+	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler) throws ErreurKeolis {
 		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + "'");
+		long startTime = System.nanoTime() / 1000;
 		final HttpClient httpClient = new DefaultHttpClient();
 		final HttpPost httpPost = new HttpPost(url);
 		Answer<?> answer;
@@ -143,6 +144,8 @@ public final class Keolis {
 		if (!"0".equals(answer.getStatus().getCode())) {
 			throw new ErreurKeolis(answer.getStatus().getMessage());
 		}
+		long elapsedTime = (System.nanoTime() / 1000) - startTime;
+		LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
 		return (List<ObjetKeolis>) answer.getData();
 	}
 
@@ -302,7 +305,11 @@ public final class Keolis {
 		final StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
 		for (final ParametreUrl param : params) {
 
-			stringBuilder.append("&param[").append(param.getName()).append("]=").append(URLEncoder.encode(param.getValue()));
+			try {
+				stringBuilder.append("&param[").append(param.getName()).append("]=").append(URLEncoder.encode(param.getValue(), "utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				throw new ErreurKeolis("Erreur lors de la construction de l'URL", e);
+			}
 		}
 		return stringBuilder.toString();
 	}
