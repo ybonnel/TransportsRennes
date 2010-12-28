@@ -118,22 +118,17 @@ public class ListArret extends ListActivity {
 	}
 
 	@Override
-	public boolean onContextItemSelected(final MenuItem item) {
-		try {
-			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-			switch (item.getItemId()) {
-				case R.id.ajoutFavori:
-					ajoutFavori((Cursor) getListAdapter().getItem(info.position));
-					return true;
-				case R.id.supprimerFavori:
-					supprimeFavori((Cursor) getListAdapter().getItem(info.position));
-					return true;
-				default:
-					return super.onOptionsItemSelected(item);
-			}
-		} catch (final DataBaseException exception) {
-			exception.printStackTrace();
-			return false;
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		switch (item.getItemId()) {
+			case R.id.ajoutFavori:
+				ajoutFavori((Cursor) getListAdapter().getItem(info.position));
+				return true;
+			case R.id.supprimerFavori:
+				supprimeFavori((Cursor) getListAdapter().getItem(info.position));
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 

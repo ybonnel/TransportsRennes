@@ -34,6 +34,10 @@ public class FavoriAdapter extends BaseAdapter {
 		this.favoris = favoris;
 	}
 
+	public List<ArretFavori> getFavoris() {
+		return favoris;
+	}
+
 	public int getCount() {
 		return favoris.size();
 	}
