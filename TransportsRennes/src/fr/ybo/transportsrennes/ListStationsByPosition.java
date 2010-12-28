@@ -14,6 +14,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
@@ -230,5 +232,68 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 				}
 			}
 		}.execute();
+	}
+
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_REFRESH = Menu.FIRST;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
+		item.setIcon(android.R.drawable.ic_menu_rotate);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		switch (item.getItemId()) {
+			case MENU_REFRESH:
+				myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
+				new AsyncTask<Void, Void, Void>() {
+
+					private boolean erreur = false;
+
+					@Override
+					protected Void doInBackground(final Void... pParams) {
+						try {
+							stations = keolis.getStations();
+							Collections.sort(stations, new Comparator<Station>() {
+								public int compare(Station o1, Station o2) {
+									return o1.getName().compareToIgnoreCase(o2.getName());
+								}
+							});
+							stationsFiltrees.clear();
+							stationsFiltrees.addAll(stations);
+						} catch (Exception exception) {
+							LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
+							erreur = true;
+						}
+
+						return null;
+					}
+
+					@Override
+					@SuppressWarnings("unchecked")
+					protected void onPostExecute(final Void pResult) {
+						super.onPostExecute(pResult);
+						myProgressDialog.dismiss();
+						if (!erreur) {
+							metterAJourListeStations();
+							mettreAjoutLoc(lastLocation);
+							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+						} else {
+							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
+									Toast.LENGTH_LONG);
+							toast.show();
+						}
+					}
+				}.execute();
+				return true;
+		}
+		return false;
 	}
 }
