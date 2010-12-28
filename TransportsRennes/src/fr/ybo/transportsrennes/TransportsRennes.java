@@ -67,9 +67,17 @@ public class TransportsRennes extends Activity {
 		startActivity(intent);
 	}
 
+	public void onBusGpsClick(View view) {
+		// TODO à faire.
+	}
+
 	public void onVeloClick(View view) {
 		Intent intent = new Intent(this, ListStationsByPosition.class);
 		startActivity(intent);
+	}
+
+	public void onVeloFavoriClick(View view) {
+		// TODO à faire.
 	}
 
 

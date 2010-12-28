@@ -18,8 +18,10 @@
     <string name="dialogRequeteAlerts">Interrogation de la Star...</string>
 
     <string name="btn_velo">VeloStar</string>
+    <string name="btn_velo_favori">Stations favorites</string>
     <string name="btn_bus">Bus</string>
     <string name="btn_bus_favori">Arrêts Favoris</string>
+    <string name="btn_bus_gps">Arrêts par position</string>
     <string name="btn_alert">Alertes</string>
 
     <string name="menu_prochainArrets">Prochaines horaires</string>
