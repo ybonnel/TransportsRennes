@@ -83,7 +83,8 @@ public class ListArret extends ListActivity {
 	}
 
 	private void construireCursor() {
-		final StringBuilder requete = new StringBuilder();
+		closeCurrentCursor();
+		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" ArretRoute.direction as direction ");
 		requete.append("from ArretRoute, Arret ");
