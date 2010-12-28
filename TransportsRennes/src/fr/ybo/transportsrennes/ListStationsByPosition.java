@@ -2,6 +2,7 @@ package fr.ybo.transportsrennes;
 
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -178,7 +179,12 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 				String _lat = Double.toString(station.getLatitude());
 				String _lon = Double.toString(station.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + _lat + "," + _lon);
-				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException noGoogleMapsException) {
+					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
+					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 
