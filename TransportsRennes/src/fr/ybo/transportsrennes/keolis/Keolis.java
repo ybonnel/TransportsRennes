@@ -279,7 +279,7 @@ public final class Keolis {
 	 */
 	public List<Station> getStationByNumbers(List<String> numbers) {
 		List<Station> stations = new ArrayList<Station>();
-		if (numbers.size() <= 5) {
+		if (numbers.size() <= 2) {
 			for (String number : numbers) {
 				stations.add(getStationByNumber(number));
 			}

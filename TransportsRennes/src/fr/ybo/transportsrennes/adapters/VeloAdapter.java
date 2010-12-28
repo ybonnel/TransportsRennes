@@ -18,6 +18,10 @@ import java.util.List;
  */
 public class VeloAdapter extends ArrayAdapter<Station> {
 
+	public List<Station> getStations() {
+		return stations;
+	}
+
 	private List<Station> stations;
 
 	private static final double SEUIL_ROUGE = 0.25;

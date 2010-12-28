@@ -11,17 +11,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".BusRennes"/>
-        <activity android:name=".ListAlerts"></activity>
-        <activity android:name=".DetailAlert"></activity>
-        <activity android:name=".ListArret"></activity>
-        <activity android:name=".DetailArret"></activity>
-        <activity android:name=".ListFavoris"></activity>
-        <activity android:name=".ListStationsByPosition"></activity>
+        <activity android:name=".ListAlerts"/>
+        <activity android:name=".DetailAlert"/>
+        <activity android:name=".ListArret"/>
+        <activity android:name=".DetailArret"/>
+        <activity android:name=".ListFavoris"/>
+        <activity android:name=".ListStationsByPosition"/>
+        <activity android:name=".ListStationsFavoris"/>
     </application>
     <uses-sdk android:minSdkVersion="3"
               android:targetSdkVersion="8"
               android:maxSdkVersion="9"/>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>

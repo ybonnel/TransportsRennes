@@ -27,8 +27,10 @@ public class TransportsRennes extends Activity {
 		setContentView(R.layout.main);
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
 		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
-		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
+		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
 		Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
+		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
+		Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
 		btnBus.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onBusClick(view);
@@ -39,14 +41,24 @@ public class TransportsRennes extends Activity {
 				onBusFavoriClick(view);
 			}
 		});
-		btnVeloStar.setOnClickListener(new View.OnClickListener() {
+		btnBusGps.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				onVeloClick(view);
+				onBusGpsClick(view);
 			}
 		});
 		btnAlert.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onAlertClick(view);
+			}
+		});
+		btnVeloStar.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onVeloClick(view);
+			}
+		});
+		btnVeloFavori.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onVeloFavoriClick(view);
 			}
 		});
 		verifierUpgrade();
@@ -77,7 +89,8 @@ public class TransportsRennes extends Activity {
 	}
 
 	public void onVeloFavoriClick(View view) {
-		// TODO à faire.
+		Intent intent = new Intent(this, ListStationsFavoris.class);
+		startActivity(intent);
 	}
 
 
