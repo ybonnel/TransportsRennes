@@ -174,11 +174,17 @@ public class DetailArret extends ListActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
+	protected void onPause() {
 		closeCurrentCursor();
-		super.onDestroy();
+		super.onPause();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setListAdapter(construireAdapter(calendar));
+		getListView().invalidate();
+	}
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ALL_STOPS = Menu.FIRST;

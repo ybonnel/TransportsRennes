@@ -20,8 +20,8 @@ public class Table {
 	private Constructor<?> constructor;
 
 	protected Table(final Class<?> clazz) throws DataBaseException {
-		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Table table = clazz
-				.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Table.class);
+		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Table table =
+				clazz.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Table.class);
 		if (table == null) {
 			throw new DataBaseException("La classe " + clazz.getSimpleName() + " ne contient pas l'annoation @Table");
 		}
@@ -181,12 +181,12 @@ public class Table {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <Entite> List<Entite> select(final SQLiteDatabase db, final Entite entite, final String selectionPlus,
-	                                       final List<String> selectArgsPlus, final String orderBy) throws DataBaseException {
-		final List<Entite> entites = new ArrayList<Entite>();
-		final StringBuilder whereClause = new StringBuilder();
-		final List<String> selectionArgsList = new ArrayList<String>();
-		for (final Colonne colonne : colonnes) {
+	protected <Entite> List<Entite> select(SQLiteDatabase db, Entite entite, String selectionPlus, List<String> selectArgsPlus, String orderBy)
+			throws DataBaseException {
+		List<Entite> entites = new ArrayList<Entite>();
+		StringBuilder whereClause = new StringBuilder();
+		List<String> selectionArgsList = new ArrayList<String>();
+		for (Colonne colonne : colonnes) {
 			colonne.appendWhereIfNotNull(whereClause, entite, selectionArgsList);
 		}
 		if (selectionPlus != null) {
@@ -194,16 +194,16 @@ public class Table {
 			whereClause.append(selectionPlus);
 			whereClause.append(')');
 		}
-		final String selection = whereClause.length() > 0 ? whereClause.toString() : null;
+		String selection = whereClause.length() > 0 ? whereClause.toString() : null;
 		if (selectArgsPlus != null) {
 			selectionArgsList.addAll(selectArgsPlus);
 		}
-		final String[] selectionArgs = selection == null ? null : selectionArgsList.toArray(new String[selectionArgsList.size()]);
-		final Cursor cursor = db.query(name, getColumns(), selection, selectionArgs, null, null, orderBy);
+		String[] selectionArgs = selection == null ? null : selectionArgsList.toArray(new String[selectionArgsList.size()]);
+		Cursor cursor = db.query(name, getColumns(), selection, selectionArgs, null, null, orderBy);
 		Entite newEntite;
 		while (cursor.moveToNext()) {
 			newEntite = (Entite) getNewEntite();
-			for (final Colonne colonne : colonnes) {
+			for (Colonne colonne : colonnes) {
 				colonne.remplirEntite(cursor, newEntite);
 			}
 			entites.add(newEntite);

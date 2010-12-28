@@ -53,6 +53,9 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 	private Location lastLocation = null;
 
 	private String printLocaltion(Location location) {
+		if (location == null) {
+			return "null";
+		}
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Localtion[provider : ");
 		stringBuilder.append(location.getProvider());

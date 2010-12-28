@@ -64,6 +64,7 @@ public class DetailAlert extends Activity {
 			while (cursor.moveToNext()) {
 				arretsToBold.add(cursor.getString(0));
 			}
+			cursor.close();
 		}
 		((TextView) findViewById(R.id.detailAlert_Detail)).setText(Html.fromHtml(alert.getDetailFormatte(arretsToBold)));
 	}

@@ -16,7 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -33,15 +32,19 @@ public class ListArret extends ListActivity {
 
 	private final static Class<?> classDrawable = R.drawable.class;
 
-	private static final LogYbo LOG_YBO = new LogYbo(ListArret.class);
+	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
 	private ProgressDialog myProgressDialog;
-
-	private DataBaseHelper dataBaseHelper = null;
 
 	private Route myRoute;
 
 	private Cursor currentCursor;
+
+	private void closeCurrentCursor() {
+		if (currentCursor != null && !currentCursor.isClosed()) {
+			currentCursor.close();
+		}
+	}
 
 	private void ajoutFavori(final Cursor cursor) throws DataBaseException {
 		final ArretFavori arretFavori = new ArretFavori();
@@ -52,7 +55,7 @@ public class ListArret extends ListActivity {
 		arretFavori.setRouteNomCourt(myRoute.getNomCourt());
 		arretFavori.setRouteNomLong(myRoute.getNomLong());
 		LOG_YBO.debug("Ajout du favori " + arretFavori.getStopId());
-		getDataBaseHelper().insert(arretFavori);
+		BusRennesApplication.getDataBaseHelper().insert(arretFavori);
 	}
 
 	private void chargerRoute() {
@@ -79,7 +82,7 @@ public class ListArret extends ListActivity {
 
 	}
 
-	private void construireListe() {
+	private void construireCursor() {
 		final StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" ArretRoute.direction as direction ");
@@ -90,9 +93,12 @@ public class ListArret extends ListActivity {
 		requete.append(" order by ArretRoute.direction, Arret.nom;");
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
-		currentCursor = getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
+		currentCursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
+	}
 
+	private void construireListe() {
+		construireCursor();
 		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor, myRoute));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -109,13 +115,6 @@ public class ListArret extends ListActivity {
 		});
 		lv.setTextFilterEnabled(true);
 		registerForContextMenu(lv);
-	}
-
-	private DataBaseHelper getDataBaseHelper() {
-		if (dataBaseHelper == null) {
-			dataBaseHelper = BusRennesApplication.getDataBaseHelper();
-		}
-		return dataBaseHelper;
 	}
 
 	@Override
@@ -165,11 +164,7 @@ public class ListArret extends ListActivity {
 		}
 		final Route routeTmp = new Route();
 		routeTmp.setId(myRoute.getId());
-		try {
-			myRoute = getDataBaseHelper().selectSingle(routeTmp);
-		} catch (final DataBaseException e1) {
-			e1.printStackTrace();
-		}
+		myRoute = BusRennesApplication.getDataBaseHelper().selectSingle(routeTmp);
 		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
 			chargerRoute();
 		} else {
@@ -178,20 +173,16 @@ public class ListArret extends ListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			final Cursor cursor = (Cursor) getListAdapter().getItem(info.position);
-			final String idArret = cursor.getString(cursor.getColumnIndex("_id"));
-			final String nomArret = cursor.getString(cursor.getColumnIndex("arretName"));
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			Cursor cursor = (Cursor) getListAdapter().getItem(info.position);
+			String idArret = cursor.getString(cursor.getColumnIndex("_id"));
+			String nomArret = cursor.getString(cursor.getColumnIndex("arretName"));
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.setStopId(idArret);
-			try {
-				arretFavori = getDataBaseHelper().selectSingle(arretFavori);
-			} catch (final DataBaseException e) {
-				e.printStackTrace();
-			}
+			arretFavori = BusRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(nomArret);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
@@ -199,17 +190,23 @@ public class ListArret extends ListActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		if (currentCursor != null && !currentCursor.isClosed()) {
-			currentCursor.close();
-		}
-		super.onDestroy();
+	protected void onPause() {
+		closeCurrentCursor();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		construireCursor();
+		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor, myRoute));
+		getListView().invalidate();
 	}
 
 	private void supprimeFavori(final Cursor cursor) throws DataBaseException {
 		final ArretFavori arretFavori = new ArretFavori();
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
 		LOG_YBO.debug("Suppression du favori " + arretFavori.getStopId());
-		getDataBaseHelper().delete(arretFavori);
+		BusRennesApplication.getDataBaseHelper().delete(arretFavori);
 	}
 }
