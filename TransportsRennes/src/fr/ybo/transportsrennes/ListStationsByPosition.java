@@ -12,7 +12,8 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
@@ -23,6 +24,7 @@ import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -161,16 +163,15 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stationsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.liststations_input);
-		editText.setOnKeyListener(new View.OnKeyListener() {
-			public boolean onKey(View view, int keyCode, KeyEvent event) {
-				LOG_YBO.debug("onKey : event = " + event);
-				if (KeyEvent.ACTION_DOWN == event.getAction() && KeyEvent.KEYCODE_ENTER == keyCode) {
-					return true;
-				}
-				if (KeyEvent.ACTION_UP == event.getAction()) {
-					metterAJourListeStations();
-				}
-				return false;
+		editText.addTextChangedListener(new TextWatcher() {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			}
+
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			}
+
+			public void afterTextChanged(Editable editable) {
+				metterAJourListeStations();
 			}
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -199,6 +200,11 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 			protected Void doInBackground(final Void... pParams) {
 				try {
 					stations = keolis.getStations();
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.getName().compareToIgnoreCase(o2.getName());
+						}
+					});
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				} catch (Exception exception) {
