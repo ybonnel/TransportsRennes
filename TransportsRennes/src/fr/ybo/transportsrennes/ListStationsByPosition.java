@@ -85,6 +85,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 				station.calculDistance(location);
 			}
 			Collections.sort(stations, new Station.ComparatorDistance());
+			Collections.sort(stationsFiltrees, new Station.ComparatorDistance());
 			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 		}
 	}
