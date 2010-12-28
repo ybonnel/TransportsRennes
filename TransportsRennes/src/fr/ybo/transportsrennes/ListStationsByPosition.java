@@ -14,12 +14,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -193,6 +195,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 		});
 
 		listView.setTextFilterEnabled(true);
+		registerForContextMenu(listView);
 		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 		new AsyncTask<Void, Void, Void>() {
 
@@ -295,5 +298,44 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 				return true;
 		}
 		return false;
+	}
+
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v.getId() == android.R.id.list) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			Station station = (Station) getListAdapter().getItem(info.position);
+			VeloFavori veloFavori = new VeloFavori();
+			veloFavori.setNumber(station.getNumber());
+			veloFavori = BusRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
+			menu.setHeaderTitle(Formatteur.formatterChaine(station.getName()));
+			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
+					veloFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
+		}
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		Station station;
+		VeloFavori veloFavori;
+		switch (item.getItemId()) {
+			case R.id.ajoutFavori:
+				station = (Station) getListAdapter().getItem(info.position);
+				veloFavori = new VeloFavori();
+				veloFavori.setNumber(station.getNumber());
+				BusRennesApplication.getDataBaseHelper().insert(veloFavori);
+				return true;
+			case R.id.supprimerFavori:
+				station = (Station) getListAdapter().getItem(info.position);
+				veloFavori = new VeloFavori();
+				veloFavori.setNumber(station.getNumber());
+				BusRennesApplication.getDataBaseHelper().delete(veloFavori);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 }

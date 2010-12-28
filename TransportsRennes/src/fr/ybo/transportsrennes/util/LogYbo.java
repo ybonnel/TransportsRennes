@@ -19,4 +19,8 @@ public class LogYbo {
 		Log.e(tag, message, throwable);
 	}
 
+	public void warn(String message) {
+		Log.w(tag, message);
+	}
+
 }

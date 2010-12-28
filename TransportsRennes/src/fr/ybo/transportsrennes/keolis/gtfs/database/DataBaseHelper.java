@@ -4,14 +4,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
+
+	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	public static final String DATABASE_NAME = "keolis.db";
-	public static final int DATABASE_VERSION = 1;
+	public static final int DATABASE_VERSION = 2;
 
 	private final Base base;
 
@@ -63,11 +66,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
-		Log.w(this.getClass().getSimpleName(),
-				"Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
-		base.dropDataBase(db);
-		base.createDataBase(db);
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		if (oldVersion == 1 && newVersion == 2) {
+			LOG_YBO.debug("Mise a jour de la base de la version " + oldVersion + " a " + newVersion + ", ajout de la table VeloFavori");
+			base.getTable(VeloFavori.class).createTable(db);
+		} else {
+			LOG_YBO.warn(
+					"Mise a jour de la base de la version " + oldVersion + " a " + newVersion + "non prevue, la base va etre supprimee et recreer");
+			base.dropDataBase(db);
+			base.createDataBase(db);
+		}
 	}
 
 	public <Entite> List<Entite> select(final Entite entite) throws DataBaseException {

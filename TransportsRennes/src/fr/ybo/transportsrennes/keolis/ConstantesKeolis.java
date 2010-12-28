@@ -17,6 +17,7 @@ public class ConstantesKeolis {
 		LIST_CLASSES_DATABASE.add(HeuresArrets.class);
 		LIST_CLASSES_DATABASE.add(ArretFavori.class);
 		LIST_CLASSES_DATABASE.add(ArretRoute.class);
+		LIST_CLASSES_DATABASE.add(VeloFavori.class);
 	}
 
 	public static final List<Class<?>> LIST_CLASSES_GTFS = new ArrayList<Class<?>>();
