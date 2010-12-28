@@ -174,16 +174,9 @@ public class DetailArret extends ListActivity {
 	}
 
 	@Override
-	protected void onPause() {
+	protected void onDestroy() {
 		closeCurrentCursor();
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setListAdapter(construireAdapter(calendar));
-		getListView().invalidate();
 	}
 
 	private static final int GROUP_ID = 0;

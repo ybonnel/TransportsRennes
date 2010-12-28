@@ -60,8 +60,7 @@ public class ListArret extends ListActivity {
 
 	private void chargerRoute() {
 
-		myProgressDialog =
-				ProgressDialog.show(ListArret.this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
+		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -73,12 +72,12 @@ public class ListArret extends ListActivity {
 
 			@Override
 			protected void onPostExecute(final Void result) {
+				super.onPostExecute(result);
 				construireListe();
 				myProgressDialog.dismiss();
-
 			}
 
-		}.execute((Void[]) null);
+		}.execute();
 
 	}
 
@@ -191,17 +190,9 @@ public class ListArret extends ListActivity {
 	}
 
 	@Override
-	protected void onPause() {
+	protected void onDestroy() {
 		closeCurrentCursor();
 		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		construireCursor();
-		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor, myRoute));
-		getListView().invalidate();
 	}
 
 	private void supprimeFavori(final Cursor cursor) throws DataBaseException {
