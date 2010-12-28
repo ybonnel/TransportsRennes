@@ -19,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -256,16 +257,40 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel aux API Keolis pour récupérer les stations associées à un
-	 * districts.
+	 * Appel aux API Keolis pour récupérer une station à partir de son number.
 	 *
-	 * @param district le districs.
-	 * @return la liste des stations.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
+	 * @param number numéro de la station.
+	 * @return la station.
 	 */
-	public List<Station> getStationByDistrict(final District district) throws ErreurKeolis {
-		final ParametreUrl[] params = {new ParametreUrl("request", "district"), new ParametreUrl("value", district.getName())};
-		return getStation(getUrl(COMMANDE_STATIONS, params));
+	public Station getStationByNumber(String number) {
+		ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
+		List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
+		if (stations.isEmpty()) {
+			return null;
+		}
+		return stations.get(0);
+	}
+
+	/**
+	 * Appel aux API Keolis pour récupérer les stations à partir de leurs numéros.
+	 *
+	 * @param numbers numéros des stations.
+	 * @return la station.
+	 */
+	public List<Station> getStationByNumbers(List<String> numbers) {
+		List<Station> stations = new ArrayList<Station>();
+		if (numbers.size() <= 5) {
+			for (String number : numbers) {
+				stations.add(getStationByNumber(number));
+			}
+		} else {
+			for (Station station : getStations()) {
+				if (numbers.contains(station.getNumber())) {
+					stations.add(station);
+				}
+			}
+		}
+		return stations;
 	}
 
 	/**
