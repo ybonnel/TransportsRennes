@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
@@ -24,6 +25,30 @@ public class TransportsRennes extends Activity {
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.main);
+		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
+		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
+		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
+		Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
+		btnBus.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onBusClick(view);
+			}
+		});
+		btnBusFavori.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onBusFavoriClick(view);
+			}
+		});
+		btnVeloStar.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onVeloClick(view);
+			}
+		});
+		btnAlert.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onAlertClick(view);
+			}
+		});
 		verifierUpgrade();
 	}
 
