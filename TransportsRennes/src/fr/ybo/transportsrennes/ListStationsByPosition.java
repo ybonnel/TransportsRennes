@@ -149,7 +149,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 		String query = editText.getText().toString().toUpperCase();
 		stationsFiltrees.clear();
 		for (Station station : stations) {
-			if (station.getName().toUpperCase().contains(query)) {
+			if (station.getName().toUpperCase().contains(query.toUpperCase())) {
 				stationsFiltrees.add(station);
 			}
 		}

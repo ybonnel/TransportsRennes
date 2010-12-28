@@ -3,12 +3,17 @@ package fr.ybo.transportsrennes;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.Formatteur;
@@ -162,8 +167,25 @@ public class DetailArret extends ListActivity {
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		gestionViewsTitle();
+		ImageView imageGoogleMap = (ImageView) findViewById(R.id.googlemap);
+		imageGoogleMap.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Arret arret = new Arret();
+				arret.setId(favori.getStopId());
+				arret = BusRennesApplication.getDataBaseHelper().selectSingle(arret);
+				String _lat = Double.toString(arret.getLatitude());
+				String _lon = Double.toString(arret.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(favori.getNomArret()) + "+@" + _lat + "," + _lon);
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException noGoogleMapsException) {
+					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
+					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 		setListAdapter(construireAdapter(calendar));
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 	}
 
