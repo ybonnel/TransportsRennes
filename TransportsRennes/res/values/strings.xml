@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Nom de l'application -->
-    <string name="app_name">Transports de Rennes</string>
+    <string name="app_name">Transports Rennes</string>
 
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
