@@ -326,9 +326,6 @@ public class GetAndContructZip {
 			route.setOrdre(ordre++);
 		}
 
-		System.out.println("Ecriture du fichier routes.txt");
-		moteurCsv.writeFile(new File(repertoire, "routes.txt"), routes, Route.class);
-
 
 		System.out.println("Ajout des informations complémentaires à arretRoute");
 		Map<String, Arret> mapArrets = new HashMap<String, Arret>();
@@ -380,6 +377,31 @@ public class GetAndContructZip {
 					}
 				}
 			}
+			int max = 0;
+			String chaineMax = null;
+			for (String stops : mapCompteurTrip.keySet()) {
+				if (stops.length() > max) {
+					chaineMax = stops;
+					max = chaineMax.length();
+				}
+			}
+			String[] stops = chaineMax.split(",");
+			String firstStop = stops[0];
+			String lastStop = null;
+			for (String stop : stops) {
+				if (stop != null && !"".equals(stop)) {
+					lastStop = stop;
+				}
+			}
+			for (Route route : routes) {
+				if (route.getId().equals(routeId)) {
+					List<String> listStops = new ArrayList<String>();
+					listStops.add(mapArrets.get(firstStop).getNom());
+					listStops.add(mapArrets.get(lastStop).getNom());
+					Collections.sort(listStops);
+					route.setNomLong(listStops.get(0) + " - " + listStops.get(1));
+				}
+			}
 			System.out.println("Compte de la route " + routeId);
 			for (Map.Entry<String, Integer> entry : mapCompteurTrip.entrySet()) {
 				System.out.println(entry.getValue() + " : " + entry.getKey());
@@ -407,6 +429,10 @@ public class GetAndContructZip {
 						arretRoute.getArretId() + ",direction=" + arretRoute.getDirection() + ",sequence=" + arretRoute.getSequence() + "]");
 			}
 		}
+
+
+		System.out.println("Ecriture du fichier routes.txt");
+		moteurCsv.writeFile(new File(repertoire, "routes.txt"), routes, Route.class);
 
 		System.out.println("Ecriture du fichier ArretRoute");
 		moteurCsv.writeFile(new File(repertoire, "arret_route.txt"), listeArretsRoutes, ArretRoute.class);

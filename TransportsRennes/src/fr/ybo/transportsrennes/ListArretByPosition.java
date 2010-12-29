@@ -121,7 +121,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 			}
 		}
 		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'allumer son GPS.", Toast.LENGTH_SHORT)
+			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'activer votre GPS.", Toast.LENGTH_SHORT)
 					.show();
 		}
 	}

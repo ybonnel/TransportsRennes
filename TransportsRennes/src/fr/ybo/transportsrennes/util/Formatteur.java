@@ -2,21 +2,15 @@ package fr.ybo.transportsrennes.util;
 
 public class Formatteur {
 
-	public static String formatterChaine(String chaine)
-	{
+	public static String formatterChaine(String chaine) {
 		StringBuilder nomLongFormateBuilder = new StringBuilder();
 		for (String champ : chaine.replaceAll("/", "-").split(" ")) {
-			for (String champ2 : champ.split("-")) {
-				for (String champ3 : champ2.split("\\(")) {
-					if (champ3.length() > 0) {
-						nomLongFormateBuilder.append(champ3.substring(0, 1).toUpperCase());
-						nomLongFormateBuilder.append(champ3.substring(1, champ3.length()).toLowerCase());
-					}
-					nomLongFormateBuilder.append('(');
+			for (String champ2 : champ.split("\\(")) {
+				if (champ2.length() > 0) {
+					nomLongFormateBuilder.append(champ2.substring(0, 1).toUpperCase());
+					nomLongFormateBuilder.append(champ2.substring(1, champ2.length()).toLowerCase());
 				}
-				// on enleve le dernier tiret.
-				nomLongFormateBuilder.deleteCharAt(nomLongFormateBuilder.length() - 1);
-				nomLongFormateBuilder.append('-');
+				nomLongFormateBuilder.append('(');
 			}
 			// on enleve le dernier tiret.
 			nomLongFormateBuilder.deleteCharAt(nomLongFormateBuilder.length() - 1);
