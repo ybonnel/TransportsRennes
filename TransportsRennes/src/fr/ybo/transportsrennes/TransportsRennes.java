@@ -80,7 +80,8 @@ public class TransportsRennes extends Activity {
 	}
 
 	public void onBusGpsClick(View view) {
-		// TODO à faire.
+		Intent intent = new Intent(this, ListArretByPosition.class);
+		startActivity(intent);
 	}
 
 	public void onVeloClick(View view) {

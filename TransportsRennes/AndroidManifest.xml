@@ -18,6 +18,7 @@
         <activity android:name=".ListFavoris"/>
         <activity android:name=".ListStationsByPosition"/>
         <activity android:name=".ListStationsFavoris"/>
+        <activity android:name=".ListArretByPosition"/>
     </application>
     <uses-sdk android:minSdkVersion="3"
               android:targetSdkVersion="8"
