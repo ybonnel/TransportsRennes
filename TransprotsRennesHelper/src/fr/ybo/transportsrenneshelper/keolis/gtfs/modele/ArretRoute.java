@@ -2,17 +2,21 @@ package fr.ybo.transportsrenneshelper.keolis.gtfs.modele;
 
 import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.keolis.gtfs.annotation.FichierCsv;
+import fr.ybo.transportsrenneshelper.keolis.gtfs.moteur.adapter.AdapterInteger;
 
 @FichierCsv("arret_route.txt")
 public class ArretRoute {
 	@BaliseCsv("stop_id")
 	private String arretId;
 
-	@BaliseCsv("stop_id")
+	@BaliseCsv("route_id")
 	private String routeId;
 
 	@BaliseCsv("direction")
 	private String direction;
+
+	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class)
+	private Integer sequence;
 
 	public String getArretId() {
 		return arretId;
@@ -38,4 +42,11 @@ public class ArretRoute {
 		this.routeId = routeId;
 	}
 
+	public void setSequence(Integer sequence) {
+		this.sequence = sequence;
+	}
+
+	public Integer getSequence() {
+		return sequence;
+	}
 }
