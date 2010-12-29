@@ -1,11 +1,12 @@
 package fr.ybo.transportsrennes.keolis;
 
 import fr.ybo.transportsrennes.keolis.modele.Answer;
-import fr.ybo.transportsrennes.keolis.modele.District;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
-import fr.ybo.transportsrennes.keolis.modele.bus.*;
+import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
-import fr.ybo.transportsrennes.keolis.xml.sax.*;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
 import fr.ybo.transportsrennes.util.LogYbo;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -17,7 +18,6 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +51,6 @@ public final class Keolis {
 	 */
 	private static final String KEY = "G7JE45LI1RK3W1P";
 	/**
-	 * Commande pour récupérer les districts.
-	 */
-	private static final String COMMANDE_DISTRICS = "getbikedistricts";
-	/**
 	 * Commande pour récupérer les stations.
 	 */
 	private static final String COMMANDE_STATIONS = "getbikestations";
@@ -62,42 +58,6 @@ public final class Keolis {
 	 * Commande pour récupérer les alerts.
 	 */
 	private static final String COMMANDE_ALERTS = "getlinesalerts";
-	/**
-	 * Commande pour récupérer les lignes.
-	 */
-	private static final String COMMANDE_LINES = "getlines";
-	/**
-	 * Commande pour récupérer les équipements.
-	 */
-	private static final String COMMANDE_EQUIPEMENTS = "getequipments";
-	/**
-	 * Commande pour récupérer les status des équipements.
-	 */
-	private static final String COMMANDE_EQUIPEMENTS_STATUS = "getequipmentsstatus";
-	/**
-	 * Commande pour récupérer les stations de métro.
-	 */
-	private static final String COMMANDE_METRO_STATION = "getmetrostations";
-	/**
-	 * Commande pour récupérer les status des stations de métros.
-	 */
-	private static final String COMMANDE_METRO_STATUS = "getmetrostationsstatus";
-	/**
-	 * Commande pour récupérer les Park relais.
-	 */
-	private static final String COMMANDE_PARK_RELAI = "getrelayparks";
-	/**
-	 * Commande pour récupérer les points de vente.
-	 */
-	private static final String COMMANDE_POS = "getpos";
-	/**
-	 * Commande pour récupérer les villes.
-	 */
-	private static final String COMMANDE_VILLE = "getcities";
-	/**
-	 * Commande pour récupérer les districts d'un ville.
-	 */
-	private static final String COMMANDE_VILLE_DISTRICT = "getcitydistricts";
 
 	/**
 	 * Retourne l'instance du singletton.
@@ -125,21 +85,21 @@ public final class Keolis {
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	@SuppressWarnings("unchecked")
-	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler) throws ErreurKeolis {
+	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler) {
 		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + "'");
 		long startTime = System.nanoTime() / 1000;
-		final HttpClient httpClient = new DefaultHttpClient();
-		final HttpPost httpPost = new HttpPost(url);
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpPost httpPost = new HttpPost(url);
 		Answer<?> answer;
 		try {
-			final HttpResponse reponse = httpClient.execute(httpPost);
-			final ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			HttpResponse reponse = httpClient.execute(httpPost);
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 			reponse.getEntity().writeTo(ostream);
-			final SAXParserFactory factory = SAXParserFactory.newInstance();
-			final SAXParser parser = factory.newSAXParser();
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(ostream.toByteArray()), handler);
 			answer = handler.getAnswer();
-		} catch (final Exception e) {
+		} catch (Exception e) {
 			throw new ErreurKeolis("Erreur lors de l'appel à getDistricts", e);
 		}
 		if (!"0".equals(answer.getStatus().getCode())) {
@@ -156,93 +116,8 @@ public final class Keolis {
 	 * @return les alertes.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	public List<Alert> getAlerts() throws ErreurKeolis {
+	public List<Alert> getAlerts() {
 		return appelKeolis(getUrl(COMMANDE_ALERTS), new GetAlertsHandler());
-	}
-
-	/**
-	 * Appel les API Keolis pour récupérer les districts.
-	 *
-	 * @return la liste des districts.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<District> getDistricts() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_DISTRICS), new GetDistrictHandler());
-	}
-
-	/**
-	 * @param ville la ville.
-	 * @return les districts d'une ville.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<District> getDistrictVilles(final String ville) throws ErreurKeolis {
-		final ParametreUrl[] params = {new ParametreUrl("city", ville)};
-		return appelKeolis(getUrl(COMMANDE_VILLE_DISTRICT, params), new GetDistrictHandler());
-	}
-
-	/**
-	 * @return les équipements.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<Equipement> getEquipments() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_EQUIPEMENTS), new GetEquipmentsHandler());
-	}
-
-	/**
-	 * @return les status des équipements.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<Status> getEquipmentsStatus() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_EQUIPEMENTS_STATUS), new GetStatusHandler());
-	}
-
-	/**
-	 * @return les lignes.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<Line> getLines() throws ErreurKeolis {
-		final GetLinesHandler handler = new GetLinesHandler();
-		final List<Line> lines = appelKeolis(getUrl(COMMANDE_LINES), handler);
-		try {
-			for (final Line line : lines) {
-				line.genereUrl(handler.getBaseUrl());
-			}
-		} catch (final MalformedURLException malformedURLException) {
-			throw new ErreurKeolis("Erreur lors de la construction de l'URL d'accés aux picto", malformedURLException);
-		}
-		return lines;
-	}
-
-	/**
-	 * @return les stations de métros.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<MetroStation> getMetroStations() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_METRO_STATION), new GetMetroStationHandler());
-	}
-
-	/**
-	 * @return les status des métros.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<Status> getMetroStatus() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_METRO_STATUS), new GetStatusHandler());
-	}
-
-	/**
-	 * @return les parks relais.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<ParkRelai> getParkRelais() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
-	}
-
-	/**
-	 * @return les points de ventes.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<PointDeVente> getPointDeVente() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
 	}
 
 	/**
@@ -252,7 +127,7 @@ public final class Keolis {
 	 * @return la liste des stations.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	private List<Station> getStation(final String url) throws ErreurKeolis {
+	private List<Station> getStation(String url) {
 		return appelKeolis(url, new GetStationHandler());
 	}
 
@@ -299,7 +174,7 @@ public final class Keolis {
 	 * @return la listes des stations.
 	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	public List<Station> getStations() throws ErreurKeolis {
+	public List<Station> getStations() {
 		return getStation(getUrl(COMMANDE_STATIONS));
 	}
 
@@ -310,8 +185,8 @@ public final class Keolis {
 	 * @param commande commande à exécuter.
 	 * @return l'url.
 	 */
-	private String getUrl(final String commande) {
-		final StringBuilder stringBuilder = new StringBuilder(URL);
+	private String getUrl(String commande) {
+		StringBuilder stringBuilder = new StringBuilder(URL);
 		stringBuilder.append("?version=").append(VERSION);
 		stringBuilder.append("&key=").append(KEY);
 		stringBuilder.append("&cmd=").append(commande);
@@ -326,9 +201,9 @@ public final class Keolis {
 	 * @param params   liste de paramètres de l'url.
 	 * @return l'url.
 	 */
-	private String getUrl(final String commande, final ParametreUrl[] params) {
-		final StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
-		for (final ParametreUrl param : params) {
+	private String getUrl(String commande, ParametreUrl[] params) {
+		StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
+		for (ParametreUrl param : params) {
 
 			try {
 				stringBuilder.append("&param[").append(param.getName()).append("]=").append(URLEncoder.encode(param.getValue(), "utf-8"));
@@ -337,14 +212,6 @@ public final class Keolis {
 			}
 		}
 		return stringBuilder.toString();
-	}
-
-	/**
-	 * @return les villes.
-	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
-	 */
-	public List<Ville> getVilles() throws ErreurKeolis {
-		return appelKeolis(getUrl(COMMANDE_VILLE), new GetVilleHandler());
 	}
 
 }

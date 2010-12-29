@@ -60,7 +60,7 @@ public class DetailAlert extends Activity {
 			requete.append("select Arret.nom from Arret, Route, ArretRoute ");
 			requete.append("where Route.nomCourt = :nomCourt and ArretRoute.routeId = Route.id ");
 			requete.append("and Arret.id = ArretRoute.arretId");
-			Cursor cursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
+			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
 			while (cursor.moveToNext()) {
 				arretsToBold.add(cursor.getString(0));
 			}

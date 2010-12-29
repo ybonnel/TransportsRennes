@@ -131,7 +131,7 @@ public class DetailArret extends ListActivity {
 		selectionArgs.add(favori.getRouteId());
 		selectionArgs.add(favori.getStopId());
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts.");
-		currentCursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts terminée : " + currentCursor.getCount());
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
@@ -155,7 +155,7 @@ public class DetailArret extends ListActivity {
 		selectionArgs.add(favori.getStopId());
 		selectionArgs.add(Long.toString(now));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
-		currentCursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
@@ -172,7 +172,7 @@ public class DetailArret extends ListActivity {
 			public void onClick(View view) {
 				Arret arret = new Arret();
 				arret.setId(favori.getStopId());
-				arret = BusRennesApplication.getDataBaseHelper().selectSingle(arret);
+				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
 				String _lat = Double.toString(arret.getLatitude());
 				String _lon = Double.toString(arret.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(favori.getNomArret()) + "+@" + _lat + "," + _lon);

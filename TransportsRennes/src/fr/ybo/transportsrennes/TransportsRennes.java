@@ -64,31 +64,37 @@ public class TransportsRennes extends Activity {
 		verifierUpgrade();
 	}
 
+	@SuppressWarnings("unused")
 	public void onAlertClick(View view) {
 		Intent intent = new Intent(TransportsRennes.this, ListAlerts.class);
 		startActivity(intent);
 	}
 
+	@SuppressWarnings("unused")
 	public void onBusClick(View view) {
 		Intent intent = new Intent(TransportsRennes.this, BusRennes.class);
 		startActivity(intent);
 	}
 
+	@SuppressWarnings("unused")
 	public void onBusFavoriClick(View view) {
 		Intent intent = new Intent(this, ListFavoris.class);
 		startActivity(intent);
 	}
 
+	@SuppressWarnings("unused")
 	public void onBusGpsClick(View view) {
 		Intent intent = new Intent(this, ListArretByPosition.class);
 		startActivity(intent);
 	}
 
+	@SuppressWarnings("unused")
 	public void onVeloClick(View view) {
 		Intent intent = new Intent(this, ListStationsByPosition.class);
 		startActivity(intent);
 	}
 
+	@SuppressWarnings("unused")
 	public void onVeloFavoriClick(View view) {
 		Intent intent = new Intent(this, ListStationsFavoris.class);
 		startActivity(intent);
@@ -104,7 +110,7 @@ public class TransportsRennes extends Activity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.updateIfNecessaryDatabase(BusRennesApplication.getDataBaseHelper());
+				UpdateDataBase.updateIfNecessaryDatabase(TransportsRennesApplication.getDataBaseHelper());
 				return null;
 			}
 
@@ -118,7 +124,7 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = BusRennesApplication.getDataBaseHelper();
+		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		if (dernierMiseAJour == null) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);

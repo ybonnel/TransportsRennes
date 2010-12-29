@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="updateKeolis">Mise à jour des données</string>
-    <string name="menuListAlert">Alertes</string>
-    <string name="menuListFavoris">Arrêts favoris</string>
-    <string name="loadAllLines">Chargement de toutes les lignes</string>
+    <!-- Nom de l'application -->
     <string name="app_name">Transports de Rennes</string>
-    <string name="ajoutFavori">Ajouter aux favoris.</string>
-    <string name="supprimerFavori">Supprimer des favoris.</string>
-    <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
 
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
         données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?
     </string>
-    <string name="infoChargementGtfs">Chargement des données de bus...</string>
+    <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
+    <string name="infoChargementGtfs">Chargement des données de la Star...</string>
     <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
     <string name="dialogRequeteAlerts">Interrogation de la Star...</string>
 
+    <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">VeloStar</string>
     <string name="btn_velo_favori">Stations favorites</string>
     <string name="btn_bus">Bus</string>
@@ -24,6 +20,7 @@
     <string name="btn_bus_gps">Arrêts par position</string>
     <string name="btn_alert">Alertes</string>
 
+    <!-- Libellés de menus -->
     <string name="menu_prochainArrets">Prochaines horaires</string>
     <string name="menu_allArrets">Toutes les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>

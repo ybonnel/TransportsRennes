@@ -84,13 +84,6 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	protected abstract String getBaliseData();
 
 	/**
-	 * @return le contenu de la balise courante.
-	 */
-	protected final StringBuilder getContenu() {
-		return this.contenu;
-	}
-
-	/**
 	 * Méthode à implémenter créant un nouvel objet Keolis.
 	 *
 	 * @return nouvel objet Keolis.
@@ -132,7 +125,8 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	 *
 	 * @param localName nom de la balise.
 	 */
-	public void surchargeEndElement(final String localName) {
+	@SuppressWarnings("unused")
+	public void surchargeEndElement(String localName) {
 	}
 
 }

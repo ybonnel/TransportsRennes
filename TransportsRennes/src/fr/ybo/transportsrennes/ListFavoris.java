@@ -20,7 +20,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 public class ListFavoris extends ListActivity {
 
 	private void construireListe() throws DataBaseException {
-		setListAdapter(new FavoriAdapter(getApplicationContext(), BusRennesApplication.getDataBaseHelper().select(new ArretFavori())));
+		setListAdapter(new FavoriAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -59,9 +59,9 @@ public class ListFavoris extends ListActivity {
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
 				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
-				BusRennesApplication.getDataBaseHelper().delete(favori);
+				TransportsRennesApplication.getDataBaseHelper().delete(favori);
 				((FavoriAdapter) getListAdapter()).getFavoris().clear();
-				((FavoriAdapter) getListAdapter()).getFavoris().addAll(BusRennesApplication.getDataBaseHelper().select(new ArretFavori()));
+				((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
 				((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
 				return true;
 			default:

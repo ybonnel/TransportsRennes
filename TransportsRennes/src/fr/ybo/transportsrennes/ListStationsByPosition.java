@@ -121,8 +121,16 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
 		List<String> providers = locationManager.getProviders(criteria, true);
+		boolean gpsTrouve = false;
 		for (String providerName : providers) {
 			locationManager.requestLocationUpdates(providerName, 10000l, 20l, this);
+			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
+				gpsTrouve = true;
+			}
+		}
+		if (!gpsTrouve) {
+			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'allumer son GPS.", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 
@@ -309,7 +317,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 			Station station = (Station) getListAdapter().getItem(info.position);
 			VeloFavori veloFavori = new VeloFavori();
 			veloFavori.setNumber(station.getNumber());
-			veloFavori = BusRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
+			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(station.getName()));
 			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					veloFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
@@ -326,13 +334,13 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
 				veloFavori.setNumber(station.getNumber());
-				BusRennesApplication.getDataBaseHelper().insert(veloFavori);
+				TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
 				return true;
 			case R.id.supprimerFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
 				veloFavori.setNumber(station.getNumber());
-				BusRennesApplication.getDataBaseHelper().delete(veloFavori);
+				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

@@ -1,7 +1,7 @@
 package fr.ybo.transportsrennes.keolis.gtfs;
 
 import android.content.ContentValues;
-import fr.ybo.transportsrennes.BusRennesApplication;
+import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
@@ -39,15 +39,15 @@ public final class UpdateDataBase {
 
 	public static void chargeDetailRoute(Route route) {
 		LOG_YBO.debug("Chargement en base de la route : " + route.getNomCourt());
-		BusRennesApplication.getDataBaseHelper().beginTransaction();
-		route.chargerHeuresArrets(BusRennesApplication.getDataBaseHelper());
+		TransportsRennesApplication.getDataBaseHelper().beginTransaction();
+		route.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper());
 		route.setChargee(Boolean.TRUE);
 		final ContentValues values = new ContentValues();
 		values.put("chargee", 1);
 		final String[] whereArgs = new String[1];
 		whereArgs[0] = route.getId();
-		BusRennesApplication.getDataBaseHelper().getWritableDatabase().update("Route", values, "id = :id", whereArgs);
-		BusRennesApplication.getDataBaseHelper().endTransaction();
+		TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().update("Route", values, "id = :id", whereArgs);
+		TransportsRennesApplication.getDataBaseHelper().endTransaction();
 		LOG_YBO.debug("Chargement en base de la route terminée");
 	}
 

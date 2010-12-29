@@ -80,7 +80,7 @@ public class ListStationsFavoris extends ListActivity {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					List<VeloFavori> velosFavoris = BusRennesApplication.getDataBaseHelper().select(new VeloFavori());
+					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
 					List<String> numbers = new ArrayList<String>();
 					for (VeloFavori favori : velosFavoris) {
 						numbers.add(favori.getNumber());
@@ -142,7 +142,7 @@ public class ListStationsFavoris extends ListActivity {
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							List<VeloFavori> velosFavoris = BusRennesApplication.getDataBaseHelper().select(new VeloFavori());
+							List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
 							List<String> numbers = new ArrayList<String>();
 							for (VeloFavori favori : velosFavoris) {
 								numbers.add(favori.getNumber());
@@ -202,7 +202,7 @@ public class ListStationsFavoris extends ListActivity {
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
 				veloFavori.setNumber(station.getNumber());
-				BusRennesApplication.getDataBaseHelper().delete(veloFavori);
+				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				((VeloAdapter) getListAdapter()).getStations().remove(station);
 				((VeloAdapter) getListAdapter()).notifyDataSetChanged();
 				return true;

@@ -52,13 +52,6 @@ public class Alert implements Serializable {
 	 */
 	private String link;
 
-	/**
-	 * @return the detail
-	 */
-	public final String getDetail() {
-		return detail;
-	}
-
 	public String getDetailFormatte(Set<String> arrets) {
 		StringBuilder lignes = new StringBuilder();
 		for (String line : lines) {
@@ -67,9 +60,9 @@ public class Alert implements Serializable {
 		}
 		lignes.deleteCharAt(lignes.length() - 1);
 		lignes.deleteCharAt(lignes.length() - 1);
-		String detailFormatte = detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;")
-				.replaceAll("&nbsp; ", "&nbsp;").replaceAll("&nbsp;&nbsp;", "&nbsp;")
-				.replaceAll("&nbsp;", " " + lignes.toString() + " ");
+		String detailFormatte =
+				detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
+						.replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " " + lignes.toString() + " ");
 		StringBuilder resultat = new StringBuilder();
 		char carOld = '\0';
 		for (char car : detailFormatte.toCharArray()) {
@@ -83,8 +76,7 @@ public class Alert implements Serializable {
 
 		String resultatChaine = resultat.toString();
 		for (String arretToBold : arrets) {
-			resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>"
-					+ arretToBold + "</b>");
+			resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>" + arretToBold + "</b>");
 		}
 
 		// recherche des lignes à mettre en gras.
@@ -104,13 +96,6 @@ public class Alert implements Serializable {
 	}
 
 	/**
-	 * @return the endtime
-	 */
-	public final String getEndtime() {
-		return endtime;
-	}
-
-	/**
 	 * @return the lines
 	 */
 	public final List<String> getLines() {
@@ -118,34 +103,6 @@ public class Alert implements Serializable {
 			lines = new ArrayList<String>();
 		}
 		return lines;
-	}
-
-	/**
-	 * @return the link
-	 */
-	public final String getLink() {
-		return link;
-	}
-
-	/**
-	 * @return the starttime
-	 */
-	public final String getStarttime() {
-		return starttime;
-	}
-
-	/**
-	 * @return the title
-	 */
-	public final String getTitle() {
-		return title;
-	}
-
-	/**
-	 * @return the majordisturbance
-	 */
-	public final boolean isMajordisturbance() {
-		return majordisturbance;
 	}
 
 	/**

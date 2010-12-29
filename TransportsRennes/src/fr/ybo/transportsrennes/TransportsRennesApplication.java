@@ -7,7 +7,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
  */
-public class BusRennesApplication extends Application {
+public class TransportsRennesApplication extends Application {
 
 	private static DataBaseHelper databaseHelper;
 

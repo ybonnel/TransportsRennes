@@ -34,67 +34,11 @@ public class Calendrier {
 	@BaliseCsv(value = "sunday", adapter = AdapterBoolean.class)
 	private Boolean dimanche;
 
-	public Boolean getDimanche() {
-		return dimanche;
-	}
-
 	public String getId() {
 		return id;
 	}
 
-	public Boolean getJeudi() {
-		return jeudi;
-	}
-
-	public Boolean getLundi() {
-		return lundi;
-	}
-
-	public Boolean getMardi() {
-		return mardi;
-	}
-
-	public Boolean getMercredi() {
-		return mercredi;
-	}
-
-	public Boolean getSamedi() {
-		return samedi;
-	}
-
-	public Boolean getVendredi() {
-		return vendredi;
-	}
-
-	public void setDimanche(final Boolean dimanche) {
-		this.dimanche = dimanche;
-	}
-
 	public void setId(final String id) {
 		this.id = id;
-	}
-
-	public void setJeudi(final Boolean jeudi) {
-		this.jeudi = jeudi;
-	}
-
-	public void setLundi(final Boolean lundi) {
-		this.lundi = lundi;
-	}
-
-	public void setMardi(final Boolean mardi) {
-		this.mardi = mardi;
-	}
-
-	public void setMercredi(final Boolean mercredi) {
-		this.mercredi = mercredi;
-	}
-
-	public void setSamedi(final Boolean samedi) {
-		this.samedi = samedi;
-	}
-
-	public void setVendredi(final Boolean vendredi) {
-		this.vendredi = vendredi;
 	}
 }

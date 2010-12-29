@@ -55,7 +55,7 @@ public class ListArret extends ListActivity {
 		arretFavori.setRouteNomCourt(myRoute.getNomCourt());
 		arretFavori.setRouteNomLong(myRoute.getNomLong());
 		LOG_YBO.debug("Ajout du favori " + arretFavori.getStopId());
-		BusRennesApplication.getDataBaseHelper().insert(arretFavori);
+		TransportsRennesApplication.getDataBaseHelper().insert(arretFavori);
 	}
 
 	private void chargerRoute() {
@@ -93,7 +93,8 @@ public class ListArret extends ListActivity {
 		requete.append(" order by ArretRoute.direction, Arret.nom;");
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
-		currentCursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
+		currentCursor =
+				TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
 	}
 
@@ -159,7 +160,7 @@ public class ListArret extends ListActivity {
 		}
 		final Route routeTmp = new Route();
 		routeTmp.setId(myRoute.getId());
-		myRoute = BusRennesApplication.getDataBaseHelper().selectSingle(routeTmp);
+		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(routeTmp);
 		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
 			chargerRoute();
 		} else {
@@ -177,7 +178,7 @@ public class ListArret extends ListActivity {
 			String nomArret = cursor.getString(cursor.getColumnIndex("arretName"));
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.setStopId(idArret);
-			arretFavori = BusRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
+			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(nomArret);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
@@ -194,6 +195,6 @@ public class ListArret extends ListActivity {
 		final ArretFavori arretFavori = new ArretFavori();
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
 		LOG_YBO.debug("Suppression du favori " + arretFavori.getStopId());
-		BusRennesApplication.getDataBaseHelper().delete(arretFavori);
+		TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 	}
 }

@@ -15,10 +15,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
+import android.widget.*;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -116,8 +113,16 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
 		List<String> providers = locationManager.getProviders(criteria, true);
+		boolean gpsTrouve = false;
 		for (String providerName : providers) {
 			locationManager.requestLocationUpdates(providerName, 10000l, 20l, this);
+			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
+				gpsTrouve = true;
+			}
+		}
+		if (!gpsTrouve) {
+			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'allumer son GPS.", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 
@@ -211,7 +216,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 		requete.append("FROM Arret, ArretRoute, Route ");
 		requete.append("WHERE Arret.id = ArretRoute.arretId");
 		requete.append(" AND ArretRoute.routeId = Route.id");
-		Cursor cursor = BusRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
+		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 		Arret arret;
 		arrets = new ArrayList<Arret>();
 		while (cursor.moveToNext()) {
@@ -240,7 +245,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 			Arret arret = (Arret) getListAdapter().getItem(info.position);
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.setStopId(arret.getId());
-			arretFavori = BusRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
+			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(arret.getNom()));
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
@@ -254,13 +259,13 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
-				BusRennesApplication.getDataBaseHelper().insert(arret.getFavori());
+				TransportsRennesApplication.getDataBaseHelper().insert(arret.getFavori());
 				return true;
 			case R.id.supprimerFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.setStopId(arret.getId());
-				BusRennesApplication.getDataBaseHelper().delete(arretFavori);
+				TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

@@ -41,8 +41,6 @@ public class Arret {
 	@BaliseCsv(value = "stop_lon", adapter = AdapterDouble.class)
 	private Double longitude;
 
-	private transient String destination;
-
 	private transient ArretFavori favori;
 
 	public ArretFavori getFavori() {
@@ -75,18 +73,6 @@ public class Arret {
 		return true;
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getDestination() {
-		return destination;
-	}
-
 	public String getId() {
 		return id;
 	}
@@ -111,16 +97,8 @@ public class Arret {
 		return result;
 	}
 
-	public void setCode(final String code) {
-		this.code = code;
-	}
-
 	public void setDescription(final String description) {
 		this.description = description;
-	}
-
-	public void setDestination(final String destination) {
-		this.destination = destination;
 	}
 
 	public void setId(final String id) {
