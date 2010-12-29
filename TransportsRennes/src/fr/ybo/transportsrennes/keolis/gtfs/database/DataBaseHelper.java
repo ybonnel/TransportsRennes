@@ -8,7 +8,9 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -65,16 +67,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		base.createDataBase(db);
 	}
 
+	private static interface UpgradeDatabase {
+		void upagrade(SQLiteDatabase db);
+	}
+
+	private Map<Integer, UpgradeDatabase> mapUpgrades = null;
+
+	private Map<Integer, UpgradeDatabase> getUpgrades() {
+		if (mapUpgrades == null) {
+			mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
+			mapUpgrades.put(2, new UpgradeDatabase() {
+				public void upagrade(SQLiteDatabase db) {
+					base.getTable(VeloFavori.class).createTable(db);
+				}
+			});
+		}
+		return mapUpgrades;
+	}
+
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		if (oldVersion == 1 && newVersion == 2) {
-			LOG_YBO.debug("Mise a jour de la base de la version " + oldVersion + " a " + newVersion + ", ajout de la table VeloFavori");
-			base.getTable(VeloFavori.class).createTable(db);
-		} else {
-			LOG_YBO.warn(
-					"Mise a jour de la base de la version " + oldVersion + " a " + newVersion + "non prevue, la base va etre supprimee et recreer");
-			base.dropDataBase(db);
-			base.createDataBase(db);
+		LOG_YBO.debug("Demande de mise à jour de la base de la version " + oldVersion + " à la version " + newVersion);
+		for (int version = oldVersion + 1; version <= newVersion; version++) {
+			if (getUpgrades().containsKey(version)) {
+				LOG_YBO.debug("Lancement de la mise à jour pour la version " + version);
+				getUpgrades().get(version).upagrade(db);
+			}
 		}
 	}
 
