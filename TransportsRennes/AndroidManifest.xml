@@ -5,21 +5,21 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="true" android:name="TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name=".TransportsRennes">
+        <activity android:name=".TransportsRennes" android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".BusRennes"/>
-        <activity android:name=".ListAlerts"/>
-        <activity android:name=".DetailAlert"/>
-        <activity android:name=".ListArret"/>
-        <activity android:name=".DetailArret"/>
-        <activity android:name=".ListFavoris"/>
-        <activity android:name=".ListStationsByPosition"/>
-        <activity android:name=".ListStationsFavoris"/>
-        <activity android:name=".ListArretByPosition"/>
+        <activity android:name=".BusRennes" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListAlerts" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".DetailAlert" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListStationsByPosition" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListStationsFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
     </application>
     <uses-sdk android:minSdkVersion="3"
               android:targetSdkVersion="8"

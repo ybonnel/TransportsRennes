@@ -1,10 +1,8 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -14,7 +12,6 @@ import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
@@ -33,8 +30,6 @@ public class ListArret extends ListActivity {
 	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
-
-	private ProgressDialog myProgressDialog;
 
 	private Route myRoute;
 
@@ -56,29 +51,6 @@ public class ListArret extends ListActivity {
 		arretFavori.setRouteNomLong(myRoute.getNomLong());
 		LOG_YBO.debug("Ajout du favori " + arretFavori.getStopId());
 		TransportsRennesApplication.getDataBaseHelper().insert(arretFavori);
-	}
-
-	private void chargerRoute() {
-
-		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
-
-		new AsyncTask<Void, Void, Void>() {
-
-			@Override
-			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.chargeDetailRoute(myRoute);
-				return null;
-			}
-
-			@Override
-			protected void onPostExecute(final Void result) {
-				super.onPostExecute(result);
-				construireListe();
-				myProgressDialog.dismiss();
-			}
-
-		}.execute();
-
 	}
 
 	private void construireCursor() {
@@ -158,14 +130,7 @@ public class ListArret extends ListActivity {
 			textView.setText(myRoute.getNomCourt());
 			conteneur.addView(textView);
 		}
-		final Route routeTmp = new Route();
-		routeTmp.setId(myRoute.getId());
-		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(routeTmp);
-		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
-			chargerRoute();
-		} else {
-			construireListe();
-		}
+		construireListe();
 	}
 
 	@Override

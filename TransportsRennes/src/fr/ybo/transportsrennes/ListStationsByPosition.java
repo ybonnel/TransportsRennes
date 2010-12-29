@@ -146,8 +146,8 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 
 	@Override
 	protected void onPause() {
-		super.onPause();
 		desactiveGps();
+		super.onPause();
 	}
 
 	private ProgressDialog myProgressDialog;

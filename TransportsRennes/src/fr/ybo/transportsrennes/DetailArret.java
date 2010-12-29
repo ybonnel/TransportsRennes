@@ -3,16 +3,19 @@ package fr.ybo.transportsrennes;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
+import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
@@ -160,6 +163,8 @@ public class DetailArret extends ListActivity {
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
+	private Route myRoute;
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -184,9 +189,47 @@ public class DetailArret extends ListActivity {
 				}
 			}
 		});
-		setListAdapter(construireAdapter(calendar));
+		myRoute = new Route();
+		myRoute.setId(favori.getRouteId());
+		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
+		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
+			chargerRoute();
+		} else {
+			setListAdapter(construireAdapter(calendar));
+		}
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
+	}
+
+	private ProgressDialog myProgressDialog;
+
+	private void chargerRoute() {
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog
+						.show(DetailArret.this, "", "Premier accès aux horaires de la ligne " + myRoute.getNomCourt() + ", chargement des données...",
+								true);
+			}
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+				UpdateDataBase.chargeDetailRoute(myRoute);
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(final Void result) {
+				super.onPostExecute(result);
+				setListAdapter(construireAdapter(calendar));
+				getListView().invalidate();
+				myProgressDialog.dismiss();
+			}
+
+		}.execute();
+
 	}
 
 	private void closeCurrentCursor() {
@@ -198,7 +241,7 @@ public class DetailArret extends ListActivity {
 	@Override
 	protected void onDestroy() {
 		closeCurrentCursor();
-		super.onPause();
+		super.onDestroy();
 	}
 
 	private static final int GROUP_ID = 0;
