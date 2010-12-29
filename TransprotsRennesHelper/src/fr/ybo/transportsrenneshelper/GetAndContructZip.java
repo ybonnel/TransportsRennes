@@ -121,6 +121,7 @@ public class GetAndContructZip {
 		listeClassCsv.add(Trip.class);
 		listeClassCsv.add(Calendrier.class);
 		listeClassCsv.add(HeuresArrets.class);
+		listeClassCsv.add(ArretRoute.class);
 		MoteurCsv moteurCsv = new MoteurCsv(listeClassCsv);
 
 		Map<String, BufferedWriter> mapTripIdFichier = new HashMap<String, BufferedWriter>();
@@ -190,25 +191,6 @@ public class GetAndContructZip {
 			bufToClose.close();
 		}
 
-		System.out.println("Ecriture du fichier arret_route.txt");
-
-		bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "arret_route.txt")));
-
-		bufWriter.write("stop_id,route_id,direction\n");
-
-		for (ArretRoute arretRouteToWrite : listeArretsRoutes) {
-			bufWriter.write(arretRouteToWrite.getArretId());
-			bufWriter.write(',');
-			bufWriter.write(arretRouteToWrite.getRouteId());
-			bufWriter.write(',');
-			bufWriter.write(arretRouteToWrite.getDirection());
-			bufWriter.write('\n');
-		}
-
-		bufWriter.close();
-
-		System.out.println("Fin de l'ecriture du fichier arret_route.txt");
-
 		System.out.println("Compression des données (regroupement de calendrier)");
 
 
@@ -230,7 +212,9 @@ public class GetAndContructZip {
 				return name.startsWith("stopTimes");
 			}
 		})) {
-			file.delete();
+			if (!file.delete()) {
+				System.err.println( "Fichier " + file.getName() + " non supprimer");
+			}
 		}
 
 
@@ -291,6 +275,7 @@ public class GetAndContructZip {
 
 		System.out.println("Ecriture du fichier principal stop_times.txt");
 
+
 		moteurCsv.writeFile(new File(repertoire, "stop_times.txt"), allHeures, HeuresArrets.class, Collections.singleton("trip_id"));
 
 		System.out.println("Ajout de l'ordre dans route.txt");
@@ -320,6 +305,8 @@ public class GetAndContructZip {
 		System.out.println("Ecriture du fichier routes.txt");
 		moteurCsv.writeFile(new File(repertoire, "routes.txt"), routes, Route.class);
 
+		System.out.println("Ecriture du fichier ArretRoute");
+		moteurCsv.writeFile(new File(repertoire, "arret_route.txt"), listeArretsRoutes, ArretRoute.class);
 
 		bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
 
