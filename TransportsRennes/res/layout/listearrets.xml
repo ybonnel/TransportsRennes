@@ -41,7 +41,7 @@
               android:textSize="20dip"
               android:gravity="center_vertical|right"
               android:text="Direction"
-            android:layout_below="@id/nomLong"
+            android:layout_below="@id/conteneurImage"
             android:layout_alignParentRight="true"/>
 
     <ListView android:id="@id/android:list"
