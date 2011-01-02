@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:myapp="http://schemas.android.com/apk/res/fr.ybo.transportsrennes"
               android:id="@+id/home_root"
               android:orientation="vertical"
               android:layout_width="fill_parent"
@@ -62,4 +63,12 @@
                     android:drawableTop="@drawable/home_btn_velo_favori"/>
         </LinearLayout>
     </LinearLayout>
+
+    <com.admob.android.ads.AdView
+            android:id="@+id/ad"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            myapp:backgroundColor="#000000"
+            myapp:primaryTextColor="#FFFFFF"
+            myapp:secondaryTextColor="#CCCCCC"/>
 </LinearLayout>
