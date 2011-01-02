@@ -1,6 +1,7 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
+import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -245,6 +249,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 			Arret arret = (Arret) getListAdapter().getItem(info.position);
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.setStopId(arret.getId());
+			arretFavori.setRouteId(arret.getFavori().getRouteId());
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(arret.getNom()));
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
@@ -259,16 +264,62 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
+				Route myRoute = new Route();
+				myRoute.setId(arret.getFavori().getRouteId());
+				myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
+				if (myRoute.getChargee() == null || !myRoute.getChargee()) {
+					chargerRoute(myRoute);
+				}
 				TransportsRennesApplication.getDataBaseHelper().insert(arret.getFavori());
 				return true;
 			case R.id.supprimerFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.setStopId(arret.getId());
+				arretFavori.setRouteId(arret.getFavori().getRouteId());
 				TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
 	}
+
+	private ProgressDialog myProgressDialog;
+
+	private void chargerRoute(final Route myRoute) {
+
+		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
+
+		new AsyncTask<Void, Void, Void>() {
+
+			boolean erreur = false;
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+				try {
+					UpdateDataBase.chargeDetailRoute(myRoute);
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Erreur lors du chargement du détail de la route", exception);
+					erreur = true;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(final Void result) {
+				super.onPostExecute(result);
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(ListArretByPosition.this,
+							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							Toast.LENGTH_LONG).show();
+					ListArretByPosition.this.finish();
+				}
+			}
+
+		}.execute();
+
+	}
+
+
 }

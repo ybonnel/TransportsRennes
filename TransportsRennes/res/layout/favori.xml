@@ -15,23 +15,36 @@
 
     <TextView android:id="@+id/nomArret"
               android:paddingLeft="5dip"
-              android:paddingTop="8dip"
-              android:paddingBottom="8dip"
-              android:layout_width="150dip"
+              android:paddingTop="5dip"
+              android:paddingBottom="2dip"
+              android:layout_width="wrap_content"
               android:layout_height="fill_parent"
               android:textSize="18dip"
               android:gravity="center_vertical|left"
-              android:text="Oberthur"
               android:layout_toRightOf="@id/conteneurImage"/>
 
     <TextView android:id="@+id/directionArret"
               android:paddingRight="5dip"
-              android:paddingTop="8dip"
-              android:paddingBottom="8dip"
+              android:paddingLeft="6dip"
+              android:paddingTop="3dip"
+              android:paddingBottom="2dip"
+              android:layout_width="wrap_content"
+              android:layout_height="28dip"
+              android:textSize="15dip"
+              android:maxLines="1"
+              android:gravity="center_vertical|right"
+              android:layout_below="@id/nomArret"
+              android:layout_toRightOf="@id/conteneurImage"/>
+
+    <TextView android:id="@+id/tempsRestant"
+              android:paddingRight="5dip"
+              android:paddingTop="2dip"
+              android:paddingBottom="3dip"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              android:layout_height="28dip"
               android:textSize="15dip"
               android:gravity="center_vertical|right"
-              android:text="Alma"
-              android:layout_toRightOf="@id/nomArret"/>
+              android:layout_toRightOf="@id/directionArret"
+              android:layout_below="@id/nomArret"
+            android:layout_alignParentRight="true"/>
 </RelativeLayout>

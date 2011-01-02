@@ -1,8 +1,10 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -12,15 +14,14 @@ import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
+import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * Liste des arrêts d'une ligne de bus.
@@ -33,6 +34,8 @@ public class ListArret extends ListActivity {
 
 	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
+	private ProgressDialog myProgressDialog;
+
 	private Route myRoute;
 
 	private Cursor currentCursor;
@@ -44,6 +47,10 @@ public class ListArret extends ListActivity {
 	}
 
 	private void ajoutFavori(final Cursor cursor) throws DataBaseException {
+		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
+		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
+			chargerRoute();
+		}
 		ArretFavori arretFavori = new ArretFavori();
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
 		arretFavori.setNomArret(cursor.getString(cursor.getColumnIndex("arretName")));
@@ -53,6 +60,41 @@ public class ListArret extends ListActivity {
 		arretFavori.setRouteNomLong(myRoute.getNomLong());
 		LOG_YBO.debug("Ajout du favori " + arretFavori.getStopId());
 		TransportsRennesApplication.getDataBaseHelper().insert(arretFavori);
+	}
+
+	private void chargerRoute() {
+
+		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
+
+		new AsyncTask<Void, Void, Void>() {
+
+			boolean erreur = false;
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+				try {
+					UpdateDataBase.chargeDetailRoute(myRoute);
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Erreur lors du chargement du détail de la route", exception);
+					erreur = true;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(final Void result) {
+				super.onPostExecute(result);
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(ListArret.this,
+							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							Toast.LENGTH_LONG).show();
+					ListArret.this.finish();
+				}
+			}
+
+		}.execute();
+
 	}
 
 	private void construireCursor() {
@@ -137,6 +179,8 @@ public class ListArret extends ListActivity {
 			textView.setText(myRoute.getNomCourt());
 			conteneur.addView(textView);
 		}
+		final Route routeTmp = new Route();
+		routeTmp.setId(myRoute.getId());
 		construireListe();
 	}
 
@@ -174,7 +218,6 @@ public class ListArret extends ListActivity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ORDER = Menu.FIRST;
-	private static final int MENU_CHOOSE = MENU_ORDER + 1;
 
 	private boolean orderDirection = true;
 
