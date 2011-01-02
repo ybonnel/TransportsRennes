@@ -13,8 +13,11 @@ import android.widget.Button;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
+import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.util.LogYbo;
+
+import java.util.Date;
 
 
 public class TransportsRennes extends Activity {
@@ -140,20 +143,32 @@ public class TransportsRennes extends Activity {
 	private void verifierUpgrade() {
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		if (dernierMiseAJour == null) {
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		if (dernierMiseAJour == null || dernierMiseAJour.getDerniereMiseAJour() == null ||
+				dateDernierFichierKeolis.after(dernierMiseAJour.getDerniereMiseAJour())) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.premierLancement)).setCancelable(false)
-					.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-						public void onClick(final DialogInterface dialog, final int id) {
-							dialog.dismiss();
-							TransportsRennes.this.upgradeDatabase();
-						}
-					}).setNegativeButton("Non", new DialogInterface.OnClickListener() {
+			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
+			builder.setCancelable(false);
+			builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 				public void onClick(final DialogInterface dialog, final int id) {
-					dialog.cancel();
-					TransportsRennes.this.finish();
+					dialog.dismiss();
+					TransportsRennes.this.upgradeDatabase();
 				}
 			});
+			if (dernierMiseAJour == null) {
+				builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.cancel();
+						TransportsRennes.this.finish();
+					}
+				});
+			} else {
+				builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.cancel();
+					}
+				});
+			}
 			final AlertDialog alert = builder.create();
 			alert.show();
 		}

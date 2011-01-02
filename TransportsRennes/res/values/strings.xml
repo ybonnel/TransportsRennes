@@ -7,6 +7,7 @@
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
         données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?
     </string>
+    <string name="majDispo">Une mise à jour des données de la Star est disponible, voulez vous l\'effectuer maintenant?</string>
     <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
     <string name="infoChargementGtfs">Chargement des données de la Star...</string>
     <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
