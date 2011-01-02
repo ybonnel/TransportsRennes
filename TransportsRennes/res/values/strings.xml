@@ -21,8 +21,8 @@
     <string name="btn_alert">Alertes</string>
 
     <!-- Libellés de menus -->
-    <string name="menu_prochainArrets">Prochaines horaires</string>
-    <string name="menu_allArrets">Toutes les horaires</string>
+    <string name="menu_prochainArrets">Prochains horaires</string>
+    <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
 </resources>
