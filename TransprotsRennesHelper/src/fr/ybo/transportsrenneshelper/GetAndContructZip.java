@@ -286,6 +286,41 @@ public class GetAndContructZip {
 		File fileCalendar = new File(repertoire, "calendar.txt");
 		moteurCsv.writeFile(fileCalendar, newCalendriers, Calendrier.class);
 
+
+		Map<String, Integer> mapTripMaxSequences = new HashMap<String, Integer>();
+		for (Trip trip : mapTrips.values()) {
+			mapTripMaxSequences.put(trip.getId(), 0);
+		}
+		System.out.println("Premiers parcours des horaires pour identifier les stopSequence max des trips");
+		for (Map.Entry<Route, Map<IdentifiantHeureArret, HeuresArrets>> entryHeures : mapHeuresCompressees.entrySet()) {
+			for (Map.Entry<IdentifiantHeureArret, HeuresArrets> entry : entryHeures.getValue().entrySet()) {
+				if (entry.getValue().getStopSequence() > mapTripMaxSequences.get(entry.getValue().getTripId())) {
+					mapTripMaxSequences.put(entry.getValue().getTripId(), entry.getValue().getStopSequence());
+				}
+			}
+		}
+		System.out.println("Deuxième parcours des horaires supprimer les derniers arrêts de lignes");
+		Map<Route, List<IdentifiantHeureArret>> mapHorairesToDelete = new HashMap<Route, List<IdentifiantHeureArret>>();
+		for (Map.Entry<Route, Map<IdentifiantHeureArret, HeuresArrets>> entryHeures : mapHeuresCompressees.entrySet()) {
+			mapHorairesToDelete.put(entryHeures.getKey(), new ArrayList<IdentifiantHeureArret>());
+			for (Map.Entry<IdentifiantHeureArret, HeuresArrets> entry : entryHeures.getValue().entrySet()) {
+				if (entry.getValue().getStopSequence().equals(mapTripMaxSequences.get(entry.getValue().getTripId()))) {
+					mapHorairesToDelete.get(entryHeures.getKey()).add(entry.getKey());
+				}
+			}
+		}
+		System.out.println("Suppression des derniers arrêts");
+		for (Map.Entry<Route, List<IdentifiantHeureArret>> entryIdsToDelte : mapHorairesToDelete.entrySet()) {
+			for (IdentifiantHeureArret idToDelete : entryIdsToDelte.getValue()) {
+				/*System.out.println("Suppression de l'arrêt " + idToDelete.stopId + " sur la route " + idToDelete.routeId + " pour l'horaire " +
+						formatterCalendarHeure(idToDelete.heureDepart, 0));*/
+				mapHeuresCompressees.get(entryIdsToDelte.getKey()).remove(idToDelete);
+			}
+		}
+
+
+		System.out.println("Ecriture du fichier principal stop_times.txt");
+
 		List<HeuresArrets> allHeures = new ArrayList<HeuresArrets>();
 
 		System.out.println("Ecriture des fichiers stopTimes");
@@ -296,8 +331,6 @@ public class GetAndContructZip {
 			allHeures.addAll(heures);
 			moteurCsv.writeFile(fileStopTimes, heures, HeuresArrets.class, Collections.singleton("trip_id"));
 		}
-
-		System.out.println("Ecriture du fichier principal stop_times.txt");
 
 
 		moteurCsv.writeFile(new File(repertoire, "stop_times.txt"), allHeures, HeuresArrets.class, Collections.singleton("trip_id"));
@@ -352,9 +385,19 @@ public class GetAndContructZip {
 					String chaineBonChemin = null;
 					for (Map.Entry<String, Integer> entry : mapCompteurTrip.entrySet()) {
 						if ((entry.getKey().startsWith(arretRoute.getArretId() + ",") ||
-								entry.getKey().contains("," + arretRoute.getArretId() + ",")) && entry.getValue() > max) {
+								entry.getKey().contains("," + arretRoute.getArretId() + ",")) && entry.getValue() > max &&
+								!entry.getKey().endsWith(arretRoute.getArretId() + ",")) {
 							max = entry.getValue();
 							chaineBonChemin = entry.getKey();
+						}
+					}
+					if (chaineBonChemin == null) {
+						for (Map.Entry<String, Integer> entry : mapCompteurTrip.entrySet()) {
+							if ((entry.getKey().startsWith(arretRoute.getArretId() + ",") ||
+									entry.getKey().contains("," + arretRoute.getArretId() + ",")) && entry.getValue() > max) {
+								max = entry.getValue();
+								chaineBonChemin = entry.getKey();
+							}
 						}
 					}
 					if (chaineBonChemin != null) {
@@ -430,6 +473,35 @@ public class GetAndContructZip {
 			}
 		}
 
+		System.out.println("Suppression des arrêts innutiles");
+		List<Arret> arrets = moteurCsv.parseFile(new File(repertoire, "stops.txt"), Arret.class);
+		Map<String, Set<String>> mapStopsIds = new HashMap<String, Set<String>>();
+		for (HeuresArrets heure : allHeures) {
+			if (!mapStopsIds.containsKey(heure.getRouteId())) {
+				mapStopsIds.put(heure.getRouteId(), new HashSet<String>());
+			}
+			if (!mapStopsIds.get(heure.getRouteId()).contains(heure.getStopId())) {
+				mapStopsIds.get(heure.getRouteId()).add(heure.getStopId());
+			}
+		}
+		Iterator<ArretRoute> itArretsRoutes = listeArretsRoutes.iterator();
+		Set<String> stopsIds = new HashSet<String>();
+		while (itArretsRoutes.hasNext()) {
+			ArretRoute arretRoute = itArretsRoutes.next();
+			if (!mapStopsIds.get(arretRoute.getRouteId()).contains(arretRoute.getArretId())) {
+				itArretsRoutes.remove();
+			}
+			else if (!stopsIds.contains(arretRoute.getArretId())) {
+				stopsIds.add(arretRoute.getArretId());
+			}
+		}
+		Iterator<Arret> itArrets = arrets.iterator();
+		while (itArrets.hasNext()) {
+			if (!stopsIds.contains(itArrets.next().getId())) {
+				itArrets.remove();
+			}
+		}
+
 
 		System.out.println("Ecriture du fichier routes.txt");
 		moteurCsv.writeFile(new File(repertoire, "routes.txt"), routes, Route.class);
@@ -437,9 +509,12 @@ public class GetAndContructZip {
 		System.out.println("Ecriture du fichier ArretRoute");
 		moteurCsv.writeFile(new File(repertoire, "arret_route.txt"), listeArretsRoutes, ArretRoute.class);
 
+		System.out.println("Ecriture du fichier Arret");
+		moteurCsv.writeFile(new File(repertoire, "stops.txt"), arrets, Arret.class);
+
 		bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
 
-		bufWriter.write(SDF.format(lastUpdate));
+		bufWriter.write(SDF.format(new Date()));
 
 		bufWriter.close();
 
@@ -467,6 +542,28 @@ public class GetAndContructZip {
 		}
 
 
+	}
+
+	private static String formatterCalendarHeure(int prochainDepart, int now) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int tempsEnMinutes = prochainDepart - now;
+		int heures = tempsEnMinutes / 60;
+		int minutes = tempsEnMinutes - heures * 60;
+		if (heures >= 24) {
+			heures = heures - 24;
+		}
+		String heuresChaine = Integer.toString(heures);
+		String minutesChaine = Integer.toString(minutes);
+		if (heuresChaine.length() < 2) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(heuresChaine);
+		stringBuilder.append(':');
+		if (minutesChaine.length() < 2) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(minutesChaine);
+		return stringBuilder.toString();
 	}
 
 	private static Calendrier rechercherCalendrier(List<Calendrier> calendriers, Calendrier calendrier) {
