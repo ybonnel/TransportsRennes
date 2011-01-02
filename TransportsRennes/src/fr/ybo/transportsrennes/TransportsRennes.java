@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
@@ -109,9 +110,16 @@ public class TransportsRennes extends Activity {
 
 		new AsyncTask<Void, Void, Void>() {
 
+			private boolean erreur = false;
+
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.updateIfNecessaryDatabase(TransportsRennesApplication.getDataBaseHelper());
+				try {
+					UpdateDataBase.updateIfNecessaryDatabase(TransportsRennesApplication.getDataBaseHelper());
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
+					erreur = true;
+				}
 				return null;
 			}
 
@@ -120,6 +128,11 @@ public class TransportsRennes extends Activity {
 				super.onPostExecute(pResult);
 				LOG_YBO.debug("###### Fin de la mise à jour ");
 				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(TransportsRennes.this,
+							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							Toast.LENGTH_LONG).show();
+				}
 			}
 		}.execute((Void[]) null);
 	}

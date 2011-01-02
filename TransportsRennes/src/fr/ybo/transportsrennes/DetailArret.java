@@ -206,6 +206,8 @@ public class DetailArret extends ListActivity {
 	private void chargerRoute() {
 		new AsyncTask<Void, Void, Void>() {
 
+			private boolean erreur = false;
+
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -216,15 +218,26 @@ public class DetailArret extends ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				UpdateDataBase.chargeDetailRoute(myRoute);
+				try {
+					UpdateDataBase.chargeDetailRoute(myRoute);
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
+					erreur = true;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
-				setListAdapter(construireAdapter(calendar));
-				getListView().invalidate();
+				if (erreur) {
+					Toast.makeText(DetailArret.this,
+							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							Toast.LENGTH_LONG).show();
+				} else {
+					setListAdapter(construireAdapter(calendar));
+					getListView().invalidate();
+				}
 				myProgressDialog.dismiss();
 			}
 
