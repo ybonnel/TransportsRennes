@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
@@ -66,7 +67,12 @@ public class TransportsRennes extends Activity {
 				onVeloFavoriClick(view);
 			}
 		});
-		verifierUpgrade();
+		try {
+			verifierUpgrade();
+		} catch (ErreurKeolis erreurKeolis) {
+			LOG_YBO.erreur("Erreur lors de la vérification de mise à jour", erreurKeolis);
+			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...", Toast.LENGTH_LONG);
+		}
 	}
 
 	@SuppressWarnings("unused")

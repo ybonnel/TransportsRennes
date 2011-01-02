@@ -15,13 +15,14 @@ public class ArretFavori implements Serializable {
 	private String stopId;
 
 	@Colonne
+	@PrimaryKey
+	private String routeId;
+
+	@Colonne
 	private String nomArret;
 
 	@Colonne
 	private String direction;
-
-	@Colonne
-	private String routeId;
 
 	@Colonne
 	private String routeNomCourt;

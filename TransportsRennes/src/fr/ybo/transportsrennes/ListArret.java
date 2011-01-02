@@ -44,7 +44,7 @@ public class ListArret extends ListActivity {
 	}
 
 	private void ajoutFavori(final Cursor cursor) throws DataBaseException {
-		final ArretFavori arretFavori = new ArretFavori();
+		ArretFavori arretFavori = new ArretFavori();
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
 		arretFavori.setNomArret(cursor.getString(cursor.getColumnIndex("arretName")));
 		arretFavori.setDirection(cursor.getString(cursor.getColumnIndex("direction")));
@@ -150,6 +150,7 @@ public class ListArret extends ListActivity {
 			String nomArret = cursor.getString(cursor.getColumnIndex("arretName"));
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.setStopId(idArret);
+			arretFavori.setRouteId(myRoute.getId());
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(nomArret);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
@@ -166,6 +167,7 @@ public class ListArret extends ListActivity {
 	private void supprimeFavori(final Cursor cursor) throws DataBaseException {
 		final ArretFavori arretFavori = new ArretFavori();
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
+		arretFavori.setRouteId(myRoute.getId());
 		LOG_YBO.debug("Suppression du favori " + arretFavori.getStopId());
 		TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 	}
