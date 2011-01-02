@@ -87,7 +87,7 @@ public class GetStationHandler extends KeolisHandler<Station> {
 		} else if (baliseName.equals(BIKESAVAILABLE)) {
 			currentObjectKeolis.setBikesavailable(Integer.parseInt(contenu));
 		} else if (baliseName.equals(POS)) {
-			currentObjectKeolis.setPos(Integer.parseInt(contenu));
+			currentObjectKeolis.setPos("1".equals(contenu));
 		} else if (baliseName.equals(DISTRICT)) {
 			currentObjectKeolis.setDistrict(contenu);
 		} else if (baliseName.equals(LASTUPDATE)) {

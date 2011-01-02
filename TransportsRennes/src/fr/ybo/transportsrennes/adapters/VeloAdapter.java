@@ -56,6 +56,12 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 		dispoVeloStation.setText(Formatteur.formatterChaine(station.getName()));
 		TextView dispoVeloDistance = (TextView) v.findViewById(R.id.dispovelo_distance);
 		dispoVeloDistance.setText(station.formatDistance());
+		ImageView iconeCb = (ImageView) v.findViewById(R.id.dispovelo_cb);
+		if (station.isPos()) {
+			iconeCb.setVisibility(View.VISIBLE);
+		} else {
+			iconeCb.setVisibility(View.INVISIBLE);
+		}
 		return v;
 	}
 }

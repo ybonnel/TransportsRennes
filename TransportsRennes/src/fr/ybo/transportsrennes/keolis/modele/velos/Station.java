@@ -74,7 +74,7 @@ public class Station implements Serializable {
 	/**
 	 * Position.
 	 */
-	private int pos;
+	private boolean pos;
 	/**
 	 * Nom du district.
 	 */
@@ -94,9 +94,9 @@ public class Station implements Serializable {
 	 *
 	 * @param pCurrentLocation la location courante.
 	 */
-	public final void calculDistance(final Location pCurrentLocation) {
+	public void calculDistance(Location pCurrentLocation) {
 		if (pCurrentLocation != null) {
-			final float[] distanceResult = new float[1];
+			float[] distanceResult = new float[1];
 			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude, distanceResult);
 			distance = (int) distanceResult[0];
 		}
@@ -107,7 +107,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la distance formattée.
 	 */
-	public final String formatDistance() {
+	public String formatDistance() {
 		if (distance == null) {
 			return "";
 		}
@@ -122,7 +122,7 @@ public class Station implements Serializable {
 	/**
 	 * @return adresse.
 	 */
-	public final String getAdresse() {
+	public String getAdresse() {
 		return adresse;
 	}
 
@@ -131,7 +131,7 @@ public class Station implements Serializable {
 	 *
 	 * @return le nombre de velos libres.
 	 */
-	public final int getBikesavailable() {
+	public int getBikesavailable() {
 		return bikesavailable;
 	}
 
@@ -140,7 +140,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la distance à la position courante.
 	 */
-	public final Integer getDistance() {
+	public Integer getDistance() {
 		return distance;
 	}
 
@@ -149,7 +149,7 @@ public class Station implements Serializable {
 	 *
 	 * @return le nom du district.
 	 */
-	public final String getDistrict() {
+	public String getDistrict() {
 		return district;
 	}
 
@@ -158,7 +158,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la date de dernière mise à jour.
 	 */
-	public final String getLastupdate() {
+	public String getLastupdate() {
 		return lastupdate;
 	}
 
@@ -167,7 +167,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la latitude.
 	 */
-	public final double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
@@ -176,7 +176,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la longitude.
 	 */
-	public final double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 
@@ -185,7 +185,7 @@ public class Station implements Serializable {
 	 *
 	 * @return nom de la station.
 	 */
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -194,7 +194,7 @@ public class Station implements Serializable {
 	 *
 	 * @return numéro de la station.
 	 */
-	public final String getNumber() {
+	public String getNumber() {
 		return number;
 	}
 
@@ -203,7 +203,7 @@ public class Station implements Serializable {
 	 *
 	 * @return la position.
 	 */
-	public final int getPos() {
+	public boolean isPos() {
 		return pos;
 	}
 
@@ -212,7 +212,7 @@ public class Station implements Serializable {
 	 *
 	 * @return le nombre de places libres.
 	 */
-	public final int getSlotsavailable() {
+	public int getSlotsavailable() {
 		return slotsavailable;
 	}
 
@@ -221,14 +221,14 @@ public class Station implements Serializable {
 	 *
 	 * @return état de la station.
 	 */
-	public final boolean getState() {
+	public boolean getState() {
 		return state;
 	}
 
 	/**
 	 * @param pAdresse l'adresse.
 	 */
-	public final void setAdresse(final String pAdresse) {
+	public void setAdresse(String pAdresse) {
 		adresse = pAdresse;
 	}
 
@@ -237,11 +237,11 @@ public class Station implements Serializable {
 	 *
 	 * @param pBikesavailable nombre de vélos libres.
 	 */
-	public final void setBikesavailable(final int pBikesavailable) {
+	public void setBikesavailable(int pBikesavailable) {
 		bikesavailable = pBikesavailable;
 	}
 
-	public void setDistance(final Integer newDistance) {
+	public void setDistance(Integer newDistance) {
 		distance = newDistance;
 	}
 
@@ -250,7 +250,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pDistrict le nom du district.
 	 */
-	public final void setDistrict(final String pDistrict) {
+	public void setDistrict(String pDistrict) {
 		district = pDistrict;
 	}
 
@@ -259,7 +259,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pLastupdate la date de dernière mise à jour.
 	 */
-	public final void setLastupdate(final String pLastupdate) {
+	public void setLastupdate(String pLastupdate) {
 		lastupdate = pLastupdate;
 	}
 
@@ -268,7 +268,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pLatitude la latitude.
 	 */
-	public final void setLatitude(final double pLatitude) {
+	public void setLatitude(double pLatitude) {
 		latitude = pLatitude;
 	}
 
@@ -277,7 +277,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pLongitude la longitude.
 	 */
-	public final void setLongitude(final double pLongitude) {
+	public void setLongitude(double pLongitude) {
 		longitude = pLongitude;
 	}
 
@@ -286,7 +286,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pName nom du district.
 	 */
-	public final void setName(final String pName) {
+	public void setName(String pName) {
 		name = pName;
 	}
 
@@ -295,7 +295,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pNumber le numéro de la station.
 	 */
-	public final void setNumber(final String pNumber) {
+	public void setNumber(String pNumber) {
 		number = pNumber;
 	}
 
@@ -304,7 +304,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pPos la position.
 	 */
-	public final void setPos(final int pPos) {
+	public void setPos(boolean pPos) {
 		pos = pPos;
 	}
 
@@ -313,7 +313,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pSlotsavailable le nombre de places libres.
 	 */
-	public final void setSlotsavailable(final int pSlotsavailable) {
+	public void setSlotsavailable(int pSlotsavailable) {
 		slotsavailable = pSlotsavailable;
 	}
 
@@ -322,7 +322,7 @@ public class Station implements Serializable {
 	 *
 	 * @param pState état de la station.
 	 */
-	public final void setState(final boolean pState) {
+	public void setState(boolean pState) {
 		state = pState;
 	}
 
@@ -331,7 +331,7 @@ public class Station implements Serializable {
 	 * @see Object#toString().
 	 */
 	@Override
-	public final String toString() {
+	public String toString() {
 		return new StringBuilder(name).append(' ').append(bikesavailable).append('/').append((slotsavailable + bikesavailable)).append("  ")
 				.append(formatDistance()).toString();
 	}
