@@ -26,4 +26,6 @@
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
+    <string name="menu_orderByName">Ordre alphabétique</string>
+    <string name="menu_orderBySequence">Ordre de la ligne</string>
 </resources>

@@ -16,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	public static final String DATABASE_NAME = "keolis.db";
-	public static final int DATABASE_VERSION = 2;
+	public static final int DATABASE_VERSION = 3;
 
 	private final Base base;
 
@@ -79,6 +79,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			mapUpgrades.put(2, new UpgradeDatabase() {
 				public void upagrade(SQLiteDatabase db) {
 					base.getTable(VeloFavori.class).createTable(db);
+				}
+			});
+			mapUpgrades.put(3, new UpgradeDatabase(){
+				public void upagrade(SQLiteDatabase db) {
+					base.dropDataBase(db);
+					base.createDataBase(db);
 				}
 			});
 		}

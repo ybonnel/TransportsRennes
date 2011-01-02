@@ -18,7 +18,9 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Liste des arrêts d'une ligne de bus.
@@ -62,7 +64,12 @@ public class ListArret extends ListActivity {
 		requete.append("where");
 		requete.append(" ArretRoute.routeId = :routeId");
 		requete.append(" and ArretRoute.arretId = Arret.id");
-		requete.append(" order by ArretRoute.direction, Arret.nom;");
+		requete.append(" order by ArretRoute.direction, ");
+		if (orderDirection) {
+			requete.append("ArretRoute.sequence");
+		} else {
+			requete.append("Arret.nom");
+		}
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
 		currentCursor =
@@ -161,5 +168,39 @@ public class ListArret extends ListActivity {
 		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
 		LOG_YBO.debug("Suppression du favori " + arretFavori.getStopId());
 		TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
+	}
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_ORDER = Menu.FIRST;
+	private static final int MENU_CHOOSE = MENU_ORDER + 1;
+
+	private boolean orderDirection = true;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, R.string.menu_orderByName);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		menu.findItem(MENU_ORDER).setTitle(orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		switch (item.getItemId()) {
+			case MENU_ORDER:
+				orderDirection = !orderDirection;
+				construireListe();
+				getListView().invalidate();
+				return true;
+		}
+		return false;
 	}
 }

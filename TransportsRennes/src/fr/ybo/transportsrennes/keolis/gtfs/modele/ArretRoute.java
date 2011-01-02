@@ -1,6 +1,7 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.*;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
 @Table
 @FichierCsv("arret_route.txt")
@@ -18,4 +19,8 @@ public class ArretRoute {
 	@Colonne
 	@BaliseCsv("direction")
 	private String direction;
+
+	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class)
+	@Colonne( type = Colonne.TypeColonne.INTEGER )
+	private Integer sequence;
 }
