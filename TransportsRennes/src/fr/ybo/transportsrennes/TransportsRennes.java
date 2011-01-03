@@ -141,6 +141,7 @@ public class TransportsRennes extends Activity {
 					Toast.makeText(TransportsRennes.this,
 							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
+					TransportsRennes.this.finish();
 				}
 			}
 		}.execute((Void[]) null);

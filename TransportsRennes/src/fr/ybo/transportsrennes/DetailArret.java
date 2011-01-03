@@ -234,6 +234,7 @@ public class DetailArret extends ListActivity {
 					Toast.makeText(DetailArret.this,
 							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
+					DetailArret.this.finish();
 				} else {
 					setListAdapter(construireAdapter(calendar));
 					getListView().invalidate();

@@ -240,6 +240,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
 							Toast.LENGTH_LONG);
 					toast.show();
+					ListStationsByPosition.this.finish();
 				}
 			}
 		}.execute();
@@ -300,6 +301,7 @@ public class ListStationsByPosition extends ListActivity implements LocationList
 							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
 									Toast.LENGTH_LONG);
 							toast.show();
+							ListStationsByPosition.this.finish();
 						}
 					}
 				}.execute();

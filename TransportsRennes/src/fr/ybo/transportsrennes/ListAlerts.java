@@ -76,6 +76,7 @@ public class ListAlerts extends ListActivity {
 					Toast toast =
 							Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de Star...", Toast.LENGTH_LONG);
 					toast.show();
+					ListAlerts.this.finish();
 				}
 			}
 		}.execute();
