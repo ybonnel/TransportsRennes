@@ -311,7 +311,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(ListArretByPosition.this,
-							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
 					ListArretByPosition.this.finish();
 				}

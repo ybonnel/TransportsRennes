@@ -71,7 +71,11 @@ public class TransportsRennes extends Activity {
 			verifierUpgrade();
 		} catch (ErreurKeolis erreurKeolis) {
 			LOG_YBO.erreur("Erreur lors de la vérification de mise à jour", erreurKeolis);
-			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...", Toast.LENGTH_LONG);
+			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...", Toast.LENGTH_LONG).show();
+			if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
+				LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
+				finish();
+			}
 		}
 	}
 
@@ -139,7 +143,7 @@ public class TransportsRennes extends Activity {
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(TransportsRennes.this,
-							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
 					TransportsRennes.this.finish();
 				}

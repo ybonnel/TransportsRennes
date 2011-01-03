@@ -232,7 +232,7 @@ public class DetailArret extends ListActivity {
 				super.onPostExecute(result);
 				if (erreur) {
 					Toast.makeText(DetailArret.this,
-							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
 					DetailArret.this.finish();
 				} else {

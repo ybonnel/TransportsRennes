@@ -87,7 +87,7 @@ public class ListArret extends ListActivity {
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(ListArret.this,
-							"Une erreur est survenue lors de la récupération des données de la Star, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
 							Toast.LENGTH_LONG).show();
 					ListArret.this.finish();
 				}
