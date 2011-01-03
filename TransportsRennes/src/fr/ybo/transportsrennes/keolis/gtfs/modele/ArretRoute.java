@@ -23,4 +23,12 @@ public class ArretRoute {
 	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class)
 	@Colonne( type = Colonne.TypeColonne.INTEGER )
 	private Integer sequence;
+
+	public void setRouteId(String routeId) {
+		this.routeId = routeId;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
 }

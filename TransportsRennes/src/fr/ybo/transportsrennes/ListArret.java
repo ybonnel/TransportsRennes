@@ -1,7 +1,9 @@
 package fr.ybo.transportsrennes;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -17,11 +19,13 @@ import fr.ybo.transportsrennes.adapters.ArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Liste des arrêts d'une ligne de bus.
@@ -44,6 +48,45 @@ public class ListArret extends ListActivity {
 		if (currentCursor != null && !currentCursor.isClosed()) {
 			currentCursor.close();
 		}
+	}
+
+	private String currentDirection = null;
+
+	public void onDirectionClick() {
+		final Map<String, String> mapDirections = new HashMap<String, String>();
+		ArretRoute arretRouteRef = new ArretRoute();
+		arretRouteRef.setRouteId(myRoute.getId());
+		for (ArretRoute arretRoute : TransportsRennesApplication.getDataBaseHelper().select(arretRouteRef)) {
+			String directionFormattee = Formatteur.formatterChaine(arretRoute.getDirection());
+			if (!mapDirections.containsKey(directionFormattee)) {
+				mapDirections.put(directionFormattee, arretRoute.getDirection());
+			}
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Choisissez une direction");
+		final List<String> items = new ArrayList<String>();
+		items.add("Toutes");
+		items.addAll(mapDirections.keySet());
+		Collections.sort(items, new Comparator<String>() {
+			public int compare(String o1, String o2) {
+				if ("Toutes".equals(o1)) {
+					return -1;
+				}
+				if ("Toutes".equals(o2)) {
+					return 1;
+				}
+				return o1.compareToIgnoreCase(o2);
+			}
+		});
+		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int item) {
+				currentDirection = mapDirections.get(items.get(item));
+				construireListe();
+				getListView().invalidate();
+				dialogInterface.dismiss();
+			}
+		});
+		builder.create().show();
 	}
 
 	private void ajoutFavori(final Cursor cursor) throws DataBaseException {
@@ -99,6 +142,8 @@ public class ListArret extends ListActivity {
 
 	private void construireCursor() {
 		closeCurrentCursor();
+		List<String> selectionArgs = new ArrayList<String>();
+		selectionArgs.add(myRoute.getId());
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" ArretRoute.direction as direction ");
@@ -106,6 +151,10 @@ public class ListArret extends ListActivity {
 		requete.append("where");
 		requete.append(" ArretRoute.routeId = :routeId");
 		requete.append(" and ArretRoute.arretId = Arret.id");
+		if (currentDirection != null) {
+			requete.append(" and ArretRoute.direction = :direction");
+			selectionArgs.add(currentDirection);
+		}
 		requete.append(" order by ArretRoute.direction, ");
 		if (orderDirection) {
 			requete.append("ArretRoute.sequence");
@@ -114,8 +163,7 @@ public class ListArret extends ListActivity {
 		}
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
-		currentCursor =
-				TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myRoute.getId()));
+		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
 	}
 
@@ -159,6 +207,11 @@ public class ListArret extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
 		myRoute = (Route) getIntent().getExtras().getSerializable("route");
+		((TextView) findViewById(R.id.directionArretEntete)).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				ListArret.this.onDirectionClick();
+			}
+		});
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
 		nomLong.setText(myRoute.getNomLongFormate());

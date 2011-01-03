@@ -3,7 +3,8 @@
               android:orientation="vertical" android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <ListView android:id="@id/android:list" android:layout_width="fill_parent"
-              android:layout_height="fill_parent"/>
+              android:layout_height="fill_parent"
+              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
     <TextView android:id="@id/android:empty"
               android:layout_width="fill_parent" android:layout_height="fill_parent"
               android:text="Aucune station favorite trouvée (appui long sur la liste des stations de vélo pour la rajouter aux favoris)"/>

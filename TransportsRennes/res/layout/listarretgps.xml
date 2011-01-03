@@ -10,8 +10,16 @@
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
               android:hint="Recherche d'arrêts"/>
+
+    <ImageView android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:paddingBottom="4dip"
+            android:src="@android:drawable/divider_horizontal_dim_dark"
+            android:id="@+id/separateur"/>
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:divider="@android:drawable/divider_horizontal_dim_dark"
             />
 </LinearLayout>

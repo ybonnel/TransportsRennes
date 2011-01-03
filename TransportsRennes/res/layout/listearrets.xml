@@ -42,12 +42,23 @@
               android:gravity="center_vertical|right"
               android:text="Direction"
             android:layout_below="@id/conteneurImage"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:drawablePadding="2dip"/>
+
+    <ImageView android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+            android:layout_below="@id/nomArretEntete"
+            android:paddingTop="4dip"
+            android:paddingBottom="4dip"
+            android:src="@android:drawable/divider_horizontal_dim_dark"
+            android:id="@+id/listearrets_separateur"/>
 
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:layout_below="@id/nomArretEntete"
+              android:layout_below="@id/listearrets_separateur"
               android:layout_alignParentLeft="true"
+              android:divider="@android:drawable/divider_horizontal_dim_dark"
             />
 </RelativeLayout>
