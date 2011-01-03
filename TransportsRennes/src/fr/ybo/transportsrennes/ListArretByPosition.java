@@ -84,8 +84,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 				arret.calculDistance(location);
 			}
 			Collections.sort(arrets, new Arret.ComparatorDistance());
-			Collections.sort(arretsFiltrees, new Arret.ComparatorDistance());
-			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+			metterAJourListeArrets();
 		}
 	}
 
@@ -147,9 +146,11 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 	private void metterAJourListeArrets() {
 		String query = editText.getText().toString().toUpperCase();
 		arretsFiltrees.clear();
+		int count = 0;
 		for (Arret arret : arrets) {
-			if (arret.getNom().toUpperCase().contains(query.toUpperCase())) {
+			if (count < 100 && arret.getNom().toUpperCase().contains(query.toUpperCase())) {
 				arretsFiltrees.add(arret);
+				count++;
 			}
 		}
 		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
@@ -196,8 +197,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 				return o1.getNom().compareToIgnoreCase(o2.getNom());
 			}
 		});
-		arretsFiltrees.clear();
-		arretsFiltrees.addAll(arrets);
+		metterAJourListeArrets();
 
 		activeGps();
 		((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
