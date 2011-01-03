@@ -55,8 +55,7 @@ public final class GestionZipKeolis {
 
 	}
 
-	public static void getAndParseZipKeolis(final MoteurCsv moteur,
-	                                        final DataBaseHelper dataBaseHelper)
+	public static void getAndParseZipKeolis(final MoteurCsv moteur, final DataBaseHelper dataBaseHelper)
 			throws ErreurGestionFiles, ErreurMoteurCsv, DataBaseException {
 		try {
 			final HttpURLConnection connection = openHttpConnection();
@@ -68,11 +67,14 @@ public final class GestionZipKeolis {
 				LOG_YBO.debug("Debut du traitement du fichier " + zipEntry.getName());
 				bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
 				moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine());
-				dataBaseHelper.beginTransaction();
-				while ((ligne = bufReader.readLine()) != null) {
-					dataBaseHelper.insert(moteur.creerObjet(ligne));
+				try {
+					dataBaseHelper.beginTransaction();
+					while ((ligne = bufReader.readLine()) != null) {
+						dataBaseHelper.insert(moteur.creerObjet(ligne));
+					}
+				} finally {
+					dataBaseHelper.endTransaction();
 				}
-				dataBaseHelper.endTransaction();
 				LOG_YBO.debug("Fin du traitement du fichier " + zipEntry.getName());
 			}
 			dataBaseHelper.close();

@@ -39,15 +39,18 @@ public final class UpdateDataBase {
 
 	public static void chargeDetailRoute(Route route) {
 		LOG_YBO.debug("Chargement en base de la route : " + route.getNomCourt());
-		TransportsRennesApplication.getDataBaseHelper().beginTransaction();
-		route.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper());
-		route.setChargee(Boolean.TRUE);
-		final ContentValues values = new ContentValues();
-		values.put("chargee", 1);
-		final String[] whereArgs = new String[1];
-		whereArgs[0] = route.getId();
-		TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().update("Route", values, "id = :id", whereArgs);
-		TransportsRennesApplication.getDataBaseHelper().endTransaction();
+		try {
+			TransportsRennesApplication.getDataBaseHelper().beginTransaction();
+			route.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper());
+			route.setChargee(Boolean.TRUE);
+			final ContentValues values = new ContentValues();
+			values.put("chargee", 1);
+			final String[] whereArgs = new String[1];
+			whereArgs[0] = route.getId();
+			TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().update("Route", values, "id = :id", whereArgs);
+		} finally {
+			TransportsRennesApplication.getDataBaseHelper().endTransaction();
+		}
 		LOG_YBO.debug("Chargement en base de la route terminée");
 	}
 
