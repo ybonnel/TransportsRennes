@@ -13,10 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -166,6 +163,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), R.layout.arretgps, arretsFiltrees));
 		listView = getListView();

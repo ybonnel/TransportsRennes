@@ -8,7 +8,8 @@
               android:layout_width="fill_parent"
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
-              android:imeOptions="actionSearch"/>
+              android:imeOptions="actionSearch"
+              android:hint="Recherche de stations" />
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
