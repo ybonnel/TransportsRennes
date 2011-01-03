@@ -2,6 +2,7 @@ package fr.ybo.transportsrennes.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.JoursFeries;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.List;
 
 public class FavoriAdapter extends BaseAdapter {
 	private final static Class<?> classDrawable = R.drawable.class;
+
+	private final static LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
 
 	static class ViewHolder {
 		LinearLayout conteneur;
@@ -114,17 +118,21 @@ public class FavoriAdapter extends BaseAdapter {
 		selectionArgs.add(favori.getRouteId());
 		selectionArgs.add(favori.getStopId());
 		selectionArgs.add(Long.toString(now));
-		Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		if (currentCursor.moveToFirst()) {
-			int prochainDepart = currentCursor.getInt(0);
-			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
-		}
+		try {
+			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+			if (currentCursor.moveToFirst()) {
+				int prochainDepart = currentCursor.getInt(0);
+				holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+			}
 
-		currentCursor.close();
+			currentCursor.close();
+		} catch (SQLiteException sqlException) {
+			LOG_YBO.erreur("Erreur SQL reçue lors de la récupération du prochain départ, ça doit pas arriver, mais on ignore l'erreur au cas où",
+					sqlException);
+		}
 
 		return convertView;
 	}
-
 
 
 	private String formatterCalendar(int prochainDepart, int now) {
