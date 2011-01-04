@@ -58,7 +58,7 @@ public class RouteAdapter extends BaseAdapter {
 		convertView.setTag(holder);
 
 		Route route = routes.get(position);
-		holder.nomLong.setText(route.getNomLongFormate());
+		holder.nomLong.setText(route.getNomLong());
 		try {
 			Field fieldIcon = classDrawable.getDeclaredField("i" + route.getNomCourt().toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);

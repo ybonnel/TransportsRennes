@@ -11,14 +11,17 @@
                   android:paddingRight="2dip"
                   android:layout_height="50dip"
                   android:gravity="center_vertical|center_horizontal"/>
-    <TextView android:id="@+id/nomLong"
-              android:padding="5dip"
-              android:layout_width="fill_parent"
-              android:minHeight="50dip"
-              android:layout_height="wrap_content"
-              android:textSize="20dip"
-              android:gravity="center_vertical|left"
-              android:layout_toRightOf="@id/conteneurImage"/>
+    <HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_toRightOf="@id/conteneurImage">
+        <TextView android:id="@+id/nomLong"
+                  android:padding="5dip"
+                  android:layout_width="fill_parent"
+                  android:layout_height="50dip"
+                  android:textSize="20dip"
+                  android:gravity="center_vertical|left"/>
+    </HorizontalScrollView>
 
     <TextView android:id="@+id/nomArretEntete"
               android:paddingLeft="5dip"
@@ -29,8 +32,8 @@
               android:textSize="20dip"
               android:gravity="center_vertical|left"
               android:text="Nom de l'arrêt"
-            android:layout_below="@id/conteneurImage"
-            android:layout_alignParentLeft="true"/>
+              android:layout_below="@id/conteneurImage"
+              android:layout_alignParentLeft="true"/>
 
     <TextView android:id="@+id/directionArretEntete"
               android:paddingRight="5dip"
@@ -41,18 +44,18 @@
               android:textSize="20dip"
               android:gravity="center_vertical|right"
               android:text="Direction"
-            android:layout_below="@id/conteneurImage"
-            android:layout_alignParentRight="true"
-            android:drawableRight="@android:drawable/arrow_down_float"
-            android:drawablePadding="2dip"/>
+              android:layout_below="@id/conteneurImage"
+              android:layout_alignParentRight="true"
+              android:drawableRight="@android:drawable/arrow_down_float"
+              android:drawablePadding="2dip"/>
 
     <ImageView android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-            android:layout_below="@id/nomArretEntete"
-            android:paddingTop="4dip"
-            android:paddingBottom="4dip"
-            android:src="@android:drawable/divider_horizontal_dim_dark"
-            android:id="@+id/listearrets_separateur"/>
+               android:layout_height="10dip"
+               android:layout_below="@id/nomArretEntete"
+               android:paddingTop="4dip"
+               android:paddingBottom="0dip"
+               android:src="@android:drawable/divider_horizontal_dim_dark"
+               android:id="@+id/listearrets_separateur"/>
 
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"

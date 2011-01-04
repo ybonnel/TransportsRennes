@@ -87,7 +87,7 @@ public class DetailArret extends ListActivity {
 	private void gestionViewsTitle() {
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(Formatteur.formatterChaine(favori.getRouteNomLong()));
+		nomLong.setText(favori.getRouteNomLong());
 		try {
 			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.getRouteNomCourt().toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);

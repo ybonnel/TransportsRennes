@@ -207,14 +207,14 @@ public class ListArret extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
 		myRoute = (Route) getIntent().getExtras().getSerializable("route");
-		((TextView) findViewById(R.id.directionArretEntete)).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.directionArretEntete).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				ListArret.this.onDirectionClick();
 			}
 		});
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(myRoute.getNomLongFormate());
+		nomLong.setText(myRoute.getNomLong());
 		try {
 			Field fieldIcon = classDrawable.getDeclaredField("i" + myRoute.getNomCourt().toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);

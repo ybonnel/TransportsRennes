@@ -72,10 +72,6 @@ public class Route implements Serializable {
 		return nomLong;
 	}
 
-	public String getNomLongFormate() {
-		return Formatteur.formatterChaine(nomLong);
-	}
-
 	public void setChargee(final Boolean chargee) {
 		this.chargee = chargee;
 	}

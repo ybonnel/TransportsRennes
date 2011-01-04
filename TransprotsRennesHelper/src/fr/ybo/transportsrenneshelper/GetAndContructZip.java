@@ -114,6 +114,88 @@ public class GetAndContructZip {
 		return stringBuilder.toString();
 	}
 
+	public static void rechercherCasToTest() throws IOException {
+		File repertoire = new File(REPERTOIRE_SORTIE);
+		List<Class<?>> listeClassCsv = new ArrayList<Class<?>>();
+		listeClassCsv.add(Route.class);
+		listeClassCsv.add(Trip.class);
+		listeClassCsv.add(Calendrier.class);
+		listeClassCsv.add(HeuresArrets.class);
+		listeClassCsv.add(ArretRoute.class);
+		listeClassCsv.add(Arret.class);
+		MoteurCsv moteurCsv = new MoteurCsv(listeClassCsv);
+		Map<String, Route> mapRoutes = new HashMap<String, Route>();
+		Map<String, Arret> mapArrets = new HashMap<String, Arret>();
+		Map<String, List<Arret>> mapArretsByRoute = new HashMap<String, List<Arret>>();
+		List<ArretRoute> arretsRoutes = moteurCsv.parseFile(new File(repertoire, "arret_route.txt"), ArretRoute.class);
+		for (Arret arret : moteurCsv.parseFile(new File(repertoire, "stops.txt"), Arret.class)) {
+			mapArrets.put(arret.getId(), arret);
+		}
+		for (Route route : moteurCsv.parseFile(new File(repertoire, "routes.txt"), Route.class)) {
+			mapRoutes.put(route.getId(), route);
+		}
+		for (ArretRoute arretRoute : arretsRoutes) {
+			if (!mapArretsByRoute.containsKey(arretRoute.getRouteId())) {
+				mapArretsByRoute.put(arretRoute.getRouteId(), new ArrayList<Arret>());
+			}
+			mapArretsByRoute.get(arretRoute.getRouteId()).add(mapArrets.get(arretRoute.getArretId()));
+		}
+		System.out.println("Route avec le nom le plus long :");
+		int maxCar = 0;
+		String nomLong = "";
+		String nomCourt = "";
+		for (Route route : mapRoutes.values()) {
+			if (route.getNomLong().length() > maxCar) {
+				maxCar = route.getNomLong().length();
+				nomLong = route.getNomLong();
+				nomCourt = route.getNomCourt();
+			}
+		}
+		System.out.println("\tLigne " + nomCourt + " : " + nomLong + "(" + maxCar + ")");
+
+		System.out.println("Arrêt avec le nom le plus long :");
+		String nomCourtRoute = "";
+		maxCar = 0;
+		for (Route route : mapRoutes.values()) {
+			for (Arret arret : mapArretsByRoute.get(route.getId())) {
+				if (arret.getNom() == null) {
+					System.err.println("Arret d'id " + arret.getId() + " de la ligne " + route.getNomCourt() + " n'a pas de nom!!!");
+				} else if (arret.getNom().length() > maxCar) {
+					maxCar = arret.getNom().length();
+					nomLong = arret.getNom();
+					nomCourtRoute = route.getNomCourt();
+				}
+			}
+		}
+		System.out.println("\tLigne " + nomCourtRoute + " : " + nomLong + "(" + maxCar + ")");
+
+		System.out.println("Direction la plus grande :");
+		ArretRoute arretRouteLongueDirection = arretsRoutes.get(0);
+		for (ArretRoute arretRoute : arretsRoutes) {
+			if (arretRoute.getDirection().length() > arretRouteLongueDirection.getDirection().length()) {
+				arretRouteLongueDirection = arretRoute;
+			}
+		}
+		System.out.println("\tLigne " + mapRoutes.get(arretRouteLongueDirection.getRouteId()).getNomCourt() + ", arrêt " +
+				mapArrets.get(arretRouteLongueDirection.getArretId()).getNom() + " : " + arretRouteLongueDirection.getDirection() + "(" +
+				arretRouteLongueDirection.getDirection().length() + ")");
+
+		System.out.println("Combinaison arrêt - direction la plus grance :");
+		arretRouteLongueDirection = arretsRoutes.get(0);
+		for (ArretRoute arretRoute : arretsRoutes) {
+			if (arretRoute.getDirection().length() + mapArrets.get(arretRoute.getArretId()).getNom().length() >
+					arretRouteLongueDirection.getDirection().length() + mapArrets.get(arretRouteLongueDirection.getArretId()).getNom().length()) {
+				arretRouteLongueDirection = arretRoute;
+			}
+		}
+		int longueur = arretRouteLongueDirection.getDirection().length() + mapArrets.get(arretRouteLongueDirection.getArretId()).getNom().length();
+		System.out.println("\tLigne " + mapRoutes.get(arretRouteLongueDirection.getRouteId()).getNomCourt() + ", arrêt " +
+				mapArrets.get(arretRouteLongueDirection.getArretId()).getNom() + " vers " + arretRouteLongueDirection.getDirection() + "(" +
+				longueur + ")");
+
+
+	}
+
 	public static void getAndParseZipKeolis() throws ParseException, IOException, IllegalAccessException, ErreurMoteurCsv {
 		Date lastUpdate = getLastUpdate();
 		final HttpURLConnection connection = openHttpConnection(lastUpdate);
@@ -420,7 +502,7 @@ public class GetAndContructZip {
 					}
 				}
 			}
-			int max = 0;
+			/*int max = 0;
 			String chaineMax = null;
 			for (String stops : mapCompteurTrip.keySet()) {
 				if (stops.length() > max) {
@@ -444,7 +526,7 @@ public class GetAndContructZip {
 					Collections.sort(listStops);
 					route.setNomLong(listStops.get(0) + " - " + listStops.get(1));
 				}
-			}
+			}*/
 			System.out.println("Compte de la route " + routeId);
 			for (Map.Entry<String, Integer> entry : mapCompteurTrip.entrySet()) {
 				System.out.println(entry.getValue() + " : " + entry.getKey());
@@ -490,8 +572,7 @@ public class GetAndContructZip {
 			ArretRoute arretRoute = itArretsRoutes.next();
 			if (!mapStopsIds.get(arretRoute.getRouteId()).contains(arretRoute.getArretId())) {
 				itArretsRoutes.remove();
-			}
-			else if (!stopsIds.contains(arretRoute.getArretId())) {
+			} else if (!stopsIds.contains(arretRoute.getArretId())) {
 				stopsIds.add(arretRoute.getArretId());
 			}
 		}
@@ -544,7 +625,7 @@ public class GetAndContructZip {
 
 	}
 
-	private static String formatterCalendarHeure(int prochainDepart, int now) {
+	/*private static String formatterCalendarHeure(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		int heures = tempsEnMinutes / 60;
@@ -564,7 +645,7 @@ public class GetAndContructZip {
 		}
 		stringBuilder.append(minutesChaine);
 		return stringBuilder.toString();
-	}
+	}*/
 
 	private static Calendrier rechercherCalendrier(List<Calendrier> calendriers, Calendrier calendrier) {
 		int index = calendriers.indexOf(calendrier);
@@ -629,7 +710,8 @@ public class GetAndContructZip {
 	}
 
 	public static void main(String[] args) throws IOException, ParseException, ErreurMoteurCsv, IllegalAccessException {
-		GetAndContructZip.getAndParseZipKeolis();
+		getAndParseZipKeolis();
+		rechercherCasToTest();
 	}
 
 }
