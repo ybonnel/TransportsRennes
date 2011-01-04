@@ -105,8 +105,7 @@ public class DetailArret extends ListActivity {
 			textView.setText(favori.getRouteNomCourt());
 			conteneur.addView(textView);
 		}
-		((TextView) findViewById(R.id.detailArret_nomArret)).setText(
-				favori.getNomArret() + " vers " + Formatteur.formatterChaine(favori.getDirection().replaceAll(favori.getRouteNomCourt(), "")));
+		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.getNomArret() + " vers " + favori.getDirection());
 	}
 
 	private DetailArretAdapter construireAdapter(Calendar calendar) {

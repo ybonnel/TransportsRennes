@@ -53,7 +53,7 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 			conteneur.addView(textView);
 		}
 		TextView arretDirection = (TextView) v.findViewById(R.id.arretgps_direction);
-		arretDirection.setText(Formatteur.formatterChaine(arret.getFavori().getDirection().replaceAll(arret.getFavori().getRouteNomCourt(), "")));
+		arretDirection.setText(arret.getFavori().getDirection());
 		TextView nomArret = (TextView) v.findViewById(R.id.arretgps_nomArret);
 		nomArret.setText(Formatteur.formatterChaine(arret.getNom()));
 		TextView distance = (TextView) v.findViewById(R.id.arretgps_distance);

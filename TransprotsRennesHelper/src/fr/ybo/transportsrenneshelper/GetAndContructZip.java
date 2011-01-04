@@ -449,6 +449,7 @@ public class GetAndContructZip {
 		}
 		for (String routeId : mapStopsByTripsIdAndRouteId.keySet()) {
 			Map<String, Integer> mapCompteurTrip = new HashMap<String, Integer>();
+			Map<String, String> mapDirections = new HashMap<String, String>();
 			for (Map.Entry<String, List<StopIdWithSequence>> entry : mapStopsByTripsIdAndRouteId.get(routeId).entrySet()) {
 				List<StopIdWithSequence> stops = new ArrayList<StopIdWithSequence>();
 				for (StopIdWithSequence stop : entry.getValue()) {
@@ -457,8 +458,15 @@ public class GetAndContructZip {
 				String stopsChaine = genereChaineOfListe(stops);
 				if (!mapCompteurTrip.containsKey(stopsChaine)) {
 					mapCompteurTrip.put(stopsChaine, 0);
+					mapDirections.put(stopsChaine, mapTrips.get(entry.getKey()).getHeadSign());
 				}
 				mapCompteurTrip.put(stopsChaine, mapCompteurTrip.get(stopsChaine) + 1);
+				if (!mapDirections.get(stopsChaine).equals(mapTrips.get(entry.getKey()).getHeadSign())) {
+					System.out.println("Plusieurs directions trouvée pour la ligne " + routeId);
+					System.out.println("\t" + stopsChaine);
+					System.out.println("\tDirection actuelle : " + mapDirections.get(stopsChaine));
+					System.out.println("\tNouvelle direction : " + mapTrips.get(entry.getKey()).getHeadSign());
+				}
 			}
 			Map<String, List<ArretRoute>> mapArretRouteByDirection = new HashMap<String, List<ArretRoute>>();
 			for (ArretRoute arretRoute : listeArretsRoutes) {
@@ -494,7 +502,20 @@ public class GetAndContructZip {
 								stopSequence++;
 							}
 						}
-						arretRoute.setDirection(mapArrets.get(lastStop).getNom());
+						String direction = mapDirections.get(chaineBonChemin);
+						if (direction.split("\\|").length > 1) {
+							direction = direction.split("\\|")[1];
+						}
+						else {
+							System.err.println(direction);
+							if (direction.equals("51 beton chev st s")) {
+								direction = "Betton (Champ Devant)";
+							}
+						}
+						while (direction.startsWith(" ")) {
+							direction = direction.substring(1);
+						}
+						arretRoute.setDirection(direction);
 						if (!mapArretRouteByDirection.containsKey(arretRoute.getDirection())) {
 							mapArretRouteByDirection.put(arretRoute.getDirection(), new ArrayList<ArretRoute>());
 						}

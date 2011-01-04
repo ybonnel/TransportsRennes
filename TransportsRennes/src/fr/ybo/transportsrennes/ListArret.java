@@ -57,10 +57,7 @@ public class ListArret extends ListActivity {
 		ArretRoute arretRouteRef = new ArretRoute();
 		arretRouteRef.setRouteId(myRoute.getId());
 		for (ArretRoute arretRoute : TransportsRennesApplication.getDataBaseHelper().select(arretRouteRef)) {
-			String directionFormattee = Formatteur.formatterChaine(arretRoute.getDirection());
-			if (!mapDirections.containsKey(directionFormattee)) {
-				mapDirections.put(directionFormattee, arretRoute.getDirection());
-			}
+			mapDirections.put(arretRoute.getDirection(), arretRoute.getDirection());
 		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choisissez une direction");
