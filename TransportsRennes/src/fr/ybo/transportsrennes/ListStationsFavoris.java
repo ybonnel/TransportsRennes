@@ -85,6 +85,7 @@ public class ListStationsFavoris extends ListActivity {
 					for (VeloFavori favori : velosFavoris) {
 						numbers.add(favori.getNumber());
 					}
+					stations.clear();
 					stations.addAll(keolis.getStationByNumbers(numbers));
 					Collections.sort(stations, new Comparator<Station>() {
 						public int compare(Station o1, Station o2) {
@@ -148,6 +149,7 @@ public class ListStationsFavoris extends ListActivity {
 							for (VeloFavori favori : velosFavoris) {
 								numbers.add(favori.getNumber());
 							}
+							stations.clear();
 							stations.addAll(keolis.getStationByNumbers(numbers));
 							Collections.sort(stations, new Comparator<Station>() {
 								public int compare(Station o1, Station o2) {
