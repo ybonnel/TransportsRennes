@@ -143,6 +143,9 @@ public class FavoriAdapter extends BaseAdapter {
 		} else {
 			int heures = tempsEnMinutes / 60;
 			int minutes = tempsEnMinutes - heures * 60;
+			if (heures >= 24) {
+				heures = heures - 24;
+			}
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
@@ -151,7 +154,9 @@ public class FavoriAdapter extends BaseAdapter {
 			}
 			if (minutes > 0) {
 				stringBuilder.append(minutes);
-				stringBuilder.append(" min ");
+				if (heures <= 0) {
+					stringBuilder.append(" min");
+				}
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
