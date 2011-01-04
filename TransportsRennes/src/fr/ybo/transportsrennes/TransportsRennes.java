@@ -128,7 +128,7 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					UpdateDataBase.updateIfNecessaryDatabase(TransportsRennesApplication.getDataBaseHelper());
+					UpdateDataBase.updateIfNecessaryDatabase();
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
 					erreur = true;

@@ -28,6 +28,10 @@ public class ArretRoute {
 		this.routeId = routeId;
 	}
 
+	public void setArretId(String arretId) {
+		this.arretId = arretId;
+	}
+
 	public String getDirection() {
 		return direction;
 	}

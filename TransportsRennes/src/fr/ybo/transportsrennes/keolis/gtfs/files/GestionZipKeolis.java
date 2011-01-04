@@ -1,5 +1,6 @@
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
+import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
@@ -55,7 +56,7 @@ public final class GestionZipKeolis {
 
 	}
 
-	public static void getAndParseZipKeolis(final MoteurCsv moteur, final DataBaseHelper dataBaseHelper)
+	public static void getAndParseZipKeolis(final MoteurCsv moteur)
 			throws ErreurGestionFiles, ErreurMoteurCsv, DataBaseException {
 		try {
 			final HttpURLConnection connection = openHttpConnection();
@@ -68,16 +69,16 @@ public final class GestionZipKeolis {
 				bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
 				moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine());
 				try {
-					dataBaseHelper.beginTransaction();
+					TransportsRennesApplication.getDataBaseHelper().beginTransaction();
 					while ((ligne = bufReader.readLine()) != null) {
-						dataBaseHelper.insert(moteur.creerObjet(ligne));
+						TransportsRennesApplication.getDataBaseHelper().insert(moteur.creerObjet(ligne));
 					}
 				} finally {
-					dataBaseHelper.endTransaction();
+					TransportsRennesApplication.getDataBaseHelper().endTransaction();
 				}
 				LOG_YBO.debug("Fin du traitement du fichier " + zipEntry.getName());
 			}
-			dataBaseHelper.close();
+			TransportsRennesApplication.getDataBaseHelper().close();
 			connection.disconnect();
 			LOG_YBO.debug("Fin getAndParseZipKeolis.");
 		} catch (final IOException e) {

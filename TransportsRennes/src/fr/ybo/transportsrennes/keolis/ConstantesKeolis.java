@@ -20,6 +20,17 @@ public class ConstantesKeolis {
 		LIST_CLASSES_DATABASE.add(VeloFavori.class);
 	}
 
+	public static final List<Class<?>> LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE = new ArrayList<Class<?>>();
+
+	static {
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(Arret.class);
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(Calendrier.class);
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(DernierMiseAJour.class);
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(Route.class);
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(HeuresArrets.class);
+		LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE.add(ArretRoute.class);
+	}
+
 	public static final List<Class<?>> LIST_CLASSES_GTFS = new ArrayList<Class<?>>();
 
 	static {
