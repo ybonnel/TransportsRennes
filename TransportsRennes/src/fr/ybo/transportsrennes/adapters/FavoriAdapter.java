@@ -41,12 +41,15 @@ public class FavoriAdapter extends BaseAdapter {
 
 	private int now;
 	private Calendar calendar;
+	private Calendar calendarLaVeille;
 
 	public FavoriAdapter(final Context context, final List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.favoris = favoris;
 		calendar = Calendar.getInstance();
+		calendarLaVeille = Calendar.getInstance();
+		calendarLaVeille.roll(Calendar.DATE, false);
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 
@@ -103,6 +106,17 @@ public class FavoriAdapter extends BaseAdapter {
 		}
 
 		StringBuilder requete = new StringBuilder();
+		requete.append("select (HeuresArrets.heureDepart - :uneJournee) as _id ");
+		requete.append("from Calendrier,  HeuresArrets");
+		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
+		requete.append(" as HeuresArrets ");
+		requete.append("where ");
+		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
+		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
+		requete.append(" and HeuresArrets.routeId = :routeId1");
+		requete.append(" and HeuresArrets.stopId = :arretId1");
+		requete.append(" and HeuresArrets.heureDepart >= :maintenantHier ");
+		requete.append("UNION ");
 		requete.append("select HeuresArrets.heureDepart as _id ");
 		requete.append("from Calendrier,  HeuresArrets");
 		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
@@ -110,14 +124,19 @@ public class FavoriAdapter extends BaseAdapter {
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendar));
 		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId");
-		requete.append(" and HeuresArrets.stopId = :arretId");
+		requete.append(" and HeuresArrets.routeId = :routeId2");
+		requete.append(" and HeuresArrets.stopId = :arretId2");
 		requete.append(" and HeuresArrets.heureDepart >= :maintenant");
-		requete.append(" order by HeuresArrets.heureDepart limit 1;");
+		requete.append(" order by _id limit 1;");
+		int uneJournee = 24 * 60;
 		List<String> selectionArgs = new ArrayList<String>();
+		selectionArgs.add(Integer.toString(uneJournee));
 		selectionArgs.add(favori.getRouteId());
 		selectionArgs.add(favori.getStopId());
-		selectionArgs.add(Long.toString(now));
+		selectionArgs.add(Integer.toString(now + (uneJournee)));
+		selectionArgs.add(favori.getRouteId());
+		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(Integer.toString(now));
 		try {
 			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 			if (currentCursor.moveToFirst()) {

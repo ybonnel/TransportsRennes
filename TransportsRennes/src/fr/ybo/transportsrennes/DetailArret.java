@@ -43,6 +43,7 @@ public class DetailArret extends ListActivity {
 	private Cursor currentCursor;
 
 	private Calendar calendar = Calendar.getInstance();
+	private Calendar calendarLaVeille = Calendar.getInstance();
 
 	private String clauseWhereForTodayCalendrier(Calendar calendar) {
 		if (JoursFeries.isJourFerie(calendar.getTime())) {
@@ -141,6 +142,17 @@ public class DetailArret extends ListActivity {
 	private DetailArretAdapter construireAdapterProchainsDeparts(Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
+		requete.append("select (HeuresArrets.heureDepart - :uneJournee) as _id ");
+		requete.append("from Calendrier,  HeuresArrets");
+		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
+		requete.append(" as HeuresArrets ");
+		requete.append("where ");
+		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
+		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
+		requete.append(" and HeuresArrets.routeId = :routeId1");
+		requete.append(" and HeuresArrets.stopId = :arretId1");
+		requete.append(" and HeuresArrets.heureDepart >= :maintenantHier ");
+		requete.append("UNION ");
 		requete.append("select HeuresArrets.heureDepart as _id ");
 		requete.append("from Calendrier,  HeuresArrets");
 		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
@@ -148,14 +160,19 @@ public class DetailArret extends ListActivity {
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendar));
 		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId");
-		requete.append(" and HeuresArrets.stopId = :arretId");
+		requete.append(" and HeuresArrets.routeId = :routeId2");
+		requete.append(" and HeuresArrets.stopId = :arretId2");
 		requete.append(" and HeuresArrets.heureDepart >= :maintenant");
-		requete.append(" order by HeuresArrets.heureDepart;");
+		requete.append(" order by _id;");
 		List<String> selectionArgs = new ArrayList<String>();
+		int uneJournee = 24 * 60;
+		selectionArgs.add(Integer.toString(uneJournee));
 		selectionArgs.add(favori.getRouteId());
 		selectionArgs.add(favori.getStopId());
-		selectionArgs.add(Long.toString(now));
+		selectionArgs.add(Integer.toString(now + (uneJournee)));
+		selectionArgs.add(favori.getRouteId());
+		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(Integer.toString(now));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
@@ -168,6 +185,8 @@ public class DetailArret extends ListActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		calendar = Calendar.getInstance();
+		calendarLaVeille = Calendar.getInstance();
+		calendarLaVeille.roll(Calendar.DATE, false);
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		gestionViewsTitle();
@@ -301,6 +320,10 @@ public class DetailArret extends ListActivity {
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, monthOfYear);
 			calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+			calendarLaVeille.set(Calendar.YEAR, year);
+			calendarLaVeille.set(Calendar.MONTH, monthOfYear);
+			calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+			calendarLaVeille.roll(Calendar.DATE, false);
 			LOG_YBO.debug("Date choisie : " + calendar.getTime().toString());
 			setListAdapter(construireAdapter(calendar));
 			getListView().invalidate();
