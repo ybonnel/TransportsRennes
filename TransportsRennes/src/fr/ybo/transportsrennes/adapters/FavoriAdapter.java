@@ -47,6 +47,11 @@ public class FavoriAdapter extends BaseAdapter {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.favoris = favoris;
+		majCalendar();
+	}
+
+
+	public void majCalendar() {
 		calendar = Calendar.getInstance();
 		calendarLaVeille = Calendar.getInstance();
 		calendarLaVeille.roll(Calendar.DATE, false);
