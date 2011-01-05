@@ -35,9 +35,6 @@ public class DetailArretAdapter extends CursorAdapter {
 			stringBuilder.append("dans ");
 			int heures = tempsEnMinutes / 60;
 			int minutes = tempsEnMinutes - heures * 60;
-			if (heures >= 24) {
-				heures = heures - 24;
-			}
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
