@@ -22,6 +22,13 @@ public final class UpdateDataBase {
 		if (dernierMiseAJour == null || dernierMiseAJour.getDerniereMiseAJour() == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.getDerniereMiseAJour())) {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
+			LOG_YBO.debug("Suppression des routes chargées");
+			for (Route route : TransportsRennesApplication.getDataBaseHelper().select(new Route())) {
+				 if (route.getChargee() != null
+						 && route.getChargee().booleanValue()) {
+					  TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE HeuresArrets" + route.getIdWithoutSpecCar());
+				 }
+			}
 			LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
 			for (final Class<?> clazz : ConstantesKeolis.LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE) {
 				TransportsRennesApplication.getDataBaseHelper().deleteAll(clazz);

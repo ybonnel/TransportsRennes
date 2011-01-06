@@ -83,6 +83,7 @@ public class ListFavoris extends ListActivity {
 		super.onResume();
 		if (threadCourant == null) {
 			LOG_YBO.debug("Démarrage du threadMiseAJour");
+			runnableMajToRunOnUiThread.run();
 			threadCourant = new Thread(runnableMajHoraires);
 			threadCourant.start();
 		}
