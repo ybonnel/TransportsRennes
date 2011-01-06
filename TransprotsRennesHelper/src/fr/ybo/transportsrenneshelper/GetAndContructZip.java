@@ -341,6 +341,16 @@ public class GetAndContructZip {
 					mapHeures.put(idHeureArret, heure);
 				} else {
 					mapHeures.get(idHeureArret).getCalendrier().merge(calendrierActuel);
+					if (heure.getStopSequence().intValue() < mapHeures.get(idHeureArret).getStopSequence().intValue()) {
+						mapHeures.get(idHeureArret).setStopSequence(heure.getStopSequence());
+						mapHeures.get(idHeureArret).setTripId(heure.getTripId());
+					}
+					if (mapHeures.get(idHeureArret).getStopSequence().intValue() != heure.getStopSequence()
+							&& mapHeures.get(idHeureArret).getStopSequence().intValue() != 1
+							&& heure.getStopSequence() != 1) {
+						System.err.println("ATTENTION : stop_sequence, différent pour " + heure.getRouteId() + " - " + heure.getStopId() + " à " + heure.getHeureDepart());
+						System.err.println("\t" + mapHeures.get(idHeureArret).getStopSequence() + " - " + heure.getStopSequence());
+					}
 				}
 			}
 		}
@@ -394,8 +404,8 @@ public class GetAndContructZip {
 		System.out.println("Suppression des derniers arrêts");
 		for (Map.Entry<Route, List<IdentifiantHeureArret>> entryIdsToDelte : mapHorairesToDelete.entrySet()) {
 			for (IdentifiantHeureArret idToDelete : entryIdsToDelte.getValue()) {
-				/*System.out.println("Suppression de l'arrêt " + idToDelete.stopId + " sur la route " + idToDelete.routeId + " pour l'horaire " +
-						formatterCalendarHeure(idToDelete.heureDepart, 0));*/
+				System.out.println("Suppression de l'arrêt " + idToDelete.stopId + " sur la route " + idToDelete.routeId + " pour l'horaire " +
+						idToDelete.heureDepart);
 				mapHeuresCompressees.get(entryIdsToDelte.getKey()).remove(idToDelete);
 			}
 		}
@@ -462,10 +472,10 @@ public class GetAndContructZip {
 				}
 				mapCompteurTrip.put(stopsChaine, mapCompteurTrip.get(stopsChaine) + 1);
 				if (!mapDirections.get(stopsChaine).equals(mapTrips.get(entry.getKey()).getHeadSign())) {
-					System.out.println("Plusieurs directions trouvée pour la ligne " + routeId);
-					System.out.println("\t" + stopsChaine);
-					System.out.println("\tDirection actuelle : " + mapDirections.get(stopsChaine));
-					System.out.println("\tNouvelle direction : " + mapTrips.get(entry.getKey()).getHeadSign());
+					System.err.println("Plusieurs directions trouvée pour la ligne " + routeId);
+					System.err.println("\t" + stopsChaine);
+					System.err.println("\tDirection actuelle : " + mapDirections.get(stopsChaine));
+					System.err.println("\tNouvelle direction : " + mapTrips.get(entry.getKey()).getHeadSign());
 				}
 			}
 			Map<String, List<ArretRoute>> mapArretRouteByDirection = new HashMap<String, List<ArretRoute>>();
@@ -505,8 +515,7 @@ public class GetAndContructZip {
 						String direction = mapDirections.get(chaineBonChemin);
 						if (direction.split("\\|").length > 1) {
 							direction = direction.split("\\|")[1];
-						}
-						else {
+						} else {
 							System.err.println(direction);
 							if (direction.equals("51 beton chev st s")) {
 								direction = "Betton (Champ Devant)";
