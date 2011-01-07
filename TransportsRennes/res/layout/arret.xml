@@ -24,11 +24,6 @@
               android:text="vers"
               android:layout_alignParentLeft="true"/>
 
-    <HorizontalScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/nomArret"
-            android:layout_toRightOf="@id/vers">
         <TextView android:id="@+id/directionArret"
                   android:paddingRight="5dip"
                   android:paddingBottom="8dip"
@@ -36,6 +31,6 @@
                   android:layout_height="wrap_content"
                   android:textSize="16dip"
                   android:gravity="center_vertical|left"
-                  android:layout_below="@id/nomArret"/>
-    </HorizontalScrollView>
+            android:layout_below="@id/nomArret"
+            android:layout_toRightOf="@id/vers"/>
 </RelativeLayout>
