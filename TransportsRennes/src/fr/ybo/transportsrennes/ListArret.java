@@ -79,6 +79,8 @@ public class ListArret extends ListActivity {
 			public void onClick(DialogInterface dialogInterface, int item) {
 				currentDirection = mapDirections.get(items.get(item));
 				construireListe();
+				((TextView)findViewById(R.id.directionArretCourante)).setText(currentDirection == null ? "Toutes" : currentDirection);
+				findViewById(R.id.directionArretCouranteScroll).invalidate();
 				getListView().invalidate();
 				dialogInterface.dismiss();
 			}
@@ -204,7 +206,7 @@ public class ListArret extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
 		myRoute = (Route) getIntent().getExtras().getSerializable("route");
-		findViewById(R.id.directionArretEntete).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				ListArret.this.onDirectionClick();
 			}

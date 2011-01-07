@@ -23,35 +23,41 @@
                   android:gravity="center_vertical|left"/>
     </HorizontalScrollView>
 
-    <TextView android:id="@+id/nomArretEntete"
+    <TextView android:id="@+id/directionEntete"
               android:paddingLeft="5dip"
               android:paddingTop="5dip"
               android:paddingBottom="3dip"
-              android:layout_width="150dip"
+              android:paddingRight="6dip"
+              android:layout_width="wrap_content"
               android:layout_height="30dip"
               android:textSize="20dip"
               android:gravity="center_vertical|left"
-              android:text="Nom de l'arrêt"
+              android:text="Direction :"
               android:layout_below="@id/conteneurImage"
               android:layout_alignParentLeft="true"/>
 
-    <TextView android:id="@+id/directionArretEntete"
-              android:paddingRight="5dip"
-              android:paddingTop="5dip"
-              android:paddingBottom="3dip"
-              android:layout_width="fill_parent"
-              android:layout_height="30dip"
-              android:textSize="20dip"
-              android:gravity="center_vertical|right"
-              android:text="Direction"
-              android:layout_below="@id/conteneurImage"
-              android:layout_alignParentRight="true"
-              android:drawableRight="@android:drawable/arrow_down_float"
-              android:drawablePadding="2dip"/>
+    <HorizontalScrollView
+            android:id="@+id/directionArretCouranteScroll"
+            android:layout_width="fill_parent"
+            android:layout_height="30dip"
+            android:layout_below="@id/conteneurImage"
+            android:layout_toRightOf="@id/directionEntete">
+        <TextView android:id="@+id/directionArretCourante"
+                  android:paddingRight="5dip"
+                  android:paddingTop="5dip"
+                  android:paddingBottom="3dip"
+                  android:layout_width="wrap_content"
+                  android:layout_height="30dip"
+                  android:textSize="20dip"
+                  android:text="Toutes"
+                  android:gravity="center_vertical|left"
+                  android:drawablePadding="2dip"
+                  android:drawableRight="@android:drawable/arrow_down_float"/>
+    </HorizontalScrollView>
 
     <ImageView android:layout_width="fill_parent"
                android:layout_height="10dip"
-               android:layout_below="@id/nomArretEntete"
+               android:layout_below="@id/directionEntete"
                android:paddingTop="4dip"
                android:paddingBottom="0dip"
                android:src="@android:drawable/divider_horizontal_dim_dark"
