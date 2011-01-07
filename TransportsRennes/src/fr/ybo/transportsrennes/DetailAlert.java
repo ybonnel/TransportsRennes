@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ import java.util.Set;
  *
  * @author ybonnel
  */
-public class DetailAlert extends Activity {
+public class DetailAlert extends MenuAccueil.Activity {
 
 	private static final Class<R.drawable> classDrawable = R.drawable.class;
 

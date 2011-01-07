@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
@@ -35,7 +36,7 @@ import java.util.List;
  *
  * @author ybonnel
  */
-public class ListArretByPosition extends ListActivity implements LocationListener {
+public class ListArretByPosition extends MenuAccueil.ListActivity implements LocationListener {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ListArretByPosition.class);
 

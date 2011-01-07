@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
@@ -32,7 +33,7 @@ import java.util.*;
  *
  * @author ybonnel
  */
-public class ListArret extends ListActivity {
+public class ListArret extends MenuAccueil.ListActivity {
 
 	private final static Class<?> classDrawable = R.drawable.class;
 

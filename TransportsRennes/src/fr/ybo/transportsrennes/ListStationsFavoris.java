@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
@@ -32,7 +33,7 @@ import java.util.List;
  *
  * @author ybonnel
  */
-public class ListStationsFavoris extends ListActivity {
+public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ListStationsFavoris.class);
 

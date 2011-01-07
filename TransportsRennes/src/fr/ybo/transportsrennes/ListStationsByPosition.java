@@ -16,6 +16,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author ybonnel
  */
-public class ListStationsByPosition extends ListActivity implements LocationListener {
+public class ListStationsByPosition extends MenuAccueil.ListActivity implements LocationListener {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ListStationsByPosition.class);
 

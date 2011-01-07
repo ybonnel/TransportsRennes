@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author ybonnel
  */
-public class ListFavoris extends ListActivity {
+public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ListFavoris.class);
 

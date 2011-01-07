@@ -11,6 +11,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
@@ -20,7 +21,7 @@ import fr.ybo.transportsrennes.util.LogYbo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAlerts extends ListActivity {
+public class ListAlerts extends MenuAccueil.ListActivity {
 
 	/**
 	 * Permet d'accéder aux apis keolis.
