@@ -249,7 +249,7 @@ public class ListArretByPosition extends ListActivity implements LocationListene
 			arretFavori.setStopId(arret.getId());
 			arretFavori.setRouteId(arret.getFavori().getRouteId());
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
-			menu.setHeaderTitle(Formatteur.formatterChaine(arret.getNom()));
+			menu.setHeaderTitle(arret.getNom());
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
 		}

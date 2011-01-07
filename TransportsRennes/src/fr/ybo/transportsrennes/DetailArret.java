@@ -198,7 +198,7 @@ public class DetailArret extends ListActivity {
 				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
 				String _lat = Double.toString(arret.getLatitude());
 				String _lon = Double.toString(arret.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(favori.getNomArret()) + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + favori.getNomArret() + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {

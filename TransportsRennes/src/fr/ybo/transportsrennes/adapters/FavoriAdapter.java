@@ -90,7 +90,7 @@ public class FavoriAdapter extends BaseAdapter {
 
 		ArretFavori favori = favoris.get(position);
 
-		holder.arret.setText(Formatteur.formatterChaine(favori.getNomArret()));
+		holder.arret.setText(favori.getNomArret());
 		holder.direction.setText(favori.getDirection());
 		try {
 			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.getRouteNomCourt().toLowerCase());
