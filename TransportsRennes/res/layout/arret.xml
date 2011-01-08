@@ -12,25 +12,23 @@
               android:layout_height="wrap_content"
               android:textSize="20dip"
               android:gravity="center_vertical|left"/>
-    <TextView android:id="@+id/vers"
-              android:paddingLeft="8dip"
+
+    <ImageView android:id="@+id/isfavori"
+               android:paddingRight="4dip"
+               android:layout_width="wrap_content"
+               android:layout_height="55dip"
+               android:layout_centerVertical="true"
+               android:layout_alignParentRight="true"/>
+
+    <TextView android:id="@+id/directionArret"
+              android:paddingLeft="5dip"
+              android:paddingRight="2dip"
               android:paddingBottom="8dip"
-              android:paddingRight="6dip"
-              android:layout_width="wrap_content"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:textSize="16dip"
               android:gravity="center_vertical|left"
               android:layout_below="@id/nomArret"
-              android:text="vers"
-              android:layout_alignParentLeft="true"/>
-
-        <TextView android:id="@+id/directionArret"
-                  android:paddingRight="5dip"
-                  android:paddingBottom="8dip"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="16dip"
-                  android:gravity="center_vertical|left"
-            android:layout_below="@id/nomArret"
-            android:layout_toRightOf="@id/vers"/>
+              android:layout_toLeftOf="@id/isfavori"
+            android:layout_alignParentLeft="true"/>
 </RelativeLayout>

@@ -1,15 +1,11 @@
 package fr.ybo.transportsrennes;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +13,8 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
@@ -38,8 +30,6 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
-
-	private ProgressDialog myProgressDialog;
 
 	private Route myRoute;
 
@@ -80,64 +70,13 @@ public class ListArret extends MenuAccueil.ListActivity {
 			public void onClick(DialogInterface dialogInterface, int item) {
 				currentDirection = mapDirections.get(items.get(item));
 				construireListe();
-				((TextView)findViewById(R.id.directionArretCourante)).setText(currentDirection == null ? "Toutes" : currentDirection);
+				((TextView) findViewById(R.id.directionArretCourante)).setText(currentDirection == null ? "Toutes" : currentDirection);
 				findViewById(R.id.directionArretCouranteScroll).invalidate();
 				getListView().invalidate();
 				dialogInterface.dismiss();
 			}
 		});
 		builder.create().show();
-	}
-
-	private void ajoutFavori(final Cursor cursor) throws DataBaseException {
-		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
-		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
-			chargerRoute();
-		}
-		ArretFavori arretFavori = new ArretFavori();
-		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
-		arretFavori.setNomArret(cursor.getString(cursor.getColumnIndex("arretName")));
-		arretFavori.setDirection(cursor.getString(cursor.getColumnIndex("direction")));
-		arretFavori.setRouteId(myRoute.getId());
-		arretFavori.setRouteNomCourt(myRoute.getNomCourt());
-		arretFavori.setRouteNomLong(myRoute.getNomLong());
-		LOG_YBO.debug("Ajout du favori " + arretFavori.getStopId());
-		TransportsRennesApplication.getDataBaseHelper().insert(arretFavori);
-	}
-
-	private void chargerRoute() {
-
-		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
-
-		new AsyncTask<Void, Void, Void>() {
-
-			boolean erreur = false;
-
-			@Override
-			protected Void doInBackground(final Void... pParams) {
-				try {
-					UpdateDataBase.chargeDetailRoute(myRoute);
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur lors du chargement du détail de la route", exception);
-					erreur = true;
-				}
-				return null;
-			}
-
-			@Override
-			protected void onPostExecute(final Void result) {
-				super.onPostExecute(result);
-				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(ListArret.this,
-							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
-							Toast.LENGTH_LONG).show();
-					ListArret.this.finish();
-				}
-			}
-
-		}.execute();
-
 	}
 
 	private void construireCursor() {
@@ -169,7 +108,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private void construireListe() {
 		construireCursor();
-		setListAdapter(new ArretAdapter(getApplicationContext(), currentCursor, myRoute));
+		setListAdapter(new ArretAdapter(this, currentCursor, myRoute));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -185,21 +124,6 @@ public class ListArret extends MenuAccueil.ListActivity {
 		});
 		lv.setTextFilterEnabled(true);
 		registerForContextMenu(lv);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		switch (item.getItemId()) {
-			case R.id.ajoutFavori:
-				ajoutFavori((Cursor) getListAdapter().getItem(info.position));
-				return true;
-			case R.id.supprimerFavori:
-				supprimeFavori((Cursor) getListAdapter().getItem(info.position));
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
 	}
 
 	@Override
@@ -238,35 +162,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Cursor cursor = (Cursor) getListAdapter().getItem(info.position);
-			String idArret = cursor.getString(cursor.getColumnIndex("_id"));
-			String nomArret = cursor.getString(cursor.getColumnIndex("arretName"));
-			ArretFavori arretFavori = new ArretFavori();
-			arretFavori.setStopId(idArret);
-			arretFavori.setRouteId(myRoute.getId());
-			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
-			menu.setHeaderTitle(nomArret);
-			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
-		}
-	}
-
-	@Override
 	protected void onDestroy() {
 		closeCurrentCursor();
 		super.onPause();
-	}
-
-	private void supprimeFavori(final Cursor cursor) throws DataBaseException {
-		final ArretFavori arretFavori = new ArretFavori();
-		arretFavori.setStopId(cursor.getString(cursor.getColumnIndex("_id")));
-		arretFavori.setRouteId(myRoute.getId());
-		LOG_YBO.debug("Suppression du favori " + arretFavori.getStopId());
-		TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 	}
 
 	private static final int GROUP_ID = 0;

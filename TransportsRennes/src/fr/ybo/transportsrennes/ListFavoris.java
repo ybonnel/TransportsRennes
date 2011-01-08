@@ -1,6 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -16,7 +15,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,7 +41,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private Runnable runnableMajToRunOnUiThread = new Runnable() {
 		public void run() {
-		    ((FavoriAdapter) ListFavoris.this.getListAdapter()).majCalendar();
+			((FavoriAdapter) ListFavoris.this.getListAdapter()).majCalendar();
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris().clear();
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris()
 					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
