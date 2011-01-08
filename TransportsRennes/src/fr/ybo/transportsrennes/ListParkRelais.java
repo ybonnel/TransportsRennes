@@ -16,9 +16,11 @@ import android.text.TextWatcher;
 import android.view.*;
 import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
+import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
+import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -29,14 +31,14 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Activité de type liste permettant de lister les stations pas distances de la
+ * Activité de type liste permettant de lister les parks relais par distances de la
  * position actuelle.
  *
  * @author ybonnel
  */
-public class ListStationsByPosition extends MenuAccueil.ListActivity implements LocationListener {
+public class ListParkRelais extends MenuAccueil.ListActivity implements LocationListener {
 
-	private static final LogYbo LOG_YBO = new LogYbo(ListStationsByPosition.class);
+	private static final LogYbo LOG_YBO = new LogYbo(ListParkRelais.class);
 
 	/**
 	 * Permet d'accéder aux apis keolis.
@@ -51,13 +53,13 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	/**
 	 * Liste des stations.
 	 */
-	private List<Station> stations = new ArrayList<Station>();
-	private List<Station> stationsFiltrees = new ArrayList<Station>();
+	private List<ParkRelai> parkRelais = new ArrayList<ParkRelai>();
+	private List<ParkRelai> parkRelaisFiltres = new ArrayList<ParkRelai>();
 
 	private Location lastLocation = null;
 
 	/**
-	 * Permet de mettre à jour les distances des stations par rapport à une
+	 * Permet de mettre à jour les distances des park relais par rapport à une
 	 * nouvelle position.
 	 *
 	 * @param location position courante.
@@ -66,12 +68,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private void mettreAjoutLoc(Location location) {
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
-			for (Station station : stations) {
-				station.calculDistance(location);
+			for (ParkRelai parkRelai : parkRelais) {
+				parkRelai.calculDistance(location);
 			}
-			Collections.sort(stations, new Station.ComparatorDistance());
-			Collections.sort(stationsFiltrees, new Station.ComparatorDistance());
-			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+			Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
+			Collections.sort(parkRelaisFiltres, new ParkRelai.ComparatorDistance());
+			((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
@@ -132,15 +134,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private ProgressDialog myProgressDialog;
 
 	@SuppressWarnings("unchecked")
-	private void metterAJourListeStations() {
+	private void metterAJourListeParkRelais() {
 		String query = editText.getText().toString().toUpperCase();
-		stationsFiltrees.clear();
-		for (Station station : stations) {
-			if (station.getName().toUpperCase().contains(query.toUpperCase())) {
-				stationsFiltrees.add(station);
+		parkRelaisFiltres.clear();
+		for (ParkRelai parkRelai : parkRelais) {
+			if (parkRelai.getName().toUpperCase().contains(query.toUpperCase())) {
+				parkRelaisFiltres.add(parkRelai);
 			}
 		}
-		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
+		((ArrayAdapter<ParkRelai>) listView.getAdapter()).notifyDataSetChanged();
 	}
 
 	private EditText editText;
@@ -149,12 +151,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.liststations);
+		setContentView(R.layout.listparkrelais);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stationsFiltrees));
+		setListAdapter(new ParkRelaiAdapter(this, R.layout.dispoparkrelai, parkRelaisFiltres));
 		listView = getListView();
-		editText = (EditText) findViewById(R.id.liststations_input);
+		editText = (EditText) findViewById(R.id.listparkrelai_input);
 		editText.addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 			}
@@ -163,16 +165,16 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			}
 
 			public void afterTextChanged(Editable editable) {
-				metterAJourListeStations();
+				metterAJourListeParkRelais();
 			}
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				VeloAdapter veloAdapter = (VeloAdapter) ((ListView) adapterView).getAdapter();
-				Station station = veloAdapter.getItem(position);
-				String _lat = Double.toString(station.getLatitude());
-				String _lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + _lat + "," + _lon);
+				ParkRelaiAdapter adapter = (ParkRelaiAdapter) ((ListView) adapterView).getAdapter();
+				ParkRelai parkRelai = adapter.getItem(position);
+				String _lat = Double.toString(parkRelai.getLatitude());
+				String _lon = Double.toString(parkRelai.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.getName() + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -184,7 +186,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
+		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteParkRelais), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
@@ -192,16 +194,16 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					stations = keolis.getStations();
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
+					parkRelais = keolis.getParkRelais();
+					Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+						public int compare(ParkRelai o1, ParkRelai o2) {
 							return o1.getName().compareToIgnoreCase(o2.getName());
 						}
 					});
-					stationsFiltrees.clear();
-					stationsFiltrees.addAll(stations);
+					parkRelaisFiltres.clear();
+					parkRelaisFiltres.addAll(parkRelais);
 				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
+					LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
 					erreur = true;
 				}
 
@@ -215,12 +217,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				myProgressDialog.dismiss();
 				if (!erreur) {
 					activeGps();
-					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+					((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
+					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...",
 							Toast.LENGTH_LONG);
 					toast.show();
-					ListStationsByPosition.this.finish();
+					ListParkRelais.this.finish();
 				}
 			}
 		}.execute();
@@ -252,16 +254,16 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							stations = keolis.getStations();
-							Collections.sort(stations, new Comparator<Station>() {
-								public int compare(Station o1, Station o2) {
+							parkRelais = keolis.getParkRelais();
+							Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+								public int compare(ParkRelai o1, ParkRelai o2) {
 									return o1.getName().compareToIgnoreCase(o2.getName());
 								}
 							});
-							stationsFiltrees.clear();
-							stationsFiltrees.addAll(stations);
+							parkRelaisFiltres.clear();
+							parkRelaisFiltres.addAll(parkRelais);
 						} catch (Exception exception) {
-							LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
+							LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
 							erreur = true;
 						}
 
@@ -274,58 +276,19 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 						super.onPostExecute(pResult);
 						myProgressDialog.dismiss();
 						if (!erreur) {
-							metterAJourListeStations();
+							metterAJourListeParkRelais();
 							mettreAjoutLoc(lastLocation);
-							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+							((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 						} else {
-							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
+							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...",
 									Toast.LENGTH_LONG);
 							toast.show();
-							ListStationsByPosition.this.finish();
+							ListParkRelais.this.finish();
 						}
 					}
 				}.execute();
 				return true;
 		}
 		return false;
-	}
-
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Station station = (Station) getListAdapter().getItem(info.position);
-			VeloFavori veloFavori = new VeloFavori();
-			veloFavori.setNumber(station.getNumber());
-			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
-			menu.setHeaderTitle(Formatteur.formatterChaine(station.getName()));
-			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-					veloFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		Station station;
-		VeloFavori veloFavori;
-		switch (item.getItemId()) {
-			case R.id.ajoutFavori:
-				station = (Station) getListAdapter().getItem(info.position);
-				veloFavori = new VeloFavori();
-				veloFavori.setNumber(station.getNumber());
-				TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
-				return true;
-			case R.id.supprimerFavori:
-				station = (Station) getListAdapter().getItem(info.position);
-				veloFavori = new VeloFavori();
-				veloFavori.setNumber(station.getNumber());
-				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
 	}
 }

@@ -3,8 +3,10 @@ package fr.ybo.transportsrennes.keolis;
 import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -58,6 +60,10 @@ public final class Keolis {
 	 * Commande pour récupérer les alerts.
 	 */
 	private static final String COMMANDE_ALERTS = "getlinesalerts";
+	/**
+	 * Commande pour récupérer les Park relais.
+	 */
+	private static final String COMMANDE_PARK_RELAI = "getrelayparks";
 
 	/**
 	 * Retourne l'instance du singletton.
@@ -176,6 +182,14 @@ public final class Keolis {
 	 */
 	public List<Station> getStations() {
 		return getStation(getUrl(COMMANDE_STATIONS));
+	}
+
+	/**
+	 * @return les parks relais.
+	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
+	 */
+	public List<ParkRelai> getParkRelais() throws ErreurKeolis {
+		return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
 	}
 
 	/**

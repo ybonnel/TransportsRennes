@@ -12,6 +12,7 @@
     <string name="infoChargementGtfs">Chargement des données du STAR...</string>
     <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
     <string name="dialogRequeteAlerts">Interrogation du STAR...</string>
+    <string name="dialogRequeteParkRelais">Interrogation du STAR...</string>
 
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">VeloStar</string>

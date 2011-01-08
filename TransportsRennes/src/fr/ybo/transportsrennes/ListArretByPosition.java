@@ -1,6 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,7 +21,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
-import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -53,23 +51,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	private Location lastLocation = null;
 
-	private String printLocaltion(Location location) {
-		if (location == null) {
-			return "null";
-		}
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("Localtion[provider : ");
-		stringBuilder.append(location.getProvider());
-		stringBuilder.append(", accuracy : ");
-		stringBuilder.append(location.getAccuracy());
-		stringBuilder.append(", longitude : ");
-		stringBuilder.append(location.getLongitude());
-		stringBuilder.append(", latitude : ");
-		stringBuilder.append(location.getLatitude());
-		stringBuilder.append(']');
-		return stringBuilder.toString();
-	}
-
 	/**
 	 * Permet de mettre à jour les distances des arrêts par rapport à une
 	 * nouvelle position.
@@ -78,7 +59,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	 */
 	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
-		LOG_YBO.debug("Nouvelle location : " + printLocaltion(location));
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
 			for (Arret arret : arrets) {
