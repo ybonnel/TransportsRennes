@@ -8,8 +8,14 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -77,7 +83,8 @@ public class TransportsRennes extends Activity {
 			verifierUpgrade();
 		} catch (ErreurKeolis erreurKeolis) {
 			LOG_YBO.erreur("Erreur lors de la vérification de mise à jour", erreurKeolis);
-			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...",
+					Toast.LENGTH_LONG).show();
 			if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
 				LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
 				finish();
@@ -201,5 +208,36 @@ public class TransportsRennes extends Activity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.main);
+	}
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_ID = Menu.FIRST;
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
+		item.setIcon(android.R.drawable.ic_menu_info_details);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+			case MENU_ID:
+				TextView message = new TextView(this);
+				message.setPadding(8, 8, 8, 8);
+				message.setTextSize(18);
+				Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+				message.setText(spanned, TextView.BufferType.SPANNABLE);
+				message.setMovementMethod(LinkMovementMethod.getInstance());
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setView(message).setCancelable(true);
+				builder.create().show();
+				return true;
+		}
+		return false;
 	}
 }

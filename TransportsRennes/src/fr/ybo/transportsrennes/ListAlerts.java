@@ -71,7 +71,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
-				((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+				((ArrayAdapter<Alert>) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast toast =
