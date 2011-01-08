@@ -8,7 +8,7 @@
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#ff355689</item>
+        <item name="android:textColor">#e9e9e9</item>
         <item name="android:background">@null</item>
     </style>
 </resources>
