@@ -139,6 +139,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 			public void onClick(View view) {
 				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
 				intent.putExtra("route", myRoute);
+				if (currentDirection != null) {
+					intent.putExtra("direction", currentDirection);
+				}
 				startActivity(intent);
 			}
 		});

@@ -22,11 +22,13 @@ public class ArretsOnMap extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		Route myRoute = (Route) getIntent().getSerializableExtra("route");
+		String currentDirection = getIntent().getStringExtra("direction");
 
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 
 		MapController mc = mapView.getController();
+		mapView.setSatellite(true);
 
 		// Creation du geo point
 		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -41,6 +43,10 @@ public class ArretsOnMap extends MapActivity {
 		requete.append("where");
 		requete.append(" ArretRoute.routeId = :routeId");
 		requete.append(" and ArretRoute.arretId = Arret.id");
+		if (currentDirection != null) {
+			requete.append(" and ArretRoute.direction = :direction");
+			selectionArgs.add(currentDirection);
+		}
 		requete.append(" order by ArretRoute.sequence");
 		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		int minLatitude = Integer.MAX_VALUE;
