@@ -73,11 +73,10 @@
                     android:text="@string/btn_parking"
                     android:onClick="onParkingClick"
                     android:drawableTop="@drawable/home_btn_parking"/>
-            <!--<Button android:id="@+id/home_btn_velo_favori"
+            <Button android:id="@+id/home_btn_tickets"
                     style="@style/HomeButton"
-                    android:onClick="onVeloFavoriClick"
-                    android:text="@string/btn_velo_favori"
-                    android:drawableTop="@drawable/home_btn_velo_favori"/>-->
+                    android:text="@string/btn_tickets"
+                    android:drawableTop="@drawable/home_btn_tickets"/>
         </LinearLayout>
     </LinearLayout>
 

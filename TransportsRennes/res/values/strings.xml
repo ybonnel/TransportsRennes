@@ -25,6 +25,7 @@
     <string name="btn_bus_gps">Arrêts à proximité</string>
     <string name="btn_alert">Alertes</string>
     <string name="btn_parking">Parcs relais</string>
+    <string name="btn_tickets">Points de vente</string>
 
     <!-- Libellés de menus -->
     <string name="menu_prochainArrets">Prochains horaires</string>
