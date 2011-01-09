@@ -1,6 +1,6 @@
 h1. Transports Rennes
 
-Il s'agit d'une application Android utilisant les données fournis par Rennes Métropole dans le cadre de l'ouvertude des données, dit l'"open-data":http://data.keolis-rennes.com.
+Il s'agit d'une application Android utilisant les données fournis par Rennes Métropole dans le cadre de l'ouvertude des données, dit "l'open-data":http://data.keolis-rennes.com.
 Le but de cette application est de présenter toutes les informations utiles (et disponible dans l'open data) pour les usagers des transports de Rennes (bus, velo, ...).
 Cette application est disponible gratuitement sur le market Android.
 
