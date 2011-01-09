@@ -197,17 +197,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 							return o1.getName().compareToIgnoreCase(o2.getName());
 						}
 					});
-					// Recherche du point de vente avec le nom le plus long.
-					int max = 0;
-					String nom = null;
-					for (PointDeVente pointDeVente : pointsDeVente) {
-						if (pointDeVente.getName().length() > max) {
-							max = pointDeVente.getName().length();
-							nom = pointDeVente.getName();
-						}
-					}
-					LOG_YBO.debug("Point de vente avec le nom le plus long :");
-					LOG_YBO.debug(nom + "(" + max + ")");
 					pointsDeVenteFiltres.clear();
 					pointsDeVenteFiltres.addAll(pointsDeVente);
 				} catch (Exception exception) {
