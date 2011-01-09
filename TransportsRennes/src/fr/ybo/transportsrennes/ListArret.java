@@ -135,6 +135,13 @@ public class ListArret extends MenuAccueil.ListActivity {
 				ListArret.this.onDirectionClick();
 			}
 		});
+		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener(){
+			public void onClick(View view) {
+				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
+				intent.putExtra("route", myRoute);
+				startActivity(intent);
+			}
+		});
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
 		nomLong.setText(myRoute.getNomLong());

@@ -14,7 +14,8 @@
     <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_toRightOf="@id/conteneurImage">
+            android:layout_toRightOf="@id/conteneurImage"
+            android:layout_toLeftOf="@id/googlemap">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
                   android:layout_width="fill_parent"
@@ -22,6 +23,16 @@
                   android:textSize="20dip"
                   android:gravity="center_vertical|left"/>
     </HorizontalScrollView>
+
+    <ImageView android:id="@+id/googlemap"
+               android:layout_width="44dip"
+               android:paddingBottom="5dip"
+               android:paddingTop="5dip"
+               android:paddingLeft="2dip"
+               android:paddingRight="4dip"
+               android:layout_height="50dip"
+               android:src="@android:drawable/ic_dialog_map"
+               android:layout_alignParentRight="true"/>
 
     <TextView android:id="@+id/directionEntete"
               android:paddingLeft="5dip"
