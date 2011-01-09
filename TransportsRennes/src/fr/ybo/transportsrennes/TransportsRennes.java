@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
@@ -85,17 +84,43 @@ public class TransportsRennes extends Activity {
 				onPointsDeVenteClick(view);
 			}
 		});
-		try {
-			verifierUpgrade();
-		} catch (ErreurKeolis erreurKeolis) {
-			LOG_YBO.erreur("Erreur lors de la vérification de mise à jour", erreurKeolis);
-			Toast.makeText(this, "Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...",
-					Toast.LENGTH_LONG).show();
-			if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-				LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
-				finish();
+		new AsyncTask<Void, Void, Void>() {
+
+			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.verificationUpdate), true);
 			}
-		}
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+
+				try {
+					verifierUpgrade();
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
+					erreur = true;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(final Void pResult) {
+				super.onPostExecute(pResult);
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(TransportsRennes.this,
+							"Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...",
+							Toast.LENGTH_LONG).show();
+					if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
+						LOG_YBO.warn(
+								"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
+						TransportsRennes.this.finish();
+					}
+				}
+			}
+		}.execute((Void[]) null);
 	}
 
 	@SuppressWarnings("unused")
@@ -211,8 +236,12 @@ public class TransportsRennes extends Activity {
 					}
 				});
 			}
-			final AlertDialog alert = builder.create();
-			alert.show();
+			runOnUiThread(new Runnable() {
+				public void run() {
+					final AlertDialog alert = builder.create();
+					alert.show();
+				}
+			});
 		}
 	}
 

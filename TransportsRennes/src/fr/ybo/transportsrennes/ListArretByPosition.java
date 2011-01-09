@@ -172,16 +172,35 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		construireListeArrets();
-		Collections.sort(arrets, new Comparator<Arret>() {
-			public int compare(Arret o1, Arret o2) {
-				return o1.getNom().compareToIgnoreCase(o2.getNom());
-			}
-		});
-		metterAJourListeArrets();
+		new AsyncTask<Void, Void, Void>() {
 
-		activeGps();
-		((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListArretByPosition.this, "", getString(R.string.rechercheArrets), true);
+			}
+
+			@Override
+			protected Void doInBackground(Void... voids) {
+				construireListeArrets();
+				Collections.sort(arrets, new Comparator<Arret>() {
+					public int compare(Arret o1, Arret o2) {
+						return o1.getNom().compareToIgnoreCase(o2.getNom());
+					}
+				});
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void aVoid) {
+				metterAJourListeArrets();
+				activeGps();
+				((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+				myProgressDialog.dismiss();
+				super.onPostExecute(aVoid);
+			}
+		}.execute();
+
 	}
 
 	private void construireListeArrets() {
@@ -218,6 +237,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			arret.getFavori().setStopId(arret.getId());
 			arrets.add(arret);
 		}
+		cursor.close();
 	}
 
 	@Override

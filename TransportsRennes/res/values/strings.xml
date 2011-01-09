@@ -10,6 +10,8 @@
     <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez vous l\'effectuer maintenant? Attention, vous devrez charger à nouveau les horaires que vous avez déjà chargés.</string>
     <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
     <string name="infoChargementGtfs">Chargement des données du STAR...</string>
+    <string name="verificationUpdate">Recherche de mise à jour...</string>
+    <string name="rechercheArrets">Recherche des arrêts de bus...</string>
     <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
     <string name="dialogRequeteAlerts">Interrogation du STAR...</string>
     <string name="dialogRequeteParkRelais">Interrogation du STAR...</string>
