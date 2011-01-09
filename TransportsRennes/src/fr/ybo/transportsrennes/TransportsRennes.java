@@ -125,7 +125,7 @@ public class TransportsRennes extends Activity {
 
 	@SuppressWarnings("unused")
 	public void onAlertClick(View view) {
-		Intent intent = new Intent(TransportsRennes.this, ListAlerts.class);
+		Intent intent = new Intent(TransportsRennes.this, TabAlertes.class);
 		startActivity(intent);
 	}
 
