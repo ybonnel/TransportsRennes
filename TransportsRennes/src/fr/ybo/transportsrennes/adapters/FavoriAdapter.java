@@ -1,5 +1,6 @@
 package fr.ybo.transportsrennes.adapters;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -14,7 +15,6 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -88,7 +88,63 @@ public class FavoriAdapter extends BaseAdapter {
 
 		convertView.setTag(holder);
 
-		ArretFavori favori = favoris.get(position);
+		final ArretFavori favori = favoris.get(position);
+
+
+		ImageView moveUp = (ImageView) convertView.findViewById(R.id.moveUp);
+		ImageView moveDown = (ImageView) convertView.findViewById(R.id.moveDown);
+		moveUp.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				if (position > 0) {
+					int autrePosition = position - 1;
+					favoris.set(position, favoris.get(autrePosition));
+					favoris.set(autrePosition, favori);
+					favoris.get(position).setOrdre(position);
+					ContentValues contentValues = new ContentValues();
+					contentValues.put("ordre", position);
+					String whereClause = "stopId = :stopId and routeId = :routeId";
+					List<String> whereArgs = new ArrayList<String>(2);
+					whereArgs.add(favoris.get(position).getStopId());
+					whereArgs.add(favoris.get(position).getRouteId());
+					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+					favoris.get(autrePosition).setOrdre(autrePosition);
+					contentValues.put("ordre", autrePosition);
+					whereArgs.clear();
+					whereArgs.add(favoris.get(autrePosition).getStopId());
+					whereArgs.add(favoris.get(autrePosition).getRouteId());
+					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+					FavoriAdapter.this.notifyDataSetChanged();
+				}
+			}
+		});
+		moveDown.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				if (position < favoris.size() - 1) {
+					int autrePosition = position + 1;
+					favoris.set(position, favoris.get(autrePosition));
+					favoris.set(autrePosition, favori);
+					favoris.get(position).setOrdre(position);
+					ContentValues contentValues = new ContentValues();
+					contentValues.put("ordre", position);
+					String whereClause = "stopId = :stopId and routeId = :routeId";
+					List<String> whereArgs = new ArrayList<String>(2);
+					whereArgs.add(favoris.get(position).getStopId());
+					whereArgs.add(favoris.get(position).getRouteId());
+					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+					favoris.get(autrePosition).setOrdre(autrePosition);
+					contentValues.put("ordre", autrePosition);
+					whereArgs.clear();
+					whereArgs.add(favoris.get(autrePosition).getStopId());
+					whereArgs.add(favoris.get(autrePosition).getRouteId());
+					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+					FavoriAdapter.this.notifyDataSetChanged();
+				}
+			}
+		});
 
 		holder.arret.setText(favori.getNomArret());
 		holder.direction.setText(favori.getDirection());
@@ -155,6 +211,7 @@ public class FavoriAdapter extends BaseAdapter {
 					sqlException);
 		}
 
+
 		return convertView;
 	}
 
@@ -177,8 +234,7 @@ public class FavoriAdapter extends BaseAdapter {
 				if (heures <= 0) {
 					stringBuilder.append(minutes);
 					stringBuilder.append(" min");
-				}
-				else {
+				} else {
 					if (minutes < 10) {
 						stringBuilder.append("0");
 					}

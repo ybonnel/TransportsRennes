@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -16,7 +17,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	public static final String DATABASE_NAME = "keolis.db";
-	public static final int DATABASE_VERSION = 3;
+	public static final int DATABASE_VERSION = 4;
 
 	private final Base base;
 
@@ -85,6 +86,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				public void upagrade(SQLiteDatabase db) {
 					base.dropDataBase(db);
 					base.createDataBase(db);
+				}
+			});
+			mapUpgrades.put(4, new UpgradeDatabase(){
+				public void upagrade(SQLiteDatabase db) {
+					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
+					int count = 0;
+					for (ArretFavori arretFavori : base.select(db, new ArretFavori(), null, null, null)) {
+						arretFavori.setOrdre(count++);
+						base.delete(db, arretFavori);
+						base.insert(db, arretFavori);
+					}
 				}
 			});
 		}

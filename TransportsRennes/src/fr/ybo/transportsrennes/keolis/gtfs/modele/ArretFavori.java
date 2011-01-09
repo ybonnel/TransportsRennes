@@ -30,6 +30,17 @@ public class ArretFavori implements Serializable {
 	@Colonne
 	private String routeNomLong;
 
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	private Integer ordre;
+
+	public Integer getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(Integer ordre) {
+		this.ordre = ordre;
+	}
+
 	public String getDirection() {
 		return direction;
 	}

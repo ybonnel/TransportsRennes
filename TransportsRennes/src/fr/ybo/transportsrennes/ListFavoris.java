@@ -25,7 +25,8 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	private static final LogYbo LOG_YBO = new LogYbo(ListFavoris.class);
 
 	private void construireListe() throws DataBaseException {
-		setListAdapter(new FavoriAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())));
+		setListAdapter(new FavoriAdapter(getApplicationContext(),
+				TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), null, null, "ordre")));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -44,7 +45,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).majCalendar();
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris().clear();
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris()
-					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
+					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), null, null, "ordre"));
 			((FavoriAdapter) ListFavoris.this.getListAdapter()).notifyDataSetChanged();
 		}
 	};
