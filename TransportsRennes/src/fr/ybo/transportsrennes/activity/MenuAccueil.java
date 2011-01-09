@@ -14,13 +14,14 @@ public class MenuAccueil {
 	protected static final int MENU_ID = 99;
 
 	protected static void addMenu(Menu menu) {
-		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_accueil);
+		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_accueil).setIcon(R.drawable.ic_menu_home);
 	}
 
 	protected static boolean onOptionsItemSelected(Context context, MenuItem item) {
 			switch (item.getItemId()) {
 				case MENU_ID:
 					Intent intent = new Intent(context, TransportsRennes.class);
+					intent.putExtra("update", false);
 					context.startActivity(intent);
 					return true;
 			}

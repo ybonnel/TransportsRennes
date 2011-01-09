@@ -1,6 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -126,7 +125,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
-		item.setIcon(android.R.drawable.ic_menu_rotate);
+		item.setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 

@@ -234,7 +234,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
-		item.setIcon(android.R.drawable.ic_menu_rotate);
+		item.setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 
