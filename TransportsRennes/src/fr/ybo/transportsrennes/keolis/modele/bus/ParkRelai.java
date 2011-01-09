@@ -1,35 +1,14 @@
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import android.location.Location;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * @author ybonnel
  */
 @SuppressWarnings("serial")
-public class ParkRelai implements Serializable {
-
-	public static class ComparatorDistance implements Comparator<ParkRelai> {
-
-		public int compare(ParkRelai o1, ParkRelai o2) {
-			if (o1 == null || o2 == null || o1.getDistance() == null || o2.getDistance() == null) {
-				return 0;
-			}
-			return o1.getDistance().compareTo(o2.getDistance());
-		}
-	}
-
-	/**
-	 * Nombre de mètres dans un kiloMètre.
-	 */
-	private static final double NB_METRES_BY_KM = 1000;
-	/**
-	 * Multiplicateur de décimales pour l'affichage d'un km (10 pour une
-	 * décimale).
-	 */
-	private static final double MULTI_DECIMALES_FOR_KM = 10;
+public class ParkRelai extends ObjetWithDistance implements Serializable {
 
 	/**
 	 * name.
@@ -58,53 +37,12 @@ public class ParkRelai implements Serializable {
 	/**
 	 * state.
 	 */
-	private boolean state;
+	private Integer state;
 
 	/**
-	 * Distance à la position courante. Calculée par la méthode
-	 * {@link #calculDistance(android.location.Location)}.
+	 * Distance à la position courante. Calculée par la méthode calculDistance.
 	 */
 	private Integer distance = null;
-
-	/**
-	 * Getter.
-	 *
-	 * @return la distance à la position courante.
-	 */
-	public Integer getDistance() {
-		return distance;
-	}
-
-	/**
-	 * Calcul la distance entre une location et la station.
-	 *
-	 * @param pCurrentLocation la location courante.
-	 */
-	public void calculDistance(Location pCurrentLocation) {
-		if (pCurrentLocation != null) {
-			float[] distanceResult = new float[1];
-			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude, distanceResult);
-			distance = (int) distanceResult[0];
-		}
-	}
-
-	/**
-	 * Format la distance.
-	 *
-	 * @return la distance formattée.
-	 */
-	public String formatDistance() {
-		if (distance == null) {
-			return "";
-		}
-		if (distance < NB_METRES_BY_KM) {
-			return distance + "m";
-		} else {
-			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
-			return distanceKm + "km";
-		}
-	}
-
 
 
 	/**
@@ -128,6 +66,11 @@ public class ParkRelai implements Serializable {
 		return lastupdate;
 	}
 
+	@Override
+	public Integer getDistance() {
+		return distance;
+	}
+
 	/**
 	 * @return the latitude
 	 */
@@ -142,6 +85,11 @@ public class ParkRelai implements Serializable {
 		return longitude;
 	}
 
+	@Override
+	public void setDistance(Integer distance) {
+		this.distance = distance;
+	}
+
 	/**
 	 * @return the name
 	 */
@@ -152,7 +100,7 @@ public class ParkRelai implements Serializable {
 	/**
 	 * @return the state
 	 */
-	public final boolean isState() {
+	public final Integer getState() {
 		return state;
 	}
 
@@ -201,7 +149,7 @@ public class ParkRelai implements Serializable {
 	/**
 	 * @param pState the state to set
 	 */
-	public final void setState(final boolean pState) {
+	public final void setState(final Integer pState) {
 		state = pState;
 	}
 }

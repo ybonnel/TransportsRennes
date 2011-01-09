@@ -1,6 +1,7 @@
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
 import android.location.Location;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 import java.io.Serializable;
 import java.util.Comparator;
@@ -10,32 +11,12 @@ import java.util.Comparator;
  *
  * @author ybonnel
  */
-public class Station implements Serializable {
-
-	public static class ComparatorDistance implements Comparator<Station> {
-
-		public int compare(Station o1, Station o2) {
-			if (o1 == null || o2 == null || o1.getDistance() == null || o2.getDistance() == null) {
-				return 0;
-			}
-			return o1.getDistance().compareTo(o2.getDistance());
-		}
-	}
+public class Station extends ObjetWithDistance implements Serializable {
 
 	/**
 	 * Serial.
 	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Nombre de mètres dans un kiloMètre.
-	 */
-	private static final double NB_METRES_BY_KM = 1000;
-	/**
-	 * Multiplicateur de décimales pour l'affichage d'un km (10 pour une
-	 * décimale).
-	 */
-	private static final double MULTI_DECIMALES_FOR_KM = 10;
 	/**
 	 * Numéro de la station.
 	 */
@@ -84,40 +65,9 @@ public class Station implements Serializable {
 	 */
 	private String lastupdate;
 	/**
-	 * Distance à la position courante. Calculée par la méthode
-	 * {@link Station#calculDistance(Location)}.
+	 * Distance à la position courante. Calculée par la méthode calculDistance
 	 */
 	private Integer distance = null;
-
-	/**
-	 * Calcul la distance entre une location et la station.
-	 *
-	 * @param pCurrentLocation la location courante.
-	 */
-	public void calculDistance(Location pCurrentLocation) {
-		if (pCurrentLocation != null) {
-			float[] distanceResult = new float[1];
-			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude, distanceResult);
-			distance = (int) distanceResult[0];
-		}
-	}
-
-	/**
-	 * Format la distance.
-	 *
-	 * @return la distance formattée.
-	 */
-	public String formatDistance() {
-		if (distance == null) {
-			return "";
-		}
-		if (distance < NB_METRES_BY_KM) {
-			return distance + "m";
-		} else {
-			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
-			return distanceKm + "km";
-		}
-	}
 
 	/**
 	 * @return adresse.
@@ -324,15 +274,5 @@ public class Station implements Serializable {
 	 */
 	public void setState(boolean pState) {
 		state = pState;
-	}
-
-	/**
-	 * @return String.
-	 * @see Object#toString().
-	 */
-	@Override
-	public String toString() {
-		return new StringBuilder(name).append(' ').append(bikesavailable).append('/').append((slotsavailable + bikesavailable)).append("  ")
-				.append(formatDistance()).toString();
 	}
 }

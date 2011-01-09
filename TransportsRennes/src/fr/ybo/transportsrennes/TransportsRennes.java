@@ -44,6 +44,7 @@ public class TransportsRennes extends Activity {
 		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
 		Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
 		Button btnParking = (Button) findViewById(R.id.home_btn_parking);
+		Button btnPointsDeVente = (Button) findViewById(R.id.home_btn_tickets);
 		btnBus.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onBusClick(view);
@@ -77,6 +78,11 @@ public class TransportsRennes extends Activity {
 		btnParking.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onParkingClick(view);
+			}
+		});
+		btnPointsDeVente.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onPointsDeVenteClick(view);
 			}
 		});
 		try {
@@ -131,6 +137,12 @@ public class TransportsRennes extends Activity {
 	@SuppressWarnings("unused")
 	public void onParkingClick(View view) {
 		Intent intent = new Intent(this, ListParkRelais.class);
+		startActivity(intent);
+	}
+
+	@SuppressWarnings("unused")
+	public void onPointsDeVenteClick(View view) {
+		Intent intent = new Intent(this, ListPointsDeVente.class);
 		startActivity(intent);
 	}
 

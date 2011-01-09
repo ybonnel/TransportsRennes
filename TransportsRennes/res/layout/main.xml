@@ -76,6 +76,7 @@
             <Button android:id="@+id/home_btn_tickets"
                     style="@style/HomeButton"
                     android:text="@string/btn_tickets"
+                    android:onClick="onPointsDeVenteClick"
                     android:drawableTop="@drawable/home_btn_tickets"/>
         </LinearLayout>
     </LinearLayout>

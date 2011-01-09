@@ -1,25 +1,13 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-import android.location.Location;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.*;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterDouble;
-
-import java.util.Comparator;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 @Table
 @FichierCsv("stops.txt")
-public class Arret {
-
-	public static class ComparatorDistance implements Comparator<Arret> {
-
-		public int compare(Arret o1, Arret o2) {
-			if (o1 == null || o2 == null || o1.distance == null || o2.distance == null) {
-				return 0;
-			}
-			return o1.distance.compareTo(o2.distance);
-		}
-	}
+public class Arret extends ObjetWithDistance {
 
 	@Colonne
 	@PrimaryKey
@@ -77,12 +65,22 @@ public class Arret {
 		return id;
 	}
 
-	public Double getLatitude() {
-		return latitude;
+	@Override
+	public Integer getDistance() {
+		return distance;
 	}
 
-	public Double getLongitude() {
-		return longitude;
+	public double getLatitude() {
+		return latitude.doubleValue();
+	}
+
+	public double getLongitude() {
+		return longitude.doubleValue();
+	}
+
+	@Override
+	public void setDistance(Integer distance) {
+		this.distance = distance;
 	}
 
 	public String getNom() {
@@ -117,52 +115,11 @@ public class Arret {
 		this.nom = nom;
 	}
 
-	/**
-	 * Nombre de mètres dans un kiloMètre.
-	 */
-	private static final double NB_METRES_BY_KM = 1000;
-	/**
-	 * Multiplicateur de décimales pour l'affichage d'un km (10 pour une
-	 * décimale).
-	 */
-	private static final double MULTI_DECIMALES_FOR_KM = 10;
-
 
 	/**
-	 * Distance à la position courante. Calculée par la méthode
-	 * {@link Arret#calculDistance(android.location.Location)}.
+	 * Distance à la position courante. Calculée par la méthode calculDistance.
 	 */
 	private Integer distance = null;
-
-	/**
-	 * Calcul la distance entre une location et l'arrêt.
-	 *
-	 * @param pCurrentLocation la location courante.
-	 */
-	public final void calculDistance(final Location pCurrentLocation) {
-		if (pCurrentLocation != null) {
-			final float[] distanceResult = new float[1];
-			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), latitude, longitude, distanceResult);
-			distance = (int) distanceResult[0];
-		}
-	}
-
-	/**
-	 * Format la distance.
-	 *
-	 * @return la distance formattée.
-	 */
-	public final String formatDistance() {
-		if (distance == null) {
-			return "";
-		}
-		if (distance < NB_METRES_BY_KM) {
-			return distance + "m";
-		} else {
-			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
-			return distanceKm + "km";
-		}
-	}
 
 
 }

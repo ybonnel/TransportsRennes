@@ -23,6 +23,7 @@
         <activity android:name=".ListStationsFavoris" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListParkRelais" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListPointsDeVente" android:configChanges="orientation|keyboardHidden"/>
 
         <!-- The application's publisher ID assigned by AdMob -->
         <meta-data android:value="a14d20c4e95f641" android:name="ADMOB_PUBLISHER_ID"/>

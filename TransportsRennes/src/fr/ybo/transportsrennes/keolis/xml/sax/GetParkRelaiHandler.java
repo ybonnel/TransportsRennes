@@ -67,7 +67,7 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 		} else if (baliseName.equals(LAST_UPDATE)) {
 			currentObjectKeolis.setLastupdate(contenu);
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.setState(Boolean.parseBoolean(contenu));
+			currentObjectKeolis.setState(Integer.parseInt(contenu));
 		}
 	}
 }

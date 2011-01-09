@@ -13,6 +13,7 @@
     <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
     <string name="dialogRequeteAlerts">Interrogation du STAR...</string>
     <string name="dialogRequeteParkRelais">Interrogation du STAR...</string>
+    <string name="dialogRequetePointsDeVente">Interrogation du STAR...</string>
     <string name="dialogAPropos">L\'application Transports Rennes a été développée dans le cadre de l\'ouverture des données du réseau STAR et du service LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).<b/>
     Cette application est développé et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.<b/>
     N\'hésitez pas en m\'envoyer toute suggestion ou problème.</string>

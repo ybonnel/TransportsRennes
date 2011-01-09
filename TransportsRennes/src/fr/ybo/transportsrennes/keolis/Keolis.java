@@ -4,11 +4,9 @@ import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
+import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.*;
 import fr.ybo.transportsrennes.util.LogYbo;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -64,6 +62,10 @@ public final class Keolis {
 	 * Commande pour récupérer les Park relais.
 	 */
 	private static final String COMMANDE_PARK_RELAI = "getrelayparks";
+	/**
+	 * Commande pour récupérer les points de vente.
+	 */
+	private static final String COMMANDE_POS = "getpos";
 
 	/**
 	 * Retourne l'instance du singletton.
@@ -190,6 +192,14 @@ public final class Keolis {
 	 */
 	public List<ParkRelai> getParkRelais() throws ErreurKeolis {
 		return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
+	}
+
+	/**
+	 * @return les points de ventes.
+	 * @throws ErreurKeolis en cas d'erreur lors de l'appel aux API Keolis.
+	 */
+	public List<PointDeVente> getPointDeVente() throws ErreurKeolis {
+		return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
 	}
 
 	/**
