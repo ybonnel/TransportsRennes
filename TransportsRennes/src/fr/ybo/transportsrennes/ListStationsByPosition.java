@@ -51,8 +51,8 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	/**
 	 * Liste des stations.
 	 */
-	private List<Station> stations = new ArrayList<Station>();
-	private List<Station> stationsFiltrees = new ArrayList<Station>();
+	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
+	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>());
 
 	private Location lastLocation = null;
 
@@ -66,8 +66,10 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private void mettreAjoutLoc(Location location) {
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
-			for (Station station : stations) {
-				station.calculDistance(location);
+			synchronized (stations) {
+				for (Station station : stations) {
+					station.calculDistance(location);
+				}
 			}
 			Collections.sort(stations, new Station.ComparatorDistance());
 			Collections.sort(stationsFiltrees, new Station.ComparatorDistance());
@@ -135,9 +137,11 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private void metterAJourListeStations() {
 		String query = editText.getText().toString().toUpperCase();
 		stationsFiltrees.clear();
-		for (Station station : stations) {
-			if (station.getName().toUpperCase().contains(query.toUpperCase())) {
-				stationsFiltrees.add(station);
+		synchronized (stations) {
+			for (Station station : stations) {
+				if (station.getName().toUpperCase().contains(query.toUpperCase())) {
+					stationsFiltrees.add(station);
+				}
 			}
 		}
 		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
@@ -192,7 +196,8 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					stations = keolis.getStations();
+					stations.clear();
+					stations.addAll(keolis.getStations());
 					Collections.sort(stations, new Comparator<Station>() {
 						public int compare(Station o1, Station o2) {
 							return o1.getName().compareToIgnoreCase(o2.getName());
@@ -252,7 +257,8 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							stations = keolis.getStations();
+							stations.clear();
+							stations.addAll(keolis.getStations());
 							Collections.sort(stations, new Comparator<Station>() {
 								public int compare(Station o1, Station o2) {
 									return o1.getName().compareToIgnoreCase(o2.getName());

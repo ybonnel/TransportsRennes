@@ -19,6 +19,7 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
@@ -32,7 +33,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 	private ProgressDialog myProgressDialog;
 
-	private List<Alert> alerts = new ArrayList<Alert>();
+	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>());
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {

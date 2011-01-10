@@ -44,7 +44,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 	/**
 	 * Liste des stations.
 	 */
-	private List<Station> stations = new ArrayList<Station>();
+	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
 
 	private ProgressDialog myProgressDialog;
 

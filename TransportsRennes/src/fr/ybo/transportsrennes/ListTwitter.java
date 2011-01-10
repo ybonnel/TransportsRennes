@@ -14,6 +14,7 @@ import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ListTwitter extends MenuAccueil.ListActivity {
@@ -22,7 +23,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 	private ProgressDialog myProgressDialog;
 
-	private List<Status> allStatus = new ArrayList<Status>();
+	private final List<Status> allStatus = Collections.synchronizedList(new ArrayList<Status>());
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {

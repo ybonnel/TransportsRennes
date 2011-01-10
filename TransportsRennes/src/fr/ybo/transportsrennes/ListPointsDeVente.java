@@ -50,8 +50,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	/**
 	 * Liste des points de vente.
 	 */
-	private List<PointDeVente> pointsDeVente = new ArrayList<PointDeVente>();
-	private List<PointDeVente> pointsDeVenteFiltres = new ArrayList<PointDeVente>();
+	private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>());
+	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>());
 
 	private Location lastLocation = null;
 
@@ -65,8 +65,10 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	private void mettreAjoutLoc(Location location) {
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
-			for (PointDeVente pointDeVente : pointsDeVente) {
-				pointDeVente.calculDistance(location);
+			synchronized (pointsDeVente) {
+				for (PointDeVente pointDeVente : pointsDeVente) {
+					pointDeVente.calculDistance(location);
+				}
 			}
 			Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
 			Collections.sort(pointsDeVenteFiltres, new PointDeVente.ComparatorDistance());
@@ -134,9 +136,11 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	private void metterAJourListe() {
 		String query = editText.getText().toString().toUpperCase();
 		pointsDeVenteFiltres.clear();
-		for (PointDeVente pointDeVente : pointsDeVente) {
-			if (pointDeVente.getName().toUpperCase().contains(query.toUpperCase())) {
-				pointsDeVenteFiltres.add(pointDeVente);
+		synchronized (pointsDeVente) {
+			for (PointDeVente pointDeVente : pointsDeVente) {
+				if (pointDeVente.getName().toUpperCase().contains(query.toUpperCase())) {
+					pointsDeVenteFiltres.add(pointDeVente);
+				}
 			}
 		}
 		((ArrayAdapter<PointDeVente>) listView.getAdapter()).notifyDataSetChanged();
@@ -191,7 +195,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					pointsDeVente = keolis.getPointDeVente();
+					pointsDeVente.clear();
+					pointsDeVente.addAll(keolis.getPointDeVente());
 					Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
 						public int compare(PointDeVente o1, PointDeVente o2) {
 							return o1.getName().compareToIgnoreCase(o2.getName());

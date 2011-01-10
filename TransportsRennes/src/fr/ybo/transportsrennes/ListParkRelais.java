@@ -13,16 +13,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
-import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-import fr.ybo.transportsrennes.keolis.modele.velos.Station;
-import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -53,8 +52,8 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	/**
 	 * Liste des stations.
 	 */
-	private List<ParkRelai> parkRelais = new ArrayList<ParkRelai>();
-	private List<ParkRelai> parkRelaisFiltres = new ArrayList<ParkRelai>();
+	private final List<ParkRelai> parkRelais = Collections.synchronizedList(new ArrayList<ParkRelai>());
+	private final List<ParkRelai> parkRelaisFiltres = Collections.synchronizedList(new ArrayList<ParkRelai>());
 
 	private Location lastLocation = null;
 
@@ -68,8 +67,10 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	private void mettreAjoutLoc(Location location) {
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
-			for (ParkRelai parkRelai : parkRelais) {
-				parkRelai.calculDistance(location);
+			synchronized (parkRelais) {
+				for (ParkRelai parkRelai : parkRelais) {
+					parkRelai.calculDistance(location);
+				}
 			}
 			Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
 			Collections.sort(parkRelaisFiltres, new ParkRelai.ComparatorDistance());
@@ -137,9 +138,11 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	private void metterAJourListeParkRelais() {
 		String query = editText.getText().toString().toUpperCase();
 		parkRelaisFiltres.clear();
-		for (ParkRelai parkRelai : parkRelais) {
-			if (parkRelai.getName().toUpperCase().contains(query.toUpperCase())) {
-				parkRelaisFiltres.add(parkRelai);
+		synchronized (parkRelais) {
+			for (ParkRelai parkRelai : parkRelais) {
+				if (parkRelai.getName().toUpperCase().contains(query.toUpperCase())) {
+					parkRelaisFiltres.add(parkRelai);
+				}
 			}
 		}
 		((ArrayAdapter<ParkRelai>) listView.getAdapter()).notifyDataSetChanged();
@@ -194,7 +197,8 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					parkRelais = keolis.getParkRelais();
+					parkRelais.clear();
+					parkRelais.addAll(keolis.getParkRelais());
 					Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 						public int compare(ParkRelai o1, ParkRelai o2) {
 							return o1.getName().compareToIgnoreCase(o2.getName());
@@ -219,8 +223,8 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					activeGps();
 					((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...",
-							Toast.LENGTH_LONG);
+					Toast toast =
+							Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...", Toast.LENGTH_LONG);
 					toast.show();
 					ListParkRelais.this.finish();
 				}
@@ -254,7 +258,8 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							parkRelais = keolis.getParkRelais();
+							parkRelais.clear();
+							parkRelais.addAll(keolis.getParkRelais());
 							Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 								public int compare(ParkRelai o1, ParkRelai o2) {
 									return o1.getName().compareToIgnoreCase(o2.getName());
