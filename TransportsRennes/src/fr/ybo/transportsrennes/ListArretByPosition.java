@@ -46,8 +46,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	/**
 	 * Liste des stations.
 	 */
-	private List<Arret> arrets = new ArrayList<Arret>();
-	private List<Arret> arretsFiltrees = new ArrayList<Arret>();
+	private final List<Arret> arrets = new ArrayList<Arret>();
+	private final List<Arret> arretsFiltrees = new ArrayList<Arret>();
 
 	private Location lastLocation = null;
 
@@ -61,10 +61,12 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	private void mettreAjoutLoc(Location location) {
 		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
-			for (Arret arret : arrets) {
-				arret.calculDistance(location);
+			synchronized (arrets) {
+				for (Arret arret : arrets) {
+					arret.calculDistance(location);
+				}
+				Collections.sort(arrets, new Arret.ComparatorDistance());
 			}
-			Collections.sort(arrets, new Arret.ComparatorDistance());
 			metterAJourListeArrets();
 		}
 	}
@@ -126,12 +128,16 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	@SuppressWarnings("unchecked")
 	private void metterAJourListeArrets() {
 		String query = editText.getText().toString().toUpperCase();
-		arretsFiltrees.clear();
-		int count = 0;
-		for (Arret arret : arrets) {
-			if (count < 100 && arret.getNom().toUpperCase().contains(query.toUpperCase())) {
-				arretsFiltrees.add(arret);
-				count++;
+		synchronized (arretsFiltrees) {
+			arretsFiltrees.clear();
+			int count = 0;
+			synchronized (arrets) {
+				for (Arret arret : arrets) {
+					if (count < 100 && arret.getNom().toUpperCase().contains(query.toUpperCase())) {
+						arretsFiltrees.add(arret);
+						count++;
+					}
+				}
 			}
 		}
 		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
@@ -183,11 +189,13 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected Void doInBackground(Void... voids) {
 				construireListeArrets();
-				Collections.sort(arrets, new Comparator<Arret>() {
-					public int compare(Arret o1, Arret o2) {
-						return o1.getNom().compareToIgnoreCase(o2.getNom());
-					}
-				});
+				synchronized (arrets) {
+					Collections.sort(arrets, new Comparator<Arret>() {
+						public int compare(Arret o1, Arret o2) {
+							return o1.getNom().compareToIgnoreCase(o2.getNom());
+						}
+					});
+				}
 				return null;
 			}
 
@@ -220,22 +228,24 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		requete.append(" AND ArretRoute.routeId = Route.id");
 		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 		Arret arret;
-		arrets = new ArrayList<Arret>();
-		while (cursor.moveToNext()) {
-			arret = new Arret();
-			arret.setId(cursor.getString(cursor.getColumnIndex("arretId")));
-			arret.setNom(cursor.getString(cursor.getColumnIndex("arretNom")));
-			arret.setDescription(cursor.getString(cursor.getColumnIndex("arretDescription")));
-			arret.setLatitude(cursor.getDouble(cursor.getColumnIndex("arretLatitude")));
-			arret.setLongitude(cursor.getDouble(cursor.getColumnIndex("arretLongitude")));
-			arret.setFavori(new ArretFavori());
-			arret.getFavori().setDirection(cursor.getString(cursor.getColumnIndex("favoriDirection")));
-			arret.getFavori().setRouteId(cursor.getString(cursor.getColumnIndex("routeId")));
-			arret.getFavori().setRouteNomCourt(cursor.getString(cursor.getColumnIndex("routeNomCourt")));
-			arret.getFavori().setRouteNomLong(cursor.getString(cursor.getColumnIndex("routeNomLong")));
-			arret.getFavori().setNomArret(arret.getNom());
-			arret.getFavori().setStopId(arret.getId());
-			arrets.add(arret);
+		synchronized (arrets) {
+			arrets.clear();
+			while (cursor.moveToNext()) {
+				arret = new Arret();
+				arret.setId(cursor.getString(cursor.getColumnIndex("arretId")));
+				arret.setNom(cursor.getString(cursor.getColumnIndex("arretNom")));
+				arret.setDescription(cursor.getString(cursor.getColumnIndex("arretDescription")));
+				arret.setLatitude(cursor.getDouble(cursor.getColumnIndex("arretLatitude")));
+				arret.setLongitude(cursor.getDouble(cursor.getColumnIndex("arretLongitude")));
+				arret.setFavori(new ArretFavori());
+				arret.getFavori().setDirection(cursor.getString(cursor.getColumnIndex("favoriDirection")));
+				arret.getFavori().setRouteId(cursor.getString(cursor.getColumnIndex("routeId")));
+				arret.getFavori().setRouteNomCourt(cursor.getString(cursor.getColumnIndex("routeNomCourt")));
+				arret.getFavori().setRouteNomLong(cursor.getString(cursor.getColumnIndex("routeNomLong")));
+				arret.getFavori().setNomArret(arret.getNom());
+				arret.getFavori().setStopId(arret.getId());
+				arrets.add(arret);
+			}
 		}
 		cursor.close();
 	}
