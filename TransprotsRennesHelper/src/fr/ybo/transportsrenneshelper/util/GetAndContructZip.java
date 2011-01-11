@@ -3,7 +3,14 @@ package fr.ybo.transportsrenneshelper.util;
 
 import fr.ybo.transportsrenneshelper.moteurcsv.ErreurMoteurCsv;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -130,17 +137,21 @@ public class GetAndContructZip {
 
 	}
 
-	protected static void addFileToZip(File file, ZipOutputStream out) throws IOException {
-		byte data[] = new byte[2048];
-		FileInputStream fi = new FileInputStream(file);
-		BufferedInputStream origin = new BufferedInputStream(fi, 2048);
-		ZipEntry entry = new ZipEntry(file.getName());
-		out.putNextEntry(entry);
-		int count;
-		while ((count = origin.read(data, 0, 2048)) != -1) {
-			out.write(data, 0, count);
+	public static void addFileToZip(File file, ZipOutputStream out) {
+		try {
+			byte data[] = new byte[2048];
+			FileInputStream fi = new FileInputStream(file);
+			BufferedInputStream origin = new BufferedInputStream(fi, 2048);
+			ZipEntry entry = new ZipEntry(file.getName());
+			out.putNextEntry(entry);
+			int count;
+			while ((count = origin.read(data, 0, 2048)) != -1) {
+				out.write(data, 0, count);
+			}
+			origin.close();
+		} catch (IOException ioException) {
+			throw new ErreurMoteurCsv(ioException);
 		}
-		origin.close();
 	}
 
 }

@@ -29,15 +29,26 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
+import fr.ybo.transportsrenneshelper.moteurcsv.ErreurMoteurCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
+import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipOutputStream;
 
 
 public class Generateur {
@@ -53,6 +64,7 @@ public class Generateur {
 	private Map<String, List<Horaire>> horairesByLigneId = new HashMap<String, List<Horaire>>();
 
 	private static final List<Class<?>> LIST_CLASSES = new ArrayList<Class<?>>();
+
 	static {
 		LIST_CLASSES.add(Arret.class);
 		LIST_CLASSES.add(ArretRoute.class);
@@ -79,7 +91,7 @@ public class Generateur {
 		System.out.println("Génération du fichier arrets.txt");
 		moteurCsv.writeFile(new File(repertoire, "arrets.txt"), arrets.values(), Arret.class);
 		System.out.println("Génération du fichier arrets_routes.txt");
-		moteurCsv.writeFile(new File(repertoire, "arrets_routes.txt"),arretsRoutes, ArretRoute.class);
+		moteurCsv.writeFile(new File(repertoire, "arrets_routes.txt"), arretsRoutes, ArretRoute.class);
 		System.out.println("Génération du fichier calendriers.txt");
 		moteurCsv.writeFile(new File(repertoire, "calendriers.txt"), calendriers, Calendrier.class);
 		System.out.println("Génération du fichier directions.txt");
@@ -94,8 +106,45 @@ public class Generateur {
 			trajets.addAll(trajetsToAdd);
 		}
 		moteurCsv.writeFile(new File(repertoire, "trajets.txt"), trajets, Trajet.class);
+		for (Ligne ligne : lignes) {
+			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id), Horaire.class);
+			System.out.println("Nombre d'horaire pour la ligne " + ligne.id + " : " + horairesByLigneId.get(ligne.id).size());
+		}
+		System.out.println("Création du zip principal");
+		try {
+			FileOutputStream dest = new FileOutputStream(new File(repertoire, "GTFSRennesPrincipal.zip"));
+			ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 
+			GetAndContructZip.addFileToZip(new File(repertoire, "arrets.txt"), out);
+			GetAndContructZip.addFileToZip(new File(repertoire, "arrets_routes.txt"), out);
+			GetAndContructZip.addFileToZip(new File(repertoire, "calendriers.txt"), out);
+			GetAndContructZip.addFileToZip(new File(repertoire, "directions.txt"), out);
+			GetAndContructZip.addFileToZip(new File(repertoire, "lignes.txt"), out);
+			GetAndContructZip.addFileToZip(new File(repertoire, "trajets.txt"), out);
+			out.close();
 
+			for (File fileStopTime : repertoire.listFiles(new FilenameFilter() {
+				public boolean accept(File dir, String name) {
+					return name.startsWith("horaires_");
+				}
+			})) {
+				String name = fileStopTime.getName();
+				String newName = name.split("\\.")[0] + ".zip";
+				dest = new FileOutputStream(new File(repertoire, newName));
+				out = new ZipOutputStream(new BufferedOutputStream(dest));
+				GetAndContructZip.addFileToZip(fileStopTime, out);
+				out.close();
+			}
+
+			System.out.println("Création du fichier last_update.txt");
+			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
+
+			bufWriter.write(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+
+			bufWriter.close();
+		} catch (Exception exception) {
+			throw new ErreurMoteurCsv(exception);
+		}
 	}
 
 	public void remplirArretRoutes() {
