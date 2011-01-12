@@ -39,7 +39,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -110,6 +109,11 @@ public class Generateur {
 			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id), Horaire.class);
 			System.out.println("Nombre d'horaire pour la ligne " + ligne.id + " : " + horairesByLigneId.get(ligne.id).size());
 		}
+		genereZips(repertoire);
+	}
+
+	private void genereZips(File repertoire) {
+
 		System.out.println("Création du zip principal");
 		try {
 			FileOutputStream dest = new FileOutputStream(new File(repertoire, "GTFSRennesPrincipal.zip"));
@@ -209,7 +213,7 @@ public class Generateur {
 				}
 				if (chaine == null) {
 					// Seulement terminus pour cette ligne, pas à gérer
-					break;
+					continue;
 				}
 				String[] champs = chaine.split(",");
 				int sequence = 1;
