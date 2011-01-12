@@ -27,16 +27,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -88,8 +80,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				for (Arret arret : arrets) {
 					arret.calculDistance(location);
 				}
-			}
-			if (!arrets.isEmpty()) {
 				Collections.sort(arrets, new Arret.ComparatorDistance());
 			}
 			metterAJourListeArrets();
@@ -212,11 +202,13 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected Void doInBackground(Void... voids) {
 				construireListeArrets();
-				Collections.sort(arrets, new Comparator<Arret>() {
-					public int compare(Arret o1, Arret o2) {
-						return o1.nom.compareToIgnoreCase(o2.nom);
-					}
-				});
+				synchronized (arrets) {
+					Collections.sort(arrets, new Comparator<Arret>() {
+						public int compare(Arret o1, Arret o2) {
+							return o1.nom.compareToIgnoreCase(o2.nom);
+						}
+					});
+				}
 				return null;
 			}
 

@@ -86,9 +86,9 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				for (ParkRelai parkRelai : parkRelais) {
 					parkRelai.calculDistance(location);
 				}
+				Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
 			}
-			Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
-			Collections.sort(parkRelaisFiltres, new ParkRelai.ComparatorDistance());
+			metterAJourListeParkRelais();
 			((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 		}
 	}
@@ -152,8 +152,8 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	@SuppressWarnings("unchecked")
 	private void metterAJourListeParkRelais() {
 		String query = editText.getText().toString().toUpperCase();
-		parkRelaisFiltres.clear();
 		synchronized (parkRelais) {
+			parkRelaisFiltres.clear();
 			for (ParkRelai parkRelai : parkRelais) {
 				if (parkRelai.name.toUpperCase().contains(query.toUpperCase())) {
 					parkRelaisFiltres.add(parkRelai);
@@ -212,15 +212,17 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					parkRelais.clear();
-					parkRelais.addAll(keolis.getParkRelais());
-					Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-						public int compare(ParkRelai o1, ParkRelai o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
-					parkRelaisFiltres.clear();
-					parkRelaisFiltres.addAll(parkRelais);
+					synchronized (parkRelais) {
+						parkRelais.clear();
+						parkRelais.addAll(keolis.getParkRelais());
+						Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+							public int compare(ParkRelai o1, ParkRelai o2) {
+								return o1.name.compareToIgnoreCase(o2.name);
+							}
+						});
+						parkRelaisFiltres.clear();
+						parkRelaisFiltres.addAll(parkRelais);
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
 					erreur = true;
@@ -273,15 +275,17 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							parkRelais.clear();
-							parkRelais.addAll(keolis.getParkRelais());
-							Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-								public int compare(ParkRelai o1, ParkRelai o2) {
-									return o1.name.compareToIgnoreCase(o2.name);
-								}
-							});
-							parkRelaisFiltres.clear();
-							parkRelaisFiltres.addAll(parkRelais);
+							synchronized (parkRelais) {
+								parkRelais.clear();
+								parkRelais.addAll(keolis.getParkRelais());
+								Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+									public int compare(ParkRelai o1, ParkRelai o2) {
+										return o1.name.compareToIgnoreCase(o2.name);
+									}
+								});
+								parkRelaisFiltres.clear();
+								parkRelaisFiltres.addAll(parkRelais);
+							}
 						} catch (Exception exception) {
 							LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
 							erreur = true;

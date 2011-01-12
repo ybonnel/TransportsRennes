@@ -100,13 +100,15 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					for (VeloFavori favori : velosFavoris) {
 						numbers.add(favori.number);
 					}
-					stations.clear();
-					stations.addAll(keolis.getStationByNumbers(numbers));
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
+					synchronized (stations) {
+						stations.clear();
+						stations.addAll(keolis.getStationByNumbers(numbers));
+						Collections.sort(stations, new Comparator<Station>() {
+							public int compare(Station o1, Station o2) {
+								return o1.name.compareToIgnoreCase(o2.name);
+							}
+						});
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
 					erreur = true;
@@ -164,13 +166,15 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 							for (VeloFavori favori : velosFavoris) {
 								numbers.add(favori.number);
 							}
-							stations.clear();
-							stations.addAll(keolis.getStationByNumbers(numbers));
-							Collections.sort(stations, new Comparator<Station>() {
-								public int compare(Station o1, Station o2) {
-									return o1.name.compareToIgnoreCase(o2.name);
-								}
-							});
+							synchronized (stations) {
+								stations.clear();
+								stations.addAll(keolis.getStationByNumbers(numbers));
+								Collections.sort(stations, new Comparator<Station>() {
+									public int compare(Station o1, Station o2) {
+										return o1.name.compareToIgnoreCase(o2.name);
+									}
+								});
+							}
 						} catch (Exception exception) {
 							LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
 							erreur = true;

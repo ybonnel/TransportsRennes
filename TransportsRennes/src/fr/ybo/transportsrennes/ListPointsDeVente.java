@@ -84,10 +84,9 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				for (PointDeVente pointDeVente : pointsDeVente) {
 					pointDeVente.calculDistance(location);
 				}
+				Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
 			}
-			Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
-			Collections.sort(pointsDeVenteFiltres, new PointDeVente.ComparatorDistance());
-			((ArrayAdapter<PointDeVente>) getListAdapter()).notifyDataSetChanged();
+			metterAJourListe();
 		}
 	}
 
@@ -210,15 +209,17 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					pointsDeVente.clear();
-					pointsDeVente.addAll(keolis.getPointDeVente());
-					Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
-						public int compare(PointDeVente o1, PointDeVente o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
-					pointsDeVenteFiltres.clear();
-					pointsDeVenteFiltres.addAll(pointsDeVente);
+					synchronized (pointsDeVente) {
+						pointsDeVente.clear();
+						pointsDeVente.addAll(keolis.getPointDeVente());
+						Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
+							public int compare(PointDeVente o1, PointDeVente o2) {
+								return o1.name.compareToIgnoreCase(o2.name);
+							}
+						});
+						pointsDeVenteFiltres.clear();
+						pointsDeVenteFiltres.addAll(pointsDeVente);
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListPointsDeVente.doInBackGround", exception);
 					erreur = true;

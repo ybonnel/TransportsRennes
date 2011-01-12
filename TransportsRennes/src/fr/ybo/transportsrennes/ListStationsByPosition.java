@@ -93,9 +93,9 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				for (Station station : stations) {
 					station.calculDistance(location);
 				}
+				Collections.sort(stations, new Station.ComparatorDistance());
 			}
-			Collections.sort(stations, new Station.ComparatorDistance());
-			Collections.sort(stationsFiltrees, new Station.ComparatorDistance());
+			metterAJourListeStations();
 			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 		}
 	}
@@ -219,15 +219,17 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					stations.clear();
-					stations.addAll(keolis.getStations());
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
-					stationsFiltrees.clear();
-					stationsFiltrees.addAll(stations);
+					synchronized (stations) {
+						stations.clear();
+						stations.addAll(keolis.getStations());
+						Collections.sort(stations, new Comparator<Station>() {
+							public int compare(Station o1, Station o2) {
+								return o1.name.compareToIgnoreCase(o2.name);
+							}
+						});
+						stationsFiltrees.clear();
+						stationsFiltrees.addAll(stations);
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
 					erreur = true;
@@ -280,15 +282,17 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					@Override
 					protected Void doInBackground(final Void... pParams) {
 						try {
-							stations.clear();
-							stations.addAll(keolis.getStations());
-							Collections.sort(stations, new Comparator<Station>() {
-								public int compare(Station o1, Station o2) {
-									return o1.name.compareToIgnoreCase(o2.name);
-								}
-							});
-							stationsFiltrees.clear();
-							stationsFiltrees.addAll(stations);
+							synchronized (stations) {
+								stations.clear();
+								stations.addAll(keolis.getStations());
+								Collections.sort(stations, new Comparator<Station>() {
+									public int compare(Station o1, Station o2) {
+										return o1.name.compareToIgnoreCase(o2.name);
+									}
+								});
+								stationsFiltrees.clear();
+								stationsFiltrees.addAll(stations);
+							}
 						} catch (Exception exception) {
 							LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
 							erreur = true;
