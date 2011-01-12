@@ -42,8 +42,20 @@
         <activity android:name=".TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListTwitter" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <receiver android:name="TransportsWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/transportswidget"/>
+        </receiver>
+        <activity android:name=".TransportsWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
 
-        <uses-library android:name="com.google.android.maps" />
+        <uses-library android:name="com.google.android.maps"/>
 
         <!-- The application's publisher ID assigned by AdMob -->
         <meta-data android:value="a14d20c4e95f641" android:name="ADMOB_PUBLISHER_ID"/>
