@@ -37,7 +37,7 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
 		TextView titreAlert = (TextView) v.findViewById(R.id.titreAlert);
 		LinearLayout conteneur = (LinearLayout) v.findViewById(R.id.conteneurImage);
 		titreAlert.setText(alert.getTitleFormate());
-		for (String ligne : alert.getLines()) {
+		for (String ligne : alert.lines) {
 			try {
 				Field fieldIcon = classDrawable.getDeclaredField("i" + ligne.toLowerCase());
 				int ressourceImg = fieldIcon.getInt(null);

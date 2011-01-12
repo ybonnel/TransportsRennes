@@ -8,7 +8,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
@@ -38,30 +37,14 @@ public class Colonne {
 	protected Colonne(final Field field, final String tableName) throws DataBaseException {
 		this.field = field;
 		this.tableName = tableName;
-		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne colonne = field
-				.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.class);
+		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne colonne =
+				field.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.class);
 		type = colonne.type();
 		primaryKey = field.getAnnotation(PrimaryKey.class) != null;
 		name = colonne.name();
 		indexed = field.getAnnotation(Indexed.class);
 		if ("".equals(name)) {
 			name = field.getName();
-		}
-		if (type == TypeColonne.ENUM) {
-			if (colonne.clazz() == null || colonne.clazz().equals(Enum.class)) {
-				throw new DataBaseException("Pour une colonne de type Enum, la classe est obligatoire.");
-			}
-			if (colonne.methode() == null || "".equals(colonne.methode())) {
-				throw new DataBaseException("Pour une colonne de type Enum, la méthode est obligatoire.");
-			}
-			try {
-				valueOf = colonne.clazz().getDeclaredMethod("valueOf", int.class);
-				methodeEnum = colonne.clazz().getDeclaredMethod(colonne.methode(), (Class<?>[]) null);
-			} catch (final SecurityException e) {
-				throw new DataBaseException(e);
-			} catch (final NoSuchMethodException e) {
-				throw new DataBaseException(e);
-			}
 		}
 	}
 
@@ -84,23 +67,12 @@ public class Colonne {
 				case NUMERIC:
 					values.put(name, (Double) valeur);
 					break;
-				case ENUM:
-					try {
-						values.put(name, (Integer) methodeEnum.invoke(valeur, (Object[]) null));
-					} catch (final IllegalArgumentException e) {
-						throw new DataBaseException(e);
-					} catch (final IllegalAccessException e) {
-						throw new DataBaseException(e);
-					} catch (final InvocationTargetException e) {
-						throw new DataBaseException(e);
-					}
-					break;
 			}
 		}
 	}
 
-	protected <Entite> void appendWhereIfNotNull(final StringBuilder queryBuilder, final Entite entite,
-	                                             final List<String> selectionArgs) throws DataBaseException {
+	protected <Entite> void appendWhereIfNotNull(final StringBuilder queryBuilder, final Entite entite, final List<String> selectionArgs)
+			throws DataBaseException {
 		final String valeur = getValueToString(entite);
 		if (valeur != null) {
 			if (queryBuilder.length() > 0) {
@@ -169,17 +141,6 @@ public class Colonne {
 		}
 		String retour;
 		switch (type) {
-			case ENUM:
-				try {
-					retour = Integer.toString((Integer) methodeEnum.invoke(valeur, (Object[]) null));
-				} catch (final IllegalArgumentException e) {
-					throw new DataBaseException(e);
-				} catch (final IllegalAccessException e) {
-					throw new DataBaseException(e);
-				} catch (final InvocationTargetException e) {
-					throw new DataBaseException(e);
-				}
-				break;
 			case BOOLEAN:
 				retour = (Boolean) valeur ? "1" : "0";
 				break;
@@ -212,17 +173,6 @@ public class Colonne {
 		if (!cursor.isNull(index)) {
 			Object value;
 			switch (type) {
-				case ENUM:
-					try {
-						value = valueOf.invoke(null, cursor.getInt(index));
-					} catch (final IllegalArgumentException e) {
-						throw new DataBaseException(e);
-					} catch (final IllegalAccessException e) {
-						throw new DataBaseException(e);
-					} catch (final InvocationTargetException e) {
-						throw new DataBaseException(e);
-					}
-					break;
 				case INTEGER:
 					value = cursor.getInt(index);
 					break;

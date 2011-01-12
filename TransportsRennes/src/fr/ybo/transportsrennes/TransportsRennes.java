@@ -214,8 +214,8 @@ public class TransportsRennes extends Activity {
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
-		if (dernierMiseAJour == null || dernierMiseAJour.getDerniereMiseAJour() == null ||
-				dateDernierFichierKeolis.after(dernierMiseAJour.getDerniereMiseAJour())) {
+		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
+				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
 			builder.setCancelable(false);

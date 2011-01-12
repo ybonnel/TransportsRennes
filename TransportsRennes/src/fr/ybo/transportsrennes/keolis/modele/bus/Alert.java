@@ -23,34 +23,34 @@ public class Alert implements Serializable {
 	/**
 	 * title.
 	 */
-	private String title;
+	public String title;
 	/**
 	 * starttime.
 	 */
-	private String starttime;
+	public String starttime;
 	/**
 	 * endtime.
 	 */
-	private String endtime;
+	public String endtime;
 	/**
 	 * lines.
 	 */
-	private List<String> lines;
+	public List<String> lines = new ArrayList<String>();
 
 	/**
 	 * majordisturbance.
 	 */
-	private boolean majordisturbance;
+	public boolean majordisturbance;
 
 	/**
 	 * detail.
 	 */
-	private String detail;
+	public String detail;
 
 	/**
 	 * link.
 	 */
-	private String link;
+	public String link;
 
 	public String getDetailFormatte(Set<String> arrets) {
 		StringBuilder lignes = new StringBuilder();
@@ -95,74 +95,7 @@ public class Alert implements Serializable {
 		return resultat.toString();
 	}
 
-	/**
-	 * @return the lines
-	 */
-	public final List<String> getLines() {
-		if (lines == null) {
-			lines = new ArrayList<String>();
-		}
-		return lines;
-	}
-
-	/**
-	 * @param pDetail the detail to set
-	 */
-	public final void setDetail(final String pDetail) {
-		detail = pDetail;
-	}
-
-	/**
-	 * @param pEndtime the endtime to set
-	 */
-	public final void setEndtime(final String pEndtime) {
-		endtime = pEndtime;
-	}
-
-	/**
-	 * @param pLink the link to set
-	 */
-	public final void setLink(final String pLink) {
-		link = pLink;
-	}
-
-	/**
-	 * @param pMajordisturbance the majordisturbance to set
-	 */
-	public final void setMajordisturbance(final boolean pMajordisturbance) {
-		majordisturbance = pMajordisturbance;
-	}
-
-	/**
-	 * @param pStarttime the starttime to set
-	 */
-	public final void setStarttime(final String pStarttime) {
-		starttime = pStarttime;
-	}
-
-	/**
-	 * @param pTitle the title to set
-	 */
-	public final void setTitle(final String pTitle) {
-		title = pTitle;
-	}
-
 	public String getTitleFormate() {
-		String titleFormate = title;
-		for (String ligneConcernee : lines) {
-			titleFormate = titleFormate.replaceAll(ligneConcernee, "");
-		}
-		if (titleFormate.startsWith(" ")) {
-			titleFormate = titleFormate.substring(1);
-		}
-		return Formatteur.formatterChaine(titleFormate);
-	}
-
-	/**
-	 * @return le titre de l'alert formatté.
-	 */
-	@Override
-	public final String toString() {
 		String titleFormate = title;
 		for (String ligneConcernee : lines) {
 			titleFormate = titleFormate.replaceAll(ligneConcernee, "");

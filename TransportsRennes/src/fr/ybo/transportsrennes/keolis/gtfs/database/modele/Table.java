@@ -23,7 +23,7 @@ public class Table {
 		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Table table =
 				clazz.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Table.class);
 		if (table == null) {
-			throw new DataBaseException("La classe " + clazz.getSimpleName() + " ne contient pas l'annoation @Table");
+			throw new DataBaseException("La classe " + clazz.getSimpleName() + " ne contient pas l'annotation @Table");
 		}
 		name = table.value();
 		if ("".equals(name)) {
@@ -54,7 +54,7 @@ public class Table {
 	}
 
 	public void addSuffixeToTableName(final String suffixe) {
-		name = name.concat(suffixe);
+		name = name.concat("_" + suffixe);
 		for (final Colonne colonne : colonnes) {
 			colonne.setTableName(name);
 		}

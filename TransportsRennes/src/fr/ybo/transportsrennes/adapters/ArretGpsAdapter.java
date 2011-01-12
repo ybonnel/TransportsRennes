@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
-import fr.ybo.transportsrennes.util.Formatteur;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 		Arret arret = arrets.get(position);
 		LinearLayout conteneur = (LinearLayout) v.findViewById(R.id.conteneurImage);
 		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + arret.getFavori().getRouteNomCourt().toLowerCase());
+			Field fieldIcon = classDrawable.getDeclaredField("i" + arret.favori.nomCourt.toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
 			ImageView imgView = new ImageView(getContext());
 			imgView.setImageResource(ressourceImg);
@@ -44,18 +43,18 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 		} catch (NoSuchFieldException e) {
 			TextView textView = new TextView(getContext());
 			textView.setTextSize(16);
-			textView.setText(arret.getFavori().getRouteNomCourt());
+			textView.setText(arret.favori.nomCourt);
 			conteneur.addView(textView);
 		} catch (IllegalAccessException e) {
 			TextView textView = new TextView(getContext());
 			textView.setTextSize(16);
-			textView.setText(arret.getFavori().getRouteNomCourt());
+			textView.setText(arret.favori.nomCourt);
 			conteneur.addView(textView);
 		}
 		TextView arretDirection = (TextView) v.findViewById(R.id.arretgps_direction);
-		arretDirection.setText(arret.getFavori().getDirection());
+		arretDirection.setText(arret.favori.direction);
 		TextView nomArret = (TextView) v.findViewById(R.id.arretgps_nomArret);
-		nomArret.setText(arret.getNom());
+		nomArret.setText(arret.nom);
 		TextView distance = (TextView) v.findViewById(R.id.arretgps_distance);
 		distance.setText(arret.formatDistance());
 		return v;

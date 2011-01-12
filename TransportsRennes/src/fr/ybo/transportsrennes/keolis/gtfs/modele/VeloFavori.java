@@ -6,19 +6,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 @Table
 public class VeloFavori {
-
-	/**
-	 * Numéro de la station.
-	 */
 	@Colonne
 	@PrimaryKey
-	private String number;
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
+	public String number;
 }

@@ -1,6 +1,5 @@
 package fr.ybo.transportsrennes;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,7 +14,6 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
-import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -75,8 +73,9 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 				((ArrayAdapter<Alert>) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast toast =
-							Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR, si cela persiste envoyez un mail au développeur.", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(),
+							"Une erreur est survenu lors de l'interrogation du STAR, si cela persiste envoyez un mail au développeur.",
+							Toast.LENGTH_LONG);
 					toast.show();
 					ListAlerts.this.finish();
 				}

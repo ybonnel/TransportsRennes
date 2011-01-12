@@ -15,30 +15,49 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
+import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
+import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
+import fr.ybo.transportsrennes.util.LogYbo;
 
-@FichierCsv("arrets_routes.txt")
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@FichierCsv("lignes.txt")
 @Table
-public class ArretRoute {
-	@BaliseCsv("arret_id")
-	@Colonne
-	@PrimaryKey
-	public String arretId;
-	@BaliseCsv("ligne_id")
-	@Colonne
-	@PrimaryKey
-	public String ligneId;
-	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
-	public Integer directionId;
-	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
-	public Integer sequence;
+public class Ligne implements Serializable {
 
+	private static  final LogYbo LOG_YBO = new LogYbo(Ligne.class);
+
+	@BaliseCsv("id")
+	@Colonne
+	@PrimaryKey
+	public String id;
+	@BaliseCsv("nom_court")
+	@Colonne
+	public String nomCourt;
+	@BaliseCsv("nom_long")
+	@Colonne
+	public String nomLong;
+	@BaliseCsv(value = "ordre", adapter = AdapterInteger.class)
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	public Integer ordre;
+	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	public Boolean chargee;
+
+	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper) {
+		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
+		final List<Class<?>> classes = new ArrayList<Class<?>>();
+		classes.add(Horaire.class);
+		MoteurCsv moteur = new MoteurCsv(classes);
+		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper);
+		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
+	}
 }

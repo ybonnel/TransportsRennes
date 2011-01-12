@@ -71,27 +71,27 @@ public class GetStationHandler extends KeolisHandler<Station> {
 	@Override
 	protected final void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenu) {
 		if (baliseName.equals(NUMBER)) {
-			currentObjectKeolis.setNumber(contenu);
+			currentObjectKeolis.number = contenu;
 		} else if (baliseName.equals(NAME)) {
-			currentObjectKeolis.setName(contenu);
+			currentObjectKeolis.name = contenu;
 		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.setAdresse(contenu);
+			currentObjectKeolis.adresse = contenu;
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.setState(Boolean.parseBoolean(contenu));
+			currentObjectKeolis.state = Boolean.parseBoolean(contenu);
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.setLatitude(Double.parseDouble(contenu));
+			currentObjectKeolis.latitude = Double.parseDouble(contenu);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.setLongitude(Double.parseDouble(contenu));
+			currentObjectKeolis.longitude = Double.parseDouble(contenu);
 		} else if (baliseName.equals(SLOTSAVAILABLE)) {
-			currentObjectKeolis.setSlotsavailable(Integer.parseInt(contenu));
+			currentObjectKeolis.slotsavailable = Integer.parseInt(contenu);
 		} else if (baliseName.equals(BIKESAVAILABLE)) {
-			currentObjectKeolis.setBikesavailable(Integer.parseInt(contenu));
+			currentObjectKeolis.bikesavailable = Integer.parseInt(contenu);
 		} else if (baliseName.equals(POS)) {
-			currentObjectKeolis.setPos("1".equals(contenu));
+			currentObjectKeolis.pos = "1".equals(contenu);
 		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.setDistrict(contenu);
+			currentObjectKeolis.district = contenu;
 		} else if (baliseName.equals(LASTUPDATE)) {
-			currentObjectKeolis.setLastupdate(contenu);
+			currentObjectKeolis.lastupdate = contenu;
 		}
 	}
 }

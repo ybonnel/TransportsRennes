@@ -107,7 +107,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		if (v.getId() == android.R.id.list) {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
-			menu.setHeaderTitle(favori.getNomArret());
+			menu.setHeaderTitle(favori.nomArret);
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, "Supprimer des favoris");
 		}
 	}

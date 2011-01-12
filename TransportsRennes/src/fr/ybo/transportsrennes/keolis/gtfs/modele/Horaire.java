@@ -15,42 +15,33 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterDouble;
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterBoolean;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
-import java.io.Serializable;
-
-@FichierCsv("arrets.txt")
+@FichierCsv("horaires.txt")
 @Table
-public class Arret extends ObjetWithDistance implements Serializable  {
-	@BaliseCsv("id")
+public class Horaire {
+	@BaliseCsv("arret_id")
 	@Colonne
 	@PrimaryKey
-	public String id;
-	@BaliseCsv("nom")
-	@Colonne
-	public String nom;
-	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
-	@Colonne( type = Colonne.TypeColonne.NUMERIC )
-	public Double latitude;
-	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
-	@Colonne( type = Colonne.TypeColonne.NUMERIC )
-	public Double longitude;
-
-	public transient ArretFavori favori;
-
-	@Override
-	public double getLatitude() {
-		return latitude;
-	}
-
-	@Override
-	public double getLongitude() {
-		return longitude;
-	}
+	public String arretId;
+	@BaliseCsv(value = "trajet_id", adapter = AdapterInteger.class)
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@PrimaryKey
+	public Integer trajetId;
+	@BaliseCsv(value = "heure_depart", adapter = AdapterInteger.class)
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	public Integer heureDepart;
+	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class)
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	public Integer stopSequence;
+	@BaliseCsv(value = "terminus", adapter = AdapterBoolean.class)
+	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	public Boolean terminus;
 }

@@ -8,16 +8,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Liste des arrêts d'une ligne de bus.
@@ -30,7 +36,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
-	private Route myRoute;
+	private Ligne myLigne;
 
 	private Cursor currentCursor;
 
@@ -43,17 +49,22 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private String currentDirection = null;
 
 	public void onDirectionClick() {
-		final Map<String, String> mapDirections = new HashMap<String, String>();
-		ArretRoute arretRouteRef = new ArretRoute();
-		arretRouteRef.setRouteId(myRoute.getId());
-		for (ArretRoute arretRoute : TransportsRennesApplication.getDataBaseHelper().select(arretRouteRef)) {
-			mapDirections.put(arretRoute.getDirection(), arretRoute.getDirection());
+		StringBuilder requete = new StringBuilder();
+		requete.append("SELECT Direction.id as directionId, Direction.direction as direction ");
+		requete.append("FROM Direction, ArretRoute ");
+		requete.append("WHERE Direction.id = ArretRoute.directionId");
+		requete.append(" AND ArretRoute.ligneId = :ligneId ");
+		requete.append("GROUP BY Direction.id, Direction.direction");
+		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myLigne.id));
+		int directionIndex = cursor.getColumnIndex("direction");
+		final List<String> items = new ArrayList<String>();
+		while (cursor.moveToNext()) {
+			items.add(cursor.getString(directionIndex));
 		}
+		cursor.close();
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choisissez une direction");
-		final List<String> items = new ArrayList<String>();
 		items.add("Toutes");
-		items.addAll(mapDirections.keySet());
 		Collections.sort(items, new Comparator<String>() {
 			public int compare(String o1, String o2) {
 				if ("Toutes".equals(o1)) {
@@ -67,9 +78,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 		});
 		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialogInterface, int item) {
-				currentDirection = mapDirections.get(items.get(item));
+				currentDirection = items.get(item).equals("Toutes") ? null : items.get(item);
 				construireListe();
-				((TextView) findViewById(R.id.directionArretCourante)).setText(currentDirection == null ? "Toutes" : currentDirection);
+				((TextView) findViewById(R.id.directionArretCourante)).setText(items.get(item));
 				findViewById(R.id.directionArretCouranteScroll).invalidate();
 				getListView().invalidate();
 				dialogInterface.dismiss();
@@ -81,19 +92,20 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private void construireCursor() {
 		closeCurrentCursor();
 		List<String> selectionArgs = new ArrayList<String>();
-		selectionArgs.add(myRoute.getId());
+		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" ArretRoute.direction as direction ");
-		requete.append("from ArretRoute, Arret ");
+		requete.append(" Direction.direction as direction ");
+		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
-		requete.append(" ArretRoute.routeId = :routeId");
+		requete.append(" ArretRoute.ligneId = :ligneId");
 		requete.append(" and ArretRoute.arretId = Arret.id");
+		requete.append(" and Direction.id = ArretRoute.directionId");
 		if (currentDirection != null) {
-			requete.append(" and ArretRoute.direction = :direction");
+			requete.append(" and Direction.direction = :direction");
 			selectionArgs.add(currentDirection);
 		}
-		requete.append(" order by ArretRoute.direction, ");
+		requete.append(" order by Direction.direction, ");
 		if (orderDirection) {
 			requete.append("ArretRoute.sequence");
 		} else {
@@ -107,7 +119,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private void construireListe() {
 		construireCursor();
-		setListAdapter(new ArretAdapter(this, currentCursor, myRoute));
+		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -117,7 +129,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
 				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
-				intent.putExtra("route", myRoute);
+				intent.putExtra("ligne", myLigne);
 				startActivity(intent);
 			}
 		});
@@ -129,16 +141,16 @@ public class ListArret extends MenuAccueil.ListActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
-		myRoute = (Route) getIntent().getExtras().getSerializable("route");
+		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				ListArret.this.onDirectionClick();
 			}
 		});
-		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener(){
+		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
-				intent.putExtra("route", myRoute);
+				intent.putExtra("ligne", myLigne);
 				if (currentDirection != null) {
 					intent.putExtra("direction", currentDirection);
 				}
@@ -147,9 +159,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 		});
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(myRoute.getNomLong());
+		nomLong.setText(myLigne.nomLong);
 		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + myRoute.getNomCourt().toLowerCase());
+			Field fieldIcon = classDrawable.getDeclaredField("i" + myLigne.nomCourt.toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
 			ImageView imgView = new ImageView(getApplicationContext());
 			imgView.setImageResource(ressourceImg);
@@ -157,16 +169,14 @@ public class ListArret extends MenuAccueil.ListActivity {
 		} catch (NoSuchFieldException e) {
 			TextView textView = new TextView(getApplicationContext());
 			textView.setTextSize(16);
-			textView.setText(myRoute.getNomCourt());
+			textView.setText(myLigne.nomCourt);
 			conteneur.addView(textView);
 		} catch (IllegalAccessException e) {
 			TextView textView = new TextView(getApplicationContext());
 			textView.setTextSize(16);
-			textView.setText(myRoute.getNomCourt());
+			textView.setText(myLigne.nomCourt);
 			conteneur.addView(textView);
 		}
-		final Route routeTmp = new Route();
-		routeTmp.setId(myRoute.getId());
 		construireListe();
 	}
 

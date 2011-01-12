@@ -36,7 +36,7 @@ public class DetailAlert extends MenuAccueil.Activity {
 		TextView titreAlert = (TextView) findViewById(R.id.titreAlert);
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		titreAlert.setText(alert.getTitleFormate());
-		for (String ligne : alert.getLines()) {
+		for (String ligne : alert.lines) {
 			try {
 				Field fieldIcon = classDrawable.getDeclaredField("i" + ligne.toLowerCase());
 				int ressourceImg = fieldIcon.getInt(null);
@@ -56,10 +56,10 @@ public class DetailAlert extends MenuAccueil.Activity {
 			}
 		}
 		Set<String> arretsToBold = new HashSet<String>();
-		for (String line : alert.getLines()) {
+		for (String line : alert.lines) {
 			StringBuilder requete = new StringBuilder();
-			requete.append("select Arret.nom from Arret, Route, ArretRoute ");
-			requete.append("where Route.nomCourt = :nomCourt and ArretRoute.routeId = Route.id ");
+			requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
+			requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
 			requete.append("and Arret.id = ArretRoute.arretId");
 			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
 			while (cursor.moveToNext()) {

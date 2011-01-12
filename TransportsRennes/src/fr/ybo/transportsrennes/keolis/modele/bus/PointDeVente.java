@@ -14,75 +14,48 @@ public class PointDeVente extends ObjetWithDistance implements Serializable {
 	/**
 	 * Nom du point de vente.
 	 */
-	private String name;
+	public String name;
 	/**
 	 * Type du point de vente.
 	 */
-	private String type;
+	public String type;
 	/**
 	 * Adresse du point de vente.
 	 */
-	private String adresse;
+	public String adresse;
 	/**
 	 * Code postal du point de vente.
 	 */
-	private String codePostal;
+	public String codePostal;
 	/**
 	 * Ville du point de vente.
 	 */
-	private String ville;
+	public String ville;
 	/**
 	 * District du point de vente.
 	 */
-	private String district;
+	public String district;
 	/**
 	 * Téléphone du point de vente.
 	 */
-	private String telephone;
+	public String telephone;
 	/**
 	 * Schedule du point de vente.
 	 */
-	private String schedule;
+	public String schedule;
 	/**
 	 * Latitude du point de vente.
 	 */
-	private double latitude;
+	public double latitude;
 	/**
 	 * Longitude du point de vente.
 	 */
-	private double longitude;
-
-	private Integer distance;
-
-	/**
-	 * @return the adresse
-	 */
-	public final String getAdresse() {
-		return adresse;
-	}
-
-	/**
-	 * @return the codePostal
-	 */
-	public final String getCodePostal() {
-		return codePostal;
-	}
-
-	/**
-	 * @return the district
-	 */
-	public final String getDistrict() {
-		return district;
-	}
-
-	@Override
-	public Integer getDistance() {
-		return distance;
-	}
+	public double longitude;
 
 	/**
 	 * @return the latitude
 	 */
+	@Override
 	public final double getLatitude() {
 		return latitude;
 	}
@@ -90,117 +63,8 @@ public class PointDeVente extends ObjetWithDistance implements Serializable {
 	/**
 	 * @return the longitude
 	 */
+	@Override
 	public final double getLongitude() {
 		return longitude;
-	}
-
-	@Override
-	public void setDistance(Integer distance) {
-		this.distance = distance;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public final String getName() {
-		return name;
-	}
-
-	/**
-	 * @return the schedule
-	 */
-	public final String getSchedule() {
-		return schedule;
-	}
-
-	/**
-	 * @return the telephone
-	 */
-	public final String getTelephone() {
-		return telephone;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public final String getType() {
-		return type;
-	}
-
-	/**
-	 * @return the ville
-	 */
-	public final String getVille() {
-		return ville;
-	}
-
-	/**
-	 * @param pAdresse the adresse to set
-	 */
-	public final void setAdresse(final String pAdresse) {
-		adresse = pAdresse;
-	}
-
-	/**
-	 * @param pCodePostal the codePostal to set
-	 */
-	public final void setCodePostal(final String pCodePostal) {
-		codePostal = pCodePostal;
-	}
-
-	/**
-	 * @param pDistrict the district to set
-	 */
-	public final void setDistrict(final String pDistrict) {
-		district = pDistrict;
-	}
-
-	/**
-	 * @param pLatitude the latitude to set
-	 */
-	public final void setLatitude(final double pLatitude) {
-		latitude = pLatitude;
-	}
-
-	/**
-	 * @param pLongitude the longitude to set
-	 */
-	public final void setLongitude(final double pLongitude) {
-		longitude = pLongitude;
-	}
-
-	/**
-	 * @param pName the name to set
-	 */
-	public final void setName(final String pName) {
-		name = pName;
-	}
-
-	/**
-	 * @param pSchedule the schedule to set
-	 */
-	public final void setSchedule(final String pSchedule) {
-		schedule = pSchedule;
-	}
-
-	/**
-	 * @param pTelephone the telephone to set
-	 */
-	public final void setTelephone(final String pTelephone) {
-		telephone = pTelephone;
-	}
-
-	/**
-	 * @param pType the type to set
-	 */
-	public final void setType(final String pType) {
-		type = pType;
-	}
-
-	/**
-	 * @param pVille the ville to set
-	 */
-	public final void setVille(final String pVille) {
-		ville = pVille;
 	}
 }

@@ -38,8 +38,8 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 		LayoutInflater vi = LayoutInflater.from(getContext());
 		View v = vi.inflate(R.layout.dispovelo, null);
 		Station station = stations.get(position);
-		int placesTotales = station.getBikesavailable() + station.getSlotsavailable();
-		double poucentageDispo = ((double) station.getBikesavailable()) / ((double) (placesTotales));
+		int placesTotales = station.bikesavailable + station.slotsavailable;
+		double poucentageDispo = ((double) station.bikesavailable) / ((double) (placesTotales));
 
 		ImageView icone = (ImageView) v.findViewById(R.id.dispovelo_image);
 		if (poucentageDispo < SEUIL_ROUGE) {
@@ -51,13 +51,13 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 		}
 
 		TextView dispoVeloText = (TextView) v.findViewById(R.id.dispovelo_text);
-		dispoVeloText.setText(station.getBikesavailable() + " / " + placesTotales);
+		dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);
 		TextView dispoVeloStation = (TextView) v.findViewById(R.id.dispovelo_station);
-		dispoVeloStation.setText(Formatteur.formatterChaine(station.getName()));
+		dispoVeloStation.setText(Formatteur.formatterChaine(station.name));
 		TextView dispoVeloDistance = (TextView) v.findViewById(R.id.dispovelo_distance);
 		dispoVeloDistance.setText(station.formatDistance());
 		ImageView iconeCb = (ImageView) v.findViewById(R.id.dispovelo_cb);
-		if (station.isPos()) {
+		if (station.pos) {
 			iconeCb.setVisibility(View.VISIBLE);
 		} else {
 			iconeCb.setVisibility(View.INVISIBLE);

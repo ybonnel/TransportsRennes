@@ -168,7 +168,7 @@ public final class Keolis {
 			}
 		} else {
 			for (Station station : getStations()) {
-				if (numbers.contains(station.getNumber())) {
+				if (numbers.contains(station.number)) {
 					stations.add(station);
 				}
 			}

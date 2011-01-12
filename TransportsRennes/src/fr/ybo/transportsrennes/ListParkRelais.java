@@ -140,7 +140,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 		parkRelaisFiltres.clear();
 		synchronized (parkRelais) {
 			for (ParkRelai parkRelai : parkRelais) {
-				if (parkRelai.getName().toUpperCase().contains(query.toUpperCase())) {
+				if (parkRelai.name.toUpperCase().contains(query.toUpperCase())) {
 					parkRelaisFiltres.add(parkRelai);
 				}
 			}
@@ -177,7 +177,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				ParkRelai parkRelai = adapter.getItem(position);
 				String _lat = Double.toString(parkRelai.getLatitude());
 				String _lon = Double.toString(parkRelai.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.getName() + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -201,7 +201,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					parkRelais.addAll(keolis.getParkRelais());
 					Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 						public int compare(ParkRelai o1, ParkRelai o2) {
-							return o1.getName().compareToIgnoreCase(o2.getName());
+							return o1.name.compareToIgnoreCase(o2.name);
 						}
 					});
 					parkRelaisFiltres.clear();
@@ -262,7 +262,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 							parkRelais.addAll(keolis.getParkRelais());
 							Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 								public int compare(ParkRelai o1, ParkRelai o2) {
-									return o1.getName().compareToIgnoreCase(o2.getName());
+									return o1.name.compareToIgnoreCase(o2.name);
 								}
 							});
 							parkRelaisFiltres.clear();

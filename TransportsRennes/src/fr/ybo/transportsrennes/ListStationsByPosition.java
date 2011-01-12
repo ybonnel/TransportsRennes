@@ -13,8 +13,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
-import android.widget.*;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -139,7 +147,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		stationsFiltrees.clear();
 		synchronized (stations) {
 			for (Station station : stations) {
-				if (station.getName().toUpperCase().contains(query.toUpperCase())) {
+				if (station.name.toUpperCase().contains(query.toUpperCase())) {
 					stationsFiltrees.add(station);
 				}
 			}
@@ -176,7 +184,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				Station station = veloAdapter.getItem(position);
 				String _lat = Double.toString(station.getLatitude());
 				String _lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -200,7 +208,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					stations.addAll(keolis.getStations());
 					Collections.sort(stations, new Comparator<Station>() {
 						public int compare(Station o1, Station o2) {
-							return o1.getName().compareToIgnoreCase(o2.getName());
+							return o1.name.compareToIgnoreCase(o2.name);
 						}
 					});
 					stationsFiltrees.clear();
@@ -261,7 +269,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 							stations.addAll(keolis.getStations());
 							Collections.sort(stations, new Comparator<Station>() {
 								public int compare(Station o1, Station o2) {
-									return o1.getName().compareToIgnoreCase(o2.getName());
+									return o1.name.compareToIgnoreCase(o2.name);
 								}
 							});
 							stationsFiltrees.clear();
@@ -304,9 +312,9 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			Station station = (Station) getListAdapter().getItem(info.position);
 			VeloFavori veloFavori = new VeloFavori();
-			veloFavori.setNumber(station.getNumber());
+			veloFavori.number = station.number;
 			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
-			menu.setHeaderTitle(Formatteur.formatterChaine(station.getName()));
+			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
 			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					veloFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
 		}
@@ -321,13 +329,13 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			case R.id.ajoutFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
-				veloFavori.setNumber(station.getNumber());
+				veloFavori.number = station.number;
 				TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
 				return true;
 			case R.id.supprimerFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
-				veloFavori.setNumber(station.getNumber());
+				veloFavori.number = station.number;
 				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				return true;
 			default:

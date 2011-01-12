@@ -2,7 +2,6 @@ package fr.ybo.transportsrennes;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -13,14 +12,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
-import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -76,22 +79,22 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		favori = (ArretFavori) getIntent().getExtras().getSerializable("favori");
 		if (favori == null) {
 			favori = new ArretFavori();
-			favori.setStopId(getIntent().getExtras().getString("idArret"));
-			favori.setNomArret(getIntent().getExtras().getString("nomArret"));
-			favori.setDirection(getIntent().getExtras().getString("direction"));
-			final Route myRoute = (Route) getIntent().getExtras().getSerializable("route");
-			favori.setRouteId(myRoute.getId());
-			favori.setRouteNomCourt(myRoute.getNomCourt());
-			favori.setRouteNomLong(myRoute.getNomLong());
+			favori.arretId = getIntent().getExtras().getString("idArret");
+			favori.nomArret = getIntent().getExtras().getString("nomArret");
+			favori.direction = getIntent().getExtras().getString("direction");
+			Ligne myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+			favori.ligneId = myLigne.id;
+			favori.nomCourt = myLigne.nomCourt;
+			favori.nomLong = myLigne.nomLong;
 		}
 	}
 
 	private void gestionViewsTitle() {
 		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
 		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(favori.getRouteNomLong());
+		nomLong.setText(favori.nomLong);
 		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.getRouteNomCourt().toLowerCase());
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
 			ImageView imgView = new ImageView(getApplicationContext());
 			imgView.setImageResource(ressourceImg);
@@ -99,88 +102,98 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} catch (NoSuchFieldException e) {
 			TextView textView = new TextView(getApplicationContext());
 			textView.setTextSize(16);
-			textView.setText(favori.getRouteNomCourt());
+			textView.setText(favori.nomCourt);
 			conteneur.addView(textView);
 		} catch (IllegalAccessException e) {
 			TextView textView = new TextView(getApplicationContext());
 			textView.setTextSize(16);
-			textView.setText(favori.getRouteNomCourt());
+			textView.setText(favori.nomCourt);
 			conteneur.addView(textView);
 		}
-		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.getNomArret() + " vers " + favori.getDirection());
+		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + " vers " + favori.direction);
 	}
 
-	private DetailArretAdapter construireAdapter(Calendar calendar) {
+	private DetailArretAdapter construireAdapter() {
 		closeCurrentCursor();
 		if (prochainArrets) {
-			return construireAdapterProchainsDeparts(calendar);
+			return construireAdapterProchainsDeparts();
 		}
-		return construireAdapterAllDeparts(calendar);
+		return construireAdapterAllDeparts();
 	}
 
-	private DetailArretAdapter construireAdapterAllDeparts(Calendar calendar) {
+	private DetailArretAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select HeuresArrets.heureDepart as _id ");
-		requete.append("from Calendrier,  HeuresArrets");
-		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
-		requete.append(" as HeuresArrets ");
+		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("from Calendrier,  Horaire_");
+		requete.append(favori.ligneId);
+		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId");
-		requete.append(" and HeuresArrets.stopId = :arretId");
-		requete.append(" order by HeuresArrets.heureDepart;");
+		requete.append(" and Trajet.calendrierId = Calendrier.id");
+		requete.append(" and Trajet.id = Horaire.trajetId");
+		requete.append(" and Trajet.ligneId = :ligneId");
+		requete.append(" and Horaire.arretId = :arretId");
+		requete.append(" and Horaire.terminus = 0");
+		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>();
-		selectionArgs.add(favori.getRouteId());
-		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(favori.ligneId);
+		selectionArgs.add(favori.arretId);
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts.");
+		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts terminée : " + currentCursor.getCount());
+		long elapsedTime = System.currentTimeMillis() - startTime;
+		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
-	private DetailArretAdapter construireAdapterProchainsDeparts(Calendar calendar) {
+	private DetailArretAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (HeuresArrets.heureDepart - :uneJournee) as _id ");
-		requete.append("from Calendrier,  HeuresArrets");
-		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
-		requete.append(" as HeuresArrets ");
+		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
+		requete.append("from Calendrier,  Horaire_");
+		requete.append(favori.ligneId);
+		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId1");
-		requete.append(" and HeuresArrets.stopId = :arretId1");
-		requete.append(" and HeuresArrets.heureDepart >= :maintenantHier ");
+		requete.append(" and Trajet.id = Horaire.trajetId");
+		requete.append(" and Trajet.calendrierId = Calendrier.id");
+		requete.append(" and Trajet.ligneId = :routeId1");
+		requete.append(" and Horaire.arretId = :arretId1");
+		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
+		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
-		requete.append("select HeuresArrets.heureDepart as _id ");
-		requete.append("from Calendrier,  HeuresArrets");
-		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
-		requete.append(" as HeuresArrets ");
+		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("from Calendrier,  Horaire_");
+		requete.append(favori.ligneId);
+		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId2");
-		requete.append(" and HeuresArrets.stopId = :arretId2");
-		requete.append(" and HeuresArrets.heureDepart >= :maintenant");
+		requete.append(" and Trajet.id = Horaire.trajetId");
+		requete.append(" and Trajet.calendrierId = Calendrier.id");
+		requete.append(" and Trajet.ligneId = :routeId2");
+		requete.append(" and Horaire.arretId = :arretId2");
+		requete.append(" and Horaire.heureDepart >= :maintenant");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id;");
 		List<String> selectionArgs = new ArrayList<String>();
 		int uneJournee = 24 * 60;
 		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(favori.getRouteId());
-		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(favori.ligneId);
+		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now + (uneJournee)));
-		selectionArgs.add(favori.getRouteId());
-		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(favori.ligneId);
+		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
+		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
+		long elapsedTime = System.currentTimeMillis() - startTime;
+		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
-	private Route myRoute;
+	private Ligne myLigne;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
@@ -195,11 +208,11 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		imageGoogleMap.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Arret arret = new Arret();
-				arret.setId(favori.getStopId());
+				arret.id = favori.arretId;
 				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
 				String _lat = Double.toString(arret.getLatitude());
 				String _lon = Double.toString(arret.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + favori.getNomArret() + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -208,13 +221,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				}
 			}
 		});
-		myRoute = new Route();
-		myRoute.setId(favori.getRouteId());
-		myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
-		if (myRoute.getChargee() == null || !myRoute.getChargee()) {
-			chargerRoute();
+		myLigne = new Ligne();
+		myLigne.id = favori.ligneId;
+		myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
+		if (myLigne.chargee == null || !myLigne.chargee) {
+			chargerLigne();
 		} else {
-			setListAdapter(construireAdapter(calendar));
+			setListAdapter(construireAdapter());
 		}
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
@@ -222,7 +235,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private ProgressDialog myProgressDialog;
 
-	private void chargerRoute() {
+	private void chargerLigne() {
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
@@ -231,14 +244,14 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			protected void onPreExecute() {
 				super.onPreExecute();
 				myProgressDialog = ProgressDialog
-						.show(DetailArret.this, "", "Premier accès aux horaires de la ligne " + myRoute.getNomCourt() + ", chargement des données...",
+						.show(DetailArret.this, "", "Premier accès aux horaires de la ligne " + myLigne.nomCourt + ", chargement des données...",
 								true);
 			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailRoute(myRoute);
+					UpdateDataBase.chargeDetailLigne(myLigne);
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
 					erreur = true;
@@ -255,7 +268,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 							Toast.LENGTH_LONG).show();
 					DetailArret.this.finish();
 				} else {
-					setListAdapter(construireAdapter(calendar));
+					setListAdapter(construireAdapter());
 					getListView().invalidate();
 				}
 				myProgressDialog.dismiss();
@@ -303,7 +316,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		switch (item.getItemId()) {
 			case MENU_ALL_STOPS:
 				prochainArrets = !prochainArrets;
-				setListAdapter(construireAdapter(calendar));
+				setListAdapter(construireAdapter());
 				getListView().invalidate();
 				return true;
 			case MENU_SELECT_DAY:
@@ -326,7 +339,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 			calendarLaVeille.roll(Calendar.DATE, false);
 			LOG_YBO.debug("Date choisie : " + calendar.getTime().toString());
-			setListAdapter(construireAdapter(calendar));
+			setListAdapter(construireAdapter());
 			getListView().invalidate();
 		}
 	};

@@ -67,25 +67,25 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 	@Override
 	protected final void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenu) {
 		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.setName(contenu);
+			currentObjectKeolis.name = contenu;
 		} else if (baliseName.equals(TYPE)) {
-			currentObjectKeolis.setType(contenu);
+			currentObjectKeolis.type = contenu;
 		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.setAdresse(contenu);
+			currentObjectKeolis.adresse = contenu;
 		} else if (baliseName.equals(CODE_POSTAL)) {
-			currentObjectKeolis.setCodePostal(contenu);
+			currentObjectKeolis.codePostal = contenu;
 		} else if (baliseName.equals(VILLE)) {
-			currentObjectKeolis.setVille(contenu);
+			currentObjectKeolis.ville = contenu;
 		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.setDistrict(contenu);
+			currentObjectKeolis.district = contenu;
 		} else if (baliseName.equals(TELEPHONE)) {
-			currentObjectKeolis.setTelephone(contenu);
+			currentObjectKeolis.telephone = contenu;
 		} else if (baliseName.equals(SCHEDULE)) {
-			currentObjectKeolis.setSchedule(contenu);
+			currentObjectKeolis.schedule = contenu;
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.setLatitude(Double.parseDouble(contenu));
+			currentObjectKeolis.latitude = Double.parseDouble(contenu);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.setLongitude(Double.parseDouble(contenu));
+			currentObjectKeolis.longitude = Double.parseDouble(contenu);
 		}
 	}
 }

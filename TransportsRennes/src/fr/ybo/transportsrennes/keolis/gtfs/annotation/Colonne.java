@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Colonne {
 	public enum TypeColonne {
-		INTEGER("INTEGER"), TEXT("TEXT"), NUMERIC("NUMERIC"), BOOLEAN("INTEGER(1)"), DATE("INTEGER"), ENUM("INTEGER");
+		INTEGER("INTEGER"), TEXT("TEXT"), NUMERIC("NUMERIC"), BOOLEAN("INTEGER(1)"), DATE("INTEGER");
 
 		private String sqlType;
 
@@ -21,10 +21,6 @@ public @interface Colonne {
 			return sqlType;
 		}
 	}
-
-	@SuppressWarnings("rawtypes") Class<? extends Enum> clazz() default Enum.class;
-
-	String methode() default "";
 
 	String name() default "";
 

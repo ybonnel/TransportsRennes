@@ -9,7 +9,7 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 
@@ -18,26 +18,26 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 	private static final LogYbo LOG_YBO = new LogYbo(OnClickFavoriGestionnaire.class);
 
-	private Route route;
+	private Ligne ligne;
 	private String nomArret;
 	private String direction;
 	private ArretFavori myFavori = new ArretFavori();
 	private Activity activity;
 
-	public OnClickFavoriGestionnaire(Route route, String stopId, String nomArret, String direction, Activity activity) {
-		this.route = route;
+	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity) {
+		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
-		myFavori.setStopId(stopId);
-		myFavori.setRouteId(route.getId());
+		myFavori.arretId = arretId;
+		myFavori.ligneId = ligne.id;
 		this.activity = activity;
 	}
 
 	private ProgressDialog myProgressDialog;
 
-	private void chargerRoute() {
+	private void chargerLigne() {
 
-		myProgressDialog = ProgressDialog.show(activity, "", "Premier accès à la ligne " + route.getNomCourt() + ", chargement des données...", true);
+		myProgressDialog = ProgressDialog.show(activity, "", "Premier accès à la ligne " + ligne.nomCourt + ", chargement des données...", true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -46,9 +46,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailRoute(route);
+					UpdateDataBase.chargeDetailLigne(ligne);
 				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur lors du chargement du détail de la route", exception);
+					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
 					erreur = true;
 				}
 				return null;
@@ -74,15 +74,15 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	public void onClick(View view) {
 		ImageView imageView = (ImageView) view;
 		if (TransportsRennesApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
-			route = TransportsRennesApplication.getDataBaseHelper().selectSingle(route);
-			if (route.getChargee() == null || !route.getChargee()) {
-				chargerRoute();
+			ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
+			if (ligne.chargee == null || !ligne.chargee) {
+				chargerLigne();
 			}
 			// Ajout d'un favori.
-			myFavori.setRouteNomCourt(route.getNomCourt());
-			myFavori.setRouteNomLong(route.getNomLong());
-			myFavori.setDirection(direction);
-			myFavori.setNomArret(nomArret);
+			myFavori.nomCourt = ligne.nomCourt;
+			myFavori.nomLong = ligne.nomLong;
+			myFavori.direction = direction;
+			myFavori.nomArret = nomArret;
 			TransportsRennesApplication.getDataBaseHelper().insert(myFavori);
 			imageView.setImageResource(android.R.drawable.btn_star_big_on);
 			imageView.invalidate();

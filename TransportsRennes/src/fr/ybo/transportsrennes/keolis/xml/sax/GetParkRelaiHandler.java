@@ -55,19 +55,19 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	@Override
 	protected final void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenu) {
 		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.setName(contenu);
+			currentObjectKeolis.name = contenu;
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.setLatitude(Double.parseDouble(contenu));
+			currentObjectKeolis.latitude = Double.parseDouble(contenu);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.setLongitude(Double.parseDouble(contenu));
+			currentObjectKeolis.longitude = Double.parseDouble(contenu);
 		} else if (baliseName.equals(CAR_PARK_AVAILABLE)) {
-			currentObjectKeolis.setCarParkAvailable(Integer.parseInt(contenu));
+			currentObjectKeolis.carParkAvailable = Integer.parseInt(contenu);
 		} else if (baliseName.equals(CAR_PARK_CAPACITY)) {
-			currentObjectKeolis.setCarParkCapacity(Integer.parseInt(contenu));
+			currentObjectKeolis.carParkCapacity = Integer.parseInt(contenu);
 		} else if (baliseName.equals(LAST_UPDATE)) {
-			currentObjectKeolis.setLastupdate(contenu);
+			currentObjectKeolis.lastupdate = contenu;
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.setState(Integer.parseInt(contenu));
+			currentObjectKeolis.state = Integer.parseInt(contenu);
 		}
 	}
 }

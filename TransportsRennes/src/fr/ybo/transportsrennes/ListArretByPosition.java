@@ -12,14 +12,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
-import android.widget.*;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -132,7 +140,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		int count = 0;
 		synchronized (arrets) {
 			for (Arret arret : arrets) {
-				if (count < 100 && arret.getNom().toUpperCase().contains(query.toUpperCase())) {
+				if (count < 100 && arret.nom.toUpperCase().contains(query.toUpperCase())) {
 					arretsFiltrees.add(arret);
 					count++;
 				}
@@ -169,7 +177,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				Arret arret = (Arret) getListAdapter().getItem(position);
 				Intent intent = new Intent(ListArretByPosition.this, DetailArret.class);
-				intent.putExtra("favori", arret.getFavori());
+				intent.putExtra("favori", arret.favori);
 				startActivity(intent);
 			}
 		});
@@ -189,7 +197,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				construireListeArrets();
 				Collections.sort(arrets, new Comparator<Arret>() {
 					public int compare(Arret o1, Arret o2) {
-						return o1.getNom().compareToIgnoreCase(o2.getNom());
+						return o1.nom.compareToIgnoreCase(o2.nom);
 					}
 				});
 				return null;
@@ -212,33 +220,40 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		requete.append("SELECT");
 		requete.append(" Arret.id as arretId,");
 		requete.append(" Arret.nom as arretNom,");
-		requete.append(" Arret.description as arretDescription,");
 		requete.append(" Arret.latitude as arretLatitude,");
 		requete.append(" Arret.longitude as arretLongitude,");
-		requete.append(" ArretRoute.direction as favoriDirection,");
-		requete.append(" Route.id as routeId,");
-		requete.append(" Route.nomCourt as routeNomCourt,");
-		requete.append(" Route.nomLong as routeNomLong ");
-		requete.append("FROM Arret, ArretRoute, Route ");
+		requete.append(" Direction.direction as favoriDirection,");
+		requete.append(" Ligne.id as ligneId,");
+		requete.append(" Ligne.nomCourt as nomCourt,");
+		requete.append(" Ligne.nomLong as nomLong ");
+		requete.append("FROM Arret, ArretRoute, Ligne, Direction ");
 		requete.append("WHERE Arret.id = ArretRoute.arretId");
-		requete.append(" AND ArretRoute.routeId = Route.id");
+		requete.append(" AND ArretRoute.ligneId = Ligne.id");
+		requete.append(" AND ArretRoute.directionId = Direction.id");
 		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 		Arret arret;
 		arrets.clear();
+		int arretIdIndex = cursor.getColumnIndex("arretId");
+		int arretNomIndex = cursor.getColumnIndex("arretNom");
+		int latitudeIndex = cursor.getColumnIndex("arretLatitude");
+		int longitudeIndex = cursor.getColumnIndex("arretLongitude");
+		int directionIndex = cursor.getColumnIndex("favoriDirection");
+		int ligneIdIndex = cursor.getColumnIndex("ligneId");
+		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+		int nomLongIndex = cursor.getColumnIndex("nomLong");
 		while (cursor.moveToNext()) {
 			arret = new Arret();
-			arret.setId(cursor.getString(cursor.getColumnIndex("arretId")));
-			arret.setNom(cursor.getString(cursor.getColumnIndex("arretNom")));
-			arret.setDescription(cursor.getString(cursor.getColumnIndex("arretDescription")));
-			arret.setLatitude(cursor.getDouble(cursor.getColumnIndex("arretLatitude")));
-			arret.setLongitude(cursor.getDouble(cursor.getColumnIndex("arretLongitude")));
-			arret.setFavori(new ArretFavori());
-			arret.getFavori().setDirection(cursor.getString(cursor.getColumnIndex("favoriDirection")));
-			arret.getFavori().setRouteId(cursor.getString(cursor.getColumnIndex("routeId")));
-			arret.getFavori().setRouteNomCourt(cursor.getString(cursor.getColumnIndex("routeNomCourt")));
-			arret.getFavori().setRouteNomLong(cursor.getString(cursor.getColumnIndex("routeNomLong")));
-			arret.getFavori().setNomArret(arret.getNom());
-			arret.getFavori().setStopId(arret.getId());
+			arret.id = cursor.getString(arretIdIndex);
+			arret.nom = cursor.getString(arretNomIndex);
+			arret.latitude = cursor.getDouble(latitudeIndex);
+			arret.longitude = cursor.getDouble(longitudeIndex);
+			arret.favori = new ArretFavori();
+			arret.favori.direction = cursor.getString(directionIndex);
+			arret.favori.ligneId = cursor.getString(ligneIdIndex);
+			arret.favori.nomCourt = cursor.getString(nomCourtIndex);
+			arret.favori.nomLong = cursor.getString(nomLongIndex);
+			arret.favori.nomArret = arret.nom;
+			arret.favori.arretId = arret.id;
 			arrets.add(arret);
 		}
 		cursor.close();
@@ -251,10 +266,10 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			Arret arret = (Arret) getListAdapter().getItem(info.position);
 			ArretFavori arretFavori = new ArretFavori();
-			arretFavori.setStopId(arret.getId());
-			arretFavori.setRouteId(arret.getFavori().getRouteId());
+			arretFavori.arretId = arret.id;
+			arretFavori.ligneId = arret.favori.ligneId;
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
-			menu.setHeaderTitle(arret.getNom());
+			menu.setHeaderTitle(arret.nom);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
 					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
 		}
@@ -267,19 +282,19 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
-				Route myRoute = new Route();
-				myRoute.setId(arret.getFavori().getRouteId());
-				myRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(myRoute);
-				if (myRoute.getChargee() == null || !myRoute.getChargee()) {
-					chargerRoute(myRoute);
+				Ligne myLigne = new Ligne();
+				myLigne.id = arret.favori.ligneId;
+				myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
+				if (myLigne.chargee == null || !myLigne.chargee) {
+					chargerLigne(myLigne);
 				}
-				TransportsRennesApplication.getDataBaseHelper().insert(arret.getFavori());
+				TransportsRennesApplication.getDataBaseHelper().insert(arret.favori);
 				return true;
 			case R.id.supprimerFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
 				ArretFavori arretFavori = new ArretFavori();
-				arretFavori.setStopId(arret.getId());
-				arretFavori.setRouteId(arret.getFavori().getRouteId());
+				arretFavori.arretId = arret.id;
+				arretFavori.ligneId = arret.favori.ligneId;
 				TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				return true;
 			default:
@@ -289,9 +304,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	private ProgressDialog myProgressDialog;
 
-	private void chargerRoute(final Route myRoute) {
+	private void chargerLigne(final Ligne myLigne) {
 
-		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myRoute.getNomCourt() + ", chargement des données...", true);
+		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myLigne.nomCourt + ", chargement des données...", true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -300,9 +315,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailRoute(myRoute);
+					UpdateDataBase.chargeDetailLigne(myLigne);
 				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur lors du chargement du détail de la route", exception);
+					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
 					erreur = true;
 				}
 				return null;

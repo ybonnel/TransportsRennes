@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import com.google.android.maps.*;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.map.MapItemizedOverlay;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class ArretsOnMap extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-		Route myRoute = (Route) getIntent().getSerializableExtra("route");
+		Ligne myLigne = (Ligne) getIntent().getSerializableExtra("ligne");
 		String currentDirection = getIntent().getStringExtra("direction");
 
 		MapView mapView = (MapView) findViewById(R.id.mapview);
@@ -35,16 +35,17 @@ public class ArretsOnMap extends MapActivity {
 		Drawable drawable = getResources().getDrawable(R.drawable.markee);
 		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
 		List<String> selectionArgs = new ArrayList<String>();
-		selectionArgs.add(myRoute.getId());
+		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" ArretRoute.direction as direction, Arret.latitude as latitude, Arret.longitude ");
-		requete.append("from ArretRoute, Arret ");
+		requete.append(" Direction.direction as direction, Arret.latitude as latitude, Arret.longitude ");
+		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
-		requete.append(" ArretRoute.routeId = :routeId");
+		requete.append(" ArretRoute.ligneId = :ligneId");
 		requete.append(" and ArretRoute.arretId = Arret.id");
+		requete.append(" and ArretRoute.directionId = Direction.id");
 		if (currentDirection != null) {
-			requete.append(" and ArretRoute.direction = :direction");
+			requete.append(" and Direction.direction = :direction");
 			selectionArgs.add(currentDirection);
 		}
 		requete.append(" order by ArretRoute.sequence");
@@ -77,12 +78,12 @@ public class ArretsOnMap extends MapActivity {
 
 			OverlayItem overlayitem = new OverlayItem(geoPoint, nom, direction);
 			ArretFavori arretFavori = new ArretFavori();
-			arretFavori.setDirection(direction);
-			arretFavori.setNomArret(nom);
-			arretFavori.setRouteId(myRoute.getId());
-			arretFavori.setRouteNomCourt(myRoute.getNomCourt());
-			arretFavori.setRouteNomLong(myRoute.getNomLong());
-			arretFavori.setStopId(id);
+			arretFavori.direction = direction;
+			arretFavori.nomArret = nom;
+			arretFavori.ligneId = myLigne.id;
+			arretFavori.nomCourt = myLigne.nomCourt;
+			arretFavori.nomLong = myLigne.nomLong;
+			arretFavori.arretId = id;
 			itemizedoverlay.addOverlay(overlayitem, arretFavori);
 		}
 		cursor.close();

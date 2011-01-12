@@ -7,5 +7,9 @@
               android:divider="@android:drawable/divider_horizontal_dim_dark"/>
     <TextView android:id="@id/android:empty"
               android:layout_width="fill_parent" android:layout_height="fill_parent"
+              android:layout_alignParentLeft="true"
+              android:gravity="center"
+              android:textSize="18dip"
+              android:padding="10dip"
               android:text="Aucune station favorite trouvée (appui long sur la liste des stations de vélo pour la rajouter aux favoris)"/>
 </LinearLayout>

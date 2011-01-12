@@ -4,7 +4,7 @@ import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.HeuresArrets;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -24,15 +24,15 @@ public final class GestionZipKeolis {
 	private static final LogYbo LOG_YBO = new LogYbo(GestionZipKeolis.class);
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
-	private final static String URL_BASE = "http://yanbonnel.perso.sfr.fr/GTFSRennes/1.0.4/";
-	private final static String URL_STOP_TIMES = URL_BASE + "stopTimes";
+	private final static String URL_BASE = "http://yanbonnel.perso.sfr.fr/GTFSRennes/DEV/";
+	private final static String URL_STOP_TIMES = URL_BASE + "horaires_";
 	private final static String URL_LAST_UPDATE = URL_BASE + "last_update.txt";
 	private final static String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
 
-	private static HttpURLConnection openConnectionForStopTime(String routeId) throws ErreurGestionFiles {
+	private static HttpURLConnection openConnectionForStopTime(String ligneId) throws ErreurGestionFiles {
 
 		try {
-			final HttpURLConnection connection = (HttpURLConnection) new URL(URL_STOP_TIMES + routeId + ".zip").openConnection();
+			final HttpURLConnection connection = (HttpURLConnection) new URL(URL_STOP_TIMES + ligneId + ".zip").openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.connect();
@@ -42,13 +42,13 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	public static void chargeRoute(MoteurCsv moteurCsv, String routeId, DataBaseHelper dataBaseHelper) {
+	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, DataBaseHelper dataBaseHelper) {
 		try {
-			HttpURLConnection connection = openConnectionForStopTime(routeId);
+			HttpURLConnection connection = openConnectionForStopTime(ligneId);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
 			zipInputStream.getNextEntry();
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
-			moteurCsv.parseFileAndInsert(bufReader, HeuresArrets.class, dataBaseHelper, routeId);
+			moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
 
 		} catch (Exception exception) {
 			throw new ErreurGestionFiles(exception);

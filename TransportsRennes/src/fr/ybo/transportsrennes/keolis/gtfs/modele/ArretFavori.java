@@ -9,84 +9,20 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 @Table
 public class ArretFavori implements Serializable {
-
 	@Colonne
 	@PrimaryKey
-	private String stopId;
-
+	public String arretId;
 	@Colonne
 	@PrimaryKey
-	private String routeId;
-
+	public String ligneId;
 	@Colonne
-	private String nomArret;
-
+	public String nomArret;
 	@Colonne
-	private String direction;
-
+	public String direction;
 	@Colonne
-	private String routeNomCourt;
-
+	public String nomCourt;
 	@Colonne
-	private String routeNomLong;
-
+	public String nomLong;
 	@Colonne(type = Colonne.TypeColonne.INTEGER)
-	private Integer ordre;
-
-	public Integer getOrdre() {
-		return ordre;
-	}
-
-	public void setOrdre(Integer ordre) {
-		this.ordre = ordre;
-	}
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public String getNomArret() {
-		return nomArret;
-	}
-
-	public String getRouteId() {
-		return routeId;
-	}
-
-	public String getRouteNomCourt() {
-		return routeNomCourt;
-	}
-
-	public String getRouteNomLong() {
-		return routeNomLong;
-	}
-
-	public String getStopId() {
-		return stopId;
-	}
-
-	public void setDirection(final String direction) {
-		this.direction = direction;
-	}
-
-	public void setNomArret(final String nomArret) {
-		this.nomArret = nomArret;
-	}
-
-	public void setRouteId(final String routeId) {
-		this.routeId = routeId;
-	}
-
-	public void setRouteNomCourt(final String routeNomCourt) {
-		this.routeNomCourt = routeNomCourt;
-	}
-
-	public void setRouteNomLong(final String routeNomLong) {
-		this.routeNomLong = routeNomLong;
-	}
-
-	public void setStopId(final String stopId) {
-		this.stopId = stopId;
-	}
-
+	public Integer ordre;
 }

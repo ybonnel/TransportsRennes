@@ -55,19 +55,19 @@ public class GetAlertsHandler extends KeolisHandler<Alert> {
 	@Override
 	protected final void remplirObjectKeolis(final Alert currentObjectKeolis, final String baliseName, final String contenu) {
 		if (baliseName.equals(TITLE)) {
-			currentObjectKeolis.setTitle(contenu);
+			currentObjectKeolis.title = contenu;
 		} else if (baliseName.equals(STARTTIME)) {
-			currentObjectKeolis.setStarttime(contenu);
+			currentObjectKeolis.starttime = contenu;
 		} else if (baliseName.equals(ENDTIME)) {
-			currentObjectKeolis.setEndtime(contenu);
+			currentObjectKeolis.endtime = contenu;
 		} else if (baliseName.equals(LINE)) {
-			currentObjectKeolis.getLines().add(contenu);
+			currentObjectKeolis.lines.add(contenu);
 		} else if (baliseName.equals(MAJORDISTURBANCE)) {
-			currentObjectKeolis.setMajordisturbance(Boolean.parseBoolean(contenu));
+			currentObjectKeolis.majordisturbance = Boolean.parseBoolean(contenu);
 		} else if (baliseName.equals(DETAIL)) {
-			currentObjectKeolis.setDetail(contenu);
+			currentObjectKeolis.detail = contenu;
 		} else if (baliseName.equals(LINK)) {
-			currentObjectKeolis.setLink(contenu);
+			currentObjectKeolis.link = contenu;
 		}
 	}
 }

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -99,20 +98,20 @@ public class FavoriAdapter extends BaseAdapter {
 					int autrePosition = position - 1;
 					favoris.set(position, favoris.get(autrePosition));
 					favoris.set(autrePosition, favori);
-					favoris.get(position).setOrdre(position);
+					favoris.get(position).ordre = position;
 					ContentValues contentValues = new ContentValues();
 					contentValues.put("ordre", position);
-					String whereClause = "stopId = :stopId and routeId = :routeId";
+					String whereClause = "arretId = :arretId and ligneId = :ligneId";
 					List<String> whereArgs = new ArrayList<String>(2);
-					whereArgs.add(favoris.get(position).getStopId());
-					whereArgs.add(favoris.get(position).getRouteId());
+					whereArgs.add(favoris.get(position).arretId);
+					whereArgs.add(favoris.get(position).ligneId);
 					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					favoris.get(autrePosition).setOrdre(autrePosition);
+					favoris.get(autrePosition).ordre = autrePosition;
 					contentValues.put("ordre", autrePosition);
 					whereArgs.clear();
-					whereArgs.add(favoris.get(autrePosition).getStopId());
-					whereArgs.add(favoris.get(autrePosition).getRouteId());
+					whereArgs.add(favoris.get(autrePosition).arretId);
+					whereArgs.add(favoris.get(autrePosition).ligneId);
 					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
 					FavoriAdapter.this.notifyDataSetChanged();
@@ -125,20 +124,20 @@ public class FavoriAdapter extends BaseAdapter {
 					int autrePosition = position + 1;
 					favoris.set(position, favoris.get(autrePosition));
 					favoris.set(autrePosition, favori);
-					favoris.get(position).setOrdre(position);
+					favoris.get(position).ordre = position;
 					ContentValues contentValues = new ContentValues();
 					contentValues.put("ordre", position);
-					String whereClause = "stopId = :stopId and routeId = :routeId";
+					String whereClause = "arretId = :arretId and ligneId = :ligneId";
 					List<String> whereArgs = new ArrayList<String>(2);
-					whereArgs.add(favoris.get(position).getStopId());
-					whereArgs.add(favoris.get(position).getRouteId());
+					whereArgs.add(favoris.get(position).arretId);
+					whereArgs.add(favoris.get(position).ligneId);
 					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					favoris.get(autrePosition).setOrdre(autrePosition);
+					favoris.get(autrePosition).ordre = autrePosition;
 					contentValues.put("ordre", autrePosition);
 					whereArgs.clear();
-					whereArgs.add(favoris.get(autrePosition).getStopId());
-					whereArgs.add(favoris.get(autrePosition).getRouteId());
+					whereArgs.add(favoris.get(autrePosition).arretId);
+					whereArgs.add(favoris.get(autrePosition).ligneId);
 					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
 					FavoriAdapter.this.notifyDataSetChanged();
@@ -146,10 +145,10 @@ public class FavoriAdapter extends BaseAdapter {
 			}
 		});
 
-		holder.arret.setText(favori.getNomArret());
-		holder.direction.setText(favori.getDirection());
+		holder.arret.setText(favori.nomArret);
+		holder.direction.setText(favori.direction);
 		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.getRouteNomCourt().toLowerCase());
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
 			int ressourceImg = fieldIcon.getInt(null);
 			ImageView imgView = new ImageView(mInflater.getContext());
 			imgView.setImageResource(ressourceImg);
@@ -157,46 +156,50 @@ public class FavoriAdapter extends BaseAdapter {
 		} catch (NoSuchFieldException e) {
 			TextView textView = new TextView(mInflater.getContext());
 			textView.setTextSize(16);
-			textView.setText(favori.getRouteNomCourt());
+			textView.setText(favori.nomCourt);
 			holder.conteneur.addView(textView);
 		} catch (IllegalAccessException e) {
 			TextView textView = new TextView(mInflater.getContext());
 			textView.setTextSize(16);
-			textView.setText(favori.getRouteNomCourt());
+			textView.setText(favori.nomCourt);
 			holder.conteneur.addView(textView);
 		}
 
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (HeuresArrets.heureDepart - :uneJournee) as _id ");
-		requete.append("from Calendrier,  HeuresArrets");
-		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
-		requete.append(" as HeuresArrets ");
+		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
+		requete.append("from Calendrier,  Horaire_");
+		requete.append(favori.ligneId);
+		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId1");
-		requete.append(" and HeuresArrets.stopId = :arretId1");
-		requete.append(" and HeuresArrets.heureDepart >= :maintenantHier ");
+		requete.append(" and Trajet.id = Horaire.trajetId");
+		requete.append(" and Trajet.calendrierId = Calendrier.id");
+		requete.append(" and Trajet.ligneId = :routeId1");
+		requete.append(" and Horaire.arretId = :arretId1");
+		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
+		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
-		requete.append("select HeuresArrets.heureDepart as _id ");
-		requete.append("from Calendrier,  HeuresArrets");
-		requete.append(Route.getIdWithoutSpecCar(favori.getRouteId()));
-		requete.append(" as HeuresArrets ");
+		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("from Calendrier,  Horaire_");
+		requete.append(favori.ligneId);
+		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
 		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and HeuresArrets.serviceId = Calendrier.id");
-		requete.append(" and HeuresArrets.routeId = :routeId2");
-		requete.append(" and HeuresArrets.stopId = :arretId2");
-		requete.append(" and HeuresArrets.heureDepart >= :maintenant");
-		requete.append(" order by _id limit 1;");
+		requete.append(" and Trajet.id = Horaire.trajetId");
+		requete.append(" and Trajet.calendrierId = Calendrier.id");
+		requete.append(" and Trajet.ligneId = :routeId2");
+		requete.append(" and Horaire.arretId = :arretId2");
+		requete.append(" and Horaire.heureDepart >= :maintenant");
+		requete.append(" and Horaire.terminus = 0");
+		requete.append(" order by _id;");
 		int uneJournee = 24 * 60;
 		List<String> selectionArgs = new ArrayList<String>();
 		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(favori.getRouteId());
-		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(favori.ligneId);
+		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now + (uneJournee)));
-		selectionArgs.add(favori.getRouteId());
-		selectionArgs.add(favori.getStopId());
+		selectionArgs.add(favori.ligneId);
+		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
 		try {
 			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);

@@ -138,7 +138,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		pointsDeVenteFiltres.clear();
 		synchronized (pointsDeVente) {
 			for (PointDeVente pointDeVente : pointsDeVente) {
-				if (pointDeVente.getName().toUpperCase().contains(query.toUpperCase())) {
+				if (pointDeVente.name.toUpperCase().contains(query.toUpperCase())) {
 					pointsDeVenteFiltres.add(pointDeVente);
 				}
 			}
@@ -175,7 +175,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				PointDeVente pointDeVente = adapter.getItem(position);
 				String _lat = Double.toString(pointDeVente.getLatitude());
 				String _lon = Double.toString(pointDeVente.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.getName() + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -199,7 +199,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 					pointsDeVente.addAll(keolis.getPointDeVente());
 					Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
 						public int compare(PointDeVente o1, PointDeVente o2) {
-							return o1.getName().compareToIgnoreCase(o2.getName());
+							return o1.name.compareToIgnoreCase(o2.name);
 						}
 					});
 					pointsDeVenteFiltres.clear();

@@ -13,22 +13,22 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.activity.OnClickFavoriGestionnaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Route;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 
 /**
  * Adapteur pour les arrêts.
  */
 public class ArretAdapter extends CursorAdapter {
 
-	private Route route;
+	private Ligne ligne;
 	private ArretFavori favori;
 	private  Activity activity;
 
-	public ArretAdapter(Activity activity, Cursor cursor, Route route) {
+	public ArretAdapter(Activity activity, Cursor cursor, Ligne ligne) {
 		super(activity, cursor);
-		this.route = route;
+		this.ligne = ligne;
 		favori = new ArretFavori();
-		favori.setRouteId(this.route.getId());
+		favori.ligneId = this.ligne.id;
 		this.activity = activity;
 	}
 
@@ -39,15 +39,14 @@ public class ArretAdapter extends CursorAdapter {
 		int directionCol = cursor.getColumnIndex("direction");
 		String direction = cursor.getString(directionCol);
 		int arretIdCol = cursor.getColumnIndex("_id");
-		final String arretId = cursor.getString(arretIdCol);
-		favori.setStopId(arretId);
+		favori.arretId = cursor.getString(arretIdCol);
 		((TextView) view.findViewById(R.id.nomArret)).setText(name);
 		((TextView) view.findViewById(R.id.directionArret)).setText("vers " + direction);
 		final ImageView imageView = ((ImageView) view.findViewById(R.id.isfavori));
 		imageView.setImageResource(
 				TransportsRennesApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off :
 						android.R.drawable.btn_star_big_on);
-		imageView.setOnClickListener(new OnClickFavoriGestionnaire(route, arretId, name, direction, activity));
+		imageView.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, activity));
 	}
 
 	@Override

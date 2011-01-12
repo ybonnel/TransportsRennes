@@ -60,7 +60,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				Station station = veloAdapter.getItem(position);
 				String _lat = Double.toString(station.getLatitude());
 				String _lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + _lat + "," + _lon);
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException noGoogleMapsException) {
@@ -83,13 +83,13 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
 					List<String> numbers = new ArrayList<String>();
 					for (VeloFavori favori : velosFavoris) {
-						numbers.add(favori.getNumber());
+						numbers.add(favori.number);
 					}
 					stations.clear();
 					stations.addAll(keolis.getStationByNumbers(numbers));
 					Collections.sort(stations, new Comparator<Station>() {
 						public int compare(Station o1, Station o2) {
-							return o1.getName().compareToIgnoreCase(o2.getName());
+							return o1.name.compareToIgnoreCase(o2.name);
 						}
 					});
 				} catch (Exception exception) {
@@ -147,13 +147,13 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 							List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
 							List<String> numbers = new ArrayList<String>();
 							for (VeloFavori favori : velosFavoris) {
-								numbers.add(favori.getNumber());
+								numbers.add(favori.number);
 							}
 							stations.clear();
 							stations.addAll(keolis.getStationByNumbers(numbers));
 							Collections.sort(stations, new Comparator<Station>() {
 								public int compare(Station o1, Station o2) {
-									return o1.getName().compareToIgnoreCase(o2.getName());
+									return o1.name.compareToIgnoreCase(o2.name);
 								}
 							});
 						} catch (Exception exception) {
@@ -191,7 +191,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		if (v.getId() == android.R.id.list) {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			Station station = (Station) getListAdapter().getItem(info.position);
-			menu.setHeaderTitle(Formatteur.formatterChaine(station.getName()));
+			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, "Supprimer des favoris");
 		}
 	}
@@ -205,7 +205,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 			case R.id.supprimerFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
-				veloFavori.setNumber(station.getNumber());
+				veloFavori.number = station.number;
 				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				((VeloAdapter) getListAdapter()).getStations().remove(station);
 				((VeloAdapter) getListAdapter()).notifyDataSetChanged();
