@@ -89,7 +89,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 					arret.calculDistance(location);
 				}
 			}
-			Collections.sort(arrets, new Arret.ComparatorDistance());
+			if (!arrets.isEmpty()) {
+				Collections.sort(arrets, new Arret.ComparatorDistance());
+			}
 			metterAJourListeArrets();
 		}
 	}
