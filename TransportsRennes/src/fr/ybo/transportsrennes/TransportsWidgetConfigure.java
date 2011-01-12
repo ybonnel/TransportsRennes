@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
+import fr.ybo.transportsrennes.adapters.FavoriAdapterForWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 
@@ -60,7 +61,7 @@ public class TransportsWidgetConfigure extends ListActivity {
 	}
 
 	private void construireListe() throws DataBaseException {
-		setListAdapter(new FavoriAdapter(getApplicationContext(),favoris));
+		setListAdapter(new FavoriAdapterForWidget(getApplicationContext(),favoris));
 		final ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
@@ -68,8 +69,8 @@ public class TransportsWidgetConfigure extends ListActivity {
 				ArretFavori favori = favoriAdapter.getItem(position);
 				SharedPreferences sharedPreferences = TransportsWidgetConfigure.this.getSharedPreferences("prefs", 0);
 				SharedPreferences.Editor edit = sharedPreferences.edit();
-				edit.putString("favoriArretId" + appWidgetId, favori.arretId);
-				edit.putString("favoriArretId" + appWidgetId, favori.ligneId);
+				edit.putString("ArretId_" + appWidgetId, favori.arretId);
+				edit.putString("LigneId_" + appWidgetId, favori.ligneId);
 				edit.commit();
 				Intent resultValue = new Intent();
 				resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);

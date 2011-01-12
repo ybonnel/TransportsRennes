@@ -206,7 +206,7 @@ public class FavoriAdapter extends BaseAdapter {
 		requete.append(" and Horaire.arretId = :arretId2");
 		requete.append(" and Horaire.heureDepart >= :maintenant");
 		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by _id;");
+		requete.append(" order by _id limit 1;");
 		int uneJournee = 24 * 60;
 		List<String> selectionArgs = new ArrayList<String>();
 		selectionArgs.add(Integer.toString(uneJournee));
