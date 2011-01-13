@@ -48,6 +48,7 @@ public class Main {
 		 generateur.remplirArretRoutes();
 		 generateur.afficheCompteurs();
 		 generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
+		 generateur.rechercherPointsInterets();
 		 System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
 	 }
 

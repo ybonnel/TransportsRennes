@@ -15,63 +15,114 @@
 
 package fr.ybo.transportsrennes;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.JoursFeries;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TransportsWidget extends AppWidgetProvider {
+	private final static LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
+
 	private final static Class<?> classDrawable = R.drawable.class;
 
-	private Timer timer = null;
+	private final static Map<Integer, Timer> mapTimersByWidgetId = new HashMap<Integer, Timer>();
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		if (timer != null) {
-			timer.cancel();
-		}
-		SharedPreferences sharedPreferences = context.getSharedPreferences("prefs", 0);
-		ArretFavori favoriSelect = new ArretFavori();
-		Map<Integer, ArretFavori> mapArretFavoris = new HashMap<Integer, ArretFavori>();
+		LOG_YBO.debug("onUpdate");
 		for (int appWidgetId : appWidgetIds) {
-			favoriSelect.arretId = sharedPreferences.getString("ArretId_" + appWidgetId, null);
-			favoriSelect.ligneId = sharedPreferences.getString("LigneId_" + appWidgetId, null);
-			mapArretFavoris.put(appWidgetId, TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect));
-			RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-			views.setTextViewText(R.id.nomArret, mapArretFavoris.get(appWidgetId).nomArret);
-			views.setTextViewText(R.id.directionArret, mapArretFavoris.get(appWidgetId).direction);
-			try {
-				Field fieldIcon = classDrawable.getDeclaredField("i" + mapArretFavoris.get(appWidgetId).nomCourt.toLowerCase());
-				int ressourceImg = fieldIcon.getInt(null);
-				views.setImageViewResource(R.id.iconeLigne, ressourceImg);
-			} catch (Exception ignore) {
-			}
-			appWidgetManager.updateAppWidget(appWidgetIds, views);
+			updateAppWidget(context, appWidgetManager, appWidgetId);
 		}
-		timer = new Timer();
-		timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager, mapArretFavoris), 1, 1000);
+		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
-	private class MyTime extends TimerTask {
-		;
+	@Override
+	public void onDeleted(Context context, int[] appWidgetIds) {
+		LOG_YBO.debug("onDeleted");
+		synchronized (mapTimersByWidgetId) {
+			for (int appWidgetId : appWidgetIds) {
+				// Arrêt du timer.
+				if (mapTimersByWidgetId.containsKey(appWidgetId)) {
+					mapTimersByWidgetId.get(appWidgetId).cancel();
+					mapTimersByWidgetId.remove(appWidgetId);
+				}
+				TransportsWidgetConfigure.deleteSettings(context, appWidgetId);
+			}
+		}
+		super.onDeleted(context, appWidgetIds);
+	}
+
+	@Override
+	public void onEnabled(Context context) {
+		LOG_YBO.debug("onEnable");
+		super.onEnabled(context);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	@Override
+	public void onDisabled(Context context) {
+		LOG_YBO.debug("onDisable");
+		super.onDisabled(context);    //To change body of overridden methods use File | Settings | File Templates.
+	}
+
+	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+		if (mapTimersByWidgetId.containsKey(appWidgetId)) {
+			return;
+		}
+		LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
+		ArretFavori favoriSelect = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
+		if (favoriSelect == null) {
+			return;
+		}
+		ArretFavori favori = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+		views.setTextViewText(R.id.nomArret, favori.nomArret);
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			views.setImageViewResource(R.id.iconeLigne, ressourceImg);
+		} catch (Exception ignore) {
+		}
+		final Intent intent = new Intent(context, TransportsWidget.class);
+		intent.setAction("YboClick");
+		intent.putExtra("favori", favori);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
+		appWidgetManager.updateAppWidget(appWidgetId, views);
+		Timer timer = new Timer();
+		synchronized (mapTimersByWidgetId) {
+			mapTimersByWidgetId.put(appWidgetId, timer);
+		}
+		timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager, favori, appWidgetId), 2000, 20000);
+	}
+
+	private static class MyTime extends TimerTask {
 		AppWidgetManager appWidgetManager;
 		Context context;
 
-		private Map<Integer, ArretFavori> mapArretFavoris;
+		private ArretFavori favori;
+		private int appWidgetId;
 
-		public MyTime(Context context, AppWidgetManager appWidgetManager, Map<Integer, ArretFavori> mapArretFavoris) {
+		public MyTime(Context context, AppWidgetManager appWidgetManager, ArretFavori favori, int appWidgetId) {
 			this.context = context;
 			this.appWidgetManager = appWidgetManager;
-			this.mapArretFavoris = mapArretFavoris;
+			this.favori = favori;
+			this.appWidgetId = appWidgetId;
 		}
 
 		@Override
@@ -83,7 +134,8 @@ public class TransportsWidget extends AppWidgetProvider {
 			int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 			StringBuilder requete = new StringBuilder();
 			requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
-			requete.append("from Calendrier,  Horaire_@ligneId@");
+			requete.append("from Calendrier,  Horaire_");
+			requete.append(favori.ligneId);
 			requete.append(" as Horaire, Trajet ");
 			requete.append("where ");
 			requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
@@ -96,7 +148,7 @@ public class TransportsWidget extends AppWidgetProvider {
 			requete.append("UNION ");
 			requete.append("select Horaire.heureDepart as _id ");
 			requete.append("from Calendrier,  Horaire_");
-			requete.append("@ligneId@");
+			requete.append(favori.ligneId);
 			requete.append(" as Horaire, Trajet ");
 			requete.append("where ");
 			requete.append(clauseWhereForTodayCalendrier(calendar));
@@ -106,109 +158,98 @@ public class TransportsWidget extends AppWidgetProvider {
 			requete.append(" and Horaire.arretId = :arretId2");
 			requete.append(" and Horaire.heureDepart >= :maintenant");
 			requete.append(" and Horaire.terminus = 0");
-			requete.append(" order by _id limit 2;");
+			requete.append(" order by _id limit 4;");
 			int uneJournee = 24 * 60;
-
-			for (Map.Entry<Integer, ArretFavori> entry : mapArretFavoris.entrySet()) {
-				// Réquète.
-
-
-				List<String> selectionArgs = new ArrayList<String>();
-				selectionArgs.add(Integer.toString(uneJournee));
-				selectionArgs.add(entry.getValue().ligneId);
-				selectionArgs.add(entry.getValue().arretId);
-				selectionArgs.add(Integer.toString(now + (uneJournee)));
-				selectionArgs.add(entry.getValue().ligneId);
-				selectionArgs.add(entry.getValue().arretId);
-				selectionArgs.add(Integer.toString(now));
-				Integer prochainDepart1 = null;
-				Integer prochainDepart2 = null;
-				try {
-					Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-					while (currentCursor.moveToNext()) {
-						if (prochainDepart1 != null) {
-							prochainDepart2 = currentCursor.getInt(0);
-						} else {
-							prochainDepart1 = currentCursor.getInt(0);
-						}
-					}
-					currentCursor.close();
-				} catch (SQLiteException ignored) {
+			// Réquète.
+			List<String> selectionArgs = new ArrayList<String>();
+			selectionArgs.add(Integer.toString(uneJournee));
+			selectionArgs.add(favori.ligneId);
+			selectionArgs.add(favori.arretId);
+			selectionArgs.add(Integer.toString(now + (uneJournee)));
+			selectionArgs.add(favori.ligneId);
+			selectionArgs.add(favori.arretId);
+			selectionArgs.add(Integer.toString(now));
+			Map<Integer, Integer> mapProchainsDepart = new HashMap<Integer, Integer>();
+			try {
+				int count = 1;
+				Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+				while (currentCursor.moveToNext()) {
+					mapProchainsDepart.put(count, currentCursor.getInt(0));
+					count++;
 				}
-				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
-				if (prochainDepart1 != null) {
-					remoteViews.setTextViewText(R.id.tempsRestant1, formatterCalendar(prochainDepart1, now));
-				} else {
-					remoteViews.setTextViewText(R.id.tempsRestant1, "");
-				}
-				if (prochainDepart2 != null) {
-					remoteViews.setTextViewText(R.id.tempsRestant2, formatterCalendar(prochainDepart2, now));
-				} else {
-					remoteViews.setTextViewText(R.id.tempsRestant2, "");
-				}
-				appWidgetManager.updateAppWidget(entry.getKey(), remoteViews);
+				currentCursor.close();
+			} catch (SQLiteException ignored) {
 			}
-		}
-
-
-		private String formatterCalendar(int prochainDepart, int now) {
-			StringBuilder stringBuilder = new StringBuilder();
-			int tempsEnMinutes = prochainDepart - now;
-			if (tempsEnMinutes < 0) {
-				stringBuilder.append("Trop tard!");
-			} else {
-				int heures = tempsEnMinutes / 60;
-				int minutes = tempsEnMinutes - heures * 60;
-				boolean tempsAjoute = false;
-				if (heures > 0) {
-					stringBuilder.append(heures);
-					stringBuilder.append(" h ");
-					tempsAjoute = true;
-				}
-				if (minutes > 0) {
-					if (heures <= 0) {
-						stringBuilder.append(minutes);
-						stringBuilder.append(" min");
-					} else {
-						if (minutes < 10) {
-							stringBuilder.append("0");
-						}
-						stringBuilder.append(minutes);
-					}
-					tempsAjoute = true;
-				}
-				if (!tempsAjoute) {
-					stringBuilder.append("0 min");
-				}
-			}
-			return stringBuilder.toString();
-		}
-
-		private String clauseWhereForTodayCalendrier(Calendar calendar) {
-			if (JoursFeries.isJourFerie(calendar.getTime())) {
-				return "Dimanche = 1";
-			}
-			switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-				case Calendar.MONDAY:
-					return "Lundi = 1";
-				case Calendar.TUESDAY:
-					return "Mardi = 1";
-				case Calendar.WEDNESDAY:
-					return "Mercredi = 1";
-				case Calendar.THURSDAY:
-					return "Jeudi = 1";
-				case Calendar.FRIDAY:
-					return "Vendredi = 1";
-				case Calendar.SATURDAY:
-					return "Samedi = 1";
-				case Calendar.SUNDAY:
-					return "Dimanche = 1";
-				default:
-					return null;
-			}
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget);
+			remoteViews.setTextViewText(R.id.tempsRestant1,
+					mapProchainsDepart.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(1), now));
+			remoteViews.setTextViewText(R.id.tempsRestant2,
+					mapProchainsDepart.get(2) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(2), now));
+			remoteViews.setTextViewText(R.id.tempsRestant3,
+					mapProchainsDepart.get(3) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(3), now));
+			remoteViews.setTextViewText(R.id.tempsRestant4,
+					mapProchainsDepart.get(4) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(4), now));
+			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 		}
 	}
 
+
+	private static String formatterCalendar(int prochainDepart, int now) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int tempsEnMinutes = prochainDepart - now;
+		if (tempsEnMinutes < 0) {
+			stringBuilder.append("Trop tard!");
+		} else {
+			int heures = tempsEnMinutes / 60;
+			int minutes = tempsEnMinutes - heures * 60;
+			boolean tempsAjoute = false;
+			if (heures > 0) {
+				stringBuilder.append(heures);
+				stringBuilder.append(" h ");
+				tempsAjoute = true;
+			}
+			if (minutes > 0) {
+				if (heures <= 0) {
+					stringBuilder.append(minutes);
+					stringBuilder.append(" min");
+				} else {
+					if (minutes < 10) {
+						stringBuilder.append("0");
+					}
+					stringBuilder.append(minutes);
+				}
+				tempsAjoute = true;
+			}
+			if (!tempsAjoute) {
+				stringBuilder.append("0 min");
+			}
+		}
+		return stringBuilder.toString();
+	}
+
+	private static String clauseWhereForTodayCalendrier(Calendar calendar) {
+		if (JoursFeries.isJourFerie(calendar.getTime())) {
+			return "Dimanche = 1";
+		}
+		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+			case Calendar.MONDAY:
+				return "Lundi = 1";
+			case Calendar.TUESDAY:
+				return "Mardi = 1";
+			case Calendar.WEDNESDAY:
+				return "Mercredi = 1";
+			case Calendar.THURSDAY:
+				return "Jeudi = 1";
+			case Calendar.FRIDAY:
+				return "Vendredi = 1";
+			case Calendar.SATURDAY:
+				return "Samedi = 1";
+			case Calendar.SUNDAY:
+				return "Dimanche = 1";
+			default:
+				return null;
+		}
+	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -221,7 +262,14 @@ public class TransportsWidget extends AppWidgetProvider {
 			} else {
 				super.onReceive(context, intent);
 			}
+		} else if ("YboClick".equals(action)) {
+			ArretFavori favori = (ArretFavori) intent.getExtras().getSerializable("favori");
+			Intent startIntent = new Intent(context, DetailArret.class);
+			startIntent.putExtra("favori", favori);
+			startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(startIntent);
 		}
+		super.onReceive(context, intent);
 	}
 }
 

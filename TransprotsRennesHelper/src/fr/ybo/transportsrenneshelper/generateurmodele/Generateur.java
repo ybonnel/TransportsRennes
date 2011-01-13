@@ -74,6 +74,23 @@ public class Generateur {
 		LIST_CLASSES.add(Trajet.class);
 	}
 
+	public void rechercherPointsInterets() {
+		int max = 0;
+		Arret arretLong = null;
+		for (Arret arret : arrets.values()) {
+			if (arret.nom.length() > max) {
+				max = arret.nom.length();
+				arretLong = arret;
+			}
+		}
+		System.out.println("Arret avec le nom le plus long : " + arretLong.nom + " qui existe sur les lignes :");
+		for (ArretRoute arretRoute : arretsRoutes) {
+			if (arretRoute.arretId.equals(arretLong.id)) {
+				System.out.println("\t" + arretRoute.ligneId);
+			}
+		}
+	}
+
 	public void genererFichiers(File repertoire) {
 		if (repertoire.exists()) {
 			for (File file : repertoire.listFiles()) {

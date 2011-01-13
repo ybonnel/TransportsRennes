@@ -16,9 +16,9 @@
   -->
 
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="146dp"
-    android:minHeight="72dp"
-    android:updatePeriodMillis="20000"
+    android:minWidth="148dp"
+    android:minHeight="148dp"
+    android:updatePeriodMillis="10000"
     android:initialLayout="@layout/widget"
-    android:configure="fr.ybo.transportsrennes.TransportsWidgetConfigure" >
+    android:configure="fr.ybo.transportsrennes.TransportsWidgetConfigure">
 </appwidget-provider>

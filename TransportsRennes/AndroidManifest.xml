@@ -20,7 +20,7 @@
           android:versionCode="8"
           android:versionName="1.0.7">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="false" android:name="TransportsRennesApplication"
+                 android:debuggable="true" android:name="TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
         <activity android:name=".TransportsRennes" android:configChanges="orientation|keyboardHidden">
             <intent-filter>
@@ -42,7 +42,7 @@
         <activity android:name=".TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListTwitter" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <receiver android:name="TransportsWidget">
+        <receiver android:name=".TransportsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>

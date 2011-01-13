@@ -15,16 +15,24 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:orientation="vertical"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
     <TextView android:id="@+id/configurewidget_entete"
               android:text="Choisissez votre arrêt favori à mettre en widget"
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:padding="5dip"
               android:textSize="18dip"/>
-    <include android:layout="@layout/listfavoris"/>
-</RelativeLayout>
+
+    <ImageView android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+            android:paddingTop="4dip"
+            android:paddingBottom="4dip"
+            android:src="@android:drawable/divider_horizontal_dim_dark"
+            android:id="@+id/separateur"/>
+    <ListView android:id="@id/android:list" android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
+</LinearLayout>
