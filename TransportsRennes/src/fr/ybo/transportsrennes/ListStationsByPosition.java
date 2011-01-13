@@ -193,6 +193,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				metterAJourListeStations();
 			}
 		});
+
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				VeloAdapter veloAdapter = (VeloAdapter) ((ListView) adapterView).getAdapter();
@@ -244,6 +245,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
 				if (!erreur) {
+					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+						public void onClick(View view) {
+							Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+							ArrayList<Station> stationsSerializable = new ArrayList<Station>();
+							stationsSerializable.addAll(stationsFiltrees);
+							intent.putExtra("stations", stationsSerializable);
+							startActivity(intent);
+						}
+					});
 					activeGps();
 					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 				} else {

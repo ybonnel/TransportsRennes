@@ -34,6 +34,7 @@ import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
+import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -233,7 +234,15 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
-				if (!erreur) {
+				if (!erreur) {findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+						public void onClick(View view) {
+							Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
+							ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>();
+							pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
+							intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
+							startActivity(intent);
+						}
+					});
 					activeGps();
 					((ArrayAdapter<PointDeVente>) getListAdapter()).notifyDataSetChanged();
 				} else {

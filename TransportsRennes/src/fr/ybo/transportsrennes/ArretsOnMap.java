@@ -21,7 +21,7 @@ import android.os.Bundle;
 import com.google.android.maps.*;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.map.MapItemizedOverlay;
+import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,8 +47,8 @@ public class ArretsOnMap extends MapActivity {
 
 		// Creation du geo point
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = getResources().getDrawable(R.drawable.markee);
-		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+		Drawable drawable = getResources().getDrawable(R.drawable.markee_bus);
+		MapItemizedOverlayArret itemizedoverlay = new MapItemizedOverlayArret(drawable, this);
 		List<String> selectionArgs = new ArrayList<String>();
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();

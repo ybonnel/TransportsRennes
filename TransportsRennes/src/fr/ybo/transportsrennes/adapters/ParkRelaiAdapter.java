@@ -40,7 +40,7 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
+	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
 
 	static {
 		MAP_STATES.put(1, "Fermé");

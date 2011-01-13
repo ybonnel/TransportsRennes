@@ -37,6 +37,7 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
+import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -237,6 +238,15 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
 				if (!erreur) {
+					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+						public void onClick(View view) {
+							Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
+							ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>();
+							parkRelaisSerializable.addAll(parkRelaisFiltres);
+							intent.putExtra("parkRelais", parkRelaisSerializable);
+							startActivity(intent);
+						}
+					});
 					activeGps();
 					((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 				} else {

@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
+import fr.ybo.transportsrennes.adapters.DetailTrajetAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -139,7 +141,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private DetailArretAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -165,7 +167,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private DetailArretAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
+		requete.append("select (Horaire.heureDepart - :uneJournee) as _id, Trajet.id as trajetId ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -178,7 +180,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
 		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -245,6 +247,15 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			setListAdapter(construireAdapter());
 		}
 		ListView lv = getListView();
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				DetailArretAdapter arretAdapter = (DetailArretAdapter) ((ListView) adapterView).getAdapter();
+				Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
+				intent.putExtra("trajetId", cursor.getString(cursor.getColumnIndex("trajetId")));
+				startActivity(intent);
+			}
+		});
 		lv.setTextFilterEnabled(true);
 	}
 

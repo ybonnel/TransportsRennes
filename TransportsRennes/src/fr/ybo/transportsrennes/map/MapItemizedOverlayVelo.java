@@ -17,34 +17,40 @@ package fr.ybo.transportsrennes.map;
 
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.widget.Toast;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
-import fr.ybo.transportsrennes.DetailArret;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.modele.velos.Station;
+import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapItemizedOverlay extends ItemizedOverlay {
+public class MapItemizedOverlayVelo extends ItemizedOverlay {
+
+	private final static LogYbo LOG_YBO = new LogYbo(MapItemizedOverlayVelo.class);
 
 	//Liste des marqueurs
 	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private Context mContext;
-	private List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>();
+	private List<Station> stations = new ArrayList<Station>();
 
-	public MapItemizedOverlay(Drawable defaultMarker, Context context) {
+	public MapItemizedOverlayVelo(Drawable defaultMarker, Context context) {
 		super(boundCenterBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(OverlayItem overlay, ArretFavori favori) {
+	public void addOverlay(OverlayItem overlay, Station station) {
 		mOverlays.add(overlay);
-		arretFavoris.add(favori);
+		stations.add(station);
 		populate();
 	}
 
@@ -60,20 +66,25 @@ public class MapItemizedOverlay extends ItemizedOverlay {
 
 	//Appeer quand on clique sur un marqueur
 	@Override
-	protected boolean onTap(int index) {
+	protected boolean onTap(final int index) {
 		OverlayItem item = mOverlays.get(index);
-		final ArretFavori favori = arretFavoris.get(index);
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
-		builder.setMessage("vers " + item.getSnippet() + "\nVoulez vous ouvrir le détail?");
+		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir la station dans GoogleMap?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.dismiss();
-				final Intent intent = new Intent(mContext, DetailArret.class);
-				intent.putExtra("favori",favori);
-				mContext.startActivity(intent);
+				Station station = stations.get(index);
+				String _lat = Double.toString(station.getLatitude());
+				String _lon = Double.toString(station.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
+				try {
+					MapItemizedOverlayVelo.this.mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException noGoogleMapsException) {
+					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
+					Toast.makeText(MapItemizedOverlayVelo.this.mContext, "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -83,8 +94,6 @@ public class MapItemizedOverlay extends ItemizedOverlay {
 		});
 		AlertDialog alert = builder.create();
 		alert.show();
-
-
 		return true;
 	}
 }

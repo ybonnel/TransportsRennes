@@ -174,6 +174,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						favori.ordre = cursor.getInt(ordreIndex);
 						base.insert(db, favori);
 					}
+					db.execSQL("DROP TABLE ArretFavori_tmp");
 				}
 			});
 		}

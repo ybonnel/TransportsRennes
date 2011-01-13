@@ -18,6 +18,17 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
+    <TextView android:id="@+id/enteteGoogleMap"
+              android:text="Visualiser sur GoogleMap"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:paddingTop="10dip"
+              android:paddingBottom="3dip"
+              android:textSize="18dip"
+              android:gravity="center_horizontal"
+              android:drawableRight="@android:drawable/ic_dialog_map"
+            android:drawablePadding="5dip"/>
+
     <EditText android:id="@+id/liststations_input"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
