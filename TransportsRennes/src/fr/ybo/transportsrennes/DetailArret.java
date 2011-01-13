@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
-import fr.ybo.transportsrennes.adapters.DetailTrajetAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -141,7 +140,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private DetailArretAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId ");
+		requete.append("select Horaire.heureDepart as _id,");
+		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -160,14 +160,16 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
+		LOG_YBO.debug(
+				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
 	private DetailArretAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id, Trajet.id as trajetId ");
+		requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
+		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -180,7 +182,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
 		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId ");
+		requete.append("select Horaire.heureDepart as _id,");
+		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -206,7 +209,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		long elapsedTime = System.currentTimeMillis() - startTime;
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
+		LOG_YBO.debug(
+				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
@@ -247,12 +251,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			setListAdapter(construireAdapter());
 		}
 		ListView lv = getListView();
-		lv.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				DetailArretAdapter arretAdapter = (DetailArretAdapter) ((ListView) adapterView).getAdapter();
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);
 				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
-				intent.putExtra("trajetId", cursor.getString(cursor.getColumnIndex("trajetId")));
+				intent.putExtra("trajetId", cursor.getInt(cursor.getColumnIndex("trajetId")));
+				intent.putExtra("sequence", cursor.getInt(cursor.getColumnIndex("sequence")));
 				startActivity(intent);
 			}
 		});

@@ -32,7 +32,8 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activitée permettant d'afficher le détail d'un trajet
@@ -50,10 +51,12 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	private Trajet trajet;
 	private Direction direction;
 	private Ligne ligne;
+	private int sequence;
 
 	private void recuperationDonneesIntent() {
 		trajet = new Trajet();
-		trajet.id = Integer.valueOf(getIntent().getExtras().getString("trajetId"));
+		trajet.id = getIntent().getExtras().getInt("trajetId");
+		sequence = getIntent().getExtras().getInt("sequence");
 		trajet = TransportsRennesApplication.getDataBaseHelper().selectSingle(trajet);
 		direction = new Direction();
 		direction.id = trajet.directionId;
@@ -75,7 +78,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 			conteneur.addView(imgView);
 		} catch (Exception ignore) {
 		}
-		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText(direction.direction);
+		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText("Vers " + direction.direction);
 	}
 
 	@Override
@@ -92,7 +95,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);
 				Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
-				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretNom")));
+				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);
@@ -104,14 +107,18 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	private void construireListe() {
 		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as _id, Horaire.heureDepart as heureDepart, Arret.nom as nom ");
-		requete.append("FROM Arret, Horaire ");
+		requete.append("FROM Arret, Horaire_");
+		requete.append(ligne.id);
+		requete.append(" as Horaire ");
 		requete.append("WHERE Arret.id = Horaire.arretId");
-		requete.append(" AND Horaire.trajetId = ");
-		requete.append(trajet.id);
-		requete.append(" ORDER BY stopSequence;");
+		requete.append(" AND Horaire.trajetId = :trajetId");
+		requete.append(" AND Horaire.stopSequence > :sequence ");
+		requete.append("ORDER BY stopSequence;");
+		List<String> selectionArgs = new ArrayList<String>(2);
+		selectionArgs.add(String.valueOf(trajet.id));
+		selectionArgs.add(String.valueOf(sequence));
 		LOG_YBO.debug("Exécution de " + requete.toString());
-		currentCursor = TransportsRennesApplication.getDataBaseHelper()
-				.executeSelectQuery(requete.toString(), null);
+		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Résultat : " + currentCursor.getCount());
 		setListAdapter(new DetailTrajetAdapter(this, currentCursor));
 	}
