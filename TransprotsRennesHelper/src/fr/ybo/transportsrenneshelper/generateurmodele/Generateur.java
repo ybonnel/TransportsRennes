@@ -89,6 +89,23 @@ public class Generateur {
 				System.out.println("\t" + arretRoute.ligneId);
 			}
 		}
+
+
+		max = 0;
+		Direction directionLongue = null;
+		for (Direction direction : directions.values()) {
+			if (direction.direction.length() > max) {
+				max = direction.direction.length();
+				directionLongue = direction;
+			}
+		}
+		for (ArretRoute arretRoute : arretsRoutes) {
+			if (arretRoute.directionId == directionLongue.id) {
+				System.out.println("Direction avec le nom le plus long : " + directionLongue.direction + " pour la ligne " + arretRoute.ligneId);
+				break;
+			}
+		}
+
 	}
 
 	public void genererFichiers(File repertoire) {

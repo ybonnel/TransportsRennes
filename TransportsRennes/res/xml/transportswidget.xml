@@ -19,6 +19,6 @@
     android:minWidth="148dp"
     android:minHeight="148dp"
     android:updatePeriodMillis="10000"
-    android:initialLayout="@layout/widget"
+    android:initialLayout="@layout/widget_arrets"
     android:configure="fr.ybo.transportsrennes.TransportsWidgetConfigure">
 </appwidget-provider>

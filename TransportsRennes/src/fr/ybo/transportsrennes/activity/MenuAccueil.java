@@ -62,7 +62,6 @@ public class MenuAccueil {
 
 	public static abstract class Activity extends android.app.Activity {
 
-
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 			super.onCreateOptionsMenu(menu);

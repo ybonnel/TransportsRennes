@@ -20,13 +20,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FavoriAdapterForWidget extends BaseAdapter {
@@ -36,15 +40,29 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		LinearLayout conteneur;
 		TextView arret;
 		TextView direction;
+		CheckBox checkBox;
 	}
 
 	private final LayoutInflater mInflater;
 
 	private final List<ArretFavori> favoris;
 
+	private final Context mContext;
+
+	private final List<Integer> favorisSelectionnes = new ArrayList<Integer>();
+
+	public List<ArretFavori> getFavorisSelectionnes() {
+		List<ArretFavori> retour = new ArrayList<ArretFavori>(2);
+		for (int position : favorisSelectionnes) {
+			retour.add(favoris.get(position));
+		}
+		return retour;
+	}
+
 	public FavoriAdapterForWidget(final Context context, final List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
+		mContext = context;
 		this.favoris = favoris;
 	}
 
@@ -70,6 +88,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		holder.conteneur = (LinearLayout) convertView.findViewById(R.id.conteneurImage);
 		holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
 		holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
+		holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
 
 		convertView.setTag(holder);
 
@@ -83,17 +102,31 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 			ImageView imgView = new ImageView(mInflater.getContext());
 			imgView.setImageResource(ressourceImg);
 			holder.conteneur.addView(imgView);
-		} catch (NoSuchFieldException e) {
-			TextView textView = new TextView(mInflater.getContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			holder.conteneur.addView(textView);
-		} catch (IllegalAccessException e) {
-			TextView textView = new TextView(mInflater.getContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			holder.conteneur.addView(textView);
+		} catch (Exception ignore) {
 		}
+		holder.checkBox.setChecked(favorisSelectionnes.contains(new Integer(position)));
+		holder.checkBox.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// Perform action on clicks, depending on whether it's now checked
+				CheckBox checkBox = (CheckBox) v;
+				if (checkBox.isChecked()) {
+					if (favorisSelectionnes.size() < 2) {
+						favorisSelectionnes.add(position);
+					} else {
+						Toast.makeText(mContext, "Déjà deux arrêts favoris sélectionnés", Toast.LENGTH_SHORT).show();
+						checkBox.setChecked(false);
+						checkBox.invalidate();
+					}
+				} else {
+					Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
+					while (positionActuels.hasNext()) {
+						if (positionActuels.next().intValue() == position) {
+							positionActuels.remove();
+						}
+					}
+				}
+			}
+		});
 		return convertView;
 	}
 

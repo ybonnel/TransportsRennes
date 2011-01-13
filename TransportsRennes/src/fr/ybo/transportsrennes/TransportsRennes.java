@@ -35,10 +35,14 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class TransportsRennes extends Activity {
@@ -203,6 +207,26 @@ public class TransportsRennes extends Activity {
 			protected Void doInBackground(final Void... pParams) {
 				try {
 					UpdateDataBase.updateIfNecessaryDatabase();
+					Set<String> ligneIds = new HashSet<String>();
+					for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
+						if (!ligneIds.contains(favori.ligneId)) {
+							ligneIds.add(favori.ligneId);
+						}
+					}
+					Ligne ligne;
+					Ligne ligneSelect = new Ligne();
+					for (String ligneId : ligneIds) {
+						ligneSelect.id = ligneId;
+						ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
+						final String nomLigne = ligne.nomCourt;
+						runOnUiThread(new Runnable() {
+							public void run() {
+								myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + "\nChargement de la ligne " + nomLigne +
+										" dont vous avez des favoris...");
+							}
+						});
+						UpdateDataBase.chargeDetailLigne(ligne);
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
 					erreur = true;
