@@ -100,6 +100,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
 		views.setViewVisibility(R.id.layout_1arret, View.VISIBLE);
 		views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
+		views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
 	}
 
 	static void updateAppWidget2Arret(Context context, RemoteViews views, ArretFavori favori1, ArretFavori favori2) {
@@ -131,6 +132,52 @@ public class TransportsWidget extends AppWidgetProvider {
 		views.setOnClickPendingIntent(R.id.layout_2arret_2, pendingIntent2);
 		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
 		views.setViewVisibility(R.id.layout_2arret, View.VISIBLE);
+		views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
+	}
+
+	static void updateAppWidget3Arret(Context context, RemoteViews views, ArretFavori favori1, ArretFavori favori2, ArretFavori favori3) {
+		views.setTextViewText(R.id.nomArret1_3arret, favori1.nomArret);
+		views.setTextViewText(R.id.direction1_3arret, "-> " + favori1.direction);
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori1.nomCourt.toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			views.setImageViewResource(R.id.iconeLigne1_3arret, ressourceImg);
+		} catch (Exception ignore) {
+		}
+		views.setTextViewText(R.id.nomArret2_3arret, favori2.nomArret);
+		views.setTextViewText(R.id.direction2_3arret, "-> " + favori2.direction);
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori2.nomCourt.toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			views.setImageViewResource(R.id.iconeLigne2_3arret, ressourceImg);
+		} catch (Exception ignore) {
+		}
+		views.setTextViewText(R.id.nomArret3_3arret, favori3.nomArret);
+		views.setTextViewText(R.id.direction3_3arret, "-> " + favori3.direction);
+		try {
+			Field fieldIcon = classDrawable.getDeclaredField("i" + favori3.nomCourt.toLowerCase());
+			int ressourceImg = fieldIcon.getInt(null);
+			views.setImageViewResource(R.id.iconeLigne3_3arret, ressourceImg);
+		} catch (Exception ignore) {
+		}
+		final Intent intent1 = new Intent(context, TransportsWidget.class);
+		intent1.setAction("YboClick_" + favori1.arretId + "_" + favori1.ligneId);
+		LOG_YBO.debug("Action dans l'intent : " + intent1.getAction());
+		PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+		views.setOnClickPendingIntent(R.id.layout_3arret_1, pendingIntent1);
+		Intent intent2 = new Intent(context, TransportsWidget.class);
+		intent2.setAction("YboClick_" + favori2.arretId + "_" + favori2.ligneId);
+		LOG_YBO.debug("Action dans l'intent : " + intent2.getAction());
+		PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+		views.setOnClickPendingIntent(R.id.layout_3arret_2, pendingIntent2);
+		Intent intent3 = new Intent(context, TransportsWidget.class);
+		intent3.setAction("YboClick_" + favori3.arretId + "_" + favori3.ligneId);
+		LOG_YBO.debug("Action dans l'intent : " + intent3.getAction());
+		PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
+		views.setOnClickPendingIntent(R.id.layout_3arret_3, pendingIntent3);
+		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
+		views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
+		views.setViewVisibility(R.id.layout_3arret, View.VISIBLE);
 	}
 
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -167,6 +214,9 @@ public class TransportsWidget extends AppWidgetProvider {
 			case 2:
 				updateAppWidget2Arret(context, views, favorisBdd.get(0), favorisBdd.get(1));
 				break;
+			case 3:
+				updateAppWidget3Arret(context, views, favorisBdd.get(0), favorisBdd.get(1), favorisBdd.get(2));
+				break;
 		}
 
 		switch (favorisBdd.size()) {
@@ -175,6 +225,9 @@ public class TransportsWidget extends AppWidgetProvider {
 				break;
 			case 2:
 				MyTime.remplirRemoteViews2Arret(views, favorisBdd);
+				break;
+			case 3:
+				MyTime.remplirRemoteViews3Arret(views, favorisBdd);
 				break;
 		}
 
@@ -294,6 +347,26 @@ public class TransportsWidget extends AppWidgetProvider {
 					mapProchainsDepart2.get(2) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart2.get(2), now));
 		}
 
+		public void remplirRemoteViews3Arret(RemoteViews remoteViews) {
+			remplirRemoteViews3Arret(remoteViews, favoris);
+		}
+
+		public static void remplirRemoteViews3Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
+			Calendar calendar = Calendar.getInstance();
+			int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+			Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 1, calendar, now);
+			remoteViews.setTextViewText(R.id.tempsRestant1_3arret,
+					mapProchainsDepart1.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart1.get(1), now));
+
+			Map<Integer, Integer> mapProchainsDepart2 = requete(favoris.get(1), 1, calendar, now);
+			remoteViews.setTextViewText(R.id.tempsRestant2_3arret,
+					mapProchainsDepart2.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart2.get(1), now));
+
+			Map<Integer, Integer> mapProchainsDepart3 = requete(favoris.get(2), 1, calendar, now);
+			remoteViews.setTextViewText(R.id.tempsRestant3_3arret,
+					mapProchainsDepart3.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart3.get(1), now));
+		}
+
 		@Override
 		public void run() {
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
@@ -303,6 +376,9 @@ public class TransportsWidget extends AppWidgetProvider {
 					break;
 				case 2:
 					remplirRemoteViews2Arret(remoteViews);
+					break;
+				case 3:
+					remplirRemoteViews3Arret(remoteViews);
 					break;
 			}
 			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
@@ -385,10 +461,14 @@ public class TransportsWidget extends AppWidgetProvider {
 				ArretFavori favori = new ArretFavori();
 				favori.arretId = champs[1];
 				favori.ligneId = champs[2];
-				Intent startIntent = new Intent(context, DetailArret.class);
-				startIntent.putExtra("favori", TransportsRennesApplication.getDataBaseHelper().selectSingle(favori));
-				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				context.startActivity(startIntent);
+				favori = TransportsRennesApplication.getDataBaseHelper().selectSingle(favori);
+				if (favori != null) {
+					Intent startIntent = new Intent(context, DetailArret.class);
+					startIntent.putExtra("favori", favori);
+					startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					context.startActivity(startIntent);
+				}
 			}
 		}
 		super.onReceive(context, intent);

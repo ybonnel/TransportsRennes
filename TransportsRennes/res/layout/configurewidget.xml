@@ -32,7 +32,7 @@
             android:layout_marginRight="5dip"
             android:layout_marginLeft="0dip"/>
     <TextView android:id="@+id/configurewidget_entete"
-              android:text="Choisissez un ou deux arrêts favoris."
+              android:text="Choisissez de un à trois arrêts favoris."
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
               android:padding="3dip"

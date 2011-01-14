@@ -307,7 +307,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				if (!TransportsWidgetConfigure.isUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {
-					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG);
+					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();
 				}
 				return true;
 			default:

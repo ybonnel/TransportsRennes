@@ -110,7 +110,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 				// Perform action on clicks, depending on whether it's now checked
 				CheckBox checkBox = (CheckBox) v;
 				if (checkBox.isChecked()) {
-					if (favorisSelectionnes.size() < 2) {
+					if (favorisSelectionnes.size() < 3) {
 						favorisSelectionnes.add(position);
 					} else {
 						Toast.makeText(mContext, "Déjà deux arrêts favoris sélectionnés", Toast.LENGTH_SHORT).show();
@@ -120,7 +120,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 				} else {
 					Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
 					while (positionActuels.hasNext()) {
-						if (positionActuels.next().intValue() == position) {
+						if (positionActuels.next() == position) {
 							positionActuels.remove();
 						}
 					}

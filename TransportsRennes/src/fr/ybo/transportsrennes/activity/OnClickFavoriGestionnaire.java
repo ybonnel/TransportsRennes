@@ -109,7 +109,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				imageView.setImageResource(android.R.drawable.btn_star_big_off);
 				imageView.invalidate();
 			} else {
-				Toast.makeText(activity, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG);
+				Toast.makeText(activity, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();
 			}
 		}
 	}

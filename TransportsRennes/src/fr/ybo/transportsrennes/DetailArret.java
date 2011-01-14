@@ -99,6 +99,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			favori.nomArret = getIntent().getExtras().getString("nomArret");
 			favori.direction = getIntent().getExtras().getString("direction");
 			Ligne myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+			if (myLigne == null) {
+				finish();
+				return;
+			}
 			favori.ligneId = myLigne.id;
 			favori.nomCourt = myLigne.nomCourt;
 			favori.nomLong = myLigne.nomLong;
@@ -224,6 +228,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		calendarLaVeille.roll(Calendar.DATE, false);
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
+		if (favori.ligneId == null) {
+			return;
+		}
 		gestionViewsTitle();
 		ImageView imageGoogleMap = (ImageView) findViewById(R.id.googlemap);
 		imageGoogleMap.setOnClickListener(new View.OnClickListener() {

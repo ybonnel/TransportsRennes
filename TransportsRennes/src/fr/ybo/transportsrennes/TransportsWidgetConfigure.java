@@ -88,7 +88,7 @@ public class TransportsWidgetConfigure extends ListActivity {
 				FavoriAdapterForWidget favoriAdapter = (FavoriAdapterForWidget) getListAdapter();
 				List<ArretFavori> favorisSelectionnes = favoriAdapter.getFavorisSelectionnes();
 				if (favorisSelectionnes.isEmpty()) {
-					Toast.makeText(TransportsWidgetConfigure.this, "Sélectionnez au moins un arrêt favori.", Toast.LENGTH_SHORT);
+					Toast.makeText(TransportsWidgetConfigure.this, "Sélectionnez au moins un arrêt favori.", Toast.LENGTH_SHORT).show();
 				} else {
 					saveSettings(TransportsWidgetConfigure.this, appWidgetId, favorisSelectionnes);
 					AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidgetConfigure.this);
@@ -117,6 +117,7 @@ public class TransportsWidgetConfigure extends ListActivity {
 	public static boolean isUsed(Context context, ArretFavori favori) {
 		Map<Integer, ArretFavori> favori1 = new HashMap<Integer, ArretFavori>();
 		Map<Integer, ArretFavori> favori2 = new HashMap<Integer, ArretFavori>();
+		Map<Integer, ArretFavori> favori3 = new HashMap<Integer, ArretFavori>();
 		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 		for (String key : sharedPreferences.getAll().keySet()) {
 			if (key.startsWith("ArretId1_")) {
@@ -147,8 +148,34 @@ public class TransportsWidgetConfigure extends ListActivity {
 				}
 				favori2.get(widgetId).ligneId = sharedPreferences.getString(key, null);
 			}
+			if (key.startsWith("ArretId3_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori3.containsKey(widgetId)) {
+					favori3.put(widgetId, new ArretFavori());
+				}
+				favori3.get(widgetId).arretId = sharedPreferences.getString(key, null);
+			}
+			if (key.startsWith("LigneId3_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori3.containsKey(widgetId)) {
+					favori3.put(widgetId, new ArretFavori());
+				}
+				favori3.get(widgetId).ligneId = sharedPreferences.getString(key, null);
+			}
 		}
 		for (ArretFavori favoriWidget : favori1.values()) {
+			if (favori.arretId.equals(favoriWidget.arretId)
+					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+				return true;
+			}
+		}
+		for (ArretFavori favoriWidget : favori2.values()) {
+			if (favori.arretId.equals(favoriWidget.arretId)
+					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+				return true;
+			}
+		}
+		for (ArretFavori favoriWidget : favori3.values()) {
 			if (favori.arretId.equals(favoriWidget.arretId)
 					&& favori.ligneId.equals(favoriWidget.ligneId)) {
 				return true;

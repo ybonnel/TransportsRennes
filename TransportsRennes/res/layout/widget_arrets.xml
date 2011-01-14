@@ -216,4 +216,143 @@
         </RelativeLayout>
     </RelativeLayout>
 
+
+    <RelativeLayout
+            android:id="@+id/layout_3arret"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="invisible">
+        <RelativeLayout android:id="@+id/layout_3arret_1"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content">
+
+            <ImageView android:id="@+id/iconeLigne1_3arret"
+                       android:layout_width="45dip"
+                       android:layout_height="44dip"
+                       android:paddingTop="19dip"
+                       android:paddingLeft="20dip"
+                       android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView android:id="@+id/nomArret1_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="16dip"
+                      android:paddingBottom="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_toRightOf="@id/iconeLigne1_3arret"/>
+
+            <TextView android:id="@+id/direction1_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="9dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/nomArret1_3arret"
+                      android:layout_alignLeft="@id/nomArret1_3arret"/>
+
+            <TextView android:id="@+id/tempsRestant1_3arret"
+                      android:paddingLeft="24dip"
+                      android:paddingTop="5dip"
+                      android:layout_width="140dip"
+                      android:layout_height="wrap_content"
+                      android:textSize="16dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/iconeLigne1_3arret"/>
+        </RelativeLayout>
+        <RelativeLayout android:id="@+id/layout_3arret_2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_3arret_1">
+
+            <ImageView android:id="@+id/iconeLigne2_3arret"
+                       android:layout_width="45dip"
+                       android:layout_height="30dip"
+                       android:paddingTop="5dip"
+                       android:paddingLeft="20dip"
+                       android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView android:id="@+id/nomArret2_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="2dip"
+                      android:paddingBottom="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_toRightOf="@id/iconeLigne2_3arret"/>
+
+            <TextView android:id="@+id/direction2_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="9dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/nomArret2_3arret"
+                      android:layout_alignLeft="@id/nomArret2_3arret"/>
+
+            <TextView android:id="@+id/tempsRestant2_3arret"
+                      android:paddingLeft="24dip"
+                      android:paddingTop="5dip"
+                      android:layout_width="140dip"
+                      android:layout_height="wrap_content"
+                      android:textSize="16dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/iconeLigne2_3arret"/>
+        </RelativeLayout>
+        <RelativeLayout android:id="@+id/layout_3arret_3"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/layout_3arret_2">
+
+            <ImageView android:id="@+id/iconeLigne3_3arret"
+                       android:layout_width="45dip"
+                       android:layout_height="30dip"
+                       android:paddingTop="5dip"
+                       android:paddingLeft="20dip"
+                       android:gravity="center_vertical|center_horizontal"/>
+
+            <TextView android:id="@+id/nomArret3_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="2dip"
+                      android:paddingBottom="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="12dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_toRightOf="@id/iconeLigne3_3arret"/>
+
+            <TextView android:id="@+id/direction3_3arret"
+                      android:paddingLeft="3dip"
+                      android:paddingTop="0dip"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="9dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/nomArret3_3arret"
+                      android:layout_alignLeft="@id/nomArret3_3arret"/>
+
+            <TextView android:id="@+id/tempsRestant3_3arret"
+                      android:paddingLeft="24dip"
+                      android:paddingTop="5dip"
+                      android:layout_width="140dip"
+                      android:layout_height="wrap_content"
+                      android:textSize="16dip"
+                      android:textColor="#080808"
+                      android:gravity="center_vertical|left"
+                      android:layout_below="@id/iconeLigne3_3arret"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
 </RelativeLayout>
