@@ -153,6 +153,9 @@ public class TransportsWidget extends AppWidgetProvider {
 		ArretFavori favoriBdd;
 		for (ArretFavori favoriSelect : favorisSelects) {
 			favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
+			if (favoriBdd == null) {
+				return;
+			}
 			if (favoriBdd.nomArret.length() > 13) {
 				favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 12) + "...";
 			}

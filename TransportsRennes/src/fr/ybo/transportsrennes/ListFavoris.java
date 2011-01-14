@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
@@ -134,10 +135,15 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
 				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
-				TransportsRennesApplication.getDataBaseHelper().delete(favori);
-				((FavoriAdapter) getListAdapter()).getFavoris().clear();
-				((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
-				((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+
+				if (!TransportsWidgetConfigure.isUsed(this, favori)) {
+					TransportsRennesApplication.getDataBaseHelper().delete(favori);
+					((FavoriAdapter) getListAdapter()).getFavoris().clear();
+					((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
+					((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+				} else {
+					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG);
+				}
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

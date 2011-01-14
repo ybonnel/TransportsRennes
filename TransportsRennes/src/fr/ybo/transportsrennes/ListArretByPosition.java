@@ -304,7 +304,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.arretId = arret.id;
 				arretFavori.ligneId = arret.favori.ligneId;
-				TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
+				if (!TransportsWidgetConfigure.isUsed(this, arretFavori)) {
+					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
+				} else {
+					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG);
+				}
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);

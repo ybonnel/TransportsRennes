@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
@@ -103,9 +104,13 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			imageView.invalidate();
 		} else {
 			// Supression d'un favori.
-			TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
-			imageView.setImageResource(android.R.drawable.btn_star_big_off);
-			imageView.invalidate();
+			if (!TransportsWidgetConfigure.isUsed(activity, myFavori)) {
+				TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
+				imageView.setImageResource(android.R.drawable.btn_star_big_off);
+				imageView.invalidate();
+			} else {
+				Toast.makeText(activity, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG);
+			}
 		}
 	}
 }

@@ -32,6 +32,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -111,6 +112,49 @@ public class TransportsWidgetConfigure extends ListActivity {
 			count++;
 		}
 		edit.commit();
+	}
+
+	public static boolean isUsed(Context context, ArretFavori favori) {
+		Map<Integer, ArretFavori> favori1 = new HashMap<Integer, ArretFavori>();
+		Map<Integer, ArretFavori> favori2 = new HashMap<Integer, ArretFavori>();
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		for (String key : sharedPreferences.getAll().keySet()) {
+			if (key.startsWith("ArretId1_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori1.containsKey(widgetId)) {
+					favori1.put(widgetId, new ArretFavori());
+				}
+				favori1.get(widgetId).arretId = sharedPreferences.getString(key, null);
+			}
+			if (key.startsWith("LigneId1_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori1.containsKey(widgetId)) {
+					favori1.put(widgetId, new ArretFavori());
+				}
+				favori1.get(widgetId).ligneId = sharedPreferences.getString(key, null);
+			}
+			if (key.startsWith("ArretId2_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori2.containsKey(widgetId)) {
+					favori2.put(widgetId, new ArretFavori());
+				}
+				favori2.get(widgetId).arretId = sharedPreferences.getString(key, null);
+			}
+			if (key.startsWith("LigneId2_")) {
+				int widgetId = Integer.parseInt(key.split("_")[1]);
+				if (!favori2.containsKey(widgetId)) {
+					favori2.put(widgetId, new ArretFavori());
+				}
+				favori2.get(widgetId).ligneId = sharedPreferences.getString(key, null);
+			}
+		}
+		for (ArretFavori favoriWidget : favori1.values()) {
+			if (favori.arretId.equals(favoriWidget.arretId)
+					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected static List<Integer> getWidgetIds(Context context) {
