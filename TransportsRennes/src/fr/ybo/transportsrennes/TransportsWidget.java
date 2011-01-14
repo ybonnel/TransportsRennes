@@ -146,6 +146,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
 		List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
 		if (favorisSelects.isEmpty()) {
+			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
 			return;
 		}
 		List<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
@@ -154,6 +155,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		for (ArretFavori favoriSelect : favorisSelects) {
 			favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
 			if (favoriBdd == null) {
+				LOG_YBO.debug("FavoriBdd null");
 				return;
 			}
 			if (favoriBdd.nomArret.length() > 13) {
@@ -180,7 +182,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		synchronized (mapTimersByWidgetId) {
 			mapTimersByWidgetId.put(appWidgetId, timer);
 		}
-		timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager, favorisBdd, appWidgetId), 500, 20000);
+		timer.scheduleAtFixedRate(new MyTime(context, appWidgetManager, favorisBdd, appWidgetId), 20000, 20000);
 	}
 
 	private static class MyTime extends TimerTask {
@@ -197,7 +199,7 @@ public class TransportsWidget extends AppWidgetProvider {
 			this.appWidgetId = appWidgetId;
 		}
 
-		private Map<Integer, Integer> requete(ArretFavori favori, int limit, Calendar calendar, int now) {
+		private static Map<Integer, Integer> requete(ArretFavori favori, int limit, Calendar calendar, int now) {
 			Calendar calendarLaVeille = Calendar.getInstance();
 			calendarLaVeille.roll(Calendar.DATE, false);
 			StringBuilder requete = new StringBuilder();
@@ -253,6 +255,10 @@ public class TransportsWidget extends AppWidgetProvider {
 		}
 
 		public void remplirRemoteViews1Arret(RemoteViews remoteViews) {
+			remplirRemoteViews1Arret(remoteViews, favoris);
+		}
+
+		public static void remplirRemoteViews1Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
 
 			Calendar calendar = Calendar.getInstance();
 			int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
@@ -265,10 +271,14 @@ public class TransportsWidget extends AppWidgetProvider {
 					mapProchainsDepart.get(3) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(3), now));
 			remoteViews.setTextViewText(R.id.tempsRestant4_1arret,
 					mapProchainsDepart.get(4) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(4), now));
+
 		}
 
 		public void remplirRemoteViews2Arret(RemoteViews remoteViews) {
+			remplirRemoteViews2Arret(remoteViews, favoris);
+		}
 
+		public static void remplirRemoteViews2Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
 			Calendar calendar = Calendar.getInstance();
 			int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 			Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 2, calendar, now);
