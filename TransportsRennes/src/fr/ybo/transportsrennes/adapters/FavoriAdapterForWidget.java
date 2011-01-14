@@ -113,7 +113,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 					if (favorisSelectionnes.size() < 3) {
 						favorisSelectionnes.add(position);
 					} else {
-						Toast.makeText(mContext, "Déjà deux arrêts favoris sélectionnés", Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, "Déjà trois arrêts favoris sélectionnés", Toast.LENGTH_SHORT).show();
 						checkBox.setChecked(false);
 						checkBox.invalidate();
 					}
