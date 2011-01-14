@@ -29,13 +29,7 @@ import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class TransportsWidget extends AppWidgetProvider {
 	private final static LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
@@ -171,11 +165,18 @@ public class TransportsWidget extends AppWidgetProvider {
 				updateAppWidget1Arret(context, views, favorisBdd.get(0));
 				break;
 			case 2:
-				updateAppWidget2Arret(context, views, favorisBdd.get(0),
-						favorisBdd.get(1));
+				updateAppWidget2Arret(context, views, favorisBdd.get(0), favorisBdd.get(1));
 				break;
 		}
 
+		switch (favorisBdd.size()) {
+			case 1:
+				MyTime.remplirRemoteViews1Arret(views, favorisBdd);
+				break;
+			case 2:
+				MyTime.remplirRemoteViews2Arret(views, favorisBdd);
+				break;
+		}
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 		Timer timer = new Timer();
@@ -385,9 +386,9 @@ public class TransportsWidget extends AppWidgetProvider {
 				favori.arretId = champs[1];
 				favori.ligneId = champs[2];
 				Intent startIntent = new Intent(context, DetailArret.class);
-					startIntent.putExtra("favori", TransportsRennesApplication.getDataBaseHelper().selectSingle(favori));
-					startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					context.startActivity(startIntent);
+				startIntent.putExtra("favori", TransportsRennesApplication.getDataBaseHelper().selectSingle(favori));
+				startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(startIntent);
 			}
 		}
 		super.onReceive(context, intent);
