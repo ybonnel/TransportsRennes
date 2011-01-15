@@ -81,7 +81,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	 */
 	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
-		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
+		if (location != null && (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0))) {
 			lastLocation = location;
 			synchronized (parkRelais) {
 				for (ParkRelai parkRelai : parkRelais) {

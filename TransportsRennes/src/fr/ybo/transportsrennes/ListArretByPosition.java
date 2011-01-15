@@ -74,7 +74,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	 */
 	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
-		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
+		if (location != null && (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0))) {
 			lastLocation = location;
 			synchronized (arrets) {
 				for (Arret arret : arrets) {

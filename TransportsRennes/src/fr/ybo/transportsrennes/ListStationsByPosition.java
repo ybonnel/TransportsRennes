@@ -87,7 +87,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	 */
 	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
-		if (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0)) {
+		if (location != null && (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0))) {
 			lastLocation = location;
 			synchronized (stations) {
 				for (Station station : stations) {
