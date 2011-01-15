@@ -115,12 +115,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			mapUpgrades.put(4, new UpgradeDatabase() {
 				public void upagrade(SQLiteDatabase db) {
 					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
-					int count = 0;
-					for (ArretFavori arretFavori : base.select(db, new ArretFavori(), null, null, null)) {
-						arretFavori.ordre = count++;
-						base.delete(db, arretFavori);
-						base.insert(db, arretFavori);
-					}
 				}
 			});
 			mapUpgrades.put(5, new UpgradeDatabase() {
@@ -164,6 +158,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					int nomLongIndex = cursor.getColumnIndex("routeNomLong");
 					int ordreIndex = cursor.getColumnIndex("ordre");
 					ArretFavori favori = new ArretFavori();
+					int count = 1;
 					while (cursor.moveToNext()) {
 						favori.arretId = cursor.getString(arretIdIndex);
 						favori.ligneId = cursor.getString(ligneIdIndex);
@@ -171,7 +166,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						favori.direction = cursor.getString(directionIndex);
 						favori.nomCourt = cursor.getString(nomCourtIndex);
 						favori.nomLong = cursor.getString(nomLongIndex);
-						favori.ordre = cursor.getInt(ordreIndex);
+						favori.ordre = cursor.isNull(ordreIndex) ? count++ : cursor.getInt(ordreIndex);
 						base.insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
