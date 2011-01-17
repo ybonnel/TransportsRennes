@@ -22,7 +22,8 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="false" android:name="TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name=".TransportsRennes" android:configChanges="orientation|keyboardHidden">
+        <activity android:name=".TransportsRennes" android:configChanges="orientation|keyboardHidden"
+                android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

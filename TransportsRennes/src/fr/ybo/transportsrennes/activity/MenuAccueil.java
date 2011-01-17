@@ -37,6 +37,7 @@ public class MenuAccueil {
 				case MENU_ID:
 					Intent intent = new Intent(context, TransportsRennes.class);
 					intent.putExtra("update", false);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 					context.startActivity(intent);
 					return true;
 			}
