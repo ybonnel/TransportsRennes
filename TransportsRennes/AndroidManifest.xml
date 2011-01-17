@@ -23,7 +23,7 @@
                  android:debuggable="false" android:name="TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
         <activity android:name=".TransportsRennes" android:configChanges="orientation|keyboardHidden"
-                android:clearTaskOnLaunch="true">
+                android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
