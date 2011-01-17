@@ -46,7 +46,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Activité de type liste permettant de lister les parks relais par distances de la
+ * Activité de type liste permettant de lister les parcs relais par distances de la
  * position actuelle.
  *
  * @author ybonnel
@@ -74,7 +74,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	private Location lastLocation = null;
 
 	/**
-	 * Permet de mettre à jour les distances des park relais par rapport à une
+	 * Permet de mettre à jour les distances des parc relais par rapport à une
 	 * nouvelle position.
 	 *
 	 * @param location position courante.

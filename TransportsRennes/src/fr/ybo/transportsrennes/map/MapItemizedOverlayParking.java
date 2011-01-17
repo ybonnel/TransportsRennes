@@ -73,7 +73,7 @@ public class MapItemizedOverlayParking extends ItemizedOverlay {
 		OverlayItem item = mOverlays.get(index);
 		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
-		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir le Park Relai dans GoogleMap?");
+		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir le Parc Relai dans GoogleMap?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
