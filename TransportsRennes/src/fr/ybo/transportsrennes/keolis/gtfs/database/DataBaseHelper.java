@@ -20,22 +20,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Calendrier;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.*;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -147,9 +135,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					columns.add("routeNomCourt");
 					columns.add("routeNomLong");
 					columns.add("ordre");
-					cursor =
-							db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null,
-									null);
+					cursor = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
 					int arretIdIndex = cursor.getColumnIndex("stopId");
 					int ligneIdIndex = cursor.getColumnIndex("routeId");
 					int nomArretIndex = cursor.getColumnIndex("nomArret");
@@ -179,11 +165,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		LOG_YBO.debug("Demande de mise à jour de la base de la version " + oldVersion + " à la version " + newVersion);
-		for (int version = oldVersion + 1; version <= newVersion; version++) {
-			if (getUpgrades().containsKey(version)) {
-				LOG_YBO.debug("Lancement de la mise à jour pour la version " + version);
-				getUpgrades().get(version).upagrade(db);
+		try {
+			for (int version = oldVersion + 1; version <= newVersion; version++) {
+				if (getUpgrades().containsKey(version)) {
+					LOG_YBO.debug("Lancement de la mise à jour pour la version " + version);
+					getUpgrades().get(version).upagrade(db);
+				}
 			}
+		} catch (Exception exception) {
+			LOG_YBO.erreur("Une erreur est survenue lors de l'upgrade, on supprime le schéma et on le recrée.", exception);
+			Cursor cursor =
+					db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null, null);
+			while (cursor.moveToNext()) {
+				String tableName = cursor.getString(0);
+				if (!tableName.equals("android_metadata")) {
+					db.execSQL("DROP TABLE " + tableName);
+				}
+			}
+			cursor.close();
+			base.createDataBase(db);
 		}
 	}
 
