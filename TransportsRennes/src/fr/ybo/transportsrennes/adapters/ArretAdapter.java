@@ -169,7 +169,7 @@ public class ArretAdapter extends CursorAdapter {
 			arret.longitude = cursor.getDouble(longitudeIndex);
 			arret.favori.nomCourt = cursor.getString(nomCourtIndex);
 			arret.favori.nomLong = cursor.getString(nomLongIndex);
-			if (!arret.id.equals(favori.arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
+			if (!arret.id.equals(arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
 				arret.calculDistance(locationArret);
 				if (arret.distance < DISTANCE_MAX_METRE) {
 					arrets.add(arret);
