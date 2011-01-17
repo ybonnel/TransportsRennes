@@ -30,10 +30,21 @@
 
     <ImageView android:id="@+id/isfavori"
                android:paddingRight="4dip"
+               android:paddingTop="7dip"
                android:layout_width="wrap_content"
-               android:layout_height="55dip"
-               android:layout_centerVertical="true"
+               android:layout_height="wrap_content"
                android:layout_alignParentRight="true"/>
+
+    <ImageView android:id="@+id/imageCorrespondance"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+               android:paddingBottom="10dip"
+               android:src="@drawable/arrow_right_float"
+               android:layout_alignParentRight="true"
+               android:layout_below="@id/isfavori"/>
 
     <TextView android:id="@+id/directionArret"
               android:paddingLeft="5dip"
@@ -44,6 +55,12 @@
               android:textSize="16dip"
               android:gravity="center_vertical|left"
               android:layout_below="@id/nomArret"
-              android:layout_toLeftOf="@id/isfavori"
+              android:layout_toLeftOf="@id/imageCorrespondance"
             android:layout_alignParentLeft="true"/>
+    <LinearLayout android:id="@+id/detailCorrespondance"
+                  android:visibility="invisible"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+            android:layout_below="@id/directionArret"/>
 </RelativeLayout>
