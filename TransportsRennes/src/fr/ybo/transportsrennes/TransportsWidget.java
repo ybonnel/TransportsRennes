@@ -467,6 +467,7 @@ public class TransportsWidget extends AppWidgetProvider {
 					startIntent.putExtra("favori", favori);
 					startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+					startIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 
 					context.startActivity(startIntent);
 				}
