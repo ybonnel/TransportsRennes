@@ -17,8 +17,12 @@ package fr.ybo.transportsrennes;
 
 import android.app.Application;
 import android.appwidget.AppWidgetManager;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
+import fr.ybo.transportsrennes.util.Constantes;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
@@ -37,6 +41,21 @@ public class TransportsRennesApplication extends Application {
 		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
+		traker = GoogleAnalyticsTracker.getInstance();
+		traker.start(Constantes.UA_ACCOUNT, 60, this);
+		traker.setCustomVar(1, "androidVersion", android.os.Build.FINGERPRINT);
+		traker.setCustomVar(2, "androidModel", android.os.Build.MODEL);
+		PackageManager manager = getPackageManager();
+		try {
+			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+			traker.setCustomVar(3, "appVersion", info.versionName);
+		} catch (PackageManager.NameNotFoundException ignore) {
+		}
 	}
 
+	private static GoogleAnalyticsTracker traker;
+
+	public static GoogleAnalyticsTracker getTraker() {
+		return traker;
+	}
 }

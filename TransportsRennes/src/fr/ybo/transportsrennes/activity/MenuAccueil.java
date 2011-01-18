@@ -18,10 +18,14 @@ package fr.ybo.transportsrennes.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennes;
+import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.util.Constantes;
 
 public class MenuAccueil {
 
@@ -46,6 +50,11 @@ public class MenuAccueil {
 
 	public static abstract class ListActivity extends android.app.ListActivity {
 
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			TransportsRennesApplication.getTraker().trackPageView("/" + this.getClass().getSimpleName());
+		}
 
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,6 +71,12 @@ public class MenuAccueil {
 	}
 
 	public static abstract class Activity extends android.app.Activity {
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			TransportsRennesApplication.getTraker().trackPageView("/" + this.getClass().getSimpleName());
+		}
 
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {

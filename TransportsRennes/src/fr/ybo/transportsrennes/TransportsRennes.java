@@ -32,12 +32,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.util.Constantes;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.Date;
@@ -54,6 +56,8 @@ public class TransportsRennes extends Activity {
 	@Override
 	protected void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
+		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
+
 		boolean update = getIntent().getBooleanExtra("update", true);
 		setContentView(R.layout.main);
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
