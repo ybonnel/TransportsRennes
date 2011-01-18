@@ -17,12 +17,7 @@ package fr.ybo.transportsrennes;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
+import com.google.android.maps.*;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
@@ -97,6 +92,10 @@ public class ParkRelaisOnMap extends MapActivity {
 		mapOverlays.add(itemizedoverlay);
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
+
+		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this, mapView);
+		mapOverlays.add(myLocationOverlay);
+		myLocationOverlay.enableMyLocation();
 
 	}
 

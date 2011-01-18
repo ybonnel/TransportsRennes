@@ -106,6 +106,10 @@ public class ArretsOnMap extends MapActivity {
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
+		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this, mapView);
+		mapOverlays.add(myLocationOverlay);
+		myLocationOverlay.enableMyLocation();
+
 	}
 
 	@Override
