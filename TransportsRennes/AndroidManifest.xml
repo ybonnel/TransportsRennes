@@ -61,22 +61,6 @@
         </activity>
 
         <uses-library android:name="com.google.android.maps"/>
-
-        <!-- The application's publisher ID assigned by AdMob -->
-        <meta-data android:value="a14d20c4e95f641" android:name="ADMOB_PUBLISHER_ID"/>
-
-        <!-- AdMobActivity definition -->
-        <activity android:name="com.admob.android.ads.AdMobActivity"
-                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-                  android:configChanges="orientation|keyboard|keyboardHidden"/>
-        <!-- Track Market installs -->
-        <receiver android:name="com.admob.android.ads.analytics.InstallReceiver"
-                  android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER"/>
-            </intent-filter>
-        </receiver>
-        <meta-data android:value="false" android:name="ADMOB_ALLOW_LOCATION_FOR_ADS"/>
     </application>
 
     <uses-sdk android:minSdkVersion="3"
