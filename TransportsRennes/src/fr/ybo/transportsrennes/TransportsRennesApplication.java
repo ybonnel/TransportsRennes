@@ -43,12 +43,12 @@ public class TransportsRennesApplication extends Application {
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
 		traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, 60, this);
-		traker.setCustomVar(1, "androidVersion", android.os.Build.FINGERPRINT);
-		traker.setCustomVar(2, "androidModel", android.os.Build.MODEL);
+		traker.setCustomVar(1, "androidVersion", android.os.Build.FINGERPRINT, 1);
+		traker.setCustomVar(2, "androidModel", android.os.Build.MODEL, 1);
 		PackageManager manager = getPackageManager();
 		try {
 			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-			traker.setCustomVar(3, "appVersion", info.versionName);
+			traker.setCustomVar(3, "appVersion", info.versionName, 1);
 		} catch (PackageManager.NameNotFoundException ignore) {
 		}
 	}

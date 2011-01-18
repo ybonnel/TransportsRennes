@@ -46,9 +46,21 @@
                   android:textSize="20dip"
                   android:gravity="center_vertical|left"/>
     </HorizontalScrollView>
+
+    <ImageView android:id="@+id/imageCorrespondance"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:paddingLeft="10dip"
+               android:paddingRight="10dip"
+               android:paddingTop="10dip"
+               android:paddingBottom="10dip"
+               android:src="@drawable/arrow_right_float"
+               android:layout_alignParentRight="true"
+               android:layout_below="@id/conteneurImage"/>
     <HorizontalScrollView android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:layout_below="@id/conteneurImage"
+                          android:layout_toLeftOf="@id/imageCorrespondance"
                           android:id="@+id/detailArret_scrolling">
         <TextView android:id="@+id/detailArret_nomArret"
                   android:paddingLeft="5dip"
@@ -62,9 +74,20 @@
                   android:layout_alignParentLeft="true"/>
     </HorizontalScrollView>
 
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/detailCorrespondance_scroll"
+                android:layout_below="@id/detailArret_scrolling">
+        <LinearLayout android:id="@+id/detailCorrespondance"
+                      android:visibility="invisible"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"/>
+    </ScrollView>
+
     <ImageView android:layout_width="fill_parent"
                android:layout_height="10dip"
-               android:layout_below="@id/detailArret_scrolling"
+               android:layout_below="@id/detailCorrespondance_scroll"
                android:paddingTop="4dip"
                android:paddingBottom="0dip"
                android:src="@android:drawable/divider_horizontal_dim_dark"
