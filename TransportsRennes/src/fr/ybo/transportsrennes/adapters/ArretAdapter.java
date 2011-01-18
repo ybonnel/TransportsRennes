@@ -40,7 +40,9 @@ import fr.ybo.transportsrennes.util.LogYbo;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Adapteur pour les arrêts.
@@ -60,6 +62,8 @@ public class ArretAdapter extends CursorAdapter {
 	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(ArretAdapter.class);
+
+	private Set<String> setCorrespondances = new HashSet<String>();
 
 	private final LayoutInflater mInflater;
 
@@ -91,15 +95,25 @@ public class ArretAdapter extends CursorAdapter {
 		final ImageView correspondance = ((ImageView) view.findViewById(R.id.imageCorrespondance));
 		final LinearLayout detailCorrespondance = ((LinearLayout) view.findViewById(R.id.detailCorrespondance));
 		correspondance.setImageResource(R.drawable.arrow_right_float);
-		detailCorrespondance.removeAllViews();
-		detailCorrespondance.setVisibility(View.INVISIBLE);
+		if (!setCorrespondances.contains(arretId)) {
+			detailCorrespondance.removeAllViews();
+			detailCorrespondance.setVisibility(View.INVISIBLE);
+			correspondance.setImageResource(R.drawable.arrow_right_float);
+		} else {
+			detailCorrespondance.setVisibility(View.VISIBLE);
+			detailCorrespondance.removeAllViews();
+			construireCorrespondance(detailCorrespondance, arretId);
+			correspondance.setImageResource(R.drawable.arrow_down_float);
+		}
 		correspondance.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				if (detailCorrespondance.getVisibility() == View.VISIBLE) {
+				if (setCorrespondances.contains(arretId)) {
+					setCorrespondances.remove(arretId);
 					correspondance.setImageResource(R.drawable.arrow_right_float);
 					detailCorrespondance.removeAllViews();
 					detailCorrespondance.setVisibility(View.INVISIBLE);
 				} else {
+					setCorrespondances.add(arretId);
 					detailCorrespondance.setVisibility(View.VISIBLE);
 					detailCorrespondance.removeAllViews();
 					construireCorrespondance(detailCorrespondance, arretId);
