@@ -179,7 +179,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		setContentView(R.layout.liststations);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stationsFiltrees));
+		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.liststations_input);
 		editText.addTextChangedListener(new TextWatcher() {

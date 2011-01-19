@@ -34,7 +34,6 @@ import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
-import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -170,7 +169,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		setContentView(R.layout.listpointsdevente);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		setListAdapter(new PointDeVenteAdapter(this, R.layout.pointdevente, pointsDeVenteFiltres));
+		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listpointsdevente_input);
 		editText.addTextChangedListener(new TextWatcher() {

@@ -38,8 +38,8 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
 	private List<Arret> arrets;
 
-	public ArretGpsAdapter(Context context, int textViewResourceId, List<Arret> objects) {
-		super(context, textViewResourceId, objects);
+	public ArretGpsAdapter(Context context, List<Arret> objects) {
+		super(context, R.layout.arretgps, objects);
 		arrets = objects;
 	}
 

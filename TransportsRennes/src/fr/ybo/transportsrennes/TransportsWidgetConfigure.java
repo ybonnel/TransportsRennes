@@ -114,7 +114,7 @@ public class TransportsWidgetConfigure extends ListActivity {
 		edit.commit();
 	}
 
-	public static boolean isUsed(Context context, ArretFavori favori) {
+	public static boolean isNotUsed(Context context, ArretFavori favori) {
 		Map<Integer, ArretFavori> favori1 = new HashMap<Integer, ArretFavori>();
 		Map<Integer, ArretFavori> favori2 = new HashMap<Integer, ArretFavori>();
 		Map<Integer, ArretFavori> favori3 = new HashMap<Integer, ArretFavori>();
@@ -166,22 +166,22 @@ public class TransportsWidgetConfigure extends ListActivity {
 		for (ArretFavori favoriWidget : favori1.values()) {
 			if (favori.arretId.equals(favoriWidget.arretId)
 					&& favori.ligneId.equals(favoriWidget.ligneId)) {
-				return true;
+				return false;
 			}
 		}
 		for (ArretFavori favoriWidget : favori2.values()) {
 			if (favori.arretId.equals(favoriWidget.arretId)
 					&& favori.ligneId.equals(favoriWidget.ligneId)) {
-				return true;
+				return false;
 			}
 		}
 		for (ArretFavori favoriWidget : favori3.values()) {
 			if (favori.arretId.equals(favoriWidget.arretId)
 					&& favori.ligneId.equals(favoriWidget.ligneId)) {
-				return true;
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	protected static List<Integer> getWidgetIds(Context context) {

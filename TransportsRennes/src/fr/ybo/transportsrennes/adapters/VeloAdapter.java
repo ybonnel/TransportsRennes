@@ -43,8 +43,8 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	public VeloAdapter(Context context, int textViewResourceId, List<Station> objects) {
-		super(context, textViewResourceId, objects);
+	public VeloAdapter(Context context, List<Station> objects) {
+		super(context, R.layout.dispovelo, objects);
 		stations = objects;
 	}
 

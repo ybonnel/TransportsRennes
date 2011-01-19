@@ -52,7 +52,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
-		setListAdapter(new AlertAdapter(this, R.layout.alert, alerts));
+		setListAdapter(new AlertAdapter(this, alerts));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new OnItemClickListener() {

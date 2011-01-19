@@ -45,9 +45,8 @@ public class DetailTrajetAdapter extends CursorAdapter {
 
 	private String formatterCalendarHeure(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart;
-		int heures = tempsEnMinutes / 60;
-		int minutes = tempsEnMinutes - heures * 60;
+		int heures = prochainDepart / 60;
+		int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
 			heures = heures - 24;
 		}

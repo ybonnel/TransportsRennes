@@ -136,7 +136,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			case R.id.supprimerFavori:
 				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 
-				if (!TransportsWidgetConfigure.isUsed(this, favori)) {
+				if (TransportsWidgetConfigure.isNotUsed(this, favori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(favori);
 					((FavoriAdapter) getListAdapter()).getFavoris().clear();
 					((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));

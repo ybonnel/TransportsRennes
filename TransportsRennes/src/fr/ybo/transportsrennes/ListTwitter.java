@@ -56,7 +56,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
-		setListAdapter(new TwitterAdapter(this, R.layout.onetwitter, allStatus));
+		setListAdapter(new TwitterAdapter(this, allStatus));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 

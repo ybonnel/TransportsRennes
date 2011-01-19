@@ -37,7 +37,6 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
@@ -173,7 +172,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 		setContentView(R.layout.listparkrelais);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		setListAdapter(new ParkRelaiAdapter(this, R.layout.dispoparkrelai, parkRelaisFiltres));
+		setListAdapter(new ParkRelaiAdapter(this, parkRelaisFiltres));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listparkrelai_input);
 		editText.addTextChangedListener(new TextWatcher() {

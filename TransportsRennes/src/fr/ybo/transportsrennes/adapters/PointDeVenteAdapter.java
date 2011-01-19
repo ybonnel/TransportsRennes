@@ -35,8 +35,8 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 
 	private List<PointDeVente> pointsDeVente;
 
-	public PointDeVenteAdapter(Context context, int textViewResourceId, List<PointDeVente> objects) {
-		super(context, textViewResourceId, objects);
+	public PointDeVenteAdapter(Context context, List<PointDeVente> objects) {
+		super(context, R.layout.pointdevente, objects);
 		pointsDeVente = objects;
 	}
 

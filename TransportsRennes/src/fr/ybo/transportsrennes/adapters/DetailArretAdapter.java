@@ -37,7 +37,7 @@ public class DetailArretAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 		int prochainDepartCol = cursor.getColumnIndex("_id");
 		int prochainDepart = cursor.getInt(prochainDepartCol);
-		((TextView) view.findViewById(R.id.detailArret_heureProchain)).setText(formatterCalendarHeure(prochainDepart, 0));
+		((TextView) view.findViewById(R.id.detailArret_heureProchain)).setText(formatterCalendarHeure(prochainDepart));
 		((TextView) view.findViewById(R.id.detailArret_tempsRestant)).setText(formatterCalendar(prochainDepart, now));
 	}
 
@@ -68,11 +68,10 @@ public class DetailArretAdapter extends CursorAdapter {
 		return stringBuilder.toString();
 	}
 
-	private String formatterCalendarHeure(int prochainDepart, int now) {
+	private String formatterCalendarHeure(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
-		int heures = tempsEnMinutes / 60;
-		int minutes = tempsEnMinutes - heures * 60;
+		int heures = prochainDepart / 60;
+		int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
 			heures = heures - 24;
 		}

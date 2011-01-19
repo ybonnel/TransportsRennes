@@ -48,8 +48,8 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 		MAP_STATES.put(3, "Indispo.");
 	}
 
-	public ParkRelaiAdapter(Context context, int textViewResourceId, List<ParkRelai> objects) {
-		super(context, textViewResourceId, objects);
+	public ParkRelaiAdapter(Context context, List<ParkRelai> objects) {
+		super(context, R.layout.dispoparkrelai, objects);
 		parkRelais = objects;
 	}
 

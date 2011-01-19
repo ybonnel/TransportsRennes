@@ -104,7 +104,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			imageView.invalidate();
 		} else {
 			// Supression d'un favori.
-			if (!TransportsWidgetConfigure.isUsed(activity, myFavori)) {
+			if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)) {
 				TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
 				imageView.setImageResource(android.R.drawable.btn_star_big_off);
 				imageView.invalidate();

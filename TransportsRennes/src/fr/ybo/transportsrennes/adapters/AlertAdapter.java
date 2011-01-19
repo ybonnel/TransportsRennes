@@ -38,8 +38,8 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
 
 	private static final Class<R.drawable> classDrawable = R.drawable.class;
 
-	public AlertAdapter(Context context, int textViewResourceId, List<Alert> objects) {
-		super(context, textViewResourceId, objects);
+	public AlertAdapter(Context context, List<Alert> objects) {
+		super(context, R.layout.alert, objects);
 		alerts = objects;
 	}
 

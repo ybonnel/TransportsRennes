@@ -92,11 +92,8 @@ public class Calendar {
 		if (samedi != calendar.samedi) {
 			return false;
 		}
-		if (vendredi != calendar.vendredi) {
-			return false;
-		}
+		return vendredi == calendar.vendredi;
 
-		return true;
 	}
 
 	@Override

@@ -166,7 +166,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		setContentView(R.layout.listarretgps);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		setListAdapter(new ArretGpsAdapter(getApplicationContext(), R.layout.arretgps, arretsFiltrees));
+		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listarretgps_input);
 		editText.addTextChangedListener(new TextWatcher() {
@@ -304,7 +304,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.arretId = arret.id;
 				arretFavori.ligneId = arret.favori.ligneId;
-				if (!TransportsWidgetConfigure.isUsed(this, arretFavori)) {
+				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {
 					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();

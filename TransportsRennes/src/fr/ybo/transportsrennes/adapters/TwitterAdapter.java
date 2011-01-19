@@ -35,8 +35,8 @@ public class TwitterAdapter extends ArrayAdapter<Status> {
 	private List<Status> allStatus;
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
 
-	public TwitterAdapter(Context context, int textViewResourceId, List<Status> objects) {
-		super(context, textViewResourceId, objects);
+	public TwitterAdapter(Context context, List<Status> objects) {
+		super(context, R.layout.onetwitter, objects);
 		allStatus = objects;
 	}
 

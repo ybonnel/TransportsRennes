@@ -67,7 +67,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listvelofavoris);
-		setListAdapter(new VeloAdapter(getApplicationContext(), R.layout.dispovelo, stations));
+		setListAdapter(new VeloAdapter(getApplicationContext(), stations));
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
