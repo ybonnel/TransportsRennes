@@ -29,7 +29,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	public static final String DATABASE_NAME = "keolis.db";
-	public static final int DATABASE_VERSION = 5;
+	public static final int DATABASE_VERSION = 6;
 
 	private final Base base;
 
@@ -156,6 +156,27 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						base.insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
+				}
+			});
+			mapUpgrades.put(6, new UpgradeDatabase() {
+				public void upagrade(SQLiteDatabase db) {
+					Cursor cursor =
+							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
+									null);
+					while (cursor.moveToNext()) {
+						String tableName = cursor.getString(0);
+						if (!tableName.equals("android_metadata") && !tableName.equals("VeloFavori") && !tableName.equals("ArretFavori")) {
+							db.execSQL("DROP TABLE " + tableName);
+						}
+					}
+					cursor.close();
+					base.getTable(Direction.class).createTable(db);
+					base.getTable(ArretRoute.class).createTable(db);
+					base.getTable(DernierMiseAJour.class).createTable(db);
+					base.getTable(Ligne.class).createTable(db);
+					base.getTable(Arret.class).createTable(db);
+					base.getTable(Calendrier.class).createTable(db);
+					base.getTable(Trajet.class).createTable(db);
 				}
 			});
 		}

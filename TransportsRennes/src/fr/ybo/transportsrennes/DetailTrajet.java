@@ -71,7 +71,6 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detailtrajet);
 		recuperationDonneesIntent();
@@ -91,7 +90,6 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 			}
 		});
 		lv.setTextFilterEnabled(true);
-		LOG_YBO.stopChrono("onCreate");
 	}
 
 	private void construireListe() {

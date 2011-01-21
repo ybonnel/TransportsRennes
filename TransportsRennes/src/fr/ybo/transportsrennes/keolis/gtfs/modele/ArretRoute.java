@@ -21,6 +21,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterBoolean;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
 @FichierCsv("arrets_routes.txt")
@@ -40,5 +41,8 @@ public class ArretRoute {
 	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
 	@Colonne(type = Colonne.TypeColonne.INTEGER)
 	public Integer sequence;
+	@BaliseCsv(value = "accessible", adapter = AdapterBoolean.class)
+	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	public Boolean accessible;
 
 }

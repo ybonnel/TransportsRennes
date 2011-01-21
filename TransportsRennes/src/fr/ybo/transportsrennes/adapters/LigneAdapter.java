@@ -26,13 +26,10 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.List;
 
 public class LigneAdapter extends BaseAdapter {
-
-	private final static LogYbo LOG_YBO = new LogYbo(LigneAdapter.class);
 
 	static class ViewHolder {
 		TextView nomLong;
@@ -61,7 +58,6 @@ public class LigneAdapter extends BaseAdapter {
 	}
 
 	public View getView(final int position, View convertView, final ViewGroup parent) {
-		LOG_YBO.startChrono("getView");
 		ViewHolder holder;
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.ligne, null);
@@ -78,7 +74,6 @@ public class LigneAdapter extends BaseAdapter {
 			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
 		} catch (Exception ignore) {
 		}
-		LOG_YBO.stopChrono("getView");
 		return convertView;
 	}
 }

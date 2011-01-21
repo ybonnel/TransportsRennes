@@ -287,6 +287,12 @@ public class Generateur {
 					System.err.println("Pas de direction trouvée!!!!!");
 				}
 				arretRoute.directionId = directionId;
+				if (GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible &&
+						GestionnaireGtfs.getInstance().getRouteExtensions().get(arretRoute.ligneId).accessible) {
+					arretRoute.accessible = true;
+				} else {
+					arretRoute.accessible = false;
+				}
 				arretsRoutes.add(arretRoute);
 			}
 		}

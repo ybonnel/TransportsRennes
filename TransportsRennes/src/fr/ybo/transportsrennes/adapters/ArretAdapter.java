@@ -76,12 +76,14 @@ public class ArretAdapter extends CursorAdapter {
 		nameCol = cursor.getColumnIndex("arretName");
 		directionCol = cursor.getColumnIndex("direction");
 		arretIdCol = cursor.getColumnIndex("_id");
+//		accessibleCol = cursor.getColumnIndex("accessible");
 	}
 
 	private final LayoutInflater mInflater;
 	private final int nameCol;
 	private final int directionCol;
 	private final int arretIdCol;
+//	private final int accessibleCol;
 
 
 	private static class ViewHolder {
@@ -90,13 +92,30 @@ public class ArretAdapter extends CursorAdapter {
 		ImageView isFavori;
 		ImageView correspondance;
 		LinearLayout detailCorrespondance;
+//		ImageView iconeHandicap;
+	}
+
+	@Override
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		LayoutInflater inflater = LayoutInflater.from(context);
+		View view = inflater.inflate(R.layout.arret, parent, false);
+		ViewHolder holder = new ViewHolder();
+		holder.nomArret = (TextView) view.findViewById(R.id.nomArret);
+		holder.directionArret = (TextView) view.findViewById(R.id.directionArret);
+		holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
+		holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
+		holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
+//		holder.iconeHandicap = (ImageView) view.findViewById(R.id.iconeHandicap);
+		view.setTag(holder);
+		return view;
+
 	}
 
 	@Override
 	public void bindView(View view, final Context context, Cursor cursor) {
-		LOG_YBO.startChrono("bindView");
 		String name = cursor.getString(nameCol);
 		String direction = cursor.getString(directionCol);
+//		boolean accessible = (cursor.getInt(accessibleCol) == 1);
 		favori.arretId = cursor.getString(arretIdCol);
 		final String arretId = favori.arretId;
 		final ViewHolder holder = (ViewHolder) view.getTag();
@@ -122,8 +141,7 @@ public class ArretAdapter extends CursorAdapter {
 				}
 			}
 		});
-		LOG_YBO.stopChrono("bindView");
-
+//		holder.iconeHandicap.setVisibility(accessible ? View.VISIBLE : View.INVISIBLE);
 	}
 
 	private void correspondancesNoDetail(ViewHolder holder) {
@@ -142,7 +160,6 @@ public class ArretAdapter extends CursorAdapter {
 	private HashMap<String, ArrayList<RelativeLayout>> mapDetailCorrespondances = new HashMap<String, ArrayList<RelativeLayout>>();
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance, String arretId) {
-		LOG_YBO.startChrono("construireCorrespondance");
 		if (!mapDetailCorrespondances.containsKey(arretId)) {
 			/* Recuperation de l'arretCourant */
 			mapDetailCorrespondances.put(arretId, new ArrayList<RelativeLayout>());
@@ -174,11 +191,9 @@ public class ArretAdapter extends CursorAdapter {
 			selectionArgs.add(String.valueOf(minLongitude));
 			selectionArgs.add(String.valueOf(maxLongitude));
 
-			LOG_YBO.startChrono("requete");
 			LOG_YBO.debug("Exectution de : " + requete.toString());
 			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 			LOG_YBO.debug("Resultat : " + cursor.getCount());
-			LOG_YBO.stopChrono("requete");
 
 			/** Recuperation des index dans le cussor */
 			int arretIdIndex = cursor.getColumnIndex("arretId");
@@ -192,7 +207,6 @@ public class ArretAdapter extends CursorAdapter {
 
 			List<Arret> arrets = new ArrayList<Arret>();
 
-			LOG_YBO.startChrono("ParcoursArrets");
 			while (cursor.moveToNext()) {
 				Arret arret = new Arret();
 				arret.id = cursor.getString(arretIdIndex);
@@ -214,13 +228,8 @@ public class ArretAdapter extends CursorAdapter {
 				}
 			}
 			cursor.close();
-			LOG_YBO.stopChrono("ParcoursArrets");
-
-			LOG_YBO.startChrono("sort");
 			Collections.sort(arrets, new Arret.ComparatorDistance());
-			LOG_YBO.stopChrono("sort");
 
-			LOG_YBO.startChrono("layouts");
 			RelativeLayout relativeLayout;
 			RelativeLayoutHolder holder;
 			for (final Arret arret : arrets) {
@@ -240,13 +249,11 @@ public class ArretAdapter extends CursorAdapter {
 				mapDetailCorrespondances.get(arretId).add(relativeLayout);
 				detailCorrespondance.addView(relativeLayout);
 			}
-			LOG_YBO.stopChrono("layouts");
 		} else {
 			for (RelativeLayout relativeLayout : mapDetailCorrespondances.get(arretId)) {
 				detailCorrespondance.addView(relativeLayout);
 			}
 		}
-		LOG_YBO.stopChrono("construireCorrespondance");
 	}
 
 
@@ -266,23 +273,6 @@ public class ArretAdapter extends CursorAdapter {
 		holder.distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
 		relativeLayout.setTag(holder);
 		return relativeLayout;
-	}
-
-	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		LOG_YBO.startChrono("newView");
-		LayoutInflater inflater = LayoutInflater.from(context);
-		View view = inflater.inflate(R.layout.arret, parent, false);
-		ViewHolder holder = new ViewHolder();
-		holder.nomArret = (TextView) view.findViewById(R.id.nomArret);
-		holder.directionArret = (TextView) view.findViewById(R.id.directionArret);
-		holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
-		holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
-		holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
-		view.setTag(holder);
-		LOG_YBO.stopChrono("newView");
-		return view;
-
 	}
 
 }

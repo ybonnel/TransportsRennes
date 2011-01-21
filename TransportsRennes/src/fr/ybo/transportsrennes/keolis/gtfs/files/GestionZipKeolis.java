@@ -39,7 +39,7 @@ public final class GestionZipKeolis {
 	private static final LogYbo LOG_YBO = new LogYbo(GestionZipKeolis.class);
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
-	private final static String URL_BASE = "http://yanbonnel.perso.sfr.fr/GTFSRennes/1.1.0/";
+	private final static String URL_BASE = "http://yanbonnel.perso.sfr.fr/GTFSRennes/1.2.0/";
 	private final static String URL_STOP_TIMES = URL_BASE + "horaires_";
 	private final static String URL_LAST_UPDATE = URL_BASE + "last_update.txt";
 	private final static String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";

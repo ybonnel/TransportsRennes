@@ -214,7 +214,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		mInflater = LayoutInflater.from(this);
 		calendar = Calendar.getInstance();
@@ -283,7 +282,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				}
 			}
 		});
-		LOG_YBO.stopChrono("onCreate");
 	}
 
 

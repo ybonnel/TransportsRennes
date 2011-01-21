@@ -23,10 +23,8 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 public class DetailArretAdapter extends CursorAdapter {
-	private static final LogYbo LOG_YBO = new LogYbo(DetailArretAdapter.class);
 
 	private int now;
 
@@ -48,23 +46,19 @@ public class DetailArretAdapter extends CursorAdapter {
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		LOG_YBO.startChrono("newView");
 		View view = inflater.inflate(R.layout.detailarretliste, parent, false);
 		ViewHolder holder = new ViewHolder();
 		holder.heureProchain = (TextView) view.findViewById(R.id.detailArret_heureProchain);
 		holder.tempsRestant = (TextView) view.findViewById(R.id.detailArret_tempsRestant);
 		view.setTag(holder);
-		LOG_YBO.stopChrono("newView");
 		return view;
 	}
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-		LOG_YBO.startChrono("bindView");
 		int prochainDepart = cursor.getInt(prochainDepartCol);
 		((ViewHolder) view.getTag()).heureProchain.setText(formatterCalendarHeure(prochainDepart));
 		((ViewHolder) view.getTag()).tempsRestant.setText(formatterCalendar(prochainDepart, now));
-		LOG_YBO.stopChrono("bindView");
 	}
 
 	private String formatterCalendar(int prochainDepart, int now) {

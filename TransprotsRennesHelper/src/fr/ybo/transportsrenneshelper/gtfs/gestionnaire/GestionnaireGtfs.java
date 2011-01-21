@@ -36,6 +36,8 @@ public class GestionnaireGtfs {
 		GTFS_CLASSES.add(Stop.class);
 		GTFS_CLASSES.add(StopTime.class);
 		GTFS_CLASSES.add(Trip.class);
+		GTFS_CLASSES.add(StopExtension.class);
+		GTFS_CLASSES.add(RouteExtension.class);
 	}
 
 	private static GestionnaireGtfs gestionnaire = null;
@@ -62,6 +64,36 @@ public class GestionnaireGtfs {
 	private Map<String, Stop> stops = null;
 	private Map<String, StopTime> stopTimes = null;
 	private Map<String, Trip> trips = null;
+	private Map<String, StopExtension> stopExtensions = null;
+	private Map<String, RouteExtension> routeExtensions = null;
+
+	public Map<String, StopExtension> getStopExtensions() {
+		if (stopExtensions == null) {
+			stopExtensions = new HashMap<String, StopExtension>();
+			try {
+				for (StopExtension stopExtension : moteurCsv.parseFile(new File(repertoire, "stops_extensions.txt"), StopExtension.class)) {
+					stopExtensions.put(stopExtension.stopId, stopExtension);
+				}
+			} catch (IOException e) {
+				throw new ErreurMoteurCsv(e);
+			}
+		}
+		return stopExtensions;
+	}
+
+	public Map<String, RouteExtension> getRouteExtensions() {
+		if (routeExtensions == null) {
+			routeExtensions = new HashMap<String, RouteExtension>();
+			try {
+				for (RouteExtension routeExtension : moteurCsv.parseFile(new File(repertoire, "routes_extensions.txt"), RouteExtension.class)) {
+					routeExtensions.put(routeExtension.routeId, routeExtension);
+				}
+			} catch (IOException e) {
+				throw new ErreurMoteurCsv(e);
+			}
+		}
+		return routeExtensions;
+	}
 
 	public Map<String, Calendar> getMapCalendars() {
 		if (calendars == null) {

@@ -29,7 +29,6 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,8 +36,6 @@ import java.util.concurrent.TimeUnit;
  * @author ybonnel
  */
 public class ListFavoris extends MenuAccueil.ListActivity {
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListFavoris.class);
 
 	private void construireListe() throws DataBaseException {
 		setListAdapter(new FavoriAdapter(getApplicationContext(),
@@ -102,7 +99,6 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
 		construireListe();
@@ -110,7 +106,6 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			threadCourant = new Thread(runnableMajHoraires);
 			threadCourant.start();
 		}
-		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@Override
@@ -138,7 +133,8 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 					((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
 					((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG)
+							.show();
 				}
 				return true;
 			default:

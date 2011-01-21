@@ -54,7 +54,8 @@ public class TransportsRennesApplication extends Application {
 		if (dateDerniereVerifUpdate == null) {
 			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate", null);
 		}
-		return (dateDerniereVerifUpdate == null) || !dateCourante.equals(dateDerniereVerifUpdate) || databaseHelper.selectSingle(dernierMiseAJour) == null;
+		return (dateDerniereVerifUpdate == null) || !dateCourante.equals(dateDerniereVerifUpdate) ||
+				databaseHelper.selectSingle(dernierMiseAJour) == null;
 	}
 
 	public static void verifUpdateDone() {
@@ -74,16 +75,15 @@ public class TransportsRennesApplication extends Application {
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, this);
-		/*traker.setCustomVar(1, "androidVersion", android.os.Build.FINGERPRINT, 1);
-		traker.setCustomVar(2, "androidModel", android.os.Build.MODEL, 1);
+		handler = new Handler();
+		myTraker = new MyTraker(traker);
+		myTraker.trackPageView("/TransportsRennesApplication/Model/" + android.os.Build.MODEL);
 		PackageManager manager = getPackageManager();
 		try {
 			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
-			traker.setCustomVar(3, "appVersion", info.versionName, 1);
+			myTraker.trackPageView("/TransportsRennesApplication/Version/" + info.versionName);
 		} catch (PackageManager.NameNotFoundException ignore) {
-		}*/
-		myTraker = new MyTraker(traker);
-		handler = new Handler();
+		}
 	}
 
 	private static Handler handler;
@@ -99,14 +99,14 @@ public class TransportsRennesApplication extends Application {
 
 		private GoogleAnalyticsTracker traker;
 
-		 public void trackPageView(final String url) {
-			 handler.post(new Runnable() {
-				 public void run() {
-					 traker.trackPageView(url);
-					 traker.dispatch();
-				 }
-			 });
-		 }
+		public void trackPageView(final String url) {
+			handler.post(new Runnable() {
+				public void run() {
+					traker.trackPageView(url);
+					traker.dispatch();
+				}
+			});
+		}
 	}
 
 	public static MyTraker getTraker() {

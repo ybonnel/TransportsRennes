@@ -13,25 +13,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.generateurmodele.modele;
-
+package fr.ybo.transportsrenneshelper.gtfs.modele;
 
 import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 
-@FichierCsv("arrets_routes.txt")
-public class ArretRoute {
-	@BaliseCsv("arret_id")
-	public String arretId;
-	@BaliseCsv("ligne_id")
-	public String ligneId;
-	@BaliseCsv( value = "direction_id", adapter = AdapterInteger.class)
-	public int directionId;
-	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class)
-	public int sequence;
-	@BaliseCsv( value = "accessbile", adapter = AdapterBoolean.class)
+@FichierCsv("stops_extensions.txt")
+public class StopExtension {
+
+	@BaliseCsv("stop_id")
+	public String stopId;
+
+	@BaliseCsv(value = "stop_accessible", adapter = AdapterBoolean.class)
 	public Boolean accessible;
-
 }

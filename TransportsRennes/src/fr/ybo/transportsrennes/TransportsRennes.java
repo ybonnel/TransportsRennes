@@ -53,17 +53,9 @@ public class TransportsRennes extends Activity {
 
 	@Override
 	protected void onCreate(Bundle bundle) {
-		LOG_YBO.startChrono("onCreate");
-		LOG_YBO.startChrono("super.onCreate");
 		super.onCreate(bundle);
-		LOG_YBO.stopChrono("super.onCreate");
-		LOG_YBO.startChrono("getTraker.trackPageView");
 		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
-		LOG_YBO.stopChrono("getTraker.trackPageView");
-		LOG_YBO.startChrono("setContentView");
 		setContentView(R.layout.main);
-		LOG_YBO.stopChrono("setContentView");
-		LOG_YBO.startChrono("findViewById");
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
 		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
 		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
@@ -112,8 +104,6 @@ public class TransportsRennes extends Activity {
 				onPointsDeVenteClick(view);
 			}
 		});
-		LOG_YBO.stopChrono("findViewById");
-		LOG_YBO.startChrono("verifUpdateNecessaire");
 		if (TransportsRennesApplication.verifUpdateNecessaire()) {
 			new AsyncTask<Void, Void, Void>() {
 
@@ -155,10 +145,6 @@ public class TransportsRennes extends Activity {
 				}
 			}.execute((Void[]) null);
 		}
-
-		LOG_YBO.stopChrono("verifUpdateNecessaire");
-
-		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@SuppressWarnings("unused")

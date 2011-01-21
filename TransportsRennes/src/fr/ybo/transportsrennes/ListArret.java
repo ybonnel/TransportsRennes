@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -108,7 +107,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction ");
+		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
 		requete.append(" ArretRoute.ligneId = :ligneId");
@@ -152,15 +151,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
-		LOG_YBO.startChrono("setContentView");
 		setContentView(R.layout.listearrets);
-		LOG_YBO.stopChrono("setContentView");
-		LOG_YBO.startChrono("getSerializable");
 		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
-		LOG_YBO.stopChrono("getSerializable");
-		LOG_YBO.startChrono("setOnClickListener");
 		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				ListArret.this.onDirectionClick();
@@ -176,15 +169,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 				startActivity(intent);
 			}
 		});
-		LOG_YBO.stopChrono("setOnClickListener");
-		LOG_YBO.startChrono("gestionIcone");
 		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
-		((ImageView)findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
-		LOG_YBO.stopChrono("gestionIcone");
-		LOG_YBO.startChrono("construireListe");
+		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
 		construireListe();
-		LOG_YBO.stopChrono("construireListe");
-		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@Override
