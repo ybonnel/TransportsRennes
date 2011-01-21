@@ -17,7 +17,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent" android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/conteneurImage"
+    <ImageView android:id="@+id/iconeLigne"
                   android:layout_width="44dip"
                   android:paddingBottom="5dip"
                   android:paddingTop="5dip"
@@ -37,7 +37,7 @@
     <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_toRightOf="@id/conteneurImage"
+            android:layout_toRightOf="@id/iconeLigne"
             android:layout_toLeftOf="@id/googlemap">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
@@ -56,10 +56,10 @@
                android:paddingBottom="10dip"
                android:src="@drawable/arrow_right_float"
                android:layout_alignParentRight="true"
-               android:layout_below="@id/conteneurImage"/>
+               android:layout_below="@id/iconeLigne"/>
     <HorizontalScrollView android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:layout_below="@id/conteneurImage"
+                          android:layout_below="@id/iconeLigne"
                           android:layout_toLeftOf="@id/imageCorrespondance"
                           android:id="@+id/detailArret_scrolling">
         <TextView android:id="@+id/detailArret_nomArret"

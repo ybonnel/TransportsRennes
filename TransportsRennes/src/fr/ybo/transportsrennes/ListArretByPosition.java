@@ -144,12 +144,10 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	private void metterAJourListeArrets() {
 		String query = editText.getText().toString().toUpperCase();
 		arretsFiltrees.clear();
-		int count = 0;
 		synchronized (arrets) {
 			for (Arret arret : arrets) {
-				if (count < 100 && arret.nom.toUpperCase().contains(query.toUpperCase())) {
+				if (arret.nom.toUpperCase().contains(query.toUpperCase())) {
 					arretsFiltrees.add(arret);
-					count++;
 				}
 			}
 		}

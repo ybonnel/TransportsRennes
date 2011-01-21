@@ -25,5 +25,6 @@
               android:layout_height="wrap_content"
               android:textSize="18dip"
               android:gravity="center_vertical|left"
-              android:layout_alignParentLeft="true"/>
+              android:layout_alignParentLeft="true"
+              android:autoLink="all"/>
 </RelativeLayout>

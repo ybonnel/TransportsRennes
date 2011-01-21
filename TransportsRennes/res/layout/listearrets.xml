@@ -18,7 +18,7 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-    <LinearLayout android:id="@+id/conteneurImage"
+    <ImageView android:id="@+id/iconeLigne"
                   android:layout_width="44dip"
                   android:paddingBottom="5dip"
                   android:paddingTop="5dip"
@@ -29,7 +29,7 @@
     <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_toRightOf="@id/conteneurImage"
+            android:layout_toRightOf="@id/iconeLigne"
             android:layout_toLeftOf="@id/googlemap">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
@@ -59,14 +59,14 @@
               android:textSize="20dip"
               android:gravity="center_vertical|left"
               android:text="Direction :"
-              android:layout_below="@id/conteneurImage"
+              android:layout_below="@id/iconeLigne"
               android:layout_alignParentLeft="true"/>
 
     <HorizontalScrollView
             android:id="@+id/directionArretCouranteScroll"
             android:layout_width="fill_parent"
             android:layout_height="30dip"
-            android:layout_below="@id/conteneurImage"
+            android:layout_below="@id/iconeLigne"
             android:layout_toRightOf="@id/directionEntete">
         <TextView android:id="@+id/directionArretCourante"
                   android:paddingRight="5dip"

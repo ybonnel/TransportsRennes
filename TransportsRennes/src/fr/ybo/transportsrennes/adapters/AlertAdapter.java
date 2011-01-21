@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.util.IconeLigne;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -35,42 +36,37 @@ import java.util.List;
 public class AlertAdapter extends ArrayAdapter<Alert> {
 
 	private List<Alert> alerts;
-
-	private static final Class<R.drawable> classDrawable = R.drawable.class;
+	private LayoutInflater inflater;
 
 	public AlertAdapter(Context context, List<Alert> objects) {
 		super(context, R.layout.alert, objects);
 		alerts = objects;
+		inflater = LayoutInflater.from(getContext());
+	}
+
+	private static class ViewHolder {
+		TextView titreAlerte;
+		ImageView iconeLigne;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = LayoutInflater.from(getContext());
-		View v = vi.inflate(R.layout.alert, null);
 		Alert alert = alerts.get(position);
-
-		TextView titreAlert = (TextView) v.findViewById(R.id.titreAlert);
-		LinearLayout conteneur = (LinearLayout) v.findViewById(R.id.conteneurImage);
-		titreAlert.setText(alert.getTitleFormate());
-		for (String ligne : alert.lines) {
-			try {
-				Field fieldIcon = classDrawable.getDeclaredField("i" + ligne.toLowerCase());
-				int ressourceImg = fieldIcon.getInt(null);
-				ImageView imgView = (ImageView) vi.inflate(R.layout.imagebus, null);
-				imgView.setImageResource(ressourceImg);
-				conteneur.addView(imgView);
-			} catch (NoSuchFieldException e) {
-				TextView textView = new TextView(getContext());
-				textView.setTextSize(16);
-				textView.setText(ligne);
-				conteneur.addView(textView);
-			} catch (IllegalAccessException e) {
-				TextView textView = new TextView(getContext());
-				textView.setTextSize(16);
-				textView.setText(ligne);
-				conteneur.addView(textView);
-			}
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.alert, null);
+			holder = new ViewHolder();
+			holder.titreAlerte = (TextView) convertView.findViewById(R.id.titreAlert);
+			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
-		return v;
+
+		holder.titreAlerte.setText(alert.getTitleFormate());
+		if (!alert.lines.isEmpty()) {
+			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
+		}
+		return convertView;
 	}
 }

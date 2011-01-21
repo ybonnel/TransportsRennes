@@ -32,9 +32,9 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,8 +46,6 @@ import java.util.List;
  * @author ybonnel
  */
 public class ListArret extends MenuAccueil.ListActivity {
-
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
@@ -154,9 +152,15 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
+		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
+		LOG_YBO.startChrono("setContentView");
 		setContentView(R.layout.listearrets);
+		LOG_YBO.stopChrono("setContentView");
+		LOG_YBO.startChrono("getSerializable");
 		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+		LOG_YBO.stopChrono("getSerializable");
+		LOG_YBO.startChrono("setOnClickListener");
 		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				ListArret.this.onDirectionClick();
@@ -172,27 +176,15 @@ public class ListArret extends MenuAccueil.ListActivity {
 				startActivity(intent);
 			}
 		});
-		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
-		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(myLigne.nomLong);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + myLigne.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(getApplicationContext());
-			imgView.setImageResource(ressourceImg);
-			conteneur.addView(imgView);
-		} catch (NoSuchFieldException e) {
-			TextView textView = new TextView(getApplicationContext());
-			textView.setTextSize(16);
-			textView.setText(myLigne.nomCourt);
-			conteneur.addView(textView);
-		} catch (IllegalAccessException e) {
-			TextView textView = new TextView(getApplicationContext());
-			textView.setTextSize(16);
-			textView.setText(myLigne.nomCourt);
-			conteneur.addView(textView);
-		}
+		LOG_YBO.stopChrono("setOnClickListener");
+		LOG_YBO.startChrono("gestionIcone");
+		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
+		((ImageView)findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
+		LOG_YBO.stopChrono("gestionIcone");
+		LOG_YBO.startChrono("construireListe");
 		construireListe();
+		LOG_YBO.stopChrono("construireListe");
+		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@Override

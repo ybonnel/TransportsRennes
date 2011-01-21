@@ -21,12 +21,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
+import fr.ybo.transportsrennes.util.IconeLigne;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -37,41 +36,40 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	private final static Class<?> classDrawable = R.drawable.class;
 
 	private List<Arret> arrets;
+	private LayoutInflater inflater;
 
 	public ArretGpsAdapter(Context context, List<Arret> objects) {
 		super(context, R.layout.arretgps, objects);
 		arrets = objects;
+		inflater = LayoutInflater.from(getContext());
+	}
+
+	private static class ViewHolder {
+		ImageView iconeLigne;
+		TextView arretDirection;
+		TextView nomArret;
+		TextView distance;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = LayoutInflater.from(getContext());
-		View v = vi.inflate(R.layout.arretgps, null);
 		Arret arret = arrets.get(position);
-		LinearLayout conteneur = (LinearLayout) v.findViewById(R.id.conteneurImage);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + arret.favori.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(getContext());
-			imgView.setImageResource(ressourceImg);
-			conteneur.addView(imgView);
-		} catch (NoSuchFieldException e) {
-			TextView textView = new TextView(getContext());
-			textView.setTextSize(16);
-			textView.setText(arret.favori.nomCourt);
-			conteneur.addView(textView);
-		} catch (IllegalAccessException e) {
-			TextView textView = new TextView(getContext());
-			textView.setTextSize(16);
-			textView.setText(arret.favori.nomCourt);
-			conteneur.addView(textView);
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.arretgps, null);
+			holder = new ViewHolder();
+			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
+			holder.arretDirection = (TextView) convertView.findViewById(R.id.arretgps_direction);
+			holder.nomArret = (TextView) convertView.findViewById(R.id.arretgps_nomArret);
+			holder.distance = (TextView) convertView.findViewById(R.id.arretgps_distance);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
-		TextView arretDirection = (TextView) v.findViewById(R.id.arretgps_direction);
-		arretDirection.setText(arret.favori.direction);
-		TextView nomArret = (TextView) v.findViewById(R.id.arretgps_nomArret);
-		nomArret.setText(arret.nom);
-		TextView distance = (TextView) v.findViewById(R.id.arretgps_distance);
-		distance.setText(arret.formatDistance());
-		return v;
+		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
+		holder.arretDirection.setText(arret.favori.direction);
+		holder.nomArret.setText(arret.nom);
+		holder.distance.setText(arret.formatDistance());
+		return convertView;
 	}
 }

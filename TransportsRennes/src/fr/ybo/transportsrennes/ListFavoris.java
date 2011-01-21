@@ -70,12 +70,9 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		public void run() {
 			while (true) {
 				try {
-					LOG_YBO.debug("Dort pendant 20 secondes");
 					TimeUnit.SECONDS.sleep(20);
-					LOG_YBO.debug("Réveil, mise à jour des favoris");
 					ListFavoris.this.runOnUiThread(runnableMajToRunOnUiThread);
 				} catch (InterruptedException e) {
-					LOG_YBO.debug("Fin du thread");
 					break;
 				}
 			}
@@ -87,7 +84,6 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	@Override
 	protected void onPause() {
 		if (threadCourant != null) {
-			LOG_YBO.debug("Arret du threadMiseAJour");
 			threadCourant.interrupt();
 			threadCourant = null;
 		}
@@ -98,7 +94,6 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	protected void onResume() {
 		super.onResume();
 		if (threadCourant == null) {
-			LOG_YBO.debug("Démarrage du threadMiseAJour");
 			runnableMajToRunOnUiThread.run();
 			threadCourant = new Thread(runnableMajHoraires);
 			threadCourant.start();
@@ -107,14 +102,15 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
+		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
 		construireListe();
 		if (threadCourant == null) {
-			LOG_YBO.debug("Démarrage du threadMiseAJour (dans onCreate)");
 			threadCourant = new Thread(runnableMajHoraires);
 			threadCourant.start();
 		}
+		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@Override

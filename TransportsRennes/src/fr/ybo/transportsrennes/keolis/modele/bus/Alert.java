@@ -19,6 +19,7 @@ import fr.ybo.transportsrennes.util.Formatteur;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,18 @@ import java.util.Set;
  */
 @SuppressWarnings("serial")
 public class Alert implements Serializable {
+
+	public Alert() {
+	}
+
+	public Alert(Alert alert) {
+		this.title = alert.title;
+		this.starttime = alert.starttime;
+		this.endtime = alert.endtime;
+		this.majordisturbance = alert.majordisturbance;
+		this.detail = alert.detail;
+		this.link = alert.link;
+	}
 
 	/**
 	 * title.
@@ -77,7 +90,7 @@ public class Alert implements Serializable {
 		lignes.deleteCharAt(lignes.length() - 1);
 		String detailFormatte =
 				detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
-						.replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " " + lignes.toString() + " ");
+						.replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
 		StringBuilder resultat = new StringBuilder();
 		char carOld = '\0';
 		for (char car : detailFormatte.toCharArray()) {
@@ -110,12 +123,24 @@ public class Alert implements Serializable {
 		return resultat.toString();
 	}
 
+	private static final HashSet<Character> caracToDelete = new HashSet<Character>();
+	static {
+		 caracToDelete.add(' ');
+		 caracToDelete.add('0');
+		 caracToDelete.add('1');
+		 caracToDelete.add('2');
+		 caracToDelete.add('3');
+		 caracToDelete.add('4');
+		 caracToDelete.add('5');
+		 caracToDelete.add('6');
+		 caracToDelete.add('7');
+		 caracToDelete.add('8');
+		 caracToDelete.add('9');
+	}
+
 	public String getTitleFormate() {
 		String titleFormate = title;
-		for (String ligneConcernee : lines) {
-			titleFormate = titleFormate.replaceAll(ligneConcernee, "");
-		}
-		if (titleFormate.startsWith(" ")) {
+		while (caracToDelete.contains(titleFormate.charAt(0))) {
 			titleFormate = titleFormate.substring(1);
 		}
 		return Formatteur.formatterChaine(titleFormate);

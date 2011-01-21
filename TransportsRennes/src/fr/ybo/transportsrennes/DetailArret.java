@@ -43,10 +43,10 @@ import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -60,7 +60,6 @@ import java.util.List;
 public class DetailArret extends MenuAccueil.ListActivity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DetailArret.class);
-	private final static Class<?> classDrawable = R.drawable.class;
 	private final static double DISTANCE_RECHERCHE_METRE = 1000.0;
 	private final static double DEGREE_LATITUDE_EN_METRES = 111192.62;
 	private final static double distanceLatitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
@@ -120,26 +119,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	}
 
 	private void gestionViewsTitle() {
-		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
-		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(favori.nomLong);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(getApplicationContext());
-			imgView.setImageResource(ressourceImg);
-			conteneur.addView(imgView);
-		} catch (NoSuchFieldException e) {
-			TextView textView = new TextView(getApplicationContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			conteneur.addView(textView);
-		} catch (IllegalAccessException e) {
-			TextView textView = new TextView(getApplicationContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			conteneur.addView(textView);
-		}
+		((TextView) findViewById(R.id.nomLong)).setText(favori.nomLong);
+		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + " vers " + favori.direction);
 	}
 
@@ -233,6 +214,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
+		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		mInflater = LayoutInflater.from(this);
 		calendar = Calendar.getInstance();
@@ -301,8 +283,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				}
 			}
 		});
+		LOG_YBO.stopChrono("onCreate");
 	}
-
 
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance) {
@@ -377,15 +359,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 		for (final Arret arret : arrets) {
 			RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
-			LinearLayout conteneur = (LinearLayout) relativeLayout.findViewById(R.id.conteneurImage);
-			try {
-				Field fieldIcon = classDrawable.getDeclaredField("i" + arret.favori.nomCourt.toLowerCase());
-				int ressourceImg = fieldIcon.getInt(null);
-				ImageView imgView = new ImageView(this);
-				imgView.setImageResource(ressourceImg);
-				conteneur.addView(imgView);
-			} catch (Exception ignore) {
-			}
+			ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
+			iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
 			TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
 			arretDirection.setText(arret.favori.direction);
 			TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);

@@ -19,7 +19,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-    <LinearLayout android:id="@+id/conteneurImage"
+    <ImageView android:id="@+id/iconeLigne"
                   android:layout_width="44dip"
                   android:paddingBottom="2dip"
                   android:paddingTop="4dip"
@@ -36,7 +36,7 @@
               android:layout_height="38dip"
               android:textSize="20dip"
               android:gravity="center_vertical|left"
-              android:layout_toRightOf="@id/conteneurImage"/>
+              android:layout_toRightOf="@id/iconeLigne"/>
 
     <TextView android:id="@+id/tempsRestant"
               android:paddingRight="5dip"
@@ -77,7 +77,7 @@
               android:textSize="14dip"
               android:gravity="center_vertical|left"
               android:layout_alignParentLeft="true"
-              android:layout_below="@id/conteneurImage"
+              android:layout_below="@id/iconeLigne"
               android:layout_toLeftOf="@id/moveDown"/>
 
 </RelativeLayout>

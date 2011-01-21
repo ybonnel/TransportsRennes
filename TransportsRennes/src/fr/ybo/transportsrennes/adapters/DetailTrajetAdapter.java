@@ -26,8 +26,8 @@ import fr.ybo.transportsrennes.R;
 
 public class DetailTrajetAdapter extends CursorAdapter {
 
-	int arretNomCol;
-	int prochainDepartCol;
+	private int arretNomCol;
+	private int prochainDepartCol;
 
 	public DetailTrajetAdapter(Context context, Cursor cursor) {
 		super(context, cursor);
@@ -35,12 +35,28 @@ public class DetailTrajetAdapter extends CursorAdapter {
 		prochainDepartCol = cursor.getColumnIndex("heureDepart");
 	}
 
+	private static class ViewHolder {
+		TextView arretNom;
+		TextView heurePassage;
+	}
+
+	@Override
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		final LayoutInflater inflater = LayoutInflater.from(context);
+		View view = inflater.inflate(R.layout.detailtrajetliste, parent, false);
+		ViewHolder holder = new ViewHolder();
+		holder.arretNom = (TextView) view.findViewById(R.id.detailTrajet_arretNom);
+		holder.heurePassage = (TextView) view.findViewById(R.id.detailTrajet_heurePassage);
+		view.setTag(holder);
+		return view;
+	}
+
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 		int prochainDepart = cursor.getInt(prochainDepartCol);
 		String arretNom = cursor.getString(arretNomCol);
-		((TextView) view.findViewById(R.id.detailTrajet_arretNom)).setText(arretNom);
-		((TextView) view.findViewById(R.id.detailTrajet_heurePassage)).setText(formatterCalendarHeure(prochainDepart));
+		((ViewHolder)view.getTag()).arretNom.setText(arretNom);
+		((ViewHolder)view.getTag()).heurePassage.setText(formatterCalendarHeure(prochainDepart));
 	}
 
 	private String formatterCalendarHeure(int prochainDepart) {
@@ -62,12 +78,6 @@ public class DetailTrajetAdapter extends CursorAdapter {
 		}
 		stringBuilder.append(minutesChaine);
 		return stringBuilder.toString();
-	}
-
-	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
-		final LayoutInflater inflater = LayoutInflater.from(context);
-		return inflater.inflate(R.layout.detailtrajetliste, parent, false);
 	}
 
 }

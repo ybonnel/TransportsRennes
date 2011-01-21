@@ -21,11 +21,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennes;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.Constantes;
 
 public class MenuAccueil {
 
@@ -37,15 +35,14 @@ public class MenuAccueil {
 	}
 
 	protected static boolean onOptionsItemSelected(Context context, MenuItem item) {
-			switch (item.getItemId()) {
-				case MENU_ID:
-					Intent intent = new Intent(context, TransportsRennes.class);
-					intent.putExtra("update", false);
-					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					context.startActivity(intent);
-					return true;
-			}
-			return false;
+		switch (item.getItemId()) {
+			case MENU_ID:
+				Intent intent = new Intent(context, TransportsRennes.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				context.startActivity(intent);
+				return true;
+		}
+		return false;
 	}
 
 	public static abstract class ListActivity extends android.app.ListActivity {

@@ -73,7 +73,14 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					alerts.addAll(keolis.getAlerts());
+					for (Alert alerte : keolis.getAlerts()) {
+						while (alerte.lines.size() > 1) {
+							Alert newAlerte = new Alert(alerte);
+							newAlerte.lines.add(alerte.lines.remove(0));
+							alerts.add(newAlerte);
+						}
+						alerts.add(alerte);
+					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListAlerts.doInBackGround", exception);
 					erreur = true;

@@ -32,14 +32,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.util.Constantes;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.Date;
@@ -55,11 +53,17 @@ public class TransportsRennes extends Activity {
 
 	@Override
 	protected void onCreate(Bundle bundle) {
+		LOG_YBO.startChrono("onCreate");
+		LOG_YBO.startChrono("super.onCreate");
 		super.onCreate(bundle);
+		LOG_YBO.stopChrono("super.onCreate");
+		LOG_YBO.startChrono("getTraker.trackPageView");
 		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
-
-		boolean update = getIntent().getBooleanExtra("update", true);
+		LOG_YBO.stopChrono("getTraker.trackPageView");
+		LOG_YBO.startChrono("setContentView");
 		setContentView(R.layout.main);
+		LOG_YBO.stopChrono("setContentView");
+		LOG_YBO.startChrono("findViewById");
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
 		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
 		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
@@ -108,7 +112,9 @@ public class TransportsRennes extends Activity {
 				onPointsDeVenteClick(view);
 			}
 		});
-		if (update) {
+		LOG_YBO.stopChrono("findViewById");
+		LOG_YBO.startChrono("verifUpdateNecessaire");
+		if (TransportsRennesApplication.verifUpdateNecessaire()) {
 			new AsyncTask<Void, Void, Void>() {
 
 				private boolean erreur = false;
@@ -143,10 +149,16 @@ public class TransportsRennes extends Activity {
 									"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
 							TransportsRennes.this.finish();
 						}
+					} else {
+						TransportsRennesApplication.verifUpdateDone();
 					}
 				}
 			}.execute((Void[]) null);
 		}
+
+		LOG_YBO.stopChrono("verifUpdateNecessaire");
+
+		LOG_YBO.stopChrono("onCreate");
 	}
 
 	@SuppressWarnings("unused")

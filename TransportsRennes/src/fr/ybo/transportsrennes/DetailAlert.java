@@ -15,18 +15,15 @@
 
 package fr.ybo.transportsrennes;
 
-import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.util.IconeLigne;
 
-import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -38,37 +35,15 @@ import java.util.Set;
  */
 public class DetailAlert extends MenuAccueil.Activity {
 
-	private static final Class<R.drawable> classDrawable = R.drawable.class;
-
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detailalert);
 		final Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
-		LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-
-		TextView titreAlert = (TextView) findViewById(R.id.titreAlert);
-		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
-		titreAlert.setText(alert.getTitleFormate());
-		for (String ligne : alert.lines) {
-			try {
-				Field fieldIcon = classDrawable.getDeclaredField("i" + ligne.toLowerCase());
-				int ressourceImg = fieldIcon.getInt(null);
-				ImageView imgView = (ImageView) layoutInflater.inflate(R.layout.imagebus, null);
-				imgView.setImageResource(ressourceImg);
-				conteneur.addView(imgView);
-			} catch (NoSuchFieldException e) {
-				TextView textView = new TextView(getApplicationContext());
-				textView.setTextSize(16);
-				textView.setText(ligne);
-				conteneur.addView(textView);
-			} catch (IllegalAccessException e) {
-				TextView textView = new TextView(getApplicationContext());
-				textView.setTextSize(16);
-				textView.setText(ligne);
-				conteneur.addView(textView);
-			}
+		((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());
+		if (!alert.lines.isEmpty()) {
+			((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
 		}
 		Set<String> arretsToBold = new HashSet<String>();
 		for (String line : alert.lines) {

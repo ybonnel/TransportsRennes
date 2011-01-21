@@ -22,26 +22,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.IconeLigne;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class FavoriAdapterForWidget extends BaseAdapter {
 	private final static Class<?> classDrawable = R.drawable.class;
-
-	static class ViewHolder {
-		LinearLayout conteneur;
-		TextView arret;
-		TextView direction;
-		CheckBox checkBox;
-	}
 
 	private final LayoutInflater mInflater;
 
@@ -78,32 +70,34 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		return position;
 	}
 
+	static class ViewHolder {
+		ImageView iconeLigne;
+		TextView arret;
+		TextView direction;
+		CheckBox checkBox;
+	}
+
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		ViewHolder holder;
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.favori_for_widget, null);
 
+			holder = new ViewHolder();
+			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
+			holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
+			holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
+			holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
 
-		convertView = mInflater.inflate(R.layout.favori_for_widget, null);
-
-		holder = new ViewHolder();
-		holder.conteneur = (LinearLayout) convertView.findViewById(R.id.conteneurImage);
-		holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
-		holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
-		holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
-
-		convertView.setTag(holder);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 
 		ArretFavori favori = favoris.get(position);
 
 		holder.arret.setText(favori.nomArret);
 		holder.direction.setText(favori.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(mInflater.getContext());
-			imgView.setImageResource(ressourceImg);
-			holder.conteneur.addView(imgView);
-		} catch (Exception ignore) {
-		}
+		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 		holder.checkBox.setChecked(favorisSelectionnes.contains(new Integer(position)));
 		holder.checkBox.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {

@@ -35,32 +35,47 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 
 	private List<PointDeVente> pointsDeVente;
 
+	private LayoutInflater inflater;
+
 	public PointDeVenteAdapter(Context context, List<PointDeVente> objects) {
 		super(context, R.layout.pointdevente, objects);
 		pointsDeVente = objects;
+		inflater = LayoutInflater.from(context);
+	}
+
+	private static class ViewHolder {
+		TextView nom;
+		TextView telephone;
+		TextView distance;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = LayoutInflater.from(getContext());
-		View v = vi.inflate(R.layout.pointdevente, null);
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.pointdevente, null);
+			holder = new ViewHolder();
+			holder.nom = (TextView) convertView.findViewById(R.id.pointdevente_nom);
+			holder.telephone = (TextView) convertView.findViewById(R.id.pointdevente_telephone);
+			holder.distance = (TextView) convertView.findViewById(R.id.pointdevente_distance);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 		PointDeVente pointDeVente = pointsDeVente.get(position);
 
-		TextView nom = (TextView) v.findViewById(R.id.pointdevente_nom);
-		nom.setText(pointDeVente.name);
-		TextView telephone = (TextView) v.findViewById(R.id.pointdevente_telephone);
-		telephone.setText(pointDeVente.telephone);
+		holder.nom.setText(pointDeVente.name);
+		holder.telephone.setText(pointDeVente.telephone);
 		final String tel = pointDeVente.telephone;
 
-		telephone.setOnClickListener(new View.OnClickListener() {
+		holder.telephone.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
 				Uri uri = Uri.parse("tel:" + tel);
 				getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
-		TextView distance = (TextView) v.findViewById(R.id.pointdevente_distance);
-		distance.setText(pointDeVente.formatDistance());
-		return v;
+		holder.distance.setText(pointDeVente.formatDistance());
+		return convertView;
 	}
 }

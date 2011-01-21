@@ -29,6 +29,7 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -41,13 +42,6 @@ public class FavoriAdapter extends BaseAdapter {
 	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
-
-	static class ViewHolder {
-		LinearLayout conteneur;
-		TextView arret;
-		TextView direction;
-		TextView tempsRestant;
-	}
 
 	private final LayoutInflater mInflater;
 
@@ -88,97 +82,101 @@ public class FavoriAdapter extends BaseAdapter {
 		return position;
 	}
 
+	static class ViewHolder {
+		ImageView iconeLigne;
+		TextView arret;
+		TextView direction;
+		TextView tempsRestant;
+		ImageView moveUp;
+		ImageView moveDown;
+	}
+
 	public View getView(final int position, View convertView, final ViewGroup parent) {
 		ViewHolder holder;
+		if (convertView == null) {
+			convertView = mInflater.inflate(R.layout.favori, null);
+			holder = new ViewHolder();
+			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
+			holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
+			holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
+			holder.tempsRestant = (TextView) convertView.findViewById(R.id.tempsRestant);
+			holder.moveUp = (ImageView) convertView.findViewById(R.id.moveUp);
+			holder.moveDown = (ImageView) convertView.findViewById(R.id.moveDown);
 
-
-		convertView = mInflater.inflate(R.layout.favori, null);
-
-		holder = new ViewHolder();
-		holder.conteneur = (LinearLayout) convertView.findViewById(R.id.conteneurImage);
-		holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
-		holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
-		holder.tempsRestant = (TextView) convertView.findViewById(R.id.tempsRestant);
-
-		convertView.setTag(holder);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 
 		final ArretFavori favori = favoris.get(position);
 
+		if (position == 0) {
+			holder.moveUp.setVisibility(View.INVISIBLE);
+		} else {
+			holder.moveUp.setVisibility(View.VISIBLE);
+			holder.moveUp.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					if (position > 0) {
+						int autrePosition = position - 1;
+						favoris.set(position, favoris.get(autrePosition));
+						favoris.set(autrePosition, favori);
+						favoris.get(position).ordre = position;
+						ContentValues contentValues = new ContentValues();
+						contentValues.put("ordre", position);
+						String whereClause = "arretId = :arretId and ligneId = :ligneId";
+						List<String> whereArgs = new ArrayList<String>(2);
+						whereArgs.add(favoris.get(position).arretId);
+						whereArgs.add(favoris.get(position).ligneId);
+						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+						favoris.get(autrePosition).ordre = autrePosition;
+						contentValues.put("ordre", autrePosition);
+						whereArgs.clear();
+						whereArgs.add(favoris.get(autrePosition).arretId);
+						whereArgs.add(favoris.get(autrePosition).ligneId);
+						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+						FavoriAdapter.this.notifyDataSetChanged();
+					}
+				}
+			});
 
-		ImageView moveUp = (ImageView) convertView.findViewById(R.id.moveUp);
-		ImageView moveDown = (ImageView) convertView.findViewById(R.id.moveDown);
-		moveUp.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				if (position > 0) {
-					int autrePosition = position - 1;
-					favoris.set(position, favoris.get(autrePosition));
-					favoris.set(autrePosition, favori);
-					favoris.get(position).ordre = position;
-					ContentValues contentValues = new ContentValues();
-					contentValues.put("ordre", position);
-					String whereClause = "arretId = :arretId and ligneId = :ligneId";
-					List<String> whereArgs = new ArrayList<String>(2);
-					whereArgs.add(favoris.get(position).arretId);
-					whereArgs.add(favoris.get(position).ligneId);
-					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					favoris.get(autrePosition).ordre = autrePosition;
-					contentValues.put("ordre", autrePosition);
-					whereArgs.clear();
-					whereArgs.add(favoris.get(autrePosition).arretId);
-					whereArgs.add(favoris.get(autrePosition).ligneId);
-					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					FavoriAdapter.this.notifyDataSetChanged();
+		}
+		if (position == (favoris.size() - 1)) {
+			holder.moveDown.setVisibility(View.INVISIBLE);
+		} else {
+			holder.moveDown.setVisibility(View.VISIBLE);
+			holder.moveDown.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					if (position < favoris.size() - 1) {
+						int autrePosition = position + 1;
+						favoris.set(position, favoris.get(autrePosition));
+						favoris.set(autrePosition, favori);
+						favoris.get(position).ordre = position;
+						ContentValues contentValues = new ContentValues();
+						contentValues.put("ordre", position);
+						String whereClause = "arretId = :arretId and ligneId = :ligneId";
+						List<String> whereArgs = new ArrayList<String>(2);
+						whereArgs.add(favoris.get(position).arretId);
+						whereArgs.add(favoris.get(position).ligneId);
+						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+						favoris.get(autrePosition).ordre = autrePosition;
+						contentValues.put("ordre", autrePosition);
+						whereArgs.clear();
+						whereArgs.add(favoris.get(autrePosition).arretId);
+						whereArgs.add(favoris.get(autrePosition).ligneId);
+						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+						FavoriAdapter.this.notifyDataSetChanged();
+					}
 				}
-			}
-		});
-		moveDown.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				if (position < favoris.size() - 1) {
-					int autrePosition = position + 1;
-					favoris.set(position, favoris.get(autrePosition));
-					favoris.set(autrePosition, favori);
-					favoris.get(position).ordre = position;
-					ContentValues contentValues = new ContentValues();
-					contentValues.put("ordre", position);
-					String whereClause = "arretId = :arretId and ligneId = :ligneId";
-					List<String> whereArgs = new ArrayList<String>(2);
-					whereArgs.add(favoris.get(position).arretId);
-					whereArgs.add(favoris.get(position).ligneId);
-					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					favoris.get(autrePosition).ordre = autrePosition;
-					contentValues.put("ordre", autrePosition);
-					whereArgs.clear();
-					whereArgs.add(favoris.get(autrePosition).arretId);
-					whereArgs.add(favoris.get(autrePosition).ligneId);
-					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-							.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-					FavoriAdapter.this.notifyDataSetChanged();
-				}
-			}
-		});
+			});
+		}
 
 		holder.arret.setText(favori.nomArret);
 		holder.direction.setText(favori.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(mInflater.getContext());
-			imgView.setImageResource(ressourceImg);
-			holder.conteneur.addView(imgView);
-		} catch (NoSuchFieldException e) {
-			TextView textView = new TextView(mInflater.getContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			holder.conteneur.addView(textView);
-		} catch (IllegalAccessException e) {
-			TextView textView = new TextView(mInflater.getContext());
-			textView.setTextSize(16);
-			textView.setText(favori.nomCourt);
-			holder.conteneur.addView(textView);
-		}
+		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 
 		StringBuilder requete = new StringBuilder();
 		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");

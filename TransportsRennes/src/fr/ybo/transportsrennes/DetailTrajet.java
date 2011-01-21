@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -29,9 +28,9 @@ import fr.ybo.transportsrennes.adapters.DetailTrajetAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +40,6 @@ import java.util.List;
  * @author ybonnel
  */
 public class DetailTrajet extends MenuAccueil.ListActivity {
-
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private static final LogYbo LOG_YBO = new LogYbo(DetailTrajet.class);
 
@@ -67,22 +64,14 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	}
 
 	private void gestionViewsTitle() {
-		LinearLayout conteneur = (LinearLayout) findViewById(R.id.conteneurImage);
-		TextView nomLong = (TextView) findViewById(R.id.nomLong);
-		nomLong.setText(ligne.nomLong);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + ligne.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			ImageView imgView = new ImageView(getApplicationContext());
-			imgView.setImageResource(ressourceImg);
-			conteneur.addView(imgView);
-		} catch (Exception ignore) {
-		}
+		((TextView) findViewById(R.id.nomLong)).setText(ligne.nomLong);
+		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
 		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText("Vers " + direction.direction);
 	}
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
+		LOG_YBO.startChrono("onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detailtrajet);
 		recuperationDonneesIntent();
@@ -102,6 +91,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 			}
 		});
 		lv.setTextFilterEnabled(true);
+		LOG_YBO.stopChrono("onCreate");
 	}
 
 	private void construireListe() {

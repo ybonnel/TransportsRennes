@@ -34,20 +34,31 @@ public class TwitterAdapter extends ArrayAdapter<Status> {
 
 	private List<Status> allStatus;
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
+	private LayoutInflater inflater;
 
 	public TwitterAdapter(Context context, List<Status> objects) {
 		super(context, R.layout.onetwitter, objects);
 		allStatus = objects;
+		inflater = LayoutInflater.from(context);
+	}
+
+	private static class ViewHolder {
+		TextView twitter;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = LayoutInflater.from(getContext());
-		View v = vi.inflate(R.layout.onetwitter, null);
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.onetwitter, null);
+			holder = new ViewHolder();
+			holder.twitter = (TextView) convertView.findViewById(R.id.twitter);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 		Status status = allStatus.get(position);
-
-		TextView twitter = (TextView) v.findViewById(R.id.twitter);
-		twitter.setText(SDF.format(status.getCreatedAt()) + status.getText());
-		return v;
+		holder.twitter.setText(SDF.format(status.getCreatedAt()) + status.getText());
+		return convertView;
 	}
 }

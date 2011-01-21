@@ -17,11 +17,14 @@ package fr.ybo.transportsrennes.util;
 
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LogYbo {
 
 	private static final String PREFIX_TAG = "YBO_";
 	private final String tag;
-	private static final boolean isDebug = false;
+	private static final boolean isDebug = true;
 
 	public LogYbo(final Class<?> clazz) {
 		tag = PREFIX_TAG + clazz.getSimpleName();
@@ -40,5 +43,28 @@ public class LogYbo {
 	public void warn(String message) {
 		Log.w(tag, message);
 	}
+
+	private Map<String, Long> mapStartTimes;
+
+	private Map<String, Long> getMapStartTimes() {
+		if (mapStartTimes == null) {
+			mapStartTimes = new HashMap<String, Long>();
+		}
+		return mapStartTimes;
+	}
+
+	public void startChrono(String message) {
+		if (isDebug) {
+			getMapStartTimes().put(message, System.nanoTime());
+		}
+	}
+
+	public void stopChrono(String message) {
+		if (isDebug) {
+			long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
+			Log.d(tag, new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());
+		}
+	}
+
 
 }

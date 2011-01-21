@@ -24,6 +24,7 @@ import android.widget.ListView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.LigneAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.List;
 
@@ -34,9 +35,11 @@ import java.util.List;
  */
 public class BusRennes extends MenuAccueil.ListActivity {
 
+	private static final LogYbo LOG_YBO = new LogYbo(BusRennes.class);
+
 	private void constructionListe() {
 		List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), null, null, "ordre");
-		setListAdapter(new LigneAdapter(getApplicationContext(), lignes));
+		setListAdapter(new LigneAdapter(this, lignes));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new OnItemClickListener() {
@@ -52,8 +55,16 @@ public class BusRennes extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		LOG_YBO.startChrono("onCreate");
+		LOG_YBO.startChrono("super.onCreate");
 		super.onCreate(savedInstanceState);
+		LOG_YBO.stopChrono("super.onCreate");
+		LOG_YBO.startChrono("setContentVew");
 		setContentView(R.layout.bus);
+		LOG_YBO.stopChrono("setContentVew");
+		LOG_YBO.startChrono("constructionListe");
 		constructionListe();
+		LOG_YBO.stopChrono("constructionListe");
+		LOG_YBO.stopChrono("onCreate");
 	}
 }

@@ -43,40 +43,57 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 
 	private static final double SEUIL_ORANGE = 0.5;
 
+	private LayoutInflater inflater;
+
 	public VeloAdapter(Context context, List<Station> objects) {
 		super(context, R.layout.dispovelo, objects);
 		stations = objects;
+		inflater = LayoutInflater.from(getContext());
+	}
+
+	private static class ViewHolder {
+		ImageView icone;
+		TextView dispoVeloText;
+		TextView dispoVeloStation;
+		TextView dispoVeloDistance;
+		ImageView iconeCb;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater vi = LayoutInflater.from(getContext());
-		View v = vi.inflate(R.layout.dispovelo, null);
+		ViewHolder holder;
+		if (convertView == null) {
+			convertView = inflater.inflate(R.layout.dispovelo, null);
+			holder = new ViewHolder();
+			holder.icone =(ImageView) convertView.findViewById(R.id.dispovelo_image);
+			holder.dispoVeloText =(TextView) convertView.findViewById(R.id.dispovelo_text);
+			holder.dispoVeloStation =(TextView) convertView.findViewById(R.id.dispovelo_station);
+			holder.dispoVeloDistance =(TextView) convertView.findViewById(R.id.dispovelo_distance);
+			holder.iconeCb =(ImageView) convertView.findViewById(R.id.dispovelo_cb);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
+		}
 		Station station = stations.get(position);
 		int placesTotales = station.bikesavailable + station.slotsavailable;
 		double poucentageDispo = ((double) station.bikesavailable) / ((double) (placesTotales));
 
-		ImageView icone = (ImageView) v.findViewById(R.id.dispovelo_image);
 		if (poucentageDispo < SEUIL_ROUGE) {
-			icone.setImageResource(R.drawable.dispo_velo_rouge);
+			holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
 		} else if (poucentageDispo < SEUIL_ORANGE) {
-			icone.setImageResource(R.drawable.dispo_velo_orange);
+			holder.icone.setImageResource(R.drawable.dispo_velo_orange);
 		} else {
-			icone.setImageResource(R.drawable.dispo_velo_bleue);
+			holder.icone.setImageResource(R.drawable.dispo_velo_bleue);
 		}
 
-		TextView dispoVeloText = (TextView) v.findViewById(R.id.dispovelo_text);
-		dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);
-		TextView dispoVeloStation = (TextView) v.findViewById(R.id.dispovelo_station);
-		dispoVeloStation.setText(Formatteur.formatterChaine(station.name));
-		TextView dispoVeloDistance = (TextView) v.findViewById(R.id.dispovelo_distance);
-		dispoVeloDistance.setText(station.formatDistance());
-		ImageView iconeCb = (ImageView) v.findViewById(R.id.dispovelo_cb);
+		holder.dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);
+		holder.dispoVeloStation.setText(Formatteur.formatterChaine(station.name));
+		holder.dispoVeloDistance.setText(station.formatDistance());
 		if (station.pos) {
-			iconeCb.setVisibility(View.VISIBLE);
+			holder.iconeCb.setVisibility(View.VISIBLE);
 		} else {
-			iconeCb.setVisibility(View.INVISIBLE);
+			holder.iconeCb.setVisibility(View.INVISIBLE);
 		}
-		return v;
+		return convertView;
 	}
 }

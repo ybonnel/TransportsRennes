@@ -25,16 +25,20 @@ import android.database.sqlite.SQLiteException;
 import android.view.View;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TransportsWidget extends AppWidgetProvider {
 	private final static LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
-
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static Map<Integer, Timer> mapTimersByWidgetId = new HashMap<Integer, Timer>();
 
@@ -87,12 +91,7 @@ public class TransportsWidget extends AppWidgetProvider {
 	static void updateAppWidget1Arret(Context context, RemoteViews views, ArretFavori favori) {
 		views.setTextViewText(R.id.nomArret_1arret, favori.nomArret);
 		views.setTextViewText(R.id.direction_1arret, "-> " + favori.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne_1arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne_1arret, IconeLigne.getIconeResource(favori.nomCourt));
 		Intent intent = new Intent(context, TransportsWidget.class);
 		intent.setAction("YboClick_" + favori.arretId + "_" + favori.ligneId);
 		LOG_YBO.debug("Action dans l'intent : " + intent.getAction());
@@ -106,20 +105,10 @@ public class TransportsWidget extends AppWidgetProvider {
 	static void updateAppWidget2Arret(Context context, RemoteViews views, ArretFavori favori1, ArretFavori favori2) {
 		views.setTextViewText(R.id.nomArret1_2arret, favori1.nomArret);
 		views.setTextViewText(R.id.direction1_2arret, "-> " + favori1.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori1.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne1_2arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne1_2arret, IconeLigne.getIconeResource(favori1.nomCourt));
 		views.setTextViewText(R.id.nomArret2_2arret, favori2.nomArret);
 		views.setTextViewText(R.id.direction2_2arret, "-> " + favori2.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori2.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne2_2arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne2_2arret, IconeLigne.getIconeResource(favori2.nomCourt));
 		final Intent intent1 = new Intent(context, TransportsWidget.class);
 		intent1.setAction("YboClick_" + favori1.arretId + "_" + favori1.ligneId);
 		LOG_YBO.debug("Action dans l'intent : " + intent1.getAction());
@@ -138,28 +127,13 @@ public class TransportsWidget extends AppWidgetProvider {
 	static void updateAppWidget3Arret(Context context, RemoteViews views, ArretFavori favori1, ArretFavori favori2, ArretFavori favori3) {
 		views.setTextViewText(R.id.nomArret1_3arret, favori1.nomArret);
 		views.setTextViewText(R.id.direction1_3arret, "-> " + favori1.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori1.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne1_3arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne1_3arret, IconeLigne.getIconeResource(favori1.nomCourt));
 		views.setTextViewText(R.id.nomArret2_3arret, favori2.nomArret);
 		views.setTextViewText(R.id.direction2_3arret, "-> " + favori2.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori2.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne2_3arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne2_3arret, IconeLigne.getIconeResource(favori2.nomCourt));
 		views.setTextViewText(R.id.nomArret3_3arret, favori3.nomArret);
 		views.setTextViewText(R.id.direction3_3arret, "-> " + favori3.direction);
-		try {
-			Field fieldIcon = classDrawable.getDeclaredField("i" + favori3.nomCourt.toLowerCase());
-			int ressourceImg = fieldIcon.getInt(null);
-			views.setImageViewResource(R.id.iconeLigne3_3arret, ressourceImg);
-		} catch (Exception ignore) {
-		}
+		views.setImageViewResource(R.id.iconeLigne3_3arret, IconeLigne.getIconeResource(favori3.nomCourt));
 		final Intent intent1 = new Intent(context, TransportsWidget.class);
 		intent1.setAction("YboClick_" + favori1.arretId + "_" + favori1.ligneId);
 		LOG_YBO.debug("Action dans l'intent : " + intent1.getAction());

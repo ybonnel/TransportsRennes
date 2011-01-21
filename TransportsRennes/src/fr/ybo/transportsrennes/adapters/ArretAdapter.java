@@ -35,11 +35,12 @@ import fr.ybo.transportsrennes.activity.OnClickFavoriGestionnaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,13 +60,11 @@ public class ArretAdapter extends CursorAdapter {
 	private final static double DEGREE_LONGITUDE_EN_METRES = 74452.10;
 	private final static double distanceLongitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
 	private final static int DISTANCE_MAX_METRE = 151;
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(ArretAdapter.class);
 
 	private Set<String> setCorrespondances = new HashSet<String>();
 
-	private final LayoutInflater mInflater;
 
 	public ArretAdapter(Activity activity, Cursor cursor, Ligne ligne) {
 		super(activity, cursor);
@@ -74,158 +73,215 @@ public class ArretAdapter extends CursorAdapter {
 		favori.ligneId = this.ligne.id;
 		this.activity = activity;
 		mInflater = LayoutInflater.from(activity);
+		nameCol = cursor.getColumnIndex("arretName");
+		directionCol = cursor.getColumnIndex("direction");
+		arretIdCol = cursor.getColumnIndex("_id");
+	}
+
+	private final LayoutInflater mInflater;
+	private final int nameCol;
+	private final int directionCol;
+	private final int arretIdCol;
+
+
+	private static class ViewHolder {
+		TextView nomArret;
+		TextView directionArret;
+		ImageView isFavori;
+		ImageView correspondance;
+		LinearLayout detailCorrespondance;
 	}
 
 	@Override
 	public void bindView(View view, final Context context, Cursor cursor) {
-		int nameCol = cursor.getColumnIndex("arretName");
+		LOG_YBO.startChrono("bindView");
 		String name = cursor.getString(nameCol);
-		int directionCol = cursor.getColumnIndex("direction");
 		String direction = cursor.getString(directionCol);
-		int arretIdCol = cursor.getColumnIndex("_id");
 		favori.arretId = cursor.getString(arretIdCol);
 		final String arretId = favori.arretId;
-		((TextView) view.findViewById(R.id.nomArret)).setText(name);
-		((TextView) view.findViewById(R.id.directionArret)).setText("vers " + direction);
-		final ImageView imageView = ((ImageView) view.findViewById(R.id.isfavori));
-		imageView.setImageResource(
+		final ViewHolder holder = (ViewHolder) view.getTag();
+		holder.nomArret.setText(name);
+		holder.directionArret.setText("vers " + direction);
+		holder.isFavori.setImageResource(
 				TransportsRennesApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off :
 						android.R.drawable.btn_star_big_on);
-		imageView.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, activity));
-		final ImageView correspondance = ((ImageView) view.findViewById(R.id.imageCorrespondance));
-		final LinearLayout detailCorrespondance = ((LinearLayout) view.findViewById(R.id.detailCorrespondance));
-		correspondance.setImageResource(R.drawable.arrow_right_float);
+		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, activity));
 		if (!setCorrespondances.contains(arretId)) {
-			detailCorrespondance.removeAllViews();
-			detailCorrespondance.setVisibility(View.INVISIBLE);
-			correspondance.setImageResource(R.drawable.arrow_right_float);
+			correspondancesNoDetail(holder);
 		} else {
-			detailCorrespondance.setVisibility(View.VISIBLE);
-			detailCorrespondance.removeAllViews();
-			construireCorrespondance(detailCorrespondance, arretId);
-			correspondance.setImageResource(R.drawable.arrow_down_float);
+			correspondancesWithDetail(holder, arretId);
 		}
-		correspondance.setOnClickListener(new View.OnClickListener() {
+		holder.correspondance.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				if (setCorrespondances.contains(arretId)) {
 					setCorrespondances.remove(arretId);
-					correspondance.setImageResource(R.drawable.arrow_right_float);
-					detailCorrespondance.removeAllViews();
-					detailCorrespondance.setVisibility(View.INVISIBLE);
+					correspondancesNoDetail(holder);
 				} else {
 					setCorrespondances.add(arretId);
-					detailCorrespondance.setVisibility(View.VISIBLE);
-					detailCorrespondance.removeAllViews();
-					construireCorrespondance(detailCorrespondance, arretId);
-					correspondance.setImageResource(R.drawable.arrow_down_float);
+					correspondancesWithDetail(holder, arretId);
 				}
 			}
 		});
+		LOG_YBO.stopChrono("bindView");
 
 	}
 
+	private void correspondancesNoDetail(ViewHolder holder) {
+		holder.detailCorrespondance.removeAllViews();
+		holder.detailCorrespondance.setVisibility(View.INVISIBLE);
+		holder.correspondance.setImageResource(R.drawable.arrow_right_float);
+	}
+
+	private void correspondancesWithDetail(ViewHolder holder, String arretId) {
+		holder.detailCorrespondance.setVisibility(View.VISIBLE);
+		holder.detailCorrespondance.removeAllViews();
+		construireCorrespondance(holder.detailCorrespondance, arretId);
+		holder.correspondance.setImageResource(R.drawable.arrow_down_float);
+	}
+
+	private HashMap<String, ArrayList<RelativeLayout>> mapDetailCorrespondances = new HashMap<String, ArrayList<RelativeLayout>>();
+
 	private void construireCorrespondance(LinearLayout detailCorrespondance, String arretId) {
-		/* Recuperation de l'arretCourant */
-		Arret arretCourant = new Arret();
-		arretCourant.id = arretId;
-		arretCourant = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretCourant);
-		Location locationArret = new Location("myProvider");
-		locationArret.setLatitude(arretCourant.latitude);
-		locationArret.setLongitude(arretCourant.longitude);
+		LOG_YBO.startChrono("construireCorrespondance");
+		if (!mapDetailCorrespondances.containsKey(arretId)) {
+			/* Recuperation de l'arretCourant */
+			mapDetailCorrespondances.put(arretId, new ArrayList<RelativeLayout>());
+			Arret arretCourant = new Arret();
+			arretCourant.id = arretId;
+			arretCourant = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretCourant);
+			Location locationArret = new Location("myProvider");
+			locationArret.setLatitude(arretCourant.latitude);
+			locationArret.setLongitude(arretCourant.longitude);
 
-		/** Construction requête. */
-		StringBuilder requete = new StringBuilder();
-		requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-		requete.append(
-				" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
-		requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
-		requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
-		requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
-		requete.append(" AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude");
+			/** Construction requête. */
+			StringBuilder requete = new StringBuilder();
+			requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
+			requete.append(
+					" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
+			requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
+			requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
+			requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
+			requete.append(" AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude");
 
-		/** Paramètres de la requête */
-		double minLatitude = arretCourant.latitude - distanceLatitudeInDegree;
-		double maxLatitude = arretCourant.latitude + distanceLatitudeInDegree;
-		double minLongitude = arretCourant.longitude - distanceLongitudeInDegree;
-		double maxLongitude = arretCourant.longitude + distanceLongitudeInDegree;
-		ArrayList<String> selectionArgs = new ArrayList<String>(4);
-		selectionArgs.add(String.valueOf(minLatitude));
-		selectionArgs.add(String.valueOf(maxLatitude));
-		selectionArgs.add(String.valueOf(minLongitude));
-		selectionArgs.add(String.valueOf(maxLongitude));
+			/** Paramètres de la requête */
+			double minLatitude = arretCourant.latitude - distanceLatitudeInDegree;
+			double maxLatitude = arretCourant.latitude + distanceLatitudeInDegree;
+			double minLongitude = arretCourant.longitude - distanceLongitudeInDegree;
+			double maxLongitude = arretCourant.longitude + distanceLongitudeInDegree;
+			ArrayList<String> selectionArgs = new ArrayList<String>(4);
+			selectionArgs.add(String.valueOf(minLatitude));
+			selectionArgs.add(String.valueOf(maxLatitude));
+			selectionArgs.add(String.valueOf(minLongitude));
+			selectionArgs.add(String.valueOf(maxLongitude));
 
-		LOG_YBO.debug("Exectution de : " + requete.toString());
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		LOG_YBO.debug("Resultat : " + cursor.getCount());
+			LOG_YBO.startChrono("requete");
+			LOG_YBO.debug("Exectution de : " + requete.toString());
+			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+			LOG_YBO.debug("Resultat : " + cursor.getCount());
+			LOG_YBO.stopChrono("requete");
 
-		/** Recuperation des index dans le cussor */
-		int arretIdIndex = cursor.getColumnIndex("arretId");
-		int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		int directionIndex = cursor.getColumnIndex("direction");
-		int arretNomIndex = cursor.getColumnIndex("arretNom");
-		int latitudeIndex = cursor.getColumnIndex("latitude");
-		int longitudeIndex = cursor.getColumnIndex("longitude");
-		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-		int nomLongIndex = cursor.getColumnIndex("nomLong");
+			/** Recuperation des index dans le cussor */
+			int arretIdIndex = cursor.getColumnIndex("arretId");
+			int ligneIdIndex = cursor.getColumnIndex("ligneId");
+			int directionIndex = cursor.getColumnIndex("direction");
+			int arretNomIndex = cursor.getColumnIndex("arretNom");
+			int latitudeIndex = cursor.getColumnIndex("latitude");
+			int longitudeIndex = cursor.getColumnIndex("longitude");
+			int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+			int nomLongIndex = cursor.getColumnIndex("nomLong");
 
-		List<Arret> arrets = new ArrayList<Arret>();
+			List<Arret> arrets = new ArrayList<Arret>();
 
-		while (cursor.moveToNext()) {
-			Arret arret = new Arret();
-			arret.id = cursor.getString(arretIdIndex);
-			arret.favori = new ArretFavori();
-			arret.favori.arretId = arret.id;
-			arret.favori.ligneId = cursor.getString(ligneIdIndex);
-			arret.favori.direction = cursor.getString(directionIndex);
-			arret.nom = cursor.getString(arretNomIndex);
-			arret.favori.nomArret = arret.nom;
-			arret.latitude = cursor.getDouble(latitudeIndex);
-			arret.longitude = cursor.getDouble(longitudeIndex);
-			arret.favori.nomCourt = cursor.getString(nomCourtIndex);
-			arret.favori.nomLong = cursor.getString(nomLongIndex);
-			if (!arret.id.equals(arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
-				arret.calculDistance(locationArret);
-				if (arret.distance < DISTANCE_MAX_METRE) {
-					arrets.add(arret);
+			LOG_YBO.startChrono("ParcoursArrets");
+			while (cursor.moveToNext()) {
+				Arret arret = new Arret();
+				arret.id = cursor.getString(arretIdIndex);
+				arret.favori = new ArretFavori();
+				arret.favori.arretId = arret.id;
+				arret.favori.ligneId = cursor.getString(ligneIdIndex);
+				arret.favori.direction = cursor.getString(directionIndex);
+				arret.nom = cursor.getString(arretNomIndex);
+				arret.favori.nomArret = arret.nom;
+				arret.latitude = cursor.getDouble(latitudeIndex);
+				arret.longitude = cursor.getDouble(longitudeIndex);
+				arret.favori.nomCourt = cursor.getString(nomCourtIndex);
+				arret.favori.nomLong = cursor.getString(nomLongIndex);
+				if (!arret.id.equals(arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
+					arret.calculDistance(locationArret);
+					if (arret.distance < DISTANCE_MAX_METRE) {
+						arrets.add(arret);
+					}
 				}
 			}
-		}
-		cursor.close();
+			cursor.close();
+			LOG_YBO.stopChrono("ParcoursArrets");
 
-		Collections.sort(arrets, new Arret.ComparatorDistance());
+			LOG_YBO.startChrono("sort");
+			Collections.sort(arrets, new Arret.ComparatorDistance());
+			LOG_YBO.stopChrono("sort");
 
-		for (final Arret arret : arrets) {
-			RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
-			LinearLayout conteneur = (LinearLayout) relativeLayout.findViewById(R.id.conteneurImage);
-			try {
-				Field fieldIcon = classDrawable.getDeclaredField("i" + arret.favori.nomCourt.toLowerCase());
-				int ressourceImg = fieldIcon.getInt(null);
-				ImageView imgView = new ImageView(activity);
-				imgView.setImageResource(ressourceImg);
-				conteneur.addView(imgView);
-			} catch (Exception ignore) {
+			LOG_YBO.startChrono("layouts");
+			RelativeLayout relativeLayout;
+			RelativeLayoutHolder holder;
+			for (final Arret arret : arrets) {
+				relativeLayout = getRelativeLayout();
+				holder = (RelativeLayoutHolder) relativeLayout.getTag();
+				holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
+				holder.arretDirection.setText(arret.favori.direction);
+				holder.nomArret.setText(arret.nom);
+				holder.distance.setText(arret.formatDistance());
+				relativeLayout.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View view) {
+						Intent intent = new Intent(activity, DetailArret.class);
+						intent.putExtra("favori", arret.favori);
+						activity.startActivity(intent);
+					}
+				});
+				mapDetailCorrespondances.get(arretId).add(relativeLayout);
+				detailCorrespondance.addView(relativeLayout);
 			}
-			TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
-			arretDirection.setText(arret.favori.direction);
-			TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
-			nomArret.setText(arret.nom);
-			TextView distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
-			distance.setText(arret.formatDistance());
-			relativeLayout.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent intent = new Intent(activity, DetailArret.class);
-					intent.putExtra("favori", arret.favori);
-					activity.startActivity(intent);
-				}
-			});
-			detailCorrespondance.addView(relativeLayout);
+			LOG_YBO.stopChrono("layouts");
+		} else {
+			for (RelativeLayout relativeLayout : mapDetailCorrespondances.get(arretId)) {
+				detailCorrespondance.addView(relativeLayout);
+			}
 		}
+		LOG_YBO.stopChrono("construireCorrespondance");
+	}
+
+
+	private static class RelativeLayoutHolder {
+		ImageView iconeLigne;
+		TextView arretDirection;
+		TextView nomArret;
+		TextView distance;
+	}
+
+	private RelativeLayout getRelativeLayout() {
+		RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
+		RelativeLayoutHolder holder = new RelativeLayoutHolder();
+		holder.iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
+		holder.arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
+		holder.nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
+		holder.distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
+		relativeLayout.setTag(holder);
+		return relativeLayout;
 	}
 
 	@Override
 	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		LOG_YBO.startChrono("newView");
 		LayoutInflater inflater = LayoutInflater.from(context);
-		return inflater.inflate(R.layout.arret, parent, false);
+		View view = inflater.inflate(R.layout.arret, parent, false);
+		ViewHolder holder = new ViewHolder();
+		holder.nomArret = (TextView) view.findViewById(R.id.nomArret);
+		holder.directionArret = (TextView) view.findViewById(R.id.directionArret);
+		holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
+		holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
+		holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
+		view.setTag(holder);
+		LOG_YBO.stopChrono("newView");
+		return view;
 
 	}
 
