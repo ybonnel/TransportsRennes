@@ -26,4 +26,14 @@ public class IconeLigne {
 			return -1;
 		}
 	}
+
+
+
+	public static int getMarkeeResource(String nomCourt) {
+		try {
+			return R.drawable.class.getDeclaredField("m" + nomCourt.toLowerCase()).getInt(null);
+		} catch (Exception ignore) {
+			return -1;
+		}
+	}
 }
