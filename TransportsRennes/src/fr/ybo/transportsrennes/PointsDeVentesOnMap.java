@@ -78,10 +78,24 @@ public class PointsDeVentesOnMap extends MapActivity {
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
-		MyLocationOverlay myLocationOverlay = new MyLocationOverlay(this, mapView);
+		myLocationOverlay = new MyLocationOverlay(this, mapView);
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
+	}
+
+	private MyLocationOverlay myLocationOverlay;
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		myLocationOverlay.enableMyLocation();
+	}
+
+	@Override
+	protected void onPause() {
+		myLocationOverlay.disableMyLocation();
+		super.onPause();
 	}
 
 	@Override
