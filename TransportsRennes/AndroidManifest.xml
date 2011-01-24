@@ -45,6 +45,7 @@
         <activity android:name=".StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ParkRelaisOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".PointsDeVentesOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <!--<activity android:name=".AllOnMap" android:configChanges="orientation|keyboardHidden"/>-->
         <activity android:name=".DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <receiver android:name=".TransportsWidget">
             <intent-filter>

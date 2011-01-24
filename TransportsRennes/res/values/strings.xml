@@ -54,4 +54,5 @@
     <string name="menu_orderBySequence"> Ordre de la ligne </string>
     <string name="menu_accueil"> Accueil </string>
     <string name="menu_apropos"> A propos </string>
+    <string name="menu_carte"> Carte </string>
 </resources>

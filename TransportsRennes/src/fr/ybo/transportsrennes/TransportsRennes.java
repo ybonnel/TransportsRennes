@@ -294,8 +294,9 @@ public class TransportsRennes extends Activity {
 		setContentView(R.layout.main);
 	}
 
-	private static final int GROUP_ID = 0;
-	private static final int MENU_ID = Menu.FIRST;
+	private final static int GROUP_ID = 0;
+	private final static int MENU_ID = 1;
+//	private final static int MENU_MAP_ID = 2;
 
 
 	@Override
@@ -303,6 +304,8 @@ public class TransportsRennes extends Activity {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
+//		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
+//		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
 		return true;
 	}
 
@@ -321,6 +324,10 @@ public class TransportsRennes extends Activity {
 				builder.setView(message).setCancelable(true);
 				builder.create().show();
 				return true;
+//			case MENU_MAP_ID:
+//				Intent intent = new Intent(this, AllOnMap.class);
+//				startActivity(intent);
+//				return true;
 		}
 		return false;
 	}
