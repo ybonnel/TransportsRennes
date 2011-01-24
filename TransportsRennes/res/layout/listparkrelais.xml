@@ -33,7 +33,7 @@
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
-              android:hint="Recherche de Park Relais" />
+              android:hint="Recherche de Parc Relais" />
     <ImageView android:layout_width="fill_parent"
                android:layout_height="wrap_content"
             android:paddingTop="4dip"
