@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 public abstract class ObjetWithDistance {
 
-	public Integer distance = null;
+	public transient Integer distance = null;
 
 	public static class ComparatorDistance implements Comparator<ObjetWithDistance> {
 

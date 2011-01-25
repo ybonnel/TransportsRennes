@@ -63,6 +63,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	private final List<Arret> arrets = Collections.synchronizedList(new ArrayList<Arret>());
 	private final List<Arret> arretsFiltrees = Collections.synchronizedList(new ArrayList<Arret>());
 
+	private List<Arret> arretsIntent = null;
+
 	private Location lastLocation = null;
 
 	/**
@@ -161,6 +163,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
+		arretsIntent = (List<Arret>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
@@ -222,6 +225,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	}
 
 	private void construireListeArrets() {
+		if (arretsIntent != null) {
+			arrets.clear();
+			arrets.addAll(arretsIntent);
+			return;
+		}
 		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT");
 		requete.append(" Arret.id as arretId,");

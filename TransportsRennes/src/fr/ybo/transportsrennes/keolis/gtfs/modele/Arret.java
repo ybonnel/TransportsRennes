@@ -41,7 +41,7 @@ public class Arret extends ObjetWithDistance implements Serializable  {
 	@Colonne( type = Colonne.TypeColonne.NUMERIC )
 	public Double longitude;
 
-	public transient ArretFavori favori;
+	public ArretFavori favori;
 
 	@Override
 	public double getLatitude() {

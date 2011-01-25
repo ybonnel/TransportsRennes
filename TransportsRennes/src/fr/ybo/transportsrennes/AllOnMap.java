@@ -14,30 +14,34 @@
 
 package fr.ybo.transportsrennes;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.location.Location;
+import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
+import android.os.Handler;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
-import fr.ybo.transportsrennes.util.IconeLigne;
+import fr.ybo.transportsrennes.map.MyGeoClusterer;
+import fr.ybo.transportsrennes.map.MyGeoItem;
+import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.GeoClusterer;
+import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AllOnMap extends MapActivity {
 
-	private MapController mc;
+	private MapView mapView;
+	private MapController mapCtrl;
+	private GeoClusterer clusterer;
+	// marker icons
+	private List<MarkerBitmap> markerIconBmps = new ArrayList<MarkerBitmap>();
 
 	/**
 	 * Called when the activity is first created.
@@ -48,109 +52,84 @@ public class AllOnMap extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 
-		Map<String, MapItemizedOverlayArret> mapItemizedOverlays = new HashMap<String, MapItemizedOverlayArret>();
-
-		MapView mapView = (MapView) findViewById(R.id.mapview);
-		mapView.setBuiltInZoomControls(false);
-
-		mc = mapView.getController();
+		mapView = (MapView) findViewById(R.id.mapview);
+		mapView.setBuiltInZoomControls(true);
+		mapView.displayZoomControls(true);
 		mapView.setSatellite(true);
+		mapCtrl = mapView.getController();
 
-		// Creation du geo point
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		StringBuilder requete = new StringBuilder();
-		requete.append("select Arret.id as arretId, Arret.nom as arretNom,");
-		requete.append(" Ligne.id as ligneId, Ligne.nomCourt as ligneNomCourt,");
-		requete.append(" Ligne.nomLong as ligneNomLong, Direction.direction as direction,");
-		requete.append(" Arret.latitude as latitude, Arret.longitude as longitude ");
-		requete.append("from ArretRoute, Arret, Direction, Ligne ");
-		requete.append("where");
-		requete.append(" ArretRoute.arretId = Arret.id");
-		requete.append(" and ArretRoute.directionId = Direction.id");
-		requete.append(" and Ligne.id = ArretRoute.ligneId");
-		requete.append(" order by ArretRoute.sequence");
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
-		int minLatitude = Integer.MAX_VALUE;
-		int maxLatitude = Integer.MIN_VALUE;
-		int minLongitude = Integer.MAX_VALUE;
-		int maxLongitude = Integer.MIN_VALUE;
+		markerIconBmps.add(new MarkerBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus),
+				BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus_inverse), new Point(55, 35), 20, 10));
+		markerIconBmps.add(new MarkerBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus),
+				BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus_inverse), new Point(53, 35), 18, 100));
+		markerIconBmps.add(new MarkerBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus),
+				BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus_inverse), new Point(54, 35), 15, 1000));
+		markerIconBmps.add(new MarkerBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus),
+				BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus_inverse), new Point(53, 35), 12, 10000));
 
-		int arretIdIndex = cursor.getColumnIndex("arretId");
-		int arretNomIndex = cursor.getColumnIndex("arretNom");
-		int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		int ligneNomCourtIndex = cursor.getColumnIndex("ligneNomCourt");
-		int ligneNomLongIndex = cursor.getColumnIndex("ligneNomLong");
-		int directionIndex = cursor.getColumnIndex("direction");
-		int latitudeIndex = cursor.getColumnIndex("latitude");
-		int longitudeIndex = cursor.getColumnIndex("longitude");
-		ArretFavori arretFavori;
-		GeoPoint geoPoint;
-		OverlayItem overlayitem;
-		while (cursor.moveToNext()) {
-			arretFavori = new ArretFavori();
-			arretFavori.arretId = cursor.getString(arretIdIndex);
-			arretFavori.nomArret = cursor.getString(arretNomIndex);
-			arretFavori.direction = cursor.getString(directionIndex);
-			arretFavori.ligneId = cursor.getString(ligneIdIndex);
-			arretFavori.nomCourt = cursor.getString(ligneNomCourtIndex);
-			arretFavori.nomLong = cursor.getString(ligneNomLongIndex);
-			int latitude = (int) (cursor.getDouble(latitudeIndex) * 1E6);
-			int longitude = (int) (cursor.getDouble(longitudeIndex) * 1E6);
-			geoPoint = new GeoPoint(latitude, longitude);
-			if (latitude < minLatitude) {
-				minLatitude = latitude;
-			}
-			if (latitude > maxLatitude) {
-				maxLatitude = latitude;
-			}
-			if (longitude < minLongitude) {
-				minLongitude = longitude;
-			}
-			if (longitude > maxLongitude) {
-				maxLongitude = longitude;
-			}
+		float screenDensity = this.getResources().getDisplayMetrics().density;
+		clusterer = new MyGeoClusterer(this, mapView, markerIconBmps, screenDensity);
 
-			overlayitem = new OverlayItem(geoPoint, arretFavori.nomArret, arretFavori.direction);
-			if (!mapItemizedOverlays.containsKey(arretFavori.nomCourt)) {
-				mapItemizedOverlays.put(arretFavori.nomCourt,
-						new MapItemizedOverlayArret(getResources().getDrawable(IconeLigne.getMarkeeResource(arretFavori.nomCourt)), this));
-			}
-			mapItemizedOverlays.get(arretFavori.nomCourt).addOverlay(overlayitem, arretFavori);
-		}
-		cursor.close();
-		for (MapItemizedOverlayArret itemizedOverlay : mapItemizedOverlays.values()) {
-			mapOverlays.add(itemizedOverlay);
-		}
+		mapCtrl.setCenter(new GeoPoint(48109681, -1679277));
+		mapCtrl.setZoom(14);
 
-		mc.setCenter(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
-		mc.setZoom(17);
-
-		myLocationOverlay = new MyLocationOverlayAnimate(this, mapView);
-		mapOverlays.add(myLocationOverlay);
+		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
-		touch = true;
-		mapView.setOnTouchListener(new View.OnTouchListener(){
-			public boolean onTouch(View view, MotionEvent motionEvent) {
-				touch = false;
-				return false;
-			}
-		});
+
+		new BackgroundTasks().execute();
 	}
 
-	private boolean touch;
+	private class BackgroundTasks extends AsyncTask<Void, Void, Void> {
 
-	private class MyLocationOverlayAnimate extends MyLocationOverlay {
+		@Override
+		protected Void doInBackground(Void... voids) {
+			StringBuilder requete = new StringBuilder();
+			requete.append("select Arret.id as arretId, Arret.nom as arretNom,");
+			requete.append(" Ligne.id as ligneId, Ligne.nomCourt as ligneNomCourt,");
+			requete.append(" Ligne.nomLong as ligneNomLong, Direction.direction as direction,");
+			requete.append(" Arret.latitude as latitude, Arret.longitude as longitude ");
+			requete.append("from ArretRoute, Arret, Direction, Ligne ");
+			requete.append("where");
+			requete.append(" ArretRoute.arretId = Arret.id");
+			requete.append(" and ArretRoute.directionId = Direction.id");
+			requete.append(" and Ligne.id = ArretRoute.ligneId");
+			requete.append(" order by ArretRoute.sequence");
+			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 
-		public MyLocationOverlayAnimate(Context context, MapView mapView) {
-			super(context, mapView);
+			int arretIdIndex = cursor.getColumnIndex("arretId");
+			int arretNomIndex = cursor.getColumnIndex("arretNom");
+			int ligneIdIndex = cursor.getColumnIndex("ligneId");
+			int ligneNomCourtIndex = cursor.getColumnIndex("ligneNomCourt");
+			int ligneNomLongIndex = cursor.getColumnIndex("ligneNomLong");
+			int directionIndex = cursor.getColumnIndex("direction");
+			int latitudeIndex = cursor.getColumnIndex("latitude");
+			int longitudeIndex = cursor.getColumnIndex("longitude");
+			Arret arret;
+			int idGeoItem = 0;
+			while (cursor.moveToNext()) {
+				arret = new Arret();
+				arret.id = cursor.getString(arretIdIndex);
+				arret.nom = cursor.getString(arretNomIndex);
+				arret.latitude = cursor.getDouble(latitudeIndex);
+				arret.longitude = cursor.getDouble(longitudeIndex);
+				arret.favori = new ArretFavori();
+				arret.favori.direction = cursor.getString(directionIndex);
+				arret.favori.ligneId = cursor.getString(ligneIdIndex);
+				arret.favori.nomCourt = cursor.getString(ligneNomCourtIndex);
+				arret.favori.nomLong = cursor.getString(ligneNomLongIndex);
+				arret.favori.nomArret = arret.nom;
+				arret.favori.arretId = arret.id;
+				clusterer.addItem(new MyGeoItem(idGeoItem++, arret));
+			}
+			cursor.close();
+			return null;
 		}
 
 		@Override
-		public void onLocationChanged(Location location) {
-			super.onLocationChanged(location);
-			if (!touch) {
-				mc.setCenter(getMyLocation());
-			}
+		protected void onPostExecute(Void aVoid) {
+			mapView.invalidate();
+			clusterer.resetViewport();
 		}
 	}
 
