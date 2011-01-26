@@ -24,12 +24,11 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.TextView;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -106,11 +105,7 @@ public class AllOnMap extends MapActivity {
 
 	private void showDialog() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		TextView textView = new TextView(this);
-		textView.setText(getString(R.string.infoAllInMap));
-		textView.setPadding(10, 3, 3, 3);
-		textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-		builder.setView(textView);
+		builder.setView(LayoutInflater.from(this).inflate(R.layout.infoallinmap, null));
 		builder.setTitle(R.string.titleInfoAllInMap);
 		builder.setCancelable(false);
 		builder.setNeutralButton("Terminer", new DialogInterface.OnClickListener() {

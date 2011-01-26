@@ -107,7 +107,7 @@ public final class GestionZipKeolis {
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.connect();
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()), 100);
 			Date date = SDF.parse(bufReader.readLine());
 			bufReader.close();
 			connection.disconnect();
