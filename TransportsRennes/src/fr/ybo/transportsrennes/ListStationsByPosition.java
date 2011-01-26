@@ -304,7 +304,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 									for (Station station : stationIntent) {
 										ids.add(station.number);
 									}
-									keolis.getStationByNumbers(ids);
+									stations.addAll(keolis.getStationByNumbers(ids));
 								}
 								Collections.sort(stations, new Comparator<Station>() {
 									public int compare(Station o1, Station o2) {
