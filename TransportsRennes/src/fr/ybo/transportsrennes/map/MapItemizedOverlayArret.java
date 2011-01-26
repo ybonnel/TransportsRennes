@@ -35,8 +35,13 @@ public class MapItemizedOverlayArret extends ItemizedOverlay {
 	private Context mContext;
 	private List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>();
 
+	private static Drawable leftBottom(Drawable drawable) {
+		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
+		return drawable;
+	}
+
 	public MapItemizedOverlayArret(Drawable defaultMarker, Context context) {
-		super(boundCenterBottom(defaultMarker));
+		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
@@ -71,7 +76,7 @@ public class MapItemizedOverlayArret extends ItemizedOverlay {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.dismiss();
 				final Intent intent = new Intent(mContext, DetailArret.class);
-				intent.putExtra("favori",favori);
+				intent.putExtra("favori", favori);
 				mContext.startActivity(intent);
 			}
 		});
