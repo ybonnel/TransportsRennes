@@ -31,7 +31,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -66,6 +70,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	/**
 	 * Liste des stations.
 	 */
+	private List<ParkRelai> parkRelaiIntent = null;
 	private final List<ParkRelai> parkRelais = Collections.synchronizedList(new ArrayList<ParkRelai>());
 	private final List<ParkRelai> parkRelaisFiltres = Collections.synchronizedList(new ArrayList<ParkRelai>());
 
@@ -166,9 +171,11 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	private ListView listView;
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listparkrelais);
+		parkRelaiIntent = (ArrayList<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("parcRelais"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ParkRelaiAdapter(this, parkRelaisFiltres));
@@ -213,7 +220,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				try {
 					synchronized (parkRelais) {
 						parkRelais.clear();
-						parkRelais.addAll(keolis.getParkRelais());
+						parkRelais.addAll(parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
 						Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 							public int compare(ParkRelai o1, ParkRelai o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
@@ -285,7 +292,19 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 						try {
 							synchronized (parkRelais) {
 								parkRelais.clear();
-								parkRelais.addAll(keolis.getParkRelais());
+								if (parkRelaiIntent == null) {
+									parkRelais.addAll(keolis.getParkRelais());
+								} else {
+									ArrayList<String> ids = new ArrayList<String>();
+									for (ParkRelai parc : parkRelaiIntent) {
+										ids.add(parc.name);
+									}
+									for (ParkRelai parc : keolis.getParkRelais()) {
+										if (ids.contains(parc.name)) {
+											parkRelais.add(parc);
+										}
+									}
+								}
 								Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 									public int compare(ParkRelai o1, ParkRelai o2) {
 										return o1.name.compareToIgnoreCase(o2.name);

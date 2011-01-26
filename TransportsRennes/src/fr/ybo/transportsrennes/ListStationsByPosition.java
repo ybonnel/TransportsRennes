@@ -73,6 +73,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	/**
 	 * Liste des stations.
 	 */
+	private List<Station> stationIntent = null;
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
 	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>());
 
@@ -172,10 +173,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private EditText editText;
 	private ListView listView;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liststations);
+		stationIntent = (ArrayList<Station>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("stations"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
@@ -221,7 +224,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				try {
 					synchronized (stations) {
 						stations.clear();
-						stations.addAll(keolis.getStations());
+						stations.addAll(stationIntent == null ? keolis.getStations() : stationIntent);
 						Collections.sort(stations, new Comparator<Station>() {
 							public int compare(Station o1, Station o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
@@ -293,7 +296,16 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 						try {
 							synchronized (stations) {
 								stations.clear();
-								stations.addAll(keolis.getStations());
+								if (stationIntent == null) {
+									stations.addAll(keolis.getStations());
+								}
+								else {
+									ArrayList<String> ids = new ArrayList<String>();
+									for (Station station : stationIntent) {
+										ids.add(station.number);
+									}
+									keolis.getStationByNumbers(ids);
+								}
 								Collections.sort(stations, new Comparator<Station>() {
 									public int compare(Station o1, Station o2) {
 										return o1.name.compareToIgnoreCase(o2.name);

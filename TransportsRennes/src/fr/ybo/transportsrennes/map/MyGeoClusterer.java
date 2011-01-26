@@ -31,23 +31,28 @@
 package fr.ybo.transportsrennes.map;
 
 import android.app.Activity;
-import android.widget.FrameLayout;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.GeoClusterer;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 
 import java.util.List;
 
-public class MyGeoClusterer extends GeoClusterer {
+public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClusterer {
 
 	private Activity activity;
+	private String paramName;
+	private Class<? extends Activity> intentClass;
 
-	public MyGeoClusterer(Activity activity, MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity) {
+	public MyGeoClusterer(Activity activity, MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity, String paramName,
+	                      Class<? extends Activity> intentClass) {
 		super(mapView, markerIconBmps, screenDensity);
 		GRIDSIZE = 70;
 		this.activity = activity;
+		this.paramName = paramName;
+		this.intentClass = intentClass;
 	}
 
 	@Override
@@ -71,7 +76,7 @@ public class MyGeoClusterer extends GeoClusterer {
 				return;
 			}
 			if (clusterMarker_ == null) {
-				clusterMarker_ = new MyClusterMarker(this, markerIconBmps_, screenDensity_, activity);
+				clusterMarker_ = new MyClusterMarker<Objet>(this, markerIconBmps_, screenDensity_, activity, paramName, intentClass);
 				List<Overlay> mapOverlays = mapView_.getOverlays();
 				mapOverlays.add(clusterMarker_);
 			}

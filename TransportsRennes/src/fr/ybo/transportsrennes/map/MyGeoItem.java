@@ -14,20 +14,19 @@
 
 package fr.ybo.transportsrennes.map;
 
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 
-public class MyGeoItem extends GeoItem {
+public class MyGeoItem<Objet extends ObjetWithDistance> extends GeoItem {
 
-	private Arret arret;
+	private Objet objet;
 
-	public MyGeoItem(long id, Arret arret) {
-		super(id, (int)(arret.latitude * 1E6), (int)(arret.longitude * 1E6));
-		this.arret = arret;
+	public MyGeoItem(long id, Objet objet) {
+		super(id, (int) (objet.getLatitude() * 1E6), (int) (objet.getLongitude() * 1E6));
+		this.objet = objet;
 	}
 
-	public Arret getArret() {
-		return arret;
+	public Objet getObjet() {
+		return objet;
 	}
 }

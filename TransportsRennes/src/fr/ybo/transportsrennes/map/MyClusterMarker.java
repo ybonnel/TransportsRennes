@@ -22,8 +22,7 @@ import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Projection;
-import fr.ybo.transportsrennes.ListArretByPosition;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.ClusterMarker;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.GeoClusterer;
@@ -32,20 +31,26 @@ import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyClusterMarker extends ClusterMarker {
+public class MyClusterMarker<Objet extends ObjetWithDistance> extends ClusterMarker {
 	/**
 	 * check time object for tapping.
 	 */
 	private long tapCheckTime_;
 
 	private Activity activity;
+	private String paramName;
+	private Class<? extends Activity> intentClass;
 
-	public MyClusterMarker(GeoClusterer.GeoCluster cluster, List<MarkerBitmap> markerIconBmps, float screenDensity, Activity activity) {
+	public MyClusterMarker(GeoClusterer.GeoCluster cluster, List<MarkerBitmap> markerIconBmps, float screenDensity, Activity activity,
+	                       String paramName, Class<? extends Activity> intentClass) {
 		super(cluster, markerIconBmps, screenDensity);
 		this.activity = activity;
+		this.paramName = paramName;
+		this.intentClass = intentClass;
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public boolean onTap(GeoPoint p, MapView mapView) {
 
 		Projection pro = mapView.getProjection();
@@ -63,12 +68,12 @@ public class MyClusterMarker extends ClusterMarker {
 					if (GeoItems_.size() > 100) {
 						Toast.makeText(activity, "Plus de 100 arrêts sur ce point veuillez zoomer avant de les afficher.", Toast.LENGTH_SHORT).show();
 					} else {
-						ArrayList<Arret> arrets = new ArrayList<Arret>();
+						ArrayList<Objet> objets = new ArrayList<Objet>();
 						for (GeoItem item : GeoItems_) {
-							arrets.add(((MyGeoItem) item).getArret());
+							objets.add(((MyGeoItem<Objet>) item).getObjet());
 						}
-						Intent intent = new Intent(activity, ListArretByPosition.class);
-						intent.putExtra("arrets", arrets);
+						Intent intent = new Intent(activity, intentClass);
+						intent.putExtra(paramName, objets);
 						activity.startActivity(intent);
 					}
 				}
