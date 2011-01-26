@@ -135,7 +135,7 @@ public class GeoClusterer {
 		// else add to items_;
 		items_.add(item);
 		int length = clusters_.size();
-		GeoCluster cluster = null;
+		GeoCluster cluster;
 		Projection proj = mapView_.getProjection();
 		Point pos = proj.toPixels(item.getLocation(), null);
 		// check existing cluster
@@ -183,8 +183,8 @@ public class GeoClusterer {
 	 * redraws clusters
 	 */
 	public void redraw() {
-		for (int i = 0; i < clusters_.size(); i++) {
-			clusters_.get(i).redraw();
+		for (GeoCluster aClusters_ : clusters_) {
+			aClusters_.redraw();
 		}
 	}
 
@@ -234,8 +234,7 @@ public class GeoClusterer {
 	protected List<GeoCluster> getClustersInViewport() {
 		GeoBounds curBounds = getCurBounds();
 		ArrayList<GeoCluster> clusters = new ArrayList<GeoCluster>();
-		for (int i = 0; i < clusters_.size(); i++) {
-			GeoCluster cluster = clusters_.get(i);
+		for (GeoCluster cluster : clusters_) {
 			if (cluster.isInBounds(curBounds)) {
 				clusters.add(cluster);
 			}
@@ -253,8 +252,8 @@ public class GeoClusterer {
 		ArrayList<GeoItem> currentLeftItems = new ArrayList<GeoItem>();
 		currentLeftItems.addAll(leftItems_);
 		leftItems_.clear();
-		for (int i = 0; i < currentLeftItems.size(); i++) {
-			addItem(currentLeftItems.get(i));
+		for (GeoItem currentLeftItem : currentLeftItems) {
+			addItem(currentLeftItem);
 		}
 	}
 
@@ -280,8 +279,7 @@ public class GeoClusterer {
 		List<GeoCluster> clusters = getClustersInViewport();
 		List<GeoItem> tmpItems = new ArrayList<GeoItem>();
 		int removed = 0;
-		for (int i = 0; i < clusters.size(); i++) {
-			GeoCluster cluster = clusters.get(i);
+		for (GeoCluster cluster : clusters) {
 			int oldZoom = cluster.getZoomLevel();
 			int curZoom = mapView_.getZoomLevel();
 			// If the cluster zoom level changed then destroy the cluster and collect its markers.
@@ -300,15 +298,15 @@ public class GeoClusterer {
 		redraw();
 		// Add the markers collected into marker cluster to reset
 		if (removed > 0) {
-			GeoCluster cluster = null;
-			for (int i = 0; i < clusters_.size(); i++) {
-				cluster = clusters_.get(i);
+			GeoCluster cluster;
+			for (GeoCluster aClusters_ : clusters_) {
+				cluster = aClusters_;
 				if (cluster.isSelected()) {
 					return cluster;
 				}
 			}
-			for (int i = 0; i < items_.size(); i++) {
-				items_.get(i).setSelect(false);
+			for (GeoItem anItems_ : items_) {
+				anItems_.setSelect(false);
 			}
 			return null;
 		}
@@ -319,9 +317,9 @@ public class GeoClusterer {
 	 * clears selected state.
 	 */
 	public void clearSelect() {
-		for (int i = 0; i < clusters_.size(); i++) {
-			if (selcluster_ == clusters_.get(i)) {
-				clusters_.get(i).clearSelect();
+		for (GeoCluster aClusters_ : clusters_) {
+			if (selcluster_ == aClusters_) {
+				aClusters_.clearSelect();
 			}
 		}
 	}
@@ -396,7 +394,6 @@ public class GeoClusterer {
 		if (selcluster_ == caller) {
 			selcluster_.clearSelect();
 			selcluster_ = null;
-			return;
 		}
 	}
 
@@ -595,6 +592,4 @@ public class GeoClusterer {
 			return inViewport;
 		}
 	}
-
-	;
 }

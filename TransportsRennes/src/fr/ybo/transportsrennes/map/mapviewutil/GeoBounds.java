@@ -57,7 +57,7 @@ public class GeoBounds {
 	 * @return true if point is in the bound.
 	 */
 	public boolean isInBounds( GeoPoint pt ){
-		if(pt==null)
+		if(null == pt)
 			return false;
 		return (pt.getLatitudeE6()<=nw_.getLatitudeE6()
 				&&pt.getLatitudeE6()>=se_.getLatitudeE6()

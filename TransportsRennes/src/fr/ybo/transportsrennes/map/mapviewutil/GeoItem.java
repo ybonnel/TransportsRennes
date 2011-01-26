@@ -74,7 +74,7 @@ public class GeoItem implements Parcelable {
 	public GeoItem(Parcel src) {
 		id_ = src.readLong();
 		location_ = new GeoPoint(src.readInt(), src.readInt());
-		isSelected_ = src.readInt() == 0 ? false : true;
+		isSelected_ = src.readInt() != 0;
 	}
 
 	/* describeContents */
@@ -95,7 +95,7 @@ public class GeoItem implements Parcelable {
 	 * @param id of the item.
 	 */
 	public void setId(long id) {
-		id_ = id;;
+		id_ = id;
 	}
 
 	/**
