@@ -41,8 +41,13 @@ public class MapItemizedOverlayPos extends ItemizedOverlay {
 	private Context mContext;
 	private List<PointDeVente> pointDeVentes = new ArrayList<PointDeVente>();
 
+	private static Drawable leftBottom(Drawable drawable) {
+		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
+		return drawable;
+	}
+
 	public MapItemizedOverlayPos(Drawable defaultMarker, Context context) {
-		super(boundCenterBottom(defaultMarker));
+		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
