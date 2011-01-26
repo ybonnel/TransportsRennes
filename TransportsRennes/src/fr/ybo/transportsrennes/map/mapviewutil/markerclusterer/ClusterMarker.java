@@ -98,8 +98,9 @@ public class ClusterMarker extends Overlay {
 	protected int txtHeightOffset_;
 
 	/**
-	 * @param cluster        a cluster to be rendered for this marker
-	 * @param markerIconBmps icon set for marker
+	 * @param cluster        a cluster to be rendered for this marker.
+	 * @param markerIconBmps icon set for marker.
+	 * @param screenDensity  screen density.
 	 */
 	public ClusterMarker(GeoClusterer.GeoCluster cluster, List<MarkerBitmap> markerIconBmps, float screenDensity) {
 		cluster_ = cluster;
@@ -110,7 +111,7 @@ public class ClusterMarker extends Overlay {
 		paint_ = new Paint();
 		paint_.setStyle(Paint.Style.STROKE);
 		paint_.setAntiAlias(true);
-		paint_.setColor(Color.WHITE);
+		paint_.setColor(Color.rgb(220, 220, 80));
 		paint_.setTextSize(TXTSIZE * screenDensity_);
 		paint_.setTextAlign(Paint.Align.CENTER);
 		paint_.setTypeface(Typeface.DEFAULT_BOLD);

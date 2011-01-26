@@ -64,6 +64,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	/**
 	 * Liste des points de vente.
 	 */
+	private List<PointDeVente> pointsDeVenteIntent = null;
 	private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>());
 	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>());
 
@@ -163,9 +164,11 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	private ListView listView;
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listpointsdevente);
+		pointsDeVenteIntent = (ArrayList<PointDeVente>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("pointsDeVente"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
@@ -210,7 +213,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				try {
 					synchronized (pointsDeVente) {
 						pointsDeVente.clear();
-						pointsDeVente.addAll(keolis.getPointDeVente());
+						pointsDeVente.addAll(pointsDeVenteIntent == null ? keolis.getPointDeVente() : pointsDeVenteIntent);
 						Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
 							public int compare(PointDeVente o1, PointDeVente o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
