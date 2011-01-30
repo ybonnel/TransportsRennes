@@ -57,7 +57,7 @@
               android:layout_height="30dip"
               android:textSize="20dip"
               android:gravity="center_vertical|left"
-              android:text="Direction :"
+              android:text="@string/directionEntete"
               android:layout_below="@id/iconeLigne"
               android:layout_alignParentLeft="true"/>
 
@@ -74,7 +74,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="30dip"
                   android:textSize="20dip"
-                  android:text="Toutes"
+                  android:text="@string/Toutes"
                   android:gravity="center_vertical|left"
                   android:drawablePadding="2dip"
                   android:drawableRight="@android:drawable/arrow_down_float"/>

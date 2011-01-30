@@ -23,7 +23,7 @@
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
-              android:hint="Recherche d'arrêts"/>
+              android:hint="@string/hint_rechercherarret"/>
 
     <ImageView android:layout_width="fill_parent"
                android:layout_height="wrap_content"

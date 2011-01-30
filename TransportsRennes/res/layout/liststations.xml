@@ -18,7 +18,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <TextView android:id="@+id/enteteGoogleMap"
-              android:text="Visualiser sur GoogleMap"
+              android:text="@string/go_googlemap"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:paddingTop="10dip"
@@ -34,7 +34,7 @@
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
-              android:hint="Recherche de stations" />
+              android:hint="@string/hint_rechercheStation" />
     <ImageView android:layout_width="fill_parent"
                android:layout_height="wrap_content"
             android:paddingTop="4dip"

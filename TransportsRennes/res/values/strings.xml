@@ -46,6 +46,15 @@
         <b/>
         N\'hésitez pas en m\'envoyer toute suggestion ou problème.
     </string>
+    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu...</string>
+    <string name="hint_rechercherarret">Recherche d\'arrêts</string>
+    <string name="listfavori_empty">Aucun favoris trouvé.</string>
+    <string name="go_googlemap">Visualiser sur GoogleMap</string>
+    <string name="hint_rechercheParcRelai">Recherche de Parc Relais</string>
+    <string name="hint_recherchePointDeVente">Recherche de Points de vente</string>
+    <string name="hint_rechercheStation">Recherche de stations</string>
+    <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
+    <string name="directionEntete">Direction :</string>
 
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">VeloStar</string>
@@ -67,4 +76,11 @@
     <string name="menu_accueil">Accueil</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
+
+    <!-- Widget -->
+    <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
+
+    <!-- Génériques -->
+    <string name="Terminer">Terminer</string>
+    <string name="Toutes">Toutes</string>
 </resources>

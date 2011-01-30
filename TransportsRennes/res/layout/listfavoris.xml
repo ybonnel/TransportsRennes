@@ -25,5 +25,5 @@
               android:gravity="center"
               android:textSize="18dip"
               android:padding="10dip"
-              android:text="Aucun favoris trouvé."/>
+              android:text="@string/listfavori_empty"/>
 </LinearLayout>

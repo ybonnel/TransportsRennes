@@ -25,5 +25,5 @@
               android:gravity="center"
               android:textSize="18dip"
               android:padding="10dip"
-              android:text="Aucune station favorite trouvée (appui long sur la liste des stations de vélo pour la rajouter aux favoris)"/>
+              android:text="@string/listevelofavoris_empty"/>
 </LinearLayout>
