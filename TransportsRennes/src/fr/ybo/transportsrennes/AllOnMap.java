@@ -82,17 +82,17 @@ public class AllOnMap extends MapActivity {
 		MapController mapCtrl = mapView.getController();
 
 		Bitmap bitmapBus = BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus);
-		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(35, 60), 20, 100));
-		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(35, 60), 18, 10000));
+		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(25, 35), 20, 100));
+		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(25, 35), 18, 10000));
 
 		Bitmap bitmapVelo = BitmapFactory.decodeResource(getResources(), R.drawable.icone_velo);
-		markerIconBmpsForVelo.add(new MarkerBitmap(bitmapVelo, bitmapVelo, new Point(35, 60), 20, 100));
+		markerIconBmpsForVelo.add(new MarkerBitmap(bitmapVelo, bitmapVelo, new Point(25, 35), 20, 100));
 
 		Bitmap bitmapParc = BitmapFactory.decodeResource(getResources(), R.drawable.icone_parc);
-		markerIconBmpsForParc.add(new MarkerBitmap(bitmapParc, bitmapParc, new Point(35, 60), 20, 10));
+		markerIconBmpsForParc.add(new MarkerBitmap(bitmapParc, bitmapParc, new Point(25, 35), 20, 10));
 
 		Bitmap bitmapPos = BitmapFactory.decodeResource(getResources(), R.drawable.icone_pos);
-		markerIconBmpsForPos.add(new MarkerBitmap(bitmapPos, bitmapPos, new Point(35, 60), 20, 1000));
+		markerIconBmpsForPos.add(new MarkerBitmap(bitmapPos, bitmapPos, new Point(25, 35), 20, 1000));
 
 
 		screenDensity = this.getResources().getDisplayMetrics().density;
