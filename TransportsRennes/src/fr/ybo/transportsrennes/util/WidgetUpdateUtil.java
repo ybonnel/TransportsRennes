@@ -211,7 +211,7 @@ public class WidgetUpdateUtil {
 				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart3.get(1), now)));
 	}
 
-	private static String formatterCalendar(Context context, int prochainDepart, int now) {
+	public static String formatterCalendar(Context context, int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {

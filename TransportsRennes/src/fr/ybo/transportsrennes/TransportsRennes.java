@@ -290,6 +290,7 @@ public class TransportsRennes extends Activity {
 	private final static int GROUP_ID = 0;
 	private final static int MENU_ID = 1;
 	private final static int MENU_MAP_ID = 2;
+	private final static int MENU_LOAD_LINES = 3;
 
 
 	@Override
@@ -299,6 +300,8 @@ public class TransportsRennes extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
+		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
+		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		return true;
 	}
 
@@ -321,7 +324,64 @@ public class TransportsRennes extends Activity {
 				Intent intent = new Intent(this, AllOnMap.class);
 				startActivity(intent);
 				return true;
+			case MENU_LOAD_LINES:
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
+				alertBuilder.setCancelable(false);
+				alertBuilder.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.dismiss();
+						loadAllLines();
+					}
+				});
+				alertBuilder.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, final int id) {
+						dialog.cancel();
+					}
+				});
+				alertBuilder.show();
+				return true;
 		}
 		return false;
+	}
+
+	private void loadAllLines() {
+		myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.infoChargementGtfs), true);
+
+		new AsyncTask<Void, Void, Void>() {
+
+			private boolean erreur = false;
+
+			@Override
+			protected Void doInBackground(final Void... pParams) {
+				try {
+					for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
+						if (ligne.chargee == null || !ligne.chargee) {
+							final String nomLigne = ligne.nomCourt;
+							runOnUiThread(new Runnable() {
+								public void run() {
+									myProgressDialog.setMessage(
+											getString(R.string.infoChargementGtfs) + '\n' + getString(R.string.premierAccesLigne, nomLigne));
+								}
+							});
+							UpdateDataBase.chargeDetailLigne(ligne);
+						}
+					}
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.loadAllLines", exception);
+					erreur = true;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(final Void pResult) {
+				super.onPostExecute(pResult);
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
+				}
+			}
+		}.execute((Void[]) null);
 	}
 }

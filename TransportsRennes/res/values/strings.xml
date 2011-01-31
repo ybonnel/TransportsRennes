@@ -46,6 +46,7 @@
     <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
     <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
+    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (5 minutes sur un Nexus One), et occupera environ 8,5Mo de données, mais vous permettra d\'accéder à tous les horaires en mode offline. Êtes-vous sûr de vouloir les charger?</string>
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">LE vélo STAR</string>
     <string name="btn_velo_favori">Stations favorites</string>
@@ -65,6 +66,7 @@
     <string name="menu_accueil">Accueil</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
+    <string name="menu_loadLines">Charger toutes les lignes</string>
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
     <!-- Génériques -->
