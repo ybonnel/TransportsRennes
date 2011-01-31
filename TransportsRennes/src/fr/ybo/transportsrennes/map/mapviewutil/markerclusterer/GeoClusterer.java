@@ -498,7 +498,7 @@ public class GeoClusterer {
 		 * @return true if selected.
 		 */
 		public boolean isSelected() {
-			return clusterMarker_.isSelected();
+			return clusterMarker_ != null && clusterMarker_.isSelected();
 		}
 
 		/**
