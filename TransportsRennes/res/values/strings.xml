@@ -16,55 +16,38 @@
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
-
     <!-- Messages -->
-    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
-        données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?
-    </string>
+    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?</string>
     <string name="titleInfoAllInMap">Bienvenue dans la carte multi-modale</string>
-    <string name="infoAllInMap">Le but de cette carte est d\'afficher tous les points d\'intérêts de
-        l\'application sur une seule carte. Pour des raisons de lisibilité, il n\'est pas possible d\'afficher tout les points, c\'est donc des regroupements qui
-        sont affichés. Le nombre affiché sur l\'icône est le nombre de points d\'intérêts contenus dans la zone associée. Pour ouvrir le détail
-        correspondant à un regroupement, il suffit de cliquer deux fois de suite sur l\'icône.
-    </string>
-    <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez vous l\'effectuer maintenant? Attention, vous devrez charger à
-        nouveau les horaires que vous avez déjà chargés.
-    </string>
-    <string name="messageLoadLine">Chargement des données de la ligne %s.</string>
-    <string name="infoChargementGtfs">Chargement des données du STAR...</string>
-    <string name="verificationUpdate">Recherche de mise à jour...</string>
-    <string name="rechercheArrets">Recherche des arrêts de bus...</string>
-    <string name="dialogRequeteVeloStar">Interrogation de VeloStar...</string>
-    <string name="dialogRequeteAlerts">Interrogation du STAR...</string>
-    <string name="dialogRequeteTwitter">Interrogation de Twitter...</string>
-    <string name="dialogRequeteParkRelais">Interrogation du STAR...</string>
-    <string name="dialogRequetePointsDeVente">Interrogation du STAR...</string>
-    <string name="dialogAPropos">L\'application Transports Rennes a été développée dans le cadre de l\'ouverture des données du réseau STAR et du
-        service LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).
-        <b/>
-        Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.
-        <b/>
-        N\'hésitez pas en m\'envoyer toute suggestion ou problème.
-    </string>
-    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu...</string>
+    <string name="infoAllInMap">Le but de cette carte est d\'afficher tous les points d\'intérêts de l\'application sur une seule carte. Pour des raisons de lisibilité, il n\'est pas possible d\'afficher tout les points, c\'est donc des regroupements qui sont affichés. Le nombre affiché sur l\'icône est le nombre de points d\'intérêts contenus dans la zone associée. Pour ouvrir le détail correspondant à un regroupement, il suffit de cliquer deux fois de suite sur l\'icône.</string>
+    <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez vous l\'effectuer maintenant? Attention, vous devrez charger à nouveau les horaires que vous avez déjà chargés.</string>
+    <string name="infoChargementGtfs">Chargement des données du STAR.</string>
+    <string name="verificationUpdate">Recherche de mise à jour.</string>
+    <string name="rechercheArrets">Recherche des arrêts de bus.</string>
+    <string name="dialogRequeteVeloStar">Interrogation du service LE vélo STAR.</string>
+    <string name="dialogRequeteAlerts">Interrogation du STAR.</string>
+    <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
+    <string name="dialogRequeteParkRelais">Interrogation du STAR.</string>
+    <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
+    <string name="dialogAPropos">L\'application Transports Rennes a été développée dans le cadre de l\'ouverture des données du réseau STAR et du service LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).<b/>Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.<b/>N\'hésitez pas en m\'envoyer toute suggestion ou problème.</string>
+    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
-    <string name="hint_rechercheParcRelai">Recherche de Parc Relais</string>
+    <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="hint_recherchePointDeVente">Recherche de Points de vente</string>
     <string name="hint_rechercheStation">Recherche de stations</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="directionEntete">Direction :</string>
-    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données...</string>
+    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
     <string name="tooMuchFavoris">Déjà trois arrêts favoris sélectionnés</string>
     <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
     <string name="ajouterFavori">Ajouter aux favoris</string>
     <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
-    <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris...</string>
-
+    <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
     <!-- Libellés des boutons de la pages d'accueil -->
-    <string name="btn_velo">VeloStar</string>
+    <string name="btn_velo">LE vélo STAR</string>
     <string name="btn_velo_favori">Stations favorites</string>
     <string name="btn_bus">Bus</string>
     <string name="btn_bus_favori">Arrêts Favoris</string>
@@ -72,7 +55,6 @@
     <string name="btn_alert">Alertes</string>
     <string name="btn_parking">Parcs relais</string>
     <string name="btn_tickets">Points de vente</string>
-
     <!-- Libellés de menus -->
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
@@ -83,10 +65,8 @@
     <string name="menu_accueil">Accueil</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
-
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
-
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
     <string name="Toutes">Toutes</string>
@@ -105,14 +85,13 @@
     <string name="twitter">Twitter</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
-
     <!-- Erreurs -->
-    <string name="erreur_chargementStar">Une erreur est survenue lors de la récupération des données du STAR sûrement due à un problème réseau, réessayez plus tard...</string>
-    <string name="erreur_interrogationStar">Une erreur est survenu lors de l\'interrogation du STAR sûrement due à un problème réseau, réessayez plus tard...</string>
-    <string name="erreur_interrogationVeloStar">Une erreur est survenu lors de l\'interrogation du service LE vélo STAR sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_chargementStar">Une erreur est survenue lors de la récupération des données du STAR sûrement due à un problème réseau, réessayez plus tard.</string>
+    <string name="erreur_interrogationStar">Une erreur est survenu lors de l\'interrogation du STAR sûrement due à un problème réseau, réessayez plus tard.</string>
+    <string name="erreur_interrogationVeloStar">Une erreur est survenu lors de l\'interrogation du service LE vélo STAR sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="erreur_twitter">Erreur lors de la récupération des messages twitter.</string>
     <string name="erreur_quotaTwitter">Le nombre de demandes à twitter pour votre IP a été dépassée (150/h). Cette limitation sera remise à zero le %1$s</string>
-    <string name="erreur_verifUpdate">Erreur lors de la vérification de mise à jour sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_verifUpdate">Erreur lors de la vérification de mise à jour sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant d\'essayer d\'ajouter des widgets.</string>
     <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
