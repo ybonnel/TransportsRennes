@@ -15,7 +15,6 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -27,16 +26,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.*;
+import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -133,8 +124,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			}
 		}
 		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'activer votre GPS.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -178,7 +168,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liststations);
-		stationIntent = (ArrayList<Station>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("stations"));
+		stationIntent = (ArrayList<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("stations"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
@@ -203,12 +193,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				String _lat = Double.toString(station.getLatitude());
 				String _lon = Double.toString(station.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 
@@ -259,8 +244,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					activeGps();
 					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
-							Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
 					toast.show();
 					ListStationsByPosition.this.finish();
 				}
@@ -298,8 +282,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 								stations.clear();
 								if (stationIntent == null) {
 									stations.addAll(keolis.getStations());
-								}
-								else {
+								} else {
 									ArrayList<String> ids = new ArrayList<String>();
 									for (Station station : stationIntent) {
 										ids.add(station.number);
@@ -332,8 +315,8 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 							mettreAjoutLoc(lastLocation);
 							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 						} else {
-							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
-									Toast.LENGTH_LONG);
+							Toast toast =
+									Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
 							toast.show();
 							ListStationsByPosition.this.finish();
 						}
@@ -356,7 +339,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
 			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-					veloFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
+					veloFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.ajouterFavori));
 		}
 	}
 

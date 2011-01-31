@@ -23,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
@@ -32,13 +31,11 @@ import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class FavoriAdapter extends BaseAdapter {
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final static LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
 
@@ -49,11 +46,13 @@ public class FavoriAdapter extends BaseAdapter {
 	private int now;
 	private Calendar calendar;
 	private Calendar calendarLaVeille;
+	private Context myContext;
 
 	public FavoriAdapter(final Context context, final List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.favoris = favoris;
+		myContext = context;
 		majCalendar();
 	}
 
@@ -235,30 +234,34 @@ public class FavoriAdapter extends BaseAdapter {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
-			stringBuilder.append("Trop tard!");
+			stringBuilder.append(myContext.getString(R.string.tropTard));
 		} else {
 			int heures = tempsEnMinutes / 60;
 			int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
-				stringBuilder.append(" h ");
+				stringBuilder.append(' ');
+				stringBuilder.append(myContext.getString(R.string.miniHeures));
+				stringBuilder.append(' ');
 				tempsAjoute = true;
 			}
 			if (minutes > 0) {
 				if (heures <= 0) {
 					stringBuilder.append(minutes);
-					stringBuilder.append(" min");
+					stringBuilder.append(' ');
+					stringBuilder.append(myContext.getString(R.string.miniMinutes));
 				} else {
 					if (minutes < 10) {
-						stringBuilder.append("0");
+						stringBuilder.append('0');
 					}
 					stringBuilder.append(minutes);
 				}
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
-				stringBuilder.append("0 min");
+				stringBuilder.append("0 ");
+				stringBuilder.append(myContext.getString(R.string.miniMinutes));
 			}
 		}
 		return stringBuilder.toString();

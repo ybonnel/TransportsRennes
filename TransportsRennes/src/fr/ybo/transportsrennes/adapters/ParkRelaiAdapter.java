@@ -41,16 +41,15 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 
 	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
 
-	static {
-		MAP_STATES.put(1, "Fermé");
-		MAP_STATES.put(2, "Complet");
-		MAP_STATES.put(3, "Indispo.");
-	}
-
 	private LayoutInflater inflater;
 
 	public ParkRelaiAdapter(Context context, List<ParkRelai> objects) {
 		super(context, R.layout.dispoparkrelai, objects);
+		if (MAP_STATES.isEmpty()) {
+			MAP_STATES.put(1, context.getString(R.string.ferme));
+			MAP_STATES.put(2, context.getString(R.string.complet));
+			MAP_STATES.put(3, context.getString(R.string.indisponible));
+		}
 		parkRelais = objects;
 		inflater = LayoutInflater.from(getContext());
 	}

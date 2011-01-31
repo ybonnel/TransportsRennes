@@ -94,9 +94,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 				((ArrayAdapter<Alert>) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							"Une erreur est survenu lors de l'interrogation du STAR, si cela persiste envoyez un mail au développeur.",
-							Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
 					ListAlerts.this.finish();
 				}

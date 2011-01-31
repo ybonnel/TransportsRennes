@@ -17,7 +17,6 @@ package fr.ybo.transportsrennes;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
@@ -28,14 +27,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -120,7 +112,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void gestionViewsTitle() {
 		((TextView) findViewById(R.id.nomLong)).setText(favori.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
-		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + " vers " + favori.direction);
+		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + " " + getString(R.string.vers) + " " + favori.direction);
 	}
 
 	private DetailArretAdapter construireAdapter() {
@@ -233,12 +225,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				String _lat = Double.toString(arret.getLatitude());
 				String _lon = Double.toString(arret.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + _lat + "," + _lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 		myLigne = new Ligne();
@@ -385,9 +372,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				myProgressDialog = ProgressDialog
-						.show(DetailArret.this, "", "Premier accès aux horaires de la ligne " + myLigne.nomCourt + ", chargement des données...",
-								true);
+				myProgressDialog = ProgressDialog.show(DetailArret.this, "", getString(R.string.premierAccesLigne, myLigne.nomCourt), true);
 			}
 
 			@Override
@@ -405,9 +390,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
 				if (erreur) {
-					Toast.makeText(DetailArret.this,
-							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(DetailArret.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
 					DetailArret.this.finish();
 				} else {
 					setListAdapter(construireAdapter());

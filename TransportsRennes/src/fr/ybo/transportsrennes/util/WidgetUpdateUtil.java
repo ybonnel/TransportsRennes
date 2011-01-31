@@ -26,30 +26,24 @@ import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.TransportsWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class WidgetUpdateUtil {
-
-	private static final LogYbo LOG_YBO = new LogYbo(WidgetUpdateUtil.class);
 
 	public static void updateAppWidget(Context context, RemoteViews views, ArrayList<ArretFavori> favoris) {
 
 		switch (favoris.size()) {
 			case 1:
 				updateAppWidget1Arret(context, views, favoris.get(0));
-				remplirRemoteViews1Arret(views, favoris);
+				remplirRemoteViews1Arret(context, views, favoris);
 				break;
 			case 2:
 				updateAppWidget2Arret(context, views, favoris.get(0), favoris.get(1));
-				remplirRemoteViews2Arret(views, favoris);
+				remplirRemoteViews2Arret(context, views, favoris);
 				break;
 			case 3:
 				updateAppWidget3Arret(context, views, favoris.get(0), favoris.get(1), favoris.get(2));
-				remplirRemoteViews3Arret(views, favoris);
+				remplirRemoteViews3Arret(context, views, favoris);
 				break;
 		}
 	}
@@ -61,7 +55,6 @@ public class WidgetUpdateUtil {
 		views.setImageViewResource(R.id.iconeLigne_1arret, IconeLigne.getIconeResource(favori.nomCourt));
 		Intent intent = new Intent(context, TransportsWidget.class);
 		intent.setAction("YboClick_" + favori.arretId + "_" + favori.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent.getAction());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
 		views.setViewVisibility(R.id.layout_1arret, View.VISIBLE);
@@ -78,12 +71,10 @@ public class WidgetUpdateUtil {
 		views.setImageViewResource(R.id.iconeLigne2_2arret, IconeLigne.getIconeResource(favori2.nomCourt));
 		final Intent intent1 = new Intent(context, TransportsWidget.class);
 		intent1.setAction("YboClick_" + favori1.arretId + "_" + favori1.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent1.getAction());
 		PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.layout_2arret_1, pendingIntent1);
 		Intent intent2 = new Intent(context, TransportsWidget.class);
 		intent2.setAction("YboClick_" + favori2.arretId + "_" + favori2.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent2.getAction());
 		PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.layout_2arret_2, pendingIntent2);
 		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
@@ -103,17 +94,14 @@ public class WidgetUpdateUtil {
 		views.setImageViewResource(R.id.iconeLigne3_3arret, IconeLigne.getIconeResource(favori3.nomCourt));
 		final Intent intent1 = new Intent(context, TransportsWidget.class);
 		intent1.setAction("YboClick_" + favori1.arretId + "_" + favori1.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent1.getAction());
 		PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.layout_3arret_1, pendingIntent1);
 		Intent intent2 = new Intent(context, TransportsWidget.class);
 		intent2.setAction("YboClick_" + favori2.arretId + "_" + favori2.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent2.getAction());
 		PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.layout_3arret_2, pendingIntent2);
 		Intent intent3 = new Intent(context, TransportsWidget.class);
 		intent3.setAction("YboClick_" + favori3.arretId + "_" + favori3.ligneId);
-		LOG_YBO.debug("Action dans l'intent : " + intent3.getAction());
 		PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
 		views.setOnClickPendingIntent(R.id.layout_3arret_3, pendingIntent3);
 		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
@@ -176,71 +164,74 @@ public class WidgetUpdateUtil {
 		return mapProchainsDepart;
 	}
 
-	public static void remplirRemoteViews1Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
+	public static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Map<Integer, Integer> mapProchainsDepart = requete(favoris.get(0), 4, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant1_1arret,
-				mapProchainsDepart.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant2_1arret,
-				mapProchainsDepart.get(2) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(2), now));
-		remoteViews.setTextViewText(R.id.tempsRestant3_1arret,
-				mapProchainsDepart.get(3) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(3), now));
-		remoteViews.setTextViewText(R.id.tempsRestant4_1arret,
-				mapProchainsDepart.get(4) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart.get(4), now));
+		remoteViews.setTextViewText(R.id.tempsRestant1_1arret, mapProchainsDepart.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart.get(1), now)));
+		remoteViews.setTextViewText(R.id.tempsRestant2_1arret, mapProchainsDepart.get(2) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart.get(2), now)));
+		remoteViews.setTextViewText(R.id.tempsRestant3_1arret, mapProchainsDepart.get(3) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart.get(3), now)));
+		remoteViews.setTextViewText(R.id.tempsRestant4_1arret, mapProchainsDepart.get(4) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart.get(4), now)));
 
 	}
 
-	public static void remplirRemoteViews2Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
+	public static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 2, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant11_2arret,
-				mapProchainsDepart1.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart1.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant12_2arret,
-				mapProchainsDepart1.get(2) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart1.get(2), now));
+		remoteViews.setTextViewText(R.id.tempsRestant11_2arret, mapProchainsDepart1.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart1.get(1), now)));
+		remoteViews.setTextViewText(R.id.tempsRestant12_2arret, mapProchainsDepart1.get(2) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart1.get(2), now)));
 		Map<Integer, Integer> mapProchainsDepart2 = requete(favoris.get(1), 2, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant21_2arret,
-				mapProchainsDepart2.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart2.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant22_2arret,
-				mapProchainsDepart2.get(2) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart2.get(2), now));
+		remoteViews.setTextViewText(R.id.tempsRestant21_2arret, mapProchainsDepart2.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart2.get(1), now)));
+		remoteViews.setTextViewText(R.id.tempsRestant22_2arret, mapProchainsDepart2.get(2) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart2.get(2), now)));
 	}
 
-	public static void remplirRemoteViews3Arret(RemoteViews remoteViews, List<ArretFavori> favoris) {
+	public static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant1_3arret,
-				mapProchainsDepart1.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart1.get(1), now));
+		remoteViews.setTextViewText(R.id.tempsRestant1_3arret, mapProchainsDepart1.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart1.get(1), now)));
 
 		Map<Integer, Integer> mapProchainsDepart2 = requete(favoris.get(1), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant2_3arret,
-				mapProchainsDepart2.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart2.get(1), now));
+		remoteViews.setTextViewText(R.id.tempsRestant2_3arret, mapProchainsDepart2.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart2.get(1), now)));
 
 		Map<Integer, Integer> mapProchainsDepart3 = requete(favoris.get(2), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant3_3arret,
-				mapProchainsDepart3.get(1) == null ? "" : "dans " + formatterCalendar(mapProchainsDepart3.get(1), now));
+		remoteViews.setTextViewText(R.id.tempsRestant3_3arret, mapProchainsDepart3.get(1) == null ? "" :
+				(context.getString(R.string.dans) + " " + formatterCalendar(context, mapProchainsDepart3.get(1), now)));
 	}
 
-	private static String formatterCalendar(int prochainDepart, int now) {
+	private static String formatterCalendar(Context context, int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
-			stringBuilder.append("Trop tard!");
+			stringBuilder.append(context.getString(R.string.tropTard));
 		} else {
 			int heures = tempsEnMinutes / 60;
 			int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
-				stringBuilder.append(" h ");
+				stringBuilder.append(' ');
+				stringBuilder.append(context.getString(R.string.miniHeures));
+				stringBuilder.append(' ');
 				tempsAjoute = true;
 			}
 			if (minutes > 0) {
 				if (heures <= 0) {
 					stringBuilder.append(minutes);
-					stringBuilder.append(" min");
+					stringBuilder.append(' ');
+					stringBuilder.append(context.getString(R.string.miniMinutes));
 				} else {
 					if (minutes < 10) {
 						stringBuilder.append("0");
@@ -250,7 +241,8 @@ public class WidgetUpdateUtil {
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
-				stringBuilder.append("0 min");
+				stringBuilder.append("0 ");
+				stringBuilder.append(context.getString(R.string.miniMinutes));
 			}
 		}
 		return stringBuilder.toString();

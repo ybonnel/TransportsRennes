@@ -37,12 +37,14 @@ public class TabAlertes extends TabActivity {
 		intent = new Intent().setClass(this, ListAlerts.class);
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("alertes").setIndicator("Alertes", res.getDrawable(android.R.drawable.ic_dialog_alert)).setContent(intent);
+		spec = tabHost.newTabSpec("alertes").setIndicator(getString(R.string.alertes), res.getDrawable(android.R.drawable.ic_dialog_alert))
+				.setContent(intent);
 		tabHost.addTab(spec);
 
 		// Do the same for the other tabs
 		intent = new Intent().setClass(this, ListTwitter.class);
-		spec = tabHost.newTabSpec("twitter").setIndicator("Twitter", res.getDrawable(R.drawable.ic_menu_twitter)).setContent(intent);
+		spec = tabHost.newTabSpec("twitter").setIndicator(getString(R.string.twitter), res.getDrawable(R.drawable.ic_menu_twitter))
+				.setContent(intent);
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTab(0);

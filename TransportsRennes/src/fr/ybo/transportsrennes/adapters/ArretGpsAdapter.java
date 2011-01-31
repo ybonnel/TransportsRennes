@@ -32,8 +32,6 @@ import java.util.List;
  */
 public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
-	private final static Class<?> classDrawable = R.drawable.class;
-
 	private List<Arret> arrets;
 	private LayoutInflater inflater;
 

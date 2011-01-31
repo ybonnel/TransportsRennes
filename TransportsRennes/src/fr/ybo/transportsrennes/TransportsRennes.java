@@ -130,9 +130,7 @@ public class TransportsRennes extends Activity {
 					super.onPostExecute(pResult);
 					myProgressDialog.dismiss();
 					if (erreur) {
-						Toast.makeText(TransportsRennes.this,
-								"Erreur lors de la vérification de mise à jour, si cela se reproduit, envoyer un mail au développeur...",
-								Toast.LENGTH_LONG).show();
+						Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG).show();
 						if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
 							LOG_YBO.warn(
 									"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
@@ -198,8 +196,6 @@ public class TransportsRennes extends Activity {
 	private void upgradeDatabase() {
 		myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.infoChargementGtfs), true);
 
-		LOG_YBO.debug("###### Lancement de la mise à jour ");
-
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
@@ -222,8 +218,8 @@ public class TransportsRennes extends Activity {
 						final String nomLigne = ligne.nomCourt;
 						runOnUiThread(new Runnable() {
 							public void run() {
-								myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + "\nChargement de la ligne " + nomLigne +
-										" dont vous avez des favoris...");
+								myProgressDialog
+										.setMessage(getString(R.string.infoChargementGtfs) + getString(R.string.chargementLigneFavori, nomLigne));
 							}
 						});
 						UpdateDataBase.chargeDetailLigne(ligne);
@@ -238,12 +234,9 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
-				LOG_YBO.debug("###### Fin de la mise à jour ");
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast.makeText(TransportsRennes.this,
-							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
 					TransportsRennes.this.finish();
 				}
 			}
@@ -259,21 +252,21 @@ public class TransportsRennes extends Activity {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
 			builder.setCancelable(false);
-			builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+			builder.setPositiveButton(getString(R.string.oui), new DialogInterface.OnClickListener() {
 				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					TransportsRennes.this.upgradeDatabase();
 				}
 			});
 			if (dernierMiseAJour == null) {
-				builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+				builder.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
 					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.cancel();
 						TransportsRennes.this.finish();
 					}
 				});
 			} else {
-				builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
+				builder.setNegativeButton(getString(R.string.non), new DialogInterface.OnClickListener() {
 					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.cancel();
 					}

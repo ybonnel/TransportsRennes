@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -52,7 +53,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 	private void chargerLigne() {
 
-		myProgressDialog = ProgressDialog.show(activity, "", "Premier accès à la ligne " + ligne.nomCourt + ", chargement des données...", true);
+		myProgressDialog = ProgressDialog.show(activity, "", activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -74,9 +75,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast.makeText(activity,
-							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(activity, activity.getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
 					activity.finish();
 				}
 			}
@@ -108,7 +107,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				imageView.setImageResource(android.R.drawable.btn_star_big_off);
 				imageView.invalidate();
 			} else {
-				Toast.makeText(activity, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();
+				Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG)
+						.show();
 			}
 		}
 	}

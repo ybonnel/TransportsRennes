@@ -114,7 +114,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
-			menu.add(Menu.NONE, R.id.supprimerFavori, 0, "Supprimer des favoris");
+			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
 		}
 	}
 
@@ -132,8 +132,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 					((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
 					((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
 				}
 				return true;
 			default:

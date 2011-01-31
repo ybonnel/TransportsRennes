@@ -32,7 +32,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FavoriAdapterForWidget extends BaseAdapter {
-	private final static Class<?> classDrawable = R.drawable.class;
 
 	private final LayoutInflater mInflater;
 
@@ -106,7 +105,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 					if (favorisSelectionnes.size() < 3) {
 						favorisSelectionnes.add(position);
 					} else {
-						Toast.makeText(mContext, "Déjà trois arrêts favoris sélectionnés", Toast.LENGTH_SHORT).show();
+						Toast.makeText(mContext, mContext.getString(R.string.tooMuchFavoris), Toast.LENGTH_SHORT).show();
 						checkBox.setChecked(false);
 						checkBox.invalidate();
 					}

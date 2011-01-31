@@ -74,14 +74,15 @@ public class ListArret extends MenuAccueil.ListActivity {
 		}
 		cursor.close();
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Choisissez une direction");
-		items.add("Toutes");
+		builder.setTitle(getString(R.string.chooseDirection));
+		final String toutes = getString(R.string.Toutes);
+		items.add(toutes);
 		Collections.sort(items, new Comparator<String>() {
 			public int compare(String o1, String o2) {
-				if ("Toutes".equals(o1)) {
+				if (toutes.equals(o1)) {
 					return -1;
 				}
-				if ("Toutes".equals(o2)) {
+				if (toutes.equals(o2)) {
 					return 1;
 				}
 				return o1.compareToIgnoreCase(o2);
@@ -89,7 +90,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		});
 		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialogInterface, int item) {
-				currentDirection = items.get(item).equals("Toutes") ? null : items.get(item);
+				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
 				construireListe();
 				((TextView) findViewById(R.id.directionArretCourante)).setText(items.get(item));
 				findViewById(R.id.directionArretCouranteScroll).invalidate();

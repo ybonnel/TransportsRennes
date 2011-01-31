@@ -15,7 +15,6 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -31,11 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -130,8 +125,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			}
 		}
 		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'activer votre GPS.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -199,12 +193,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				String _lat = Double.toString(parkRelai.getLatitude());
 				String _lon = Double.toString(parkRelai.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + _lat + "," + _lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 
@@ -255,8 +244,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					activeGps();
 					((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast =
-							Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
 					ListParkRelais.this.finish();
 				}
@@ -331,8 +319,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 							mettreAjoutLoc(lastLocation);
 							((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
 						} else {
-							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...",
-									Toast.LENGTH_LONG);
+							Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 							toast.show();
 							ListParkRelais.this.finish();
 						}

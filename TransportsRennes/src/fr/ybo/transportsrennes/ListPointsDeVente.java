@@ -15,7 +15,6 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -123,8 +122,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			}
 		}
 		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'activer votre GPS.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -168,7 +166,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listpointsdevente);
-		pointsDeVenteIntent = (ArrayList<PointDeVente>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("pointsDeVente"));
+		pointsDeVenteIntent =
+				(ArrayList<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("pointsDeVente"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
@@ -192,12 +191,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				String _lat = Double.toString(pointDeVente.getLatitude());
 				String _lon = Double.toString(pointDeVente.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + _lat + "," + _lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 
@@ -235,7 +229,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
-				if (!erreur) {findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+				if (!erreur) {
+					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 						public void onClick(View view) {
 							Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
 							ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>();
@@ -247,8 +242,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 					activeGps();
 					((ArrayAdapter<PointDeVente>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast =
-							Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation du STAR...", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
 					ListPointsDeVente.this.finish();
 				}

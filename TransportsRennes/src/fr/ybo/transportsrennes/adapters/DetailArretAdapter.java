@@ -29,8 +29,11 @@ public class DetailArretAdapter extends CursorAdapter {
 
 	private LayoutInflater inflater;
 
+	private Context myContext;
+
 	public DetailArretAdapter(Context context, Cursor cursor, int now) {
 		super(context, cursor);
+		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
 		prochainDepartCol = cursor.getColumnIndex("_id");
@@ -64,24 +67,29 @@ public class DetailArretAdapter extends CursorAdapter {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
-			stringBuilder.append("Trop tard!");
+			stringBuilder.append(myContext.getString(R.string.tropTard));
 		} else {
-			stringBuilder.append("dans ");
+			stringBuilder.append(myContext.getString(R.string.dans));
+			stringBuilder.append(' ');
 			int heures = tempsEnMinutes / 60;
 			int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
-				stringBuilder.append(" heures ");
+				stringBuilder.append(' ');
+				stringBuilder.append(myContext.getString(R.string.heures));
+				stringBuilder.append(' ');
 				tempsAjoute = true;
 			}
 			if (minutes > 0) {
 				stringBuilder.append(minutes);
-				stringBuilder.append(" minutes");
+				stringBuilder.append(' ');
+				stringBuilder.append(myContext.getString(R.string.minutes));
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
-				stringBuilder.append("0 minutes");
+				stringBuilder.append("0 ");
+				stringBuilder.append(myContext.getString(R.string.minutes));
 			}
 		}
 		return stringBuilder.toString();

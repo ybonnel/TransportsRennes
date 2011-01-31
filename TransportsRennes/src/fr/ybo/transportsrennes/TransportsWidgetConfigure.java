@@ -37,22 +37,17 @@ import java.util.Map;
 
 public class TransportsWidgetConfigure extends ListActivity {
 
-	private final static LogYbo LOG_YBO = new LogYbo(TransportsWidgetConfigure.class);
-
 	private int appWidgetId;
 	private List<ArretFavori> favoris;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		LOG_YBO.debug("onCreate");
 		Intent launchIntent = getIntent();
 		Bundle extras = launchIntent.getExtras();
 		appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
-		LOG_YBO.debug("appWidgetId : " + appWidgetId);
 		// If they gave us an intent without the widget id, just bail.
 		if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
-			LOG_YBO.debug("finish");
 			finish();
 		}
 
@@ -63,14 +58,13 @@ public class TransportsWidgetConfigure extends ListActivity {
 		setContentView(R.layout.configurewidget);
 
 		if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-			Toast.makeText(this, "Vous n'avez pas encore lancé l'application, veuillez la lancer avant d'essayer d'ajouter des widgets.",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
 			finish();
 			return;
 		}
 		favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
 		if (favoris.isEmpty()) {
-			Toast.makeText(this, "Vous n'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, getString(R.string.erreur_widgetWithNoFavori), Toast.LENGTH_LONG).show();
 			finish();
 			return;
 		}
@@ -87,7 +81,7 @@ public class TransportsWidgetConfigure extends ListActivity {
 				FavoriAdapterForWidget favoriAdapter = (FavoriAdapterForWidget) getListAdapter();
 				List<ArretFavori> favorisSelectionnes = favoriAdapter.getFavorisSelectionnes();
 				if (favorisSelectionnes.isEmpty()) {
-					Toast.makeText(TransportsWidgetConfigure.this, "Sélectionnez au moins un arrêt favori.", Toast.LENGTH_SHORT).show();
+					Toast.makeText(TransportsWidgetConfigure.this, getString(R.string.erreur_auMoinsUnFavori), Toast.LENGTH_SHORT).show();
 				} else {
 					saveSettings(TransportsWidgetConfigure.this, appWidgetId, favorisSelectionnes);
 					AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidgetConfigure.this);
@@ -163,20 +157,17 @@ public class TransportsWidgetConfigure extends ListActivity {
 			}
 		}
 		for (ArretFavori favoriWidget : favori1.values()) {
-			if (favori.arretId.equals(favoriWidget.arretId)
-					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+			if (favori.arretId.equals(favoriWidget.arretId) && favori.ligneId.equals(favoriWidget.ligneId)) {
 				return false;
 			}
 		}
 		for (ArretFavori favoriWidget : favori2.values()) {
-			if (favori.arretId.equals(favoriWidget.arretId)
-					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+			if (favori.arretId.equals(favoriWidget.arretId) && favori.ligneId.equals(favoriWidget.ligneId)) {
 				return false;
 			}
 		}
 		for (ArretFavori favoriWidget : favori3.values()) {
-			if (favori.arretId.equals(favoriWidget.arretId)
-					&& favori.ligneId.equals(favoriWidget.ligneId)) {
+			if (favori.arretId.equals(favoriWidget.arretId) && favori.ligneId.equals(favoriWidget.ligneId)) {
 				return false;
 			}
 		}

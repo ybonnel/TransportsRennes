@@ -55,6 +55,13 @@
     <string name="hint_rechercheStation">Recherche de stations</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="directionEntete">Direction :</string>
+    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données...</string>
+    <string name="tooMuchFavoris">Déjà trois arrêts favoris sélectionnés</string>
+    <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
+    <string name="ajouterFavori">Ajouter aux favoris</string>
+    <string name="suprimerFavori">Supprimer des favoris</string>
+    <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
+    <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris...</string>
 
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">VeloStar</string>
@@ -83,4 +90,30 @@
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
     <string name="Toutes">Toutes</string>
+    <string name="vers">vers</string>
+    <string name="tropTard">Trop tard!</string>
+    <string name="dans">dans</string>
+    <string name="heures">heures</string>
+    <string name="minutes">minutes</string>
+    <string name="miniHeures">h</string>
+    <string name="miniMinutes">min</string>
+    <string name="ferme">Fermé</string>
+    <string name="complet">Complet</string>
+    <string name="indisponible">Indispo.</string>
+    <string name="chooseDirection">Choisissez une direction</string>
+    <string name="alertes">Alertes</string>
+    <string name="twitter">Twitter</string>
+    <string name="oui">Oui</string>
+    <string name="non">Non</string>
+
+    <!-- Erreurs -->
+    <string name="erreur_chargementStar">Une erreur est survenue lors de la récupération des données du STAR sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_interrogationStar">Une erreur est survenu lors de l\'interrogation du STAR sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_interrogationVeloStar">Une erreur est survenu lors de l\'interrogation du service LE vélo STAR sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_twitter">Erreur lors de la récupération des messages twitter.</string>
+    <string name="erreur_quotaTwitter">Le nombre de demandes à twitter pour votre IP a été dépassée (150/h). Cette limitation sera remise à zero le %1$s</string>
+    <string name="erreur_verifUpdate">Erreur lors de la vérification de mise à jour sûrement due à un problème réseau, réessayez plus tard...</string>
+    <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant d\'essayer d\'ajouter des widgets.</string>
+    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
+    <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
 </resources>

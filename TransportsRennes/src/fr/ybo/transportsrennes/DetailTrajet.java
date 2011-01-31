@@ -65,7 +65,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	private void gestionViewsTitle() {
 		((TextView) findViewById(R.id.nomLong)).setText(ligne.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
-		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText("Vers " + direction.direction);
+		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText(getString(R.string.vers) + " " + direction.direction);
 	}
 
 	@Override

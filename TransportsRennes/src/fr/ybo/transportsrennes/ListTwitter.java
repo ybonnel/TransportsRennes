@@ -89,11 +89,9 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 				((TwitterAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (rateLimit) {
-					Toast.makeText(ListTwitter.this,
-							"Le nombre de demandes à twitter pour votre IP a été dépassée (150/h). Cette limitation sera remise à zero le " + dateReset,
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(ListTwitter.this, getString(R.string.erreur_quotaTwitter, dateReset), Toast.LENGTH_LONG).show();
 				} else if (erreur) {
-					Toast.makeText(ListTwitter.this, "Erreur lors de la récupération des messages twitter.", Toast.LENGTH_LONG).show();
+					Toast.makeText(ListTwitter.this, getString(R.string.erreur_twitter), Toast.LENGTH_LONG).show();
 					ListTwitter.this.finish();
 				}
 			}

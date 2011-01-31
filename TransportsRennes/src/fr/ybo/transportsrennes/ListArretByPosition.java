@@ -120,8 +120,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			}
 		}
 		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), "Pour mieux profiter de cette page, il est préférable d'activer votre GPS.", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -163,7 +162,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
-		arretsIntent = (List<Arret>)(getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("arrets"));
+		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
@@ -285,7 +284,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(arret.nom);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-					arretFavori == null ? "Ajouter aux favoris" : "Supprimer des favoris");
+					arretFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.suprimerFavori));
 		}
 	}
 
@@ -312,7 +311,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {
-					Toast.makeText(this, "Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.", Toast.LENGTH_LONG).show();
+					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG)
+							.show();
 				}
 				return true;
 			default:
@@ -324,7 +324,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	private void chargerLigne(final Ligne myLigne) {
 
-		myProgressDialog = ProgressDialog.show(this, "", "Premier accès à la ligne " + myLigne.nomCourt + ", chargement des données...", true);
+		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.premierAccesLigne, myLigne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -347,7 +347,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(ListArretByPosition.this,
-							"Une erreur est survenue lors de la récupération des données du STAR, réessayez plus tard, si cela persiste, envoyer un mail au développeur...",
+							getString(R.string.erreur_chargementStar),
 							Toast.LENGTH_LONG).show();
 					ListArretByPosition.this.finish();
 				}

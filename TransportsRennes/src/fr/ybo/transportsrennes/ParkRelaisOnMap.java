@@ -18,9 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import com.google.android.maps.*;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
-import fr.ybo.transportsrennes.map.MapItemizedOverlayVelo;
 import fr.ybo.transportsrennes.util.Formatteur;
 
 import java.util.HashMap;
@@ -31,12 +29,6 @@ public class ParkRelaisOnMap extends MapActivity {
 
 	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
 
-	static {
-		MAP_STATES.put(1, "Fermé");
-		MAP_STATES.put(2, "Complet");
-		MAP_STATES.put(3, "Indisponible");
-	}
-
 	/**
 	 * Called when the activity is first created.
 	 */
@@ -45,6 +37,11 @@ public class ParkRelaisOnMap extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
+		if (MAP_STATES.isEmpty()) {
+			MAP_STATES.put(1, getString(R.string.ferme));
+			MAP_STATES.put(2, getString(R.string.complet));
+			MAP_STATES.put(3, getString(R.string.indisponible));
+		}
 
 		List<ParkRelai> parkRelais = (List<ParkRelai>) getIntent().getExtras().getSerializable("parkRelais");
 

@@ -15,7 +15,6 @@
 package fr.ybo.transportsrennes;
 
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -75,12 +74,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				String _lat = Double.toString(station.getLatitude());
 				String _lon = Double.toString(station.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(getApplicationContext(), "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 
@@ -124,8 +118,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				if (!erreur) {
 					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
-							Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
 					toast.show();
 					ListStationsFavoris.this.finish();
 				}
@@ -190,8 +183,8 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 						if (!erreur) {
 							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
 						} else {
-							Toast toast = Toast.makeText(getApplicationContext(), "Une erreur est survenu lors de l'interrogation de VeloStar...",
-									Toast.LENGTH_LONG);
+							Toast toast =
+									Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
 							toast.show();
 							ListStationsFavoris.this.finish();
 						}
@@ -210,7 +203,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			Station station = (Station) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
-			menu.add(Menu.NONE, R.id.supprimerFavori, 0, "Supprimer des favoris");
+			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
 		}
 	}
 

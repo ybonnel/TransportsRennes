@@ -119,7 +119,7 @@ public class ArretAdapter extends CursorAdapter {
 		final String arretId = favori.arretId;
 		final ViewHolder holder = (ViewHolder) view.getTag();
 		holder.nomArret.setText(name);
-		holder.directionArret.setText("vers " + direction);
+		holder.directionArret.setText(context.getString(R.string.vers) + " " + direction);
 		holder.isFavori.setImageResource(
 				TransportsRennesApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off :
 						android.R.drawable.btn_star_big_on);

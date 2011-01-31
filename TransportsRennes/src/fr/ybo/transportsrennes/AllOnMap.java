@@ -108,7 +108,7 @@ public class AllOnMap extends MapActivity {
 		builder.setView(LayoutInflater.from(this).inflate(R.layout.infoallinmap, null));
 		builder.setTitle(R.string.titleInfoAllInMap);
 		builder.setCancelable(false);
-		builder.setNeutralButton("Terminer", new DialogInterface.OnClickListener() {
+		builder.setNeutralButton(getString(R.string.Terminer), new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialogInterface, int i) {
 				dialogInterface.cancel();
 			}
