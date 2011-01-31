@@ -141,6 +141,9 @@ public class Alert implements Serializable {
 		String titleFormate = title;
 		while (caracToDelete.contains(titleFormate.charAt(0))) {
 			titleFormate = titleFormate.substring(1);
+			if (titleFormate.startsWith("TTZ")) {
+				titleFormate = titleFormate.substring(3);
+			}
 		}
 		return Formatteur.formatterChaine(titleFormate);
 	}
