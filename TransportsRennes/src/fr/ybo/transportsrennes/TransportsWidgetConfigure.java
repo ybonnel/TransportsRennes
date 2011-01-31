@@ -28,7 +28,6 @@ import fr.ybo.transportsrennes.adapters.FavoriAdapterForWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
