@@ -58,13 +58,17 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		setListAdapter(new TwitterAdapter(this, allStatus));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteTwitter), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
 			private boolean rateLimit = false;
 			private String dateReset = null;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListTwitter.this, "", getString(R.string.dialogRequeteTwitter), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -85,7 +89,6 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
-				super.onPostExecute(pResult);
 				((TwitterAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (rateLimit) {
@@ -94,6 +97,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 					Toast.makeText(ListTwitter.this, getString(R.string.erreur_twitter), Toast.LENGTH_LONG).show();
 					ListTwitter.this.finish();
 				}
+				super.onPostExecute(pResult);
 			}
 		}.execute();
 	}

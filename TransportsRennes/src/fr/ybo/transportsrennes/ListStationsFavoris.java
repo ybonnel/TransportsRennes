@@ -80,10 +80,15 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "", getString(R.string.dialogRequeteVeloStar), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -113,7 +118,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
-				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
 				if (!erreur) {
 					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
@@ -122,6 +126,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					toast.show();
 					ListStationsFavoris.this.finish();
 				}
+				super.onPostExecute(pResult);
 			}
 		}.execute();
 	}
@@ -144,11 +149,15 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 		switch (item.getItemId()) {
 			case MENU_REFRESH:
-
-				myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 				new AsyncTask<Void, Void, Void>() {
 
 					private boolean erreur = false;
+
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "", getString(R.string.dialogRequeteVeloStar), true);
+					}
 
 					@Override
 					protected Void doInBackground(final Void... pParams) {
@@ -178,7 +187,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					@Override
 					@SuppressWarnings("unchecked")
 					protected void onPostExecute(final Void pResult) {
-						super.onPostExecute(pResult);
 						myProgressDialog.dismiss();
 						if (!erreur) {
 							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
@@ -188,6 +196,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 							toast.show();
 							ListStationsFavoris.this.finish();
 						}
+						super.onPostExecute(pResult);
 					}
 				}.execute();
 				return true;

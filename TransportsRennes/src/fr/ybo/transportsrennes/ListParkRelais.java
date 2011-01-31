@@ -30,7 +30,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -199,10 +203,15 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteParkRelais), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListParkRelais.this, "", getString(R.string.dialogRequeteParkRelais), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -229,7 +238,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
-				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
 				if (!erreur) {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
@@ -248,6 +256,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					toast.show();
 					ListParkRelais.this.finish();
 				}
+				super.onPostExecute(pResult);
 			}
 		}.execute();
 	}
@@ -270,10 +279,15 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 		switch (item.getItemId()) {
 			case MENU_REFRESH:
-				myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 				new AsyncTask<Void, Void, Void>() {
 
 					private boolean erreur = false;
+
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						myProgressDialog = ProgressDialog.show(ListParkRelais.this, "", getString(R.string.dialogRequeteVeloStar), true);
+					}
 
 					@Override
 					protected Void doInBackground(final Void... pParams) {
@@ -312,7 +326,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					@Override
 					@SuppressWarnings("unchecked")
 					protected void onPostExecute(final Void pResult) {
-						super.onPostExecute(pResult);
 						myProgressDialog.dismiss();
 						if (!erreur) {
 							metterAJourListeParkRelais();
@@ -323,6 +336,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 							toast.show();
 							ListParkRelais.this.finish();
 						}
+						super.onPostExecute(pResult);
 					}
 				}.execute();
 				return true;

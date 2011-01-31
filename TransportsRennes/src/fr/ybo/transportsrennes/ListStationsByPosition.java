@@ -26,8 +26,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.*;
-import android.widget.*;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -199,10 +207,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "", getString(R.string.dialogRequeteVeloStar), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -229,7 +242,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
-				super.onPostExecute(pResult);
 				myProgressDialog.dismiss();
 				if (!erreur) {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
@@ -248,6 +260,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					toast.show();
 					ListStationsByPosition.this.finish();
 				}
+				super.onPostExecute(pResult);
 			}
 		}.execute();
 	}
@@ -270,10 +283,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 		switch (item.getItemId()) {
 			case MENU_REFRESH:
-				myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteVeloStar), true);
 				new AsyncTask<Void, Void, Void>() {
 
 					private boolean erreur = false;
+
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "", getString(R.string.dialogRequeteVeloStar), true);
+					}
 
 					@Override
 					protected Void doInBackground(final Void... pParams) {

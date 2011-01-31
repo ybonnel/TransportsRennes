@@ -28,7 +28,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -197,10 +201,15 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequetePointsDeVente), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListPointsDeVente.this, "", getString(R.string.dialogRequetePointsDeVente), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -228,7 +237,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
 				super.onPostExecute(pResult);
-				myProgressDialog.dismiss();
 				if (!erreur) {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 						public void onClick(View view) {
@@ -246,6 +254,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 					toast.show();
 					ListPointsDeVente.this.finish();
 				}
+				myProgressDialog.dismiss();
 			}
 		}.execute();
 	}

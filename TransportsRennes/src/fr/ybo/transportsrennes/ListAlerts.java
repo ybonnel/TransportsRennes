@@ -64,10 +64,15 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 		});
 
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.dialogRequeteAlerts), true);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(ListAlerts.this, "", getString(R.string.dialogRequeteAlerts), true);
+			}
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -90,7 +95,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@Override
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
-				super.onPostExecute(pResult);
 				((ArrayAdapter<Alert>) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
@@ -98,6 +102,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 					toast.show();
 					ListAlerts.this.finish();
 				}
+				super.onPostExecute(pResult);
 			}
 		}.execute();
 	}
