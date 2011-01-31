@@ -29,11 +29,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+import fr.ybo.transportsrennes.keolis.ErreurKeolis;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -43,11 +45,14 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MyGeoClusterer;
 import fr.ybo.transportsrennes.map.MyGeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AllOnMap extends MapActivity {
+
+	private static LogYbo LOG_YBO = new LogYbo(AllOnMap.class);
 
 	private MapView mapView;
 	private MyGeoClusterer clustererForArret;
@@ -257,12 +262,19 @@ public class AllOnMap extends MapActivity {
 
 	private class BackgroundTasks extends AsyncTask<Void, Void, Void> {
 
+		boolean erreurKeolis = false;
+
 		@Override
 		protected Void doInBackground(Void... voids) {
 			ajouterArrets();
-			ajouterVelos();
-			ajouterParcs();
-			ajouterPos();
+			try {
+				ajouterVelos();
+				ajouterParcs();
+				ajouterPos();
+			} catch (ErreurKeolis exceptionKeolis) {
+				erreurKeolis = true;
+				LOG_YBO.erreur("Erreur lors de la récupération des données Keolis", exceptionKeolis);
+			}
 			return null;
 		}
 
@@ -303,6 +315,9 @@ public class AllOnMap extends MapActivity {
 					}
 				});
 				gestionCheckBoxFaite = true;
+			}
+			if (erreurKeolis) {
+				Toast.makeText(AllOnMap.this, getString(R.string.erreur_interrogationStar), Toast.LENGTH_SHORT).show();
 			}
 			if (arretVisible) {
 				clustererForArret.resetViewport();
