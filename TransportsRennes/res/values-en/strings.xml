@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+<!-- Nom de l'application -->
+<string name="app_name">Transports Rennes</string>
+<!-- Messages -->
+<string name="premierLancement">This is the first launch, the application needs to update the data, this may take a few tens of seconds, do you do now?</string>
+<string name="titleInfoAllInMap">Welcome to the multimodal map</string>
+<string name="infoAllInMap">The purpose of this map is to display all the points of interest of the application on a single map. To make the map clear, it was not possible to display all the points. That is why they were grouped together. The number displayed on the icon is the number of points of interest contained in the selected area. To see the detail of the group, double click on the icon. </string>
+<string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to reload schedules you have already loaded.</string>
+<string name="infoChargementGtfs">Loading data from STAR.</string>
+<string name="verificationUpdate">Research Update.</string>
+<string name="rechercheArrets">Search for bus stops.</string>
+<string name="dialogRequeteVeloStar">LE vélo STAR querying</string>
+<string name="dialogRequeteAlerts">STAR querying</string>
+<string name="dialogRequeteTwitter">Twitter querying</string>
+<string name="dialogRequeteParkRelais">STAR querying</string>
+<string name="dialogRequetePointsDeVente">STAR querying</string>
+<string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the STAR and LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;). <b/> This application is developed and maintained by one person on personal time, so thank you for your indulgence. <b/> Feel free to send me any suggestions or problem.</string>
+<string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular date using the menu.</string>
+<string name="hint_rechercherarret">Bus stop search.</string>
+<string name="listfavori_empty">No favorites found.</string>
+<string name="go_googlemap">View on GoogleMap</string>
+<string name="hint_rechercheParcRelai">Park &amp; Ride search.</string>
+<string name="hint_recherchePointDeVente">Points of sale search.</string>
+<string name="hint_rechercheStation">Station Search</string>
+<string name="listevelofavoris_empty">No favorites station found.</string>
+<string name="directionEntete">Towards :</string>
+<string name="premierAccesLigne">First access to line %1$s, loading data.</string>
+<string name="tooMuchFavoris">Already selected three favorite stops</string>
+<string name="activeGps">To fully enjoy this page, it is preferable to activate your GPS.</string>
+<string name="ajouterFavori">Add to favorites</string>
+<string name="suprimerFavori">Remove from favorites</string>
+<string name="favoriUsedByWidget">A widget is using this favorite, thank you for deleting it before the favorite.</string>
+<string name="chargementLigneFavori">\nLoading bus route %1$s which you have favorites.</string>
+<string name="loadAllLineAlert">Attention load data from all lines can take several minutes (5 minutes on a Nexus One), and will occupy approximately 8.5 MB of data, but you will have access to all schedules in offline mode. Are you sure you want to load (wifi strongly recommended)?</string>
+<!-- Libellés des boutons de la pages d'accueil -->
+<string name="btn_velo">LE vélo STAR</string>
+<string name="btn_velo_favori">Favorite Stations</string>
+<string name="btn_bus">Bus</string>
+<string name="btn_bus_favori">Favorite stops</string>
+<string name="btn_bus_gps">Nearest stops</string>
+<string name="btn_alert">Warnings</string>
+<string name="btn_parking">Park &amp; Ride</string>
+<string name="btn_tickets">Points of sale</string>
+<!-- Libellés de menus -->
+<string name="menu_prochainArrets">Upcoming timetable</string>
+<string name="menu_allArrets">All times</string>
+<string name="menu_selectDay">Select a date</string>
+<string name="menu_refresh">Refresh</string>
+<string name="menu_orderByName">Alphabetically</string>
+<string name="menu_orderBySequence">Route order</string>
+<string name="menu_accueil">Home</string>
+<string name="menu_apropos">About</string>
+<string name="menu_carte">Map</string>
+<string name="menu_loadLines">Load all bus lines</string>
+<!-- Widget -->
+<string name="widget_choix">Choose from one to three favorite stops.</string>
+<!-- Génériques -->
+<string name="Terminer">Finish</string>
+<string name="Toutes">All</string>
+<string name="vers">to</string>
+<string name="tropTard">Too late!</string>
+<string name="dans">in</string>
+<string name="heures">hours</string>
+<string name="minutes">minutes</string>
+<string name="miniHeures">h</string>
+<string name="miniMinutes">min</string>
+<string name="ferme">Closed</string>
+<string name="complet">Full</string>
+<string name="indisponible">Unavailable</string>
+<string name="chooseDirection">Choose a direction</string>
+<string name="alertes">Warnings</string>
+<string name="twitter">Twitter</string>
+<string name="oui">Yes</string>
+<string name="non">No</string>
+<!-- Erreurs -->
+<string name="erreur_chargementStar">An error occurred while retrieving data from the STAR surely due to network problems, try again later.</string>
+<string name="erreur_interrogationStar">An error occurred when querying the STAR surely due to network problems, try again later.</string>
+<string name="erreur_interrogationVeloStar">An error occurred while querying LE vélo STAR surely due to network problems, try again later.</string>
+<string name="erreur_twitter">Error retrieving twitter messages.</string>
+<string name="erreur_quotaTwitter">The number of requests to twitter to your IP has been exceeded (150/h). This limitation will be reset to zero on %1$s</string>
+<string name="erreur_verifUpdate">Error checking for updates surely due to network problems, try again later.</string>
+<string name="erreur_widgetBeforeLaunch">You have not yet started the application, please run it before trying to add widgets.</string>
+<string name="erreur_widgetWithNoFavori">You do not have favorites yet. To use widgets add favorites.</string>
+<string name="erreur_auMoinsUnFavori">Select at least one favorite stop.</string>
+</resources>
