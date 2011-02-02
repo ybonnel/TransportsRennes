@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+<!-- Nom de l'application -->
+<string name="app_name">Transports Rennes</string>
+<!-- Messages -->
+<string name="premierLancement">Este es el primer lanzamiento, la aplicación necesita para actualizar los datos, esto puede tardar unas pocas decenas de segundos, hace usted ahora?</string>
+<string name="titleInfoAllInMap">Bienvenidos al mapa multi-modal</string>
+<string name="infoAllInMap">El propósito de este mapa es mostrar todos los elementos de interés para la aplicación en una sola tarjeta. Para facilitar la lectura, no es posible mostrar todos los puntos, por lo que los grupos que se muestran. El número que aparece en el icono es el número de puntos de interés contenidos en el cuadro de asociados. Para abrir el detalle apropiado para un grupo, simplemente haga doble clic en el icono.</string>
+<string name="majDispo">Una actualización de los datos de STAR está disponible, qué haces ahora? Ten en cuenta que debe volver a cargar las horas que ya ha cargado.</string>
+<string name="infoChargementGtfs">Carga de datos de STAR.</string>
+<string name="verificationUpdate">Buscando actualización.</string>
+<string name="rechercheArrets">Buscando de paradas de autobús.</string>
+<string name="dialogRequeteVeloStar">Consultando el servicio "LE vélo STAR"</string>
+<string name="dialogRequeteAlerts">Consultando STAR.</string>
+<string name="dialogRequeteTwitter">Consultando Twitter.</string>
+<string name="dialogRequeteParkRelais">Consultando STAR.</string>
+<string name="dialogRequetePointsDeVente">Consultando STAR.</string>
+<string name="dialogAPropos">La aplicación "Transports Rennes" se desarrolló en el marco de los datos abiertas del servicio STAR y LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis -rennes.com&lt;/a&gt;). <b/>Esta aplicación es desarrollado y mantenido por una persona en el tiempo del personal, así que gracias por su indulgencia. <b/> Siéntase libre de enviarme cualquier sugerencia o problema.</string>
+<string name="detailarret_empty">No más de autobuses hoy, se puede ver todos los autobuses del día o de elegir una fecha en particular mediante el menú.</string>
+<string name="hint_rechercherarret">Buscar paradas</string>
+<string name="listfavori_empty">No favoritos encontrado</string>
+<string name="go_googlemap">Vea el GoogleMap</string>
+<string name="hint_rechercheParcRelai">Buscar Park and Ride</string>
+<string name="hint_recherchePointDeVente">Buscar salidas</string>
+<string name="hint_rechercheStation">Buscar estaciónnes</string>
+<string name="listevelofavoris_empty">No hay estación favorita que se encuentran.</string>
+<string name="directionEntete">Dirección :</string>
+<string name="premierAccesLigne">En primer lugar el acceso a la línea de %1$s, la carga de datos.</string>
+<string name="tooMuchFavoris">Ya hemos seleccionado tres favoritos se detiene</string>
+<string name="activeGps">Para disfrutar plenamente de esta página, es preferible para activar el GPS.</string>
+<string name="ajouterFavori">Añadir a Favoritos</string>
+<string name="suprimerFavori">Eliminar de Favoritos</string>
+<string name="favoriUsedByWidget">Un widget utiliza este favorito, gracias eliminar antes de eliminar este favorito.</string>
+<string name="chargementLigneFavori">Carga de la línea %1$s que tiene favoritos.</string>
+<string name="loadAllLineAlert">La atención de carga de datos de todas las líneas puede tardar varios minutos (5 minutos en Nexus One), y ocupará aproximadamente 8,5 MB de datos, pero usted tendrá acceso a todos los programas en el modo fuera de línea. ¿Está seguro que desea cargar (wifi muy recomendable)?</string>
+<!-- Libellés des boutons de la pages d'accueil -->
+<string name="btn_velo">LE vélo STAR</string>
+<string name="btn_velo_favori">Estaciones favoritas</string>
+<string name="btn_bus">Autobús</string>
+<string name="btn_bus_favori">Paradas favoritos</string>
+<string name="btn_bus_gps">Cerca de las paradas</string>
+<string name="btn_alert">Alertas</string>
+<string name="btn_parking">Park and Ride</string>
+<string name="btn_tickets">Puntos de venta</string>
+<!-- Libellés de menus -->
+<string name="menu_prochainArrets">Próximos horario</string>
+<string name="menu_allArrets">Todas las horas</string>
+<string name="menu_selectDay">Seleccione una fecha</string>
+<string name="menu_refresh">Actualizar</string>
+<string name="menu_orderByName">Alfabeto</string>
+<string name="menu_orderBySequence">La Línea de pedido</string>
+<string name="menu_accueil">Inicio</string>
+<string name="menu_apropos">Acerca de</string>
+<string name="menu_carte">Mapa</string>
+<string name="menu_loadLines">Cargar todas las líneas</string>
+<!-- Widget -->
+<string name="widget_choix">Elija uno hasta tres favoritos se detiene.</string>
+<!-- Génériques -->
+<string name="Terminer">Finalizar</string>
+<string name="Toutes">Todos</string>
+<string name="vers">a</string>
+<string name="tropTard">Demasiado tarde!</string>
+<string name="dans">en</string>
+<string name="heures">horas</string>
+<string name="minutes">minutos</string>
+<string name="miniHeures">h</string>
+<string name="miniMinutes">min</string>
+<string name="ferme">Cerrado</string>
+<string name="complet">Completo</string>
+<string name="indisponible">No dispo.</string>
+<string name="chooseDirection">Elija una dirección</string>
+<string name="alertes">Alertas</string>
+<string name="twitter">Twitter</string>
+<string name="oui">Sí</string>
+<string name="non">No</string>
+<!-- Erreurs -->
+<string name="erreur_chargementStar">Se produjo un error al recuperar datos del STAR seguramente debido a problemas de red, inténtelo de nuevo más tarde.</string>
+<string name="erreur_interrogationStar">Se produjo un error al consultar el STAR seguramente debido a problemas de red, inténtelo de nuevo más tarde.</string>
+<string name="erreur_interrogationVeloStar">Se produjo un error al consultar el servicio LE vélo STAR seguramente debido a problemas de red, inténtelo de nuevo más tarde.</string>
+<string name="erreur_twitter">Error de recuperación de los mensajes de twitter.</string>
+<string name="erreur_quotaTwitter">El número de solicitudes de Twitter para tu IP ha sido superado (150/h). Esta limitación se pone a cero en %1$s</string>
+<string name="erreur_verifUpdate">Error de comprobación de actualizaciones sin duda debido a problemas de red, inténtelo de nuevo más tarde.</string>
+<string name="erreur_widgetBeforeLaunch">Aún no ha iniciado la aplicación, por favor, ejecute antes de intentar añadir widgets.</string>
+<string name="erreur_widgetWithNoFavori">Usted no tiene ningún favorito, para utilizar los widgets, añadir favoritos.</string>
+<string name="erreur_auMoinsUnFavori">Seleccione al menos una parada favorita.</string>
+</resources>
