@@ -21,41 +21,24 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TwitterAdapter;
-import fr.ybo.transportsrennes.util.LogYbo;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
+import fr.ybo.transportsrennes.twitter.GetTwitters;
+import fr.ybo.transportsrennes.twitter.MessageTwitter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ListTwitter extends MenuAccueil.ListActivity {
 
-	private static TwitterFactory twitterFactory = null;
-
-	synchronized protected TwitterFactory getFactory() {
-		if (twitterFactory == null) {
-			twitterFactory = new TwitterFactory();
-		}
-		return twitterFactory;
-	}
-
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à hh:mm");
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListTwitter.class);
-
 	private ProgressDialog myProgressDialog;
 
-	private final List<Status> allStatus = Collections.synchronizedList(new ArrayList<Status>());
+	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>());
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
-		setListAdapter(new TwitterAdapter(this, allStatus));
+		setListAdapter(new TwitterAdapter(this, messages));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		new AsyncTask<Void, Void, Void>() {
@@ -72,17 +55,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				Twitter twitter = getFactory().getInstance();
-				try {
-					allStatus.addAll(twitter.getUserTimeline("@starbusmetro"));
-				} catch (TwitterException e) {
-					if (e.exceededRateLimitation()) {
-						rateLimit = true;
-						dateReset = SDF.format(e.getRateLimitStatus().getResetTime());
-					}
-					LOG_YBO.erreur("Erreur lors de la récupération des status twitter", e);
-					erreur = true;
-				}
+				messages.addAll(GetTwitters.getInstance().getMessages());
 				return null;
 			}
 

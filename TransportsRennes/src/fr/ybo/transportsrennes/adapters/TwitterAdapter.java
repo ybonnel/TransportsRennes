@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import twitter4j.Status;
+import fr.ybo.transportsrennes.twitter.MessageTwitter;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -29,15 +29,15 @@ import java.util.List;
 /**
  * Adapteur pour les alerts.
  */
-public class TwitterAdapter extends ArrayAdapter<Status> {
+public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 
-	private List<Status> allStatus;
+	private List<MessageTwitter> messages;
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
 	private LayoutInflater inflater;
 
-	public TwitterAdapter(Context context, List<Status> objects) {
+	public TwitterAdapter(Context context, List<MessageTwitter> objects) {
 		super(context, R.layout.onetwitter, objects);
-		allStatus = objects;
+		messages = objects;
 		inflater = LayoutInflater.from(context);
 	}
 
@@ -56,8 +56,8 @@ public class TwitterAdapter extends ArrayAdapter<Status> {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		Status status = allStatus.get(position);
-		holder.twitter.setText(SDF.format(status.getCreatedAt()) + status.getText());
+		MessageTwitter message = messages.get(position);
+		holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
 		return convertView;
 	}
 }
