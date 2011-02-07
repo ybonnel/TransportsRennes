@@ -23,12 +23,15 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ListTwitter extends MenuAccueil.ListActivity {
+
+	private static final LogYbo LOG_YBO = new LogYbo(ListTwitter.class);
 
 	private ProgressDialog myProgressDialog;
 
@@ -44,8 +47,6 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreur = false;
-			private boolean rateLimit = false;
-			private String dateReset = null;
 
 			@Override
 			protected void onPreExecute() {
@@ -55,7 +56,12 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
-				messages.addAll(GetTwitters.getInstance().getMessages());
+				try {
+					messages.addAll(GetTwitters.getInstance().getMessages());
+				} catch (Exception exception) {
+					erreur = true;
+					LOG_YBO.erreur("Erreur lors de l'interrogation de twitter", exception);
+				}
 				return null;
 			}
 
@@ -64,9 +70,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 			protected void onPostExecute(final Void pResult) {
 				((TwitterAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
-				if (rateLimit) {
-					Toast.makeText(ListTwitter.this, getString(R.string.erreur_quotaTwitter, dateReset), Toast.LENGTH_LONG).show();
-				} else if (erreur) {
+				if (erreur) {
 					Toast.makeText(ListTwitter.this, getString(R.string.erreur_twitter), Toast.LENGTH_LONG).show();
 					ListTwitter.this.finish();
 				}
