@@ -4,3 +4,4 @@
 *.iml
 **/*.iml
 TransportsRennes/gen
+**/.idea
