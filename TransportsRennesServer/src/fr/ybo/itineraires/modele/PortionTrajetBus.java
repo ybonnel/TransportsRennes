@@ -22,11 +22,20 @@ public class PortionTrajetBus extends PortionTrajet {
 	private Arret arretDepart;
 	private Arret arretArrivee;
 	private Ligne ligne;
+	private Integer timeStart;
+	private Integer timeEnd;
 
 	public PortionTrajetBus(Arret arretDepart, Arret arretArrivee, Ligne ligne) {
 		this.arretDepart = arretDepart;
 		this.arretArrivee = arretArrivee;
 		this.ligne = ligne;
+	}
+
+	public boolean rechercheHoraire() {
+		// Recupérer les trajets de l'arret/ligne
+		// Les ordonnée par horaire (récupérer l'heure courante en paramètre et la faire passer jusqu'ici)
+		// Pour chaque trajet regarder si l'arrivée est dedans, si c'est le cas, on a trouvé si c'est pas le cas continuer (prévoir un temps max).
+		return true;
 	}
 
 	@Override

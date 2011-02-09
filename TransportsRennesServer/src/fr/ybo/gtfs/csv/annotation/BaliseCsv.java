@@ -14,13 +14,13 @@
 
 package fr.ybo.gtfs.csv.annotation;
 
+import fr.ybo.gtfs.csv.moteur.adapter.AdapterCsv;
+import fr.ybo.gtfs.csv.moteur.adapter.AdapterString;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import fr.ybo.gtfs.csv.moteur.adapter.AdapterCsv;
-import fr.ybo.gtfs.csv.moteur.adapter.AdapterString;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

@@ -14,6 +14,11 @@
 
 package fr.ybo.gtfs.csv.moteur;
 
+import fr.ybo.gtfs.csv.annotation.BaliseCsv;
+import fr.ybo.gtfs.csv.annotation.FichierCsv;
+import fr.ybo.gtfs.csv.moteur.modele.ChampCsv;
+import fr.ybo.gtfs.csv.moteur.modele.ClassCsv;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -21,11 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import fr.ybo.gtfs.csv.annotation.BaliseCsv;
-import fr.ybo.gtfs.csv.annotation.FichierCsv;
-import fr.ybo.gtfs.csv.moteur.modele.ChampCsv;
-import fr.ybo.gtfs.csv.moteur.modele.ClassCsv;
 
 public class MoteurCsv {
 
@@ -55,9 +55,9 @@ public class MoteurCsv {
 					nomChamp = enteteCourante[numChamp];
 					champCsv = classCourante.getChampCsv(nomChamp);
 					if (champCsv != null) {
-						champCsv.getField().setAccessible(true);
+						//						champCsv.getField().setAccessible(true);
 						champCsv.getField().set(objetCsv, champCsv.getNewAdapterCsv().parse(champs[numChamp]));
-						champCsv.getField().setAccessible(false);
+						//						champCsv.getField().setAccessible(false);
 					}
 				}
 			}
@@ -81,8 +81,7 @@ public class MoteurCsv {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <Objet> List<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz)
-			throws IOException {
+	public <Objet> List<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz) throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 		String ligne;
 		List<Objet> objets = new ArrayList<Objet>();

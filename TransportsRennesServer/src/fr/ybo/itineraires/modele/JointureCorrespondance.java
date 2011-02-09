@@ -17,9 +17,9 @@ package fr.ybo.itineraires.modele;
 import fr.ybo.gtfs.modele.Arret;
 
 public class JointureCorrespondance extends PortionTrajetPieton {
-	private Arret arretDepart;
-	private Arret arretArrivee;
-	private double distance;
+	private final Arret arretDepart;
+	private final Arret arretArrivee;
+	private final double distance;
 
 	public JointureCorrespondance(Arret arretDepart, Arret arretArrivee, double distance) {
 		this.arretDepart = arretDepart;
@@ -38,7 +38,6 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 	public double getDistance() {
 		return distance;
 	}
-
 
 
 	@Override

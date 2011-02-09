@@ -13,21 +13,21 @@
   --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
+<head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Transports Rennes App engine</title>
-  </head>
+</head>
 
-  <body>
-    <h1>Cette application est une application offrant des services utilisés par l'application "Transports Rennes" pour Android</h1>
+<body>
+<h1>Cette application est une application offrant des services utilisés par l'application "Transports Rennes" pour Android</h1>
 
-    <table>
-      <tr>
+<table>
+    <tr>
         <td colspan="2" style="font-weight:bold;">Available Servlets:</td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
         <td><a href="twitterstarbusmetro">Message twitters du compte @starbusmetro</a></td>
-      </tr>
-    </table>
-  </body>
+    </tr>
+</table>
+</body>
 </html>

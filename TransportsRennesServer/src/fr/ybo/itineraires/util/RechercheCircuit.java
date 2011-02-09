@@ -14,27 +14,26 @@
 
 package fr.ybo.itineraires.util;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
-
 import fr.ybo.gtfs.modele.Arret;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.Circuit;
 import fr.ybo.itineraires.modele.JointurePieton;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class RechercheCircuit {
-	
+
 	private static final Logger logger = Logger.getLogger(RechercheCircuit.class.getName());
 
-	private final static double distanceRechercheArrets = 200.0;
-	private Adresse adresseDepart;
-	private Adresse adresseArrivee;
-	private List<JointurePieton> arretsDeparts = new ArrayList<JointurePieton>();
-	private List<JointurePieton> arretsArrivees = new ArrayList<JointurePieton>();
+	private final static double distanceRechercheArrets = 400;
+	private final Adresse adresseDepart;
+	private final Adresse adresseArrivee;
+	private final List<JointurePieton> arretsDeparts = new ArrayList<JointurePieton>();
+	private final List<JointurePieton> arretsArrivees = new ArrayList<JointurePieton>();
 
 	public RechercheCircuit(Adresse adresseDepart, Adresse adresseArrivee) {
 		super();
@@ -46,11 +45,11 @@ public class RechercheCircuit {
 		long startTime = System.nanoTime();
 		for (Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
 			double distance = calculDistanceDepart(arret);
-			if ( distance < distanceRechercheArrets) {
+			if (distance < distanceRechercheArrets) {
 				arretsDeparts.add(new JointurePieton(arret, adresseDepart, distance));
 			}
 			distance = calculDistanceArrivee(arret);
-			if ( distance < distanceRechercheArrets) {
+			if (distance < distanceRechercheArrets) {
 				arretsArrivees.add(new JointurePieton(arret, adresseArrivee, distance));
 			}
 		}
@@ -74,27 +73,22 @@ public class RechercheCircuit {
 		logger.info("Nombre de circuits avec un trajet bus trouvé : " + circuits.size());
 		/*for (Circuit circuit : circuits) {
 			logger.info(circuit.toString());
-		}*/
+		} */
 	}
 
 	private double calculDistanceDepart(Arret arret) {
-		return calculDistance(adresseDepart.getLatitude(),
-				adresseDepart.getLongitude(), arret.getLatitude(),
-				arret.getLongitude());
+		return calculDistance(adresseDepart.getLatitude(), adresseDepart.getLongitude(), arret.latitude, arret.longitude);
 	}
 
 	private double calculDistanceArrivee(Arret arret) {
-		return calculDistance(adresseArrivee.getLatitude(),
-				adresseArrivee.getLongitude(), arret.getLatitude(),
-				arret.getLongitude());
+		return calculDistance(adresseArrivee.getLatitude(), adresseArrivee.getLongitude(), arret.latitude, arret.longitude);
 	}
 
 	public static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
-		return calculDistance(arretDepart.getLatitude(), arretDepart.getLongitude(), arretArrivee.getLatitude(), arretArrivee.getLongitude());
+		return calculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude, arretArrivee.longitude);
 	}
 
-	private static double calculDistance(double lat1, double lon1, double lat2,
-			double lon2) {
+	private static double calculDistance(double lat1, double lon1, double lat2, double lon2) {
 		// Based on http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf
 		// using the "Inverse Formula" (section 4)
 
@@ -124,12 +118,12 @@ public class RechercheCircuit {
 
 		double sigma = 0.0;
 		double deltaSigma = 0.0;
-		double cosSqAlpha = 0.0;
-		double cos2SM = 0.0;
-		double cosSigma = 0.0;
-		double sinSigma = 0.0;
-		double cosLambda = 0.0;
-		double sinLambda = 0.0;
+		double cosSqAlpha;
+		double cos2SM;
+		double cosSigma;
+		double sinSigma;
+		double cosLambda;
+		double sinLambda;
 
 		double lambda = L; // initial guess
 		for (int iter = 0; iter < MAXITERS; iter++) {
@@ -142,41 +136,22 @@ public class RechercheCircuit {
 			sinSigma = Math.sqrt(sinSqSigma);
 			cosSigma = sinU1sinU2 + cosU1cosU2 * cosLambda; // (15)
 			sigma = Math.atan2(sinSigma, cosSigma); // (16)
-			double sinAlpha = (sinSigma == 0) ? 0.0 : cosU1cosU2 * sinLambda
-					/ sinSigma; // (17)
+			double sinAlpha = (sinSigma == 0) ? 0.0 : cosU1cosU2 * sinLambda / sinSigma; // (17)
 			cosSqAlpha = 1.0 - sinAlpha * sinAlpha;
-			cos2SM = (cosSqAlpha == 0) ? 0.0 : cosSigma - 2.0 * sinU1sinU2
-					/ cosSqAlpha; // (18)
+			cos2SM = (cosSqAlpha == 0) ? 0.0 : cosSigma - 2.0 * sinU1sinU2 / cosSqAlpha; // (18)
 
 			double uSquared = cosSqAlpha * aSqMinusBSqOverBSq; // defn
-			A = 1
-					+ (uSquared / 16384.0)
-					* // (3)
-					(4096.0 + uSquared
-							* (-768 + uSquared * (320.0 - 175.0 * uSquared)));
+			A = 1 + (uSquared / 16384.0) * // (3)
+					(4096.0 + uSquared * (-768 + uSquared * (320.0 - 175.0 * uSquared)));
 			double B = (uSquared / 1024.0) * // (4)
-					(256.0 + uSquared
-							* (-128.0 + uSquared * (74.0 - 47.0 * uSquared)));
-			double C = (f / 16.0) * cosSqAlpha
-					* (4.0 + f * (4.0 - 3.0 * cosSqAlpha)); // (10)
+					(256.0 + uSquared * (-128.0 + uSquared * (74.0 - 47.0 * uSquared)));
+			double C = (f / 16.0) * cosSqAlpha * (4.0 + f * (4.0 - 3.0 * cosSqAlpha)); // (10)
 			double cos2SMSq = cos2SM * cos2SM;
-			deltaSigma = B
-					* sinSigma
-					* // (6)
-					(cos2SM + (B / 4.0)
-							* (cosSigma * (-1.0 + 2.0 * cos2SMSq) - (B / 6.0)
-									* cos2SM
-									* (-3.0 + 4.0 * sinSigma * sinSigma)
-									* (-3.0 + 4.0 * cos2SMSq)));
+			deltaSigma = B * sinSigma * // (6)
+					(cos2SM + (B / 4.0) *
+							(cosSigma * (-1.0 + 2.0 * cos2SMSq) - (B / 6.0) * cos2SM * (-3.0 + 4.0 * sinSigma * sinSigma) * (-3.0 + 4.0 * cos2SMSq)));
 
-			lambda = L
-					+ (1.0 - C)
-					* f
-					* sinAlpha
-					* (sigma + C
-							* sinSigma
-							* (cos2SM + C * cosSigma
-									* (-1.0 + 2.0 * cos2SM * cos2SM))); // (11)
+			lambda = L + (1.0 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SM + C * cosSigma * (-1.0 + 2.0 * cos2SM * cos2SM))); // (11)
 
 			double delta = (lambda - lambdaOrig) / lambda;
 			if (Math.abs(delta) < 1.0e-12) {

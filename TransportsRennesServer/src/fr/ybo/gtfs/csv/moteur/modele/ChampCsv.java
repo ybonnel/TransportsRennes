@@ -14,13 +14,13 @@
 
 package fr.ybo.gtfs.csv.moteur.modele;
 
+import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
+import fr.ybo.gtfs.csv.moteur.adapter.AdapterCsv;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
-import fr.ybo.gtfs.csv.moteur.adapter.AdapterCsv;
 
 public class ChampCsv {
 

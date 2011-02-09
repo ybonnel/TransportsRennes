@@ -15,18 +15,17 @@
 package fr.ybo.twitter.starbusmetro.client;
 
 
+import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-import org.xml.sax.helpers.DefaultHandler;
-
-import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
-
-public class GetTwittersHandler extends DefaultHandler {
+class GetTwittersHandler extends DefaultHandler {
 
 	private static final String MESSAGES = "messages";
 	private static final String MESSAGE = "message";
@@ -69,6 +68,7 @@ public class GetTwittersHandler extends DefaultHandler {
 			this.contenu.setLength(0);
 		}
 	}
+
 	@Override
 	public final void startDocument() throws SAXException {
 		super.startDocument();

@@ -19,20 +19,20 @@ package com.google.code.geocoder.model;
  */
 public enum GeocoderStatus {
 
-    ERROR,
-    INVALID_REQUEST,
-    OK,
-    OVER_QUERY_LIMIT,
-    REQUEST_DENIED,
-    UNKNOWN_ERROR,
-    ZERO_RESULTS;
+	ERROR,
+	INVALID_REQUEST,
+	OK,
+	OVER_QUERY_LIMIT,
+	REQUEST_DENIED,
+	UNKNOWN_ERROR,
+	ZERO_RESULTS;
 
-    public String value() {
-        return name();
-    }
+	public String value() {
+		return name();
+	}
 
-    public static GeocoderStatus fromValue(String v) {
-        return valueOf(v);
-    }
+	public static GeocoderStatus fromValue(String v) {
+		return valueOf(v);
+	}
 
 }

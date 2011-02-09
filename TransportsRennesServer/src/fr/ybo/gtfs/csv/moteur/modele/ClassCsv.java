@@ -14,11 +14,11 @@
 
 package fr.ybo.gtfs.csv.moteur.modele;
 
+import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
+
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
 
 public class ClassCsv {
 	private final String separateur;

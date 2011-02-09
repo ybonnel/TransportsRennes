@@ -19,7 +19,7 @@ import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterDouble;
 
 @FichierCsv("arrets.txt")
-public class Arret extends ObjetWithDistance {
+public class Arret {
 	@BaliseCsv("id")
 	public String id;
 	@BaliseCsv("nom")
@@ -28,14 +28,4 @@ public class Arret extends ObjetWithDistance {
 	public Double latitude;
 	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
 	public Double longitude;
-	
-	@Override
-	public double getLatitude() {
-		return latitude;
-	}
-
-	@Override
-	public double getLongitude() {
-		return longitude;
-	}
 }

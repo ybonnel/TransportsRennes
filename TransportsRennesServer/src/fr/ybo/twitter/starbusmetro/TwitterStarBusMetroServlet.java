@@ -13,16 +13,19 @@
  */
 
 package fr.ybo.twitter.starbusmetro;
-import java.io.IOException;
-import javax.servlet.http.*;
 
 import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @SuppressWarnings("serial")
 public class TwitterStarBusMetroServlet extends HttpServlet {
-	
+
 	private static GetTwitters getTwitters = new GetTwitters();
-	
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/xml");
 		resp.setCharacterEncoding("utf-8");

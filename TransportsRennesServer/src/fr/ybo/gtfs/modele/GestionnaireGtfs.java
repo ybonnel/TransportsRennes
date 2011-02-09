@@ -14,8 +14,9 @@
 
 package fr.ybo.gtfs.modele;
 
-import java.io.IOException;
-import java.util.*;
+import fr.ybo.gtfs.chargement.GestionZipKeolis;
+import fr.ybo.gtfs.csv.moteur.MoteurCsv;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -23,15 +24,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import fr.ybo.gtfs.chargement.GestionZipKeolis;
-import fr.ybo.gtfs.csv.moteur.MoteurCsv;
-import org.datanucleus.sco.backed.*;
-
 public class GestionnaireGtfs {
-	
+
 	private static final Logger logger = Logger.getLogger(GestionnaireGtfs.class.getName());
-	
+
 	private static final List<Class<?>> CLASSES_CSV = new ArrayList<Class<?>>();
+
 	static {
 		CLASSES_CSV.add(Arret.class);
 		CLASSES_CSV.add(ArretRoute.class);
@@ -41,19 +39,33 @@ public class GestionnaireGtfs {
 		CLASSES_CSV.add(Ligne.class);
 		CLASSES_CSV.add(Trajet.class);
 	}
-	
-	
+
+
 	private Map<String, Arret> arrets = new HashMap<String, Arret>();
-	private Map<String, Map<String, ArretRoute>> arretsRoutesByLigneId = new HashMap<String, Map<String,ArretRoute>>();
-	private Map<String, Map<String, ArretRoute>> arretsRoutesByArretId = new HashMap<String, Map<String,ArretRoute>>();
+	private Map<String, Map<String, ArretRoute>> arretsRoutesByLigneId = new HashMap<String, Map<String, ArretRoute>>();
+	private Map<String, Map<String, ArretRoute>> arretsRoutesByArretId = new HashMap<String, Map<String, ArretRoute>>();
 	private Map<Integer, Calendrier> calendriers = new HashMap<Integer, Calendrier>();
 	private Map<Integer, Direction> directions = new HashMap<Integer, Direction>();
-	private Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer,Horaire>>();
+	private Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer, Horaire>>();
 	private Map<String, Ligne> lignes = new HashMap<String, Ligne>();
 	private Map<Integer, Trajet> trajets = new HashMap<Integer, Trajet>();
-	
+
 	public Collection<Arret> getAllArrets() {
 		return arrets.values();
+	}
+
+	public Collection<Horaire> getHorairesByArretId(String arretId) {
+		if (horaires.containsKey(arretId)) {
+			return horaires.get(arretId).values();
+		}
+		return new ArrayList<Horaire>();
+	}
+
+	public Horaire getHoraireByArretIdAndTrajetId(String arretId, Integer trajetId) {
+		if (horaires.containsKey(arretId)) {
+			return horaires.get(arretId).get(trajetId);
+		}
+		return null;
 	}
 
 	private Collection<ArretRoute> getArretRoutesByLigneId(String ligneId) {
@@ -83,9 +95,9 @@ public class GestionnaireGtfs {
 	public Ligne getLigne(String ligneId) {
 		return lignes.get(ligneId);
 	}
-	
+
 	private static GestionnaireGtfs instance = null;
-	
+
 	synchronized public static GestionnaireGtfs getInstance() {
 		if (instance == null) {
 			instance = new GestionnaireGtfs();
@@ -98,10 +110,10 @@ public class GestionnaireGtfs {
 		long startTime = System.nanoTime();
 		MoteurCsv moteurCsv = new MoteurCsv(CLASSES_CSV);
 		Map<Class<?>, List<?>> retourMoteur = GestionZipKeolis.getAndParseZipKeolis(moteurCsv);
-		for (Arret arret : (List<Arret>)retourMoteur.get(Arret.class)) {
+		for (Arret arret : (List<Arret>) retourMoteur.get(Arret.class)) {
 			arrets.put(arret.id, arret);
 		}
-		for (ArretRoute arretRoute : (List<ArretRoute>)retourMoteur.get(ArretRoute.class)) {
+		for (ArretRoute arretRoute : (List<ArretRoute>) retourMoteur.get(ArretRoute.class)) {
 			if (!arretsRoutesByLigneId.containsKey(arretRoute.ligneId)) {
 				arretsRoutesByLigneId.put(arretRoute.ligneId, new HashMap<String, ArretRoute>());
 			}
@@ -111,16 +123,16 @@ public class GestionnaireGtfs {
 			}
 			arretsRoutesByArretId.get(arretRoute.arretId).put(arretRoute.ligneId, arretRoute);
 		}
-		for (Calendrier calendrier : (List<Calendrier>)retourMoteur.get(Calendrier.class)) {
+		for (Calendrier calendrier : (List<Calendrier>) retourMoteur.get(Calendrier.class)) {
 			calendriers.put(calendrier.id, calendrier);
 		}
-		for (Direction direction : (List<Direction>)retourMoteur.get(Direction.class)) {
+		for (Direction direction : (List<Direction>) retourMoteur.get(Direction.class)) {
 			directions.put(direction.id, direction);
 		}
-		for (Ligne ligne : (List<Ligne>)retourMoteur.get(Ligne.class)) {
+		for (Ligne ligne : (List<Ligne>) retourMoteur.get(Ligne.class)) {
 			lignes.put(ligne.id, ligne);
 		}
-		for (Trajet trajet : (List<Trajet>)retourMoteur.get(Trajet.class)) {
+		for (Trajet trajet : (List<Trajet>) retourMoteur.get(Trajet.class)) {
 			trajets.put(trajet.id, trajet);
 		}
 		for (Ligne ligne : lignes.values()) {

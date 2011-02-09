@@ -14,8 +14,11 @@
 
 package fr.ybo.gtfs.chargement;
 
+import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
+import fr.ybo.gtfs.csv.moteur.MoteurCsv;
+import fr.ybo.gtfs.modele.Horaire;
+
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -25,36 +28,24 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
-import fr.ybo.gtfs.csv.moteur.MoteurCsv;
-import fr.ybo.gtfs.modele.Horaire;
-
 public final class GestionZipKeolis {
 
 	private final static String URL_BASE = "/gtfs/";
 	private final static String URL_STOP_TIMES = URL_BASE + "horaires_";
-	private final static String URL_ZIP_PRINCIPALE = URL_BASE
-			+ "GTFSRennesPrincipal.zip";
+	private final static String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
 
 	public static List<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
 		try {
-			BufferedReader bufReader = null;
-			ZipInputStream zipInputStream = new ZipInputStream(
-					GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES
-							+ ligneId + ".zip"));
+			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".zip"));
 			zipInputStream.getNextEntry();
-			bufReader = new BufferedReader(
-					new InputStreamReader(zipInputStream), 8 * 1024);
-			return moteurCsv.parseFile(bufReader, Horaire.class);
+			return moteurCsv.parseFile(new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024), Horaire.class);
 		} catch (Exception exception) {
 			throw new ErreurGestionFiles(exception);
 		}
 	}
 
-	public static Map<Class<?>, List<?>> getAndParseZipKeolis(
-			final MoteurCsv moteur) {
-		final ZipInputStream zipInputStream = new ZipInputStream(
-				GestionZipKeolis.class.getResourceAsStream(URL_ZIP_PRINCIPALE));
+	public static Map<Class<?>, List<?>> getAndParseZipKeolis(final MoteurCsv moteur) {
+		final ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_ZIP_PRINCIPALE));
 		ZipEntry zipEntry;
 		String ligne;
 		BufferedReader bufReader;
@@ -62,12 +53,9 @@ public final class GestionZipKeolis {
 		try {
 			try {
 				while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-					bufReader = new BufferedReader(new InputStreamReader(
-							zipInputStream), 8 * 1024);
+					bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
 					List<Object> objects = new ArrayList<Object>();
-					retour.put(
-							moteur.nouveauFichier(zipEntry.getName(),
-									bufReader.readLine()), objects);
+					retour.put(moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine()), objects);
 					while ((ligne = bufReader.readLine()) != null) {
 						objects.add(moteur.creerObjet(ligne));
 					}

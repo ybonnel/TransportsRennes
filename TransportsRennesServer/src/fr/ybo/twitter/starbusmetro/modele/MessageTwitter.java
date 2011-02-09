@@ -14,31 +14,30 @@
 
 package fr.ybo.twitter.starbusmetro.modele;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.google.appengine.api.datastore.Key;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-
-import com.google.appengine.api.datastore.Key;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @PersistenceCapable
 public class MessageTwitter {
-	
-	private transient SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-	
-	@PrimaryKey
-    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key key;
 
-    @Persistent
+	private final transient SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	private Key key;
+
+	@Persistent
 	public Date dateCreation;
-    
-    @Persistent
+
+	@Persistent
 	public String texte;
-	
+
 	public MessageTwitter(Date dateCreation, String texte) {
 		this.dateCreation = dateCreation;
 		this.texte = texte;
@@ -51,24 +50,8 @@ public class MessageTwitter {
 		return dateCreation;
 	}
 
-	public void setDateCreation(Date dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
-	public String getTexte() {
-		return texte;
-	}
-
 	public void setTexte(String texte) {
 		this.texte = texte;
-	}
-	
-	public Key getKey() {
-		return key;
-	}
-
-	public void setKey(Key key) {
-		this.key = key;
 	}
 
 	public String toXml() {
