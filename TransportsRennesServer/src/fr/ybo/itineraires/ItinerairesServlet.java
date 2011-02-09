@@ -21,7 +21,7 @@ import fr.ybo.itineraires.util.RechercheCircuit;
 @SuppressWarnings("serial")
 public class ItinerairesServlet extends HttpServlet {
 
-	private static final Logger logger = Logger.getLogger("Itineraires");
+	private static final Logger logger = Logger.getLogger(ItinerairesServlet.class.getName());
 	
 
 	private static final Bounds RENNES = new Bounds(47.7168983, 48.3641809,
