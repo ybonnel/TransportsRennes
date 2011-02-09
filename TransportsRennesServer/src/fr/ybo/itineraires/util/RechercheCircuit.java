@@ -24,16 +24,17 @@ import fr.ybo.gtfs.modele.Arret;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.Circuit;
+import fr.ybo.itineraires.modele.JointurePieton;
 
 public class RechercheCircuit {
 	
 	private static final Logger logger = Logger.getLogger(RechercheCircuit.class.getName());
 
-	private final static double distanceRechercheArrets = 500.0;
+	private final static double distanceRechercheArrets = 200.0;
 	private Adresse adresseDepart;
 	private Adresse adresseArrivee;
-	private List<Arret> arretsDeparts = new ArrayList<Arret>();
-	private List<Arret> arretsArrivees = new ArrayList<Arret>();
+	private List<JointurePieton> arretsDeparts = new ArrayList<JointurePieton>();
+	private List<JointurePieton> arretsArrivees = new ArrayList<JointurePieton>();
 
 	public RechercheCircuit(Adresse adresseDepart, Adresse adresseArrivee) {
 		super();
@@ -41,14 +42,16 @@ public class RechercheCircuit {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	public void calculCircuits() throws IOException {
+	public void calculCircuits() {
 		long startTime = System.nanoTime();
-		for (Arret arret : GestionnaireGtfs.getInstance().getArrets().values()) {
-			if ( calculDistanceDepart(arret) < distanceRechercheArrets) {
-				arretsDeparts.add(arret);
+		for (Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
+			double distance = calculDistanceDepart(arret);
+			if ( distance < distanceRechercheArrets) {
+				arretsDeparts.add(new JointurePieton(arret, adresseDepart, distance));
 			}
-			if ( calculDistanceArrivee(arret) < distanceRechercheArrets) {
-				arretsArrivees.add(arret);
+			distance = calculDistanceArrivee(arret);
+			if ( distance < distanceRechercheArrets) {
+				arretsArrivees.add(new JointurePieton(arret, adresseArrivee, distance));
 			}
 		}
 		long elapsedTime = (System.nanoTime() - startTime) / 1000000;
@@ -56,8 +59,8 @@ public class RechercheCircuit {
 		logger.info("Nombre d'arret éligibles au départ : " + arretsDeparts.size());
 		logger.info("Nombre d'arret éligibles à l'arrivée : " + arretsArrivees.size());
 		List<Circuit> circuits = new ArrayList<Circuit>();
-		for (Arret arretDepart : arretsDeparts) {
-			for (Arret arretArrivee : arretsArrivees) {
+		for (JointurePieton arretDepart : arretsDeparts) {
+			for (JointurePieton arretArrivee : arretsArrivees) {
 				circuits.add(new Circuit(arretDepart, arretArrivee));
 			}
 		}
@@ -68,6 +71,10 @@ public class RechercheCircuit {
 				iteratorCircuit.remove();
 			}
 		}
+		logger.info("Nombre de circuits avec un trajet bus trouvé : " + circuits.size());
+		/*for (Circuit circuit : circuits) {
+			logger.info(circuit.toString());
+		}*/
 	}
 
 	private double calculDistanceDepart(Arret arret) {
@@ -80,6 +87,10 @@ public class RechercheCircuit {
 		return calculDistance(adresseArrivee.getLatitude(),
 				adresseArrivee.getLongitude(), arret.getLatitude(),
 				arret.getLongitude());
+	}
+
+	public static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
+		return calculDistance(arretDepart.getLatitude(), arretDepart.getLongitude(), arretArrivee.getLatitude(), arretArrivee.getLongitude());
 	}
 
 	private static double calculDistance(double lat1, double lon1, double lat2,

@@ -52,7 +52,7 @@ public final class GestionZipKeolis {
 	}
 
 	public static Map<Class<?>, List<?>> getAndParseZipKeolis(
-			final MoteurCsv moteur) throws ErreurMoteurCsv, IOException {
+			final MoteurCsv moteur) {
 		final ZipInputStream zipInputStream = new ZipInputStream(
 				GestionZipKeolis.class.getResourceAsStream(URL_ZIP_PRINCIPALE));
 		ZipEntry zipEntry;
@@ -60,19 +60,23 @@ public final class GestionZipKeolis {
 		BufferedReader bufReader;
 		Map<Class<?>, List<?>> retour = new HashMap<Class<?>, List<?>>();
 		try {
-			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-				bufReader = new BufferedReader(new InputStreamReader(
-						zipInputStream), 8 * 1024);
-				List<Object> objects = new ArrayList<Object>();
-				retour.put(
-						moteur.nouveauFichier(zipEntry.getName(),
-								bufReader.readLine()), objects);
-				while ((ligne = bufReader.readLine()) != null) {
-					objects.add(moteur.creerObjet(ligne));
+			try {
+				while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+					bufReader = new BufferedReader(new InputStreamReader(
+							zipInputStream), 8 * 1024);
+					List<Object> objects = new ArrayList<Object>();
+					retour.put(
+							moteur.nouveauFichier(zipEntry.getName(),
+									bufReader.readLine()), objects);
+					while ((ligne = bufReader.readLine()) != null) {
+						objects.add(moteur.creerObjet(ligne));
+					}
 				}
+			} finally {
+				zipInputStream.close();
 			}
-		} finally {
-			zipInputStream.close();
+		} catch (IOException ioException) {
+			throw new ErreurMoteurCsv(ioException);
 		}
 		return retour;
 	}

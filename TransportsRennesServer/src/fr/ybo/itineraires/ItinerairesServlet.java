@@ -56,7 +56,7 @@ public class ItinerairesServlet extends HttpServlet {
 			if (reponse.getAdresses1().size() == 1
 					&& reponse.getAdresses2().size() == 1) {
 				
-				// Recherche des arrêts à proximité.
+				// Calcul des cricuits
 				RechercheCircuit rechercheCircuit = new RechercheCircuit(reponse.getAdresses1().get(0), reponse.getAdresses2().get(0));
 				rechercheCircuit.calculCircuits();
 			}
