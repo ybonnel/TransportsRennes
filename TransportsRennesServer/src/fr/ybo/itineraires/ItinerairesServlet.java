@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("serial")
 public class ItinerairesServlet extends HttpServlet {
 
+
 	private static final Logger logger = Logger.getLogger(ItinerairesServlet.class.getName());
 
 
@@ -74,9 +75,7 @@ public class ItinerairesServlet extends HttpServlet {
 				// Calcul des cricuits
 				RechercheCircuit rechercheCircuit = new RechercheCircuit(reponse.getAdresses1().get(0), reponse.getAdresses2().get(0));
 				rechercheCircuit.calculCircuits(calendrier, time);
-				for (Trajet trajet : rechercheCircuit.getBestTrajets()) {
-					logger.info(trajet.toString());
-				}
+				reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
 			}
 		}
 		resp.getWriter().println("OK");

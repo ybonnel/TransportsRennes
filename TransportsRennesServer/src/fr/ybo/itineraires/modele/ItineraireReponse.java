@@ -21,6 +21,7 @@ public class ItineraireReponse {
 	private String erreur;
 	private List<Adresse> adresses1;
 	private List<Adresse> adresses2;
+	private List<Trajet> trajets;
 
 	public String getErreur() {
 		return erreur;
@@ -42,6 +43,13 @@ public class ItineraireReponse {
 			adresses2 = new ArrayList<Adresse>();
 		}
 		return adresses2;
+	}
+
+	public List<Trajet> getTrajets() {
+		if (trajets == null) {
+			trajets = new ArrayList<Trajet>();
+		}
+		return trajets;
 	}
 
 }
