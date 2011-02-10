@@ -76,6 +76,10 @@ public class ItinerairesServlet extends HttpServlet {
 				RechercheCircuit rechercheCircuit = new RechercheCircuit(reponse.getAdresses1().get(0), reponse.getAdresses2().get(0));
 				rechercheCircuit.calculCircuits(calendrier, time);
 				reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
+				logger.info("Résultat de la recherche de trajets :");
+				for (Trajet trajet : reponse.getTrajets()) {
+					logger.info(trajet.toString());
+				}
 			}
 		}
 		resp.getWriter().println("OK");
@@ -87,12 +91,12 @@ public class ItinerairesServlet extends HttpServlet {
 		GeocoderRequest geocoderRequest1 =
 				new GeocoderRequestBuilder().setAddress(adresse1).setLanguage("fr").setBounds(RENNES.getLatLngBounds()).getGeocoderRequest();
 		GeocodeResponse geocoderResponse1 = geocoder.geocode(geocoderRequest1);
-		logger.info("Geocodage de la première adresse terminée");
+		logger.info("Geocodage de la première adresse terminée " + geocoderResponse1.getStatus());
 		logger.info("Geocodage de la deuxième adresse");
 		GeocoderRequest geocoderRequest2 =
 				new GeocoderRequestBuilder().setAddress(adresse2).setLanguage("fr").setBounds(RENNES.getLatLngBounds()).getGeocoderRequest();
 		GeocodeResponse geocoderResponse2 = geocoder.geocode(geocoderRequest2);
-		logger.info("Geocodage de la deuxième adresse terminée");
+		logger.info("Geocodage de la deuxième adresse terminée " + geocoderResponse2.getStatus());
 		for (GeocoderResult result : geocoderResponse1.getResults()) {
 			reponse.getAdresses1().add(new Adresse(result.getFormattedAddress(), result.getGeometry().getLocation().getLat().doubleValue(),
 					result.getGeometry().getLocation().getLng().doubleValue()));
@@ -101,5 +105,6 @@ public class ItinerairesServlet extends HttpServlet {
 			reponse.getAdresses2().add(new Adresse(result.getFormattedAddress(), result.getGeometry().getLocation().getLat().doubleValue(),
 					result.getGeometry().getLocation().getLng().doubleValue()));
 		}
+		logger.info("Nombre d'aresse retournée : " + reponse.getAdresses1() + " et " + reponse.getAdresses2());
 	}
 }
