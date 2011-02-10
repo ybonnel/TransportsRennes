@@ -50,8 +50,16 @@ public class GestionnaireGtfs {
 	private Map<String, Ligne> lignes = new HashMap<String, Ligne>();
 	private Map<Integer, Trajet> trajets = new HashMap<Integer, Trajet>();
 
+	public Calendrier getCalendrier(Integer calendrierId) {
+		return calendriers.get(calendrierId);
+	}
+
 	public Collection<Arret> getAllArrets() {
 		return arrets.values();
+	}
+
+	public Trajet getTrajet(Integer trajetId) {
+		return trajets.get(trajetId);
 	}
 
 	public Collection<Horaire> getHorairesByArretId(String arretId) {

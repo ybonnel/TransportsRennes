@@ -19,15 +19,14 @@ import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
-import fr.ybo.itineraires.modele.Adresse;
-import fr.ybo.itineraires.modele.Bounds;
-import fr.ybo.itineraires.modele.ItineraireReponse;
+import fr.ybo.itineraires.modele.*;
 import fr.ybo.itineraires.util.RechercheCircuit;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
@@ -38,25 +37,49 @@ public class ItinerairesServlet extends HttpServlet {
 
 	private static final Bounds RENNES = new Bounds(47.7168983, 48.3641809, -2.3997704, -1.1775976);
 
+	private EnumCalendrier getCalendrier(String calendrierRequete) {
+		EnumCalendrier calendrier = null;
+		if (calendrierRequete != null) {
+			calendrier = EnumCalendrier.fromNumCalendrier(Integer.parseInt(calendrierRequete));
+		}
+		if (calendrier == null) {
+			Calendar calendar = Calendar.getInstance();
+			calendrier = EnumCalendrier.fromFieldCalendar(calendar.get(Calendar.DAY_OF_WEEK));
+		}
+		return calendrier;
+	}
+
+	private int getTime(String timeRequete) {
+		if (timeRequete != null) {
+			return Integer.parseInt(timeRequete);
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			return ((calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE));
+		}
+	}
+
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String adresse1 = req.getParameter("adresse1");
 		String adresse2 = req.getParameter("adresse2");
-		resp.setContentType("text/xml");
+		EnumCalendrier calendrier = getCalendrier(req.getParameter("calendrier"));
+		int time = getTime(req.getParameter("time"));
+		resp.setContentType("text/plain");
 		resp.setCharacterEncoding("utf-8");
 		ItineraireReponse reponse = new ItineraireReponse();
 		if (adresse1 == null || adresse2 == null) {
 			reponse.setErreur("Il faut spécifier l'adresse1 et l'adresse2");
 		} else {
 			geoCoderAdresses(adresse1, adresse2, reponse);
-
 			if (reponse.getAdresses1().size() == 1 && reponse.getAdresses2().size() == 1) {
-
 				// Calcul des cricuits
 				RechercheCircuit rechercheCircuit = new RechercheCircuit(reponse.getAdresses1().get(0), reponse.getAdresses2().get(0));
-				rechercheCircuit.calculCircuits();
+				rechercheCircuit.calculCircuits(calendrier, time);
+				for (Trajet trajet : rechercheCircuit.getBestTrajets()) {
+					logger.info(trajet.toString());
+				}
 			}
 		}
-		resp.getWriter().println("</itineraires>");
+		resp.getWriter().println("OK");
 	}
 
 	private void geoCoderAdresses(String adresse1, String adresse2, ItineraireReponse reponse) {

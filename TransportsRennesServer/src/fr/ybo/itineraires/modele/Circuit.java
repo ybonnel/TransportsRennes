@@ -19,18 +19,9 @@ import fr.ybo.gtfs.modele.ArretRoute;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
 import fr.ybo.itineraires.util.RechercheCircuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.logging.Logger;
+import java.util.*;
 
 public class Circuit {
-
-	private static final Logger logger = Logger.getLogger(Circuit.class.getName());
 
 	private final static double DISTANCE_CORRESPONDANCE_REEL = 200.0;
 
@@ -50,9 +41,13 @@ public class Circuit {
 		this.arretArrivee = arretArrivee;
 	}
 
+	public List<Trajet> getTrajets() {
+		return trajets;
+	}
+
 	private Map<String, Collection<Arret>> arretsByLigneId = new HashMap<String, Collection<Arret>>();
 
-	public boolean rechercheTrajetBus() {
+	public boolean rechercheTrajetBus(EnumCalendrier calendrier, int heureDepart) {
 		Set<String> lignesDepart = new HashSet<String>();
 		for (ArretRoute arretRoute : GestionnaireGtfs.getInstance().getArretRoutesByArretId(arretDepart.getArret().id)) {
 			if (!lignesDepart.contains(arretRoute.ligneId)) {
@@ -78,10 +73,14 @@ public class Circuit {
 				// Trajets sans correspondance
 				if (ligneDepartId.equals(ligneArriveeId)) {
 					Trajet trajet = new Trajet();
-					trajet.getPortionsTrajet().add(new PortionTrajetBus(arretDepart.getArret(), arretArrivee.getArret(),
-							GestionnaireGtfs.getInstance().getLigne(ligneDepartId)));
-
-					trajets.add(trajet);
+					PortionTrajetBus bus = new PortionTrajetBus(arretDepart.getArret(), arretArrivee.getArret(),
+							GestionnaireGtfs.getInstance().getLigne(ligneDepartId));
+					if (bus.rechercheHoraire(calendrier, heureDepart)) {
+						trajet.getPortionsTrajet().add(arretDepart);
+						trajet.getPortionsTrajet().add(bus);
+						trajet.getPortionsTrajet().add(arretArrivee);
+						trajets.add(trajet);
+					}
 				} else {
 					// Trajets avec une correspondance
 					for (Arret arretDepartLigne : arretsByLigneId.get(ligneDepartId)) {
@@ -96,12 +95,14 @@ public class Circuit {
 									PortionTrajetBus bus2 = new PortionTrajetBus(arretArriveeLigne, arretArrivee.getArret(),
 											GestionnaireGtfs.getInstance().getLigne(ligneArriveeId));
 
-									if (bus1.rechercheHoraire() && bus2.rechercheHoraire()) {
+									if (bus1.rechercheHoraire(calendrier, heureDepart) && bus2.rechercheHoraire(calendrier, heureDepart)) {
 										Trajet trajet = new Trajet();
+										trajet.getPortionsTrajet().add(arretDepart);
 										trajet.getPortionsTrajet().add(bus1);
 										// Correspondance
 										trajet.getPortionsTrajet().add(new JointureCorrespondance(arretDepartLigne, arretArriveeLigne, distance));
 										trajet.getPortionsTrajet().add(bus2);
+										trajet.getPortionsTrajet().add(arretArrivee);
 										trajets.add(trajet);
 									}
 								}
@@ -111,10 +112,6 @@ public class Circuit {
 				}
 			}
 		}
-
-		// Recherche de du prochain trajet de bus pour chaque portion de trajet.
-
-
 		return !trajets.isEmpty();
 	}
 

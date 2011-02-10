@@ -14,6 +14,30 @@
 
 package fr.ybo.itineraires.modele;
 
-public class PortionTrajetPieton extends PortionTrajet {
+public abstract class PortionTrajetPieton extends PortionTrajet {
+
+	protected double distance;
+	// Vitesse d'un piéton en m/h
+	private final static double VITESSE_PIETON = 4000;
+
+	protected Integer tempsTrajet = null;
+
+	protected int calculTempsTrajetAproximatif() {
+		if (tempsTrajet == null) {
+			tempsTrajet = (int)Math.round((distance / VITESSE_PIETON) * 60);
+		}
+		return tempsTrajet;
+	}
+
+	@Override
+	public int calculHeureArrivee(int heureDepart) {
+		return heureDepart + calculTempsTrajetAproximatif();
+	}
+
+	@Override
+	public String toString() {
+		return "A pied ("
+				+ tempsTrajet + " minutes)";
+	}
 
 }

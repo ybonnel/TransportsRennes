@@ -28,9 +28,24 @@ public class Trajet {
 		return portionsTrajet;
 	}
 
+	private Integer tempsTrajet = null;
+
+	public int calculTempsTrajet(int heureDepart) {
+		if (tempsTrajet == null) {
+			int heureCourante = heureDepart;
+			for (PortionTrajet portionTrajet : getPortionsTrajet()) {
+				heureCourante = portionTrajet.calculHeureArrivee(heureCourante);
+			}
+			tempsTrajet = heureCourante - heureDepart;
+		}
+		return tempsTrajet;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder("Trajet :\n");
+		StringBuilder stringBuilder = new StringBuilder("Trajet (");
+		stringBuilder.append(tempsTrajet);
+		stringBuilder.append(" minutes):\n");
 		for (PortionTrajet portion : getPortionsTrajet()) {
 			stringBuilder.append(portion.toString());
 			stringBuilder.append('\n');

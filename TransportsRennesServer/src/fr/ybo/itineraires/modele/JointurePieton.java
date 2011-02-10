@@ -20,7 +20,6 @@ public class JointurePieton extends PortionTrajetPieton {
 
 	private final Arret arret;
 	private final Adresse adresse;
-	private final Double distance;
 
 	public JointurePieton(Arret arret, Adresse adresse, Double distance) {
 		this.arret = arret;
@@ -34,9 +33,5 @@ public class JointurePieton extends PortionTrajetPieton {
 
 	public Adresse getAdresse() {
 		return adresse;
-	}
-
-	public Double getDistance() {
-		return distance;
 	}
 }

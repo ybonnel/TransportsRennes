@@ -16,13 +16,9 @@ package fr.ybo.itineraires.util;
 
 import fr.ybo.gtfs.modele.Arret;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
-import fr.ybo.itineraires.modele.Adresse;
-import fr.ybo.itineraires.modele.Circuit;
-import fr.ybo.itineraires.modele.JointurePieton;
+import fr.ybo.itineraires.modele.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class RechercheCircuit {
@@ -41,7 +37,9 @@ public class RechercheCircuit {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	public void calculCircuits() {
+	private List<Trajet> bestTrajets = new ArrayList<Trajet>(10);
+
+	public void calculCircuits(EnumCalendrier calendrier, int heureDepart) {
 		long startTime = System.nanoTime();
 		for (Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
 			double distance = calculDistanceDepart(arret);
@@ -64,16 +62,44 @@ public class RechercheCircuit {
 			}
 		}
 		logger.info("Nombre de circuits à explorer : " + circuits.size());
+		startTime = System.nanoTime();
 		Iterator<Circuit> iteratorCircuit = circuits.iterator();
 		while (iteratorCircuit.hasNext()) {
-			if (!iteratorCircuit.next().rechercheTrajetBus()) {
+			if (!iteratorCircuit.next().rechercheTrajetBus(calendrier, heureDepart)) {
 				iteratorCircuit.remove();
 			}
 		}
+		elapsedTime = (System.nanoTime() - startTime) / 1000000;
+		logger.info("Recherche des trajets de bus en : " + elapsedTime + " ms");
 		logger.info("Nombre de circuits avec un trajet bus trouvé : " + circuits.size());
-		/*for (Circuit circuit : circuits) {
-			logger.info(circuit.toString());
-		} */
+		List<Trajet> trajets = new ArrayList<Trajet>();
+		for (Circuit circuit : circuits) {
+			trajets.addAll(circuit.getTrajets());
+		}
+		logger.info("Nombre de trajet à calculer : " + trajets.size());
+		startTime = System.nanoTime();
+		Collections.sort(trajets, new ComparatorTrajet(heureDepart));
+		elapsedTime = (System.nanoTime() - startTime) / 1000000;
+		logger.info("Temps de classement des trajets : " + elapsedTime + " ms");
+		bestTrajets.addAll(trajets.subList(0, trajets.size() > 10 ? 10 : trajets.size()));
+	}
+
+	private class ComparatorTrajet implements Comparator<Trajet> {
+		private int heureDepart;
+
+		private ComparatorTrajet(int heureDepart) {
+			this.heureDepart = heureDepart;
+		}
+
+		public int compare(Trajet o1, Trajet o2) {
+			int tempsTrajet1 = o1.calculTempsTrajet(heureDepart);
+			int tempsTrajet2 = o2.calculTempsTrajet(heureDepart);
+			return (tempsTrajet1 < tempsTrajet2 ? -1 : (tempsTrajet1 == tempsTrajet2 ? 0 : 1));
+		}
+	}
+
+	public List<Trajet> getBestTrajets() {
+		return bestTrajets;
 	}
 
 	private double calculDistanceDepart(Arret arret) {
