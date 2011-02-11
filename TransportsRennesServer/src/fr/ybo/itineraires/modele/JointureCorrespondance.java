@@ -33,4 +33,20 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 	public Arret getArretArrivee() {
 		return arretArrivee;
 	}
+
+	public String toXml() {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (tempsTrajet != null) {
+			stringBuilder.append("<tempsTrajet>");
+			stringBuilder.append(tempsTrajet);
+			stringBuilder.append("</tempsTrajet>");
+		}
+		stringBuilder.append("<arretDepartId>");
+		stringBuilder.append(arretDepart.id);
+		stringBuilder.append("</arretDepartId>");
+		stringBuilder.append("<arretArriveeId>");
+		stringBuilder.append(arretArrivee.id);
+		stringBuilder.append("</arretArriveeId>");
+		return stringBuilder.toString();
+	}
 }

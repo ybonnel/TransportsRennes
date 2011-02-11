@@ -57,7 +57,7 @@ public class ItinerairesServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		EnumCalendrier calendrier = getCalendrier(req.getParameter("calendrier"));
 		int time = getTime(req.getParameter("time"));
-		resp.setContentType("text/plain");
+		resp.setContentType("text/xml");
 		resp.setCharacterEncoding("utf-8");
 		ItineraireReponse reponse = new ItineraireReponse();
 		remplirAdresses(req, reponse);
@@ -69,7 +69,7 @@ public class ItinerairesServlet extends HttpServlet {
 		for (Trajet trajet : reponse.getTrajets()) {
 			logger.info(trajet.toString());
 		}
-		resp.getWriter().println("OK");
+		resp.getWriter().println(reponse.toXml());
 	}
 
 	public void remplirAdresses(HttpServletRequest req, ItineraireReponse reponse) {

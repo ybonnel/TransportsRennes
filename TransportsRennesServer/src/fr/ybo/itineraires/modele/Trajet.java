@@ -52,4 +52,21 @@ public class Trajet {
 		}
 		return stringBuilder.toString();
 	}
+
+	public String toXml() {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (tempsTrajet != null) {
+			stringBuilder.append("<tempsTrajet>");
+			stringBuilder.append(tempsTrajet);
+			stringBuilder.append("</tempsTrajet>");
+		}
+		for (PortionTrajet portion : getPortionsTrajet()) {
+			stringBuilder.append("<portion type=\"");
+			stringBuilder.append(portion.getClass().getSimpleName());
+			stringBuilder.append("\">");
+			stringBuilder.append(portion.toXml());
+			stringBuilder.append("</portion>");
+		}
+		return stringBuilder.toString();
+	}
 }

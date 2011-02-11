@@ -28,7 +28,9 @@ public class ItineraireServletTest {
 	@Test
 	public void testItineraireServlet_nominal() {
 		geoCoderAdresses("91 rue de Paris, Rennes");
+		//lat=48.1106736, lng=-1.6638114
 		geoCoderAdresses("29 rue d'antrain, Rennes");
+		//lat=48.1129019, lng=-1.6820555
 	}
 
 	private GeocodeResponse geoCoderAdresses(String adresse) {

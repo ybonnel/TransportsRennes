@@ -14,7 +14,11 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.gtfs.modele.*;
+import fr.ybo.gtfs.modele.Arret;
+import fr.ybo.gtfs.modele.Calendrier;
+import fr.ybo.gtfs.modele.GestionnaireGtfs;
+import fr.ybo.gtfs.modele.Horaire;
+import fr.ybo.gtfs.modele.Ligne;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +39,7 @@ public class PortionTrajetBus extends PortionTrajet {
 		private ComparatorHoraires(int heureDepart) {
 			this.heureDepart = heureDepart;
 		}
+
 		public int compare(HorairePortion o1, HorairePortion o2) {
 			if (o1.getHeureDepart() < heureDepart && o2.getHeureDepart() >= heureDepart) {
 				return 1;
@@ -54,7 +59,7 @@ public class PortionTrajetBus extends PortionTrajet {
 			}
 			Collections.sort(horaires, new ComparatorHoraires(heureDepart));
 			horaireSelectionnee = horaires.get(0);
-			if (horaireSelectionnee.getHeureDepart() < heureDepart ) {
+			if (horaireSelectionnee.getHeureDepart() < heureDepart) {
 				horaireSelectionnee.annule();
 			}
 			horaires.clear();
@@ -152,6 +157,30 @@ public class PortionTrajetBus extends PortionTrajet {
 		}
 		stringBuilder.append(") : ");
 		stringBuilder.append(arretArrivee.nom);
+		return stringBuilder.toString();
+	}
+
+	public String toXml() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("<ligneId>");
+		stringBuilder.append(ligne.id);
+		stringBuilder.append("</ligneId>");
+		stringBuilder.append("<arretDepartId>");
+		stringBuilder.append(arretDepart.id);
+		stringBuilder.append("</arretDepartId>");
+		if (horaireSelectionnee != null) {
+			stringBuilder.append("<heureDepart>");
+			stringBuilder.append(formatHeure(horaireSelectionnee.getHeureDepart()));
+			stringBuilder.append("</heureDepart>");
+		}
+		stringBuilder.append("<arretArriveeId>");
+		stringBuilder.append(arretArrivee.id);
+		stringBuilder.append("</arretArriveeId>");
+		if (horaireSelectionnee != null) {
+			stringBuilder.append("<heureArrivee>");
+			stringBuilder.append(formatHeure(horaireSelectionnee.getHeureArrivee()));
+			stringBuilder.append("</heureArrivee>");
+		}
 		return stringBuilder.toString();
 	}
 }

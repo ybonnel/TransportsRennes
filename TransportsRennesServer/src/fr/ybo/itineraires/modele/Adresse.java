@@ -39,4 +39,19 @@ public class Adresse {
 		this.longitude = longitude;
 	}
 
+	public String toXml() {
+		StringBuilder stringBuilder = new StringBuilder();
+		if (latitude != null) {
+			stringBuilder.append("<latitude>");
+			stringBuilder.append(latitude);
+			stringBuilder.append("</latitude>");
+		}
+		if (longitude != null) {
+			stringBuilder.append("<longitude>");
+			stringBuilder.append(longitude);
+			stringBuilder.append("</longitude>");
+		}
+		return stringBuilder.toString();
+	}
+
 }

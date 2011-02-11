@@ -17,4 +17,6 @@ package fr.ybo.itineraires.modele;
 public abstract class PortionTrajet {
 
 	abstract int calculHeureArrivee(int heureDepart);
+
+	public abstract String toXml();
 }

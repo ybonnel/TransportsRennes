@@ -14,6 +14,9 @@
 
 package fr.ybo.itineraires.modele;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +55,32 @@ public class ItineraireReponse {
 			trajets = new ArrayList<Trajet>();
 		}
 		return trajets;
+	}
+
+	public String toXml() {
+		StringBuilder stringBuilder = new StringBuilder("<reponse>");
+		if (erreur != null) {
+			stringBuilder.append("<erreur>");
+			stringBuilder.append(erreur);
+			stringBuilder.append("</erreur>");
+		}
+		if (adresse1 != null) {
+			stringBuilder.append("<adresse1>");
+			stringBuilder.append(adresse1.toXml());
+			stringBuilder.append("</adresse1>");
+		}
+		if (adresse2 != null) {
+			stringBuilder.append("<adresse2>");
+			stringBuilder.append(adresse2.toXml());
+			stringBuilder.append("</adresse2>");
+		}
+		for (Trajet trajet : getTrajets()) {
+			stringBuilder.append("<trajet>");
+			stringBuilder.append(trajet.toXml());
+			stringBuilder.append("</trajet>");
+		}
+		stringBuilder.append("</reponse>");
+		return stringBuilder.toString();
 	}
 
 }
