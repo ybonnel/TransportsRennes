@@ -15,22 +15,12 @@
 package fr.ybo.itineraires.modele;
 
 public class Adresse {
-	private String adresse;
 	private Double latitude;
 	private Double longitude;
 
-	public Adresse(String adresse, Double latitude, Double longitude) {
-		this.adresse = adresse;
+	public Adresse(Double latitude, Double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
-	}
-
-	public String getAdresse() {
-		return adresse;
-	}
-
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
 	}
 
 	public Double getLatitude() {

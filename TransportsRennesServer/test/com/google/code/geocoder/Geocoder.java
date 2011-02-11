@@ -46,6 +46,7 @@ public class Geocoder {
 			final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
 			URL url = new URL(urlString);
+			System.out.println(urlString);
 			final Reader reader = new InputStreamReader(url.openStream(), "utf-8");
 			return gson.fromJson(reader, GeocodeResponse.class);
 		} catch (Exception e) {
