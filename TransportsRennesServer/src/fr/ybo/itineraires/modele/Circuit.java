@@ -19,17 +19,15 @@ import fr.ybo.gtfs.modele.ArretRoute;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
 import fr.ybo.itineraires.util.RechercheCircuit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Circuit {
-
-	private final static double DISTANCE_CORRESPONDANCE_REEL = 200.0;
-
-	private final static double DISTANCE_RECHERCHE_METRE = 300.0;
-	private final static double DEGREE_LATITUDE_EN_METRES = 111192.62;
-	private final static double distanceLatitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
-	private final static double DEGREE_LONGITUDE_EN_METRES = 74452.10;
-	private final static double distanceLongitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
 
 	private JointurePieton arretDepart;
 	private JointurePieton arretArrivee;
@@ -85,26 +83,24 @@ public class Circuit {
 					// Trajets avec une correspondance
 					for (Arret arretDepartLigne : arretsByLigneId.get(ligneDepartId)) {
 						for (Arret arretArriveeLigne : arretsByLigneId.get(ligneArriveeId)) {
-							if (fastSelectCorrespondance(arretDepartLigne, arretArriveeLigne)) {
-								double distance = RechercheCircuit.calculDistanceBetweenArrets(arretDepartLigne, arretArriveeLigne);
-								if (distance < DISTANCE_CORRESPONDANCE_REEL) {
-									// Premier bus.
-									PortionTrajetBus bus1 = new PortionTrajetBus(arretDepart.getArret(), arretDepartLigne,
-											GestionnaireGtfs.getInstance().getLigne(ligneDepartId));
-									// Dexuième bus
-									PortionTrajetBus bus2 = new PortionTrajetBus(arretArriveeLigne, arretArrivee.getArret(),
-											GestionnaireGtfs.getInstance().getLigne(ligneArriveeId));
+							if (GestionnaireGtfs.getInstance().getCorrespondances(arretDepartLigne.id).contains(arretArriveeLigne.id)) {
+								// Premier bus.
+								PortionTrajetBus bus1 = new PortionTrajetBus(arretDepart.getArret(), arretDepartLigne,
+										GestionnaireGtfs.getInstance().getLigne(ligneDepartId));
+								// Dexuième bus
+								PortionTrajetBus bus2 = new PortionTrajetBus(arretArriveeLigne, arretArrivee.getArret(),
+										GestionnaireGtfs.getInstance().getLigne(ligneArriveeId));
 
-									if (bus1.rechercheHoraire(calendrier, heureDepart) && bus2.rechercheHoraire(calendrier, heureDepart)) {
-										Trajet trajet = new Trajet();
-										trajet.getPortionsTrajet().add(arretDepart);
-										trajet.getPortionsTrajet().add(bus1);
-										// Correspondance
-										trajet.getPortionsTrajet().add(new JointureCorrespondance(arretDepartLigne, arretArriveeLigne, distance));
-										trajet.getPortionsTrajet().add(bus2);
-										trajet.getPortionsTrajet().add(arretArrivee);
-										trajets.add(trajet);
-									}
+								if (bus1.rechercheHoraire(calendrier, heureDepart) && bus2.rechercheHoraire(calendrier, heureDepart)) {
+									Trajet trajet = new Trajet();
+									trajet.getPortionsTrajet().add(arretDepart);
+									trajet.getPortionsTrajet().add(bus1);
+									// Correspondance
+									trajet.getPortionsTrajet().add(new JointureCorrespondance(arretDepartLigne, arretArriveeLigne,
+											RechercheCircuit.calculDistanceBetweenArrets(arretDepartLigne, arretArriveeLigne)));
+									trajet.getPortionsTrajet().add(bus2);
+									trajet.getPortionsTrajet().add(arretArrivee);
+									trajets.add(trajet);
 								}
 							}
 						}
@@ -112,13 +108,8 @@ public class Circuit {
 				}
 			}
 		}
-		return !trajets.isEmpty();
-	}
 
-	private boolean fastSelectCorrespondance(Arret arret1, Arret arret2) {
-		double difLatitude = Math.abs(arret1.latitude - arret2.latitude);
-		double difLongitude = Math.abs(arret1.longitude - arret2.longitude);
-		return (difLatitude < distanceLatitudeInDegree && difLongitude < distanceLongitudeInDegree);
+		return !trajets.isEmpty();
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package fr.ybo.gtfs.chargement;
 
 import fr.ybo.gtfs.csv.moteur.ErreurMoteurCsv;
 import fr.ybo.gtfs.csv.moteur.MoteurCsv;
+import fr.ybo.gtfs.modele.Correspondance;
 import fr.ybo.gtfs.modele.Horaire;
 
 import java.io.BufferedReader;
@@ -33,6 +34,16 @@ public final class GestionZipKeolis {
 	private final static String URL_BASE = "/gtfs/";
 	private final static String URL_STOP_TIMES = URL_BASE + "horaires_";
 	private final static String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
+
+	public static List<Correspondance> getCorrespondances(MoteurCsv moteurCsv) {
+		try {
+			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.zip"));
+			zipInputStream.getNextEntry();
+			return moteurCsv.parseFile(new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024), Correspondance.class);
+		} catch (Exception exception) {
+			throw new ErreurGestionFiles(exception);
+		}
+	}
 
 	public static List<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
 		try {

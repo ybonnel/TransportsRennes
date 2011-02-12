@@ -45,6 +45,7 @@ public class Main {
 		 generateur.remplirLignes();
 		 generateur.remplirTrajets();
 		 generateur.remplirArretRoutes();
+		 generateur.remplirCorrespondance();
 		 generateur.afficheCompteurs();
 		 generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
 		 generateur.rechercherPointsInterets();

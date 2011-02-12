@@ -17,12 +17,15 @@ package fr.ybo.gtfs.modele;
 import fr.ybo.gtfs.chargement.GestionZipKeolis;
 import fr.ybo.gtfs.csv.moteur.MoteurCsv;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.zip.ZipInputStream;
 
 public class GestionnaireGtfs {
 
@@ -38,6 +41,7 @@ public class GestionnaireGtfs {
 		CLASSES_CSV.add(Horaire.class);
 		CLASSES_CSV.add(Ligne.class);
 		CLASSES_CSV.add(Trajet.class);
+		CLASSES_CSV.add(Correspondance.class);
 	}
 
 
@@ -49,6 +53,15 @@ public class GestionnaireGtfs {
 	private Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer, Horaire>>();
 	private Map<String, Ligne> lignes = new HashMap<String, Ligne>();
 	private Map<Integer, Trajet> trajets = new HashMap<Integer, Trajet>();
+	private Map<String, List<String>> correspondances = new HashMap<String, List<String>>();
+
+	public List<String> getCorrespondances(String arretId) {
+		if (correspondances.containsKey(arretId)) {
+			return correspondances.get(arretId);
+		} else {
+			return new ArrayList<String>();
+		}
+	}
 
 	public Calendrier getCalendrier(Integer calendrierId) {
 		return calendriers.get(calendrierId);
@@ -150,6 +163,12 @@ public class GestionnaireGtfs {
 				}
 				horaires.get(horaire.arretId).put(horaire.trajetId, horaire);
 			}
+		}
+		for (Correspondance correspondance : GestionZipKeolis.getCorrespondances(moteurCsv)) {
+			if (!correspondances.containsKey(correspondance.arretId)) {
+				correspondances.put(correspondance.arretId, new ArrayList<String>());
+			}
+			correspondances.get(correspondance.arretId).add(correspondance.correspondanceId);
 		}
 		long elapsedTime = (System.nanoTime() - startTime) / 1000000;
 		logger.info("Construction du gestionnaire gtfs en " + elapsedTime + " ms");

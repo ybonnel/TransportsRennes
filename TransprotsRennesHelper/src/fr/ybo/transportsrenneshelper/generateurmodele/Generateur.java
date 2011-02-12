@@ -18,6 +18,7 @@ package fr.ybo.transportsrenneshelper.generateurmodele;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Arret;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.ArretRoute;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Calendrier;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Correspondance;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Direction;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Horaire;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Ligne;
@@ -59,6 +60,7 @@ public class Generateur {
 	private List<Horaire> horaires = new ArrayList<Horaire>();
 	private Map<String, Arret> arrets = new HashMap<String, Arret>();
 	private List<ArretRoute> arretsRoutes = new ArrayList<ArretRoute>();
+	private List<Correspondance> correspondances = new ArrayList<Correspondance>();
 	private Map<String, List<Horaire>> horairesByLigneId = new HashMap<String, List<Horaire>>();
 
 	private static final List<Class<?>> LIST_CLASSES = new ArrayList<Class<?>>();
@@ -71,6 +73,7 @@ public class Generateur {
 		LIST_CLASSES.add(Horaire.class);
 		LIST_CLASSES.add(Ligne.class);
 		LIST_CLASSES.add(Trajet.class);
+		LIST_CLASSES.add(Correspondance.class);
 	}
 
 	public void rechercherPointsInterets() {
@@ -132,6 +135,8 @@ public class Generateur {
 		moteurCsv.writeFile(new File(repertoire, "horaires.txt"), horaires, Horaire.class);
 		System.out.println("Génération du fichier lignes.txt");
 		moteurCsv.writeFile(new File(repertoire, "lignes.txt"), lignes, Ligne.class);
+		System.out.println("Génération du fichier correspondances.txt");
+		moteurCsv.writeFile(new File(repertoire, "correspondances.txt"), correspondances, Correspondance.class);
 		System.out.println("Génération du fichier trajets.txt");
 		List<Trajet> trajets = new ArrayList<Trajet>();
 		for (List<Trajet> trajetsToAdd : this.trajets.values()) {
@@ -182,6 +187,111 @@ public class Generateur {
 		} catch (Exception exception) {
 			throw new ErreurMoteurCsv(exception);
 		}
+	}
+
+	private final static double DISTANCE_CORRESPONDANCE_REEL = 200.0;
+
+	private final static double DISTANCE_RECHERCHE_METRE = 300.0;
+	private final static double DEGREE_LATITUDE_EN_METRES = 111192.62;
+	private final static double distanceLatitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
+	private final static double DEGREE_LONGITUDE_EN_METRES = 74452.10;
+	private final static double distanceLongitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
+
+	public void remplirCorrespondance() {
+		// Trajets avec une correspondance
+		for (Arret arret : arrets.values()) {
+			for (Arret correspondance : arrets.values()) {
+				if (fastSelectCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id) &&
+						calculDistanceBetweenArrets(arret, correspondance) < DISTANCE_CORRESPONDANCE_REEL) {
+					    correspondances.add(new Correspondance(arret.id, correspondance.id));
+				}
+			}
+		}
+	}
+
+	public static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
+		return calculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude, arretArrivee.longitude);
+	}
+
+	private static double calculDistance(double lat1, double lon1, double lat2, double lon2) {
+		// Based on http://www.ngs.noaa.gov/PUBS_LIB/inverse.pdf
+		// using the "Inverse Formula" (section 4)
+
+		int MAXITERS = 20;
+		// Convert lat/long to radians
+		lat1 *= Math.PI / 180.0;
+		lat2 *= Math.PI / 180.0;
+		lon1 *= Math.PI / 180.0;
+		lon2 *= Math.PI / 180.0;
+
+		double a = 6378137.0; // WGS84 major axis
+		double b = 6356752.3142; // WGS84 semi-major axis
+		double f = (a - b) / a;
+		double aSqMinusBSqOverBSq = (a * a - b * b) / (b * b);
+
+		double L = lon2 - lon1;
+		double A = 0.0;
+		double U1 = Math.atan((1.0 - f) * Math.tan(lat1));
+		double U2 = Math.atan((1.0 - f) * Math.tan(lat2));
+
+		double cosU1 = Math.cos(U1);
+		double cosU2 = Math.cos(U2);
+		double sinU1 = Math.sin(U1);
+		double sinU2 = Math.sin(U2);
+		double cosU1cosU2 = cosU1 * cosU2;
+		double sinU1sinU2 = sinU1 * sinU2;
+
+		double sigma = 0.0;
+		double deltaSigma = 0.0;
+		double cosSqAlpha;
+		double cos2SM;
+		double cosSigma;
+		double sinSigma;
+		double cosLambda;
+		double sinLambda;
+
+		double lambda = L; // initial guess
+		for (int iter = 0; iter < MAXITERS; iter++) {
+			double lambdaOrig = lambda;
+			cosLambda = Math.cos(lambda);
+			sinLambda = Math.sin(lambda);
+			double t1 = cosU2 * sinLambda;
+			double t2 = cosU1 * sinU2 - sinU1 * cosU2 * cosLambda;
+			double sinSqSigma = t1 * t1 + t2 * t2; // (14)
+			sinSigma = Math.sqrt(sinSqSigma);
+			cosSigma = sinU1sinU2 + cosU1cosU2 * cosLambda; // (15)
+			sigma = Math.atan2(sinSigma, cosSigma); // (16)
+			double sinAlpha = (sinSigma == 0) ? 0.0 : cosU1cosU2 * sinLambda / sinSigma; // (17)
+			cosSqAlpha = 1.0 - sinAlpha * sinAlpha;
+			cos2SM = (cosSqAlpha == 0) ? 0.0 : cosSigma - 2.0 * sinU1sinU2 / cosSqAlpha; // (18)
+
+			double uSquared = cosSqAlpha * aSqMinusBSqOverBSq; // defn
+			A = 1 + (uSquared / 16384.0) * // (3)
+					(4096.0 + uSquared * (-768 + uSquared * (320.0 - 175.0 * uSquared)));
+			double B = (uSquared / 1024.0) * // (4)
+					(256.0 + uSquared * (-128.0 + uSquared * (74.0 - 47.0 * uSquared)));
+			double C = (f / 16.0) * cosSqAlpha * (4.0 + f * (4.0 - 3.0 * cosSqAlpha)); // (10)
+			double cos2SMSq = cos2SM * cos2SM;
+			deltaSigma = B * sinSigma * // (6)
+					(cos2SM + (B / 4.0) *
+							(cosSigma * (-1.0 + 2.0 * cos2SMSq) - (B / 6.0) * cos2SM * (-3.0 + 4.0 * sinSigma * sinSigma) * (-3.0 + 4.0 * cos2SMSq)));
+
+			lambda = L + (1.0 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SM + C * cosSigma * (-1.0 + 2.0 * cos2SM * cos2SM))); // (11)
+
+			double delta = (lambda - lambdaOrig) / lambda;
+			if (Math.abs(delta) < 1.0e-12) {
+				break;
+			}
+		}
+
+		return (b * A * (sigma - deltaSigma));
+
+	}
+
+	private boolean fastSelectCorrespondance(Arret arret1, Arret arret2) {
+		double difLatitude = Math.abs(arret1.latitude - arret2.latitude);
+		double difLongitude = Math.abs(arret1.longitude - arret2.longitude);
+		return (difLatitude < distanceLatitudeInDegree && difLongitude < distanceLongitudeInDegree);
 	}
 
 	public void remplirArretRoutes() {
@@ -286,12 +396,8 @@ public class Generateur {
 					System.err.println("Pas de direction trouvée!!!!!");
 				}
 				arretRoute.directionId = directionId;
-				if (GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible &&
-						GestionnaireGtfs.getInstance().getRouteExtensions().get(arretRoute.ligneId).accessible) {
-					arretRoute.accessible = true;
-				} else {
-					arretRoute.accessible = false;
-				}
+				arretRoute.accessible = GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible &&
+						GestionnaireGtfs.getInstance().getRouteExtensions().get(arretRoute.ligneId).accessible;
 				arretsRoutes.add(arretRoute);
 			}
 		}
