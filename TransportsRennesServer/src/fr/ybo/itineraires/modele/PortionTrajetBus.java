@@ -185,4 +185,15 @@ public class PortionTrajetBus extends PortionTrajet {
 		}
 		return stringBuilder.toString();
 	}
+
+    @Override
+    public fr.ybo.itineraires.schema.PortionTrajet convert() {
+        fr.ybo.itineraires.schema.PortionTrajetBus retour = new fr.ybo.itineraires.schema.PortionTrajetBus();
+        retour.setLigneId(ligne.id);
+        retour.setArretDepartId(arretDepart.id);
+        retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));
+        retour.setArretArriveeId(arretArrivee.id);
+        retour.setHeureArrivee(formatHeure(horaireSelectionnee.getHeureArrivee()));
+        return retour;
+    }
 }

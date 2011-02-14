@@ -15,6 +15,7 @@
 package fr.ybo.itineraires.modele;
 
 import fr.ybo.gtfs.modele.Arret;
+import fr.ybo.itineraires.schema.*;
 
 public class JointureCorrespondance extends PortionTrajetPieton {
 	private final Arret arretDepart;
@@ -41,4 +42,13 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 		stringBuilder.append("</arretArriveeId>");
 		return stringBuilder.toString();
 	}
+
+    @Override
+    public fr.ybo.itineraires.schema.PortionTrajet convert() {
+        fr.ybo.itineraires.schema.JointureCorrespondance retour = new fr.ybo.itineraires.schema.JointureCorrespondance();
+        remplirXml(retour);
+        retour.setArretDepartId(arretDepart.id);
+        retour.setArretArriveeId(arretArrivee.id);
+        return retour;
+    }
 }

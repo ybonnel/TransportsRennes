@@ -15,6 +15,7 @@
 package fr.ybo.itineraires.modele;
 
 import fr.ybo.gtfs.modele.Arret;
+import fr.ybo.itineraires.schema.*;
 
 public class JointurePieton extends PortionTrajetPieton {
 
@@ -46,4 +47,13 @@ public class JointurePieton extends PortionTrajetPieton {
 		stringBuilder.append("</adresse>");
 		return stringBuilder.toString();
 	}
+
+    @Override
+    public fr.ybo.itineraires.schema.PortionTrajet convert() {
+        fr.ybo.itineraires.schema.JointurePieton retour = new fr.ybo.itineraires.schema.JointurePieton();
+        remplirXml(retour);
+        retour.setAdresse(adresse.convert());
+        retour.setArretId(arret.id);
+        return retour;
+    }
 }

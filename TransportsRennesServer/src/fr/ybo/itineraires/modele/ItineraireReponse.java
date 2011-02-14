@@ -14,16 +14,15 @@
 
 package fr.ybo.itineraires.modele;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItineraireReponse {
 	private String erreur;
-	private Adresse adresse1;
-	private Adresse adresse2;
+	private Adresse adresseDepart;
+	private Adresse adresseArrivee;
 	private List<Trajet> trajets;
 
 	public String getErreur() {
@@ -34,20 +33,20 @@ public class ItineraireReponse {
 		this.erreur = erreur;
 	}
 
-	public Adresse getAdresse1() {
-		return adresse1;
+	public Adresse getAdresseDepart() {
+		return adresseDepart;
 	}
 
-	public void setAdresse1(Adresse adresse1) {
-		this.adresse1 = adresse1;
+	public void setAdresseDepart(Adresse adresseDepart) {
+		this.adresseDepart = adresseDepart;
 	}
 
-	public Adresse getAdresse2() {
-		return adresse2;
+	public Adresse getAdresseArrivee() {
+		return adresseArrivee;
 	}
 
-	public void setAdresse2(Adresse adresse2) {
-		this.adresse2 = adresse2;
+	public void setAdresseArrivee(Adresse adresseArrivee) {
+		this.adresseArrivee = adresseArrivee;
 	}
 
 	public List<Trajet> getTrajets() {
@@ -64,15 +63,15 @@ public class ItineraireReponse {
 			stringBuilder.append(erreur);
 			stringBuilder.append("</erreur>");
 		}
-		if (adresse1 != null) {
-			stringBuilder.append("<adresse1>");
-			stringBuilder.append(adresse1.toXml());
-			stringBuilder.append("</adresse1>");
+		if (adresseDepart != null) {
+			stringBuilder.append("<adresseDepart>");
+			stringBuilder.append(adresseDepart.toXml());
+			stringBuilder.append("</adresseDepart>");
 		}
-		if (adresse2 != null) {
-			stringBuilder.append("<adresse2>");
-			stringBuilder.append(adresse2.toXml());
-			stringBuilder.append("</adresse2>");
+		if (adresseArrivee != null) {
+			stringBuilder.append("<adresseArrivee>");
+			stringBuilder.append(adresseArrivee.toXml());
+			stringBuilder.append("</adresseArrivee>");
 		}
 		for (Trajet trajet : getTrajets()) {
 			stringBuilder.append("<trajet>");

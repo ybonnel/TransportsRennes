@@ -14,9 +14,34 @@
 
 package fr.ybo.itineraires.modele;
 
+import fr.ybo.itineraires.bean.ItineraireException;
+
+import java.util.logging.Logger;
+
+
 public class Adresse {
+    private static final Logger logger = Logger.getLogger(Adresse.class.getName());
 	private Double latitude;
 	private Double longitude;
+
+	public Adresse(String value) {
+		if (value == null) {
+            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+		}
+		String[] champs = value.split("\\|");
+		if (champs.length != 2) {
+            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+		}
+		try {
+			latitude = Double.parseDouble(champs[0]);
+			longitude = Double.parseDouble(champs[1]);
+		} catch (NumberFormatException exception) {
+            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'", exception);
+		}
+	}
 
 	public Adresse(Double latitude, Double longitude) {
 		this.latitude = latitude;
@@ -45,5 +70,12 @@ public class Adresse {
 		}
 		return stringBuilder.toString();
 	}
+
+    public fr.ybo.itineraires.schema.Adresse convert() {
+        fr.ybo.itineraires.schema.Adresse adresseXml = new fr.ybo.itineraires.schema.Adresse();
+        adresseXml.setLatitude(latitude);
+        adresseXml.setLongitude(longitude);
+        return adresseXml;
+    }
 
 }

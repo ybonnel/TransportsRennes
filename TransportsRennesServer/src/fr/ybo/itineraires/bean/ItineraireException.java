@@ -12,13 +12,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.itineraires.modele;
+package fr.ybo.itineraires.bean;
 
-public abstract class PortionTrajet {
 
-	abstract int calculHeureArrivee(int heureDepart);
+public class ItineraireException extends RuntimeException {
 
-	public abstract String toXml();
+	public ItineraireException(String message) {
+		super(message);
+	}
 
-    public abstract fr.ybo.itineraires.schema.PortionTrajet convert();
+	public ItineraireException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

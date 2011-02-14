@@ -40,4 +40,8 @@ public abstract class PortionTrajetPieton extends PortionTrajet {
 				+ tempsTrajet + " minutes)";
 	}
 
+    protected void remplirXml(fr.ybo.itineraires.schema.PortionTrajetPieton xml) {
+        xml.setTempsTrajet(tempsTrajet);
+    }
+
 }
