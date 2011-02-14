@@ -19,11 +19,8 @@ import fr.ybo.gtfs.modele.GestionnaireGtfs;
 import fr.ybo.itineraires.modele.*;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 public class RechercheCircuit {
-
-	private static final Logger logger = Logger.getLogger(RechercheCircuit.class.getName());
 
 	private final static double distanceRechercheArrets = 400;
 	private final Adresse adresseDepart;
@@ -37,10 +34,11 @@ public class RechercheCircuit {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	private List<Trajet> bestTrajets = new ArrayList<Trajet>(10);
+	private final List<Trajet> bestTrajets = new ArrayList<Trajet>(3);
 
-	public void calculCircuits(EnumCalendrier calendrier, int heureDepart) {
-		long startTime = System.nanoTime();
+	public List<Chrono> calculCircuits(EnumCalendrier calendrier, int heureDepart) {
+		List<Chrono> chronos = new ArrayList<Chrono>();
+		Chrono chrono = new Chrono("ArretEligibles");
 		for (Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
 			double distance = calculDistanceDepart(arret);
 			if (distance < distanceRechercheArrets) {
@@ -51,41 +49,38 @@ public class RechercheCircuit {
 				arretsArrivees.add(new JointurePieton(arret, adresseArrivee, distance));
 			}
 		}
-		long elapsedTime = (System.nanoTime() - startTime) / 1000000;
-		logger.info("Calcul des arrets eligibles en : " + elapsedTime + " ms");
-		logger.info("Nombre d'arret éligibles au départ : " + arretsDeparts.size());
-		logger.info("Nombre d'arret éligibles à l'arrivée : " + arretsArrivees.size());
+		chronos.add(chrono.stop());
+		chrono = new Chrono("RemplirCircuits");
 		List<Circuit> circuits = new ArrayList<Circuit>();
 		for (JointurePieton arretDepart : arretsDeparts) {
 			for (JointurePieton arretArrivee : arretsArrivees) {
 				circuits.add(new Circuit(arretDepart, arretArrivee));
 			}
 		}
-		logger.info("Nombre de circuits à explorer : " + circuits.size());
-		startTime = System.nanoTime();
+		chronos.add(chrono.stop());
+		chrono = new Chrono("RechercheTrajets");
 		Iterator<Circuit> iteratorCircuit = circuits.iterator();
 		while (iteratorCircuit.hasNext()) {
-			if (!iteratorCircuit.next().rechercheTrajetBus(calendrier, heureDepart)) {
+			if (iteratorCircuit.next().rechercheTrajetBus(calendrier, heureDepart)) {
 				iteratorCircuit.remove();
 			}
 		}
-		elapsedTime = (System.nanoTime() - startTime) / 1000000;
-		logger.info("Recherche des trajets de bus en : " + elapsedTime + " ms");
-		logger.info("Nombre de circuits avec un trajet bus trouvé : " + circuits.size());
+		chronos.add(chrono.stop());
+		chrono = new Chrono("RemplirTrajets");
 		List<Trajet> trajets = new ArrayList<Trajet>();
 		for (Circuit circuit : circuits) {
 			trajets.addAll(circuit.getTrajets());
 		}
-		logger.info("Nombre de trajet à calculer : " + trajets.size());
-		startTime = System.nanoTime();
+		chronos.add(chrono.stop());
+		chrono = new Chrono("SortTrajets");
 		Collections.sort(trajets, new ComparatorTrajet(heureDepart));
-		elapsedTime = (System.nanoTime() - startTime) / 1000000;
-		logger.info("Temps de classement des trajets : " + elapsedTime + " ms");
-		bestTrajets.addAll(trajets.subList(0, trajets.size() > 10 ? 10 : trajets.size()));
+		chronos.add(chrono.stop());
+		bestTrajets.addAll(trajets.subList(0, trajets.size() > 3 ? 3 : trajets.size()));
+		return chronos;
 	}
 
 	private class ComparatorTrajet implements Comparator<Trajet> {
-		private int heureDepart;
+		private final int heureDepart;
 
 		private ComparatorTrajet(int heureDepart) {
 			this.heureDepart = heureDepart;
@@ -108,10 +103,6 @@ public class RechercheCircuit {
 
 	private double calculDistanceArrivee(Arret arret) {
 		return calculDistance(adresseArrivee.getLatitude(), adresseArrivee.getLongitude(), arret.latitude, arret.longitude);
-	}
-
-	public static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
-		return calculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude, arretArrivee.longitude);
 	}
 
 	private static double calculDistance(double lat1, double lon1, double lat2, double lon2) {

@@ -14,11 +14,7 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.gtfs.modele.Arret;
-import fr.ybo.gtfs.modele.Calendrier;
-import fr.ybo.gtfs.modele.GestionnaireGtfs;
-import fr.ybo.gtfs.modele.Horaire;
-import fr.ybo.gtfs.modele.Ligne;
+import fr.ybo.gtfs.modele.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,11 +26,14 @@ public class PortionTrajetBus extends PortionTrajet {
 
 	private static final Logger logger = Logger.getLogger(PortionTrajetBus.class.getName());
 
+	private static final GestionnaireGtfs GESTIONNAIRE_GTFS = GestionnaireGtfs.getInstance();
+
 	private static final int UNE_JOURNEE = 24 * 60;
+	private static final int DEUX_HEURES = 2 * 60;
 
 	private class ComparatorHoraires implements Comparator<HorairePortion> {
 
-		private int heureDepart;
+		private final int heureDepart;
 
 		private ComparatorHoraires(int heureDepart) {
 			this.heureDepart = heureDepart;
@@ -90,10 +89,10 @@ public class PortionTrajetBus extends PortionTrajet {
 		}
 	}
 
-	private Arret arretDepart;
-	private Arret arretArrivee;
-	private Ligne ligne;
-	private List<HorairePortion> horaires = new ArrayList<HorairePortion>();
+	private final Arret arretDepart;
+	private final Arret arretArrivee;
+	private final Ligne ligne;
+	private final List<HorairePortion> horaires = new ArrayList<HorairePortion>();
 	private HorairePortion horaireSelectionnee;
 
 	public PortionTrajetBus(Arret arretDepart, Arret arretArrivee, Ligne ligne) {
@@ -104,11 +103,14 @@ public class PortionTrajetBus extends PortionTrajet {
 
 	public boolean rechercheHoraire(EnumCalendrier calendrier, int heureDepart) {
 		// Recupérer les trajets de l'arret/ligne
-		for (Horaire horaire : GestionnaireGtfs.getInstance().getHorairesByArretId(arretDepart.id)) {
-			if (ligne.id.equals(GestionnaireGtfs.getInstance().getTrajet(horaire.trajetId).ligneId)) {
-				Calendrier calendrierCourant =
-						GestionnaireGtfs.getInstance().getCalendrier(GestionnaireGtfs.getInstance().getTrajet(horaire.trajetId).calendrierId);
-				Horaire horaireArrivee = GestionnaireGtfs.getInstance().getHoraireByArretIdAndTrajetId(arretArrivee.id, horaire.trajetId);
+		Horaire horaireArrivee;
+		Calendrier calendrierCourant;
+		int heureDepartFin = heureDepart + DEUX_HEURES;
+		for (Horaire horaire : GESTIONNAIRE_GTFS.getHorairesByArretId(arretDepart.id)) {
+			if (ligne.id.equals(horaire.trajet.ligneId) && ((horaire.heureDepart >= heureDepart && horaire.heureDepart <= heureDepartFin) ||
+					(horaire.heureDepart - UNE_JOURNEE) >= heureDepart && (horaire.heureDepart - UNE_JOURNEE) <= heureDepartFin)) {
+				calendrierCourant = GESTIONNAIRE_GTFS.getCalendrier(horaire.trajet.calendrierId);
+				horaireArrivee = GESTIONNAIRE_GTFS.getHoraireByArretIdAndTrajetId(arretArrivee.id, horaire.trajetId);
 				if (horaireArrivee != null && horaireArrivee.heureDepart > horaire.heureDepart) {
 					if (horaire.heureDepart >= heureDepart && calendrier.isCalendrierValide(calendrierCourant)) {
 						horaires.add(new HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart));

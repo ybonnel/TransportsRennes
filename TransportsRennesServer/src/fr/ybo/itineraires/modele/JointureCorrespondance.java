@@ -26,14 +26,6 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 		this.distance = distance;
 	}
 
-	public Arret getArretDepart() {
-		return arretDepart;
-	}
-
-	public Arret getArretArrivee() {
-		return arretArrivee;
-	}
-
 	public String toXml() {
 		StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {

@@ -31,10 +31,6 @@ public class JointurePieton extends PortionTrajetPieton {
 		return arret;
 	}
 
-	public Adresse getAdresse() {
-		return adresse;
-	}
-
 	public String toXml() {
 		StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {

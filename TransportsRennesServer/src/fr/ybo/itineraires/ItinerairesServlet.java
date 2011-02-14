@@ -18,6 +18,7 @@ import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.EnumCalendrier;
 import fr.ybo.itineraires.modele.ItineraireReponse;
 import fr.ybo.itineraires.modele.Trajet;
+import fr.ybo.itineraires.util.Chrono;
 import fr.ybo.itineraires.util.RechercheCircuit;
 
 import javax.servlet.http.HttpServlet;
@@ -29,9 +30,6 @@ import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
 public class ItinerairesServlet extends HttpServlet {
-
-
-	private static final Logger logger = Logger.getLogger(ItinerairesServlet.class.getName());
 
 	private EnumCalendrier getCalendrier(String calendrierRequete) {
 		EnumCalendrier calendrier = null;
@@ -63,12 +61,10 @@ public class ItinerairesServlet extends HttpServlet {
 		remplirAdresses(req, reponse);
 		// Calcul des cricuits
 		RechercheCircuit rechercheCircuit = new RechercheCircuit(reponse.getAdresse1(), reponse.getAdresse2());
-		rechercheCircuit.calculCircuits(calendrier, time);
-		reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
-		logger.info("Résultat de la recherche de trajets :");
-		for (Trajet trajet : reponse.getTrajets()) {
-			logger.info(trajet.toString());
+		for (Chrono chrono : rechercheCircuit.calculCircuits(calendrier, time)) {
+			chrono.spool();
 		}
+		reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
 		resp.getWriter().println(reponse.toXml());
 	}
 

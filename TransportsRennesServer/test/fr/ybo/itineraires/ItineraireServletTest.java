@@ -41,6 +41,7 @@ public class ItineraireServletTest {
 			geocoderResponse = geocoder.geocode(geocoderRequest);
 		}
 		System.out.println("Adresses trouvées : ");
+		assert geocoderResponse != null;
 		for (GeocoderResult result : geocoderResponse.getResults()) {
 			System.out.println(result.toString());
 		}

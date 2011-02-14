@@ -32,4 +32,6 @@ public class Horaire {
 	public Integer stopSequence;
 	@BaliseCsv(value = "terminus", adapter = AdapterBoolean.class)
 	public Boolean terminus;
+
+	public Trajet trajet;
 }

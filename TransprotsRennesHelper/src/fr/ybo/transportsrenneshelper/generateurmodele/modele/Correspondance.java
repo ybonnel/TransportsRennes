@@ -17,6 +17,8 @@ package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
 import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterDouble;
+import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 
 @FichierCsv( "correspondances.txt")
 public class Correspondance {
@@ -25,10 +27,13 @@ public class Correspondance {
 	public String arretId;
 	@BaliseCsv("correspondanceId")
 	public String correspondanceId;
+	@BaliseCsv(value = "distance", adapter = AdapterInteger.class)
+	public Integer distance;
 
-	public Correspondance(String arretId, String correspondanceId) {
+	public Correspondance(String arretId, String correspondanceId, Integer distance) {
 		this.arretId = arretId;
 		this.correspondanceId = correspondanceId;
+		this.distance = distance;
 	}
 
 	public Correspondance() {

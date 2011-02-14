@@ -17,17 +17,42 @@ package fr.ybo.gtfs.modele;
 import fr.ybo.gtfs.chargement.GestionZipKeolis;
 import fr.ybo.gtfs.csv.moteur.MoteurCsv;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
-import java.util.zip.ZipInputStream;
 
 public class GestionnaireGtfs {
+
+	public static class CoupleLigne {
+		public final String ligneId1;
+		public final String ligneId2;
+
+		public CoupleLigne(String ligneId1, String ligneId2) {
+			this.ligneId1 = ligneId1;
+			this.ligneId2 = ligneId2;
+		}
+
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) {
+				return true;
+			}
+			if (o == null || getClass() != o.getClass()) {
+				return false;
+			}
+
+			CoupleLigne that = (CoupleLigne) o;
+
+			return ligneId1.equals(that.ligneId1) && ligneId2.equals(that.ligneId2);
+
+		}
+
+		@Override
+		public int hashCode() {
+			int result = ligneId1.hashCode();
+			result = 31 * result + ligneId2.hashCode();
+			return result;
+		}
+	}
 
 	private static final Logger logger = Logger.getLogger(GestionnaireGtfs.class.getName());
 
@@ -45,22 +70,15 @@ public class GestionnaireGtfs {
 	}
 
 
-	private Map<String, Arret> arrets = new HashMap<String, Arret>();
-	private Map<String, Map<String, ArretRoute>> arretsRoutesByLigneId = new HashMap<String, Map<String, ArretRoute>>();
-	private Map<String, Map<String, ArretRoute>> arretsRoutesByArretId = new HashMap<String, Map<String, ArretRoute>>();
-	private Map<Integer, Calendrier> calendriers = new HashMap<Integer, Calendrier>();
-	private Map<Integer, Direction> directions = new HashMap<Integer, Direction>();
-	private Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer, Horaire>>();
-	private Map<String, Ligne> lignes = new HashMap<String, Ligne>();
-	private Map<Integer, Trajet> trajets = new HashMap<Integer, Trajet>();
-	private Map<String, List<String>> correspondances = new HashMap<String, List<String>>();
+	private final Map<String, Arret> arrets = new HashMap<String, Arret>();
+	private final Map<String, Map<String, ArretRoute>> arretsRoutesByArretId = new HashMap<String, Map<String, ArretRoute>>();
+	private final Map<Integer, Calendrier> calendriers = new HashMap<Integer, Calendrier>();
+	private final Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer, Horaire>>();
+	private final Map<String, Ligne> lignes = new HashMap<String, Ligne>();
+	private final Map<CoupleLigne, Collection<Correspondance>> correspondances = new HashMap<CoupleLigne, Collection<Correspondance>>();
 
-	public List<String> getCorrespondances(String arretId) {
-		if (correspondances.containsKey(arretId)) {
-			return correspondances.get(arretId);
-		} else {
-			return new ArrayList<String>();
-		}
+	public Collection<Correspondance> getCorrespondances(CoupleLigne coupleLigne) {
+		return correspondances.get(coupleLigne);
 	}
 
 	public Calendrier getCalendrier(Integer calendrierId) {
@@ -71,8 +89,8 @@ public class GestionnaireGtfs {
 		return arrets.values();
 	}
 
-	public Trajet getTrajet(Integer trajetId) {
-		return trajets.get(trajetId);
+	public Arret getArret(String arretId) {
+		return arrets.get(arretId);
 	}
 
 	public Collection<Horaire> getHorairesByArretId(String arretId) {
@@ -87,22 +105,6 @@ public class GestionnaireGtfs {
 			return horaires.get(arretId).get(trajetId);
 		}
 		return null;
-	}
-
-	private Collection<ArretRoute> getArretRoutesByLigneId(String ligneId) {
-		if (arretsRoutesByLigneId.containsKey(ligneId)) {
-			return arretsRoutesByLigneId.get(ligneId).values();
-		} else {
-			return new ArrayList<ArretRoute>();
-		}
-	}
-
-	public Collection<Arret> getArretsByLigneId(String ligneId) {
-		List<Arret> arretsRetour = new ArrayList<Arret>();
-		for (ArretRoute arretRoute : getArretRoutesByLigneId(ligneId)) {
-			arretsRetour.add(arrets.get(arretRoute.arretId));
-		}
-		return arretsRetour;
 	}
 
 	public Collection<ArretRoute> getArretRoutesByArretId(String arretId) {
@@ -135,10 +137,6 @@ public class GestionnaireGtfs {
 			arrets.put(arret.id, arret);
 		}
 		for (ArretRoute arretRoute : (List<ArretRoute>) retourMoteur.get(ArretRoute.class)) {
-			if (!arretsRoutesByLigneId.containsKey(arretRoute.ligneId)) {
-				arretsRoutesByLigneId.put(arretRoute.ligneId, new HashMap<String, ArretRoute>());
-			}
-			arretsRoutesByLigneId.get(arretRoute.ligneId).put(arretRoute.arretId, arretRoute);
 			if (!arretsRoutesByArretId.containsKey(arretRoute.arretId)) {
 				arretsRoutesByArretId.put(arretRoute.arretId, new HashMap<String, ArretRoute>());
 			}
@@ -147,17 +145,16 @@ public class GestionnaireGtfs {
 		for (Calendrier calendrier : (List<Calendrier>) retourMoteur.get(Calendrier.class)) {
 			calendriers.put(calendrier.id, calendrier);
 		}
-		for (Direction direction : (List<Direction>) retourMoteur.get(Direction.class)) {
-			directions.put(direction.id, direction);
-		}
 		for (Ligne ligne : (List<Ligne>) retourMoteur.get(Ligne.class)) {
 			lignes.put(ligne.id, ligne);
 		}
+		Map<Integer, Trajet> trajets = new HashMap<Integer, Trajet>();
 		for (Trajet trajet : (List<Trajet>) retourMoteur.get(Trajet.class)) {
 			trajets.put(trajet.id, trajet);
 		}
 		for (Ligne ligne : lignes.values()) {
 			for (Horaire horaire : GestionZipKeolis.chargeLigne(moteurCsv, ligne.id)) {
+				horaire.trajet = trajets.get(horaire.trajetId);
 				if (!horaires.containsKey(horaire.arretId)) {
 					horaires.put(horaire.arretId, new HashMap<Integer, Horaire>());
 				}
@@ -165,10 +162,25 @@ public class GestionnaireGtfs {
 			}
 		}
 		for (Correspondance correspondance : GestionZipKeolis.getCorrespondances(moteurCsv)) {
-			if (!correspondances.containsKey(correspondance.arretId)) {
-				correspondances.put(correspondance.arretId, new ArrayList<String>());
+			List<String> lignes1 = new ArrayList<String>();
+			for (ArretRoute arretRoute : getArretRoutesByArretId(correspondance.arretId)) {
+				lignes1.add(arretRoute.ligneId);
 			}
-			correspondances.get(correspondance.arretId).add(correspondance.correspondanceId);
+			List<String> lignes2 = new ArrayList<String>();
+			for (ArretRoute arretRoute : getArretRoutesByArretId(correspondance.correspondanceId)) {
+				lignes2.add(arretRoute.ligneId);
+			}
+
+			CoupleLigne coupleLigne;
+			for (String ligne1 : lignes1) {
+				for (String ligne2 : lignes2) {
+					coupleLigne = new CoupleLigne(ligne1, ligne2);
+					if (!correspondances.containsKey(coupleLigne)) {
+						correspondances.put(coupleLigne, new ArrayList<Correspondance>());
+					}
+					correspondances.get(coupleLigne).add(correspondance);
+				}
+			}
 		}
 		long elapsedTime = (System.nanoTime() - startTime) / 1000000;
 		logger.info("Construction du gestionnaire gtfs en " + elapsedTime + " ms");

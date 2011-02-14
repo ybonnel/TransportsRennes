@@ -24,7 +24,7 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class TwitterStarBusMetroServlet extends HttpServlet {
 
-	private static GetTwitters getTwitters = new GetTwitters();
+	private static final GetTwitters getTwitters = new GetTwitters();
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/xml");

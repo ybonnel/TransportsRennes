@@ -12,20 +12,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.gtfs.modele;
+package fr.ybo.itineraires.util;
 
+import java.util.logging.Logger;
 
-import fr.ybo.gtfs.csv.annotation.BaliseCsv;
-import fr.ybo.gtfs.csv.annotation.FichierCsv;
-import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
+public class Chrono {
+	private static final Logger logger = Logger.getLogger(Chrono.class.getName());
+	private final long startTime;
+	private final String methode;
+	private long elapsedTime;
+	public Chrono(String methode) {
+		startTime = System.nanoTime();
+		this.methode = methode;
+	}
 
-@FichierCsv("correspondances.txt")
-public class Correspondance {
+	public Chrono stop() {
+		elapsedTime = System.nanoTime() - startTime;
+		return this;
+	}
 
-	@BaliseCsv("arretId")
-	public String arretId;
-	@BaliseCsv("correspondanceId")
-	public String correspondanceId;
-	@BaliseCsv(value = "distance", adapter = AdapterInteger.class)
-	public Integer distance;
+	public void spool() {
+		logger.info(new StringBuilder(methode).append(" : ").append(elapsedTime/1000000).append(" ms").toString());
+	}
 }

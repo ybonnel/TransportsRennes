@@ -97,7 +97,7 @@ public enum EnumCalendrier {
 		}
 	};
 
-	private int numCalendrier;
+	private final int numCalendrier;
 
 	private EnumCalendrier(int numCalendrier) {
 		this.numCalendrier = numCalendrier;

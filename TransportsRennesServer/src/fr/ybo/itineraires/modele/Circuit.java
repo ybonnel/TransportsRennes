@@ -14,24 +14,18 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.gtfs.modele.Arret;
 import fr.ybo.gtfs.modele.ArretRoute;
+import fr.ybo.gtfs.modele.Correspondance;
 import fr.ybo.gtfs.modele.GestionnaireGtfs;
-import fr.ybo.itineraires.util.RechercheCircuit;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Circuit {
+	private static final GestionnaireGtfs GESTIONNAIRE_GTFS = GestionnaireGtfs.getInstance();
 
-	private JointurePieton arretDepart;
-	private JointurePieton arretArrivee;
-	private List<Trajet> trajets = new ArrayList<Trajet>();
+	private final JointurePieton arretDepart;
+	private final JointurePieton arretArrivee;
+	private final List<Trajet> trajets = new ArrayList<Trajet>();
 
 	public Circuit(JointurePieton arretDepart, JointurePieton arretArrivee) {
 		super();
@@ -43,24 +37,16 @@ public class Circuit {
 		return trajets;
 	}
 
-	private Map<String, Collection<Arret>> arretsByLigneId = new HashMap<String, Collection<Arret>>();
-
 	public boolean rechercheTrajetBus(EnumCalendrier calendrier, int heureDepart) {
 		Set<String> lignesDepart = new HashSet<String>();
-		for (ArretRoute arretRoute : GestionnaireGtfs.getInstance().getArretRoutesByArretId(arretDepart.getArret().id)) {
+		for (ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretDepart.getArret().id)) {
 			if (!lignesDepart.contains(arretRoute.ligneId)) {
-				if (!arretsByLigneId.containsKey(arretRoute.ligneId)) {
-					arretsByLigneId.put(arretRoute.ligneId, GestionnaireGtfs.getInstance().getArretsByLigneId(arretRoute.ligneId));
-				}
 				lignesDepart.add(arretRoute.ligneId);
 			}
 		}
 		Set<String> lignesArrivee = new HashSet<String>();
-		for (ArretRoute arretRoute : GestionnaireGtfs.getInstance().getArretRoutesByArretId(arretArrivee.getArret().id)) {
+		for (ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretArrivee.getArret().id)) {
 			if (!lignesArrivee.contains(arretRoute.ligneId)) {
-				if (!arretsByLigneId.containsKey(arretRoute.ligneId)) {
-					arretsByLigneId.put(arretRoute.ligneId, GestionnaireGtfs.getInstance().getArretsByLigneId(arretRoute.ligneId));
-				}
 				lignesArrivee.add(arretRoute.ligneId);
 			}
 		}
@@ -72,7 +58,7 @@ public class Circuit {
 				if (ligneDepartId.equals(ligneArriveeId)) {
 					Trajet trajet = new Trajet();
 					PortionTrajetBus bus = new PortionTrajetBus(arretDepart.getArret(), arretArrivee.getArret(),
-							GestionnaireGtfs.getInstance().getLigne(ligneDepartId));
+							GESTIONNAIRE_GTFS.getLigne(ligneDepartId));
 					if (bus.rechercheHoraire(calendrier, heureDepart)) {
 						trajet.getPortionsTrajet().add(arretDepart);
 						trajet.getPortionsTrajet().add(bus);
@@ -81,27 +67,29 @@ public class Circuit {
 					}
 				} else {
 					// Trajets avec une correspondance
-					for (Arret arretDepartLigne : arretsByLigneId.get(ligneDepartId)) {
-						for (Arret arretArriveeLigne : arretsByLigneId.get(ligneArriveeId)) {
-							if (GestionnaireGtfs.getInstance().getCorrespondances(arretDepartLigne.id).contains(arretArriveeLigne.id)) {
-								// Premier bus.
-								PortionTrajetBus bus1 = new PortionTrajetBus(arretDepart.getArret(), arretDepartLigne,
-										GestionnaireGtfs.getInstance().getLigne(ligneDepartId));
-								// Dexuième bus
-								PortionTrajetBus bus2 = new PortionTrajetBus(arretArriveeLigne, arretArrivee.getArret(),
-										GestionnaireGtfs.getInstance().getLigne(ligneArriveeId));
+					Collection<Correspondance> correspondances =
+							GESTIONNAIRE_GTFS.getCorrespondances(new GestionnaireGtfs.CoupleLigne(ligneDepartId, ligneArriveeId));
+					if (correspondances != null) {
+						for (Correspondance correspondance : correspondances) {
+							// Premier bus.
+							PortionTrajetBus bus1 =
+									new PortionTrajetBus(arretDepart.getArret(), GESTIONNAIRE_GTFS.getArret(correspondance.arretId),
+											GESTIONNAIRE_GTFS.getLigne(ligneDepartId));
+							// Dexuième bus
+							PortionTrajetBus bus2 = new PortionTrajetBus(GESTIONNAIRE_GTFS.getArret(correspondance.correspondanceId),
+									arretArrivee.getArret(), GESTIONNAIRE_GTFS.getLigne(ligneArriveeId));
 
-								if (bus1.rechercheHoraire(calendrier, heureDepart) && bus2.rechercheHoraire(calendrier, heureDepart)) {
-									Trajet trajet = new Trajet();
-									trajet.getPortionsTrajet().add(arretDepart);
-									trajet.getPortionsTrajet().add(bus1);
-									// Correspondance
-									trajet.getPortionsTrajet().add(new JointureCorrespondance(arretDepartLigne, arretArriveeLigne,
-											RechercheCircuit.calculDistanceBetweenArrets(arretDepartLigne, arretArriveeLigne)));
-									trajet.getPortionsTrajet().add(bus2);
-									trajet.getPortionsTrajet().add(arretArrivee);
-									trajets.add(trajet);
-								}
+							if (bus1.rechercheHoraire(calendrier, heureDepart) && bus2.rechercheHoraire(calendrier, heureDepart)) {
+								Trajet trajet = new Trajet();
+								trajet.getPortionsTrajet().add(arretDepart);
+								trajet.getPortionsTrajet().add(bus1);
+								// Correspondance
+								trajet.getPortionsTrajet()
+										.add(new JointureCorrespondance(GESTIONNAIRE_GTFS.getArret(correspondance.arretId),
+												GESTIONNAIRE_GTFS.getArret(correspondance.correspondanceId), correspondance.distance));
+								trajet.getPortionsTrajet().add(bus2);
+								trajet.getPortionsTrajet().add(arretArrivee);
+								trajets.add(trajet);
 							}
 						}
 					}
@@ -109,7 +97,7 @@ public class Circuit {
 			}
 		}
 
-		return !trajets.isEmpty();
+		return trajets.isEmpty();
 	}
 
 	@Override

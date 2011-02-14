@@ -201,9 +201,12 @@ public class Generateur {
 		// Trajets avec une correspondance
 		for (Arret arret : arrets.values()) {
 			for (Arret correspondance : arrets.values()) {
-				if (fastSelectCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id) &&
-						calculDistanceBetweenArrets(arret, correspondance) < DISTANCE_CORRESPONDANCE_REEL) {
-					    correspondances.add(new Correspondance(arret.id, correspondance.id));
+				if (fastSelectCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id)) {
+					double distance =
+						calculDistanceBetweenArrets(arret, correspondance);
+					if (distance < DISTANCE_CORRESPONDANCE_REEL) {
+					    correspondances.add(new Correspondance(arret.id, correspondance.id, (int)Math.round(distance)));
+					}
 				}
 			}
 		}
