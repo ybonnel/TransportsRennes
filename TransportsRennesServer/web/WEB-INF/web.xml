@@ -18,17 +18,18 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
+    <context-param>
+        <param-name>org.restlet.application</param-name>
+        <param-value>fr.ybo.itineraires.bean.ItineraireBean</param-value>
+    </context-param>
+    <!-- Restlet adapter -->
     <servlet>
-        <servlet-name>Jersey Web Application</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-        <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>fr.ybo.itineraires.bean</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
+        <servlet-name>RestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
     </servlet>
+    <!-- Catch all requests -->
     <servlet-mapping>
-        <servlet-name>Jersey Web Application</servlet-name>
+        <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     <servlet>

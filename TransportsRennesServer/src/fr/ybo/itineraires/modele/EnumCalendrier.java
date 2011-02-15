@@ -97,6 +97,7 @@ public enum EnumCalendrier {
 		}
 	};
 
+
 	private final int numCalendrier;
 
 	private EnumCalendrier(int numCalendrier) {
@@ -107,7 +108,10 @@ public enum EnumCalendrier {
 
 	public abstract EnumCalendrier veille();
 
-	public static EnumCalendrier fromNumCalendrier(int numCalendrier) {
+	public static EnumCalendrier fromNumCalendrier(Integer numCalendrier) {
+        if (numCalendrier == null) {
+            return null;
+        }
 		for (EnumCalendrier value : values()) {
 			if (value.numCalendrier == numCalendrier) {
 				return value;

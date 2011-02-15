@@ -22,37 +22,29 @@ import fr.ybo.itineraires.modele.ItineraireRequete;
 import fr.ybo.itineraires.util.Chrono;
 import fr.ybo.itineraires.util.Key;
 import fr.ybo.itineraires.util.RechercheCircuit;
+import org.restlet.Application;
+import org.restlet.Request;
+import org.restlet.Response;
+import org.restlet.Restlet;
+import org.restlet.routing.Filter;
+import org.restlet.routing.Router;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Path("itineraires/")
-public class ItineraireBean {
+public class ItineraireBean extends Application {
+
+    @Override
+    public Restlet createInboundRoot() {
+        Router router = new Router(getContext());
+        router.attach("/itineraires", ItineraireServerResource.class);
+        return router;
+    }
+
 
     private static final Logger logger = Logger.getLogger(ItineraireBean.class.getName());
 
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    @Path("xml")
-    public static Response calculItineraireXml(@QueryParam("key") String key, @QueryParam("adresseDepart") Adresse adresseDepart,
-                                                                                  @QueryParam("adresseArrivee") Adresse adresseArrivee,
-                                                                                  @QueryParam("heureDepart") Integer heureDepart,
-                                                                                  @QueryParam("calendrier") EnumCalendrier calendrier) {
-        fr.ybo.itineraires.schema.ItineraireReponse reponse = calculItineraire(key, adresseDepart, adresseArrivee, heureDepart, calendrier);
-        Response.ResponseBuilder responseBuilder;
-        responseBuilder = Response.status(Response.Status.OK);
-        responseBuilder = responseBuilder.type(MediaType.APPLICATION_XML);
-        responseBuilder = responseBuilder.entity(reponse);
-        return responseBuilder.build();
-    }
-
-    private static fr.ybo.itineraires.schema.ItineraireReponse calculItineraire(String key, Adresse adresseDepart, Adresse adresseArrivee, Integer heureDepart, EnumCalendrier calendrier) {
+    public static fr.ybo.itineraires.schema.ItineraireReponse calculItineraire(String key, Adresse adresseDepart, Adresse adresseArrivee, Integer heureDepart, EnumCalendrier calendrier) {
         ItineraireReponse reponse;
         try {
             Key.isValid(key);
