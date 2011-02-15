@@ -22,39 +22,39 @@ import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
 import java.io.File;
 
-@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
+@SuppressWarnings({"UseOfSystemOutOrSystemErr", "WeakerAccess"})
 public class Main {
 
 	private Main() {
-		super();
 	}
 
-	public static void main(final String[] args) {
-		 final long startTime = System.currentTimeMillis();
-		 final GetAndContructZip getAndContructZip = new GetAndContructZip();
-		 getAndContructZip.getZipKeolis();
-		 GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
-		 System.out.println("Avant compression : ")  ;
-		 afficheCompteurs();
-		 final CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
-		 compressionTripAndCalendar.compressTripsAndCalendars();
-		 compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
-		 System.out.println("Après compression : ")  ;
-		 afficheCompteurs();
-		 final long timeElapsed = System.currentTimeMillis() - startTime;
-		 final Generateur generateur = new Generateur();
-		 generateur.remplirArrets();
-		 generateur.remplirCalendrier();
-		 generateur.remplirDirections();
-		 generateur.remplirHoraires();
-		 generateur.remplirLignes();
-		 generateur.remplirTrajets();
-		 generateur.remplirArretRoutes();
-		 generateur.remplirCorrespondance();
-		 generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
-		 generateur.rechercherPointsInterets();
-		 System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
-	 }
+	@SuppressWarnings({"UnusedParameters"})
+	public static void main(String[] args) {
+		long startTime = System.currentTimeMillis();
+		GetAndContructZip getAndContructZip = new GetAndContructZip();
+		getAndContructZip.getZipKeolis();
+		GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
+		System.out.println("Avant compression : ");
+		afficheCompteurs();
+		CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
+		compressionTripAndCalendar.compressTripsAndCalendars();
+		compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+		System.out.println("Après compression : ");
+		afficheCompteurs();
+		long timeElapsed = System.currentTimeMillis() - startTime;
+		Generateur generateur = new Generateur();
+		generateur.remplirArrets();
+		generateur.remplirCalendrier();
+		generateur.remplirDirections();
+		generateur.remplirHoraires();
+		generateur.remplirLignes();
+		generateur.remplirTrajets();
+		generateur.remplirArretRoutes();
+		generateur.remplirCorrespondance();
+		generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
+		generateur.rechercherPointsInterets();
+		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
+	}
 
 	private static void afficheCompteurs() {
 		System.out.println("\tNombre de Calendars : " + GestionnaireGtfs.getInstance().getMapCalendars().size());

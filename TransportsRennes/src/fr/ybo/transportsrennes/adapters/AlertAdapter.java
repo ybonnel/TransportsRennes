@@ -35,22 +35,22 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
 	private final List<Alert> alerts;
 	private final LayoutInflater inflater;
 
-	public AlertAdapter(final Context context, final List<Alert> objects) {
+	public AlertAdapter(Context context, List<Alert> objects) {
 		super(context, R.layout.alert, objects);
 		alerts = objects;
 		inflater = LayoutInflater.from(getContext());
 	}
 
 	private static class ViewHolder {
-		TextView titreAlerte;
-		ImageView iconeLigne;
+		private TextView titreAlerte;
+		private ImageView iconeLigne;
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final Alert alert = alerts.get(position);
-		final AlertAdapter.ViewHolder holder;
+		Alert alert = alerts.get(position);
+		AlertAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.alert, null);
 			holder = new AlertAdapter.ViewHolder();

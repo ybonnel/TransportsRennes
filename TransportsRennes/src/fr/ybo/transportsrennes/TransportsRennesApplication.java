@@ -58,12 +58,11 @@ public class TransportsRennesApplication extends Application {
 		if (dateDerniereVerifUpdate == null) {
 			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate", null);
 		}
-		return dateDerniereVerifUpdate == null || !dateCourante.equals(dateDerniereVerifUpdate) ||
-				databaseHelper.selectSingle(MISE_A_JOUR) == null;
+		return dateDerniereVerifUpdate == null || !dateCourante.equals(dateDerniereVerifUpdate) || databaseHelper.selectSingle(MISE_A_JOUR) == null;
 	}
 
 	public static void verifUpdateDone() {
-		final SharedPreferences.Editor edit = sharedPreferences.edit();
+		SharedPreferences.Editor edit = sharedPreferences.edit();
 		edit.putString("dateDerniereVerifUpdate", dateCourante);
 		dateDerniereVerifUpdate = dateCourante;
 		edit.commit();
@@ -76,16 +75,16 @@ public class TransportsRennesApplication extends Application {
 		dateCourante = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
-		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
-		final GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
+		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
 		myTraker = new TransportsRennesApplication.MyTraker(traker);
 		myTraker.trackPageView("/TransportsRennesApplication/Model/" + Build.MODEL);
-		final PackageManager manager = getPackageManager();
+		PackageManager manager = getPackageManager();
 		try {
-			final PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
 			myTraker.trackPageView("/TransportsRennesApplication/Version/" + info.versionName);
 		} catch (PackageManager.NameNotFoundException ignore) {
 		}
@@ -100,8 +99,7 @@ public class TransportsRennesApplication extends Application {
 
 	public static class MyTraker {
 
-		public MyTraker(final GoogleAnalyticsTracker traker) {
-			super();
+		public MyTraker(GoogleAnalyticsTracker traker) {
 			this.traker = traker;
 		}
 

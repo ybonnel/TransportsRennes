@@ -36,27 +36,31 @@ public class Geocoder {
 
 	private static final String GEOCODE_REQUEST_URL = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false";
 
-	public GeocodeResponse geocode(final GeocoderRequest geocoderRequest) {
+	public GeocodeResponse geocode(GeocoderRequest geocoderRequest) {
 		try {
-			final String urlString = getURL(geocoderRequest);
+			String urlString = getURL(geocoderRequest);
 
-			final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+			Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-			final URL url = new URL(urlString);
-			final Reader reader = new InputStreamReader(url.openStream(), "utf-8");
-			return gson.fromJson(reader, GeocodeResponse.class);
+			URL url = new URL(urlString);
+			Reader reader = new InputStreamReader(url.openStream(), "utf-8");
+			try {
+				return gson.fromJson(reader, GeocodeResponse.class);
+			} finally {
+				reader.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
-	protected String getURL(final GeocoderRequest geocoderRequest) throws UnsupportedEncodingException {
-		final String address = geocoderRequest.getAddress();
-		final LatLngBounds bounds = geocoderRequest.getBounds();
-		final String language = geocoderRequest.getLanguage();
-		final String region = geocoderRequest.getRegion();
-		final LatLng location = geocoderRequest.getLocation();
+	private String getURL(GeocoderRequest geocoderRequest) throws UnsupportedEncodingException {
+		String address = geocoderRequest.getAddress();
+		LatLngBounds bounds = geocoderRequest.getBounds();
+		String language = geocoderRequest.getLanguage();
+		String region = geocoderRequest.getRegion();
+		LatLng location = geocoderRequest.getLocation();
 
 		String urlString = GEOCODE_REQUEST_URL;
 		if (StringUtils.isNotBlank(address)) {
@@ -73,7 +77,7 @@ public class Geocoder {
 			urlString += "&region=" + URLEncoder.encode(region, "UTF-8");
 		}
 		if (bounds != null) {
-			urlString += "&bounds=" + URLEncoder.encode(bounds.getSouthwest().toUrlValue() + "|" + bounds.getNortheast().toUrlValue(), "UTF-8");
+			urlString += "&bounds=" + URLEncoder.encode(bounds.getSouthwest().toUrlValue() + '|' + bounds.getNortheast().toUrlValue(), "UTF-8");
 		}
 		return urlString;
 	}

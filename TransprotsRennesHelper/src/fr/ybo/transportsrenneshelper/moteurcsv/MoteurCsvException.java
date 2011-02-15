@@ -17,15 +17,15 @@ package fr.ybo.transportsrenneshelper.moteurcsv;
 @SuppressWarnings("serial")
 public class MoteurCsvException extends RuntimeException {
 
-	public MoteurCsvException(final String message) {
+	public MoteurCsvException(String message) {
 		super(message);
 	}
 
-	public MoteurCsvException(final String message, final Throwable throwable) {
+	public MoteurCsvException(String message, Throwable throwable) {
 		super(message, throwable);
 	}
 
-	public MoteurCsvException(final Throwable throwable) {
+	public MoteurCsvException(Throwable throwable) {
 		super(throwable);
 	}
 

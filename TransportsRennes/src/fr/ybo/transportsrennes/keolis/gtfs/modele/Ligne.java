@@ -29,12 +29,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"UnusedDeclaration"})
+@SuppressWarnings({"UnusedDeclaration", "serial"})
 @FichierCsv("lignes.txt")
 @Table
 public class Ligne implements Serializable {
 
-	private static  final LogYbo LOG_YBO = new LogYbo(Ligne.class);
+	private static final LogYbo LOG_YBO = new LogYbo(Ligne.class);
 
 	@BaliseCsv("id")
 	@Colonne
@@ -52,11 +52,11 @@ public class Ligne implements Serializable {
 	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(final DataBaseHelper dataBaseHelper) {
+	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper) {
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
-		final List<Class<?>> classes = new ArrayList<Class<?>>(1000);
+		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);
-		final MoteurCsv moteur = new MoteurCsv(classes);
+		MoteurCsv moteur = new MoteurCsv(classes);
 		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper);
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
 	}

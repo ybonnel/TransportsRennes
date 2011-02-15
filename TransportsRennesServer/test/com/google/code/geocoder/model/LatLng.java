@@ -25,17 +25,14 @@ public class LatLng {
 	private BigDecimal lng;
 
 	public LatLng() {
-		super();
 	}
 
-	public LatLng(final BigDecimal lat, final BigDecimal lng) {
-		super();
+	public LatLng(BigDecimal lat, BigDecimal lng) {
 		this.lat = lat;
 		this.lng = lng;
 	}
 
-	public LatLng(final String lat, final String lng) {
-		super();
+	public LatLng(String lat, String lng) {
 		this.lat = new BigDecimal(lat);
 		this.lng = new BigDecimal(lng);
 	}
@@ -44,7 +41,7 @@ public class LatLng {
 		return lat;
 	}
 
-	public void setLat(final BigDecimal lat) {
+	public void setLat(BigDecimal lat) {
 		this.lat = lat;
 	}
 
@@ -52,7 +49,7 @@ public class LatLng {
 		return lng;
 	}
 
-	public void setLng(final BigDecimal lng) {
+	public void setLng(BigDecimal lng) {
 		this.lng = lng;
 	}
 
@@ -67,22 +64,23 @@ public class LatLng {
 	 * @param precision We round the lat/lng values
 	 * @return Returns a string of the form "lat,lng" for this LatLng.
 	 */
-	public String toUrlValue(final int precision) {
-		return lat.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString() + "," + lng.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString();
+	public String toUrlValue(int precision) {
+		return lat.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString() + ',' + lng.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString();
 	}
 
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		final LatLng latLng = (LatLng) o;
+		LatLng latLng = (LatLng) obj;
 
-		return !(lat != null ? !lat.equals(latLng.lat) : latLng.lat != null) && !(lng != null ? !lng.equals(latLng.lng) : latLng.lng != null);
+		return !(lat != null ? !(lat.compareTo(latLng.lat) == 0) : latLng.lat != null) &&
+				!(lng != null ? !(lng.compareTo(latLng.lng) == 0) : latLng.lng != null);
 
 	}
 
@@ -95,7 +93,7 @@ public class LatLng {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("LatLng");
 		sb.append("{lat=").append(lat);
 		sb.append(", lng=").append(lng);

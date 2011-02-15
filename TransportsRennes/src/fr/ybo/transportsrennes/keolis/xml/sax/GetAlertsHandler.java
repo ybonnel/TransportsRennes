@@ -57,17 +57,17 @@ public class GetAlertsHandler extends KeolisHandler<Alert> {
 	private static final String ALERT = "alert";
 
 	@Override
-	protected final String getBaliseData() {
+	protected String getBaliseData() {
 		return ALERT;
 	}
 
 	@Override
-	protected final Alert getNewObjetKeolis() {
+	protected Alert getNewObjetKeolis() {
 		return new Alert();
 	}
 
 	@Override
-	protected final void remplirObjectKeolis(final Alert currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
+	protected void remplirObjectKeolis(Alert currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(TITLE)) {
 			currentObjectKeolis.title = contenuOfBalise;
 		} else if (baliseName.equals(STARTTIME)) {

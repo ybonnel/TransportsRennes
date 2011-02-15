@@ -27,12 +27,12 @@ public class TwitterStarBusMetroServlet extends HttpServlet {
 	private static final GetTwitters GET_TWITTERS = new GetTwitters();
 
 	@Override
-	public void doGet(final HttpServletRequest req, final HttpServletResponse resp) throws IOException {
+	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/xml");
 		resp.setCharacterEncoding("utf-8");
 		resp.getWriter().println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		resp.getWriter().println("<messages>");
-		for (final MessageTwitter message : GET_TWITTERS.getMessages()) {
+		for (MessageTwitter message : GET_TWITTERS.getMessages()) {
 			resp.getWriter().println(message.toXml());
 		}
 		resp.getWriter().println("</messages>");

@@ -36,9 +36,9 @@ public class TransportsWidget extends AppWidgetProvider {
 
 	private static final Map<Integer, Timer> MAP_TIMERS_BY_WIDGET_ID = new HashMap<Integer, Timer>(5);
 
-	public static void verifKiller(final Context context, final AppWidgetManager appWidgetManager) {
-		if (MAP_TIMERS_BY_WIDGET_ID.size() == 0) {
-			for (final int widgetId : TransportsWidgetConfigure.getWidgetIds(context)) {
+	public static void verifKiller(Context context, AppWidgetManager appWidgetManager) {
+		if (MAP_TIMERS_BY_WIDGET_ID.isEmpty()) {
+			for (int widgetId : TransportsWidgetConfigure.getWidgetIds(context)) {
 				LOG_YBO.debug("Le widget " + widgetId + " a du être killer, on le relance");
 				updateAppWidget(context, appWidgetManager, widgetId);
 			}
@@ -46,18 +46,18 @@ public class TransportsWidget extends AppWidgetProvider {
 	}
 
 	@Override
-	public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
+	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		LOG_YBO.debug("onUpdate");
-		for (final int appWidgetId : appWidgetIds) {
+		for (int appWidgetId : appWidgetIds) {
 			updateAppWidget(context, appWidgetManager, appWidgetId);
 		}
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
 	@Override
-	public void onDeleted(final Context context, final int[] appWidgetIds) {
+	public void onDeleted(Context context, int[] appWidgetIds) {
 		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
-			for (final int appWidgetId : appWidgetIds) {
+			for (int appWidgetId : appWidgetIds) {
 				// Arrêt du timer.
 				if (MAP_TIMERS_BY_WIDGET_ID.containsKey(appWidgetId)) {
 					MAP_TIMERS_BY_WIDGET_ID.get(appWidgetId).cancel();
@@ -70,31 +70,31 @@ public class TransportsWidget extends AppWidgetProvider {
 	}
 
 	@Override
-	public void onEnabled(final Context context) {
+	public void onEnabled(Context context) {
 		LOG_YBO.debug("onEnable");
 		super.onEnabled(context);
 	}
 
 	@Override
-	public void onDisabled(final Context context) {
+	public void onDisabled(Context context) {
 		LOG_YBO.debug("onDisable");
 		TransportsWidgetConfigure.deleteAllSettings(context);
 		super.onDisabled(context);
 	}
 
-	static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
+	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 		LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
 		if (MAP_TIMERS_BY_WIDGET_ID.containsKey(appWidgetId)) {
 			return;
 		}
-		final List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
+		List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
 		if (favorisSelects.isEmpty()) {
 			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
 			return;
 		}
-		final ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
-		final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-		for (final ArretFavori favoriSelect : favorisSelects) {
+		ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
+		for (ArretFavori favoriSelect : favorisSelects) {
 			ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
 			if (favoriBdd == null) {
 				LOG_YBO.debug("FavoriBdd null");
@@ -111,7 +111,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		WidgetUpdateUtil.updateAppWidget(context, views, favorisBdd);
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
-		final Timer timer = new Timer();
+		Timer timer = new Timer();
 		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
 			MAP_TIMERS_BY_WIDGET_ID.put(appWidgetId, timer);
 		}
@@ -125,8 +125,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		private final ArrayList<ArretFavori> favoris;
 		private final int appWidgetId;
 
-		MyTime(final Context context, final AppWidgetManager appWidgetManager, final ArrayList<ArretFavori> favoris, final int appWidgetId) {
-			super();
+		MyTime(Context context, AppWidgetManager appWidgetManager, ArrayList<ArretFavori> favoris, int appWidgetId) {
 			this.context = context;
 			this.appWidgetManager = appWidgetManager;
 			this.favoris = favoris;
@@ -136,7 +135,7 @@ public class TransportsWidget extends AppWidgetProvider {
 		@Override
 		public void run() {
 			LOG_YBO.debug("MyTimer.run");
-			final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
 			WidgetUpdateUtil.updateAppWidget(context, remoteViews, favoris);
 			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 		}
@@ -144,25 +143,25 @@ public class TransportsWidget extends AppWidgetProvider {
 
 
 	@Override
-	public void onReceive(final Context context, final Intent intent) {
+	public void onReceive(Context context, Intent intent) {
 		// v1.5 fix that doesn't call onDelete Action
-		final String action = intent.getAction();
+		String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-			final int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
 			if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
 				super.onReceive(context, intent);
 			} else {
 				onDeleted(context, new int[]{appWidgetId});
 			}
 		} else if (action.startsWith("YboClick")) {
-			final String[] champs = action.split("_");
+			String[] champs = action.split("_");
 			if (champs.length == 3) {
 				ArretFavori favori = new ArretFavori();
 				favori.arretId = champs[1];
 				favori.ligneId = champs[2];
 				favori = TransportsRennesApplication.getDataBaseHelper().selectSingle(favori);
 				if (favori != null) {
-					final Intent startIntent = new Intent(context, DetailArret.class);
+					Intent startIntent = new Intent(context, DetailArret.class);
 					startIntent.putExtra("favori", favori);
 					startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

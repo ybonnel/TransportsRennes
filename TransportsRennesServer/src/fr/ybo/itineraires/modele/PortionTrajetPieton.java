@@ -16,32 +16,31 @@ package fr.ybo.itineraires.modele;
 
 public abstract class PortionTrajetPieton extends PortionTrajet {
 
-	protected double distance;
+	double distance;
 	// Vitesse d'un piéton en m/h
 	private static final double VITESSE_PIETON = 4000;
 
-	protected Integer tempsTrajet;
+	Integer tempsTrajet;
 
-	protected int calculTempsTrajetAproximatif() {
+	private int calculTempsTrajetAproximatif() {
 		if (tempsTrajet == null) {
-			tempsTrajet = (int)Math.round(distance / VITESSE_PIETON * 60);
+			tempsTrajet = (int) Math.round(distance / VITESSE_PIETON * 60);
 		}
 		return tempsTrajet;
 	}
 
 	@Override
-	public int calculHeureArrivee(final int heureDepart) {
+	public int calculHeureArrivee(int heureDepart) {
 		return heureDepart + calculTempsTrajetAproximatif();
 	}
 
 	@Override
 	public String toString() {
-		return "A pied ("
-				+ tempsTrajet + " minutes)";
+		return "A pied (" + tempsTrajet + " minutes)";
 	}
 
-    protected void remplirXml(final fr.ybo.itineraires.schema.PortionTrajetPieton xml) {
-        xml.setTempsTrajet(tempsTrajet);
-    }
+	void remplirXml(fr.ybo.itineraires.schema.PortionTrajetPieton xml) {
+		xml.setTempsTrajet(tempsTrajet);
+	}
 
 }

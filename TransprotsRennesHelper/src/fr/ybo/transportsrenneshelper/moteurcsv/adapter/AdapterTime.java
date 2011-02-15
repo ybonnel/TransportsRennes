@@ -19,24 +19,24 @@ public class AdapterTime implements AdapterCsv<Integer> {
 
 	private static final int MINUTES_BY_HOUR = 60;
 
-	public Integer parse(final String chaine) {
+	public Integer parse(String chaine) {
 		if (chaine == null) {
 			return null;
 		}
-		final String[] champs = chaine.split(":");
+		String[] champs = chaine.split(":");
 		if (champs.length != 3) {
 			return null;
 		}
 		return Integer.parseInt(champs[0]) * MINUTES_BY_HOUR + Integer.parseInt(champs[1]);
 	}
 
-	public String toString(final Integer objet) {
+	public String toString(Integer objet) {
 		if (objet == null) {
 			return null;
 		}
-		final StringBuilder retour = new StringBuilder();
-		final int heures = objet / MINUTES_BY_HOUR;
-		final int minutes = objet - heures * MINUTES_BY_HOUR;
+		StringBuilder retour = new StringBuilder();
+		int heures = objet / MINUTES_BY_HOUR;
+		int minutes = objet - heures * MINUTES_BY_HOUR;
 		if (heures < 10) {
 			retour.append('0');
 		}

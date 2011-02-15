@@ -39,11 +39,11 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
+	private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
 	private final LayoutInflater inflater;
 
-	public ParkRelaiAdapter(final Context context, final List<ParkRelai> objects) {
+	public ParkRelaiAdapter(Context context, List<ParkRelai> objects) {
 		super(context, R.layout.dispoparkrelai, objects);
 		if (MAP_STATES.isEmpty()) {
 			MAP_STATES.put(1, context.getString(R.string.ferme));
@@ -62,9 +62,9 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final ParkRelaiAdapter.ViewHolder holder;
+		ParkRelaiAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.dispoparkrelai, null);
 			holder = new ParkRelaiAdapter.ViewHolder();
@@ -76,12 +76,12 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 		} else {
 			holder = (ParkRelaiAdapter.ViewHolder) convertView1.getTag();
 		}
-		final ParkRelai parkRelai = parkRelais.get(position);
+		ParkRelai parkRelai = parkRelais.get(position);
 		holder.dispoParkRelaiNom.setText(parkRelai.name);
 		holder.dispoParkRelaiDistance.setText(parkRelai.formatDistance());
 		// Parc Relai ouvert.
 		if (parkRelai.state == 0) {
-			final double poucentageDispo = (double) parkRelai.carParkAvailable.intValue() / (double) parkRelai.carParkCapacity.intValue();
+			double poucentageDispo = (double) parkRelai.carParkAvailable.intValue() / (double) parkRelai.carParkCapacity.intValue();
 
 
 			if (poucentageDispo < SEUIL_ROUGE) {

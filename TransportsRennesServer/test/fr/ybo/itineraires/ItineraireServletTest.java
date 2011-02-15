@@ -22,6 +22,8 @@ import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import org.junit.Test;
 
+import static org.junit.Assert.fail;
+
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class ItineraireServletTest {
 
@@ -31,20 +33,22 @@ public class ItineraireServletTest {
 		//lat=48.1106736, lng=-1.6638114
 		geoCoderAdresses("29 rue d'antrain, Rennes");
 		//lat=48.1129019, lng=-1.6820555
+		fail("Assert à ajouter");
 	}
 
-	private GeocodeResponse geoCoderAdresses(final String adresse) {
-		final Geocoder geocoder = new Geocoder();
-		final GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresse).setLanguage("fr").getGeocoderRequest();
+	private void geoCoderAdresses(String adresse) {
+		Geocoder geocoder = new Geocoder();
+		GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresse).setLanguage("fr").getGeocoderRequest();
 		GeocodeResponse geocoderResponse = null;
 		for (int countTest = 0; countTest < 10 && geocoderResponse == null; countTest++) {
 			geocoderResponse = geocoder.geocode(geocoderRequest);
 		}
 		System.out.println("Adresses trouvées : ");
-		for (final GeocoderResult result : geocoderResponse.getResults()) {
-			System.out.println(result.toString());
+		if (geocoderResponse != null) {
+			for (GeocoderResult result : geocoderResponse.getResults()) {
+				System.out.println(result.toString());
+			}
 		}
-		return geocoderResponse;
 	}
 
 

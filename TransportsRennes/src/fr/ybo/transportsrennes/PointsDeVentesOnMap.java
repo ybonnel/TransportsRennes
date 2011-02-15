@@ -36,22 +36,22 @@ public class PointsDeVentesOnMap extends MapActivity {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 
-		final Iterable<PointDeVente> pointDeVentes = (Iterable<PointDeVente>) getIntent().getExtras().getSerializable("pointsDeVente");
+		Iterable<PointDeVente> pointDeVentes = (Iterable<PointDeVente>) getIntent().getExtras().getSerializable("pointsDeVente");
 
-		final MapView mapView = (MapView) findViewById(R.id.mapview);
+		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 
-		final MapController mc = mapView.getController();
+		MapController mc = mapView.getController();
 		mapView.setSatellite(true);
 
 		// Creation du geo point
-		final List<Overlay> mapOverlays = mapView.getOverlays();
-		final Drawable drawable = getResources().getDrawable(R.drawable.markee_pos);
-		final MapItemizedOverlayPos itemizedoverlay = new MapItemizedOverlayPos(drawable, this);
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		Drawable drawable = getResources().getDrawable(R.drawable.markee_pos);
+		MapItemizedOverlayPos itemizedoverlay = new MapItemizedOverlayPos(drawable, this);
 
 		int minLatitude = Integer.MAX_VALUE;
 		int maxLatitude = Integer.MIN_VALUE;
@@ -59,10 +59,10 @@ public class PointsDeVentesOnMap extends MapActivity {
 		int maxLongitude = Integer.MIN_VALUE;
 
 
-		for (final PointDeVente pointDeVente : pointDeVentes) {
-			final int latitude = (int) (pointDeVente.latitude * 1.0E6);
-			final int longitude = (int) (pointDeVente.longitude * 1.0E6);
-			final GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+		for (PointDeVente pointDeVente : pointDeVentes) {
+			int latitude = (int) (pointDeVente.latitude * 1.0E6);
+			int longitude = (int) (pointDeVente.longitude * 1.0E6);
+			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 			if (pointDeVente.longitude > -2.0) {
 				if (latitude < minLatitude) {
 					minLatitude = latitude;
@@ -77,7 +77,7 @@ public class PointsDeVentesOnMap extends MapActivity {
 					maxLongitude = longitude;
 				}
 			}
-			final OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(pointDeVente.name), pointDeVente.telephone);
+			OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(pointDeVente.name), pointDeVente.telephone);
 			itemizedoverlay.addOverlay(overlayitem, pointDeVente);
 		}
 		mapOverlays.add(itemizedoverlay);

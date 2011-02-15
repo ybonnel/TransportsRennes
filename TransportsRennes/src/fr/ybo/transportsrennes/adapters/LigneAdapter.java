@@ -39,8 +39,7 @@ public class LigneAdapter extends BaseAdapter {
 
 	private final List<Ligne> lignes;
 
-	public LigneAdapter(final Context context, final List<Ligne> lignes) throws KeolisException {
-		super();
+	public LigneAdapter(Context context, List<Ligne> lignes) throws KeolisException {
 		mInflater = LayoutInflater.from(context);
 		this.lignes = lignes;
 	}
@@ -49,17 +48,17 @@ public class LigneAdapter extends BaseAdapter {
 		return lignes.size();
 	}
 
-	public Ligne getItem(final int position) {
+	public Ligne getItem(int position) {
 		return lignes.get(position);
 	}
 
-	public long getItemId(final int position) {
+	public long getItemId(int position) {
 		return position;
 	}
 
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final LigneAdapter.ViewHolder holder;
+		LigneAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = mInflater.inflate(R.layout.ligne, null);
 			holder = new LigneAdapter.ViewHolder();
@@ -69,7 +68,7 @@ public class LigneAdapter extends BaseAdapter {
 		} else {
 			holder = (LigneAdapter.ViewHolder) convertView1.getTag();
 		}
-		final Ligne ligne = lignes.get(position);
+		Ligne ligne = lignes.get(position);
 		holder.nomLong.setText(ligne.nomLong);
 		try {
 			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));

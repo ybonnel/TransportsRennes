@@ -16,11 +16,11 @@ package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
 
 public class AdapterInteger implements AdapterCsv<Integer> {
 
-	public Integer parse(final String chaine) {
+	public Integer parse(String chaine) {
 		return Integer.valueOf(chaine);
 	}
 
-	public String toString(final Integer objet) {
+	public String toString(Integer objet) {
 		return objet.toString();
 	}
 }

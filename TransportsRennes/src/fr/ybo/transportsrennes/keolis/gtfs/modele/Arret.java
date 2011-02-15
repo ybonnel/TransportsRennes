@@ -24,9 +24,10 @@ import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 import java.io.Serializable;
 
+@SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
 @Table
-public class Arret extends ObjetWithDistance implements Serializable  {
+public class Arret extends ObjetWithDistance implements Serializable {
 	@BaliseCsv("id")
 	@Colonne
 	@PrimaryKey
@@ -35,10 +36,10 @@ public class Arret extends ObjetWithDistance implements Serializable  {
 	@Colonne
 	public String nom;
 	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
-	@Colonne( type = Colonne.TypeColonne.NUMERIC )
+	@Colonne(type = Colonne.TypeColonne.NUMERIC)
 	public Double latitude;
 	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
-	@Colonne( type = Colonne.TypeColonne.NUMERIC )
+	@Colonne(type = Colonne.TypeColonne.NUMERIC)
 	public Double longitude;
 
 	public ArretFavori favori;

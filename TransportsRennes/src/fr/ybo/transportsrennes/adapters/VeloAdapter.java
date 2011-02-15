@@ -45,7 +45,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 
 	private final LayoutInflater inflater;
 
-	public VeloAdapter(final Context context, final List<Station> objects) {
+	public VeloAdapter(Context context, List<Station> objects) {
 		super(context, R.layout.dispovelo, objects);
 		stations = objects;
 		inflater = LayoutInflater.from(getContext());
@@ -60,9 +60,9 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final VeloAdapter.ViewHolder holder;
+		VeloAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.dispovelo, null);
 			holder = new VeloAdapter.ViewHolder();
@@ -75,9 +75,9 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 		} else {
 			holder = (VeloAdapter.ViewHolder) convertView1.getTag();
 		}
-		final Station station = stations.get(position);
-		final int placesTotales = station.bikesavailable + station.slotsavailable;
-		final double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
+		Station station = stations.get(position);
+		int placesTotales = station.bikesavailable + station.slotsavailable;
+		double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
 		if (poucentageDispo < SEUIL_ROUGE) {
 			holder.icone.setImageResource(R.drawable.dispo_velo_rouge);

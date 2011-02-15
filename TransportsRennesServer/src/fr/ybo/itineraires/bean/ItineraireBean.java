@@ -31,35 +31,36 @@ import java.util.logging.Logger;
 
 public class ItineraireBean extends Application {
 
-    @Override
-    public Restlet createInboundRoot() {
-        final Router router = new Router(getContext());
-        router.attach("/itineraires", ItineraireServerResource.class);
-        return router;
-    }
+	@Override
+	public Restlet createInboundRoot() {
+		Router router = new Router(getContext());
+		router.attach("/itineraires", ItineraireServerResource.class);
+		return router;
+	}
 
 
-    private static final Logger LOGGER = Logger.getLogger(ItineraireBean.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ItineraireBean.class.getName());
 
-    public static fr.ybo.itineraires.schema.ItineraireReponse calculItineraire(final String key, final Adresse adresseDepart, final Adresse adresseArrivee, final Integer heureDepart, final EnumCalendrier calendrier) {
-        ItineraireReponse reponse;
-        try {
-            Key.valid(key);
-            final ItineraireRequete requete = new ItineraireRequete(adresseDepart, adresseArrivee, calendrier, heureDepart);
-            final RechercheCircuit rechercheCircuit = new RechercheCircuit(requete.getAdresseDepart(), requete.getAdresseArrivee());
-            for (final Chrono chrono : rechercheCircuit.calculCircuits(requete.getCalendrier(), requete.getHeureDepart())) {
-                chrono.spool();
-            }
-            reponse = new ItineraireReponse();
-            reponse.setAdresseDepart(requete.getAdresseDepart());
-            reponse.setAdresseArrivee(requete.getAdresseArrivee());
-            reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
-        } catch (Exception exception) {
-            LOGGER.log(Level.SEVERE, "Erreur lors du calcul d'itineraires", exception);
-            reponse = new ItineraireReponse();
-            reponse.setErreur(exception.getMessage());
-        }
-        return ItinerairesConverter.convert(reponse);
+	public static fr.ybo.itineraires.schema.ItineraireReponse calculItineraire(String key, Adresse adresseDepart, Adresse adresseArrivee,
+	                                                                           Integer heureDepart, EnumCalendrier calendrier) {
+		ItineraireReponse reponse;
+		try {
+			Key.valid(key);
+			ItineraireRequete requete = new ItineraireRequete(adresseDepart, adresseArrivee, calendrier, heureDepart);
+			RechercheCircuit rechercheCircuit = new RechercheCircuit(requete.getAdresseDepart(), requete.getAdresseArrivee());
+			for (Chrono chrono : rechercheCircuit.calculCircuits(requete.getCalendrier(), requete.getHeureDepart())) {
+				chrono.spool();
+			}
+			reponse = new ItineraireReponse();
+			reponse.setAdresseDepart(requete.getAdresseDepart());
+			reponse.setAdresseArrivee(requete.getAdresseArrivee());
+			reponse.getTrajets().addAll(rechercheCircuit.getBestTrajets());
+		} catch (Exception exception) {
+			LOGGER.log(Level.SEVERE, "Erreur lors du calcul d'itineraires", exception);
+			reponse = new ItineraireReponse();
+			reponse.setErreur(exception.getMessage());
+		}
+		return ItinerairesConverter.convert(reponse);
 
-    }
+	}
 }

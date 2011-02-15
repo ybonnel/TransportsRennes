@@ -69,18 +69,18 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 	private static final String LONGITUDE = "longitude";
 
 	@Override
-	protected final String getBaliseData() {
+	protected String getBaliseData() {
 		return POS;
 	}
 
 	@Override
-	protected final PointDeVente getNewObjetKeolis() {
+	protected PointDeVente getNewObjetKeolis() {
 		return new PointDeVente();
 	}
 
-	@SuppressWarnings({"IfStatementWithTooManyBranches"})
+	@SuppressWarnings({"IfStatementWithTooManyBranches", "OverlyComplexMethod"})
 	@Override
-	protected final void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
+	protected void remplirObjectKeolis(PointDeVente currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(TYPE)) {

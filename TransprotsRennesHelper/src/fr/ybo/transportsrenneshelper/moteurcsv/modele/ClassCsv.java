@@ -27,20 +27,19 @@ public class ClassCsv {
 
 	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(10);
 
-	public ClassCsv(final String separateur, final Class<?> clazz) throws MoteurCsvException {
-		super();
+	public ClassCsv(String separateur, Class<?> clazz) throws MoteurCsvException {
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {
 			contructeur = clazz.getDeclaredConstructor((Class<?>[]) null);
-		} catch (final SecurityException e) {
+		} catch (SecurityException e) {
 			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
-		} catch (final NoSuchMethodException e) {
+		} catch (NoSuchMethodException e) {
 			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
 		}
 	}
 
-	public ChampCsv getChampCsv(final String nomCsv) {
+	public ChampCsv getChampCsv(String nomCsv) {
 		return mapOfFields.get(nomCsv);
 	}
 
@@ -60,7 +59,7 @@ public class ClassCsv {
 		return separateur;
 	}
 
-	public void setChampCsv(final String nomCsv, final ChampCsv champCsv) {
+	public void setChampCsv(String nomCsv, ChampCsv champCsv) {
 		mapOfFields.put(nomCsv, champCsv);
 	}
 

@@ -19,7 +19,7 @@ import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
 @FichierCsv("directions.txt")
-public class Direction {
+class Direction {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
 	public Integer id;
 	@BaliseCsv("direction")

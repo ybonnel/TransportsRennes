@@ -16,5 +16,5 @@ package fr.ybo.gtfs.csv.moteur.adapter;
 
 public interface AdapterCsv<Objet> {
 
-	public Objet parse(String chaine);
+	Objet parse(String chaine);
 }

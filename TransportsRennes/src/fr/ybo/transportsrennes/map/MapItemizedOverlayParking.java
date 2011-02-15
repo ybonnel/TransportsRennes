@@ -39,25 +39,25 @@ public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
 	private final Context mContext;
 	private final List<ParkRelai> parkRelais = new ArrayList<ParkRelai>(4);
 
-	private static Drawable leftBottom(final Drawable drawable) {
+	private static Drawable leftBottom(Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayParking(final Drawable defaultMarker, final Context context) {
+	public MapItemizedOverlayParking(Drawable defaultMarker, Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(final OverlayItem overlay, final ParkRelai parkRelai) {
+	public void addOverlay(OverlayItem overlay, ParkRelai parkRelai) {
 		mOverlays.add(overlay);
 		parkRelais.add(parkRelai);
 		populate();
 	}
 
 	@Override
-	protected OverlayItem createItem(final int i) {
+	protected OverlayItem createItem(int i) {
 		return mOverlays.get(i);
 	}
 
@@ -69,27 +69,27 @@ public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
 	//Appeer quand on clique sur un marqueur
 	@Override
 	protected boolean onTap(final int index) {
-		final OverlayItem item = mOverlays.get(index);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		OverlayItem item = mOverlays.get(index);
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
 		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir le Parc Relai dans GoogleMap?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.dismiss();
-				final ParkRelai parkRelai = parkRelais.get(index);
-				final String lat = Double.toString(parkRelai.getLatitude());
-				final String lon = Double.toString(parkRelai.getLongitude());
-				final Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(parkRelai.name) + "+@" + lat + "," + lon);
+				ParkRelai parkRelai = parkRelais.get(index);
+				String lat = Double.toString(parkRelai.getLatitude());
+				String lon = Double.toString(parkRelai.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(parkRelai.name) + "+@" + lat + ',' + lon);
 				mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
 		});
-		final AlertDialog alert = builder.create();
+		AlertDialog alert = builder.create();
 		alert.show();
 		return true;
 	}

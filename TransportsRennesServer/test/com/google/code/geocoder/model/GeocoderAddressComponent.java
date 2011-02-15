@@ -19,16 +19,16 @@ import java.util.List;
 /**
  * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
  */
-public class GeocoderAddressComponent {
-	protected String longName;
-	protected String shortName;
-	protected List<String> types;
+class GeocoderAddressComponent {
+	private String longName;
+	private String shortName;
+	private List<String> types;
 
 	public String getLongName() {
 		return longName;
 	}
 
-	public void setLongName(final String longName) {
+	public void setLongName(String longName) {
 		this.longName = longName;
 	}
 
@@ -36,7 +36,7 @@ public class GeocoderAddressComponent {
 		return shortName;
 	}
 
-	public void setShortName(final String shortName) {
+	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
 
@@ -44,12 +44,12 @@ public class GeocoderAddressComponent {
 		return types;
 	}
 
-	public void setTypes(final List<String> types) {
+	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -57,7 +57,7 @@ public class GeocoderAddressComponent {
 			return false;
 		}
 
-		final GeocoderAddressComponent that = (GeocoderAddressComponent) obj;
+		GeocoderAddressComponent that = (GeocoderAddressComponent) obj;
 
 		return !(longName != null ? !longName.equals(that.longName) : that.longName != null) &&
 				!(shortName != null ? !shortName.equals(that.shortName) : that.shortName != null) &&
@@ -75,7 +75,7 @@ public class GeocoderAddressComponent {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("GeocoderAddressComponent");
 		sb.append("{longName='").append(longName).append('\'');
 		sb.append(", shortName='").append(shortName).append('\'');

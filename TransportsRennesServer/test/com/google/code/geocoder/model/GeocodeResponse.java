@@ -20,14 +20,14 @@ import java.util.List;
  * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
  */
 public class GeocodeResponse {
-	protected GeocoderStatus status;
-	protected List<GeocoderResult> results;
+	private GeocoderStatus status;
+	private List<GeocoderResult> results;
 
 	public GeocoderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(final GeocoderStatus status) {
+	public void setStatus(GeocoderStatus status) {
 		this.status = status;
 	}
 
@@ -35,12 +35,12 @@ public class GeocodeResponse {
 		return results;
 	}
 
-	public void setResults(final List<GeocoderResult> result) {
+	public void setResults(List<GeocoderResult> result) {
 		results = result;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -48,7 +48,7 @@ public class GeocodeResponse {
 			return false;
 		}
 
-		final GeocodeResponse that = (GeocodeResponse) obj;
+		GeocodeResponse that = (GeocodeResponse) obj;
 
 		return !(results != null ? !results.equals(that.results) : that.results != null) && status == that.status;
 
@@ -63,7 +63,7 @@ public class GeocodeResponse {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("GeocodeResponse");
 		sb.append("{status=").append(status);
 		sb.append(", results=").append(results);

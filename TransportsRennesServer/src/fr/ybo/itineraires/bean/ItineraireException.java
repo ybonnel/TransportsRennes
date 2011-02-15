@@ -15,13 +15,14 @@
 package fr.ybo.itineraires.bean;
 
 
+@SuppressWarnings({"serial"})
 public class ItineraireException extends RuntimeException {
 
-	public ItineraireException(final String message) {
+	public ItineraireException(String message) {
 		super(message);
 	}
 
-	public ItineraireException(final String message, final Throwable cause) {
+	public ItineraireException(String message, Throwable cause) {
 		super(message, cause);
 	}
 }

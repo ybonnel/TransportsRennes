@@ -14,7 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.moteur.modele;
 
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsvException;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -25,19 +25,19 @@ public class ClassCsv {
 	private final Class<?> clazz;
 	private Constructor<?> contructeur;
 
-	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>();
+	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(5);
 
-	public ClassCsv(final String separateur, final Class<?> clazz) {
+	public ClassCsv(String separateur, Class<?> clazz) {
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {
 			contructeur = clazz.getDeclaredConstructor((Class<?>[]) null);
 		} catch (Exception e) {
-			throw new ErreurMoteurCsv("Erreur a la récupération du constructeur de " + clazz.getSimpleName(), e);
+			throw new MoteurCsvException("Erreur a la récupération du constructeur de " + clazz.getSimpleName(), e);
 		}
 	}
 
-	public ChampCsv getChampCsv(final String nomCsv) {
+	public ChampCsv getChampCsv(String nomCsv) {
 		return mapOfFields.get(nomCsv);
 	}
 
@@ -53,7 +53,7 @@ public class ClassCsv {
 		return separateur;
 	}
 
-	public void setChampCsv(final String nomCsv, final ChampCsv champCsv) {
+	public void setChampCsv(String nomCsv, ChampCsv champCsv) {
 		mapOfFields.put(nomCsv, champCsv);
 	}
 

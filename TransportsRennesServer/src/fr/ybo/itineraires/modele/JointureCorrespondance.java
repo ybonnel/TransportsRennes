@@ -21,8 +21,7 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 	private final Arret arretDepart;
 	private final Arret arretArrivee;
 
-	public JointureCorrespondance(final Arret arretDepart, final Arret arretArrivee, final double distance) {
-		super();
+	public JointureCorrespondance(Arret arretDepart, Arret arretArrivee, double distance) {
 		this.arretDepart = arretDepart;
 		this.arretArrivee = arretArrivee;
 		this.distance = distance;
@@ -30,7 +29,7 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 
 	@Override
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {
 			stringBuilder.append("<tempsTrajet>");
 			stringBuilder.append(tempsTrajet);
@@ -45,12 +44,12 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 		return stringBuilder.toString();
 	}
 
-    @Override
-    public PortionTrajet convert() {
-        final fr.ybo.itineraires.schema.JointureCorrespondance retour = new fr.ybo.itineraires.schema.JointureCorrespondance();
-        remplirXml(retour);
-        retour.setArretDepartId(arretDepart.id);
-        retour.setArretArriveeId(arretArrivee.id);
-        return retour;
-    }
+	@Override
+	public PortionTrajet convert() {
+		fr.ybo.itineraires.schema.JointureCorrespondance retour = new fr.ybo.itineraires.schema.JointureCorrespondance();
+		remplirXml(retour);
+		retour.setArretDepartId(arretDepart.id);
+		retour.setArretArriveeId(arretArrivee.id);
+		return retour;
+	}
 }

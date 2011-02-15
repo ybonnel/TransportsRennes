@@ -46,13 +46,13 @@ class GetTwittersHandler extends DefaultHandler {
 	}
 
 	@Override
-	public final void characters(final char[] ch, final int start, final int length) throws SAXException {
+	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
 		contenu.append(ch, start, length);
 	}
 
 	@Override
-	public final void endElement(final String uri, final String localName, final String qName) throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
 		if (messageCourant != null) {
 			if (qName.equals(DATE_CREATION)) {
@@ -71,13 +71,13 @@ class GetTwittersHandler extends DefaultHandler {
 	}
 
 	@Override
-	public final void startDocument() throws SAXException {
+	public void startDocument() throws SAXException {
 		super.startDocument();
 		contenu = new StringBuilder();
 	}
 
 	@Override
-	public final void startElement(final String uri, final String localName, final String qName, final Attributes attributes) throws SAXException {
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
 		if (qName.equals(MESSAGES)) {
 			messages = new ArrayList<MessageTwitter>(20);

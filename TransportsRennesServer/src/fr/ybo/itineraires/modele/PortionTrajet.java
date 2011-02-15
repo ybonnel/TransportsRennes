@@ -20,5 +20,8 @@ public abstract class PortionTrajet {
 
 	public abstract String toXml();
 
-    public abstract fr.ybo.itineraires.schema.PortionTrajet convert();
+	public abstract fr.ybo.itineraires.schema.PortionTrajet convert();
+
+	@Override
+	public abstract String toString();
 }

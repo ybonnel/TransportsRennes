@@ -57,18 +57,18 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	private static final String STATE = "state";
 
 	@Override
-	protected final String getBaliseData() {
+	protected String getBaliseData() {
 		return RELAY_PARK;
 	}
 
 	@Override
-	protected final ParkRelai getNewObjetKeolis() {
+	protected ParkRelai getNewObjetKeolis() {
 		return new ParkRelai();
 	}
 
 	@SuppressWarnings({"IfStatementWithTooManyBranches"})
 	@Override
-	protected final void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
+	protected void remplirObjectKeolis(ParkRelai currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(LATITUDE)) {

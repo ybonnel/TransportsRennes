@@ -35,22 +35,22 @@ import java.util.HashSet;
 public class DetailAlert extends MenuAccueil.Activity {
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detailalert);
-		final Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
+		Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
 		((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());
 		if (!alert.lines.isEmpty()) {
 			((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
 		}
-		final Collection<String> arretsToBold = new HashSet<String>(20);
-		for (final String line : alert.lines) {
-			final StringBuilder requete = new StringBuilder();
+		Collection<String> arretsToBold = new HashSet<String>(20);
+		for (String line : alert.lines) {
+			StringBuilder requete = new StringBuilder();
 			requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
 			requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
 			requete.append("and Arret.id = ArretRoute.arretId");
-			final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
+			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
 			while (cursor.moveToNext()) {
 				arretsToBold.add(cursor.getString(0));
 			}

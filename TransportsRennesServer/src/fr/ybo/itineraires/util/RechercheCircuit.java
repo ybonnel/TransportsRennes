@@ -37,18 +37,17 @@ public class RechercheCircuit {
 	private final Collection<JointurePieton> arretsDeparts = new ArrayList<JointurePieton>(10);
 	private final Collection<JointurePieton> arretsArrivees = new ArrayList<JointurePieton>(10);
 
-	public RechercheCircuit(final Adresse adresseDepart, final Adresse adresseArrivee) {
-		super();
+	public RechercheCircuit(Adresse adresseDepart, Adresse adresseArrivee) {
 		this.adresseDepart = adresseDepart;
 		this.adresseArrivee = adresseArrivee;
 	}
 
 	private final Collection<Trajet> bestTrajets = new ArrayList<Trajet>(3);
 
-	public Iterable<Chrono> calculCircuits(final EnumCalendrier calendrier, final int heureDepart) {
-		final Collection<Chrono> chronos = new ArrayList<Chrono>(5);
+	public Iterable<Chrono> calculCircuits(EnumCalendrier calendrier, int heureDepart) {
+		Collection<Chrono> chronos = new ArrayList<Chrono>(5);
 		Chrono chrono = new Chrono("ArretEligibles");
-		for (final Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
+		for (Arret arret : GestionnaireGtfs.getInstance().getAllArrets()) {
 			double distanceDepart = calculDistanceDepart(arret);
 			if (distanceDepart < DISTANCE_RECHERCHE_ARRETS) {
 				arretsDeparts.add(new JointurePieton(arret, adresseDepart, distanceDepart));
@@ -60,45 +59,44 @@ public class RechercheCircuit {
 		}
 		chronos.add(chrono.stop());
 		Chrono remplirCircuits = new Chrono("RemplirCircuits");
-		final List<Circuit> circuits = new ArrayList<Circuit>(50);
-		for (final JointurePieton arretDepart : arretsDeparts) {
-			for (final JointurePieton arretArrivee : arretsArrivees) {
+		List<Circuit> circuits = new ArrayList<Circuit>(50);
+		for (JointurePieton arretDepart : arretsDeparts) {
+			for (JointurePieton arretArrivee : arretsArrivees) {
 				circuits.add(new Circuit(arretDepart, arretArrivee));
 			}
 		}
 		chronos.add(remplirCircuits.stop());
-		remplirCircuits = new Chrono("RechercheTrajets");
-		final Iterator<Circuit> iteratorCircuit = circuits.iterator();
+		Chrono rechercheTrajets = new Chrono("RechercheTrajets");
+		Iterator<Circuit> iteratorCircuit = circuits.iterator();
 		while (iteratorCircuit.hasNext()) {
-			if (iteratorCircuit.next().rechercheTrajetBus(calendrier, heureDepart)) {
+			if (iteratorCircuit.next().hasTrajetBus(calendrier, heureDepart)) {
 				iteratorCircuit.remove();
 			}
 		}
-		chronos.add(remplirCircuits.stop());
-		remplirCircuits = new Chrono("RemplirTrajets");
-		final List<Trajet> trajets = new ArrayList<Trajet>(50);
-		for (final Circuit circuit : circuits) {
+		chronos.add(rechercheTrajets.stop());
+		Chrono remplirTrajets = new Chrono("RemplirTrajets");
+		List<Trajet> trajets = new ArrayList<Trajet>(50);
+		for (Circuit circuit : circuits) {
 			trajets.addAll(circuit.getTrajets());
 		}
-		chronos.add(remplirCircuits.stop());
-		remplirCircuits = new Chrono("SortTrajets");
-		Collections.sort(trajets, new ComparatorTrajet(heureDepart));
-		chronos.add(remplirCircuits.stop());
+		chronos.add(remplirTrajets.stop());
+		Chrono sortTrajets = new Chrono("SortTrajets");
+		Collections.sort(trajets, new RechercheCircuit.ComparatorTrajet(heureDepart));
+		chronos.add(sortTrajets.stop());
 		bestTrajets.addAll(trajets.subList(0, trajets.size() > 3 ? 3 : trajets.size()));
 		return chronos;
 	}
 
-	private class ComparatorTrajet implements Comparator<Trajet> {
+	private static class ComparatorTrajet implements Comparator<Trajet> {
 		private final int heureDepart;
 
-		private ComparatorTrajet(final int heureDepart) {
-			super();
+		private ComparatorTrajet(int heureDepart) {
 			this.heureDepart = heureDepart;
 		}
 
-		public int compare(final Trajet o1, final Trajet o2) {
-			final int tempsTrajet1 = o1.calculTempsTrajet(heureDepart);
-			final int tempsTrajet2 = o2.calculTempsTrajet(heureDepart);
+		public int compare(Trajet o1, Trajet o2) {
+			int tempsTrajet1 = o1.calculTempsTrajet(heureDepart);
+			int tempsTrajet2 = o2.calculTempsTrajet(heureDepart);
 			return tempsTrajet1 < tempsTrajet2 ? -1 : tempsTrajet1 == tempsTrajet2 ? 0 : 1;
 		}
 	}
@@ -107,11 +105,11 @@ public class RechercheCircuit {
 		return bestTrajets;
 	}
 
-	private double calculDistanceDepart(final Arret arret) {
+	private double calculDistanceDepart(Arret arret) {
 		return new CalculDistance(adresseDepart.getLatitude(), adresseDepart.getLongitude(), arret.latitude, arret.longitude).calculDistance();
 	}
 
-	private double calculDistanceArrivee(final Arret arret) {
+	private double calculDistanceArrivee(Arret arret) {
 		return new CalculDistance(adresseArrivee.getLatitude(), adresseArrivee.getLongitude(), arret.latitude, arret.longitude).calculDistance();
 	}
 

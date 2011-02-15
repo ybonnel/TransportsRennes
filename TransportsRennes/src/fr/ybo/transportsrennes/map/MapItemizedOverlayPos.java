@@ -39,25 +39,25 @@ public class MapItemizedOverlayPos extends ItemizedOverlay<OverlayItem> {
 	private final Context mContext;
 	private final List<PointDeVente> pointDeVentes = new ArrayList<PointDeVente>(20);
 
-	private static Drawable leftBottom(final Drawable drawable) {
+	private static Drawable leftBottom(Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayPos(final Drawable defaultMarker, final Context context) {
+	public MapItemizedOverlayPos(Drawable defaultMarker, Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(final OverlayItem overlay, final PointDeVente pointDeVente) {
+	public void addOverlay(OverlayItem overlay, PointDeVente pointDeVente) {
 		mOverlays.add(overlay);
 		pointDeVentes.add(pointDeVente);
 		populate();
 	}
 
 	@Override
-	protected OverlayItem createItem(final int i) {
+	protected OverlayItem createItem(int i) {
 		return mOverlays.get(i);
 	}
 
@@ -69,27 +69,27 @@ public class MapItemizedOverlayPos extends ItemizedOverlay<OverlayItem> {
 	//Appeer quand on clique sur un marqueur
 	@Override
 	protected boolean onTap(final int index) {
-		final OverlayItem item = mOverlays.get(index);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		OverlayItem item = mOverlays.get(index);
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
 		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir le Point de Vente dans GoogleMap?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.dismiss();
-				final PointDeVente pointDeVente = pointDeVentes.get(index);
-				final String lat = Double.toString(pointDeVente.getLatitude());
-				final String lon = Double.toString(pointDeVente.getLongitude());
-				final Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(pointDeVente.name) + "+@" + lat + "," + lon);
+				PointDeVente pointDeVente = pointDeVentes.get(index);
+				String lat = Double.toString(pointDeVente.getLatitude());
+				String lon = Double.toString(pointDeVente.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(pointDeVente.name) + "+@" + lat + ',' + lon);
 				mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
 		});
-		final AlertDialog alert = builder.create();
+		AlertDialog alert = builder.create();
 		alert.show();
 		return true;
 	}

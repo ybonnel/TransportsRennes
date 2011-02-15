@@ -25,9 +25,6 @@ import java.util.Date;
 
 @PersistenceCapable
 public class MessageTwitter {
-
-	private final transient SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key key;
@@ -39,29 +36,23 @@ public class MessageTwitter {
 	public String texte;
 
 	@SuppressWarnings({"AssignmentToDateFieldFromParameter"})
-	public MessageTwitter(final Date dateCreation, final String texte) {
-		super();
+	public MessageTwitter(Date dateCreation, String texte) {
 		this.dateCreation = dateCreation;
 		this.texte = texte;
 	}
 
 	public MessageTwitter() {
-		super();
 	}
 
 	public Date getDateCreation() {
 		return dateCreation;
 	}
 
-	public void setTexte(final String texte) {
-		this.texte = texte;
-	}
-
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<message>");
 		stringBuilder.append("<dateCreation>");
-		stringBuilder.append(simpleDateFormat.format(dateCreation));
+		stringBuilder.append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(dateCreation));
 		stringBuilder.append("</dateCreation>");
 		stringBuilder.append("<contenu>");
 		stringBuilder.append(texte);

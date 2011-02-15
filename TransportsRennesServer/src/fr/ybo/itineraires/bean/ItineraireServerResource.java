@@ -24,15 +24,16 @@ import org.restlet.resource.ServerResource;
 
 public class ItineraireServerResource extends ServerResource implements ItineraireResource {
 
-    @Get
-    public ItineraireReponse calculItineraire() {
-        final Form form = getRequest().getResourceRef().getQueryAsForm();
-        final String key = form.getValues("key");
-        final Adresse adresseDepart = new Adresse(form.getValues("adresseDepart"));
-        final Adresse adresseArrivee = new Adresse(form.getValues("adresseArrivee"));
-        final Integer heureDepart = form.getValues("heureDepart") == null ? null : Integer.parseInt(form.getValues("heureDepart"));
-        final EnumCalendrier calendrier = EnumCalendrier.fromNumCalendrier(form.getValues("calendrier") == null ? null : Integer.parseInt(form.getValues("calendrier")));
+	@Get
+	public ItineraireReponse calculItineraire() {
+		Form form = getRequest().getResourceRef().getQueryAsForm();
+		String key = form.getValues("key");
+		Adresse adresseDepart = new Adresse(form.getValues("adresseDepart"));
+		Adresse adresseArrivee = new Adresse(form.getValues("adresseArrivee"));
+		Integer heureDepart = form.getValues("heureDepart") == null ? null : Integer.parseInt(form.getValues("heureDepart"));
+		EnumCalendrier calendrier =
+				EnumCalendrier.fromNumCalendrier(form.getValues("calendrier") == null ? null : Integer.parseInt(form.getValues("calendrier")));
 
-        return ItineraireBean.calculItineraire(key, adresseDepart, adresseArrivee, heureDepart, calendrier);
-    }
+		return ItineraireBean.calculItineraire(key, adresseDepart, adresseArrivee, heureDepart, calendrier);
+	}
 }

@@ -19,15 +19,15 @@ package com.google.code.geocoder.model;
  * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
  */
 public class GeocoderGeometry {
-	protected LatLng location;
-	protected GeocoderLocationType locationType;
-	protected LatLngBounds viewport;
+	private LatLng location;
+	private GeocoderLocationType locationType;
+	private LatLngBounds viewport;
 
 	public LatLng getLocation() {
 		return location;
 	}
 
-	public void setLocation(final LatLng location) {
+	public void setLocation(LatLng location) {
 		this.location = location;
 	}
 
@@ -35,7 +35,7 @@ public class GeocoderGeometry {
 		return locationType;
 	}
 
-	public void setLocationType(final GeocoderLocationType locationType) {
+	public void setLocationType(GeocoderLocationType locationType) {
 		this.locationType = locationType;
 	}
 
@@ -43,12 +43,12 @@ public class GeocoderGeometry {
 		return viewport;
 	}
 
-	public void setViewport(final LatLngBounds viewport) {
+	public void setViewport(LatLngBounds viewport) {
 		this.viewport = viewport;
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -56,7 +56,7 @@ public class GeocoderGeometry {
 			return false;
 		}
 
-		final GeocoderGeometry that = (GeocoderGeometry) obj;
+		GeocoderGeometry that = (GeocoderGeometry) obj;
 
 		return !(location != null ? !location.equals(that.location) : that.location != null) && locationType == that.locationType &&
 				!(viewport != null ? !viewport.equals(that.viewport) : that.viewport != null);
@@ -73,7 +73,7 @@ public class GeocoderGeometry {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("GeocoderGeometry");
 		sb.append("{location=").append(location);
 		sb.append(", locationType=").append(locationType);

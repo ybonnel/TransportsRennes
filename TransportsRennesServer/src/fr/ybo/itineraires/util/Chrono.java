@@ -21,8 +21,8 @@ public class Chrono {
 	private final long startTime;
 	private final String methode;
 	private long elapsedTime;
-	public Chrono(final String methode) {
-		super();
+
+	public Chrono(String methode) {
 		startTime = System.nanoTime();
 		this.methode = methode;
 	}
@@ -33,6 +33,6 @@ public class Chrono {
 	}
 
 	public void spool() {
-		LOGGER.info(new StringBuilder(methode).append(" : ").append(elapsedTime/1000000).append(" ms").toString());
+		LOGGER.info(new StringBuilder(methode).append(" : ").append(elapsedTime / 1000000).append(" ms").toString());
 	}
 }

@@ -67,22 +67,22 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	private void gestionViewsTitle() {
 		((TextView) findViewById(R.id.nomLong)).setText(ligne.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
-		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText(getString(R.string.vers) + " " + direction.direction);
+		((TextView) findViewById(R.id.detailTrajet_nomTrajet)).setText(getString(R.string.vers) + ' ' + direction.direction);
 	}
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.detailtrajet);
 		recuperationDonneesIntent();
 		gestionViewsTitle();
 		construireListe();
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Adapter arretAdapter = (DetailTrajetAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				final Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
@@ -94,7 +94,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	}
 
 	private void construireListe() {
-		final StringBuilder requete = new StringBuilder();
+		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as _id, Horaire.heureDepart as heureDepart, Arret.nom as nom ");
 		requete.append("FROM Arret, Horaire_");
 		requete.append(ligne.id);
@@ -103,12 +103,12 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 		requete.append(" AND Horaire.trajetId = :trajetId");
 		requete.append(" AND Horaire.stopSequence > :sequence ");
 		requete.append("ORDER BY stopSequence;");
-		final List<String> selectionArgs = new ArrayList<String>(2);
+		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(String.valueOf(trajet.id));
 		selectionArgs.add(String.valueOf(sequence));
-		LOG_YBO.debug("Exécution de " + requete.toString());
+
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		LOG_YBO.debug("Résultat : " + currentCursor.getCount());
+
 		setListAdapter(new DetailTrajetAdapter(this, currentCursor));
 	}
 

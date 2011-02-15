@@ -24,50 +24,51 @@ class GetTwittersHandler extends DefaultHandler {
 
 	private MessageTwitter messageCourant;
 
-	private ArrayList<MessageTwitter> messages;
+	private Collection<MessageTwitter> messages;
 
 	public Collection<MessageTwitter> getMessages() {
 		return messages;
 	}
 
 	@Override
-	public final void characters(final char[] ch, final int start, final int length) throws SAXException {
+	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
-		this.contenu.append(ch, start, length);
+		contenu.append(ch, start, length);
 	}
 
 	@Override
-	public final void endElement(final String uri, final String localName, final String name) throws SAXException {
-		super.endElement(uri, localName, name);
-		if (this.messageCourant != null) {
-			if (name.equals(DATE_CREATION)) {
+	public void endElement(String uri, String localName, String qName) throws SAXException {
+		super.endElement(uri, localName, qName);
+		if (messageCourant != null) {
+			if (qName.equals(DATE_CREATION)) {
 				try {
-					this.messageCourant.dateCreation = SDF.parse(contenu.toString());
-				} catch (ParseException e) {
-					this.messageCourant.dateCreation = new Date();
+					messageCourant.dateCreation = SDF.parse(contenu.toString());
+				} catch (ParseException ignore) {
+					messageCourant.dateCreation = new Date();
 				}
-			} else if (name.equals(CONTENU)) {
-				this.messageCourant.texte = contenu.toString();
-			} else if (name.equals(MESSAGE)) {
-				this.messages.add(this.messageCourant);
+			} else if (qName.equals(CONTENU)) {
+				messageCourant.texte = contenu.toString();
+			} else if (qName.equals(MESSAGE)) {
+				messages.add(messageCourant);
 			}
-			this.contenu.setLength(0);
+			contenu.setLength(0);
 		}
-	}
-	@Override
-	public final void startDocument() throws SAXException {
-		super.startDocument();
-		this.contenu = new StringBuilder();
 	}
 
 	@Override
-	public final void startElement(final String uri, final String localName, final String name, final Attributes attributes) throws SAXException {
-		super.startElement(uri, localName, name, attributes);
-		if (name.equals(MESSAGES)) {
-			this.messages = new ArrayList<MessageTwitter>();
-		} else if (name.equals(MESSAGE)) {
-			this.messageCourant = new MessageTwitter();
+	public void startDocument() throws SAXException {
+		super.startDocument();
+		contenu = new StringBuilder();
+	}
+
+	@Override
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+		super.startElement(uri, localName, qName, attributes);
+		if (qName.equals(MESSAGES)) {
+			messages = new ArrayList<MessageTwitter>(20);
+		} else if (qName.equals(MESSAGE)) {
+			messageCourant = new MessageTwitter();
 		}
-		this.contenu.setLength(0);
+		contenu.setLength(0);
 	}
 }

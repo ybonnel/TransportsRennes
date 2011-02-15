@@ -31,18 +31,18 @@ import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyClusterMarker<Objet extends ObjetWithDistance> extends ClusterMarker {
+class MyClusterMarker<Objet extends ObjetWithDistance> extends ClusterMarker {
 	/**
 	 * check time object for tapping.
 	 */
-	private long tapCheckTime_;
+	private long tapCheckTime;
 
 	private final Activity activity;
 	private final String paramName;
 	private final Class<? extends Activity> intentClass;
 
-	public MyClusterMarker(final GeoClusterer.GeoCluster cluster, final List<MarkerBitmap> markerIconBmps, final float screenDensity, final Activity activity,
-	                       final String paramName, final Class<? extends Activity> intentClass) {
+	MyClusterMarker(GeoClusterer.GeoCluster cluster, List<MarkerBitmap> markerIconBmps, float screenDensity, Activity activity, String paramName,
+	                Class<? extends Activity> intentClass) {
 		super(cluster, markerIconBmps, screenDensity);
 		this.activity = activity;
 		this.paramName = paramName;
@@ -51,43 +51,43 @@ public class MyClusterMarker<Objet extends ObjetWithDistance> extends ClusterMar
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public boolean onTap(final GeoPoint p, final MapView mapView) {
+	public boolean onTap(GeoPoint p, MapView mapView) {
 
-		final Projection pro = mapView.getProjection();
-		final Point ct = pro.toPixels(center_, null);
-		final Point pt = pro.toPixels(p, null);
+		Projection pro = mapView.getProjection();
+		Point ct = pro.toPixels(center, null);
+		Point pt = pro.toPixels(p, null);
 		/* check if this marker was tapped */
-		final MarkerBitmap bmp = markerIconBmps_.get(markerTypes);
-		final Point grid = bmp.getGrid();
-		final Point bmpSize = bmp.getSize();
+		MarkerBitmap bmp = markerIconBmps.get(markerTypes);
+		Point grid = bmp.getGrid();
+		Point bmpSize = bmp.getSize();
 		//noinspection OverlyComplexBooleanExpression
 		if (pt.x > ct.x - grid.x && pt.x < ct.x + bmpSize.x - grid.x && pt.y > ct.y - grid.y && pt.y < ct.y + bmpSize.y - grid.y) {
-			if (isSelected_) {
+			if (selected) {
 				/* double tap */
-				final long curTime = SystemClock.uptimeMillis();
-				if (curTime < tapCheckTime_ + 1500) { // if within 1sec
-					if (GeoItems_.size() > 100) {
+				long curTime = SystemClock.uptimeMillis();
+				if (curTime < tapCheckTime + 1500) { // if within 1sec
+					if (geoItems.size() > 100) {
 						Toast.makeText(activity, "Plus de 100 arrêts sur ce point veuillez zoomer avant de les afficher.", Toast.LENGTH_SHORT).show();
 					} else {
-						final ArrayList<Objet> objets = new ArrayList<Objet>(20);
-						for (final GeoItem item : GeoItems_) {
+						ArrayList<Objet> objets = new ArrayList<Objet>(20);
+						for (GeoItem item : geoItems) {
 							objets.add(((MyGeoItem<Objet>) item).getObjet());
 						}
-						final Intent intent = new Intent(activity, intentClass);
+						Intent intent = new Intent(activity, intentClass);
 						intent.putExtra(paramName, objets);
 						activity.startActivity(intent);
 					}
 				}
-				tapCheckTime_ = SystemClock.uptimeMillis();
+				tapCheckTime = SystemClock.uptimeMillis();
 				return true;
 			}
-			isSelected_ = true;
+			selected = true;
 			setMarkerBitmap();
-			cluster_.onTapCalledFromMarker(true);
-			tapCheckTime_ = SystemClock.uptimeMillis();
+			cluster.onTapCalledFromMarker(true);
+			tapCheckTime = SystemClock.uptimeMillis();
 			return true;
 		}
-		cluster_.onTapCalledFromMarker(false);
+		cluster.onTapCalledFromMarker(false);
 		return false;
 	}
 }

@@ -34,58 +34,60 @@ import com.google.android.maps.GeoPoint;
 
 /**
  * Utility Class to handle GeoBounds, which is not available for 1.5SDK.
+ *
  * @author Huan Erdao
  */
 public class GeoBounds {
 
-	/** North-West geo point of the bound */
-	private final GeoPoint nw_;
-	/** South-East geo point of the bound */
-	private final GeoPoint se_;
+	/**
+	 * North-West geo point of the bound
+	 */
+	private final GeoPoint nw;
+	/**
+	 * South-East geo point of the bound
+	 */
+	private final GeoPoint se;
 
 	/**
 	 * @param nw North-West geo point of the bound
 	 * @param se South-East geo point of the bound
 	 */
-	public GeoBounds( final GeoPoint nw, final GeoPoint se ) {
-		super();
-		nw_ = nw;
-		se_ = se;
+	public GeoBounds(GeoPoint nw, GeoPoint se) {
+		this.nw = nw;
+		this.se = se;
 	}
-	
+
 	/**
 	 * @param pt a GeoPoint to be checked
 	 * @return true if point is in the bound.
 	 */
-	public boolean isInBounds( final GeoPoint pt ){
+	public boolean isInBounds(GeoPoint pt) {
 		//noinspection OverlyComplexBooleanExpression
-		return pt != null && pt.getLatitudeE6() <= nw_.getLatitudeE6() && pt.getLatitudeE6() >= se_.getLatitudeE6() &&
-				pt.getLongitudeE6() >= nw_.getLongitudeE6() && pt.getLongitudeE6() <= se_.getLongitudeE6();
+		return pt != null && pt.getLatitudeE6() <= nw.getLatitudeE6() && pt.getLatitudeE6() >= se.getLatitudeE6() &&
+				pt.getLongitudeE6() >= nw.getLongitudeE6() && pt.getLongitudeE6() <= se.getLongitudeE6();
 	}
 
 	/**
 	 * @return South-East point of the bound
 	 */
-	public GeoPoint getSouthEast(){
-		return se_;
+	public GeoPoint getSouthEast() {
+		return se;
 	}
 
 	/**
 	 * @return North-West point of the bound
 	 */
-	public GeoPoint getNorthWest(){
-		return nw_;
+	public GeoPoint getNorthWest() {
+		return nw;
 	}
 
 	/**
 	 * @param src a GeoBounds to be checked
 	 * @return true if the bound are same
 	 */
-	public boolean isEqual(final GeoBounds src){
-		return nw_.getLatitudeE6()==src.nw_.getLatitudeE6()&&
-				nw_.getLongitudeE6()==src.nw_.getLongitudeE6()&&
-				se_.getLatitudeE6()==src.se_.getLatitudeE6()&&
-				se_.getLongitudeE6()==src.se_.getLongitudeE6();
+	public boolean isEqual(GeoBounds src) {
+		return nw.getLatitudeE6() == src.nw.getLatitudeE6() && nw.getLongitudeE6() == src.nw.getLongitudeE6() &&
+				se.getLatitudeE6() == src.se.getLatitudeE6() && se.getLongitudeE6() == src.se.getLongitudeE6();
 	}
 
 

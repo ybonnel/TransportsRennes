@@ -29,8 +29,7 @@ public class Circuit {
 	private final JointurePieton arretArrivee;
 	private final Collection<Trajet> trajets = new ArrayList<Trajet>(200);
 
-	public Circuit(final JointurePieton arretDepart, final JointurePieton arretArrivee) {
-		super();
+	public Circuit(JointurePieton arretDepart, JointurePieton arretArrivee) {
 		this.arretDepart = arretDepart;
 		this.arretArrivee = arretArrivee;
 	}
@@ -39,27 +38,27 @@ public class Circuit {
 		return trajets;
 	}
 
-	public boolean rechercheTrajetBus(final EnumCalendrier calendrier, final int heureDepart) {
-		final Collection<String> lignesDepart = new HashSet<String>(10);
-		for (final ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretDepart.getArret().id)) {
+	public boolean hasTrajetBus(EnumCalendrier calendrier, int heureDepart) {
+		Collection<String> lignesDepart = new HashSet<String>(10);
+		for (ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretDepart.getArret().id)) {
 			if (!lignesDepart.contains(arretRoute.ligneId)) {
 				lignesDepart.add(arretRoute.ligneId);
 			}
 		}
-		final Collection<String> lignesArrivee = new HashSet<String>(10);
-		for (final ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretArrivee.getArret().id)) {
+		Collection<String> lignesArrivee = new HashSet<String>(10);
+		for (ArretRoute arretRoute : GESTIONNAIRE_GTFS.getArretRoutesByArretId(arretArrivee.getArret().id)) {
 			if (!lignesArrivee.contains(arretRoute.ligneId)) {
 				lignesArrivee.add(arretRoute.ligneId);
 			}
 		}
 		// Calcul des trajets possibles.
 		trajets.clear();
-		for (final String ligneDepartId : lignesDepart) {
-			for (final String ligneArriveeId : lignesArrivee) {
+		for (String ligneDepartId : lignesDepart) {
+			for (String ligneArriveeId : lignesArrivee) {
 				// Trajets sans correspondance
 				if (ligneDepartId.equals(ligneArriveeId)) {
-					final Trajet trajet = new Trajet();
-					final PortionTrajetBus bus =
+					Trajet trajet = new Trajet();
+					PortionTrajetBus bus =
 							new PortionTrajetBus(arretDepart.getArret(), arretArrivee.getArret(), GESTIONNAIRE_GTFS.getLigne(ligneDepartId));
 					if (bus.hasHoraire(calendrier, heureDepart)) {
 						trajet.getPortionsTrajet().add(arretDepart);
@@ -69,21 +68,20 @@ public class Circuit {
 					}
 				} else {
 					// Trajets avec une correspondance
-					final Collection<Correspondance> correspondances =
+					Collection<Correspondance> correspondances =
 							GESTIONNAIRE_GTFS.getCorrespondances(new GestionnaireGtfs.CoupleLigne(ligneDepartId, ligneArriveeId));
 					if (correspondances != null) {
-						for (final Correspondance correspondance : correspondances) {
+						for (Correspondance correspondance : correspondances) {
 							// Premier bus.
-							final PortionTrajetBus bus1 =
-									new PortionTrajetBus(arretDepart.getArret(), GESTIONNAIRE_GTFS.getArret(correspondance.arretId),
-											GESTIONNAIRE_GTFS.getLigne(ligneDepartId));
+							PortionTrajetBus bus1 = new PortionTrajetBus(arretDepart.getArret(), GESTIONNAIRE_GTFS.getArret(correspondance.arretId),
+									GESTIONNAIRE_GTFS.getLigne(ligneDepartId));
 							// Dexuième bus
-							final PortionTrajetBus bus2 =
+							PortionTrajetBus bus2 =
 									new PortionTrajetBus(GESTIONNAIRE_GTFS.getArret(correspondance.correspondanceId), arretArrivee.getArret(),
 											GESTIONNAIRE_GTFS.getLigne(ligneArriveeId));
 
 							if (bus1.hasHoraire(calendrier, heureDepart) && bus2.hasHoraire(calendrier, heureDepart)) {
-								final Trajet trajet = new Trajet();
+								Trajet trajet = new Trajet();
 								trajet.getPortionsTrajet().add(arretDepart);
 								trajet.getPortionsTrajet().add(bus1);
 								// Correspondance
@@ -104,9 +102,9 @@ public class Circuit {
 
 	@Override
 	public String toString() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Circuit :\n");
-		for (final Trajet trajet : trajets) {
+		for (Trajet trajet : trajets) {
 			stringBuilder.append(trajet.toString());
 		}
 		return stringBuilder.toString();

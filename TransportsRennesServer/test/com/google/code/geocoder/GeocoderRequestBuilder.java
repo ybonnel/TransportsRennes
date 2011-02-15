@@ -24,27 +24,27 @@ import com.google.code.geocoder.model.LatLngBounds;
 public class GeocoderRequestBuilder {
 	private final GeocoderRequest geocoderRequest = new GeocoderRequest();
 
-	public GeocoderRequestBuilder setAddress(final String address) {
+	public GeocoderRequestBuilder setAddress(String address) {
 		geocoderRequest.setAddress(address);
 		return this;
 	}
 
-	public GeocoderRequestBuilder setLanguage(final String language) {
+	public GeocoderRequestBuilder setLanguage(String language) {
 		geocoderRequest.setLanguage(language);
 		return this;
 	}
 
-	public GeocoderRequestBuilder setRegion(final String region) {
+	public GeocoderRequestBuilder setRegion(String region) {
 		geocoderRequest.setRegion(region);
 		return this;
 	}
 
-	public GeocoderRequestBuilder setBounds(final LatLngBounds bounds) {
+	public GeocoderRequestBuilder setBounds(LatLngBounds bounds) {
 		geocoderRequest.setBounds(bounds);
 		return this;
 	}
 
-	public GeocoderRequestBuilder setLocation(final LatLng location) {
+	public GeocoderRequestBuilder setLocation(LatLng location) {
 		geocoderRequest.setLocation(location);
 		return this;
 	}

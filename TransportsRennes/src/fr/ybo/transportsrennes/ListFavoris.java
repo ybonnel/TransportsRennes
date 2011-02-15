@@ -38,13 +38,13 @@ import java.util.concurrent.TimeUnit;
 public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private void construireListe() throws DataBaseException {
-		setListAdapter(new FavoriAdapter(getApplicationContext(),
-				TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre")));
-		final ListView lv = getListView();
+		setListAdapter(
+				new FavoriAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre")));
+		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final FavoriAdapter favoriAdapter = (FavoriAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				final Intent intent = new Intent(ListFavoris.this, DetailArret.class);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				FavoriAdapter favoriAdapter = (FavoriAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				Intent intent = new Intent(ListFavoris.this, DetailArret.class);
 				intent.putExtra("favori", favoriAdapter.getItem(position));
 				startActivity(intent);
 			}
@@ -98,7 +98,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
 		construireListe();
@@ -109,11 +109,11 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			final ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
 		}
@@ -121,11 +121,11 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 
 	@Override
-	public boolean onContextItemSelected(final MenuItem item) {
-		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
-				final ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 
 				if (TransportsWidgetConfigure.isNotUsed(this, favori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(favori);

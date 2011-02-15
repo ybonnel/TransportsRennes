@@ -41,7 +41,7 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	private final int now;
 	private final Context myContext;
 
-	public ArretGpsAdapter(final Context context, final List<Arret> objects) {
+	public ArretGpsAdapter(Context context, List<Arret> objects) {
 		super(context, R.layout.arretgps, objects);
 		calendar = Calendar.getInstance();
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
@@ -59,10 +59,10 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final Arret arret = arrets.get(position);
-		final ArretGpsAdapter.ViewHolder holder;
+		Arret arret = arrets.get(position);
+		ArretGpsAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.arretgps, null);
 			holder = new ArretGpsAdapter.ViewHolder();
@@ -83,8 +83,9 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 		return convertView1;
 	}
 
-	private CharSequence getTempsRestant(final Arret arret) {
-		final Map<Integer,Integer> mapProchainHoraires = WidgetUpdateUtil.requete(arret.favori, 1, calendar, now);
+	@SuppressWarnings({"TypeMayBeWeakened"})
+	private CharSequence getTempsRestant(Arret arret) {
+		Map<Integer, Integer> mapProchainHoraires = WidgetUpdateUtil.requete(arret.favori, 1, calendar, now);
 		return mapProchainHoraires.get(1) == null ? "" : WidgetUpdateUtil.formatterCalendar(myContext, mapProchainHoraires.get(1), now);
 	}
 }

@@ -36,22 +36,22 @@ public class StationsOnMap extends MapActivity {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 
-		final Iterable<Station> stations = (Iterable<Station>) getIntent().getExtras().getSerializable("stations");
+		Iterable<Station> stations = (Iterable<Station>) getIntent().getExtras().getSerializable("stations");
 
-		final MapView mapView = (MapView) findViewById(R.id.mapview);
+		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 
-		final MapController mc = mapView.getController();
+		MapController mc = mapView.getController();
 		mapView.setSatellite(true);
 
 		// Creation du geo point
-		final List<Overlay> mapOverlays = mapView.getOverlays();
-		final Drawable drawable = getResources().getDrawable(R.drawable.markee_velo);
-		final MapItemizedOverlayVelo itemizedoverlay = new MapItemizedOverlayVelo(drawable, this);
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		Drawable drawable = getResources().getDrawable(R.drawable.markee_velo);
+		MapItemizedOverlayVelo itemizedoverlay = new MapItemizedOverlayVelo(drawable, this);
 
 		int minLatitude = Integer.MAX_VALUE;
 		int maxLatitude = Integer.MIN_VALUE;
@@ -59,10 +59,10 @@ public class StationsOnMap extends MapActivity {
 		int maxLongitude = Integer.MIN_VALUE;
 
 
-		for (final Station station : stations) {
-			final int latitude = (int) (station.latitude * 1.0E6);
-			final int longitude = (int) (station.longitude * 1.0E6);
-			final GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+		for (Station station : stations) {
+			int latitude = (int) (station.latitude * 1.0E6);
+			int longitude = (int) (station.longitude * 1.0E6);
+			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 			if (latitude < minLatitude) {
 				minLatitude = latitude;
 			}
@@ -75,8 +75,9 @@ public class StationsOnMap extends MapActivity {
 			if (longitude > maxLongitude) {
 				maxLongitude = longitude;
 			}
-			final int placesTotales = station.bikesavailable + station.slotsavailable;
-			final OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(station.name), station.bikesavailable + " / " + placesTotales);
+			int placesTotales = station.bikesavailable + station.slotsavailable;
+			OverlayItem overlayitem =
+					new OverlayItem(geoPoint, Formatteur.formatterChaine(station.name), station.bikesavailable + " / " + placesTotales);
 			itemizedoverlay.addOverlay(overlayitem, station);
 		}
 		mapOverlays.add(itemizedoverlay);

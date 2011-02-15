@@ -31,22 +31,21 @@ import java.util.Map;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class CompressionTripAndCalendar {
 
-	private class Trajet {
+	private static class Trajet {
 
-		private Trajet(final List<StopTime> stopTimes) {
-			super();
+		private Trajet(List<StopTime> stopTimes) {
 			this.stopTimes = stopTimes;
 			key = genereKey();
 		}
 
 		private String genereKey() {
 			Collections.sort(stopTimes, new Comparator<StopTime>() {
-				public int compare(final StopTime o1, final StopTime o2) {
+				public int compare(StopTime o1, StopTime o2) {
 					return o1.stopSequence < o2.stopSequence ? -1 : o1.stopSequence == o2.stopSequence ? 0 : 1;
 				}
 			});
-			final StringBuilder keyBuilder = new StringBuilder();
-			for (final StopTime stopTime : stopTimes) {
+			StringBuilder keyBuilder = new StringBuilder();
+			for (StopTime stopTime : stopTimes) {
 				keyBuilder.append(stopTime.stopId);
 				keyBuilder.append(stopTime.heureDepart);
 			}
@@ -59,7 +58,7 @@ public class CompressionTripAndCalendar {
 
 		public final List<String> tripIds = new ArrayList<String>(1000);
 
-		public void addTripId(final String tripId, final Calendar calendar) {
+		public void addTripId(String tripId, Calendar calendar) {
 			if (this.calendar == null) {
 				this.calendar = new Calendar(calendar);
 			} else {
@@ -79,8 +78,9 @@ public class CompressionTripAndCalendar {
 
 
 	public void compressTripsAndCalendars() {
-		for (final Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
-			Trajet trajet = new Trajet(GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id));
+		for (Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
+			CompressionTripAndCalendar.Trajet trajet =
+					new CompressionTripAndCalendar.Trajet(GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id));
 			if (!trajets.containsKey(trajet.getKey())) {
 				trajets.put(trajet.getKey(), trajet);
 			}
@@ -89,12 +89,12 @@ public class CompressionTripAndCalendar {
 	}
 
 	public void replaceTripGenereCalendarAndCompressStopTimes() {
-		final Collection<Trip> newTrips = new ArrayList<Trip>(1000);
-		final Collection<StopTime> newStopTimes = new ArrayList<StopTime>(1000);
+		Collection<Trip> newTrips = new ArrayList<Trip>(1000);
+		Collection<StopTime> newStopTimes = new ArrayList<StopTime>(1000);
 		int calendarId = 1;
-		final Map<Calendar, String> newCalendars = new HashMap<Calendar, String>(20);
+		Map<Calendar, String> newCalendars = new HashMap<Calendar, String>(20);
 		int tripId = 1;
-		for (final CompressionTripAndCalendar.Trajet trajet : trajets.values()) {
+		for (CompressionTripAndCalendar.Trajet trajet : trajets.values()) {
 			Trip tripCourant = GestionnaireGtfs.getInstance().getMapTrips().get(trajet.tripIds.get(0));
 			tripCourant.id = String.valueOf(tripId);
 			tripId++;
@@ -105,18 +105,18 @@ public class CompressionTripAndCalendar {
 			}
 			tripCourant.serviceId = newCalendars.get(trajet.calendar);
 			newTrips.add(tripCourant);
-			for (final StopTime stopTime : trajet.stopTimes) {
+			for (StopTime stopTime : trajet.stopTimes) {
 				stopTime.tripId = tripCourant.id;
 				newStopTimes.add(stopTime);
 			}
 		}
 		GestionnaireGtfs.getInstance().getMapTrips().clear();
-		for (final Trip trip : newTrips) {
+		for (Trip trip : newTrips) {
 			GestionnaireGtfs.getInstance().getMapTrips().put(trip.id, trip);
 		}
 		GestionnaireGtfs.getInstance().getMapStopTimes().clear();
 		GestionnaireGtfs.getInstance().resetMapStopTimesByTripId();
-		for (final StopTime stopTime : newStopTimes) {
+		for (StopTime stopTime : newStopTimes) {
 			if (GestionnaireGtfs.getInstance().getMapStopTimes().containsKey(stopTime.getKey())) {
 				System.err.println("StopTimes présent plusieurs fois après compression :");
 				System.err.println("Ancien : " + GestionnaireGtfs.getInstance().getMapStopTimes().get(stopTime.getKey()).toString());
@@ -125,7 +125,7 @@ public class CompressionTripAndCalendar {
 			GestionnaireGtfs.getInstance().getMapStopTimes().put(stopTime.getKey(), stopTime);
 		}
 		GestionnaireGtfs.getInstance().getMapCalendars().clear();
-		for (final Calendar calendar : newCalendars.keySet()) {
+		for (Calendar calendar : newCalendars.keySet()) {
 			GestionnaireGtfs.getInstance().getMapCalendars().put(calendar.id, calendar);
 		}
 	}

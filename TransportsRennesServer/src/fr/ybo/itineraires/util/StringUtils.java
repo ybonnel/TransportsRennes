@@ -17,10 +17,9 @@ package fr.ybo.itineraires.util;
 public class StringUtils {
 
 	private StringUtils() {
-		super();
 	}
 
-	public static boolean isNotBlank(final CharSequence string) {
+	public static boolean isNotBlank(CharSequence string) {
 		return string != null && string.length() > 0;
 	}
 

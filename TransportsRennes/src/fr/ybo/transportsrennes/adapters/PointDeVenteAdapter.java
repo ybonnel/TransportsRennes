@@ -36,7 +36,7 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 
 	private final LayoutInflater inflater;
 
-	public PointDeVenteAdapter(final Context context, final List<PointDeVente> objects) {
+	public PointDeVenteAdapter(Context context, List<PointDeVente> objects) {
 		super(context, R.layout.pointdevente, objects);
 		pointsDeVente = objects;
 		inflater = LayoutInflater.from(context);
@@ -49,9 +49,9 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final PointDeVenteAdapter.ViewHolder holder;
+		PointDeVenteAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.pointdevente, null);
 			holder = new PointDeVenteAdapter.ViewHolder();
@@ -62,7 +62,7 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 		} else {
 			holder = (PointDeVenteAdapter.ViewHolder) convertView1.getTag();
 		}
-		final PointDeVente pointDeVente = pointsDeVente.get(position);
+		PointDeVente pointDeVente = pointsDeVente.get(position);
 
 		holder.nom.setText(pointDeVente.name);
 		holder.telephone.setText(pointDeVente.telephone);
@@ -70,8 +70,8 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 
 		holder.telephone.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(final View view) {
-				final Uri uri = Uri.parse("tel:" + tel);
+			public void onClick(View view) {
+				Uri uri = Uri.parse("tel:" + tel);
 				getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});

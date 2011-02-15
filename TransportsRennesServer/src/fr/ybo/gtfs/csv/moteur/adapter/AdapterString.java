@@ -16,7 +16,7 @@ package fr.ybo.gtfs.csv.moteur.adapter;
 
 @SuppressWarnings({"UnusedDeclaration"})
 public class AdapterString implements AdapterCsv<String> {
-	public String parse(final String chaine) {
+	public String parse(String chaine) {
 		return chaine;
 	}
 }

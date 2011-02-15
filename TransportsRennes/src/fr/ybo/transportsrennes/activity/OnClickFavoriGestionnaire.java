@@ -40,8 +40,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	private final ArretFavori myFavori = new ArretFavori();
 	private final Activity activity;
 
-	public OnClickFavoriGestionnaire(final Ligne ligne, final String arretId, final String nomArret, final String direction, final Activity activity) {
-		super();
+	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity) {
 		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
@@ -61,7 +60,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			boolean erreur;
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
 					UpdateDataBase.chargeDetailLigne(ligne);
 				} catch (Exception exception) {
@@ -72,7 +71,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			}
 
 			@Override
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
@@ -86,8 +85,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	}
 
 
-	public void onClick(final View view) {
-		final ImageView imageView = (ImageView) view;
+	public void onClick(View view) {
+		ImageView imageView = (ImageView) view;
 		if (TransportsRennesApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
 			ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
 			if (ligne.chargee == null || !ligne.chargee) {
@@ -108,8 +107,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				imageView.setImageResource(android.R.drawable.btn_star_big_off);
 				imageView.invalidate();
 			} else {
-				Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
 			}
 		}
 	}

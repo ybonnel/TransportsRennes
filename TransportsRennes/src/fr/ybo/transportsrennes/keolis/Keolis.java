@@ -104,7 +104,6 @@ public final class Keolis {
 	 * Constructeur privé.
 	 */
 	private Keolis() {
-		super();
 	}
 
 	/**
@@ -115,18 +114,18 @@ public final class Keolis {
 	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	@SuppressWarnings("unchecked")
-	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler) {
-		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + "'");
-		final long startTime = System.nanoTime() / 1000;
-		final HttpClient httpClient = new DefaultHttpClient();
-		final HttpUriRequest httpPost = new HttpPost(url);
-		final Answer<?> answer;
+	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler) {
+		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
+		long startTime = System.nanoTime() / 1000;
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpUriRequest httpPost = new HttpPost(url);
+		Answer<?> answer;
 		try {
-			final HttpResponse reponse = httpClient.execute(httpPost);
-			final ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			HttpResponse reponse = httpClient.execute(httpPost);
+			ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 			reponse.getEntity().writeTo(ostream);
-			final SAXParserFactory factory = SAXParserFactory.newInstance();
-			final SAXParser parser = factory.newSAXParser();
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(ostream.toByteArray()), handler);
 			answer = handler.getAnswer();
 		} catch (Exception e) {
@@ -135,7 +134,7 @@ public final class Keolis {
 		if (!"0".equals(answer.getStatus().getCode())) {
 			throw new KeolisException(answer.getStatus().getMessage());
 		}
-		final long elapsedTime = System.nanoTime() / 1000 - startTime;
+		long elapsedTime = System.nanoTime() / 1000 - startTime;
 		LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
 		return (List<ObjetKeolis>) answer.getData();
 	}
@@ -157,7 +156,7 @@ public final class Keolis {
 	 * @return la liste des stations.
 	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	private List<Station> getStation(final String url) {
+	private List<Station> getStation(String url) {
 		return appelKeolis(url, new GetStationHandler());
 	}
 
@@ -167,9 +166,9 @@ public final class Keolis {
 	 * @param number numéro de la station.
 	 * @return la station.
 	 */
-	Station getStationByNumber(final String number) {
-		final ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
-		final List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
+	private Station getStationByNumber(String number) {
+		ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
+		List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
 		if (stations.isEmpty()) {
 			return null;
 		}
@@ -182,14 +181,14 @@ public final class Keolis {
 	 * @param numbers numéros des stations.
 	 * @return la station.
 	 */
-	public Collection<Station> getStationByNumbers(final Collection<String> numbers) {
-		final Collection<Station> stations = new ArrayList<Station>(5);
+	public Collection<Station> getStationByNumbers(Collection<String> numbers) {
+		Collection<Station> stations = new ArrayList<Station>(5);
 		if (numbers.size() <= 2) {
-			for (final String number : numbers) {
+			for (String number : numbers) {
 				stations.add(getStationByNumber(number));
 			}
 		} else {
-			for (final Station station : getStations()) {
+			for (Station station : getStations()) {
 				if (numbers.contains(station.number)) {
 					stations.add(station);
 				}
@@ -231,8 +230,8 @@ public final class Keolis {
 	 * @param commande commande à exécuter.
 	 * @return l'url.
 	 */
-	private String getUrl(final String commande) {
-		final StringBuilder stringBuilder = new StringBuilder(URL);
+	private String getUrl(String commande) {
+		StringBuilder stringBuilder = new StringBuilder(URL);
 		stringBuilder.append("?version=").append(VERSION);
 		stringBuilder.append("&key=").append(KEY);
 		stringBuilder.append("&cmd=").append(commande);
@@ -247,9 +246,9 @@ public final class Keolis {
 	 * @param params   liste de paramètres de l'url.
 	 * @return l'url.
 	 */
-	private String getUrl(final String commande, final ParametreUrl[] params) {
-		final StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
-		for (final ParametreUrl param : params) {
+	private String getUrl(String commande, ParametreUrl[] params) {
+		StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
+		for (ParametreUrl param : params) {
 
 			try {
 				stringBuilder.append("&param[").append(param.getName()).append("]=").append(URLEncoder.encode(param.getValue(), "utf-8"));

@@ -20,17 +20,16 @@ import java.util.logging.Logger;
 
 
 public class Adresse {
-    private static final Logger LOGGER = Logger.getLogger(Adresse.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Adresse.class.getName());
 	private final Double latitude;
 	private final Double longitude;
 
-	public Adresse(final String value) {
-		super();
+	public Adresse(String value) {
 		if (value == null) {
 			LOGGER.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 		}
-		final String[] champs = value.split("\\|");
+		String[] champs = value.split("\\|");
 		if (champs.length != 2) {
 			LOGGER.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
@@ -45,8 +44,7 @@ public class Adresse {
 	}
 
 	@SuppressWarnings({"UnusedDeclaration"})
-	public Adresse(final Double latitude, final Double longitude) {
-		super();
+	public Adresse(Double latitude, Double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -60,7 +58,7 @@ public class Adresse {
 	}
 
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (latitude != null) {
 			stringBuilder.append("<latitude>");
 			stringBuilder.append(latitude);
@@ -74,11 +72,11 @@ public class Adresse {
 		return stringBuilder.toString();
 	}
 
-    public fr.ybo.itineraires.schema.Adresse convert() {
-        final fr.ybo.itineraires.schema.Adresse adresseXml = new fr.ybo.itineraires.schema.Adresse();
-        adresseXml.setLatitude(latitude);
-        adresseXml.setLongitude(longitude);
-        return adresseXml;
-    }
+	public fr.ybo.itineraires.schema.Adresse convert() {
+		fr.ybo.itineraires.schema.Adresse adresseXml = new fr.ybo.itineraires.schema.Adresse();
+		adresseXml.setLatitude(latitude);
+		adresseXml.setLongitude(longitude);
+		return adresseXml;
+	}
 
 }

@@ -49,22 +49,26 @@ public class GetAndContructZip {
 	private static final String EXTENSION_URL = ".zip";
 
 
-	Date getLastUpdate() {
+	private Date getLastUpdate() {
 		try {
-			final HttpURLConnection connection = (HttpURLConnection) new URL(URL_DONNEES_TELECHARGEABLES).openConnection();
+			HttpURLConnection connection = (HttpURLConnection) new URL(URL_DONNEES_TELECHARGEABLES).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.connect();
-			final BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			final String chaineRecherchee = URL_RELATIVE;
-			String ligne = bufReader.readLine();
-			while (ligne != null) {
-				if (ligne.contains(chaineRecherchee)) {
-					final String chaineDate = ligne.substring(ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
-							ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + 8);
-					return SDF.parse(chaineDate);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			try {
+				String ligne = bufReader.readLine();
+				String chaineRecherchee = URL_RELATIVE;
+				while (ligne != null) {
+					if (ligne.contains(chaineRecherchee)) {
+						String chaineDate = ligne.substring(ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
+								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + 8);
+						return SDF.parse(chaineDate);
+					}
+					ligne = bufReader.readLine();
 				}
-				ligne = bufReader.readLine();
+			} finally {
+				bufReader.close();
 			}
 			return getLastUpdateBruteForce();
 		} catch (Exception exception) {
@@ -72,8 +76,8 @@ public class GetAndContructZip {
 		}
 	}
 
-	Date getLastUpdateBruteForce() {
-		final GregorianCalendar calendar = new GregorianCalendar();
+	private Date getLastUpdateBruteForce() {
+		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
@@ -84,7 +88,7 @@ public class GetAndContructZip {
 				HttpURLConnection connection = openHttpConnection(calendar.getTime());
 				connection.getInputStream();
 				return calendar.getTime();
-			} catch (final IOException ignore) {
+			} catch (IOException ignore) {
 				calendar.add(Calendar.DAY_OF_YEAR, -1);
 				nbJours++;
 			}
@@ -92,13 +96,13 @@ public class GetAndContructZip {
 		return null;
 	}
 
-	private URL getUrlKeolisFromDate(final Date date) throws MalformedURLException {
+	private URL getUrlKeolisFromDate(Date date) throws MalformedURLException {
 		return new URL(BASE_URL + SDF.format(date) + EXTENSION_URL);
 	}
 
-	private HttpURLConnection openHttpConnection(final Date dateFileKeolis) {
+	private HttpURLConnection openHttpConnection(Date dateFileKeolis) {
 		try {
-			final HttpURLConnection connection = (HttpURLConnection) getUrlKeolisFromDate(dateFileKeolis).openConnection();
+			HttpURLConnection connection = (HttpURLConnection) getUrlKeolisFromDate(dateFileKeolis).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.connect();
@@ -115,61 +119,73 @@ public class GetAndContructZip {
 
 	public void getZipKeolis() {
 		try {
-			final Date lastUpdate = getLastUpdate();
-			final HttpURLConnection connection = openHttpConnection(lastUpdate);
-			final ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
+			Date lastUpdate = getLastUpdate();
+			HttpURLConnection connection = openHttpConnection(lastUpdate);
+			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
 			//ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream("C:/ybonnel/GTFS-20110118.zip"));
-			final File repertoire = new File(REPERTOIRE_GTFS);
-			if (repertoire.exists()) {
-				for (final File file : repertoire.listFiles()) {
-					if (!file.delete()) {
-						System.err.println("Le fichier " + file.getName() + "n'a pas pu être effacé");
+			try {
+				File repertoire = new File(REPERTOIRE_GTFS);
+				if (repertoire.exists()) {
+					for (File file : repertoire.listFiles()) {
+						if (!file.delete()) {
+							System.err.println("Le fichier " + file.getName() + "n'a pas pu être effacé");
+						}
+					}
+				} else {
+					if (!repertoire.mkdirs()) {
+						System.err.println("Le répertoire " + repertoire.getName() + "n'a pas pu être créé");
 					}
 				}
-			} else {
-				if (!repertoire.mkdirs()) {
-					System.err.println("Le répertoire " + repertoire.getName() + "n'a pas pu être créé");
-				}
+				copieFichierZip(zipInputStream, repertoire);
+			} finally {
+				zipInputStream.close();
 			}
-			copieFichierZip(zipInputStream, repertoire);
 
 		} catch (Exception exception) {
 			throw new MoteurCsvException(exception);
 		}
 	}
 
-	private void copieFichierZip(final ZipInputStream zipInputStream, final File repertoire) throws IOException {
+	private void copieFichierZip(ZipInputStream zipInputStream, File repertoire) throws IOException {
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
 		while (zipEntry != null) {
 			System.out.println("Copie du fichier " + zipEntry.getName());
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
-			final File file = new File(repertoire, zipEntry.getName());
-			final BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
-			String ligne = bufReader.readLine();
-			while (ligne != null) {
-				bufWriter.write(ligne);
-				bufWriter.write('\n');
-				ligne = bufReader.readLine();
+			File file = new File(repertoire, zipEntry.getName());
+			@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"}) BufferedReader bufReader =
+					new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
+			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
+			try {
+				String ligne = bufReader.readLine();
+				while (ligne != null) {
+					bufWriter.write(ligne);
+					bufWriter.write('\n');
+					ligne = bufReader.readLine();
+				}
+			} finally {
+				bufWriter.close();
+				bufReader.close();
 			}
-			bufWriter.close();
 			System.out.println("Fin de la copie du fichier " + zipEntry.getName());
 			zipEntry = zipInputStream.getNextEntry();
 		}
 	}
 
-	public static void addFileToZip(final File file, final ZipOutputStream out) {
+	public static void addFileToZip(File file, ZipOutputStream out) {
 		try {
-			final FileInputStream fi = new FileInputStream(file);
-			final BufferedInputStream origin = new BufferedInputStream(fi, 2048);
-			final ZipEntry entry = new ZipEntry(file.getName());
-			out.putNextEntry(entry);
-			final byte[] data = new byte[2048];
-			int count = origin.read(data, 0, 2048);
-			while (count != -1) {
-				out.write(data, 0, count);
-				count = origin.read(data, 0, 2048);
+			FileInputStream fi = new FileInputStream(file);
+			BufferedInputStream origin = new BufferedInputStream(fi, 2048);
+			try {
+				ZipEntry entry = new ZipEntry(file.getName());
+				out.putNextEntry(entry);
+				byte[] data = new byte[2048];
+				int count = origin.read(data, 0, 2048);
+				while (count != -1) {
+					out.write(data, 0, count);
+					count = origin.read(data, 0, 2048);
+				}
+			} finally {
+				origin.close();
 			}
-			origin.close();
 		} catch (IOException ioException) {
 			throw new MoteurCsvException(ioException);
 		}

@@ -52,56 +52,56 @@ public class TransportsRennes extends Activity {
 	private static final LogYbo LOG_YBO = new LogYbo(TransportsRennes.class);
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
 		setContentView(R.layout.main);
-		final Button btnBus = (Button) findViewById(R.id.home_btn_bus);
-		final Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
-		final Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
-		final Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
-		final Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
-		final Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
-		final Button btnParking = (Button) findViewById(R.id.home_btn_parking);
-		final Button btnPointsDeVente = (Button) findViewById(R.id.home_btn_tickets);
+		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
+		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
+		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
+		Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
+		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
+		Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
+		Button btnParking = (Button) findViewById(R.id.home_btn_parking);
+		Button btnPointsDeVente = (Button) findViewById(R.id.home_btn_tickets);
 		btnBus.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onBusClick(view);
+			public void onClick(View view) {
+				onBusClick();
 			}
 		});
 		btnBusFavori.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onBusFavoriClick(view);
+			public void onClick(View view) {
+				onBusFavoriClick();
 			}
 		});
 		btnBusGps.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
+			public void onClick(View view) {
 				onBusGpsClick();
 			}
 		});
 		btnAlert.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onAlertClick(view);
+			public void onClick(View view) {
+				onAlertClick();
 			}
 		});
 		btnVeloStar.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onVeloClick(view);
+			public void onClick(View view) {
+				onVeloClick();
 			}
 		});
 		btnVeloFavori.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onVeloFavoriClick(view);
+			public void onClick(View view) {
+				onVeloFavoriClick();
 			}
 		});
 		btnParking.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onParkingClick(view);
+			public void onClick(View view) {
+				onParkingClick();
 			}
 		});
 		btnPointsDeVente.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				onPointsDeVenteClick(view);
+			public void onClick(View view) {
+				onPointsDeVenteClick();
 			}
 		});
 		if (TransportsRennesApplication.isUpdateNecessaire()) {
@@ -115,7 +115,7 @@ public class TransportsRennes extends Activity {
 				}
 
 				@Override
-				protected Void doInBackground(final Void... pParams) {
+				protected Void doInBackground(Void... pParams) {
 
 					try {
 						verifierUpgrade();
@@ -127,7 +127,7 @@ public class TransportsRennes extends Activity {
 				}
 
 				@Override
-				protected void onPostExecute(final Void result) {
+				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
 					myProgressDialog.dismiss();
 					if (erreur) {
@@ -145,51 +145,51 @@ public class TransportsRennes extends Activity {
 		}
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onAlertClick(final View view) {
-		final Intent intent = new Intent(this, TabAlertes.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onAlertClick() {
+		Intent intent = new Intent(this, TabAlertes.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onBusClick(final View view) {
-		final Intent intent = new Intent(this, BusRennes.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onBusClick() {
+		Intent intent = new Intent(this, BusRennes.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onBusFavoriClick(final View view) {
-		final Intent intent = new Intent(this, ListFavoris.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onBusFavoriClick() {
+		Intent intent = new Intent(this, ListFavoris.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
+	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onBusGpsClick() {
-		final Intent intent = new Intent(this, ListArretByPosition.class);
+		Intent intent = new Intent(this, ListArretByPosition.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onVeloClick(final View view) {
-		final Intent intent = new Intent(this, ListStationsByPosition.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onVeloClick() {
+		Intent intent = new Intent(this, ListStationsByPosition.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onVeloFavoriClick(final View view) {
-		final Intent intent = new Intent(this, ListStationsFavoris.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onVeloFavoriClick() {
+		Intent intent = new Intent(this, ListStationsFavoris.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onParkingClick(final View view) {
-		final Intent intent = new Intent(this, ListParkRelais.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onParkingClick() {
+		Intent intent = new Intent(this, ListParkRelais.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess", "UnusedParameters"})
-	public void onPointsDeVenteClick(final View view) {
-		final Intent intent = new Intent(this, ListPointsDeVente.class);
+	@SuppressWarnings({"unused", "WeakerAccess"})
+	public void onPointsDeVenteClick() {
+		Intent intent = new Intent(this, ListPointsDeVente.class);
 		startActivity(intent);
 	}
 
@@ -202,17 +202,17 @@ public class TransportsRennes extends Activity {
 			private boolean erreur;
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
 					UpdateDataBase.updateIfNecessaryDatabase();
-					final Collection<String> ligneIds = new HashSet<String>(10);
-					for (final ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
+					Collection<String> ligneIds = new HashSet<String>(10);
+					for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
 						if (!ligneIds.contains(favori.ligneId)) {
 							ligneIds.add(favori.ligneId);
 						}
 					}
-					final Ligne ligneSelect = new Ligne();
-					for (final String ligneId : ligneIds) {
+					Ligne ligneSelect = new Ligne();
+					for (String ligneId : ligneIds) {
 						ligneSelect.id = ligneId;
 						Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
 						final String nomLigne = ligne.nomCourt;
@@ -232,7 +232,7 @@ public class TransportsRennes extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
@@ -244,37 +244,37 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
-		final DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
 			builder.setCancelable(false);
 			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				public void onClick(final DialogInterface dialog, final int id) {
+				public void onClick(DialogInterface dialog, int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
 			});
 			if (dernierMiseAJour == null) {
 				builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 						finish();
 					}
 				});
 			} else {
 				builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
 				});
 			}
 			runOnUiThread(new Runnable() {
 				public void run() {
-					final AlertDialog alert = builder.create();
+					AlertDialog alert = builder.create();
 					alert.show();
 				}
 			});
@@ -282,7 +282,7 @@ public class TransportsRennes extends Activity {
 	}
 
 	@Override
-	public void onConfigurationChanged(final Configuration newConfig) {
+	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.main);
 	}
@@ -294,48 +294,48 @@ public class TransportsRennes extends Activity {
 
 
 	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
+		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
-		final MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
+		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
-		final MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
+		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case MENU_ID:
-				final TextView message = new TextView(this);
+				TextView message = new TextView(this);
 				message.setPadding(8, 8, 8, 8);
 				message.setTextSize(18);
-				final Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+				Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
 				message.setText(spanned, TextView.BufferType.SPANNABLE);
 				message.setMovementMethod(LinkMovementMethod.getInstance());
-				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setView(message).setCancelable(true);
 				builder.create().show();
 				return true;
 			case MENU_MAP_ID:
-				final Intent intent = new Intent(this, AllOnMap.class);
+				Intent intent = new Intent(this, AllOnMap.class);
 				startActivity(intent);
 				return true;
 			case MENU_LOAD_LINES:
-				final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
 				alertBuilder.setCancelable(false);
 				alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(DialogInterface dialog, int id) {
 						dialog.dismiss();
 						loadAllLines();
 					}
 				});
 				alertBuilder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(final DialogInterface dialog, final int id) {
+					public void onClick(DialogInterface dialog, int id) {
 						dialog.cancel();
 					}
 				});
@@ -353,9 +353,9 @@ public class TransportsRennes extends Activity {
 			private boolean erreur;
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
-					for (final Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
+					for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
 						if (ligne.chargee == null || !ligne.chargee) {
 							final String nomLigne = ligne.nomCourt;
 							runOnUiThread(new Runnable() {
@@ -375,7 +375,7 @@ public class TransportsRennes extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {

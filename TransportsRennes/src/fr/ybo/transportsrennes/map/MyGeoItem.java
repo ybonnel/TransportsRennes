@@ -21,7 +21,7 @@ public class MyGeoItem<Objet extends ObjetWithDistance> extends GeoItem {
 
 	private final Objet objet;
 
-	public MyGeoItem(final long id, final Objet objet) {
+	public MyGeoItem(long id, Objet objet) {
 		super(id, (int) (objet.getLatitude() * 1.00E6), (int) (objet.getLongitude() * 1.00E6));
 		this.objet = objet;
 	}

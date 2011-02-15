@@ -21,7 +21,7 @@ import java.util.Calendar;
 public enum EnumCalendrier {
 	LUNDI(1) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.lundi;
 		}
 
@@ -32,7 +32,7 @@ public enum EnumCalendrier {
 	},
 	MARDI(2) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.mardi;
 		}
 
@@ -43,7 +43,7 @@ public enum EnumCalendrier {
 	},
 	MERCREDI(3) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.mercredi;
 		}
 
@@ -54,7 +54,7 @@ public enum EnumCalendrier {
 	},
 	JEUDI(4) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.jeudi;
 		}
 
@@ -65,7 +65,7 @@ public enum EnumCalendrier {
 	},
 	VENDREDI(5) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.vendredi;
 		}
 
@@ -76,7 +76,7 @@ public enum EnumCalendrier {
 	},
 	SAMEDI(6) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.samedi;
 		}
 
@@ -87,7 +87,7 @@ public enum EnumCalendrier {
 	},
 	DIMANCHE(7) {
 		@Override
-		public boolean isCalendrierValide(final Calendrier calendrier) {
+		public boolean isCalendrierValide(Calendrier calendrier) {
 			return calendrier.dimanche;
 		}
 
@@ -100,7 +100,8 @@ public enum EnumCalendrier {
 
 	private final int numCalendrier;
 
-	EnumCalendrier(final int numCalendrier) {
+	@SuppressWarnings({"WeakerAccess"})
+	EnumCalendrier(int numCalendrier) {
 		this.numCalendrier = numCalendrier;
 	}
 
@@ -108,11 +109,11 @@ public enum EnumCalendrier {
 
 	public abstract EnumCalendrier veille();
 
-	public static EnumCalendrier fromNumCalendrier(final Integer numCalendrier) {
-        if (numCalendrier == null) {
-            return null;
-        }
-		for (final EnumCalendrier value : values()) {
+	public static EnumCalendrier fromNumCalendrier(Integer numCalendrier) {
+		if (numCalendrier == null) {
+			return null;
+		}
+		for (EnumCalendrier value : values()) {
 			if (value.numCalendrier == numCalendrier) {
 				return value;
 			}
@@ -120,7 +121,7 @@ public enum EnumCalendrier {
 		return null;
 	}
 
-	public static EnumCalendrier fromFieldCalendar(final int field) {
+	public static EnumCalendrier fromFieldCalendar(int field) {
 		switch (field) {
 			case Calendar.MONDAY:
 				return LUNDI;

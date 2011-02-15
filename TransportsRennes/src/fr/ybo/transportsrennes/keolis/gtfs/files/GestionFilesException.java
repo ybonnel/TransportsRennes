@@ -17,7 +17,7 @@ package fr.ybo.transportsrennes.keolis.gtfs.files;
 @SuppressWarnings("serial")
 class GestionFilesException extends RuntimeException {
 
-	GestionFilesException(final Throwable throwable) {
+	GestionFilesException(Throwable throwable) {
 		super(throwable);
 	}
 }

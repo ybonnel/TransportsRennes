@@ -35,16 +35,15 @@ public class PortionTrajetBus extends PortionTrajet {
 	private static final int UNE_JOURNEE = 24 * 60;
 	private static final int DEUX_HEURES = 2 * 60;
 
-	private class ComparatorHoraires implements Comparator<PortionTrajetBus.HorairePortion> {
+	private static class ComparatorHoraires implements Comparator<PortionTrajetBus.HorairePortion> {
 
 		private final int heureDepart;
 
-		private ComparatorHoraires(final int heureDepart) {
-			super();
+		private ComparatorHoraires(int heureDepart) {
 			this.heureDepart = heureDepart;
 		}
 
-		public int compare(final PortionTrajetBus.HorairePortion o1, final PortionTrajetBus.HorairePortion o2) {
+		public int compare(PortionTrajetBus.HorairePortion o1, PortionTrajetBus.HorairePortion o2) {
 			if (o1.getHeureDepart() < heureDepart && o2.getHeureDepart() >= heureDepart) {
 				return 1;
 			}
@@ -56,7 +55,7 @@ public class PortionTrajetBus extends PortionTrajet {
 	}
 
 	@Override
-	public int calculHeureArrivee(final int heureDepart) {
+	public int calculHeureArrivee(int heureDepart) {
 		if (horaireSelectionnee == null) {
 			if (horaires.isEmpty()) {
 				LOGGER.warning("Horaires vide pour le trajet : " + toString());
@@ -71,12 +70,11 @@ public class PortionTrajetBus extends PortionTrajet {
 		return horaireSelectionnee.getHeureArrivee();
 	}
 
-	private class HorairePortion {
+	private static class HorairePortion {
 		private Integer heureDepart;
 		private Integer heureArrivee;
 
-		private HorairePortion(final Integer heureDepart, final Integer heureArrivee) {
-			super();
+		private HorairePortion(Integer heureDepart, Integer heureArrivee) {
 			this.heureDepart = heureDepart;
 			this.heureArrivee = heureArrivee;
 		}
@@ -101,17 +99,16 @@ public class PortionTrajetBus extends PortionTrajet {
 	private final List<PortionTrajetBus.HorairePortion> horaires = new ArrayList<PortionTrajetBus.HorairePortion>(10);
 	private PortionTrajetBus.HorairePortion horaireSelectionnee;
 
-	public PortionTrajetBus(final Arret arretDepart, final Arret arretArrivee, final Ligne ligne) {
-		super();
+	public PortionTrajetBus(Arret arretDepart, Arret arretArrivee, Ligne ligne) {
 		this.arretDepart = arretDepart;
 		this.arretArrivee = arretArrivee;
 		this.ligne = ligne;
 	}
 
-	public boolean hasHoraire(final EnumCalendrier calendrier, final int heureDepart) {
+	public boolean hasHoraire(EnumCalendrier calendrier, int heureDepart) {
 		// Recupérer les trajets de l'arret/ligne
-		final int heureDepartFin = heureDepart + DEUX_HEURES;
-		for (final Horaire horaire : GESTIONNAIRE_GTFS.getHorairesByArretId(arretDepart.id)) {
+		int heureDepartFin = heureDepart + DEUX_HEURES;
+		for (Horaire horaire : GESTIONNAIRE_GTFS.getHorairesByArretId(arretDepart.id)) {
 			if (ligne.id.equals(horaire.trajet.ligneId) && (horaire.heureDepart >= heureDepart && horaire.heureDepart <= heureDepartFin ||
 					horaire.heureDepart - UNE_JOURNEE >= heureDepart && horaire.heureDepart - UNE_JOURNEE <= heureDepartFin)) {
 				Calendrier calendrierCourant = GESTIONNAIRE_GTFS.getCalendrier(horaire.trajet.calendrierId);
@@ -121,7 +118,8 @@ public class PortionTrajetBus extends PortionTrajet {
 						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart));
 					}
 					if (horaire.heureDepart - UNE_JOURNEE >= heureDepart && calendrier.veille().isCalendrierValide(calendrierCourant)) {
-						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE));
+						horaires.add(
+								new PortionTrajetBus.HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE));
 					}
 
 				}
@@ -130,10 +128,10 @@ public class PortionTrajetBus extends PortionTrajet {
 		return !horaires.isEmpty();
 	}
 
-	private String formatHeure(final int time) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		final int heure = time / 60;
-		final int minutes = time - heure * 60;
+	private String formatHeure(int time) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int heure = time / 60;
+		int minutes = time - heure * 60;
 		if (heure < 10) {
 			stringBuilder.append('0');
 		}
@@ -148,7 +146,7 @@ public class PortionTrajetBus extends PortionTrajet {
 
 	@Override
 	public String toString() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Portion en bus :\n");
 		stringBuilder.append("\tLigne :");
 		stringBuilder.append(ligne.id);
@@ -169,7 +167,7 @@ public class PortionTrajetBus extends PortionTrajet {
 
 	@Override
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<ligneId>");
 		stringBuilder.append(ligne.id);
 		stringBuilder.append("</ligneId>");
@@ -192,14 +190,14 @@ public class PortionTrajetBus extends PortionTrajet {
 		return stringBuilder.toString();
 	}
 
-    @Override
-    public fr.ybo.itineraires.schema.PortionTrajet convert() {
-        final fr.ybo.itineraires.schema.PortionTrajetBus retour = new fr.ybo.itineraires.schema.PortionTrajetBus();
-        retour.setLigneId(ligne.id);
-        retour.setArretDepartId(arretDepart.id);
-        retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));
-        retour.setArretArriveeId(arretArrivee.id);
-        retour.setHeureArrivee(formatHeure(horaireSelectionnee.getHeureArrivee()));
-        return retour;
-    }
+	@Override
+	public fr.ybo.itineraires.schema.PortionTrajet convert() {
+		fr.ybo.itineraires.schema.PortionTrajetBus retour = new fr.ybo.itineraires.schema.PortionTrajetBus();
+		retour.setLigneId(ligne.id);
+		retour.setArretDepartId(arretDepart.id);
+		retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));
+		retour.setArretArriveeId(arretArrivee.id);
+		retour.setHeureArrivee(formatHeure(horaireSelectionnee.getHeureArrivee()));
+		return retour;
+	}
 }

@@ -16,11 +16,11 @@ package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
 
 public class AdapterBoolean implements AdapterCsv<Boolean> {
 
-	public Boolean parse(final String chaine) {
+	public Boolean parse(String chaine) {
 		return Integer.parseInt(chaine) == 1;
 	}
 
-	public String toString(final Boolean objet) {
+	public String toString(Boolean objet) {
 		return objet ? "1" : "0";
 	}
 }

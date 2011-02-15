@@ -19,22 +19,21 @@ import fr.ybo.itineraires.bean.ItineraireException;
 
 public class Key {
 
-    private static final String[] KEYS = { "xxxxx" };
+	private static final String[] KEYS = {"xxxxx"};
 
 	private Key() {
-		super();
 	}
 
-	public static void valid(final String key) {
-        if (key == null) {
-            throw new ItineraireException("La clé doit être valorisée");
-        }
-        for (final String validKey : KEYS) {
-            if (validKey.equals(key)) {
-                return;
-            }
-        }
-        throw new ItineraireException("La clé n'est pas bonne");
-    }
+	public static void valid(String key) {
+		if (key == null) {
+			throw new ItineraireException("La clé doit être valorisée");
+		}
+		for (String validKey : KEYS) {
+			if (validKey.equals(key)) {
+				return;
+			}
+		}
+		throw new ItineraireException("La clé n'est pas bonne");
+	}
 
 }

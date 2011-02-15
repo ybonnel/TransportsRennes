@@ -22,8 +22,7 @@ public class JointurePieton extends PortionTrajetPieton {
 	private final Arret arret;
 	private final Adresse adresse;
 
-	public JointurePieton(final Arret arret, final Adresse adresse, final Double distance) {
-		super();
+	public JointurePieton(Arret arret, Adresse adresse, Double distance) {
 		this.arret = arret;
 		this.adresse = adresse;
 		this.distance = distance;
@@ -35,7 +34,7 @@ public class JointurePieton extends PortionTrajetPieton {
 
 	@Override
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {
 			stringBuilder.append("<tempsTrajet>");
 			stringBuilder.append(tempsTrajet);
@@ -50,12 +49,12 @@ public class JointurePieton extends PortionTrajetPieton {
 		return stringBuilder.toString();
 	}
 
-    @Override
-    public PortionTrajet convert() {
-        final fr.ybo.itineraires.schema.JointurePieton retour = new fr.ybo.itineraires.schema.JointurePieton();
-        remplirXml(retour);
-        retour.setAdresse(adresse.convert());
-        retour.setArretId(arret.id);
-        return retour;
-    }
+	@Override
+	public PortionTrajet convert() {
+		fr.ybo.itineraires.schema.JointurePieton retour = new fr.ybo.itineraires.schema.JointurePieton();
+		remplirXml(retour);
+		retour.setAdresse(adresse.convert());
+		retour.setArretId(arret.id);
+		return retour;
+	}
 }

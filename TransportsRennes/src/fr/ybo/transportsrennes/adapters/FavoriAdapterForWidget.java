@@ -42,15 +42,14 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 	private final List<Integer> favorisSelectionnes = new ArrayList<Integer>(3);
 
 	public List<ArretFavori> getFavorisSelectionnes() {
-		final List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
-		for (final int position : favorisSelectionnes) {
+		List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
+		for (int position : favorisSelectionnes) {
 			retour.add(favoris.get(position));
 		}
 		return retour;
 	}
 
-	public FavoriAdapterForWidget(final Context context, final List<ArretFavori> favoris) {
-		super();
+	public FavoriAdapterForWidget(Context context, List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
@@ -61,11 +60,11 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		return favoris.size();
 	}
 
-	public ArretFavori getItem(final int position) {
+	public ArretFavori getItem(int position) {
 		return favoris.get(position);
 	}
 
-	public long getItemId(final int position) {
+	public long getItemId(int position) {
 		return position;
 	}
 
@@ -76,9 +75,9 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		CheckBox checkBox;
 	}
 
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final FavoriAdapterForWidget.ViewHolder holder;
+		FavoriAdapterForWidget.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = mInflater.inflate(R.layout.favori_for_widget, null);
 
@@ -93,16 +92,16 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 			holder = (FavoriAdapterForWidget.ViewHolder) convertView1.getTag();
 		}
 
-		final ArretFavori favori = favoris.get(position);
+		ArretFavori favori = favoris.get(position);
 
 		holder.arret.setText(favori.nomArret);
 		holder.direction.setText(favori.direction);
 		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 		holder.checkBox.setChecked(favorisSelectionnes.contains(Integer.valueOf(position)));
 		holder.checkBox.setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View v) {
+			public void onClick(View v) {
 				// Perform action on clicks, depending on whether it's now checked
-				final CheckBox checkBox = (CheckBox) v;
+				CheckBox checkBox = (CheckBox) v;
 				if (checkBox.isChecked()) {
 					if (favorisSelectionnes.size() < 3) {
 						favorisSelectionnes.add(position);
@@ -112,7 +111,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 						checkBox.invalidate();
 					}
 				} else {
-					final Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
+					Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
 					while (positionActuels.hasNext()) {
 						if (positionActuels.next() == position) {
 							positionActuels.remove();

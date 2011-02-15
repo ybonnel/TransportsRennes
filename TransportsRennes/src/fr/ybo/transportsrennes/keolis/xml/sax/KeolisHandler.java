@@ -63,13 +63,13 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	private StringBuilder contenu;
 
 	@Override
-	public final void characters(final char[] ch, final int start, final int length) throws SAXException {
+	public void characters(char[] ch, int start, int length) throws SAXException {
 		super.characters(ch, start, length);
 		contenu.append(ch, start, length);
 	}
 
 	@Override
-	public final void endElement(final String uri, final String localName, final String qName) throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		super.endElement(uri, localName, qName);
 		if (answer != null) {
 			if (localName.equals(getBaliseData())) {
@@ -86,7 +86,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	 *
 	 * @return réponse de l'API getdistrict.
 	 */
-	public final Answer<ObjetKeolis> getAnswer() {
+	public Answer<ObjetKeolis> getAnswer() {
 		return answer;
 	}
 
@@ -114,13 +114,13 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	protected abstract void remplirObjectKeolis(ObjetKeolis currentObjectKeolis, String baliseName, String contenuOfBalise);
 
 	@Override
-	public final void startDocument() throws SAXException {
+	public void startDocument() throws SAXException {
 		super.startDocument();
 		contenu = new StringBuilder();
 	}
 
 	@Override
-	public final void startElement(final String uri, final String localName, final String qName, final Attributes attributes) throws SAXException {
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
 		if (localName.equals(ANSWER)) {
 			answer = new Answer<ObjetKeolis>();

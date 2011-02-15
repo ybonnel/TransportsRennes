@@ -24,12 +24,12 @@ import android.widget.TabHost;
 public class TabAlertes extends TabActivity {
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabalertes);
 
-		final Resources res = getResources();
-		final TabHost tabHost = getTabHost();
+		Resources res = getResources();
+		TabHost tabHost = getTabHost();
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
 		Intent intent = new Intent().setClass(this, ListAlerts.class);
@@ -41,10 +41,11 @@ public class TabAlertes extends TabActivity {
 		tabHost.addTab(spec);
 
 		// Do the same for the other tabs
-		intent = new Intent().setClass(this, ListTwitter.class);
-		spec = tabHost.newTabSpec("twitter").setIndicator(getString(R.string.twitter), res.getDrawable(R.drawable.ic_menu_twitter))
-				.setContent(intent);
-		tabHost.addTab(spec);
+		Intent intentTwitter = new Intent().setClass(this, ListTwitter.class);
+		TabHost.TabSpec twitterSpec =
+				tabHost.newTabSpec("twitter").setIndicator(getString(R.string.twitter), res.getDrawable(R.drawable.ic_menu_twitter))
+						.setContent(intentTwitter);
+		tabHost.addTab(twitterSpec);
 
 		tabHost.setCurrentTab(0);
 	}

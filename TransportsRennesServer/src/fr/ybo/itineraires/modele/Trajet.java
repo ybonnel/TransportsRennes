@@ -31,10 +31,10 @@ public class Trajet {
 
 	private Integer tempsTrajet;
 
-	public int calculTempsTrajet(final int heureDepart) {
+	public int calculTempsTrajet(int heureDepart) {
 		if (tempsTrajet == null) {
 			int heureCourante = heureDepart;
-			for (final PortionTrajet portionTrajet : getPortionsTrajet()) {
+			for (PortionTrajet portionTrajet : getPortionsTrajet()) {
 				heureCourante = portionTrajet.calculHeureArrivee(heureCourante);
 			}
 			tempsTrajet = heureCourante - heureDepart;
@@ -44,10 +44,10 @@ public class Trajet {
 
 	@Override
 	public String toString() {
-		final StringBuilder stringBuilder = new StringBuilder("Trajet (");
+		StringBuilder stringBuilder = new StringBuilder("Trajet (");
 		stringBuilder.append(tempsTrajet);
 		stringBuilder.append(" minutes):\n");
-		for (final PortionTrajet portion : getPortionsTrajet()) {
+		for (PortionTrajet portion : getPortionsTrajet()) {
 			stringBuilder.append(portion.toString());
 			stringBuilder.append('\n');
 		}
@@ -55,13 +55,13 @@ public class Trajet {
 	}
 
 	public String toXml() {
-		final StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {
 			stringBuilder.append("<tempsTrajet>");
 			stringBuilder.append(tempsTrajet);
 			stringBuilder.append("</tempsTrajet>");
 		}
-		for (final PortionTrajet portion : getPortionsTrajet()) {
+		for (PortionTrajet portion : getPortionsTrajet()) {
 			stringBuilder.append("<portion type=\"");
 			stringBuilder.append(portion.getClass().getSimpleName());
 			stringBuilder.append("\">");

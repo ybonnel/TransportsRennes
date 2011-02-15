@@ -14,7 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.moteur.modele;
 
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.ErreurMoteurCsv;
+import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsvException;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterCsv;
 
 import java.lang.reflect.Constructor;
@@ -25,11 +25,11 @@ import java.util.Map;
 public class ChampCsv {
 
 	private final Class<? extends AdapterCsv<?>> adapter;
-	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>();
+	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> MAP_ADAPTERS =
+			new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(5);
 	private final Field field;
 
-	public ChampCsv(final Class<? extends AdapterCsv<?>> adapter, final Field field) {
-		super();
+	public ChampCsv(Class<? extends AdapterCsv<?>> adapter, Field field) {
 		this.adapter = adapter;
 		this.field = field;
 	}
@@ -39,14 +39,14 @@ public class ChampCsv {
 	}
 
 	public AdapterCsv<?> getNewAdapterCsv() {
-		if (!mapAdapters.containsKey(adapter)) {
+		if (!MAP_ADAPTERS.containsKey(adapter)) {
 			try {
-				final Constructor<? extends AdapterCsv<?>> construteur = adapter.getConstructor((Class<?>[]) null);
-				mapAdapters.put(adapter, construteur.newInstance((Object[]) null));
-			} catch (final Exception exception) {
-				throw new ErreurMoteurCsv(exception);
+				Constructor<? extends AdapterCsv<?>> construteur = adapter.getConstructor((Class<?>[]) null);
+				MAP_ADAPTERS.put(adapter, construteur.newInstance((Object[]) null));
+			} catch (Exception exception) {
+				throw new MoteurCsvException(exception);
 			}
 		}
-		return mapAdapters.get(adapter);
+		return MAP_ADAPTERS.get(adapter);
 	}
 }

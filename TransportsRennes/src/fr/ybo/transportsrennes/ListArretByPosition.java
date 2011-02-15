@@ -81,11 +81,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	 * @param location position courante.
 	 */
 	@SuppressWarnings("unchecked")
-	private void mettreAjoutLoc(final Location location) {
+	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
 			synchronized (arrets) {
-				for (final Arret arret : arrets) {
+				for (Arret arret : arrets) {
 					arret.calculDistance(location);
 				}
 				Collections.sort(arrets, new Arret.ComparatorDistance());
@@ -94,33 +94,33 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		}
 	}
 
-	public void onLocationChanged(final Location arg0) {
+	public void onLocationChanged(Location arg0) {
 		mettreAjoutLoc(arg0);
 	}
 
-	public void onProviderDisabled(final String arg0) {
+	public void onProviderDisabled(String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onProviderEnabled(final String arg0) {
+	public void onProviderEnabled(String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onStatusChanged(final String arg0, final int arg1, final Bundle arg2) {
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 	}
 
 	/**
 	 * Active le GPS.
 	 */
 	private void activeGps() {
-		final Criteria criteria = new Criteria();
+		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		final List<String> providers = locationManager.getProviders(criteria, true);
+		List<String> providers = locationManager.getProviders(criteria, true);
 		boolean gpsTrouve = false;
-		for (final String providerName : providers) {
+		for (String providerName : providers) {
 			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
 			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
 				gpsTrouve = true;
@@ -131,7 +131,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		}
 	}
 
-	void desactiveGps() {
+	private void desactiveGps() {
 		locationManager.removeUpdates(this);
 	}
 
@@ -149,10 +149,10 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	@SuppressWarnings("unchecked")
 	private void metterAJourListeArrets() {
-		final String query = editText.getText().toString().toUpperCase();
+		String query = editText.getText().toString().toUpperCase();
 		arretsFiltrees.clear();
 		synchronized (arrets) {
-			for (final Arret arret : arrets) {
+			for (Arret arret : arrets) {
 				if (arret.nom.toUpperCase().contains(query.toUpperCase())) {
 					arretsFiltrees.add(arret);
 				}
@@ -166,7 +166,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
 		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("arrets"));
@@ -176,20 +176,20 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listarretgps_input);
 		editText.addTextChangedListener(new TextWatcher() {
-			public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 			}
 
-			public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 			}
 
-			public void afterTextChanged(final Editable editable) {
+			public void afterTextChanged(Editable editable) {
 				metterAJourListeArrets();
 			}
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Arret arret = (Arret) getListAdapter().getItem(position);
-				final Intent intent = new Intent(ListArretByPosition.this, DetailArret.class);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Arret arret = (Arret) getListAdapter().getItem(position);
+				Intent intent = new Intent(ListArretByPosition.this, DetailArret.class);
 				intent.putExtra("favori", arret.favori);
 				startActivity(intent);
 			}
@@ -206,11 +206,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			}
 
 			@Override
-			protected Void doInBackground(final Void... voids) {
+			protected Void doInBackground(Void... voids) {
 				construireListeArrets();
 				synchronized (arrets) {
 					Collections.sort(arrets, new Comparator<Arret>() {
-						public int compare(final Arret o1, final Arret o2) {
+						public int compare(Arret o1, Arret o2) {
 							return o1.nom.compareToIgnoreCase(o2.nom);
 						}
 					});
@@ -219,7 +219,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			}
 
 			@Override
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				metterAJourListeArrets();
 				activeGps();
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
@@ -236,7 +236,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			arrets.addAll(arretsIntent);
 			return;
 		}
-		final StringBuilder requete = new StringBuilder();
+		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT");
 		requete.append(" Arret.id as arretId,");
 		requete.append(" Arret.nom as arretNom,");
@@ -250,16 +250,16 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		requete.append("WHERE Arret.id = ArretRoute.arretId");
 		requete.append(" AND ArretRoute.ligneId = Ligne.id");
 		requete.append(" AND ArretRoute.directionId = Direction.id");
-		final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
+		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 		arrets.clear();
-		final int arretIdIndex = cursor.getColumnIndex("arretId");
-		final int arretNomIndex = cursor.getColumnIndex("arretNom");
-		final int latitudeIndex = cursor.getColumnIndex("arretLatitude");
-		final int longitudeIndex = cursor.getColumnIndex("arretLongitude");
-		final int directionIndex = cursor.getColumnIndex("favoriDirection");
-		final int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		final int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-		final int nomLongIndex = cursor.getColumnIndex("nomLong");
+		int arretIdIndex = cursor.getColumnIndex("arretId");
+		int arretNomIndex = cursor.getColumnIndex("arretNom");
+		int latitudeIndex = cursor.getColumnIndex("arretLatitude");
+		int longitudeIndex = cursor.getColumnIndex("arretLongitude");
+		int directionIndex = cursor.getColumnIndex("favoriDirection");
+		int ligneIdIndex = cursor.getColumnIndex("ligneId");
+		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+		int nomLongIndex = cursor.getColumnIndex("nomLong");
 		while (cursor.moveToNext()) {
 			Arret arret = new Arret();
 			arret.id = cursor.getString(arretIdIndex);
@@ -279,11 +279,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	}
 
 	@Override
-	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			final Arret arret = (Arret) getListAdapter().getItem(info.position);
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			Arret arret = (Arret) getListAdapter().getItem(info.position);
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.arretId = arret.id;
 			arretFavori.ligneId = arret.favori.ligneId;
@@ -295,9 +295,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	}
 
 	@Override
-	public boolean onContextItemSelected(final MenuItem item) {
-		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		final Arret arret;
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		Arret arret;
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
@@ -311,14 +311,13 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				return true;
 			case R.id.supprimerFavori:
 				arret = (Arret) getListAdapter().getItem(info.position);
-				final ArretFavori arretFavori = new ArretFavori();
+				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.arretId = arret.id;
 				arretFavori.ligneId = arret.favori.ligneId;
 				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {
-					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
 				}
 				return true;
 			default:
@@ -337,7 +336,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			boolean erreur;
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
 					UpdateDataBase.chargeDetailLigne(myLigne);
 				} catch (Exception exception) {
@@ -348,13 +347,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			}
 
 			@Override
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast.makeText(ListArretByPosition.this,
-							getString(R.string.erreur_chargementStar),
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(ListArretByPosition.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
 					finish();
 				}
 			}

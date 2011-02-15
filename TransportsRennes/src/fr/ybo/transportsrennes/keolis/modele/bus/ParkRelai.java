@@ -57,7 +57,7 @@ public class ParkRelai extends ObjetWithDistance implements Serializable {
 	 * @return the latitude
 	 */
 	@Override
-	public final double getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
@@ -65,7 +65,7 @@ public class ParkRelai extends ObjetWithDistance implements Serializable {
 	 * @return the longitude
 	 */
 	@Override
-	public final double getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 }

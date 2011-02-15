@@ -61,27 +61,26 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private String currentDirection;
 
-	void onDirectionClick() {
-		final StringBuilder requete = new StringBuilder();
+	private void onDirectionClick() {
+		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Direction.id as directionId, Direction.direction as direction ");
 		requete.append("FROM Direction, ArretRoute ");
 		requete.append("WHERE Direction.id = ArretRoute.directionId");
 		requete.append(" AND ArretRoute.ligneId = :ligneId ");
 		requete.append("GROUP BY Direction.id, Direction.direction");
-		final Cursor cursor =
-				TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myLigne.id));
-		final int directionIndex = cursor.getColumnIndex("direction");
+		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myLigne.id));
+		int directionIndex = cursor.getColumnIndex("direction");
 		final List<String> items = new ArrayList<String>(5);
 		while (cursor.moveToNext()) {
 			items.add(cursor.getString(directionIndex));
 		}
 		cursor.close();
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseDirection));
 		final String toutes = getString(fr.ybo.transportsrennes.R.string.Toutes);
 		items.add(toutes);
 		Collections.sort(items, new Comparator<String>() {
-			public int compare(final String o1, final String o2) {
+			public int compare(String o1, String o2) {
 				if (toutes.equals(o1)) {
 					return -1;
 				}
@@ -92,7 +91,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 			}
 		});
 		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialogInterface, final int item) {
+			public void onClick(DialogInterface dialogInterface, int item) {
 				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
 				construireListe();
 				((TextView) findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante)).setText(items.get(item));
@@ -106,9 +105,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private void construireCursor() {
 		closeCurrentCursor();
-		final List<String> selectionArgs = new ArrayList<String>(2);
+		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
-		final StringBuilder requete = new StringBuilder();
+		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible ");
 		requete.append("from ArretRoute, Arret, Direction ");
@@ -135,12 +134,12 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private void construireListe() {
 		construireCursor();
 		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Adapter arretAdapter = (ArretAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				final Intent intent = new Intent(ListArret.this, DetailArret.class);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				Intent intent = new Intent(ListArret.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
 				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
@@ -153,18 +152,18 @@ public class ListArret extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(fr.ybo.transportsrennes.R.layout.listearrets);
 		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
+			public void onClick(View view) {
 				onDirectionClick();
 			}
 		});
 		findViewById(fr.ybo.transportsrennes.R.id.googlemap).setOnClickListener(new View.OnClickListener() {
-			public void onClick(final View view) {
-				final Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
+			public void onClick(View view) {
+				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
 				intent.putExtra("ligne", myLigne);
 				if (currentDirection != null) {
 					intent.putExtra("direction", currentDirection);
@@ -189,14 +188,14 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private boolean orderDirection = true;
 
 	@Override
-	public boolean onCreateOptionsMenu(final Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, fr.ybo.transportsrennes.R.string.menu_orderByName);
 		return true;
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(final Menu menu) {
+	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(MENU_ORDER)
 				.setTitle(orderDirection ? fr.ybo.transportsrennes.R.string.menu_orderByName : fr.ybo.transportsrennes.R.string.menu_orderBySequence);
@@ -205,10 +204,10 @@ public class ListArret extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 
-		if (MENU_ORDER == item.getItemId()) {
+		if (item.getItemId() == MENU_ORDER) {
 			orderDirection = !orderDirection;
 			construireListe();
 			getListView().invalidate();

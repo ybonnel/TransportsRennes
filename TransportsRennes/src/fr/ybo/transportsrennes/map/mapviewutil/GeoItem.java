@@ -37,27 +37,33 @@ import com.google.android.maps.GeoPoint;
 
 /**
  * Utility Class to handle GeoItem for ClusterMarker
+ *
  * @author Huan Erdao
  */
 public class GeoItem implements Parcelable {
-	
-	/** id of item. */
-	private final long id_;
-	/** item location in GeoPoint. */
-	private final GeoPoint location_;
-	/** selection state flag. true if selected.*/
-	private boolean isSelected_;
-	
+
 	/**
-	 * @param id item id.
-	 * @param latitudeE6 latitude of the item in microdegrees (degrees * 1E6).
+	 * id of item.
+	 */
+	private final long id;
+	/**
+	 * item location in GeoPoint.
+	 */
+	private final GeoPoint location;
+	/**
+	 * selection state flag. true if selected.
+	 */
+	private boolean isSelected;
+
+	/**
+	 * @param id          item id.
+	 * @param latitudeE6  latitude of the item in microdegrees (degrees * 1E6).
 	 * @param longitudeE6 longitude of the item in microdegrees (degrees * 1E6).
 	 */
-	protected GeoItem(final long id, final int latitudeE6, final int longitudeE6) {
-		super();
-		id_ = id;
-		location_ = new GeoPoint(latitudeE6, longitudeE6);
-		isSelected_ = false;
+	protected GeoItem(long id, int latitudeE6, int longitudeE6) {
+		this.id = id;
+		location = new GeoPoint(latitudeE6, longitudeE6);
+		isSelected = false;
 	}
 
 	/* describeContents */
@@ -68,40 +74,44 @@ public class GeoItem implements Parcelable {
 
 	/**
 	 * getLocation
+	 *
 	 * @return GeoPoint of the item.
 	 */
 	public GeoPoint getLocation() {
-		return location_;
+		return location;
 	}
 
 	/**
-	 * isSelected
+	 * selected
+	 *
 	 * @return true if the item is in selected state.
 	 */
 	public boolean isSelected() {
-		return isSelected_;
+		return isSelected;
 	}
 
 	/**
 	 * setSelect
+	 *
 	 * @param flg flag to be set.
 	 */
 	@SuppressWarnings({"SameParameterValue"})
-	public void setSelect(final boolean flg) {
-		isSelected_ = flg;
+	public void setSelect(boolean flg) {
+		isSelected = flg;
 	}
 
 	/**
 	 * writeToParcel
+	 *
 	 * @param parcel Parcel to be written.
-	 * @param flags flag.
+	 * @param flags  flag.
 	 */
-	public void writeToParcel(final Parcel parcel, final int flags) {
-		parcel.writeLong(id_);
-		parcel.writeInt(location_.getLatitudeE6());
-		parcel.writeInt(location_.getLongitudeE6());
-		final int flg = isSelected_ ? 1 : 0;
+	public void writeToParcel(Parcel parcel, int flags) {
+		parcel.writeLong(id);
+		parcel.writeInt(location.getLatitudeE6());
+		parcel.writeInt(location.getLongitudeE6());
+		int flg = isSelected ? 1 : 0;
 		parcel.writeInt(flg);
-   }
+	}
 
 }

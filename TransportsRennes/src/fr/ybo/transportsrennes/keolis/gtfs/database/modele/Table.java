@@ -34,10 +34,8 @@ public class Table {
 	private String[] columns;
 	private final Constructor<?> constructor;
 
-	Table(final Class<?> clazz) throws DataBaseException {
-		super();
-		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Table table =
-				clazz.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Table.class);
+	Table(Class<?> clazz) throws DataBaseException {
+		fr.ybo.transportsrennes.keolis.gtfs.annotation.Table table = clazz.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Table.class);
 		if (table == null) {
 			throw new DataBaseException("La classe " + clazz.getSimpleName() + " ne contient pas l'annotation @Table");
 		}
@@ -45,23 +43,22 @@ public class Table {
 		if ("".equals(name)) {
 			name = clazz.getSimpleName();
 		}
-		for (final Field field : clazz.getDeclaredFields()) {
+		for (Field field : clazz.getDeclaredFields()) {
 			if (field.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.class) != null) {
 				colonnes.add(new Colonne(field, name));
 			}
 		}
 		try {
 			constructor = clazz.getConstructor((Class<?>[]) null);
-		} catch (final SecurityException e) {
+		} catch (SecurityException e) {
 			throw new DataBaseException(e);
-		} catch (final NoSuchMethodException e) {
+		} catch (NoSuchMethodException e) {
 			throw new DataBaseException(e);
 		}
 	}
 
-	public Table(final Table table) {
-		super();
-		for (final Colonne colonne : table.colonnes) {
+	public Table(Table table) {
+		for (Colonne colonne : table.colonnes) {
 			colonnes.add(new Colonne(colonne));
 		}
 		name = table.name;
@@ -70,24 +67,24 @@ public class Table {
 		constructor = table.constructor;
 	}
 
-	public void addSuffixeToTableName(final String suffixe) {
-		name = name + "_" + suffixe;
-		for (final Colonne colonne : colonnes) {
+	public void addSuffixeToTableName(String suffixe) {
+		name = name + '_' + suffixe;
+		for (Colonne colonne : colonnes) {
 			colonne.setTableName(name);
 		}
 	}
 
-	public void createTable(final SQLiteDatabase db) {
-		final StringBuilder requete = new StringBuilder();
+	public void createTable(SQLiteDatabase db) {
+		StringBuilder requete = new StringBuilder();
 		requete.append("CREATE TABLE ");
 		requete.append(name);
 		requete.append(" (");
-		final Collection<String> indexes = new ArrayList<String>(2);
-		final StringBuilder primaryKeys = new StringBuilder();
+		Collection<String> indexes = new ArrayList<String>(2);
+		StringBuilder primaryKeys = new StringBuilder();
 		boolean first = true;
-		for (final Colonne colonne : colonnes) {
+		for (Colonne colonne : colonnes) {
 			if (!first) {
-				requete.append(",");
+				requete.append(',');
 			}
 			requete.append(colonne.getSqlDefinition());
 			if (colonne.isPrimaryKey()) {
@@ -109,31 +106,31 @@ public class Table {
 		}
 		requete.append(");");
 		db.execSQL(requete.toString());
-		for (final String requeteIndex : indexes) {
+		for (String requeteIndex : indexes) {
 			db.execSQL(requeteIndex);
 		}
 	}
 
-	void delete(final SQLiteDatabase db) {
+	void delete(SQLiteDatabase db) {
 		db.delete(name, null, null);
 	}
 
-	<Entite> void delete(final SQLiteDatabase db, final Entite entite) throws DataBaseException {
-		final List<String> where = generePrimaryKeyWhere(entite);
+	<Entite> void delete(SQLiteDatabase db, Entite entite) throws DataBaseException {
+		List<String> where = generePrimaryKeyWhere(entite);
 		db.delete(name, getPrimaryKeyWhere(), where.toArray(new String[where.size()]));
 	}
 
-	public void dropTable(final SQLiteDatabase db) {
-		final StringBuilder requete = new StringBuilder();
+	public void dropTable(SQLiteDatabase db) {
+		StringBuilder requete = new StringBuilder();
 		requete.append("DROP TABLE IF EXISTS ");
 		requete.append(name);
 		requete.append(';');
 		db.execSQL(requete.toString());
 	}
 
-	private <Entite> List<String> generePrimaryKeyWhere(final Entite entite) throws DataBaseException {
-		final List<String> whereArgs = new ArrayList<String>(3);
-		for (final Colonne colonne : colonnes) {
+	private <Entite> List<String> generePrimaryKeyWhere(Entite entite) throws DataBaseException {
+		List<String> whereArgs = new ArrayList<String>(3);
+		for (Colonne colonne : colonnes) {
 			if (colonne.isPrimaryKey()) {
 				whereArgs.add(colonne.getValueToString(entite));
 			}
@@ -155,25 +152,25 @@ public class Table {
 		return name;
 	}
 
-	Object getNewEntite() throws DataBaseException {
+	private Object getNewEntite() throws DataBaseException {
 		try {
 			return constructor.newInstance((Object[]) null);
-		} catch (final IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new DataBaseException(e);
-		} catch (final InstantiationException e) {
+		} catch (InstantiationException e) {
 			throw new DataBaseException(e);
-		} catch (final IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			throw new DataBaseException(e);
-		} catch (final InvocationTargetException e) {
+		} catch (InvocationTargetException e) {
 			throw new DataBaseException(e);
 		}
 	}
 
 	private String getPrimaryKeyWhere() {
 		if (primaryKeyWhere == null) {
-			final StringBuilder where = new StringBuilder();
+			StringBuilder where = new StringBuilder();
 			boolean first = true;
-			for (final Colonne colonne : colonnes) {
+			for (Colonne colonne : colonnes) {
 				if (colonne.isPrimaryKey()) {
 					if (!first) {
 						where.append(" AND ");
@@ -189,21 +186,21 @@ public class Table {
 		return primaryKeyWhere;
 	}
 
-	public <Entite> void insert(final SQLiteDatabase db, final Entite entite) throws DataBaseException {
-		final ContentValues values = new ContentValues();
-		for (final Colonne colonne : colonnes) {
+	public <Entite> void insert(SQLiteDatabase db, Entite entite) throws DataBaseException {
+		ContentValues values = new ContentValues();
+		for (Colonne colonne : colonnes) {
 			colonne.ajoutValeur(values, entite);
 		}
 		db.insertOrThrow(name, null, values);
 	}
 
 	@SuppressWarnings("unchecked")
-	<Entite> List<Entite> select(final SQLiteDatabase db, final Entite entite, final String selectionPlus, final Collection<String> selectArgsPlus, final String orderBy)
+	<Entite> List<Entite> select(SQLiteDatabase db, Entite entite, String selectionPlus, Collection<String> selectArgsPlus, String orderBy)
 			throws DataBaseException {
-		final List<Entite> entites = new ArrayList<Entite>(50);
-		final StringBuilder whereClause = new StringBuilder();
-		final List<String> selectionArgsList = new ArrayList<String>(selectArgsPlus == null ? 0 : selectArgsPlus.size());
-		for (final Colonne colonne : colonnes) {
+		List<Entite> entites = new ArrayList<Entite>(50);
+		StringBuilder whereClause = new StringBuilder();
+		List<String> selectionArgsList = new ArrayList<String>(selectArgsPlus == null ? 0 : selectArgsPlus.size());
+		for (Colonne colonne : colonnes) {
 			colonne.appendWhereIfNotNull(whereClause, entite, selectionArgsList);
 		}
 		if (selectionPlus != null) {
@@ -211,15 +208,15 @@ public class Table {
 			whereClause.append(selectionPlus);
 			whereClause.append(')');
 		}
-		final String selection = whereClause.length() > 0 ? whereClause.toString() : null;
+		String selection = whereClause.length() > 0 ? whereClause.toString() : null;
 		if (selectArgsPlus != null) {
 			selectionArgsList.addAll(selectArgsPlus);
 		}
-		final String[] selectionArgs = selection == null ? null : selectionArgsList.toArray(new String[selectionArgsList.size()]);
-		final Cursor cursor = db.query(name, getColumns(), selection, selectionArgs, null, null, orderBy);
+		String[] selectionArgs = selection == null ? null : selectionArgsList.toArray(new String[selectionArgsList.size()]);
+		Cursor cursor = db.query(name, getColumns(), selection, selectionArgs, null, null, orderBy);
 		while (cursor.moveToNext()) {
 			Entite newEntite = (Entite) getNewEntite();
-			for (final Colonne colonne : colonnes) {
+			for (Colonne colonne : colonnes) {
 				colonne.remplirEntite(cursor, newEntite);
 			}
 			entites.add(newEntite);

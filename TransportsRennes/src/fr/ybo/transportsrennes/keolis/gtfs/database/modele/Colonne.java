@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.keolis.gtfs.database.modele;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Indexed;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
@@ -28,7 +27,7 @@ import java.util.Date;
 
 class Colonne {
 
-	private final TypeColonne type;
+	private final fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne type;
 	private final Field field;
 	private final String name;
 	private final boolean primaryKey;
@@ -37,8 +36,7 @@ class Colonne {
 	private final Indexed indexed;
 	private String tableName;
 
-	Colonne(final Colonne colonne) {
-		super();
+	Colonne(Colonne colonne) {
 		type = colonne.type;
 		field = colonne.field;
 		name = colonne.name;
@@ -49,11 +47,10 @@ class Colonne {
 		tableName = colonne.tableName;
 	}
 
-	Colonne(final Field field, final String tableName) throws DataBaseException {
-		super();
+	Colonne(Field field, String tableName) throws DataBaseException {
 		this.field = field;
 		this.tableName = tableName;
-		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne colonne =
+		fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne colonne =
 				field.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.class);
 		type = colonne.type();
 		primaryKey = field.getAnnotation(PrimaryKey.class) != null;
@@ -61,8 +58,8 @@ class Colonne {
 		indexed = field.getAnnotation(Indexed.class);
 	}
 
-	<Entite> void ajoutValeur(final ContentValues values, final Entite entite) throws DataBaseException {
-		final Object valeur = getValue(entite);
+	<Entite> void ajoutValeur(ContentValues values, Entite entite) throws DataBaseException {
+		Object valeur = getValue(entite);
 		if (valeur != null) {
 			switch (type) {
 				case BOOLEAN:
@@ -84,9 +81,8 @@ class Colonne {
 		}
 	}
 
-	<Entite> void appendWhereIfNotNull(final StringBuilder queryBuilder, final Entite entite, final Collection<String> selectionArgs)
-			throws DataBaseException {
-		final String valeur = getValueToString(entite);
+	<Entite> void appendWhereIfNotNull(StringBuilder queryBuilder, Entite entite, Collection<String> selectionArgs) throws DataBaseException {
+		String valeur = getValueToString(entite);
 		if (valeur != null) {
 			if (queryBuilder.length() > 0) {
 				queryBuilder.append(" AND ");
@@ -102,13 +98,12 @@ class Colonne {
 		if (indexed == null) {
 			return null;
 		}
-		final StringBuilder requete = new StringBuilder("CREATE ");
+		StringBuilder requete = new StringBuilder("CREATE ");
 		if (indexed.unique()) {
 			requete.append("UNIQUE ");
 		}
 		requete.append("INDEX ");
-		final String nameIndex;
-		nameIndex = "".equals(indexed.name()) ? new StringBuilder(tableName).append('_').append(name).toString() : indexed.name();
+		String nameIndex = "".equals(indexed.name()) ? new StringBuilder(tableName).append('_').append(name).toString() : indexed.name();
 		requete.append(nameIndex);
 		requete.append(" ON ");
 		requete.append(tableName);
@@ -123,32 +118,32 @@ class Colonne {
 	}
 
 	String getSqlDefinition() {
-		final StringBuilder requete = new StringBuilder(name);
-		requete.append(" ");
+		StringBuilder requete = new StringBuilder(name);
+		requete.append(' ');
 		requete.append(type.getSqlType());
 		return requete.toString();
 	}
 
-	private Object getValue(final Object object) throws DataBaseException {
+	private Object getValue(Object object) throws DataBaseException {
 		try {
-			final boolean isAccessible = field.isAccessible();
+			boolean isAccessible = field.isAccessible();
 			field.setAccessible(true);
-			final Object valeur = field.get(object);
+			Object valeur = field.get(object);
 			field.setAccessible(isAccessible);
 			return valeur;
-		} catch (final IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new DataBaseException(e);
-		} catch (final IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			throw new DataBaseException(e);
 		}
 	}
 
-	<Entite> String getValueToString(final Entite entite) throws DataBaseException {
-		final Object valeur = getValue(entite);
+	<Entite> String getValueToString(Entite entite) throws DataBaseException {
+		Object valeur = getValue(entite);
 		if (valeur == null) {
 			return null;
 		}
-		final String retour;
+		String retour;
 		switch (type) {
 			case BOOLEAN:
 				retour = (Boolean) valeur ? "1" : "0";
@@ -164,7 +159,7 @@ class Colonne {
 				retour = (String) valeur;
 				break;
 			default:
-				throw new DataBaseException("Type de colonne inconnu [" + type + "]");
+				throw new DataBaseException("Type de colonne inconnu [" + type + ']');
 		}
 		return retour;
 	}
@@ -177,10 +172,10 @@ class Colonne {
 		return primaryKey;
 	}
 
-	<Entite> void remplirEntite(final Cursor cursor, final Entite entite) throws DataBaseException {
-		final int index = cursor.getColumnIndex(name);
+	<Entite> void remplirEntite(Cursor cursor, Entite entite) throws DataBaseException {
+		int index = cursor.getColumnIndex(name);
 		if (!cursor.isNull(index)) {
-			final Object value;
+			Object value;
 			switch (type) {
 				case INTEGER:
 					value = cursor.getInt(index);
@@ -198,25 +193,25 @@ class Colonne {
 					value = new Date(cursor.getLong(index));
 					break;
 				default:
-					throw new DataBaseException("Type de colonne inconnu [" + type + "]");
+					throw new DataBaseException("Type de colonne inconnu [" + type + ']');
 			}
 			setValue(entite, value);
 		}
 	}
 
-	void setTableName(final String tableName) {
+	void setTableName(String tableName) {
 		this.tableName = tableName;
 	}
 
-	private <Entite> void setValue(final Entite entite, final Object value) throws DataBaseException {
+	private <Entite> void setValue(Entite entite, Object value) throws DataBaseException {
 		try {
-			final boolean isAccessible = field.isAccessible();
+			boolean isAccessible = field.isAccessible();
 			field.setAccessible(true);
 			field.set(entite, value);
 			field.setAccessible(isAccessible);
-		} catch (final IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new DataBaseException(e);
-		} catch (final IllegalAccessException e) {
+		} catch (IllegalAccessException e) {
 			throw new DataBaseException(e);
 		}
 	}

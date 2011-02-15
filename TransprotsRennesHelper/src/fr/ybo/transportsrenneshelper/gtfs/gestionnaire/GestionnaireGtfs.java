@@ -21,8 +21,8 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import java.util.Map;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class GestionnaireGtfs {
 
-	private static final List<Class<?>> GTFS_CLASSES = new ArrayList<Class<?>>();
+	private static final List<Class<?>> GTFS_CLASSES = new ArrayList<Class<?>>(7);
 
 	static {
 		GTFS_CLASSES.add(Calendar.class);
@@ -54,10 +54,9 @@ public class GestionnaireGtfs {
 	private MoteurCsv moteurCsv;
 
 	private GestionnaireGtfs() {
-		super();
 	}
 
-	public static synchronized void initInstance(final File repertoireGtfs) {
+	public static synchronized void initInstance(File repertoireGtfs) {
 		gestionnaire = new GestionnaireGtfs();
 		gestionnaire.repertoire = repertoireGtfs;
 		gestionnaire.moteurCsv = new MoteurCsv(GTFS_CLASSES);
@@ -77,9 +76,9 @@ public class GestionnaireGtfs {
 
 	public Map<String, StopExtension> getStopExtensions() {
 		if (stopExtensions == null) {
-			stopExtensions = new HashMap<String, StopExtension>();
+			stopExtensions = new HashMap<String, StopExtension>(500);
 			try {
-				for (final StopExtension stopExtension : moteurCsv.parseFile(new File(repertoire, "stops_extensions.txt"), StopExtension.class)) {
+				for (StopExtension stopExtension : moteurCsv.parseFile(new File(repertoire, "stops_extensions.txt"), StopExtension.class)) {
 					stopExtensions.put(stopExtension.stopId, stopExtension);
 				}
 			} catch (IOException e) {
@@ -91,9 +90,9 @@ public class GestionnaireGtfs {
 
 	public Map<String, RouteExtension> getRouteExtensions() {
 		if (routeExtensions == null) {
-			routeExtensions = new HashMap<String, RouteExtension>();
+			routeExtensions = new HashMap<String, RouteExtension>(67);
 			try {
-				for (final RouteExtension routeExtension : moteurCsv.parseFile(new File(repertoire, "routes_extensions.txt"), RouteExtension.class)) {
+				for (RouteExtension routeExtension : moteurCsv.parseFile(new File(repertoire, "routes_extensions.txt"), RouteExtension.class)) {
 					routeExtensions.put(routeExtension.routeId, routeExtension);
 				}
 			} catch (IOException e) {
@@ -105,13 +104,13 @@ public class GestionnaireGtfs {
 
 	public Map<String, Calendar> getMapCalendars() {
 		if (calendars == null) {
-			calendars = new HashMap<String, Calendar>();
+			calendars = new HashMap<String, Calendar>(10);
 			try {
-				for (final Calendar calendar : moteurCsv.parseFile(new File(repertoire, "calendar.txt"), Calendar.class)) {
+				for (Calendar calendar : moteurCsv.parseFile(new File(repertoire, "calendar.txt"), Calendar.class)) {
 					if (calendars.containsKey(calendar.id)) {
 						System.err.println("Calendar présent plusieurs fois");
-						System.err.println("Premier : " + calendars.get(calendar.id).toString() );
-						System.err.println("Deuxième : " + calendar.toString() );
+						System.err.println("Premier : " + calendars.get(calendar.id).toString());
+						System.err.println("Deuxième : " + calendar.toString());
 					}
 					calendars.put(calendar.id, calendar);
 				}
@@ -124,13 +123,13 @@ public class GestionnaireGtfs {
 
 	public Map<String, Route> getMapRoutes() {
 		if (routes == null) {
-			routes = new HashMap<String, Route>();
+			routes = new HashMap<String, Route>(67);
 			try {
-				for (final Route route : moteurCsv.parseFile(new File(repertoire, "routes.txt"), Route.class)) {
+				for (Route route : moteurCsv.parseFile(new File(repertoire, "routes.txt"), Route.class)) {
 					if (routes.containsKey(route.id)) {
 						System.err.println("Route présente plusieurs fois");
-						System.err.println("Première : " + routes.get(route.id).toString() );
-						System.err.println("Deuxième : " + route.toString() );
+						System.err.println("Première : " + routes.get(route.id).toString());
+						System.err.println("Deuxième : " + route.toString());
 					}
 					routes.put(route.id, route);
 				}
@@ -143,13 +142,13 @@ public class GestionnaireGtfs {
 
 	public Map<String, Stop> getMapStops() {
 		if (stops == null) {
-			stops = new HashMap<String, Stop>();
+			stops = new HashMap<String, Stop>(500);
 			try {
-				for (final Stop stop : moteurCsv.parseFile(new File(repertoire, "stops.txt"), Stop.class)) {
+				for (Stop stop : moteurCsv.parseFile(new File(repertoire, "stops.txt"), Stop.class)) {
 					if (stops.containsKey(stop.id)) {
 						System.err.println("Stop présent plusieurs fois");
-						System.err.println("Premier : " + stops.get(stop.id).toString() );
-						System.err.println("Deuxième : " + stop.toString() );
+						System.err.println("Premier : " + stops.get(stop.id).toString());
+						System.err.println("Deuxième : " + stop.toString());
 					}
 					stops.put(stop.id, stop);
 				}
@@ -162,13 +161,13 @@ public class GestionnaireGtfs {
 
 	public Map<String, StopTime> getMapStopTimes() {
 		if (stopTimes == null) {
-			stopTimes = new HashMap<String, StopTime>();
+			stopTimes = new HashMap<String, StopTime>(5000);
 			try {
-				for (final StopTime stopTime : moteurCsv.parseFile(new File(repertoire, "stop_times.txt"), StopTime.class)) {
+				for (StopTime stopTime : moteurCsv.parseFile(new File(repertoire, "stop_times.txt"), StopTime.class)) {
 					if (stopTimes.containsKey(stopTime.getKey())) {
 						System.err.println("StopTime présent plusieurs fois");
-						System.err.println("Premier : " + stopTimes.get(stopTime.getKey()).toString() );
-						System.err.println("Deuxième : " + stopTime.toString() );
+						System.err.println("Premier : " + stopTimes.get(stopTime.getKey()).toString());
+						System.err.println("Deuxième : " + stopTime.toString());
 					}
 					stopTimes.put(stopTime.getKey(), stopTime);
 				}
@@ -181,13 +180,13 @@ public class GestionnaireGtfs {
 
 	public Map<String, Trip> getMapTrips() {
 		if (trips == null) {
-			trips = new HashMap<String, Trip>();
+			trips = new HashMap<String, Trip>(500);
 			try {
-				for (final Trip trip : moteurCsv.parseFile(new File(repertoire, "trips.txt"), Trip.class)) {
+				for (Trip trip : moteurCsv.parseFile(new File(repertoire, "trips.txt"), Trip.class)) {
 					if (trips.containsKey(trip.id)) {
 						System.err.println("Trip présent plusieurs fois");
-						System.err.println("Premier : " + trips.get(trip.id).toString() );
-						System.err.println("Deuxième : " + trip.toString() );
+						System.err.println("Premier : " + trips.get(trip.id).toString());
+						System.err.println("Deuxième : " + trip.toString());
 					}
 					trips.put(trip.id, trip);
 				}
@@ -200,12 +199,12 @@ public class GestionnaireGtfs {
 
 	private Map<String, List<StopTime>> mapStopTimesByTripId;
 
-	public List<StopTime> getStopTimesForOnTrip(final String tripId) {
+	public List<StopTime> getStopTimesForOnTrip(String tripId) {
 		if (mapStopTimesByTripId == null) {
-			mapStopTimesByTripId = new HashMap<String, List<StopTime>>();
-			for (final StopTime stopTime : getMapStopTimes().values()) {
+			mapStopTimesByTripId = new HashMap<String, List<StopTime>>(500);
+			for (StopTime stopTime : getMapStopTimes().values()) {
 				if (!mapStopTimesByTripId.containsKey(stopTime.tripId)) {
-					mapStopTimesByTripId.put(stopTime.tripId, new ArrayList<StopTime>());
+					mapStopTimesByTripId.put(stopTime.tripId, new ArrayList<StopTime>(100));
 				}
 				mapStopTimesByTripId.get(stopTime.tripId).add(stopTime);
 			}

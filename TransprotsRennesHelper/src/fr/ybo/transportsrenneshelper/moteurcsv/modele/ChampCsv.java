@@ -26,11 +26,11 @@ import java.util.Map;
 public class ChampCsv {
 
 	private final Class<? extends AdapterCsv<?>> adapter;
-	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(10);
+	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> MAP_ADAPTERS =
+			new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(10);
 	private final Field field;
 
-	public ChampCsv(final Class<? extends AdapterCsv<?>> adapter, final Field field) {
-		super();
+	public ChampCsv(Class<? extends AdapterCsv<?>> adapter, Field field) {
 		this.adapter = adapter;
 		this.field = field;
 	}
@@ -45,14 +45,14 @@ public class ChampCsv {
 
 	@SuppressWarnings("unchecked")
 	public AdapterCsv<Object> getNewAdapterCsv() {
-		if (!mapAdapters.containsKey(adapter)) {
+		if (!MAP_ADAPTERS.containsKey(adapter)) {
 			try {
-				final Constructor<? extends AdapterCsv<?>> constructeur = adapter.getConstructor((Class<?>[]) null);
-				mapAdapters.put(adapter, constructeur.newInstance((Object[]) null));
+				Constructor<? extends AdapterCsv<?>> constructeur = adapter.getConstructor((Class<?>[]) null);
+				MAP_ADAPTERS.put(adapter, constructeur.newInstance((Object[]) null));
 			} catch (Exception e) {
 				throw new MoteurCsvException(e);
 			}
 		}
-		return (AdapterCsv<Object>) mapAdapters.get(adapter);
+		return (AdapterCsv<Object>) MAP_ADAPTERS.get(adapter);
 	}
 }

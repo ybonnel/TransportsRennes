@@ -18,11 +18,11 @@ package fr.ybo.transportsrennes.keolis.gtfs.database;
 public class DataBaseException extends RuntimeException {
 
 
-	public DataBaseException(final Exception exception) {
+	public DataBaseException(Exception exception) {
 		super(exception);
 	}
 
-	public DataBaseException(final String msg) {
+	public DataBaseException(String msg) {
 		super(msg);
 	}
 }

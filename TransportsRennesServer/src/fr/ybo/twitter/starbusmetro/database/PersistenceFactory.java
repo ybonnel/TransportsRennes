@@ -21,7 +21,6 @@ public final class PersistenceFactory {
 	private static final PersistenceManagerFactory PMF_INSTANCE = JDOHelper.getPersistenceManagerFactory("transactions-optional");
 
 	private PersistenceFactory() {
-		super();
 	}
 
 	public static PersistenceManagerFactory getPersistenceManagerFactory() {

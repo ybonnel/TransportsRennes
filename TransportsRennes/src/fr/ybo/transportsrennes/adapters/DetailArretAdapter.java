@@ -31,7 +31,7 @@ public class DetailArretAdapter extends CursorAdapter {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(final Context context, final Cursor cursor, final int now) {
+	public DetailArretAdapter(Context context, Cursor cursor, int now) {
 		super(context, cursor);
 		myContext = context;
 		this.now = now;
@@ -47,9 +47,9 @@ public class DetailArretAdapter extends CursorAdapter {
 	private final int prochainDepartCol;
 
 	@Override
-	public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
-		final View view = inflater.inflate(R.layout.detailarretliste, parent, false);
-		final DetailArretAdapter.ViewHolder holder = new DetailArretAdapter.ViewHolder();
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		View view = inflater.inflate(R.layout.detailarretliste, parent, false);
+		DetailArretAdapter.ViewHolder holder = new DetailArretAdapter.ViewHolder();
 		holder.heureProchain = (TextView) view.findViewById(R.id.detailArret_heureProchain);
 		holder.tempsRestant = (TextView) view.findViewById(R.id.detailArret_tempsRestant);
 		view.setTag(holder);
@@ -57,22 +57,23 @@ public class DetailArretAdapter extends CursorAdapter {
 	}
 
 	@Override
-	public void bindView(final View view, final Context context, final Cursor cursor) {
-		final int prochainDepart = cursor.getInt(prochainDepartCol);
+	public void bindView(View view, Context context, Cursor cursor) {
+		int prochainDepart = cursor.getInt(prochainDepartCol);
 		((DetailArretAdapter.ViewHolder) view.getTag()).heureProchain.setText(formatterCalendarHeure(prochainDepart));
 		((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText(formatterCalendar(prochainDepart, now));
 	}
 
-	private CharSequence formatterCalendar(final int prochainDepart, final int now) {
-		final StringBuilder stringBuilder = new StringBuilder();
-		final int tempsEnMinutes = prochainDepart - now;
+	@SuppressWarnings({"TypeMayBeWeakened"})
+	private CharSequence formatterCalendar(int prochainDepart, int now) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
 			stringBuilder.append(myContext.getString(R.string.tropTard));
 		} else {
 			stringBuilder.append(myContext.getString(R.string.dans));
 			stringBuilder.append(' ');
-			final int heures = tempsEnMinutes / 60;
-			final int minutes = tempsEnMinutes - heures * 60;
+			int heures = tempsEnMinutes / 60;
+			int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
@@ -95,15 +96,16 @@ public class DetailArretAdapter extends CursorAdapter {
 		return stringBuilder.toString();
 	}
 
-	private CharSequence formatterCalendarHeure(final int prochainDepart) {
-		final StringBuilder stringBuilder = new StringBuilder();
+	@SuppressWarnings({"TypeMayBeWeakened"})
+	private CharSequence formatterCalendarHeure(int prochainDepart) {
+		StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;
-		final int minutes = prochainDepart - heures * 60;
+		int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
 			heures -= 24;
 		}
-		final String heuresChaine = Integer.toString(heures);
-		final String minutesChaine = Integer.toString(minutes);
+		String heuresChaine = Integer.toString(heures);
+		String minutesChaine = Integer.toString(minutes);
 		if (heuresChaine.length() < 2) {
 			stringBuilder.append('0');
 		}

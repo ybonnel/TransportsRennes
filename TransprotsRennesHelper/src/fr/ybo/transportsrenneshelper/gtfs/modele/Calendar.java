@@ -39,12 +39,10 @@ public class Calendar {
 	public boolean dimanche;
 
 	public Calendar() {
-		super();
 
 	}
 
-	public Calendar(final Calendar calendar) {
-		super();
+	public Calendar(Calendar calendar) {
 		lundi = calendar.lundi;
 		mardi = calendar.mardi;
 		mercredi = calendar.mercredi;
@@ -54,7 +52,7 @@ public class Calendar {
 		dimanche = calendar.dimanche;
 	}
 
-	public void merge(final Calendar calendar) {
+	public void merge(Calendar calendar) {
 		lundi = lundi || calendar.lundi;
 		mardi = mardi || calendar.mardi;
 		mercredi = mercredi || calendar.mercredi;
@@ -65,12 +63,12 @@ public class Calendar {
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 
-		final Calendar calendar = (Calendar) obj;
+		Calendar calendar = (Calendar) obj;
 
 		return dimanche == calendar.dimanche && jeudi == calendar.jeudi && lundi == calendar.lundi && mardi == calendar.mardi &&
 				mercredi == calendar.mercredi && samedi == calendar.samedi && vendredi == calendar.vendredi;

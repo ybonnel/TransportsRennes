@@ -17,7 +17,7 @@ package com.google.code.geocoder.model;
 import java.io.Serializable;
 
 @SuppressWarnings({"UnusedDeclaration"})
-public class AddressDetails implements Serializable {
+class AddressDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String country;
@@ -32,7 +32,7 @@ public class AddressDetails implements Serializable {
 		return country;
 	}
 
-	public void setCountry(final String country) {
+	public void setCountry(String country) {
 		this.country = country;
 	}
 
@@ -40,7 +40,7 @@ public class AddressDetails implements Serializable {
 		return administrativeAreaLevel1;
 	}
 
-	public void setAdministrativeAreaLevel1(final String administrativeAreaLevel1) {
+	public void setAdministrativeAreaLevel1(String administrativeAreaLevel1) {
 		this.administrativeAreaLevel1 = administrativeAreaLevel1;
 	}
 
@@ -48,7 +48,7 @@ public class AddressDetails implements Serializable {
 		return locality;
 	}
 
-	public void setLocality(final String locality) {
+	public void setLocality(String locality) {
 		this.locality = locality;
 	}
 
@@ -56,7 +56,7 @@ public class AddressDetails implements Serializable {
 		return subLocality;
 	}
 
-	public void setSubLocality(final String subLocality) {
+	public void setSubLocality(String subLocality) {
 		this.subLocality = subLocality;
 	}
 
@@ -64,7 +64,7 @@ public class AddressDetails implements Serializable {
 		return route;
 	}
 
-	public void setRoute(final String route) {
+	public void setRoute(String route) {
 		this.route = route;
 	}
 
@@ -72,7 +72,7 @@ public class AddressDetails implements Serializable {
 		return streetAddress;
 	}
 
-	public void setStreetAddress(final String streetAddress) {
+	public void setStreetAddress(String streetAddress) {
 		this.streetAddress = streetAddress;
 	}
 
@@ -80,13 +80,13 @@ public class AddressDetails implements Serializable {
 		return subPremise;
 	}
 
-	public void setSubPremise(final String subPremise) {
+	public void setSubPremise(String subPremise) {
 		this.subPremise = subPremise;
 	}
 
 	@SuppressWarnings({"OverlyComplexBooleanExpression"})
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -94,7 +94,7 @@ public class AddressDetails implements Serializable {
 			return false;
 		}
 
-		final AddressDetails that = (AddressDetails) obj;
+		AddressDetails that = (AddressDetails) obj;
 
 		return !(administrativeAreaLevel1 != null ? !administrativeAreaLevel1.equals(that.administrativeAreaLevel1) :
 				that.administrativeAreaLevel1 != null) && !(country != null ? !country.equals(that.country) : that.country != null) &&
@@ -121,7 +121,7 @@ public class AddressDetails implements Serializable {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("AddressDetails{country='");
 		sb.append(country);
 		sb.append("', administrativeAreaLevel1='");

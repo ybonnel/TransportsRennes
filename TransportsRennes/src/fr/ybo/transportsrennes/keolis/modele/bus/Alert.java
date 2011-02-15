@@ -36,11 +36,9 @@ import java.util.List;
 public class Alert implements Serializable {
 
 	public Alert() {
-		super();
 	}
 
-	public Alert(final Alert alert) {
-		super();
+	public Alert(Alert alert) {
 		title = alert.title;
 		starttime = alert.starttime;
 		endtime = alert.endtime;
@@ -81,20 +79,20 @@ public class Alert implements Serializable {
 	 */
 	public String link;
 
-	public String getDetailFormatte(final Iterable<String> arrets) {
-		final StringBuilder lignes = new StringBuilder();
-		for (final String line : lines) {
+	public String getDetailFormatte(Iterable<String> arrets) {
+		StringBuilder lignes = new StringBuilder();
+		for (String line : lines) {
 			lignes.append(line);
 			lignes.append(", ");
 		}
 		lignes.deleteCharAt(lignes.length() - 1);
 		lignes.deleteCharAt(lignes.length() - 1);
-		final String detailFormatte =
+		String detailFormatte =
 				detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
 						.replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
 		StringBuilder resultat = new StringBuilder();
 		char carOld = '\0';
-		for (final char car : detailFormatte.toCharArray()) {
+		for (char car : detailFormatte.toCharArray()) {
 			//noinspection OverlyComplexBooleanExpression
 			if ((carOld >= '0' && carOld <= '9' || carOld >= 'a' && carOld <= 'z' || carOld == 'é') && car >= 'A' && car <= 'Z') {
 				// Minuscule suivie d'une majuscule, ça doit être un retour à la ligne qui manque.
@@ -105,14 +103,14 @@ public class Alert implements Serializable {
 		}
 
 		String resultatChaine = resultat.toString();
-		for (final String arretToBold : arrets) {
+		for (String arretToBold : arrets) {
 			resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>" + arretToBold + "</b>");
 		}
 
 		// recherche des lignes à mettre en gras.
-		final String[] champs = resultatChaine.split("\n");
+		String[] champs = resultatChaine.split("\n");
 		StringBuilder stringBuilder = new StringBuilder();
-		for (final String champ : champs) {
+		for (String champ : champs) {
 			if (champ.startsWith("Ligne")) {
 				stringBuilder.append("<br/><b>");
 			}
@@ -126,20 +124,22 @@ public class Alert implements Serializable {
 	}
 
 	private static final Collection<Character> CARAC_TO_DELETE = new HashSet<Character>(11);
+
 	static {
-		 CARAC_TO_DELETE.add(' ');
-		 CARAC_TO_DELETE.add('0');
-		 CARAC_TO_DELETE.add('1');
-		 CARAC_TO_DELETE.add('2');
-		 CARAC_TO_DELETE.add('3');
-		 CARAC_TO_DELETE.add('4');
-		 CARAC_TO_DELETE.add('5');
-		 CARAC_TO_DELETE.add('6');
-		 CARAC_TO_DELETE.add('7');
-		 CARAC_TO_DELETE.add('8');
-		 CARAC_TO_DELETE.add('9');
+		CARAC_TO_DELETE.add(' ');
+		CARAC_TO_DELETE.add('0');
+		CARAC_TO_DELETE.add('1');
+		CARAC_TO_DELETE.add('2');
+		CARAC_TO_DELETE.add('3');
+		CARAC_TO_DELETE.add('4');
+		CARAC_TO_DELETE.add('5');
+		CARAC_TO_DELETE.add('6');
+		CARAC_TO_DELETE.add('7');
+		CARAC_TO_DELETE.add('8');
+		CARAC_TO_DELETE.add('9');
 	}
 
+	@SuppressWarnings({"TypeMayBeWeakened"})
 	public CharSequence getTitleFormate() {
 		String titleFormate = title;
 		while (CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {

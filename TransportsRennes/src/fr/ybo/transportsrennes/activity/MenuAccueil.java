@@ -30,17 +30,16 @@ public class MenuAccueil {
 	private static final int MENU_ID = 99;
 
 	private MenuAccueil() {
-		super();
 	}
 
-	private static void addMenu(final Menu menu) {
+	private static void addMenu(Menu menu) {
 		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_accueil).setIcon(R.drawable.ic_menu_home);
 	}
 
 	@SuppressWarnings({"BooleanMethodNameMustStartWithQuestion"})
-	private static boolean onOptionsItemSelected(final Context context, final MenuItem item) {
-		if (MENU_ID == item.getItemId()) {
-			final Intent intent = new Intent(context, TransportsRennes.class);
+	private static boolean onOptionsItemSelected(Context context, MenuItem item) {
+		if (item.getItemId() == MENU_ID) {
+			Intent intent = new Intent(context, TransportsRennes.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			context.startActivity(intent);
 			return true;
@@ -51,20 +50,20 @@ public class MenuAccueil {
 	public abstract static class ListActivity extends android.app.ListActivity {
 
 		@Override
-		protected void onCreate(final Bundle savedInstanceState) {
+		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView("/" + getClass().getSimpleName());
+			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(final Menu menu) {
+		public boolean onCreateOptionsMenu(Menu menu) {
 			super.onCreateOptionsMenu(menu);
 			addMenu(menu);
 			return true;
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(final MenuItem item) {
+		public boolean onOptionsItemSelected(MenuItem item) {
 			super.onOptionsItemSelected(item);
 			return MenuAccueil.onOptionsItemSelected(this, item);
 		}
@@ -73,20 +72,20 @@ public class MenuAccueil {
 	public abstract static class Activity extends android.app.Activity {
 
 		@Override
-		protected void onCreate(final Bundle savedInstanceState) {
+		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView("/" + getClass().getSimpleName());
+			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(final Menu menu) {
+		public boolean onCreateOptionsMenu(Menu menu) {
 			super.onCreateOptionsMenu(menu);
 			addMenu(menu);
 			return true;
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(final MenuItem item) {
+		public boolean onOptionsItemSelected(MenuItem item) {
 			super.onOptionsItemSelected(item);
 			return MenuAccueil.onOptionsItemSelected(this, item);
 		}

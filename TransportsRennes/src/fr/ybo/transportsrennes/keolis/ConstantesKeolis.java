@@ -71,6 +71,5 @@ public final class ConstantesKeolis {
 	}
 
 	private ConstantesKeolis() {
-		super();
 	}
 }

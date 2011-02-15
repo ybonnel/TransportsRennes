@@ -20,7 +20,7 @@ import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 
 @SuppressWarnings({"WeakerAccess", "UnusedDeclaration"})
-@FichierCsv( "correspondances.txt")
+@FichierCsv("correspondances.txt")
 public class Correspondance {
 
 	@BaliseCsv("arretId")
@@ -30,14 +30,12 @@ public class Correspondance {
 	@BaliseCsv(value = "distance", adapter = AdapterInteger.class)
 	public Integer distance;
 
-	public Correspondance(final String arretId, final String correspondanceId, final Integer distance) {
-		super();
+	public Correspondance(String arretId, String correspondanceId, Integer distance) {
 		this.arretId = arretId;
 		this.correspondanceId = correspondanceId;
 		this.distance = distance;
 	}
 
 	public Correspondance() {
-		super();
 	}
 }

@@ -43,7 +43,7 @@ class GetTwitters {
 	@SuppressWarnings({"StaticNonFinalField"})
 	private static TwitterFactory twitterFactory;
 
-	static synchronized TwitterFactory getFactory() {
+	private static synchronized TwitterFactory getFactory() {
 		if (twitterFactory == null) {
 			twitterFactory = new TwitterFactory();
 		}
@@ -52,16 +52,16 @@ class GetTwitters {
 
 	@SuppressWarnings("unchecked")
 	public Iterable<MessageTwitter> getMessages() {
-		final PersistenceManager persistenceManager = PersistenceFactory.getPersistenceManagerFactory().getPersistenceManager();
-		final List<MessageTwitter> messages = new ArrayList<MessageTwitter>(20);
+		PersistenceManager persistenceManager = PersistenceFactory.getPersistenceManagerFactory().getPersistenceManager();
+		List<MessageTwitter> messages = new ArrayList<MessageTwitter>(20);
 		try {
 			if (LastUpdate.getInstance().isUpdate()) {
 				LOGGER.fine("Les messages twitter sont à jour, envoie du contenu de la base de donnée");
 				messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
 			} else {
 				LOGGER.fine("Les messages twitter ne sont pas à jour, récupération du contenu de twiter");
-				final Twitter twitter = getFactory().getInstance();
-				final ResponseList<Status> listeStatus;
+				Twitter twitter = getFactory().getInstance();
+				ResponseList<Status> listeStatus;
 				try {
 					listeStatus = twitter.getUserTimeline("@starbusmetro");
 				} catch (TwitterException e) {
@@ -69,20 +69,20 @@ class GetTwitters {
 					messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
 					return messages;
 				}
-				for (final Status status : listeStatus) {
+				for (Status status : listeStatus) {
 					messages.add(new MessageTwitter(status.getCreatedAt(), status.getText()));
 				}
 				Collections.sort(messages, new Comparator<MessageTwitter>() {
-					public int compare(final MessageTwitter o1, final MessageTwitter o2) {
+					public int compare(MessageTwitter o1, MessageTwitter o2) {
 						return o2.getDateCreation().compareTo(o1.getDateCreation());
 					}
 				});
-				final Collection<MessageTwitter> messagesBdd = (Collection<MessageTwitter>) persistenceManager.newQuery(QUERY).execute();
+				Collection<MessageTwitter> messagesBdd = (Collection<MessageTwitter>) persistenceManager.newQuery(QUERY).execute();
 				Date dateDernierMessage = null;
 				if (messagesBdd != null && !messagesBdd.isEmpty()) {
 					dateDernierMessage = messagesBdd.iterator().next().getDateCreation();
 				}
-				for (final MessageTwitter message : messages) {
+				for (MessageTwitter message : messages) {
 					if (dateDernierMessage == null || message.getDateCreation().after(dateDernierMessage)) {
 						persistenceManager.makePersistent(message);
 					}

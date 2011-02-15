@@ -25,13 +25,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class GetTwitters {
+class GetTwitters {
 
 	@SuppressWarnings({"StaticNonFinalField"})
 	private static GetTwitters instance;
 
 	private GetTwitters() {
-		super();
 	}
 
 	private static synchronized GetTwitters getInstance() {
@@ -42,10 +41,10 @@ public class GetTwitters {
 	}
 
 	ArrayList<MessageTwitter> getMessages() throws IOException, ParserConfigurationException, SAXException {
-		final GetTwittersHandler handler = new GetTwittersHandler();
-		final SAXParserFactory factory = SAXParserFactory.newInstance();
-		final SAXParser parser = factory.newSAXParser();
-		final HttpURLConnection connection = (HttpURLConnection) new URL("http://transports-rennes.appspot.com/twitterstarbusmetro").openConnection();
+		GetTwittersHandler handler = new GetTwittersHandler();
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		SAXParser parser = factory.newSAXParser();
+		HttpURLConnection connection = (HttpURLConnection) new URL("http://transports-rennes.appspot.com/twitterstarbusmetro").openConnection();
 		connection.setRequestMethod("GET");
 		connection.setDoOutput(true);
 		connection.connect();

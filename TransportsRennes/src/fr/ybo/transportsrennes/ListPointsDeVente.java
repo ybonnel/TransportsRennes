@@ -81,11 +81,11 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	 * @param location position courante.
 	 */
 	@SuppressWarnings("unchecked")
-	private void mettreAjoutLoc(final Location location) {
+	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
 			synchronized (pointsDeVente) {
-				for (final PointDeVente pointDeVente : pointsDeVente) {
+				for (PointDeVente pointDeVente : pointsDeVente) {
 					pointDeVente.calculDistance(location);
 				}
 				Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
@@ -94,33 +94,33 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		}
 	}
 
-	public void onLocationChanged(final Location arg0) {
+	public void onLocationChanged(Location arg0) {
 		mettreAjoutLoc(arg0);
 	}
 
-	public void onProviderDisabled(final String arg0) {
+	public void onProviderDisabled(String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onProviderEnabled(final String arg0) {
+	public void onProviderEnabled(String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onStatusChanged(final String arg0, final int arg1, final Bundle arg2) {
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
 	}
 
 	/**
 	 * Active le GPS.
 	 */
 	private void activeGps() {
-		final Criteria criteria = new Criteria();
+		Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		final List<String> providers = locationManager.getProviders(criteria, true);
+		List<String> providers = locationManager.getProviders(criteria, true);
 		boolean gpsTrouve = false;
-		for (final String providerName : providers) {
+		for (String providerName : providers) {
 			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
 			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
 				gpsTrouve = true;
@@ -131,7 +131,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		}
 	}
 
-	protected void desactiveGps() {
+	private void desactiveGps() {
 		locationManager.removeUpdates(this);
 	}
 
@@ -151,10 +151,10 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 	@SuppressWarnings("unchecked")
 	private void metterAJourListe() {
-		final String query = editText.getText().toString().toUpperCase();
+		String query = editText.getText().toString().toUpperCase();
 		pointsDeVenteFiltres.clear();
 		synchronized (pointsDeVente) {
-			for (final PointDeVente pointDeVente : pointsDeVente) {
+			for (PointDeVente pointDeVente : pointsDeVente) {
 				if (pointDeVente.name.toUpperCase().contains(query.toUpperCase())) {
 					pointsDeVenteFiltres.add(pointDeVente);
 				}
@@ -168,7 +168,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void onCreate(final Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listpointsdevente);
 		pointsDeVenteIntent =
@@ -179,23 +179,23 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listpointsdevente_input);
 		editText.addTextChangedListener(new TextWatcher() {
-			public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 			}
 
-			public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 			}
 
-			public void afterTextChanged(final Editable editable) {
+			public void afterTextChanged(Editable editable) {
 				metterAJourListe();
 			}
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				final PointDeVente pointDeVente = adapter.getItem(position);
-				final String lat = Double.toString(pointDeVente.getLatitude());
-				final String lon = Double.toString(pointDeVente.getLongitude());
-				final Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + lat + "," + lon);
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				PointDeVente pointDeVente = adapter.getItem(position);
+				String lat = Double.toString(pointDeVente.getLatitude());
+				String lon = Double.toString(pointDeVente.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + lat + ',' + lon);
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
@@ -213,13 +213,13 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			}
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
 					synchronized (pointsDeVente) {
 						pointsDeVente.clear();
 						pointsDeVente.addAll(pointsDeVenteIntent == null ? keolis.getPointDeVente() : pointsDeVenteIntent);
 						Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
-							public int compare(final PointDeVente o1, final PointDeVente o2) {
+							public int compare(PointDeVente o1, PointDeVente o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
 							}
 						});
@@ -236,17 +236,17 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				if (erreur) {
-					final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
 					finish();
 				} else {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-						public void onClick(final View view) {
-							final Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
-							final ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>();
+						public void onClick(View view) {
+							Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
+							ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(pointsDeVenteFiltres.size());
 							pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
 							intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
 							startActivity(intent);

@@ -16,11 +16,11 @@ package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
 
 @SuppressWarnings({"UnusedDeclaration"})
 public class AdapterString implements AdapterCsv<String> {
-	public String parse(final String chaine) {
+	public String parse(String chaine) {
 		return chaine;
 	}
 
-	public String toString(final String objet) {
+	public String toString(String objet) {
 		return objet;
 	}
 }

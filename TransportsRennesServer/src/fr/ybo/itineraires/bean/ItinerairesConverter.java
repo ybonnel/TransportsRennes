@@ -23,35 +23,34 @@ import fr.ybo.itineraires.schema.Trajet;
  * Date: 14/02/11
  * Time: 22:50
  */
-public class ItinerairesConverter {
+class ItinerairesConverter {
 
 	private ItinerairesConverter() {
-		super();
 	}
 
-	public static ItineraireReponse convert(final fr.ybo.itineraires.modele.ItineraireReponse reponse) {
-        final ItineraireReponse reponseXml = new ItineraireReponse();
-        reponseXml.setErreur(reponse.getErreur());
-        if (reponse.getAdresseDepart() != null) {
-            reponseXml.setAdresseDepart(reponse.getAdresseDepart().convert());
-        }
-        if (reponse.getAdresseArrivee() != null) {
-            reponseXml.setAdresseArrivee(reponse.getAdresseArrivee().convert());
-        }
-        for (final fr.ybo.itineraires.modele.Trajet trajet : reponse.getTrajets()) {
-            reponseXml.getTrajets().add(convert(trajet));
-        }
-        return reponseXml;
-    }
+	public static ItineraireReponse convert(fr.ybo.itineraires.modele.ItineraireReponse reponse) {
+		ItineraireReponse reponseXml = new ItineraireReponse();
+		reponseXml.setErreur(reponse.getErreur());
+		if (reponse.getAdresseDepart() != null) {
+			reponseXml.setAdresseDepart(reponse.getAdresseDepart().convert());
+		}
+		if (reponse.getAdresseArrivee() != null) {
+			reponseXml.setAdresseArrivee(reponse.getAdresseArrivee().convert());
+		}
+		for (fr.ybo.itineraires.modele.Trajet trajet : reponse.getTrajets()) {
+			reponseXml.getTrajets().add(convert(trajet));
+		}
+		return reponseXml;
+	}
 
-    protected static Trajet convert(final fr.ybo.itineraires.modele.Trajet trajet) {
-        if (trajet == null) {
-            return null;
-        }
-        final Trajet trajetXml = new Trajet();
-        for (final PortionTrajet portion : trajet.getPortionsTrajet()) {
-            trajetXml.getPortions().add(portion.convert());
-        }
-        return trajetXml;
-    }
+	private static Trajet convert(fr.ybo.itineraires.modele.Trajet trajet) {
+		if (trajet == null) {
+			return null;
+		}
+		Trajet trajetXml = new Trajet();
+		for (PortionTrajet portion : trajet.getPortionsTrajet()) {
+			trajetXml.getPortions().add(portion.convert());
+		}
+		return trajetXml;
+	}
 }

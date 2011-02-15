@@ -34,28 +34,28 @@ public class StatusKeolis {
 	/**
 	 * @return the code
 	 */
-	public final String getCode() {
+	public String getCode() {
 		return code;
 	}
 
 	/**
 	 * @return the message
 	 */
-	public final String getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
 	/**
 	 * @param pCode the code to set
 	 */
-	public final void setCode(final String pCode) {
+	public void setCode(String pCode) {
 		code = pCode;
 	}
 
 	/**
 	 * @param pMessage the message to set
 	 */
-	public final void setMessage(final String pMessage) {
+	public void setMessage(String pMessage) {
 		message = pMessage;
 	}
 }

@@ -37,31 +37,30 @@ public final class UpdateDataBase {
 	public static void updateIfNecessaryDatabase() {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour());
-		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 			LOG_YBO.debug("Suppression des lignes chargées");
-			for (final Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
-				 if (ligne.chargee != null
-						 && ligne.chargee) {
-					  TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
-				 }
+			for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
+				if (ligne.chargee != null && ligne.chargee) {
+					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
+				}
 			}
 			LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
-			for (final Class<?> clazz : ConstantesKeolis.CLASSES_DB_TO_DELETE_ON_UPDATE) {
+			for (Class<?> clazz : ConstantesKeolis.CLASSES_DB_TO_DELETE_ON_UPDATE) {
 				TransportsRennesApplication.getDataBaseHelper().deleteAll(clazz);
 			}
 			LOG_YBO.debug("Mise à jour des donnees");
 			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS));
 			LOG_YBO.debug("Mise à jour des arrêts favoris suite à la mise à jour.");
-			final Ligne ligneSelect = new Ligne();
-			final Arret arretSelect = new Arret();
-			final ArretRoute arretRouteSelect = new ArretRoute();
-			final Direction directionSelect = new Direction();
-			final List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
+			Ligne ligneSelect = new Ligne();
+			Arret arretSelect = new Arret();
+			ArretRoute arretRouteSelect = new ArretRoute();
+			Direction directionSelect = new Direction();
+			List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
 			TransportsRennesApplication.getDataBaseHelper().deleteAll(ArretFavori.class);
-			for (final ArretFavori favori : favoris) {
+			for (ArretFavori favori : favoris) {
 				ligneSelect.id = favori.ligneId;
 				Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
 				arretSelect.id = favori.arretId;
@@ -90,15 +89,15 @@ public final class UpdateDataBase {
 		TransportsRennesApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(final Ligne ligne) {
+	public static void chargeDetailLigne(Ligne ligne) {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {
 			TransportsRennesApplication.getDataBaseHelper().beginTransaction();
 			ligne.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper());
 			ligne.chargee = Boolean.TRUE;
-			final ContentValues values = new ContentValues();
+			ContentValues values = new ContentValues();
 			values.put("chargee", 1);
-			final String[] whereArgs = new String[1];
+			String[] whereArgs = new String[1];
 			whereArgs[0] = ligne.id;
 			TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().update("Ligne", values, "id = :id", whereArgs);
 		} finally {
@@ -108,7 +107,6 @@ public final class UpdateDataBase {
 	}
 
 	private UpdateDataBase() {
-		super();
 	}
 
 }

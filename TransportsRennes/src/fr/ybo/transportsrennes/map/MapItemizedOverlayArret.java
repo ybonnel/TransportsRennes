@@ -35,25 +35,25 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 	private final Context mContext;
 	private final List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>(20);
 
-	private static Drawable leftBottom(final Drawable drawable) {
+	private static Drawable leftBottom(Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayArret(final Drawable defaultMarker, final Context context) {
+	public MapItemizedOverlayArret(Drawable defaultMarker, Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(final OverlayItem overlay, final ArretFavori favori) {
+	public void addOverlay(OverlayItem overlay, ArretFavori favori) {
 		mOverlays.add(overlay);
 		arretFavoris.add(favori);
 		populate();
 	}
 
 	@Override
-	protected OverlayItem createItem(final int i) {
+	protected OverlayItem createItem(int i) {
 		return mOverlays.get(i);
 	}
 
@@ -64,28 +64,28 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
 	//Appeer quand on clique sur un marqueur
 	@Override
-	protected boolean onTap(final int index) {
-		final OverlayItem item = mOverlays.get(index);
+	protected boolean onTap(int index) {
+		OverlayItem item = mOverlays.get(index);
 		final ArretFavori favori = arretFavoris.get(index);
 
-		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
 		builder.setMessage("vers " + item.getSnippet() + "\nVoulez vous ouvrir le détail?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.dismiss();
-				final Intent intent = new Intent(mContext, DetailArret.class);
+				Intent intent = new Intent(mContext, DetailArret.class);
 				intent.putExtra("favori", favori);
 				mContext.startActivity(intent);
 			}
 		});
 		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
-			public void onClick(final DialogInterface dialog, final int id) {
+			public void onClick(DialogInterface dialog, int id) {
 				dialog.cancel();
 			}
 		});
-		final AlertDialog alert = builder.create();
+		AlertDialog alert = builder.create();
 		alert.show();
 
 

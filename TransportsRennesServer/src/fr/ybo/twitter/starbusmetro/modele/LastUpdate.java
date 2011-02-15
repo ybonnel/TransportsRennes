@@ -29,7 +29,6 @@ public class LastUpdate {
 	}
 
 	private LastUpdate() {
-		super();
 	}
 
 	// 5 minutes.
@@ -38,7 +37,7 @@ public class LastUpdate {
 	private Date lastUpdate;
 
 	public synchronized boolean isUpdate() {
-		final Date dateCourante = new Date();
+		Date dateCourante = new Date();
 		if (lastUpdate == null) {
 			lastUpdate = dateCourante;
 			return false;

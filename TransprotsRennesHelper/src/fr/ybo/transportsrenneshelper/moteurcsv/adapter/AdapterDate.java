@@ -24,15 +24,15 @@ public class AdapterDate implements AdapterCsv<Date> {
 	@SuppressWarnings({"UnusedDeclaration"})
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
-	public Date parse(final String chaine) {
+	public Date parse(String chaine) {
 		try {
 			return SDF.parse(chaine);
-		} catch (final ParseException ignored) {
+		} catch (ParseException ignored) {
 			return null;
 		}
 	}
 
-	public String toString(final Date objet) {
+	public String toString(Date objet) {
 		return SDF.format(objet);
 	}
 

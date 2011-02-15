@@ -11,13 +11,12 @@ import java.util.Collection;
 public class GetTwitters {
 
 	@SuppressWarnings({"StaticNonFinalField"})
-	private static GetTwitters instance = null;
+	private static GetTwitters instance;
 
 	private GetTwitters() {
-		super();
 	}
 
-	synchronized public static GetTwitters getInstance() {
+	public static synchronized GetTwitters getInstance() {
 		if (instance == null) {
 			instance = new GetTwitters();
 		}

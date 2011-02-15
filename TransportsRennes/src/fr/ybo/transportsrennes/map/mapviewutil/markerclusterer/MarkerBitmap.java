@@ -36,87 +36,100 @@ import android.graphics.Point;
 /**
  * Utility Class to handle MarkerBitmap
  * it handles grid offset to display on the map with offset
+ *
  * @author Huan Erdao
  */
 public class MarkerBitmap {
-	
-	/** bitmap object for normal state icon */
-	protected final Bitmap iconBmpNormal_;
-	/** bitmap object for select state icon */
-	protected final Bitmap iconBmpSelect_;
-	/** offset grid of icon in Point.
+
+	/**
+	 * bitmap object for normal state icon
+	 */
+	protected final Bitmap iconBmpNormal;
+	/**
+	 * bitmap object for select state icon
+	 */
+	protected final Bitmap iconBmpSelect;
+	/**
+	 * offset grid of icon in Point.
 	 * if you are using symmetric icon image, it should be half size of width&height.
-	 * adjust this parameter to offset the axis of the image. */
-	protected Point iconGrid_ = new Point();
-	/** icon size in Point. x = width, y = height */
-	protected final Point iconSize_ = new Point();
-	/** maximum item size for the marker.
+	 * adjust this parameter to offset the axis of the image.
+	 */
+	protected Point iconGrid = new Point();
+	/**
+	 * icon size in Point. x = width, y = height
+	 */
+	protected final Point iconSize = new Point();
+	/**
+	 * maximum item size for the marker.
 	 * for the last MarkerBitmap element within list, this will be ignored.
 	 */
-	protected final int itemSizeMax_;
-	/** text size for icon */
-	protected final int textSize_;
+	protected final int itemSizeMax;
+	/**
+	 * text size for icon
+	 */
+	protected final int textSize;
 
 	/**
 	 * NOTE: srcNrm & srcSel must be same bitmap size.
-	 * @param srcNrm	source Bitmap object for normal state
-	 * @param srcSel	source Bitmap object for select state
-	 * @param grid		grid point to be offset
-	 * @param textSize	text size for icon
-	 * @param maxSize	icon size threshold
+	 *
+	 * @param srcNrm   source Bitmap object for normal state
+	 * @param srcSel   source Bitmap object for select state
+	 * @param grid     grid point to be offset
+	 * @param textSize text size for icon
+	 * @param maxSize  icon size threshold
 	 */
-	public MarkerBitmap( final Bitmap srcNrm, final Bitmap srcSel, final Point grid, final int textSize, final int maxSize ) {
-		super();
-		iconBmpNormal_ = srcNrm;
-		iconBmpSelect_ = srcSel;
-		iconGrid_ = grid;
-		textSize_ = textSize;
-		itemSizeMax_ = maxSize;
-		iconSize_.x = srcNrm.getWidth();
-		iconSize_.y = srcNrm.getHeight();
+	public MarkerBitmap(Bitmap srcNrm, Bitmap srcSel, Point grid, int textSize, int maxSize) {
+		iconBmpNormal = srcNrm;
+		iconBmpSelect = srcSel;
+		iconGrid = grid;
+		this.textSize = textSize;
+		itemSizeMax = maxSize;
+		iconSize.x = srcNrm.getWidth();
+		iconSize.y = srcNrm.getHeight();
 	}
 
 	/**
 	 * @return bitmap object for normal state icon
 	 */
-	public final Bitmap getBitmapNormal(){
-		return iconBmpNormal_;
+	public Bitmap getBitmapNormal() {
+		return iconBmpNormal;
 	}
 
 	/**
 	 * @return bitmap object for select state icon
 	 */
-	public final Bitmap getBitmapSelect(){
-		return iconBmpSelect_;
+	public Bitmap getBitmapSelect() {
+		return iconBmpSelect;
 	}
 
 	/**
 	 * @return get offset grid
 	 */
-	public final Point getGrid(){
-		return iconGrid_;
+	public Point getGrid() {
+		return iconGrid;
 	}
 
 	/**
 	 * @return text size
 	 */
-	public final int getTextSize(){
-		return textSize_;
+	public int getTextSize() {
+		return textSize;
 	}
 
 	/**
 	 * @return icon size threshold
 	 */
-	public final int getItemMax(){
-		return itemSizeMax_;
+	public int getItemMax() {
+		return itemSizeMax;
 	}
-	
+
 	/**
 	 * returns icon size in Point. x = width, y = height.
+	 *
 	 * @return get bitmap size in Point
 	 */
-	public final Point getSize(){
-		return iconSize_;
+	public Point getSize() {
+		return iconSize;
 	}
-	
+
 }

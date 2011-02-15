@@ -27,7 +27,7 @@ public @interface Colonne {
 
 		private final String sqlType;
 
-		TypeColonne(final String sqlType) {
+		TypeColonne(String sqlType) {
 			this.sqlType = sqlType;
 		}
 

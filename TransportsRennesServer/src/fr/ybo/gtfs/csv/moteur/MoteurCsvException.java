@@ -12,11 +12,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.gtfs.csv.moteur;
 
-@SuppressWarnings({"UnusedDeclaration"})
-public class AdapterString implements AdapterCsv<String> {
-	public String parse(String chaine) {
-		return chaine;
+@SuppressWarnings("serial")
+public class MoteurCsvException extends RuntimeException {
+
+	public MoteurCsvException(String message) {
+		super(message);
 	}
+
+	public MoteurCsvException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
+
+	public MoteurCsvException(Throwable throwable) {
+		super(throwable);
+	}
+
 }

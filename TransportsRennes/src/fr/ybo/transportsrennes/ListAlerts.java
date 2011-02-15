@@ -49,16 +49,17 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
 		setListAdapter(new AlertAdapter(this, alerts));
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Serializable alert = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
-				final Intent intent = new Intent(ListAlerts.this, DetailAlert.class);
+			@SuppressWarnings({"TypeMayBeWeakened"})
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Serializable alert = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
+				Intent intent = new Intent(ListAlerts.this, DetailAlert.class);
 				intent.putExtra("alert", alert);
 				startActivity(intent);
 			}
@@ -76,11 +77,11 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			}
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
-					for (final Alert alerte : keolis.getAlerts()) {
+					for (Alert alerte : keolis.getAlerts()) {
 						while (alerte.lines.size() > 1) {
-							final Alert newAlerte = new Alert(alerte);
+							Alert newAlerte = new Alert(alerte);
 							newAlerte.lines.add(alerte.lines.remove(0));
 							alerts.add(newAlerte);
 						}
@@ -95,11 +96,11 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
-					final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
 					finish();
 				}

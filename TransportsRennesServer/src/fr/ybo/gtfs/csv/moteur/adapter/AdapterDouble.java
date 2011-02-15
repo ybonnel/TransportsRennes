@@ -14,9 +14,10 @@
 
 package fr.ybo.gtfs.csv.moteur.adapter;
 
+@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterDouble implements AdapterCsv<Double> {
 
-	public Double parse(final String chaine) {
+	public Double parse(String chaine) {
 		return Double.valueOf(chaine);
 	}
 }

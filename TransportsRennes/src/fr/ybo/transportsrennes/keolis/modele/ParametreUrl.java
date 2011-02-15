@@ -34,8 +34,7 @@ public class ParametreUrl {
 	 * @param pName  name.
 	 * @param pValue value.
 	 */
-	public ParametreUrl(final String pName, final String pValue) {
-		super();
+	public ParametreUrl(String pName, String pValue) {
 		name = pName;
 		value = pValue;
 	}
@@ -43,14 +42,14 @@ public class ParametreUrl {
 	/**
 	 * @return the name
 	 */
-	public final String getName() {
+	public String getName() {
 		return name;
 	}
 
 	/**
 	 * @return the value
 	 */
-	public final String getValue() {
+	public String getValue() {
 		return value;
 	}
 }

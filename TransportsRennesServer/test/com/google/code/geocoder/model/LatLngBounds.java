@@ -22,11 +22,9 @@ public class LatLngBounds {
 	private LatLng northeast;
 
 	public LatLngBounds() {
-		super();
 	}
 
-	public LatLngBounds(final LatLng southwest, final LatLng northeast) {
-		super();
+	public LatLngBounds(LatLng southwest, LatLng northeast) {
 		this.southwest = southwest;
 		this.northeast = northeast;
 	}
@@ -35,7 +33,7 @@ public class LatLngBounds {
 		return southwest;
 	}
 
-	public void setSouthwest(final LatLng southwest) {
+	public void setSouthwest(LatLng southwest) {
 		this.southwest = southwest;
 	}
 
@@ -43,7 +41,7 @@ public class LatLngBounds {
 		return northeast;
 	}
 
-	public void setNortheast(final LatLng northeast) {
+	public void setNortheast(LatLng northeast) {
 		this.northeast = northeast;
 	}
 
@@ -51,12 +49,12 @@ public class LatLngBounds {
 	 * @return Returns a string of the form "lat_lo,lng_lo,lat_hi,lng_hi" for this bounds, where "lo" corresponds to the southwest corner of the bounding box, while "hi" corresponds to the northeast corner of that box.
 	 */
 	public String toUrlValue() {
-		return southwest.toUrlValue(6) + "," + northeast.toUrlValue(6);
+		return southwest.toUrlValue(6) + ',' + northeast.toUrlValue(6);
 	}
 
 
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -64,7 +62,7 @@ public class LatLngBounds {
 			return false;
 		}
 
-		final LatLngBounds that = (LatLngBounds) obj;
+		LatLngBounds that = (LatLngBounds) obj;
 
 		return !(northeast != null ? !northeast.equals(that.northeast) : that.northeast != null) &&
 				!(southwest != null ? !southwest.equals(that.southwest) : that.southwest != null);
@@ -80,7 +78,7 @@ public class LatLngBounds {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("LatLngBounds");
 		sb.append("{southwest=").append(southwest);
 		sb.append(", northeast=").append(northeast);

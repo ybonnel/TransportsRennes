@@ -29,8 +29,8 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.util.CalculDistance;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
@@ -55,14 +55,14 @@ import java.util.zip.ZipOutputStream;
 @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class Generateur {
 
-	private final List<Ligne> lignes = new ArrayList<Ligne>(67);
-	private final List<Calendrier> calendriers = new ArrayList<Calendrier>(20);
+	private final Collection<Ligne> lignes = new ArrayList<Ligne>(67);
+	private final Collection<Calendrier> calendriers = new ArrayList<Calendrier>(20);
 	private final Map<String, List<Trajet>> trajets = new HashMap<String, List<Trajet>>(67);
 	private final Map<Integer, Direction> directions = new HashMap<Integer, Direction>(150);
 	private Map<String, Integer> mapDirectionIds;
-	private final List<Horaire> horaires = new ArrayList<Horaire>(190000);
+	private final Collection<Horaire> horaires = new ArrayList<Horaire>(190000);
 	private final Map<String, Arret> arrets = new HashMap<String, Arret>(1500);
-	private final List<ArretRoute> arretsRoutes = new ArrayList<ArretRoute>(2500);
+	private final Collection<ArretRoute> arretsRoutes = new ArrayList<ArretRoute>(2500);
 	private final Collection<Correspondance> correspondances = new ArrayList<Correspondance>(2500);
 	private final Map<String, List<Horaire>> horairesByLigneId = new HashMap<String, List<Horaire>>(67);
 
@@ -82,7 +82,7 @@ public class Generateur {
 	public void rechercherPointsInterets() {
 		int max = 0;
 		Arret arretLong = null;
-		for (final Arret arret : arrets.values()) {
+		for (Arret arret : arrets.values()) {
 			if (arret.nom.length() > max) {
 				max = arret.nom.length();
 				arretLong = arret;
@@ -91,22 +91,22 @@ public class Generateur {
 		if (arretLong != null) {
 			System.out.println("Arret avec le nom le plus long : " + arretLong.nom + " qui existe sur les lignes :");
 		}
-		for (final ArretRoute arretRoute : arretsRoutes) {
+		for (ArretRoute arretRoute : arretsRoutes) {
 			if (arretLong != null && arretRoute.arretId.equals(arretLong.id)) {
-				System.out.println("\t" + arretRoute.ligneId);
+				System.out.println('\t' + arretRoute.ligneId);
 			}
 		}
 
 
 		int maxDirectionLength = 0;
 		Direction directionLongue = null;
-		for (final Direction direction : directions.values()) {
+		for (Direction direction : directions.values()) {
 			if (direction.direction.length() > maxDirectionLength) {
 				maxDirectionLength = direction.direction.length();
 				directionLongue = direction;
 			}
 		}
-		for (final ArretRoute arretRoute : arretsRoutes) {
+		for (ArretRoute arretRoute : arretsRoutes) {
 			if (directionLongue != null && arretRoute.directionId == directionLongue.id) {
 				System.out.println("Direction avec le nom le plus long : " + directionLongue.direction + " pour la ligne " + arretRoute.ligneId);
 				break;
@@ -115,9 +115,9 @@ public class Generateur {
 
 	}
 
-	public void genererFichiers(final File repertoire) {
+	public void genererFichiers(File repertoire) {
 		if (repertoire.exists()) {
-			for (final File file : repertoire.listFiles()) {
+			for (File file : repertoire.listFiles()) {
 				if (!file.delete()) {
 					System.err.println("Le fichier " + file.getName() + "n'a pas pu être effacé");
 				}
@@ -127,7 +127,7 @@ public class Generateur {
 				System.err.println("Le répertoire " + repertoire.getName() + "n'a pas pu être créé");
 			}
 		}
-		final MoteurCsv moteurCsv = new MoteurCsv(LIST_CLASSES);
+		MoteurCsv moteurCsv = new MoteurCsv(LIST_CLASSES);
 		System.out.println("Génération du fichier arrets.txt");
 		moteurCsv.writeFile(new File(repertoire, "arrets.txt"), arrets.values(), Arret.class);
 		System.out.println("Génération du fichier arrets_routes.txt");
@@ -143,52 +143,58 @@ public class Generateur {
 		System.out.println("Génération du fichier correspondances.txt");
 		moteurCsv.writeFile(new File(repertoire, "correspondances.txt"), correspondances, Correspondance.class);
 		System.out.println("Génération du fichier trajets.txt");
-		final Collection<Trajet> trajets = new ArrayList<Trajet>(1500);
-		for (final List<Trajet> trajetsToAdd : this.trajets.values()) {
-			trajets.addAll(trajetsToAdd);
+		Collection<Trajet> trajetsTmp = new ArrayList<Trajet>(1500);
+		for (List<Trajet> trajetsToAdd : trajets.values()) {
+			trajetsTmp.addAll(trajetsToAdd);
 		}
-		moteurCsv.writeFile(new File(repertoire, "trajets.txt"), trajets, Trajet.class);
-		for (final Ligne ligne : lignes) {
+		moteurCsv.writeFile(new File(repertoire, "trajets.txt"), trajetsTmp, Trajet.class);
+		for (Ligne ligne : lignes) {
 			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id), Horaire.class);
 			System.out.println("Nombre d'horaire pour la ligne " + ligne.id + " : " + horairesByLigneId.get(ligne.id).size());
 		}
 		genereZips(repertoire);
 	}
 
-	private void genereZips(final File repertoire) {
+	private void genereZips(File repertoire) {
 
 		System.out.println("Création du zip principal");
 		try {
 			FileOutputStream dest = new FileOutputStream(new File(repertoire, "GTFSRennesPrincipal.zip"));
 			ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-
-			GetAndContructZip.addFileToZip(new File(repertoire, "arrets.txt"), out);
-			GetAndContructZip.addFileToZip(new File(repertoire, "arrets_routes.txt"), out);
-			GetAndContructZip.addFileToZip(new File(repertoire, "calendriers.txt"), out);
-			GetAndContructZip.addFileToZip(new File(repertoire, "directions.txt"), out);
-			GetAndContructZip.addFileToZip(new File(repertoire, "lignes.txt"), out);
-			GetAndContructZip.addFileToZip(new File(repertoire, "trajets.txt"), out);
-			out.close();
-
-			for (final File fileStopTime : repertoire.listFiles(new FilenameFilter() {
-				public boolean accept(final File dir, final String name) {
-					return name.startsWith("horaires_");
-				}
-			})) {
-				final String name = fileStopTime.getName();
-				final String newName = name.split("\\.")[0] + ".zip";
-				dest = new FileOutputStream(new File(repertoire, newName));
-				out = new ZipOutputStream(new BufferedOutputStream(dest));
-				GetAndContructZip.addFileToZip(fileStopTime, out);
+			try {
+				GetAndContructZip.addFileToZip(new File(repertoire, "arrets.txt"), out);
+				GetAndContructZip.addFileToZip(new File(repertoire, "arrets_routes.txt"), out);
+				GetAndContructZip.addFileToZip(new File(repertoire, "calendriers.txt"), out);
+				GetAndContructZip.addFileToZip(new File(repertoire, "directions.txt"), out);
+				GetAndContructZip.addFileToZip(new File(repertoire, "lignes.txt"), out);
+				GetAndContructZip.addFileToZip(new File(repertoire, "trajets.txt"), out);
+			} finally {
 				out.close();
 			}
 
+			for (File fileStopTime : repertoire.listFiles(new FilenameFilter() {
+				public boolean accept(File dir, String name) {
+					return name.startsWith("horaires_");
+				}
+			})) {
+				String name = fileStopTime.getName();
+				String newName = name.split("\\.")[0] + ".zip";
+				dest = new FileOutputStream(new File(repertoire, newName));
+				out = new ZipOutputStream(new BufferedOutputStream(dest));
+				try {
+					GetAndContructZip.addFileToZip(fileStopTime, out);
+				} finally {
+					out.close();
+				}
+			}
+
 			System.out.println("Création du fichier last_update.txt");
-			final BufferedWriter bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
-
-			bufWriter.write(new SimpleDateFormat("yyyyMMdd").format(new Date()));
-
-			bufWriter.close();
+			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));
+			try {
+				bufWriter.write(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+			} finally {
+				bufWriter.close();
+			}
 		} catch (Exception exception) {
 			throw new MoteurCsvException(exception);
 		}
@@ -204,10 +210,10 @@ public class Generateur {
 
 	public void remplirCorrespondance() {
 		// Trajets avec une correspondance
-		for (final Arret arret : arrets.values()) {
-			for (final Arret correspondance : arrets.values()) {
+		for (Arret arret : arrets.values()) {
+			for (Arret correspondance : arrets.values()) {
 				if (hasFastCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id)) {
-					final double distance = calculDistanceBetweenArrets(arret, correspondance);
+					double distance = calculDistanceBetweenArrets(arret, correspondance);
 					if (distance < DISTANCE_CORRESPONDANCE_REEL) {
 						correspondances.add(new Correspondance(arret.id, correspondance.id, (int) Math.round(distance)));
 					}
@@ -216,42 +222,42 @@ public class Generateur {
 		}
 	}
 
-	private static double calculDistanceBetweenArrets(final Arret arretDepart, final Arret arretArrivee) {
+	private static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
 		return new CalculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude, arretArrivee.longitude).calculDistance();
 	}
 
-	private boolean hasFastCorrespondance(final Arret arret1, final Arret arret2) {
-		final double difLatitude = Math.abs(arret1.latitude - arret2.latitude);
-		final double difLongitude = Math.abs(arret1.longitude - arret2.longitude);
+	private boolean hasFastCorrespondance(Arret arret1, Arret arret2) {
+		double difLatitude = Math.abs(arret1.latitude - arret2.latitude);
+		double difLongitude = Math.abs(arret1.longitude - arret2.longitude);
 		return difLatitude < DISTANCE_LAT_IN_DEGREE && difLongitude < DISTANCE_LNG_IN_DEGREE;
 	}
 
 	public void remplirArretRoutes() {
-		final Map<Integer, List<Horaire>> mapHorairesByTrajetId = new HashMap<Integer, List<Horaire>>(1500);
-		for (final Horaire horaire : horaires) {
+		Map<Integer, List<Horaire>> mapHorairesByTrajetId = new HashMap<Integer, List<Horaire>>(1500);
+		for (Horaire horaire : horaires) {
 			if (!mapHorairesByTrajetId.containsKey(horaire.trajetId)) {
 				mapHorairesByTrajetId.put(horaire.trajetId, new ArrayList<Horaire>(200));
 			}
 			mapHorairesByTrajetId.get(horaire.trajetId).add(horaire);
 		}
 		// Trip des horaires.
-		for (final List<Horaire> horairesATrier : mapHorairesByTrajetId.values()) {
+		for (List<Horaire> horairesATrier : mapHorairesByTrajetId.values()) {
 			Collections.sort(horairesATrier, new Comparator<Horaire>() {
-				public int compare(final Horaire o1, final Horaire o2) {
+				public int compare(Horaire o1, Horaire o2) {
 					return o1.stopSequence < o2.stopSequence ? -1 : o1.stopSequence == o2.stopSequence ? 0 : 1;
 				}
 			});
 		}
-		for (final Ligne ligne : lignes) {
+		for (Ligne ligne : lignes) {
 			horairesByLigneId.put(ligne.id, new ArrayList<Horaire>(10000));
-			final Map<String, Integer> countByChaine = new HashMap<String, Integer>(200);
-			final Map<String, List<Trajet>> mapTrajetChaine = new HashMap<String, List<Trajet>>(200);
-			final Map<String, Arret> arretOfLigne = new HashMap<String, Arret>(200);
+			Map<String, Integer> countByChaine = new HashMap<String, Integer>(200);
+			Map<String, List<Trajet>> mapTrajetChaine = new HashMap<String, List<Trajet>>(200);
+			Map<String, Arret> arretOfLigne = new HashMap<String, Arret>(200);
 			// Parcours des trajets.
-			for (final Trajet trajet : trajets.get(ligne.id)) {
-				final StringBuilder chaineBuilder = new StringBuilder();
+			for (Trajet trajet : trajets.get(ligne.id)) {
+				StringBuilder chaineBuilder = new StringBuilder();
 				Horaire terminus = null;
-				for (final Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
+				for (Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
 					horairesByLigneId.get(ligne.id).add(horaire);
 					if (!arretOfLigne.containsKey(horaire.arretId)) {
 						arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
@@ -269,17 +275,16 @@ public class Generateur {
 				mapTrajetChaine.get(chaineBuilder.toString()).add(trajet);
 			}
 			// parcours des arrêts
-			for (final Arret arret : arretOfLigne.values()) {
+			for (Arret arret : arretOfLigne.values()) {
 				ArretRoute arretRoute = new ArretRoute();
 				arretRoute.arretId = arret.id;
 				arretRoute.ligneId = ligne.id;
 				// Recherche du trajet adéquat.
 				int max = 0;
 				String chaine = null;
-				for (final Map.Entry<String, Integer> entryChaineCount : countByChaine.entrySet()) {
-					//noinspection OverlyComplexBooleanExpression
-					if (entryChaineCount.getValue() > max && (entryChaineCount.getKey().startsWith(arret.id + ",") || !entryChaineCount.getKey().endsWith("," + arret.id + ",") &&
-							entryChaineCount.getKey().contains("," + arret.id + ","))) {
+				for (Map.Entry<String, Integer> entryChaineCount : countByChaine.entrySet()) {
+					if (entryChaineCount.getValue() > max && (entryChaineCount.getKey().startsWith(arret.id + ',') ||
+							!entryChaineCount.getKey().endsWith(',' + arret.id + ',') && entryChaineCount.getKey().contains(',' + arret.id + ','))) {
 						// Chemin trouvé
 						max = entryChaineCount.getValue();
 						chaine = entryChaineCount.getKey();
@@ -289,17 +294,17 @@ public class Generateur {
 					// Seulement terminus pour cette ligne, pas à gérer
 					continue;
 				}
-				final String[] champs = chaine.split(",");
+				String[] champs = chaine.split(",");
 				int sequence = 1;
-				for (final String champ : champs) {
+				for (String champ : champs) {
 					if (champ.equals(arret.id)) {
 						break;
 					}
 					sequence++;
 				}
 				arretRoute.sequence = sequence;
-				final Map<Integer, Integer> countDirectionIds = new HashMap<Integer, Integer>();
-				for (final Trajet trajet : mapTrajetChaine.get(chaine)) {
+				Map<Integer, Integer> countDirectionIds = new HashMap<Integer, Integer>(150);
+				for (Trajet trajet : mapTrajetChaine.get(chaine)) {
 					if (!countDirectionIds.containsKey(trajet.directionId)) {
 						countDirectionIds.put(trajet.directionId, 0);
 					}
@@ -307,7 +312,7 @@ public class Generateur {
 				}
 				int directionCount = 0;
 				int directionId = -1;
-				for (final Map.Entry<Integer, Integer> entryDirectionIdCount : countDirectionIds.entrySet()) {
+				for (Map.Entry<Integer, Integer> entryDirectionIdCount : countDirectionIds.entrySet()) {
 					if (entryDirectionIdCount.getValue() > directionCount) {
 						directionId = entryDirectionIdCount.getKey();
 						directionCount = entryDirectionIdCount.getValue();
@@ -315,13 +320,13 @@ public class Generateur {
 				}
 				if (countDirectionIds.size() > 1) {
 					System.err.println("Plusieurs directions trouvée pour une seule chaine :");
-					System.err.println("\t" + chaine);
-					for (final int dirId : countDirectionIds.keySet()) {
+					System.err.println('\t' + chaine);
+					for (int dirId : countDirectionIds.keySet()) {
 
 						System.err.println(directions.get(dirId).direction);
 					}
 					System.err.println("Direction choisi (la plus utilisée) :");
-					System.err.println("\t" + directions.get(directionId).direction);
+					System.err.println('\t' + directions.get(directionId).direction);
 				}
 				if (directionId == -1) {
 					System.err.println("Pas de direction trouvée!!!!!");
@@ -335,7 +340,7 @@ public class Generateur {
 	}
 
 	public void remplirArrets() {
-		for (final Stop stop : GestionnaireGtfs.getInstance().getMapStops().values()) {
+		for (Stop stop : GestionnaireGtfs.getInstance().getMapStops().values()) {
 			Arret arret = new Arret();
 			arret.id = stop.id;
 			arret.nom = stop.nom;
@@ -346,7 +351,7 @@ public class Generateur {
 	}
 
 	public void remplirHoraires() {
-		for (final StopTime stopTime : GestionnaireGtfs.getInstance().getMapStopTimes().values()) {
+		for (StopTime stopTime : GestionnaireGtfs.getInstance().getMapStopTimes().values()) {
 			Horaire horaire = new Horaire();
 			horaire.arretId = stopTime.stopId;
 			horaire.trajetId = Integer.parseInt(stopTime.tripId);
@@ -359,7 +364,7 @@ public class Generateur {
 
 	public void remplirTrajets() {
 		remplirDirections();
-		for (final Trip trip : GestionnaireGtfs.getInstance().getMapTrips().values()) {
+		for (Trip trip : GestionnaireGtfs.getInstance().getMapTrips().values()) {
 			Trajet trajet = new Trajet();
 			trajet.id = Integer.parseInt(trip.id);
 			trajet.calendrierId = Integer.parseInt(trip.serviceId);
@@ -376,24 +381,24 @@ public class Generateur {
 		if (mapDirectionIds == null) {
 			mapDirectionIds = new HashMap<String, Integer>(200);
 			int directionId = 1;
-			for (final Trip trip : GestionnaireGtfs.getInstance().getMapTrips().values()) {
+			for (Trip trip : GestionnaireGtfs.getInstance().getMapTrips().values()) {
 				if (!mapDirectionIds.containsKey(trip.headSign)) {
 					mapDirectionIds.put(trip.headSign, directionId);
 					directionId++;
 				}
 
 			}
-			for (final Map.Entry<String, Integer> headSign : mapDirectionIds.entrySet()) {
+			for (Map.Entry<String, Integer> headSign : mapDirectionIds.entrySet()) {
 				Direction direction = new Direction();
 				direction.id = headSign.getValue();
 				String directionTmp = headSign.getKey();
 				if ("51 beton chev st s".equals(directionTmp)) {
 					directionTmp = "51 | Betton - Chevaigné - Saint Sulpice La Forêt";
 				}
-				final String[] champs = directionTmp.split("\\|");
+				String[] champs = directionTmp.split("\\|");
 				if (champs.length == 2) {
 					direction.direction = champs[1];
-					while (direction.direction.startsWith(" ")) {
+					while (direction.direction.length() > 0 && direction.direction.charAt(0) == ' ') {
 						direction.direction = direction.direction.substring(1);
 					}
 				} else {
@@ -405,7 +410,7 @@ public class Generateur {
 	}
 
 	public void remplirCalendrier() {
-		for (final Calendar calendar : GestionnaireGtfs.getInstance().getMapCalendars().values()) {
+		for (Calendar calendar : GestionnaireGtfs.getInstance().getMapCalendars().values()) {
 			Calendrier calendrier = new Calendrier();
 			calendrier.id = Integer.parseInt(calendar.id);
 			calendrier.lundi = calendar.lundi;
@@ -420,31 +425,31 @@ public class Generateur {
 	}
 
 	public void remplirLignes() {
-		final List<Route> routes = new ArrayList<Route>(67);
+		List<Route> routes = new ArrayList<Route>(67);
 		routes.addAll(GestionnaireGtfs.getInstance().getMapRoutes().values());
 		int maxLength = 0;
 		// Recherche de la route avec le nom le plus long.
-		for (final Route route : routes) {
+		for (Route route : routes) {
 			if (route.nomCourt.length() > maxLength) {
 				maxLength = route.nomCourt.length();
 			}
 		}
 		// Formatage du nom court de la ligne.
-		for (final Route route : routes) {
+		for (Route route : routes) {
 			route.nomCourtFormatte = route.nomCourt;
 			while (route.nomCourtFormatte.length() < maxLength) {
-				route.nomCourtFormatte = "0" + route.nomCourtFormatte;
+				route.nomCourtFormatte = '0' + route.nomCourtFormatte;
 			}
 		}
 		// Tri.
 		Collections.sort(routes, new Comparator<Route>() {
-			public int compare(final Route o1, final Route o2) {
+			public int compare(Route o1, Route o2) {
 				return o1.nomCourtFormatte.compareTo(o2.nomCourtFormatte);
 			}
 		});
 
 		int ordre = 1;
-		for (final Route route : routes) {
+		for (Route route : routes) {
 			Ligne ligne = new Ligne();
 			ligne.id = route.id;
 			ligne.nomCourt = route.nomCourt;

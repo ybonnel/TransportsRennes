@@ -16,11 +16,11 @@ package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
 
 public class AdapterDouble implements AdapterCsv<Double> {
 
-	public Double parse(final String chaine) {
+	public Double parse(String chaine) {
 		return Double.valueOf(chaine);
 	}
 
-	public String toString(final Double objet) {
+	public String toString(Double objet) {
 		return objet.toString();
 	}
 }

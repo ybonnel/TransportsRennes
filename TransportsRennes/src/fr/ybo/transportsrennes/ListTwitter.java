@@ -39,11 +39,11 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>(20));
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
 		setListAdapter(new TwitterAdapter(this, messages));
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		new AsyncTask<Void, Void, Void>() {
 
@@ -56,7 +56,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 			}
 
 			@Override
-			protected Void doInBackground(final Void... pParams) {
+			protected Void doInBackground(Void... pParams) {
 				try {
 					messages.addAll(GetTwitters.getInstance().getMessages());
 				} catch (Exception exception) {
@@ -68,7 +68,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void result) {
+			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {

@@ -20,16 +20,16 @@ import java.util.List;
  * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
  */
 public class GeocoderResult {
-	protected List<String> types;
-	protected String formattedAddress;
-	protected List<GeocoderAddressComponent> addressComponents;
-	protected GeocoderGeometry geometry;
+	private List<String> types;
+	private String formattedAddress;
+	private List<GeocoderAddressComponent> addressComponents;
+	private GeocoderGeometry geometry;
 
 	public List<String> getTypes() {
 		return types;
 	}
 
-	public void setTypes(final List<String> types) {
+	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 
@@ -37,7 +37,7 @@ public class GeocoderResult {
 		return formattedAddress;
 	}
 
-	public void setFormattedAddress(final String formattedAddress) {
+	public void setFormattedAddress(String formattedAddress) {
 		this.formattedAddress = formattedAddress;
 	}
 
@@ -45,7 +45,7 @@ public class GeocoderResult {
 		return addressComponents;
 	}
 
-	public void setAddressComponents(final List<GeocoderAddressComponent> addressComponents) {
+	public void setAddressComponents(List<GeocoderAddressComponent> addressComponents) {
 		this.addressComponents = addressComponents;
 	}
 
@@ -53,13 +53,12 @@ public class GeocoderResult {
 		return geometry;
 	}
 
-	public void setGeometry(final GeocoderGeometry geometry) {
+	public void setGeometry(GeocoderGeometry geometry) {
 		this.geometry = geometry;
 	}
 
-	@SuppressWarnings({"OverlyComplexBooleanExpression"})
 	@Override
-	public boolean equals(final Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -67,7 +66,7 @@ public class GeocoderResult {
 			return false;
 		}
 
-		final GeocoderResult that = (GeocoderResult) obj;
+		GeocoderResult that = (GeocoderResult) obj;
 
 		return !(addressComponents != null ? !addressComponents.equals(that.addressComponents) : that.addressComponents != null) &&
 				!(formattedAddress != null ? !formattedAddress.equals(that.formattedAddress) : that.formattedAddress != null) &&
@@ -88,7 +87,7 @@ public class GeocoderResult {
 
 	@Override
 	public String toString() {
-		final StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		sb.append("GeocoderResult");
 		sb.append("{types=").append(types);
 		sb.append(", formattedAddress='").append(formattedAddress).append('\'');

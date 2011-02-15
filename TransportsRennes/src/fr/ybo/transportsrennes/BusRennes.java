@@ -35,14 +35,15 @@ import java.util.List;
 public class BusRennes extends MenuAccueil.ListActivity {
 
 	private void constructionListe() {
-		final List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
+		List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
 		setListAdapter(new LigneAdapter(this, lignes));
-		final ListView lv = getListView();
+		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Serializable ligne = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
-				final Intent intent = new Intent(BusRennes.this, ListArret.class);
+			@SuppressWarnings({"TypeMayBeWeakened"})
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Serializable ligne = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
+				Intent intent = new Intent(BusRennes.this, ListArret.class);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);
 			}
@@ -51,7 +52,7 @@ public class BusRennes extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bus);
 		constructionListe();

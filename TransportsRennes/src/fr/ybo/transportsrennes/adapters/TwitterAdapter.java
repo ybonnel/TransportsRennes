@@ -35,7 +35,7 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
 	private final LayoutInflater inflater;
 
-	public TwitterAdapter(final Context context, final List<MessageTwitter> objects) {
+	public TwitterAdapter(Context context, List<MessageTwitter> objects) {
 		super(context, R.layout.onetwitter, objects);
 		messages = objects;
 		inflater = LayoutInflater.from(context);
@@ -46,9 +46,9 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 	}
 
 	@Override
-	public View getView(final int position, final View convertView, final ViewGroup parent) {
+	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
-		final TwitterAdapter.ViewHolder holder;
+		TwitterAdapter.ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.onetwitter, null);
 			holder = new TwitterAdapter.ViewHolder();
@@ -57,7 +57,7 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 		} else {
 			holder = (TwitterAdapter.ViewHolder) convertView1.getTag();
 		}
-		final MessageTwitter message = messages.get(position);
+		MessageTwitter message = messages.get(position);
 		holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
 		return convertView1;
 	}

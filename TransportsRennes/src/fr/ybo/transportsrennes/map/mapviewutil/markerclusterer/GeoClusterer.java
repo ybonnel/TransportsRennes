@@ -64,91 +64,90 @@ public class GeoClusterer {
 	 * screen density for multi-resolution
 	 * get from contenxt.getResources().getDisplayMetrics().density;
 	 */
-	protected float screenDensity_ = 1.0f;
+	protected float screenDensity = 1.0f;
 
 	/**
 	 * MapView object.
 	 */
-	protected final MapView mapView_;
+	protected final MapView mapView;
 	/**
 	 * GeoItem ArrayList object to be shown.
 	 */
-	private final Collection<GeoItem> items_ = new ArrayList<GeoItem>(100);
+	private final Collection<GeoItem> items = new ArrayList<GeoItem>(100);
 	/**
 	 * GeoItem ArrayList object that are out of viewport to be clustered.
 	 */
-	private final Collection<GeoItem> leftItems_ = new ArrayList<GeoItem>(100);
+	private final Collection<GeoItem> leftItems = new ArrayList<GeoItem>(100);
 	/**
 	 * Clustered object list.
 	 */
-	protected final List<GeoClusterer.GeoCluster> clusters_ = new ArrayList<GeoClusterer.GeoCluster>(100);
+	protected final List<GeoClusterer.GeoCluster> clusters = new ArrayList<GeoClusterer.GeoCluster>(100);
 	/**
 	 * MarkerBitmap object for marker icons.
 	 */
-	protected final List<MarkerBitmap> markerIconBmps_;
+	protected final List<MarkerBitmap> markerIconBmps;
 	/**
 	 * selected cluster object.
 	 */
-	private GeoClusterer.GeoCluster selcluster_;
+	private GeoClusterer.GeoCluster selcluster;
 	/**
 	 * check counter for tapping all cluster object.
 	 */
-	private int tapCheckCount_;
+	private int tapCheckCount;
 	/**
 	 * GeoBound to check moves of the map view.
 	 */
-	private GeoBounds savedBounds_;
+	private GeoBounds savedBounds;
 	/**
 	 * flag for detecting map moves. true if map is moving or zooming.
 	 */
-	private boolean isMoving_;
+	private boolean isMoving;
 	/**
 	 * handler to initiate moveend/zoomend event and reset view.
 	 */
-	private final Handler handler_;
+	private final Handler handler;
 
 	/**
 	 * @param mapView        MapView object.
 	 * @param markerIconBmps MarkerBitmap objects for icons.
 	 * @param screenDensity  Screen Density.
 	 */
-	protected GeoClusterer(final MapView mapView, final List<MarkerBitmap> markerIconBmps, final float screenDensity) {
-		super();
-		mapView_ = mapView;
-		markerIconBmps_ = markerIconBmps;
-		screenDensity_ = screenDensity;
-		handler_ = new Handler();
-		isMoving_ = false;
+	protected GeoClusterer(MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity) {
+		this.mapView = mapView;
+		this.markerIconBmps = markerIconBmps;
+		this.screenDensity = screenDensity;
+		handler = new Handler();
+		isMoving = false;
 	}
 
 	/**
 	 * add item and do clustering.
-	 * NOTE: this method will not redraw screen. after adding all items,
+	 * NOTE: this method will not redraw screen. after adding all itemsOfCluster,
 	 * you must call redraw() method.
 	 *
 	 * @param item GeoItem to be clustered.
 	 */
-	public void addItem(final GeoItem item) {
-		// if not in viewport, add to leftItems_
+	public void addItem(GeoItem item) {
+		// if not in viewport, add to leftItems
 		if (isItemNotInViewport(item)) {
-			leftItems_.add(item);
+			leftItems.add(item);
 			return;
 		}
-		// else add to items_;
-		items_.add(item);
-		final int length = clusters_.size();
-		final Projection proj = mapView_.getProjection();
-		final Point pos = proj.toPixels(item.getLocation(), null);
+		// else add to itemsOfCluster;
+		items.add(item);
+		int length = clusters.size();
+		Projection proj = mapView.getProjection();
+		Point pos = proj.toPixels(item.getLocation(), null);
 		// check existing cluster
 		for (int i = length - 1; i >= 0; i--) {
-			GeoCluster cluster = clusters_.get(i);
-			final GeoPoint gpCenter = cluster.getLocation();
+			GeoClusterer.GeoCluster cluster = clusters.get(i);
+			GeoPoint gpCenter = cluster.getLocation();
 			if (gpCenter == null) {
 				continue;
 			}
-			final Point ptCenter = proj.toPixels(gpCenter, null);
+			Point ptCenter = proj.toPixels(gpCenter, null);
 			// find a cluster which contains the marker.
-			final int gridSizePx = (int) (gridSize * screenDensity_ + 0.5f);
+			int gridSizePx = (int) (gridSize * screenDensity + 0.5f);
 			if (pos.x >= ptCenter.x - gridSizePx && pos.x <= ptCenter.x + gridSizePx && pos.y >= ptCenter.y - gridSizePx &&
 					pos.y <= ptCenter.y + gridSizePx) {
 				cluster.addItem(item);
@@ -165,17 +164,17 @@ public class GeoClusterer {
 	 *
 	 * @param item GeoItem to be set to cluster.
 	 */
-	protected void createCluster(final GeoItem item) {
-		final GeoClusterer.GeoCluster cluster = new GeoClusterer.GeoCluster(this);
+	protected void createCluster(GeoItem item) {
+		GeoClusterer.GeoCluster cluster = new GeoClusterer.GeoCluster(this);
 		cluster.addItem(item);
-		clusters_.add(cluster);
+		clusters.add(cluster);
 	}
 
 	/**
 	 * redraws clusters
 	 */
-	void redraw() {
-		for (final GeoClusterer.GeoCluster aClusters : clusters_) {
+	private void redraw() {
+		for (GeoClusterer.GeoCluster aClusters : clusters) {
 			aClusters.redraw();
 		}
 	}
@@ -186,9 +185,9 @@ public class GeoClusterer {
 	 * @param item item
 	 * @return true if item is within viewport.
 	 */
-	final boolean isItemNotInViewport(final GeoItem item) {
-		savedBounds_ = getCurBounds();
-		return !savedBounds_.isInBounds(item.getLocation());
+	private boolean isItemNotInViewport(GeoItem item) {
+		savedBounds = getCurBounds();
+		return !savedBounds.isInBounds(item.getLocation());
 	}
 
 	/**
@@ -196,9 +195,9 @@ public class GeoClusterer {
 	 *
 	 * @return current GeoBounds
 	 */
-	protected final GeoBounds getCurBounds() {
-		final Projection proj = mapView_.getProjection();
-		return new GeoBounds(proj.fromPixels(0, 0), proj.fromPixels(mapView_.getWidth(), mapView_.getHeight()));
+	protected GeoBounds getCurBounds() {
+		Projection proj = mapView.getProjection();
+		return new GeoBounds(proj.fromPixels(0, 0), proj.fromPixels(mapView.getWidth(), mapView.getHeight()));
 	}
 
 	/**
@@ -206,39 +205,39 @@ public class GeoClusterer {
 	 *
 	 * @return clusters within current viewport.
 	 */
-	List<GeoClusterer.GeoCluster> getClustersInViewport() {
-		final GeoBounds curBounds = getCurBounds();
-		final List<GeoClusterer.GeoCluster> clusters = new ArrayList<GeoClusterer.GeoCluster>(100);
-		for (final GeoClusterer.GeoCluster cluster : clusters_) {
+	private Iterable<GeoClusterer.GeoCluster> getClustersInViewport() {
+		GeoBounds curBounds = getCurBounds();
+		Collection<GeoClusterer.GeoCluster> clustersRetour = new ArrayList<GeoClusterer.GeoCluster>(100);
+		for (GeoClusterer.GeoCluster cluster : clusters) {
 			if (cluster.isInBounds(curBounds)) {
-				clusters.add(cluster);
+				clustersRetour.add(cluster);
 			}
 		}
-		return clusters;
+		return clustersRetour;
 	}
 
 	/**
-	 * add items that were not clustered in last clustering.
+	 * add itemsOfCluster that were not clustered in last clustering.
 	 */
-	void addLeftItems() {
-		if (leftItems_.size() == 0) {
+	private void addLeftItems() {
+		if (leftItems.isEmpty()) {
 			return;
 		}
-		final Collection<GeoItem> currentLeftItems = new ArrayList<GeoItem>(100);
-		currentLeftItems.addAll(leftItems_);
-		leftItems_.clear();
-		for (final GeoItem currentLeftItem : currentLeftItems) {
+		Collection<GeoItem> currentLeftItems = new ArrayList<GeoItem>(100);
+		currentLeftItems.addAll(leftItems);
+		leftItems.clear();
+		for (GeoItem currentLeftItem : currentLeftItems) {
 			addItem(currentLeftItem);
 		}
 	}
 
 	/**
-	 * re-add items for clustering.
+	 * re-add itemsOfCluster for clustering.
 	 *
 	 * @param items GeoItem list to be clustered.
 	 */
-	void reAddItems(final List<GeoItem> items) {
-		final int len = items.size();
+	private void reAddItems(List<GeoItem> items) {
+		int len = items.size();
 		for (int i = len - 1; i >= 0; i--) {
 			addItem(items.get(i));
 		}
@@ -248,21 +247,21 @@ public class GeoClusterer {
 	/**
 	 * reset current viewport.
 	 */
+	@SuppressWarnings({"ObjectEquality"})
 	public void resetViewport() {
-		final List<GeoClusterer.GeoCluster> clusters = getClustersInViewport();
-		final List<GeoItem> tmpItems = new ArrayList<GeoItem>(100);
+		List<GeoItem> tmpItems = new ArrayList<GeoItem>(100);
 		int removed = 0;
-		for (final GeoClusterer.GeoCluster cluster : clusters) {
-			final int oldZoom = cluster.getZoomLevel();
-			final int curZoom = mapView_.getZoomLevel();
+		for (GeoClusterer.GeoCluster cluster : getClustersInViewport()) {
+			int oldZoom = cluster.getZoomLevel();
+			int curZoom = mapView.getZoomLevel();
 			// If the cluster zoom level changed then destroy the cluster and collect its markers.
 			if (curZoom != oldZoom) {
-				tmpItems.addAll(cluster.getItems());
+				tmpItems.addAll(cluster.getItemsOfCluster());
 				cluster.clear();
 				removed++;
-				for (int j = 0; j < clusters_.size(); j++) {
-					if (cluster == clusters_.get(j)) {
-						clusters_.remove(j);
+				for (int j = 0; j < clusters.size(); j++) {
+					if (cluster == clusters.get(j)) {
+						clusters.remove(j);
 					}
 				}
 			}
@@ -271,13 +270,12 @@ public class GeoClusterer {
 		redraw();
 		// Add the markers collected into marker cluster to reset
 		if (removed > 0) {
-			for (final GeoClusterer.GeoCluster aClusters : clusters_) {
-				GeoCluster cluster = aClusters;
-				if (cluster.isSelected()) {
+			for (GeoClusterer.GeoCluster aClusters : clusters) {
+				if (aClusters.isSelected()) {
 					return;
 				}
 			}
-			for (final GeoItem anItems : items_) {
+			for (GeoItem anItems : items) {
 				anItems.setSelect(false);
 			}
 		}
@@ -286,9 +284,9 @@ public class GeoClusterer {
 	/**
 	 * clears selected state.
 	 */
-	void clearSelect() {
-		for (final GeoClusterer.GeoCluster aclusters : clusters_) {
-			if (selcluster_ == aclusters) {
+	private void clearSelect() {
+		for (GeoClusterer.GeoCluster aclusters : clusters) {
+			if (selcluster == aclusters) {
 				aclusters.clearSelect();
 			}
 		}
@@ -299,32 +297,32 @@ public class GeoClusterer {
 	 * hope there will be event notification for android equivalent to
 	 * javascriptin the future....
 	 */
-	void onNotifyDrawFromCluster() {
+	private void onNotifyDrawFromCluster() {
 		// ignore if it is already recognized as moving state
-		if (isMoving_) {
+		if (isMoving) {
 			return;
 		}
-		final GeoBounds curBnd = getCurBounds();
+		GeoBounds curBnd = getCurBounds();
 		// checking bounds if it is moving or not.
-		if (!savedBounds_.isEqual(curBnd)) {
-			isMoving_ = true;
-			savedBounds_ = curBnd;
-			final Timer timer = new Timer(true);
+		if (!savedBounds.isEqual(curBnd)) {
+			isMoving = true;
+			savedBounds = curBnd;
+			Timer timer = new Timer(true);
 			timer.schedule(new TimerTask() {
 				@Override
 				public void run() {
-					final GeoBounds curBnd = getCurBounds();
+					GeoBounds curBnd = getCurBounds();
 					// if there is no more moving, reset the viewport
-					if (savedBounds_.isEqual(curBnd)) {
-						isMoving_ = false;
+					if (savedBounds.isEqual(curBnd)) {
+						isMoving = false;
 						cancel();
-						handler_.post(new Runnable() {
+						handler.post(new Runnable() {
 							public void run() {
 								resetViewport();
 							}
 						});
 					}
-					savedBounds_ = curBnd;
+					savedBounds = curBnd;
 				}
 			}, 500, 500);
 		}
@@ -338,18 +336,18 @@ public class GeoClusterer {
 	 * @param caller   cluster object called this.
 	 * @param isTapped if true, tapped.
 	 */
-	void onTapCalledFromCluster(final GeoClusterer.GeoCluster caller, final boolean isTapped) {
-		// if tapped, set selcluster_ to caller
+	private void onTapCalledFromCluster(GeoClusterer.GeoCluster caller, boolean isTapped) {
+		// if tapped, set selcluster to caller
 		if (isTapped) {
-			if (selcluster_ == caller) {
+			if (selcluster == caller) {
 				return;
 			}
 			clearSelect();
-			selcluster_ = caller;
+			selcluster = caller;
 		} else {
-			tapCheckCount_++;
-			if (tapCheckCount_ == clusters_.size()) {
-				tapCheckCount_ = 0;
+			tapCheckCount++;
+			if (tapCheckCount == clusters.size()) {
+				tapCheckCount = 0;
 			}
 		}
 	}
@@ -362,32 +360,31 @@ public class GeoClusterer {
 		/**
 		 * GeoClusterer object
 		 */
-		private final GeoClusterer clusterer_;
+		private final GeoClusterer clusterer;
 		/**
 		 * center of cluster
 		 */
-		GeoPoint center_;
+		GeoPoint center;
 		/**
 		 * list of GeoItem within cluster
 		 */
-		private List<GeoItem> items_ = new ArrayList<GeoItem>(100);
+		private List<GeoItem> itemsOfCluster = new ArrayList<GeoItem>(100);
 		/**
 		 * ClusterMarker object
 		 */
-		protected ClusterMarker clusterMarker_;
+		protected ClusterMarker clusterMarker;
 		/**
 		 * zoomlevel at the point Cluster was made
 		 */
-		private final int zoom_;
+		private final int zoom;
 
 		/**
 		 * @param clusterer GeoClusterer object.
 		 */
-		public GeoCluster(final GeoClusterer clusterer) {
-			super();
-			clusterer_ = clusterer;
-			clusterMarker_ = null;
-			zoom_ = mapView_.getZoomLevel();
+		public GeoCluster(GeoClusterer clusterer) {
+			this.clusterer = clusterer;
+			clusterMarker = null;
+			zoom = mapView.getZoomLevel();
 		}
 
 		/**
@@ -395,11 +392,11 @@ public class GeoClusterer {
 		 *
 		 * @param item GeoItem object to be added.
 		 */
-		public void addItem(final GeoItem item) {
-			if (center_ == null) {
-				center_ = item.getLocation();
+		public void addItem(GeoItem item) {
+			if (center == null) {
+				center = item.getLocation();
 			}
-			items_.add(item);
+			itemsOfCluster.add(item);
 		}
 
 		/**
@@ -408,14 +405,14 @@ public class GeoClusterer {
 		 * @return center of the cluster in GeoPoint.
 		 */
 		public GeoPoint getLocation() {
-			return center_;
+			return center;
 		}
 
 		/**
 		 * clears selected state.
 		 */
 		public void clearSelect() {
-			clusterMarker_.clearSelect();
+			clusterMarker.clearSelect();
 		}
 
 		/**
@@ -424,7 +421,7 @@ public class GeoClusterer {
 		 * @return true if selected.
 		 */
 		public boolean isSelected() {
-			return clusterMarker_ != null && clusterMarker_.isSelected();
+			return clusterMarker != null && clusterMarker.isSelected();
 		}
 
 		/**
@@ -433,7 +430,7 @@ public class GeoClusterer {
 		 * @return zoom level of the cluster.
 		 */
 		public int getZoomLevel() {
-			return zoom_;
+			return zoom;
 		}
 
 		/**
@@ -441,8 +438,8 @@ public class GeoClusterer {
 		 *
 		 * @return list of GeoItem within cluster.
 		 */
-		public List<GeoItem> getItems() {
-			return items_;
+		public List<GeoItem> getItemsOfCluster() {
+			return itemsOfCluster;
 		}
 
 		/**
@@ -450,7 +447,7 @@ public class GeoClusterer {
 		 * calls GeoCluster.onNotifyDraw.
 		 */
 		public void onNotifyDrawFromMarker() {
-			clusterer_.onNotifyDrawFromCluster();
+			clusterer.onNotifyDrawFromCluster();
 		}
 
 		/**
@@ -458,35 +455,35 @@ public class GeoClusterer {
 		 *
 		 * @param flg true if the tap event was captured, else false.
 		 */
-		public void onTapCalledFromMarker(final boolean flg) {
-			clusterer_.onTapCalledFromCluster(this, flg);
+		public void onTapCalledFromMarker(boolean flg) {
+			clusterer.onTapCalledFromCluster(this, flg);
 		}
 
 		/**
 		 * clears cluster object.
 		 */
 		public void clear() {
-			if (clusterMarker_ != null) {
-				final List<Overlay> mapOverlays = mapView_.getOverlays();
-				if (mapOverlays.contains(clusterMarker_)) {
-					mapOverlays.remove(clusterMarker_);
+			if (clusterMarker != null) {
+				List<Overlay> mapOverlays = mapView.getOverlays();
+				if (mapOverlays.contains(clusterMarker)) {
+					mapOverlays.remove(clusterMarker);
 				}
-				clusterMarker_ = null;
+				clusterMarker = null;
 			}
-			items_ = null;
+			itemsOfCluster = null;
 		}
 
 		/**
 		 * redraw cluster. if needed create ClusterMarker object.
 		 */
 		public void redraw() {
-			if (!isInBounds(clusterer_.getCurBounds())) {
+			if (!isInBounds(clusterer.getCurBounds())) {
 				return;
 			}
-			if (clusterMarker_ == null) {
-				clusterMarker_ = new ClusterMarker(this, markerIconBmps_, screenDensity_);
-				final List<Overlay> mapOverlays = mapView_.getOverlays();
-				mapOverlays.add(clusterMarker_);
+			if (clusterMarker == null) {
+				clusterMarker = new ClusterMarker(this, markerIconBmps, screenDensity);
+				List<Overlay> mapOverlays = mapView.getOverlays();
+				mapOverlays.add(clusterMarker);
 			}
 		}
 
@@ -496,17 +493,17 @@ public class GeoClusterer {
 		 * @param bounds bounds
 		 * @return true if bounds are within this cluster size.
 		 */
-		protected boolean isInBounds(final GeoBounds bounds) {
-			if (center_ == null) {
+		protected boolean isInBounds(GeoBounds bounds) {
+			if (center == null) {
 				return false;
 			}
-			final Projection pro = mapView_.getProjection();
-			final Point nw = pro.toPixels(bounds.getNorthWest(), null);
-			final Point se = pro.toPixels(bounds.getSouthEast(), null);
-			final Point centxy = pro.toPixels(center_, null);
-			int gridSizePx = (int) (gridSize * screenDensity_ + 0.5f);
-			if (zoom_ != mapView_.getZoomLevel()) {
-				final int diff = mapView_.getZoomLevel() - zoom_;
+			Projection pro = mapView.getProjection();
+			Point nw = pro.toPixels(bounds.getNorthWest(), null);
+			Point se = pro.toPixels(bounds.getSouthEast(), null);
+			Point centxy = pro.toPixels(center, null);
+			int gridSizePx = (int) (gridSize * screenDensity + 0.5f);
+			if (zoom != mapView.getZoomLevel()) {
+				int diff = mapView.getZoomLevel() - zoom;
 				gridSizePx = (int) (Math.pow(2, diff) * gridSizePx);
 			}
 			boolean inViewport = true;

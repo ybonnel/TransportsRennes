@@ -73,18 +73,18 @@ public class GetStationHandler extends KeolisHandler<Station> {
 	private static final String LASTUPDATE = "lastupdate";
 
 	@Override
-	protected final String getBaliseData() {
+	protected String getBaliseData() {
 		return STATION;
 	}
 
 	@Override
-	protected final Station getNewObjetKeolis() {
+	protected Station getNewObjetKeolis() {
 		return new Station();
 	}
 
-	@SuppressWarnings({"IfStatementWithTooManyBranches"})
+	@SuppressWarnings({"IfStatementWithTooManyBranches", "OverlyComplexMethod"})
 	@Override
-	protected final void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
+	protected void remplirObjectKeolis(Station currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NUMBER)) {
 			currentObjectKeolis.number = contenuOfBalise;
 		} else if (baliseName.equals(NAME)) {
