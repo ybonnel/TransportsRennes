@@ -23,7 +23,7 @@ import java.io.Serializable;
  *
  * @author ybonnel
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "UnusedDeclaration"})
 public class PointDeVente extends ObjetWithDistance implements Serializable {
 	/**
 	 * Nom du point de vente.

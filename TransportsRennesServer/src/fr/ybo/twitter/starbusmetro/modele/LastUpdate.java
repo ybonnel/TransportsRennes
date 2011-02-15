@@ -18,7 +18,8 @@ import java.util.Date;
 
 public class LastUpdate {
 
-	private static LastUpdate instance = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static LastUpdate instance;
 
 	public static synchronized LastUpdate getInstance() {
 		if (instance == null) {
@@ -28,20 +29,21 @@ public class LastUpdate {
 	}
 
 	private LastUpdate() {
+		super();
 	}
 
 	// 5 minutes.
-	private final static long ECART_UPDATE = 300000;
+	private static final long ECART_UPDATE = 300000;
 
-	private Date lastUpdate = null;
+	private Date lastUpdate;
 
 	public synchronized boolean isUpdate() {
-		Date dateCourante = new Date();
+		final Date dateCourante = new Date();
 		if (lastUpdate == null) {
 			lastUpdate = dateCourante;
 			return false;
 		} else {
-			return !((dateCourante.getTime() - lastUpdate.getTime()) > ECART_UPDATE);
+			return !(dateCourante.getTime() - lastUpdate.getTime() > ECART_UPDATE);
 		}
 	}
 

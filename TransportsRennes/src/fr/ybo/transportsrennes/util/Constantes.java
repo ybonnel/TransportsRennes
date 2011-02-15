@@ -15,6 +15,10 @@
 package fr.ybo.transportsrennes.util;
 
 
-public class Constantes {
+public final class Constantes {
 	public static final String UA_ACCOUNT = "UA-20831542-1";
+
+	private Constantes() {
+		super();
+	}
 }

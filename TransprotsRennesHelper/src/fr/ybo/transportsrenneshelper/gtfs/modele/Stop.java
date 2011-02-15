@@ -18,6 +18,7 @@ import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterDouble;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("stops.txt")
 public class Stop {
 

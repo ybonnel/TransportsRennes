@@ -26,63 +26,67 @@ import fr.ybo.transportsrennes.TransportsRennesApplication;
 
 public class MenuAccueil {
 
-	protected static final int GROUP_ID = 99;
-	protected static final int MENU_ID = 99;
+	private static final int GROUP_ID = 99;
+	private static final int MENU_ID = 99;
 
-	protected static void addMenu(Menu menu) {
+	private MenuAccueil() {
+		super();
+	}
+
+	private static void addMenu(final Menu menu) {
 		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_accueil).setIcon(R.drawable.ic_menu_home);
 	}
 
-	protected static boolean onOptionsItemSelected(Context context, MenuItem item) {
-		switch (item.getItemId()) {
-			case MENU_ID:
-				Intent intent = new Intent(context, TransportsRennes.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				context.startActivity(intent);
-				return true;
+	@SuppressWarnings({"BooleanMethodNameMustStartWithQuestion"})
+	private static boolean onOptionsItemSelected(final Context context, final MenuItem item) {
+		if (MENU_ID == item.getItemId()) {
+			final Intent intent = new Intent(context, TransportsRennes.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			context.startActivity(intent);
+			return true;
 		}
 		return false;
 	}
 
-	public static abstract class ListActivity extends android.app.ListActivity {
+	public abstract static class ListActivity extends android.app.ListActivity {
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView("/" + this.getClass().getSimpleName());
+			TransportsRennesApplication.getTraker().trackPageView("/" + getClass().getSimpleName());
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			super.onCreateOptionsMenu(menu);
 			addMenu(menu);
 			return true;
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			super.onOptionsItemSelected(item);
 			return MenuAccueil.onOptionsItemSelected(this, item);
 		}
 	}
 
-	public static abstract class Activity extends android.app.Activity {
+	public abstract static class Activity extends android.app.Activity {
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView("/" + this.getClass().getSimpleName());
+			TransportsRennesApplication.getTraker().trackPageView("/" + getClass().getSimpleName());
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			super.onCreateOptionsMenu(menu);
 			addMenu(menu);
 			return true;
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			super.onOptionsItemSelected(item);
 			return MenuAccueil.onOptionsItemSelected(this, item);
 		}

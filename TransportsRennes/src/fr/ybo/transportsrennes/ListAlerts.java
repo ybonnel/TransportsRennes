@@ -20,8 +20,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -30,6 +30,7 @@ import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.LogYbo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -45,18 +46,18 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 	private ProgressDialog myProgressDialog;
 
-	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>());
+	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
 		setListAdapter(new AlertAdapter(this, alerts));
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Alert alert = (Alert) ((ListView) adapterView).getItemAtPosition(position);
+				final Serializable alert = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
 				final Intent intent = new Intent(ListAlerts.this, DetailAlert.class);
 				intent.putExtra("alert", alert);
 				startActivity(intent);
@@ -66,7 +67,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur = false;
+			private boolean erreur;
 
 			@Override
 			protected void onPreExecute() {
@@ -77,9 +78,9 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@Override
 			protected Void doInBackground(final Void... pParams) {
 				try {
-					for (Alert alerte : keolis.getAlerts()) {
+					for (final Alert alerte : keolis.getAlerts()) {
 						while (alerte.lines.size() > 1) {
-							Alert newAlerte = new Alert(alerte);
+							final Alert newAlerte = new Alert(alerte);
 							newAlerte.lines.add(alerte.lines.remove(0));
 							alerts.add(newAlerte);
 						}
@@ -94,15 +95,15 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void pResult) {
-				((ArrayAdapter<Alert>) getListAdapter()).notifyDataSetChanged();
+			protected void onPostExecute(final Void result) {
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
+					final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
 					toast.show();
-					ListAlerts.this.finish();
+					finish();
 				}
-				super.onPostExecute(pResult);
+				super.onPostExecute(result);
 			}
 		}.execute();
 	}

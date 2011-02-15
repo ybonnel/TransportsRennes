@@ -14,7 +14,7 @@
 
 package fr.ybo.transportsrenneshelper.moteurcsv.modele;
 
-import fr.ybo.transportsrenneshelper.moteurcsv.ErreurMoteurCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterCsv;
 
 import java.lang.reflect.Constructor;
@@ -22,10 +22,11 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("UnusedDeclaration")
 public class ChampCsv {
 
 	private final Class<? extends AdapterCsv<?>> adapter;
-	private static Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>();
+	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(10);
 	private final Field field;
 
 	public ChampCsv(final Class<? extends AdapterCsv<?>> adapter, final Field field) {
@@ -49,7 +50,7 @@ public class ChampCsv {
 				final Constructor<? extends AdapterCsv<?>> constructeur = adapter.getConstructor((Class<?>[]) null);
 				mapAdapters.put(adapter, constructeur.newInstance((Object[]) null));
 			} catch (Exception e) {
-				throw new ErreurMoteurCsv(e);
+				throw new MoteurCsvException(e);
 			}
 		}
 		return (AdapterCsv<Object>) mapAdapters.get(adapter);

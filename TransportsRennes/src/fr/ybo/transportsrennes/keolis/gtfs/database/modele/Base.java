@@ -17,15 +17,17 @@ package fr.ybo.transportsrennes.keolis.gtfs.database.modele;
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Base {
 
-	private final Map<Class<?>, Table> mapClassTable = new HashMap<Class<?>, Table>();
+	private final Map<Class<?>, Table> mapClassTable = new HashMap<Class<?>, Table>(10);
 
-	public Base(final List<Class<?>> classes) throws DataBaseException {
+	public Base(final Iterable<Class<?>> classes) throws DataBaseException {
+		super();
 		for (final Class<?> clazz : classes) {
 			mapClassTable.put(clazz, new Table(clazz));
 		}
@@ -73,8 +75,9 @@ public class Base {
 		mapClassTable.get(clazz).insert(db, entite);
 	}
 
+	@SuppressWarnings({"SameParameterValue"})
 	public <Entite> List<Entite> select(final SQLiteDatabase db, final Entite entite, final String selection,
-	                                    final List<String> selectionArgs, final String orderBy) throws DataBaseException {
+	                                    final Collection<String> selectionArgs, final String orderBy) throws DataBaseException {
 		final Class<?> clazz = entite.getClass();
 		if (!mapClassTable.containsKey(clazz)) {
 			throw new DataBaseException("La classe " + clazz.getSimpleName() + " n'est pas gérée par la base.");

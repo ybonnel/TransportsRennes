@@ -21,11 +21,11 @@ import java.util.Comparator;
 
 public abstract class ObjetWithDistance {
 
-	public transient Integer distance = null;
+	public transient Integer distance;
 
 	public static class ComparatorDistance implements Comparator<ObjetWithDistance> {
 
-		public int compare(ObjetWithDistance o1, ObjetWithDistance o2) {
+		public int compare(final ObjetWithDistance o1, final ObjetWithDistance o2) {
 			if (o1 == null || o2 == null || o1.distance == null || o2.distance == null) {
 				return 0;
 			}
@@ -51,9 +51,9 @@ public abstract class ObjetWithDistance {
 	 *
 	 * @param pCurrentLocation la location courante.
 	 */
-	public void calculDistance(Location pCurrentLocation) {
+	public void calculDistance(final Location pCurrentLocation) {
 		if (pCurrentLocation != null) {
-			float[] distanceResult = new float[1];
+			final float[] distanceResult = new float[1];
 			Location.distanceBetween(pCurrentLocation.getLatitude(), pCurrentLocation.getLongitude(), getLatitude(), getLongitude(), distanceResult);
 			distance = (int) distanceResult[0];
 		}
@@ -64,14 +64,14 @@ public abstract class ObjetWithDistance {
 	 *
 	 * @return la distance formattée.
 	 */
-	public String formatDistance() {
+	public CharSequence formatDistance() {
 		if (distance == null) {
 			return "";
 		}
 		if (distance < NB_METRES_BY_KM) {
 			return distance + "m";
 		} else {
-			double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
+			final double distanceKm = Math.round((double) distance / (NB_METRES_BY_KM / MULTI_DECIMALES_FOR_KM)) / MULTI_DECIMALES_FOR_KM;
 			return distanceKm + "km";
 		}
 	}

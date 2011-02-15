@@ -21,42 +21,45 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class CompressionTripAndCalendar {
 
 	private class Trajet {
 
-		private Trajet(List<StopTime> stopTimes) {
+		private Trajet(final List<StopTime> stopTimes) {
+			super();
 			this.stopTimes = stopTimes;
 			key = genereKey();
 		}
 
 		private String genereKey() {
 			Collections.sort(stopTimes, new Comparator<StopTime>() {
-				public int compare(StopTime o1, StopTime o2) {
-					return (o1.stopSequence < o2.stopSequence ? -1 : (o1.stopSequence == o2.stopSequence ? 0 : 1));
+				public int compare(final StopTime o1, final StopTime o2) {
+					return o1.stopSequence < o2.stopSequence ? -1 : o1.stopSequence == o2.stopSequence ? 0 : 1;
 				}
 			});
-			StringBuilder keyBuilder = new StringBuilder();
-			for (StopTime stopTime : stopTimes) {
+			final StringBuilder keyBuilder = new StringBuilder();
+			for (final StopTime stopTime : stopTimes) {
 				keyBuilder.append(stopTime.stopId);
 				keyBuilder.append(stopTime.heureDepart);
 			}
 			return keyBuilder.toString();
 		}
 
-		private String key;
+		private final String key;
 
-		public List<StopTime> stopTimes;
+		public final List<StopTime> stopTimes;
 
-		public List<String> tripIds = new ArrayList<String>();
+		public final List<String> tripIds = new ArrayList<String>(1000);
 
-		public void addTripId(String tripId, Calendar calendar) {
+		public void addTripId(final String tripId, final Calendar calendar) {
 			if (this.calendar == null) {
 				this.calendar = new Calendar(calendar);
 			} else {
@@ -65,20 +68,19 @@ public class CompressionTripAndCalendar {
 			tripIds.add(tripId);
 		}
 
-		public Calendar calendar = null;
+		public Calendar calendar;
 
 		public String getKey() {
 			return key;
 		}
 	}
 
-	private Map<String, Trajet> trajets = new HashMap<String, Trajet>();
+	private final Map<String, CompressionTripAndCalendar.Trajet> trajets = new HashMap<String, CompressionTripAndCalendar.Trajet>(1000);
 
 
 	public void compressTripsAndCalendars() {
-		Trajet trajet;
-		for (Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
-			trajet = new Trajet(GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id));
+		for (final Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
+			Trajet trajet = new Trajet(GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id));
 			if (!trajets.containsKey(trajet.getKey())) {
 				trajets.put(trajet.getKey(), trajet);
 			}
@@ -87,33 +89,34 @@ public class CompressionTripAndCalendar {
 	}
 
 	public void replaceTripGenereCalendarAndCompressStopTimes() {
-		List<Trip> newTrips = new ArrayList<Trip>();
-		List<StopTime> newStopTimes = new ArrayList<StopTime>();
-		Trip tripCourant;
+		final Collection<Trip> newTrips = new ArrayList<Trip>(1000);
+		final Collection<StopTime> newStopTimes = new ArrayList<StopTime>(1000);
 		int calendarId = 1;
-		Map<Calendar, String> newCalendars = new HashMap<Calendar, String>();
+		final Map<Calendar, String> newCalendars = new HashMap<Calendar, String>(20);
 		int tripId = 1;
-		for (Trajet trajet : trajets.values()) {
-			tripCourant = GestionnaireGtfs.getInstance().getMapTrips().get(trajet.tripIds.get(0));
-			tripCourant.id = String.valueOf(tripId++);
+		for (final CompressionTripAndCalendar.Trajet trajet : trajets.values()) {
+			Trip tripCourant = GestionnaireGtfs.getInstance().getMapTrips().get(trajet.tripIds.get(0));
+			tripCourant.id = String.valueOf(tripId);
+			tripId++;
 			if (!newCalendars.containsKey(trajet.calendar)) {
-				trajet.calendar.id = String.valueOf(calendarId++);
+				trajet.calendar.id = String.valueOf(calendarId);
+				calendarId++;
 				newCalendars.put(trajet.calendar, trajet.calendar.id);
 			}
 			tripCourant.serviceId = newCalendars.get(trajet.calendar);
 			newTrips.add(tripCourant);
-			for (StopTime stopTime : trajet.stopTimes) {
+			for (final StopTime stopTime : trajet.stopTimes) {
 				stopTime.tripId = tripCourant.id;
 				newStopTimes.add(stopTime);
 			}
 		}
 		GestionnaireGtfs.getInstance().getMapTrips().clear();
-		for (Trip trip : newTrips) {
+		for (final Trip trip : newTrips) {
 			GestionnaireGtfs.getInstance().getMapTrips().put(trip.id, trip);
 		}
 		GestionnaireGtfs.getInstance().getMapStopTimes().clear();
 		GestionnaireGtfs.getInstance().resetMapStopTimesByTripId();
-		for (StopTime stopTime : newStopTimes) {
+		for (final StopTime stopTime : newStopTimes) {
 			if (GestionnaireGtfs.getInstance().getMapStopTimes().containsKey(stopTime.getKey())) {
 				System.err.println("StopTimes présent plusieurs fois après compression :");
 				System.err.println("Ancien : " + GestionnaireGtfs.getInstance().getMapStopTimes().get(stopTime.getKey()).toString());
@@ -122,7 +125,7 @@ public class CompressionTripAndCalendar {
 			GestionnaireGtfs.getInstance().getMapStopTimes().put(stopTime.getKey(), stopTime);
 		}
 		GestionnaireGtfs.getInstance().getMapCalendars().clear();
-		for (Calendar calendar : newCalendars.keySet()) {
+		for (final Calendar calendar : newCalendars.keySet()) {
 			GestionnaireGtfs.getInstance().getMapCalendars().put(calendar.id, calendar);
 		}
 	}

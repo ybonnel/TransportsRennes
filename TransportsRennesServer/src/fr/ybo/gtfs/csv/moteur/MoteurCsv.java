@@ -21,10 +21,11 @@ import fr.ybo.gtfs.csv.moteur.modele.ClassCsv;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MoteurCsv {
@@ -35,7 +36,7 @@ public class MoteurCsv {
 
 	private ClassCsv classCourante;
 
-	public MoteurCsv(final List<Class<?>> classes) {
+	public MoteurCsv(final Iterable<Class<?>> classes) {
 		for (final Class<?> clazz : classes) {
 			scannerClass(clazz);
 		}
@@ -81,12 +82,13 @@ public class MoteurCsv {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <Objet> List<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz) throws IOException {
+	public <Objet> Iterable<Objet> parseFile(BufferedReader bufReader, AnnotatedElement clazz) throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
-		String ligne;
-		List<Objet> objets = new ArrayList<Objet>();
-		while ((ligne = bufReader.readLine()) != null) {
+		final Collection<Objet> objets = new ArrayList<Objet>();
+		String ligne = bufReader.readLine();
+		while (ligne != null) {
 			objets.add((Objet) creerObjet(ligne));
+			ligne = bufReader.readLine();
 		}
 		return objets;
 	}

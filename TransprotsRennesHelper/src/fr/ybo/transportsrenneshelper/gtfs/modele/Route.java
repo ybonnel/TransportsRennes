@@ -17,6 +17,7 @@ package fr.ybo.transportsrenneshelper.gtfs.modele;
 import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("routes.txt")
 public class Route {
 

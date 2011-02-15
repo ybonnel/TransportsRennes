@@ -31,8 +31,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -42,6 +43,7 @@ import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -59,7 +61,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	/**
 	 * Permet d'accéder aux apis keolis.
 	 */
-	private Keolis keolis = Keolis.getInstance();
+	private final Keolis keolis = Keolis.getInstance();
 
 	/**
 	 * Le locationManager permet d'accéder au GPS du téléphone.
@@ -69,11 +71,11 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	/**
 	 * Liste des stations.
 	 */
-	private List<ParkRelai> parkRelaiIntent = null;
-	private final List<ParkRelai> parkRelais = Collections.synchronizedList(new ArrayList<ParkRelai>());
-	private final List<ParkRelai> parkRelaisFiltres = Collections.synchronizedList(new ArrayList<ParkRelai>());
+	private List<ParkRelai> parkRelaiIntent;
+	private final List<ParkRelai> parkRelais = Collections.synchronizedList(new ArrayList<ParkRelai>(4));
+	private final List<ParkRelai> parkRelaisFiltres = Collections.synchronizedList(new ArrayList<ParkRelai>(4));
 
-	private Location lastLocation = null;
+	private Location lastLocation;
 
 	/**
 	 * Permet de mettre à jour les distances des parc relais par rapport à une
@@ -82,48 +84,48 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	 * @param location position courante.
 	 */
 	@SuppressWarnings("unchecked")
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0))) {
+	private void mettreAjoutLoc(final Location location) {
+		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
 			synchronized (parkRelais) {
-				for (ParkRelai parkRelai : parkRelais) {
+				for (final ParkRelai parkRelai : parkRelais) {
 					parkRelai.calculDistance(location);
 				}
 				Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
 			}
 			metterAJourListeParkRelais();
-			((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
-	public void onLocationChanged(Location arg0) {
+	public void onLocationChanged(final Location arg0) {
 		mettreAjoutLoc(arg0);
 	}
 
-	public void onProviderDisabled(String arg0) {
+	public void onProviderDisabled(final String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onProviderEnabled(String arg0) {
+	public void onProviderEnabled(final String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+	public void onStatusChanged(final String arg0, final int arg1, final Bundle arg2) {
 	}
 
 	/**
 	 * Active le GPS.
 	 */
 	private void activeGps() {
-		Criteria criteria = new Criteria();
+		final Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
+		final List<String> providers = locationManager.getProviders(criteria, true);
 		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000l, 20l, this);
+		for (final String providerName : providers) {
+			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
 			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
 				gpsTrouve = true;
 			}
@@ -153,16 +155,16 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 	@SuppressWarnings("unchecked")
 	private void metterAJourListeParkRelais() {
-		String query = editText.getText().toString().toUpperCase();
+		final String query = editText.getText().toString().toUpperCase();
 		synchronized (parkRelais) {
 			parkRelaisFiltres.clear();
-			for (ParkRelai parkRelai : parkRelais) {
+			for (final ParkRelai parkRelai : parkRelais) {
 				if (parkRelai.name.toUpperCase().contains(query.toUpperCase())) {
 					parkRelaisFiltres.add(parkRelai);
 				}
 			}
 		}
-		((ArrayAdapter<ParkRelai>) listView.getAdapter()).notifyDataSetChanged();
+		((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 	}
 
 	private EditText editText;
@@ -170,33 +172,33 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listparkrelais);
-		parkRelaiIntent = (ArrayList<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("parcRelais"));
+		parkRelaiIntent = (List<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("parcRelais"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ParkRelaiAdapter(this, parkRelaisFiltres));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listparkrelai_input);
 		editText.addTextChangedListener(new TextWatcher() {
-			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 			}
 
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 			}
 
-			public void afterTextChanged(Editable editable) {
+			public void afterTextChanged(final Editable editable) {
 				metterAJourListeParkRelais();
 			}
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				ParkRelaiAdapter adapter = (ParkRelaiAdapter) ((ListView) adapterView).getAdapter();
-				ParkRelai parkRelai = adapter.getItem(position);
-				String _lat = Double.toString(parkRelai.getLatitude());
-				String _lon = Double.toString(parkRelai.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + _lat + "," + _lon);
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final ParkRelaiAdapter adapter = (ParkRelaiAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final ParkRelai parkRelai = adapter.getItem(position);
+				final String _lat = Double.toString(parkRelai.getLatitude());
+				final String _lon = Double.toString(parkRelai.getLongitude());
+				final Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + _lat + "," + _lon);
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
@@ -205,7 +207,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 		registerForContextMenu(listView);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur = false;
+			private boolean erreur;
 
 			@Override
 			protected void onPreExecute() {
@@ -220,7 +222,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 						parkRelais.clear();
 						parkRelais.addAll(parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
 						Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-							public int compare(ParkRelai o1, ParkRelai o2) {
+							public int compare(final ParkRelai o1, final ParkRelai o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
 							}
 						});
@@ -239,22 +241,22 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			@SuppressWarnings("unchecked")
 			protected void onPostExecute(final Void pResult) {
 				myProgressDialog.dismiss();
-				if (!erreur) {
+				if (erreur) {
+					final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
+					toast.show();
+					finish();
+				} else {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-						public void onClick(View view) {
-							Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
-							ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>();
+						public void onClick(final View view) {
+							final Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
+							final ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>();
 							parkRelaisSerializable.addAll(parkRelaisFiltres);
 							intent.putExtra("parkRelais", parkRelaisSerializable);
 							startActivity(intent);
 						}
 					});
 					activeGps();
-					((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
-				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
-					toast.show();
-					ListParkRelais.this.finish();
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 				super.onPostExecute(pResult);
 			}
@@ -266,80 +268,79 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	private static final int MENU_REFRESH = Menu.FIRST;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
+		final MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
 		item.setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
-		switch (item.getItemId()) {
-			case MENU_REFRESH:
-				new AsyncTask<Void, Void, Void>() {
+		if (MENU_REFRESH == item.getItemId()) {
+			new AsyncTask<Void, Void, Void>() {
 
-					private boolean erreur = false;
+				private boolean erreur;
 
-					@Override
-					protected void onPreExecute() {
-						super.onPreExecute();
-						myProgressDialog = ProgressDialog.show(ListParkRelais.this, "", getString(R.string.dialogRequeteVeloStar), true);
-					}
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+					myProgressDialog = ProgressDialog.show(ListParkRelais.this, "", getString(R.string.dialogRequeteVeloStar), true);
+				}
 
-					@Override
-					protected Void doInBackground(final Void... pParams) {
-						try {
-							synchronized (parkRelais) {
-								parkRelais.clear();
-								if (parkRelaiIntent == null) {
-									parkRelais.addAll(keolis.getParkRelais());
-								} else {
-									ArrayList<String> ids = new ArrayList<String>();
-									for (ParkRelai parc : parkRelaiIntent) {
-										ids.add(parc.name);
-									}
-									for (ParkRelai parc : keolis.getParkRelais()) {
-										if (ids.contains(parc.name)) {
-											parkRelais.add(parc);
-										}
+				@Override
+				protected Void doInBackground(final Void... pParams) {
+					try {
+						synchronized (parkRelais) {
+							parkRelais.clear();
+							if (parkRelaiIntent == null) {
+								parkRelais.addAll(keolis.getParkRelais());
+							} else {
+								final Collection<String> ids = new ArrayList<String>();
+								for (final ParkRelai parc : parkRelaiIntent) {
+									ids.add(parc.name);
+								}
+								for (final ParkRelai parc : keolis.getParkRelais()) {
+									if (ids.contains(parc.name)) {
+										parkRelais.add(parc);
 									}
 								}
-								Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-									public int compare(ParkRelai o1, ParkRelai o2) {
-										return o1.name.compareToIgnoreCase(o2.name);
-									}
-								});
-								parkRelaisFiltres.clear();
-								parkRelaisFiltres.addAll(parkRelais);
 							}
-						} catch (Exception exception) {
-							LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
-							erreur = true;
+							Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+								public int compare(final ParkRelai o1, final ParkRelai o2) {
+									return o1.name.compareToIgnoreCase(o2.name);
+								}
+							});
+							parkRelaisFiltres.clear();
+							parkRelaisFiltres.addAll(parkRelais);
 						}
-
-						return null;
+					} catch (Exception exception) {
+						LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
+						erreur = true;
 					}
 
-					@Override
-					@SuppressWarnings("unchecked")
-					protected void onPostExecute(final Void pResult) {
-						myProgressDialog.dismiss();
-						if (!erreur) {
-							metterAJourListeParkRelais();
-							mettreAjoutLoc(lastLocation);
-							((ArrayAdapter<ParkRelai>) getListAdapter()).notifyDataSetChanged();
-						} else {
-							Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
-							toast.show();
-							ListParkRelais.this.finish();
-						}
-						super.onPostExecute(pResult);
+					return null;
+				}
+
+				@Override
+				@SuppressWarnings("unchecked")
+				protected void onPostExecute(final Void pResult) {
+					myProgressDialog.dismiss();
+					if (erreur) {
+						final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
+						toast.show();
+						finish();
+					} else {
+						metterAJourListeParkRelais();
+						mettreAjoutLoc(lastLocation);
+						((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					}
-				}.execute();
-				return true;
+					super.onPostExecute(pResult);
+				}
+			}.execute();
+			return true;
 		}
 		return false;
 	}

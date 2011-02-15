@@ -26,9 +26,11 @@ public class GeocoderRequest {
 	private LatLng location;        //LatLng about which to search. Optional.
 
 	public GeocoderRequest() {
+		super();
 	}
 
-	public GeocoderRequest(String address, String language) {
+	public GeocoderRequest(final String address, final String language) {
+		super();
 		this.address = address;
 		this.language = language;
 	}
@@ -37,7 +39,7 @@ public class GeocoderRequest {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(final String address) {
 		this.address = address;
 	}
 
@@ -45,7 +47,7 @@ public class GeocoderRequest {
 		return bounds;
 	}
 
-	public void setBounds(LatLngBounds bounds) {
+	public void setBounds(final LatLngBounds bounds) {
 		this.bounds = bounds;
 	}
 
@@ -53,7 +55,7 @@ public class GeocoderRequest {
 		return language;
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		this.language = language;
 	}
 
@@ -61,7 +63,7 @@ public class GeocoderRequest {
 		return location;
 	}
 
-	public void setLocation(LatLng location) {
+	public void setLocation(final LatLng location) {
 		this.location = location;
 	}
 
@@ -69,7 +71,7 @@ public class GeocoderRequest {
 		return region;
 	}
 
-	public void setRegion(String region) {
+	public void setRegion(final String region) {
 		this.region = region;
 	}
 
@@ -86,16 +88,17 @@ public class GeocoderRequest {
 		return sb.toString();
 	}
 
+	@SuppressWarnings({"OverlyComplexBooleanExpression"})
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		GeocoderRequest that = (GeocoderRequest) o;
+		final GeocoderRequest that = (GeocoderRequest) obj;
 
 		return !(address != null ? !address.equals(that.address) : that.address != null) &&
 				!(bounds != null ? !bounds.equals(that.bounds) : that.bounds != null) &&
@@ -105,6 +108,7 @@ public class GeocoderRequest {
 
 	}
 
+	@SuppressWarnings({"MethodWithMoreThanThreeNegations"})
 	@Override
 	public int hashCode() {
 		int result = address != null ? address.hashCode() : 0;

@@ -17,7 +17,13 @@ package fr.ybo.transportsrennes;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import com.google.android.maps.*;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
@@ -33,25 +39,25 @@ public class ArretsOnMap extends MapActivity {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-		Ligne myLigne = (Ligne) getIntent().getSerializableExtra("ligne");
-		String currentDirection = getIntent().getStringExtra("direction");
+		final Ligne myLigne = (Ligne) getIntent().getSerializableExtra("ligne");
+		final String currentDirection = getIntent().getStringExtra("direction");
 
-		MapView mapView = (MapView) findViewById(R.id.mapview);
+		final MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 
-		MapController mc = mapView.getController();
+		final MapController mc = mapView.getController();
 		mapView.setSatellite(true);
 
 		// Creation du geo point
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = getResources().getDrawable(IconeLigne.getMarkeeResource(myLigne.nomCourt));
-		MapItemizedOverlayArret itemizedoverlay = new MapItemizedOverlayArret(drawable, this);
-		List<String> selectionArgs = new ArrayList<String>();
+		final List<Overlay> mapOverlays = mapView.getOverlays();
+		final Drawable drawable = getResources().getDrawable(IconeLigne.getMarkeeResource(myLigne.nomCourt));
+		final MapItemizedOverlayArret itemizedoverlay = new MapItemizedOverlayArret(drawable, this);
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
-		StringBuilder requete = new StringBuilder();
+		final StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" Direction.direction as direction, Arret.latitude as latitude, Arret.longitude ");
 		requete.append("from ArretRoute, Arret, Direction ");
@@ -64,7 +70,7 @@ public class ArretsOnMap extends MapActivity {
 			selectionArgs.add(currentDirection);
 		}
 		requete.append(" order by ArretRoute.sequence");
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		int minLatitude = Integer.MAX_VALUE;
 		int maxLatitude = Integer.MIN_VALUE;
 		int minLongitude = Integer.MAX_VALUE;
@@ -72,12 +78,12 @@ public class ArretsOnMap extends MapActivity {
 
 
 		while (cursor.moveToNext()) {
-			String id = cursor.getString(cursor.getColumnIndex("_id"));
-			String nom = cursor.getString(cursor.getColumnIndex("arretName"));
-			String direction = cursor.getString(cursor.getColumnIndex("direction"));
-			int latitude = (int) (cursor.getDouble(cursor.getColumnIndex("latitude")) * 1E6);
-			int longitude = (int) (cursor.getDouble(cursor.getColumnIndex("longitude")) * 1E6);
-			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+			final String id = cursor.getString(cursor.getColumnIndex("_id"));
+			final String nom = cursor.getString(cursor.getColumnIndex("arretName"));
+			final String direction = cursor.getString(cursor.getColumnIndex("direction"));
+			final int latitude = (int) (cursor.getDouble(cursor.getColumnIndex("latitude")) * 1.0E6);
+			final int longitude = (int) (cursor.getDouble(cursor.getColumnIndex("longitude")) * 1.0E6);
+			final GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 			if (latitude < minLatitude) {
 				minLatitude = latitude;
 			}
@@ -91,8 +97,8 @@ public class ArretsOnMap extends MapActivity {
 				maxLongitude = longitude;
 			}
 
-			OverlayItem overlayitem = new OverlayItem(geoPoint, nom, direction);
-			ArretFavori arretFavori = new ArretFavori();
+			final OverlayItem overlayitem = new OverlayItem(geoPoint, nom, direction);
+			final ArretFavori arretFavori = new ArretFavori();
 			arretFavori.direction = direction;
 			arretFavori.nomArret = nom;
 			arretFavori.ligneId = myLigne.id;
@@ -126,6 +132,7 @@ public class ArretsOnMap extends MapActivity {
 		super.onPause();
 	}
 
+	@SuppressWarnings({"MethodReturnAlwaysConstant"})
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;

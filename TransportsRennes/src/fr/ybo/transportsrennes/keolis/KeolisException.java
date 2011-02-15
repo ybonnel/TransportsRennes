@@ -19,7 +19,7 @@ package fr.ybo.transportsrennes.keolis;
  *
  * @author ybonnel
  */
-public class ErreurKeolis extends RuntimeException {
+public class KeolisException extends RuntimeException {
 
 	/**
 	 * Serial.
@@ -31,7 +31,7 @@ public class ErreurKeolis extends RuntimeException {
 	 *
 	 * @param message message.
 	 */
-	public ErreurKeolis(final String message) {
+	public KeolisException(final String message) {
 		super(message);
 	}
 
@@ -41,7 +41,7 @@ public class ErreurKeolis extends RuntimeException {
 	 * @param message message.
 	 * @param cause   exception.
 	 */
-	public ErreurKeolis(final String message, final Throwable cause) {
+	public KeolisException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 

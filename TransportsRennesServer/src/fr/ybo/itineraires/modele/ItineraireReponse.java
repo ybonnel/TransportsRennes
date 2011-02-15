@@ -14,9 +14,8 @@
 
 package fr.ybo.itineraires.modele;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ItineraireReponse {
@@ -29,7 +28,7 @@ public class ItineraireReponse {
 		return erreur;
 	}
 
-	public void setErreur(String erreur) {
+	public void setErreur(final String erreur) {
 		this.erreur = erreur;
 	}
 
@@ -37,7 +36,7 @@ public class ItineraireReponse {
 		return adresseDepart;
 	}
 
-	public void setAdresseDepart(Adresse adresseDepart) {
+	public void setAdresseDepart(final Adresse adresseDepart) {
 		this.adresseDepart = adresseDepart;
 	}
 
@@ -45,19 +44,19 @@ public class ItineraireReponse {
 		return adresseArrivee;
 	}
 
-	public void setAdresseArrivee(Adresse adresseArrivee) {
+	public void setAdresseArrivee(final Adresse adresseArrivee) {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	public List<Trajet> getTrajets() {
+	public Collection<Trajet> getTrajets() {
 		if (trajets == null) {
-			trajets = new ArrayList<Trajet>();
+			trajets = new ArrayList<Trajet>(3);
 		}
 		return trajets;
 	}
 
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder("<reponse>");
+		final StringBuilder stringBuilder = new StringBuilder("<reponse>");
 		if (erreur != null) {
 			stringBuilder.append("<erreur>");
 			stringBuilder.append(erreur);
@@ -73,7 +72,7 @@ public class ItineraireReponse {
 			stringBuilder.append(adresseArrivee.toXml());
 			stringBuilder.append("</adresseArrivee>");
 		}
-		for (Trajet trajet : getTrajets()) {
+		for (final Trajet trajet : getTrajets()) {
 			stringBuilder.append("<trajet>");
 			stringBuilder.append(trajet.toXml());
 			stringBuilder.append("</trajet>");

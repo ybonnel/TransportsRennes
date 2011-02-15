@@ -20,7 +20,7 @@ public class AdapterInteger implements AdapterCsv<Integer> {
 		return Integer.valueOf(chaine);
 	}
 
-	public String toString(Integer integer) {
-		return integer.toString();
+	public String toString(final Integer objet) {
+		return objet.toString();
 	}
 }

@@ -27,7 +27,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -51,12 +60,12 @@ import java.util.List;
 public class DetailArret extends MenuAccueil.ListActivity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DetailArret.class);
-	private final static double DISTANCE_RECHERCHE_METRE = 1000.0;
-	private final static double DEGREE_LATITUDE_EN_METRES = 111192.62;
-	private final static double distanceLatitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
-	private final static double DEGREE_LONGITUDE_EN_METRES = 74452.10;
-	private final static double distanceLongitudeInDegree = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
-	private final static int DISTANCE_MAX_METRE = 151;
+	private static final double DISTANCE_RECHERCHE_METRE = 1000.0;
+	private static final double DEGREE_LATITUDE_EN_METRES = 111192.62;
+	private static final double DISTANCE_LAT_IN_DEGREE = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
+	private static final double DEGREE_LONGITUDE_EN_METRES = 74452.10;
+	private static final double DISTANCE_LNG_IN_DEGREE = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
+	private static final int DISTANCE_MAX_METRE = 151;
 
 	private boolean prochainArrets = true;
 
@@ -65,7 +74,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private Calendar calendar = Calendar.getInstance();
 	private Calendar calendarLaVeille = Calendar.getInstance();
 
-	private String clauseWhereForTodayCalendrier(Calendar calendar) {
+	private String clauseWhereForTodayCalendrier(final Calendar calendar) {
 		if (JoursFeries.isJourFerie(calendar.getTime())) {
 			return "Dimanche = 1";
 		}
@@ -98,7 +107,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			favori.arretId = getIntent().getExtras().getString("idArret");
 			favori.nomArret = getIntent().getExtras().getString("nomArret");
 			favori.direction = getIntent().getExtras().getString("direction");
-			Ligne myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+			final Ligne myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 			if (myLigne == null) {
 				finish();
 				return;
@@ -115,7 +124,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + " " + getString(R.string.vers) + " " + favori.direction);
 	}
 
-	private DetailArretAdapter construireAdapter() {
+	private ListAdapter construireAdapter() {
 		closeCurrentCursor();
 		if (prochainArrets) {
 			return construireAdapterProchainsDeparts();
@@ -123,9 +132,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		return construireAdapterAllDeparts();
 	}
 
-	private DetailArretAdapter construireAdapterAllDeparts() {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		StringBuilder requete = new StringBuilder();
+	private ListAdapter construireAdapterAllDeparts() {
+		final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+		final StringBuilder requete = new StringBuilder();
 		requete.append("select Horaire.heureDepart as _id,");
 		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
@@ -139,21 +148,21 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by Horaire.heureDepart;");
-		List<String> selectionArgs = new ArrayList<String>();
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts.");
-		long startTime = System.currentTimeMillis();
+		final long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		long elapsedTime = System.currentTimeMillis() - startTime;
+		final long elapsedTime = System.currentTimeMillis() - startTime;
 		LOG_YBO.debug(
 				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
-	private DetailArretAdapter construireAdapterProchainsDeparts() {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		StringBuilder requete = new StringBuilder();
+	private ListAdapter construireAdapterProchainsDeparts() {
+		final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+		final StringBuilder requete = new StringBuilder();
 		requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
 		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
@@ -182,19 +191,19 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Horaire.heureDepart >= :maintenant");
 		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id;");
-		List<String> selectionArgs = new ArrayList<String>();
-		int uneJournee = 24 * 60;
+		final List<String> selectionArgs = new ArrayList<String>(7);
+		final int uneJournee = 24 * 60;
 		selectionArgs.add(Integer.toString(uneJournee));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now + (uneJournee)));
+		selectionArgs.add(Integer.toString(now + uneJournee));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
-		long startTime = System.currentTimeMillis();
+		final long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		long elapsedTime = System.currentTimeMillis() - startTime;
+		final long elapsedTime = System.currentTimeMillis() - startTime;
 		LOG_YBO.debug(
 				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
@@ -216,15 +225,15 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			return;
 		}
 		gestionViewsTitle();
-		ImageView imageGoogleMap = (ImageView) findViewById(R.id.googlemap);
+		final ImageView imageGoogleMap = (ImageView) findViewById(R.id.googlemap);
 		imageGoogleMap.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			public void onClick(final View view) {
 				Arret arret = new Arret();
 				arret.id = favori.arretId;
 				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
-				String _lat = Double.toString(arret.getLatitude());
-				String _lon = Double.toString(arret.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + _lat + "," + _lon);
+				final String lat = Double.toString(arret.getLatitude());
+				final String lon = Double.toString(arret.getLongitude());
+				final Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + lat + "," + lon);
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
@@ -236,12 +245,12 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} else {
 			setListAdapter(construireAdapter());
 		}
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				DetailArretAdapter arretAdapter = (DetailArretAdapter) ((ListView) adapterView).getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Adapter arretAdapter = (DetailArretAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				final Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
 				intent.putExtra("trajetId", cursor.getInt(cursor.getColumnIndex("trajetId")));
 				intent.putExtra("sequence", cursor.getInt(cursor.getColumnIndex("sequence")));
 				startActivity(intent);
@@ -249,13 +258,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		});
 		lv.setTextFilterEnabled(true);
 
-		final ImageView correspondance = ((ImageView) findViewById(R.id.imageCorrespondance));
-		final LinearLayout detailCorrespondance = ((LinearLayout) findViewById(R.id.detailCorrespondance));
+		final ImageView correspondance = (ImageView) findViewById(R.id.imageCorrespondance);
+		final LinearLayout detailCorrespondance = (LinearLayout) findViewById(R.id.detailCorrespondance);
 		correspondance.setImageResource(R.drawable.arrow_right_float);
 		detailCorrespondance.removeAllViews();
 		detailCorrespondance.setVisibility(View.INVISIBLE);
 		correspondance.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			public void onClick(final View view) {
 				if (detailCorrespondance.getVisibility() == View.VISIBLE) {
 					correspondance.setImageResource(R.drawable.arrow_right_float);
 					detailCorrespondance.removeAllViews();
@@ -271,17 +280,17 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	}
 
 
-	private void construireCorrespondance(LinearLayout detailCorrespondance) {
+	private void construireCorrespondance(final LinearLayout detailCorrespondance) {
 		/* Recuperation de l'arretCourant */
 		Arret arretCourant = new Arret();
 		arretCourant.id = favori.arretId;
 		arretCourant = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretCourant);
-		Location locationArret = new Location("myProvider");
+		final Location locationArret = new Location("myProvider");
 		locationArret.setLatitude(arretCourant.latitude);
 		locationArret.setLongitude(arretCourant.longitude);
 
 		/** Construction requête. */
-		StringBuilder requete = new StringBuilder();
+		final StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
 		requete.append(
 				" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
@@ -291,34 +300,34 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude");
 
 		/** Paramètres de la requête */
-		double minLatitude = arretCourant.latitude - distanceLatitudeInDegree;
-		double maxLatitude = arretCourant.latitude + distanceLatitudeInDegree;
-		double minLongitude = arretCourant.longitude - distanceLongitudeInDegree;
-		double maxLongitude = arretCourant.longitude + distanceLongitudeInDegree;
-		ArrayList<String> selectionArgs = new ArrayList<String>(4);
+		final double minLatitude = arretCourant.latitude - DISTANCE_LAT_IN_DEGREE;
+		final double maxLatitude = arretCourant.latitude + DISTANCE_LAT_IN_DEGREE;
+		final double minLongitude = arretCourant.longitude - DISTANCE_LNG_IN_DEGREE;
+		final double maxLongitude = arretCourant.longitude + DISTANCE_LNG_IN_DEGREE;
+		final List<String> selectionArgs = new ArrayList<String>(4);
 		selectionArgs.add(String.valueOf(minLatitude));
 		selectionArgs.add(String.valueOf(maxLatitude));
 		selectionArgs.add(String.valueOf(minLongitude));
 		selectionArgs.add(String.valueOf(maxLongitude));
 
 		LOG_YBO.debug("Exectution de : " + requete.toString());
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 		LOG_YBO.debug("Resultat : " + cursor.getCount());
 
 		/** Recuperation des index dans le cussor */
-		int arretIdIndex = cursor.getColumnIndex("arretId");
-		int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		int directionIndex = cursor.getColumnIndex("direction");
-		int arretNomIndex = cursor.getColumnIndex("arretNom");
-		int latitudeIndex = cursor.getColumnIndex("latitude");
-		int longitudeIndex = cursor.getColumnIndex("longitude");
-		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-		int nomLongIndex = cursor.getColumnIndex("nomLong");
+		final int arretIdIndex = cursor.getColumnIndex("arretId");
+		final int ligneIdIndex = cursor.getColumnIndex("ligneId");
+		final int directionIndex = cursor.getColumnIndex("direction");
+		final int arretNomIndex = cursor.getColumnIndex("arretNom");
+		final int latitudeIndex = cursor.getColumnIndex("latitude");
+		final int longitudeIndex = cursor.getColumnIndex("longitude");
+		final int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+		final int nomLongIndex = cursor.getColumnIndex("nomLong");
 
-		List<Arret> arrets = new ArrayList<Arret>();
+		final List<Arret> arrets = new ArrayList<Arret>(20);
 
 		while (cursor.moveToNext()) {
-			Arret arret = new Arret();
+			final Arret arret = new Arret();
 			arret.id = cursor.getString(arretIdIndex);
 			arret.favori = new ArretFavori();
 			arret.favori.arretId = arret.id;
@@ -342,18 +351,18 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		Collections.sort(arrets, new Arret.ComparatorDistance());
 
 		for (final Arret arret : arrets) {
-			RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
-			ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
+			final RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
+			final ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
 			iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
-			TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
+			final TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
 			arretDirection.setText(arret.favori.direction);
-			TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
+			final TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
 			nomArret.setText(arret.nom);
-			TextView distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
+			final TextView distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
 			distance.setText(arret.formatDistance());
 			relativeLayout.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent intent = new Intent(DetailArret.this, DetailArret.class);
+				public void onClick(final View view) {
+					final Intent intent = new Intent(DetailArret.this, DetailArret.class);
 					intent.putExtra("favori", arret.favori);
 					startActivity(intent);
 				}
@@ -367,7 +376,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void chargerLigne() {
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur = false;
+			private boolean erreur;
 
 			@Override
 			protected void onPreExecute() {
@@ -391,7 +400,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				super.onPostExecute(result);
 				if (erreur) {
 					Toast.makeText(DetailArret.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-					DetailArret.this.finish();
+					finish();
 				} else {
 					setListAdapter(construireAdapter());
 					getListView().invalidate();
@@ -420,7 +429,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private static final int MENU_SELECT_DAY = MENU_ALL_STOPS + 1;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(android.R.drawable.ic_menu_view);
 		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(android.R.drawable.ic_menu_month);
@@ -428,14 +437,14 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+	public boolean onPrepareOptionsMenu(final Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(MENU_ALL_STOPS).setTitle(prochainArrets ? R.string.menu_allArrets : R.string.menu_prochainArrets);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
 		switch (item.getItemId()) {
@@ -453,9 +462,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private static final int DATE_DIALOG_ID = 0;
 
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, monthOfYear);
 			calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -463,18 +472,16 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			calendarLaVeille.set(Calendar.MONTH, monthOfYear);
 			calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 			calendarLaVeille.roll(Calendar.DATE, false);
-			LOG_YBO.debug("Date choisie : " + calendar.getTime().toString());
 			setListAdapter(construireAdapter());
 			getListView().invalidate();
 		}
 	};
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch (id) {
-			case DATE_DIALOG_ID:
-				return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-						calendar.get(Calendar.DAY_OF_MONTH));
+	protected Dialog onCreateDialog(final int id) {
+		if (id == DATE_DIALOG_ID) {
+			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+					calendar.get(Calendar.DAY_OF_MONTH));
 		}
 		return null;
 	}

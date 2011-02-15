@@ -1,12 +1,13 @@
 
 package fr.ybo.itineraires.schema;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -66,8 +67,8 @@ public class ItineraireReponse {
      *     {@link String }
      *     
      */
-    public void setErreur(String value) {
-        this.erreur = value;
+    public void setErreur(final String value) {
+	    erreur = value;
     }
 
     /**
@@ -90,8 +91,8 @@ public class ItineraireReponse {
      *     {@link Adresse }
      *     
      */
-    public void setAdresseDepart(Adresse value) {
-        this.adresseDepart = value;
+    public void setAdresseDepart(final Adresse value) {
+	    adresseDepart = value;
     }
 
     /**
@@ -114,8 +115,8 @@ public class ItineraireReponse {
      *     {@link Adresse }
      *     
      */
-    public void setAdresseArrivee(Adresse value) {
-        this.adresseArrivee = value;
+    public void setAdresseArrivee(final Adresse value) {
+	    adresseArrivee = value;
     }
 
     /**
@@ -140,11 +141,11 @@ public class ItineraireReponse {
      * 
      * 
      */
-    public List<Trajet> getTrajets() {
+    public Collection<Trajet> getTrajets() {
         if (trajets == null) {
             trajets = new ArrayList<Trajet>();
         }
-        return this.trajets;
+        return trajets;
     }
 
 }

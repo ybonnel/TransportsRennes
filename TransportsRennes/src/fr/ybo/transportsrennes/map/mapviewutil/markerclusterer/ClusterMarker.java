@@ -34,7 +34,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.FontMetrics;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import com.google.android.maps.GeoPoint;
@@ -60,14 +59,14 @@ public class ClusterMarker extends Overlay {
 	 * screen density for multi-resolution
 	 * get from contenxt.getResources().getDisplayMetrics().density;
 	 */
-	protected float screenDensity_ = 1.0f;
+	private float screenDensity_ = 1.0f;
 
-	protected final float TXTSIZE = 16.0f;
+	private static final float TXTSIZE = 16.0f;
 
 	/**
 	 * Paint object for drawing icon
 	 */
-	protected final Paint paint_;
+	private final Paint paint_;
 	/**
 	 * List of GeoItems within
 	 */
@@ -83,26 +82,27 @@ public class ClusterMarker extends Overlay {
 	/**
 	 * icon marker type
 	 */
-	protected int markerTypes = 0;
+	protected int markerTypes;
 	/**
 	 * select state for cluster
 	 */
-	protected boolean isSelected_ = false;
+	protected boolean isSelected_;
 	/**
 	 * selected item number in GeoItem List
 	 */
-	protected int selItem_;
+	private int selItem_;
 	/**
 	 * Text Offset
 	 */
-	protected int txtHeightOffset_;
+	private int txtHeightOffset_;
 
 	/**
 	 * @param cluster        a cluster to be rendered for this marker.
 	 * @param markerIconBmps icon set for marker.
 	 * @param screenDensity  screen density.
 	 */
-	public ClusterMarker(GeoClusterer.GeoCluster cluster, List<MarkerBitmap> markerIconBmps, float screenDensity) {
+	public ClusterMarker(final GeoClusterer.GeoCluster cluster, final List<MarkerBitmap> markerIconBmps, final float screenDensity) {
+		super();
 		cluster_ = cluster;
 		markerIconBmps_ = markerIconBmps;
 		center_ = cluster_.getLocation();
@@ -115,7 +115,7 @@ public class ClusterMarker extends Overlay {
 		paint_.setTextSize(TXTSIZE * screenDensity_);
 		paint_.setTextAlign(Paint.Align.CENTER);
 		paint_.setTypeface(Typeface.DEFAULT_BOLD);
-		FontMetrics metrics = paint_.getFontMetrics();
+		final Paint.FontMetrics metrics = paint_.getFontMetrics();
 		txtHeightOffset_ = (int) ((metrics.bottom + metrics.ascent) / 2.0f);
 		/* check if we have selected item in cluster */
 		selItem_ = 0;
@@ -131,13 +131,13 @@ public class ClusterMarker extends Overlay {
 	/**
 	 * change icon bitmaps according to the state.
 	 */
-	protected void setMarkerBitmap() {
+	protected final void setMarkerBitmap() {
 		markerTypes = -1;
 		for (int i = 0; i < markerIconBmps_.size(); i++) {
 			if (GeoItems_.size() < markerIconBmps_.get(i).getItemMax()) {
 				markerTypes = i;
 				paint_.setTextSize(markerIconBmps_.get(markerTypes).getTextSize() * screenDensity_);
-				FontMetrics metrics = paint_.getFontMetrics();
+				final Paint.FontMetrics metrics = paint_.getFontMetrics();
 				txtHeightOffset_ = (int) ((metrics.bottom + metrics.ascent) / 2.0f);
 				break;
 			}
@@ -155,21 +155,21 @@ public class ClusterMarker extends Overlay {
 	 * @param shadow  shadow flag.
 	 */
 	@Override
-	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
+	public void draw(final Canvas canvas, final MapView mapView, final boolean shadow) {
 		cluster_.onNotifyDrawFromMarker();
-		Projection proj = mapView.getProjection();
-		Point p = proj.toPixels(center_, null);
+		final Projection proj = mapView.getProjection();
+		final Point p = proj.toPixels(center_, null);
 		if (p.x < 0 || p.x > mapView.getWidth() || p.y < 0 || p.y > mapView.getHeight()) {
 			return;
 		}
-		MarkerBitmap mkrBmp = markerIconBmps_.get(markerTypes);
-		Bitmap bmp = isSelected_ ? mkrBmp.getBitmapSelect() : mkrBmp.getBitmapNormal();
-		Point grid = mkrBmp.getGrid();
-		Point gridReal = new Point((int) (grid.x * screenDensity_ + 0.5f), (int) (grid.y * screenDensity_ + 0.5f));
+		final MarkerBitmap mkrBmp = markerIconBmps_.get(markerTypes);
+		final Bitmap bmp = isSelected_ ? mkrBmp.getBitmapSelect() : mkrBmp.getBitmapNormal();
+		final Point grid = mkrBmp.getGrid();
+		final Point gridReal = new Point((int) (grid.x * screenDensity_ + 0.5f), (int) (grid.y * screenDensity_ + 0.5f));
 		canvas.drawBitmap(bmp, p.x - gridReal.x, p.y - gridReal.y, paint_);
-		String caption = String.valueOf(GeoItems_.size());
-		int x = p.x;
-		int y = p.y - txtHeightOffset_;
+		final String caption = String.valueOf(GeoItems_.size());
+		final int x = p.x;
+		final int y = p.y - txtHeightOffset_;
 		canvas.drawText(caption, x, y, paint_);
 	}
 
@@ -191,27 +191,6 @@ public class ClusterMarker extends Overlay {
 			GeoItems_.get(selItem_).setSelect(false);
 		}
 		setMarkerBitmap();
-	}
-
-	/**
-	 * get center location of the marker.
-	 *
-	 * @return GeoPoint object of current marker center.
-	 */
-	public GeoPoint getLocation() {
-		return center_;
-	}
-
-	/**
-	 * get selected item's location. null if nothing is selected.
-	 *
-	 * @return GeoPoint object for selected item. null if nothing selected.
-	 */
-	public GeoPoint getSelectedItemLocation() {
-		if (selItem_ < GeoItems_.size()) {
-			return GeoItems_.get(selItem_).getLocation();
-		}
-		return null;
 	}
 
 }

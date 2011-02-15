@@ -15,6 +15,7 @@
 package fr.ybo.transportsrennes.keolis.modele;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -37,11 +38,11 @@ public class Answer<ObjectKeolis> {
 	/**
 	 * @return les liste d'objet Keolis.
 	 */
-	public List<ObjectKeolis> getData() {
-		if (this.data == null) {
-			this.data = new ArrayList<ObjectKeolis>();
+	public Collection<ObjectKeolis> getData() {
+		if (data == null) {
+			data = new ArrayList<ObjectKeolis>(50);
 		}
-		return this.data;
+		return data;
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class Answer<ObjectKeolis> {
 	 * @return le status.
 	 */
 	public StatusKeolis getStatus() {
-		return this.status;
+		return status;
 	}
 
 	/**
@@ -58,7 +59,7 @@ public class Answer<ObjectKeolis> {
 	 *
 	 * @param pStatus le status.
 	 */
-	public void setStatus(StatusKeolis pStatus) {
-		this.status = pStatus;
+	public void setStatus(final StatusKeolis pStatus) {
+		status = pStatus;
 	}
 }

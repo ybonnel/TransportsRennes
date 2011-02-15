@@ -17,7 +17,7 @@ package fr.ybo.gtfs.chargement;
 @SuppressWarnings("serial")
 class ErreurGestionFiles extends RuntimeException {
 
-	public ErreurGestionFiles(final Throwable throwable) {
+	ErreurGestionFiles(final Throwable throwable) {
 		super(throwable);
 	}
 }

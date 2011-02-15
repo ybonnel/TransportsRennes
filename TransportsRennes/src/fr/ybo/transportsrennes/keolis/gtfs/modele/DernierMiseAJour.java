@@ -15,7 +15,6 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 import java.util.Date;
@@ -23,6 +22,6 @@ import java.util.Date;
 @Table
 public class DernierMiseAJour {
 
-	@Colonne(type = TypeColonne.DATE)
+	@Colonne(type = Colonne.TypeColonne.DATE)
 	public Date derniereMiseAJour;
 }

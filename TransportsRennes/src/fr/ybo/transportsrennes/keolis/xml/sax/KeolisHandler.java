@@ -49,7 +49,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	/**
 	 * Réponse de l'API getdistrict.
 	 */
-	private Answer<ObjetKeolis> answer = null;
+	private Answer<ObjetKeolis> answer;
 
 	/**
 	 * Objet Keolis courant.
@@ -59,25 +59,25 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	/**
 	 * StringBuilder servant au parsing xml.
 	 */
-	private StringBuilder contenu = null;
+	@SuppressWarnings({"StringBufferField"})
+	private StringBuilder contenu;
 
 	@Override
 	public final void characters(final char[] ch, final int start, final int length) throws SAXException {
 		super.characters(ch, start, length);
-		this.contenu.append(ch, start, length);
+		contenu.append(ch, start, length);
 	}
 
 	@Override
-	public final void endElement(final String uri, final String localName, final String name) throws SAXException {
-		super.endElement(uri, localName, name);
-		if (this.answer != null) {
+	public final void endElement(final String uri, final String localName, final String qName) throws SAXException {
+		super.endElement(uri, localName, qName);
+		if (answer != null) {
 			if (localName.equals(getBaliseData())) {
-				this.answer.getData().add(this.currentObjetKeolis);
+				answer.getData().add(currentObjetKeolis);
 			} else {
-				remplirObjectKeolis(this.currentObjetKeolis, localName, this.contenu.toString());
+				remplirObjectKeolis(currentObjetKeolis, localName, contenu.toString());
 			}
-			surchargeEndElement(localName);
-			this.contenu.setLength(0);
+			contenu.setLength(0);
 		}
 	}
 
@@ -87,7 +87,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	 * @return réponse de l'API getdistrict.
 	 */
 	public final Answer<ObjetKeolis> getAnswer() {
-		return this.answer;
+		return answer;
 	}
 
 	/**
@@ -116,31 +116,22 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	@Override
 	public final void startDocument() throws SAXException {
 		super.startDocument();
-		this.contenu = new StringBuilder();
+		contenu = new StringBuilder();
 	}
 
 	@Override
-	public final void startElement(final String uri, final String localName, final String name, final Attributes attributes) throws SAXException {
-		super.startElement(uri, localName, name, attributes);
+	public final void startElement(final String uri, final String localName, final String qName, final Attributes attributes) throws SAXException {
+		super.startElement(uri, localName, qName, attributes);
 		if (localName.equals(ANSWER)) {
-			this.answer = new Answer<ObjetKeolis>();
+			answer = new Answer<ObjetKeolis>();
 		} else if (localName.equals(STATUS)) {
-			this.answer.setStatus(new StatusKeolis());
-			this.answer.getStatus().setCode(attributes.getValue(attributes.getIndex(CODE)));
-			this.answer.getStatus().setMessage(attributes.getValue(attributes.getIndex(MESSAGE)));
+			answer.setStatus(new StatusKeolis());
+			answer.getStatus().setCode(attributes.getValue(attributes.getIndex(CODE)));
+			answer.getStatus().setMessage(attributes.getValue(attributes.getIndex(MESSAGE)));
 		} else if (localName.equals(getBaliseData())) {
-			this.currentObjetKeolis = getNewObjetKeolis();
+			currentObjetKeolis = getNewObjetKeolis();
 		}
-		this.contenu.setLength(0);
-	}
-
-	/**
-	 * Méthode permettant de surcharger le comportement sur endElement.
-	 *
-	 * @param localName nom de la balise.
-	 */
-	@SuppressWarnings("unused")
-	public void surchargeEndElement(String localName) {
+		contenu.setLength(0);
 	}
 
 }

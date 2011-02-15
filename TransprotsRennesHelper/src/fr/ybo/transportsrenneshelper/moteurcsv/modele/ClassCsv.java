@@ -14,29 +14,29 @@
 
 package fr.ybo.transportsrenneshelper.moteurcsv.modele;
 
-import fr.ybo.transportsrenneshelper.moteurcsv.ErreurMoteurCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ClassCsv {
 	private final String separateur;
 	private final Class<?> clazz;
-	private Constructor<?> contructeur;
+	private final Constructor<?> contructeur;
 
-	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>();
+	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(10);
 
-	public ClassCsv(final String separateur, final Class<?> clazz) throws ErreurMoteurCsv {
+	public ClassCsv(final String separateur, final Class<?> clazz) throws MoteurCsvException {
+		super();
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {
 			contructeur = clazz.getDeclaredConstructor((Class<?>[]) null);
 		} catch (final SecurityException e) {
-			throw new ErreurMoteurCsv("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
+			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
 		} catch (final NoSuchMethodException e) {
-			throw new ErreurMoteurCsv("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
+			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
 		}
 	}
 
@@ -44,7 +44,7 @@ public class ClassCsv {
 		return mapOfFields.get(nomCsv);
 	}
 
-	public Set<String> getNomChamps() {
+	public Iterable<String> getNomChamps() {
 		return mapOfFields.keySet();
 	}
 

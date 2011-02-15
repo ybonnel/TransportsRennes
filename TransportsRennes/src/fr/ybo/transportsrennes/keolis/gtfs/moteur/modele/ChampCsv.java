@@ -25,7 +25,7 @@ import java.util.Map;
 public class ChampCsv {
 
 	private final Class<? extends AdapterCsv<?>> adapter;
-	private static Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>();
+	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> mapAdapters = new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>();
 	private final Field field;
 
 	public ChampCsv(final Class<? extends AdapterCsv<?>> adapter, final Field field) {

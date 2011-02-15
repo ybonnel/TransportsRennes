@@ -32,10 +32,10 @@ import java.util.List;
  */
 public class AlertAdapter extends ArrayAdapter<Alert> {
 
-	private List<Alert> alerts;
-	private LayoutInflater inflater;
+	private final List<Alert> alerts;
+	private final LayoutInflater inflater;
 
-	public AlertAdapter(Context context, List<Alert> objects) {
+	public AlertAdapter(final Context context, final List<Alert> objects) {
 		super(context, R.layout.alert, objects);
 		alerts = objects;
 		inflater = LayoutInflater.from(getContext());
@@ -47,23 +47,24 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		Alert alert = alerts.get(position);
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.alert, null);
-			holder = new ViewHolder();
-			holder.titreAlerte = (TextView) convertView.findViewById(R.id.titreAlert);
-			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final Alert alert = alerts.get(position);
+		final AlertAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.alert, null);
+			holder = new AlertAdapter.ViewHolder();
+			holder.titreAlerte = (TextView) convertView1.findViewById(R.id.titreAlert);
+			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (AlertAdapter.ViewHolder) convertView1.getTag();
 		}
 
 		holder.titreAlerte.setText(alert.getTitleFormate());
 		if (!alert.lines.isEmpty()) {
 			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
 		}
-		return convertView;
+		return convertView1;
 	}
 }

@@ -19,6 +19,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -35,68 +36,76 @@ import java.util.Date;
  */
 public class TransportsRennesApplication extends Application {
 
+	@SuppressWarnings({"StaticNonFinalField", "StaticNonFinalField"})
 	private static DataBaseHelper databaseHelper;
 
 	public static DataBaseHelper getDataBaseHelper() {
 		return databaseHelper;
 	}
 
-	private static String dateDerniereVerifUpdate = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static String dateDerniereVerifUpdate;
 
-	private static String dateCourante = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static String dateCourante;
 
-	private static SharedPreferences sharedPreferences = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static SharedPreferences sharedPreferences;
 
-	private static DernierMiseAJour dernierMiseAJour = new DernierMiseAJour();
+	private static final DernierMiseAJour MISE_A_JOUR = new DernierMiseAJour();
 
-	public static boolean verifUpdateNecessaire() {
+	public static synchronized boolean isUpdateNecessaire() {
 		if (dateDerniereVerifUpdate == null) {
 			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate", null);
 		}
-		return (dateDerniereVerifUpdate == null) || !dateCourante.equals(dateDerniereVerifUpdate) ||
-				databaseHelper.selectSingle(dernierMiseAJour) == null;
+		return dateDerniereVerifUpdate == null || !dateCourante.equals(dateDerniereVerifUpdate) ||
+				databaseHelper.selectSingle(MISE_A_JOUR) == null;
 	}
 
 	public static void verifUpdateDone() {
-		SharedPreferences.Editor edit = sharedPreferences.edit();
+		final SharedPreferences.Editor edit = sharedPreferences.edit();
 		edit.putString("dateDerniereVerifUpdate", dateCourante);
 		dateDerniereVerifUpdate = dateCourante;
 		edit.commit();
 	}
 
+	@SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod"})
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		dateCourante = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+		final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
-		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
+		final GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
-		myTraker = new MyTraker(traker);
-		myTraker.trackPageView("/TransportsRennesApplication/Model/" + android.os.Build.MODEL);
-		PackageManager manager = getPackageManager();
+		myTraker = new TransportsRennesApplication.MyTraker(traker);
+		myTraker.trackPageView("/TransportsRennesApplication/Model/" + Build.MODEL);
+		final PackageManager manager = getPackageManager();
 		try {
-			PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+			final PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
 			myTraker.trackPageView("/TransportsRennesApplication/Version/" + info.versionName);
 		} catch (PackageManager.NameNotFoundException ignore) {
 		}
 	}
 
+	@SuppressWarnings({"StaticNonFinalField"})
 	private static Handler handler;
 
-	private static MyTraker myTraker;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static TransportsRennesApplication.MyTraker myTraker;
 
 
 	public static class MyTraker {
 
-		public MyTraker(GoogleAnalyticsTracker traker) {
+		public MyTraker(final GoogleAnalyticsTracker traker) {
+			super();
 			this.traker = traker;
 		}
 
-		private GoogleAnalyticsTracker traker;
+		private final GoogleAnalyticsTracker traker;
 
 		public void trackPageView(final String url) {
 			handler.post(new Runnable() {
@@ -108,7 +117,7 @@ public class TransportsRennesApplication extends Application {
 		}
 	}
 
-	public static MyTraker getTraker() {
+	public static TransportsRennesApplication.MyTraker getTraker() {
 		return myTraker;
 	}
 }

@@ -23,14 +23,15 @@ public class LogYbo {
 
 	private static final String PREFIX_TAG = "YBO_";
 	private final String tag;
-	private static final boolean isDebug = false;
+	private static final boolean IS_DEBUG = false;
 
 	public LogYbo(final Class<?> clazz) {
+		super();
 		tag = PREFIX_TAG + clazz.getSimpleName();
 	}
 
 	public void debug(final String message) {
-		if (isDebug) {
+		if (IS_DEBUG) {
 			Log.d(tag, message);
 		}
 	}
@@ -39,7 +40,8 @@ public class LogYbo {
 		Log.e(tag, message, throwable);
 	}
 
-	public void warn(String message) {
+	@SuppressWarnings({"SameParameterValue"})
+	public void warn(final String message) {
 		Log.w(tag, message);
 	}
 
@@ -47,20 +49,22 @@ public class LogYbo {
 
 	private Map<String, Long> getMapStartTimes() {
 		if (mapStartTimes == null) {
-			mapStartTimes = new HashMap<String, Long>();
+			mapStartTimes = new HashMap<String, Long>(5);
 		}
 		return mapStartTimes;
 	}
 
-	public void startChrono(String message) {
-		if (isDebug) {
+	@SuppressWarnings({"UnusedDeclaration"})
+	public void startChrono(final String message) {
+		if (IS_DEBUG) {
 			getMapStartTimes().put(message, System.nanoTime());
 		}
 	}
 
-	public void stopChrono(String message) {
-		if (isDebug) {
-			long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
+	@SuppressWarnings({"UnusedDeclaration"})
+	public void stopChrono(final String message) {
+		if (IS_DEBUG) {
+			final long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
 			Log.d(tag, new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());
 		}
 	}

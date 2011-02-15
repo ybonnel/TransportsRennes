@@ -82,30 +82,31 @@ public class GetStationHandler extends KeolisHandler<Station> {
 		return new Station();
 	}
 
+	@SuppressWarnings({"IfStatementWithTooManyBranches"})
 	@Override
-	protected final void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenu) {
+	protected final void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NUMBER)) {
-			currentObjectKeolis.number = contenu;
+			currentObjectKeolis.number = contenuOfBalise;
 		} else if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenu;
+			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenu;
+			currentObjectKeolis.adresse = contenuOfBalise;
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.state = Boolean.parseBoolean(contenu);
+			currentObjectKeolis.state = Boolean.parseBoolean(contenuOfBalise);
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenu);
+			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenu);
+			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
 		} else if (baliseName.equals(SLOTSAVAILABLE)) {
-			currentObjectKeolis.slotsavailable = Integer.parseInt(contenu);
+			currentObjectKeolis.slotsavailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(BIKESAVAILABLE)) {
-			currentObjectKeolis.bikesavailable = Integer.parseInt(contenu);
+			currentObjectKeolis.bikesavailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(POS)) {
-			currentObjectKeolis.pos = "1".equals(contenu);
+			currentObjectKeolis.pos = "1".equals(contenuOfBalise);
 		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenu;
+			currentObjectKeolis.district = contenuOfBalise;
 		} else if (baliseName.equals(LASTUPDATE)) {
-			currentObjectKeolis.lastupdate = contenu;
+			currentObjectKeolis.lastupdate = contenuOfBalise;
 		}
 	}
 }

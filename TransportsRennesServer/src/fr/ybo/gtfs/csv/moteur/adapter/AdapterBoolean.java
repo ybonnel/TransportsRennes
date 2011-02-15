@@ -14,6 +14,7 @@
 
 package fr.ybo.gtfs.csv.moteur.adapter;
 
+@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterBoolean implements AdapterCsv<Boolean> {
 
 	public Boolean parse(final String chaine) {

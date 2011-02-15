@@ -52,8 +52,8 @@ public abstract class PortionTrajetPieton
      * Sets the value of the tempsTrajet property.
      * 
      */
-    public void setTempsTrajet(int value) {
-        this.tempsTrajet = value;
+    public void setTempsTrajet(final int value) {
+	    tempsTrajet = value;
     }
 
 }

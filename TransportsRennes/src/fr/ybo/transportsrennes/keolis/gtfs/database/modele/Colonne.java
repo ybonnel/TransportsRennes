@@ -23,21 +23,22 @@ import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
-public class Colonne {
+class Colonne {
 
 	private final TypeColonne type;
 	private final Field field;
-	private String name;
+	private final String name;
 	private final boolean primaryKey;
 	private Method valueOf;
 	private Method methodeEnum;
 	private final Indexed indexed;
 	private String tableName;
 
-	public Colonne(final Colonne colonne) {
+	Colonne(final Colonne colonne) {
+		super();
 		type = colonne.type;
 		field = colonne.field;
 		name = colonne.name;
@@ -48,21 +49,19 @@ public class Colonne {
 		tableName = colonne.tableName;
 	}
 
-	protected Colonne(final Field field, final String tableName) throws DataBaseException {
+	Colonne(final Field field, final String tableName) throws DataBaseException {
+		super();
 		this.field = field;
 		this.tableName = tableName;
 		final fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne colonne =
 				field.getAnnotation(fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne.class);
 		type = colonne.type();
 		primaryKey = field.getAnnotation(PrimaryKey.class) != null;
-		name = colonne.name();
+		name = "".equals(colonne.name()) ? field.getName() : colonne.name();
 		indexed = field.getAnnotation(Indexed.class);
-		if ("".equals(name)) {
-			name = field.getName();
-		}
 	}
 
-	protected <Entite> void ajoutValeur(final ContentValues values, final Entite entite) throws DataBaseException {
+	<Entite> void ajoutValeur(final ContentValues values, final Entite entite) throws DataBaseException {
 		final Object valeur = getValue(entite);
 		if (valeur != null) {
 			switch (type) {
@@ -85,7 +84,7 @@ public class Colonne {
 		}
 	}
 
-	protected <Entite> void appendWhereIfNotNull(final StringBuilder queryBuilder, final Entite entite, final List<String> selectionArgs)
+	<Entite> void appendWhereIfNotNull(final StringBuilder queryBuilder, final Entite entite, final Collection<String> selectionArgs)
 			throws DataBaseException {
 		final String valeur = getValueToString(entite);
 		if (valeur != null) {
@@ -99,7 +98,7 @@ public class Colonne {
 		}
 	}
 
-	protected String getIndexSqlDef() {
+	String getIndexSqlDef() {
 		if (indexed == null) {
 			return null;
 		}
@@ -108,12 +107,8 @@ public class Colonne {
 			requete.append("UNIQUE ");
 		}
 		requete.append("INDEX ");
-		String nameIndex;
-		if ("".equals(indexed.name())) {
-			nameIndex = new StringBuilder(tableName).append('_').append(name).toString();
-		} else {
-			nameIndex = indexed.name();
-		}
+		final String nameIndex;
+		nameIndex = "".equals(indexed.name()) ? new StringBuilder(tableName).append('_').append(name).toString() : indexed.name();
 		requete.append(nameIndex);
 		requete.append(" ON ");
 		requete.append(tableName);
@@ -123,11 +118,11 @@ public class Colonne {
 		return requete.toString();
 	}
 
-	protected String getName() {
+	String getName() {
 		return name;
 	}
 
-	protected String getSqlDefinition() {
+	String getSqlDefinition() {
 		final StringBuilder requete = new StringBuilder(name);
 		requete.append(" ");
 		requete.append(type.getSqlType());
@@ -148,12 +143,12 @@ public class Colonne {
 		}
 	}
 
-	protected <Entite> String getValueToString(final Entite entite) throws DataBaseException {
+	<Entite> String getValueToString(final Entite entite) throws DataBaseException {
 		final Object valeur = getValue(entite);
 		if (valeur == null) {
 			return null;
 		}
-		String retour;
+		final String retour;
 		switch (type) {
 			case BOOLEAN:
 				retour = (Boolean) valeur ? "1" : "0";
@@ -174,18 +169,18 @@ public class Colonne {
 		return retour;
 	}
 
-	protected boolean isIndexed() {
+	boolean isIndexed() {
 		return indexed != null;
 	}
 
-	protected boolean isPrimaryKey() {
+	boolean isPrimaryKey() {
 		return primaryKey;
 	}
 
-	protected <Entite> void remplirEntite(final Cursor cursor, final Entite entite) throws DataBaseException {
+	<Entite> void remplirEntite(final Cursor cursor, final Entite entite) throws DataBaseException {
 		final int index = cursor.getColumnIndex(name);
 		if (!cursor.isNull(index)) {
-			Object value;
+			final Object value;
 			switch (type) {
 				case INTEGER:
 					value = cursor.getInt(index);
@@ -209,7 +204,7 @@ public class Colonne {
 		}
 	}
 
-	protected void setTableName(final String tableName) {
+	void setTableName(final String tableName) {
 		this.tableName = tableName;
 	}
 

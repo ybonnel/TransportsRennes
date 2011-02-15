@@ -16,7 +16,13 @@ package fr.ybo.transportsrennes;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import com.google.android.maps.*;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
 import fr.ybo.transportsrennes.util.Formatteur;
@@ -27,14 +33,14 @@ import java.util.Map;
 
 public class ParkRelaisOnMap extends MapActivity {
 
-	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
+	private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
 	/**
 	 * Called when the activity is first created.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
 		if (MAP_STATES.isEmpty()) {
@@ -43,18 +49,18 @@ public class ParkRelaisOnMap extends MapActivity {
 			MAP_STATES.put(3, getString(R.string.indisponible));
 		}
 
-		List<ParkRelai> parkRelais = (List<ParkRelai>) getIntent().getExtras().getSerializable("parkRelais");
+		final Iterable<ParkRelai> parkRelais = (Iterable<ParkRelai>) getIntent().getExtras().getSerializable("parkRelais");
 
-		MapView mapView = (MapView) findViewById(R.id.mapview);
+		final MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 
-		MapController mc = mapView.getController();
+		final MapController mc = mapView.getController();
 		mapView.setSatellite(true);
 
 		// Creation du geo point
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = getResources().getDrawable(R.drawable.markee_parking);
-		MapItemizedOverlayParking itemizedoverlay = new MapItemizedOverlayParking(drawable, this);
+		final List<Overlay> mapOverlays = mapView.getOverlays();
+		final Drawable drawable = getResources().getDrawable(R.drawable.markee_parking);
+		final MapItemizedOverlayParking itemizedoverlay = new MapItemizedOverlayParking(drawable, this);
 
 		int minLatitude = Integer.MAX_VALUE;
 		int maxLatitude = Integer.MIN_VALUE;
@@ -62,10 +68,10 @@ public class ParkRelaisOnMap extends MapActivity {
 		int maxLongitude = Integer.MIN_VALUE;
 
 
-		for (ParkRelai parkRelai : parkRelais) {
-			int latitude = (int) (parkRelai.latitude * 1E6);
-			int longitude = (int) (parkRelai.longitude * 1E6);
-			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
+		for (final ParkRelai parkRelai : parkRelais) {
+			final int latitude = (int) (parkRelai.latitude * 1.0E6);
+			final int longitude = (int) (parkRelai.longitude * 1.0E6);
+			final GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 			if (latitude < minLatitude) {
 				minLatitude = latitude;
 			}
@@ -82,7 +88,7 @@ public class ParkRelaisOnMap extends MapActivity {
 			if (parkRelai.state != 0) {
 				description = MAP_STATES.get(parkRelai.state);
 			}
-			OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(parkRelai.name), description);
+			final OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(parkRelai.name), description);
 			itemizedoverlay.addOverlay(overlayitem, parkRelai);
 		}
 		mapOverlays.add(itemizedoverlay);

@@ -28,7 +28,7 @@ public class GeocoderAddressComponent {
 		return longName;
 	}
 
-	public void setLongName(String longName) {
+	public void setLongName(final String longName) {
 		this.longName = longName;
 	}
 
@@ -36,7 +36,7 @@ public class GeocoderAddressComponent {
 		return shortName;
 	}
 
-	public void setShortName(String shortName) {
+	public void setShortName(final String shortName) {
 		this.shortName = shortName;
 	}
 
@@ -44,20 +44,20 @@ public class GeocoderAddressComponent {
 		return types;
 	}
 
-	public void setTypes(List<String> types) {
+	public void setTypes(final List<String> types) {
 		this.types = types;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		GeocoderAddressComponent that = (GeocoderAddressComponent) o;
+		final GeocoderAddressComponent that = (GeocoderAddressComponent) obj;
 
 		return !(longName != null ? !longName.equals(that.longName) : that.longName != null) &&
 				!(shortName != null ? !shortName.equals(that.shortName) : that.shortName != null) &&

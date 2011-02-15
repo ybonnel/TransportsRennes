@@ -26,7 +26,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MoteurCsv {
@@ -37,7 +36,8 @@ public class MoteurCsv {
 
 	private ClassCsv classCourante;
 
-	public MoteurCsv(final List<Class<?>> classes) {
+	public MoteurCsv(final Iterable<Class<?>> classes) {
+		super();
 		for (final Class<?> clazz : classes) {
 			scannerClass(clazz);
 		}
@@ -81,17 +81,18 @@ public class MoteurCsv {
 		}
 	}
 
-	public <Objet> void parseFileAndInsert(BufferedReader bufReader, Class<Objet> clazz, DataBaseHelper dataBaseHelper, String suffixeTableName)
+	public <Objet> void parseFileAndInsert(final BufferedReader bufReader, final Class<Objet> clazz, final DataBaseHelper dataBaseHelper, final String suffixeTableName)
 			throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
-		String ligne;
 		final Table table = dataBaseHelper.getBase().getTable(clazz);
 		table.addSuffixeToTableName(suffixeTableName);
 		final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 		table.dropTable(db);
 		table.createTable(db);
-		while ((ligne = bufReader.readLine()) != null) {
+		String ligne = bufReader.readLine();
+		while (ligne != null) {
 			table.insert(db, creerObjet(ligne));
+			ligne = bufReader.readLine();
 		}
 	}
 

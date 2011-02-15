@@ -18,12 +18,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.LigneAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -34,14 +35,14 @@ import java.util.List;
 public class BusRennes extends MenuAccueil.ListActivity {
 
 	private void constructionListe() {
-		List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), null, null, "ordre");
+		final List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
 		setListAdapter(new LigneAdapter(this, lignes));
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		lv.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Ligne ligne = (Ligne) ((ListView) adapterView).getItemAtPosition(position);
-				Intent intent = new Intent(BusRennes.this, ListArret.class);
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Serializable ligne = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
+				final Intent intent = new Intent(BusRennes.this, ListArret.class);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);
 			}
@@ -50,7 +51,7 @@ public class BusRennes extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bus);
 		constructionListe();

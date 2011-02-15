@@ -21,6 +21,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
+@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("directions.txt")
 @Table
 public class Direction {

@@ -25,8 +25,12 @@ import fr.ybo.itineraires.schema.Trajet;
  */
 public class ItinerairesConverter {
 
-    public static ItineraireReponse convert(fr.ybo.itineraires.modele.ItineraireReponse reponse) {
-        ItineraireReponse reponseXml = new ItineraireReponse();
+	private ItinerairesConverter() {
+		super();
+	}
+
+	public static ItineraireReponse convert(final fr.ybo.itineraires.modele.ItineraireReponse reponse) {
+        final ItineraireReponse reponseXml = new ItineraireReponse();
         reponseXml.setErreur(reponse.getErreur());
         if (reponse.getAdresseDepart() != null) {
             reponseXml.setAdresseDepart(reponse.getAdresseDepart().convert());
@@ -34,18 +38,18 @@ public class ItinerairesConverter {
         if (reponse.getAdresseArrivee() != null) {
             reponseXml.setAdresseArrivee(reponse.getAdresseArrivee().convert());
         }
-        for (fr.ybo.itineraires.modele.Trajet trajet : reponse.getTrajets()) {
+        for (final fr.ybo.itineraires.modele.Trajet trajet : reponse.getTrajets()) {
             reponseXml.getTrajets().add(convert(trajet));
         }
         return reponseXml;
     }
 
-    protected static Trajet convert(fr.ybo.itineraires.modele.Trajet trajet) {
+    protected static Trajet convert(final fr.ybo.itineraires.modele.Trajet trajet) {
         if (trajet == null) {
             return null;
         }
-        Trajet trajetXml = new Trajet();
-        for (PortionTrajet portion : trajet.getPortionsTrajet()) {
+        final Trajet trajetXml = new Trajet();
+        for (final PortionTrajet portion : trajet.getPortionsTrajet()) {
             trajetXml.getPortions().add(portion.convert());
         }
         return trajetXml;

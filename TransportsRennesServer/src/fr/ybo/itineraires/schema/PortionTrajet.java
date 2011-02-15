@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@SuppressWarnings({"ClassMayBeInterface", "EmptyClass"})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PortionTrajet")
 @XmlSeeAlso({

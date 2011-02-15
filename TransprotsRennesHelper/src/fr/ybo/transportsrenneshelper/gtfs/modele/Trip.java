@@ -18,6 +18,7 @@ import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("trips.txt")
 public class Trip {
 	@BaliseCsv("trip_id")

@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * 
  */
+@SuppressWarnings({"UnusedDeclaration"})
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "Adresse", propOrder = {
     "latitude",
@@ -48,8 +49,8 @@ public class Adresse {
      * Sets the value of the latitude property.
      * 
      */
-    public void setLatitude(double value) {
-        this.latitude = value;
+    public void setLatitude(final double value) {
+	    latitude = value;
     }
 
     /**
@@ -64,8 +65,8 @@ public class Adresse {
      * Sets the value of the longitude property.
      * 
      */
-    public void setLongitude(double value) {
-        this.longitude = value;
+    public void setLongitude(final double value) {
+	    longitude = value;
     }
 
 }

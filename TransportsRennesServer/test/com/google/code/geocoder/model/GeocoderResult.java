@@ -29,7 +29,7 @@ public class GeocoderResult {
 		return types;
 	}
 
-	public void setTypes(List<String> types) {
+	public void setTypes(final List<String> types) {
 		this.types = types;
 	}
 
@@ -37,7 +37,7 @@ public class GeocoderResult {
 		return formattedAddress;
 	}
 
-	public void setFormattedAddress(String formattedAddress) {
+	public void setFormattedAddress(final String formattedAddress) {
 		this.formattedAddress = formattedAddress;
 	}
 
@@ -45,7 +45,7 @@ public class GeocoderResult {
 		return addressComponents;
 	}
 
-	public void setAddressComponents(List<GeocoderAddressComponent> addressComponents) {
+	public void setAddressComponents(final List<GeocoderAddressComponent> addressComponents) {
 		this.addressComponents = addressComponents;
 	}
 
@@ -53,20 +53,21 @@ public class GeocoderResult {
 		return geometry;
 	}
 
-	public void setGeometry(GeocoderGeometry geometry) {
+	public void setGeometry(final GeocoderGeometry geometry) {
 		this.geometry = geometry;
 	}
 
+	@SuppressWarnings({"OverlyComplexBooleanExpression"})
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		GeocoderResult that = (GeocoderResult) o;
+		final GeocoderResult that = (GeocoderResult) obj;
 
 		return !(addressComponents != null ? !addressComponents.equals(that.addressComponents) : that.addressComponents != null) &&
 				!(formattedAddress != null ? !formattedAddress.equals(that.formattedAddress) : that.formattedAddress != null) &&
@@ -75,6 +76,7 @@ public class GeocoderResult {
 
 	}
 
+	@SuppressWarnings({"MethodWithMoreThanThreeNegations"})
 	@Override
 	public int hashCode() {
 		int result = types != null ? types.hashCode() : 0;

@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("lignes.txt")
 @Table
 public class Ligne implements Serializable {
@@ -51,11 +52,11 @@ public class Ligne implements Serializable {
 	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper) {
+	public void chargerHeuresArrets(final DataBaseHelper dataBaseHelper) {
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
-		final List<Class<?>> classes = new ArrayList<Class<?>>();
+		final List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);
-		MoteurCsv moteur = new MoteurCsv(classes);
+		final MoteurCsv moteur = new MoteurCsv(classes);
 		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper);
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
 	}

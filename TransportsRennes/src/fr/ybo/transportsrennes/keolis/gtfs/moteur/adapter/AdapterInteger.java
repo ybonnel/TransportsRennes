@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
 
+@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterInteger implements AdapterCsv<Integer> {
 
 	public Integer parse(final String chaine) {

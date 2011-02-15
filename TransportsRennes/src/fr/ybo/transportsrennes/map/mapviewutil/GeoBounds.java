@@ -39,15 +39,16 @@ import com.google.android.maps.GeoPoint;
 public class GeoBounds {
 
 	/** North-West geo point of the bound */
-	private GeoPoint nw_;
+	private final GeoPoint nw_;
 	/** South-East geo point of the bound */
-	private GeoPoint se_;
+	private final GeoPoint se_;
 
 	/**
 	 * @param nw North-West geo point of the bound
 	 * @param se South-East geo point of the bound
 	 */
-	public GeoBounds( GeoPoint nw, GeoPoint se ){
+	public GeoBounds( final GeoPoint nw, final GeoPoint se ) {
+		super();
 		nw_ = nw;
 		se_ = se;
 	}
@@ -56,13 +57,10 @@ public class GeoBounds {
 	 * @param pt a GeoPoint to be checked
 	 * @return true if point is in the bound.
 	 */
-	public boolean isInBounds( GeoPoint pt ){
-		if(null == pt)
-			return false;
-		return (pt.getLatitudeE6()<=nw_.getLatitudeE6()
-				&&pt.getLatitudeE6()>=se_.getLatitudeE6()
-				&&pt.getLongitudeE6()>=nw_.getLongitudeE6()
-				&&pt.getLongitudeE6()<=se_.getLongitudeE6());
+	public boolean isInBounds( final GeoPoint pt ){
+		//noinspection OverlyComplexBooleanExpression
+		return pt != null && pt.getLatitudeE6() <= nw_.getLatitudeE6() && pt.getLatitudeE6() >= se_.getLatitudeE6() &&
+				pt.getLongitudeE6() >= nw_.getLongitudeE6() && pt.getLongitudeE6() <= se_.getLongitudeE6();
 	}
 
 	/**
@@ -83,11 +81,11 @@ public class GeoBounds {
 	 * @param src a GeoBounds to be checked
 	 * @return true if the bound are same
 	 */
-	public Boolean isEqual(GeoBounds src){
-		return (nw_.getLatitudeE6()==src.nw_.getLatitudeE6()&&
+	public boolean isEqual(final GeoBounds src){
+		return nw_.getLatitudeE6()==src.nw_.getLatitudeE6()&&
 				nw_.getLongitudeE6()==src.nw_.getLongitudeE6()&&
 				se_.getLatitudeE6()==src.se_.getLatitudeE6()&&
-				se_.getLongitudeE6()==src.se_.getLongitudeE6());
+				se_.getLongitudeE6()==src.se_.getLongitudeE6();
 	}
 
 

@@ -25,6 +25,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -32,19 +33,19 @@ import java.util.List;
  */
 public class VeloAdapter extends ArrayAdapter<Station> {
 
-	public List<Station> getStations() {
+	public Collection<Station> getStations() {
 		return stations;
 	}
 
-	private List<Station> stations;
+	private final List<Station> stations;
 
 	private static final double SEUIL_ROUGE = 0.25;
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 
-	public VeloAdapter(Context context, List<Station> objects) {
+	public VeloAdapter(final Context context, final List<Station> objects) {
 		super(context, R.layout.dispovelo, objects);
 		stations = objects;
 		inflater = LayoutInflater.from(getContext());
@@ -59,23 +60,24 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.dispovelo, null);
-			holder = new ViewHolder();
-			holder.icone =(ImageView) convertView.findViewById(R.id.dispovelo_image);
-			holder.dispoVeloText =(TextView) convertView.findViewById(R.id.dispovelo_text);
-			holder.dispoVeloStation =(TextView) convertView.findViewById(R.id.dispovelo_station);
-			holder.dispoVeloDistance =(TextView) convertView.findViewById(R.id.dispovelo_distance);
-			holder.iconeCb =(ImageView) convertView.findViewById(R.id.dispovelo_cb);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final VeloAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.dispovelo, null);
+			holder = new VeloAdapter.ViewHolder();
+			holder.icone = (ImageView) convertView1.findViewById(R.id.dispovelo_image);
+			holder.dispoVeloText = (TextView) convertView1.findViewById(R.id.dispovelo_text);
+			holder.dispoVeloStation = (TextView) convertView1.findViewById(R.id.dispovelo_station);
+			holder.dispoVeloDistance = (TextView) convertView1.findViewById(R.id.dispovelo_distance);
+			holder.iconeCb = (ImageView) convertView1.findViewById(R.id.dispovelo_cb);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (VeloAdapter.ViewHolder) convertView1.getTag();
 		}
-		Station station = stations.get(position);
-		int placesTotales = station.bikesavailable + station.slotsavailable;
-		double poucentageDispo = ((double) station.bikesavailable) / ((double) (placesTotales));
+		final Station station = stations.get(position);
+		final int placesTotales = station.bikesavailable + station.slotsavailable;
+		final double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
 		if (poucentageDispo < SEUIL_ROUGE) {
 			holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
@@ -93,6 +95,6 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 		} else {
 			holder.iconeCb.setVisibility(View.INVISIBLE);
 		}
-		return convertView;
+		return convertView1;
 	}
 }

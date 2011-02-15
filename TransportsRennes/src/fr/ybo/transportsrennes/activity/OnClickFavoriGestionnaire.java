@@ -35,12 +35,13 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	private static final LogYbo LOG_YBO = new LogYbo(OnClickFavoriGestionnaire.class);
 
 	private Ligne ligne;
-	private String nomArret;
-	private String direction;
-	private ArretFavori myFavori = new ArretFavori();
-	private Activity activity;
+	private final String nomArret;
+	private final String direction;
+	private final ArretFavori myFavori = new ArretFavori();
+	private final Activity activity;
 
-	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity) {
+	public OnClickFavoriGestionnaire(final Ligne ligne, final String arretId, final String nomArret, final String direction, final Activity activity) {
+		super();
 		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
@@ -57,7 +58,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			boolean erreur = false;
+			boolean erreur;
 
 			@Override
 			protected Void doInBackground(final Void... pParams) {
@@ -85,8 +86,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	}
 
 
-	public void onClick(View view) {
-		ImageView imageView = (ImageView) view;
+	public void onClick(final View view) {
+		final ImageView imageView = (ImageView) view;
 		if (TransportsRennesApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
 			ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
 			if (ligne.chargee == null || !ligne.chargee) {

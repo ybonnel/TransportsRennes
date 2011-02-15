@@ -25,10 +25,10 @@ import fr.ybo.transportsrennes.R;
 
 public class DetailTrajetAdapter extends CursorAdapter {
 
-	private int arretNomCol;
-	private int prochainDepartCol;
+	private final int arretNomCol;
+	private final int prochainDepartCol;
 
-	public DetailTrajetAdapter(Context context, Cursor cursor) {
+	public DetailTrajetAdapter(final Context context, final Cursor cursor) {
 		super(context, cursor);
 		arretNomCol = cursor.getColumnIndex("nom");
 		prochainDepartCol = cursor.getColumnIndex("heureDepart");
@@ -40,10 +40,10 @@ public class DetailTrajetAdapter extends CursorAdapter {
 	}
 
 	@Override
-	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+	public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
 		final LayoutInflater inflater = LayoutInflater.from(context);
-		View view = inflater.inflate(R.layout.detailtrajetliste, parent, false);
-		ViewHolder holder = new ViewHolder();
+		final View view = inflater.inflate(R.layout.detailtrajetliste, parent, false);
+		final DetailTrajetAdapter.ViewHolder holder = new DetailTrajetAdapter.ViewHolder();
 		holder.arretNom = (TextView) view.findViewById(R.id.detailTrajet_arretNom);
 		holder.heurePassage = (TextView) view.findViewById(R.id.detailTrajet_heurePassage);
 		view.setTag(holder);
@@ -51,22 +51,22 @@ public class DetailTrajetAdapter extends CursorAdapter {
 	}
 
 	@Override
-	public void bindView(View view, Context context, Cursor cursor) {
-		int prochainDepart = cursor.getInt(prochainDepartCol);
-		String arretNom = cursor.getString(arretNomCol);
-		((ViewHolder)view.getTag()).arretNom.setText(arretNom);
-		((ViewHolder)view.getTag()).heurePassage.setText(formatterCalendarHeure(prochainDepart));
+	public void bindView(final View view, final Context context, final Cursor cursor) {
+		final int prochainDepart = cursor.getInt(prochainDepartCol);
+		final String arretNom = cursor.getString(arretNomCol);
+		((DetailTrajetAdapter.ViewHolder)view.getTag()).arretNom.setText(arretNom);
+		((DetailTrajetAdapter.ViewHolder)view.getTag()).heurePassage.setText(formatterCalendarHeure(prochainDepart));
 	}
 
-	private String formatterCalendarHeure(int prochainDepart) {
-		StringBuilder stringBuilder = new StringBuilder();
+	private CharSequence formatterCalendarHeure(final int prochainDepart) {
+		final StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;
-		int minutes = prochainDepart - heures * 60;
+		final int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
-			heures = heures - 24;
+			heures -= 24;
 		}
-		String heuresChaine = Integer.toString(heures);
-		String minutesChaine = Integer.toString(minutes);
+		final String heuresChaine = Integer.toString(heures);
+		final String minutesChaine = Integer.toString(minutes);
 		if (heuresChaine.length() < 2) {
 			stringBuilder.append('0');
 		}

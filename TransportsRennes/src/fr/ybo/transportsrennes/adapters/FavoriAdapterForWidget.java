@@ -39,17 +39,18 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 
 	private final Context mContext;
 
-	private final List<Integer> favorisSelectionnes = new ArrayList<Integer>();
+	private final List<Integer> favorisSelectionnes = new ArrayList<Integer>(3);
 
 	public List<ArretFavori> getFavorisSelectionnes() {
-		List<ArretFavori> retour = new ArrayList<ArretFavori>(2);
-		for (int position : favorisSelectionnes) {
+		final List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
+		for (final int position : favorisSelectionnes) {
 			retour.add(favoris.get(position));
 		}
 		return retour;
 	}
 
 	public FavoriAdapterForWidget(final Context context, final List<ArretFavori> favoris) {
+		super();
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
@@ -75,32 +76,33 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 		CheckBox checkBox;
 	}
 
-	public View getView(final int position, View convertView, final ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.favori_for_widget, null);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final FavoriAdapterForWidget.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = mInflater.inflate(R.layout.favori_for_widget, null);
 
-			holder = new ViewHolder();
-			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
-			holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
-			holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
-			holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
+			holder = new FavoriAdapterForWidget.ViewHolder();
+			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
+			holder.direction = (TextView) convertView1.findViewById(R.id.directionArret);
+			holder.checkBox = (CheckBox) convertView1.findViewById(R.id.checkbox);
 
-			convertView.setTag(holder);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (FavoriAdapterForWidget.ViewHolder) convertView1.getTag();
 		}
 
-		ArretFavori favori = favoris.get(position);
+		final ArretFavori favori = favoris.get(position);
 
 		holder.arret.setText(favori.nomArret);
 		holder.direction.setText(favori.direction);
 		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
-		holder.checkBox.setChecked(favorisSelectionnes.contains(new Integer(position)));
+		holder.checkBox.setChecked(favorisSelectionnes.contains(Integer.valueOf(position)));
 		holder.checkBox.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				// Perform action on clicks, depending on whether it's now checked
-				CheckBox checkBox = (CheckBox) v;
+				final CheckBox checkBox = (CheckBox) v;
 				if (checkBox.isChecked()) {
 					if (favorisSelectionnes.size() < 3) {
 						favorisSelectionnes.add(position);
@@ -110,7 +112,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 						checkBox.invalidate();
 					}
 				} else {
-					Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
+					final Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
 					while (positionActuels.hasNext()) {
 						if (positionActuels.next() == position) {
 							positionActuels.remove();
@@ -119,7 +121,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 				}
 			}
 		});
-		return convertView;
+		return convertView1;
 	}
 
 }

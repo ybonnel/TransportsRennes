@@ -49,30 +49,31 @@ public class MarkerBitmap {
 	 * adjust this parameter to offset the axis of the image. */
 	protected Point iconGrid_ = new Point();
 	/** icon size in Point. x = width, y = height */
-	protected Point iconSize_ = new Point();
+	protected final Point iconSize_ = new Point();
 	/** maximum item size for the marker.
 	 * for the last MarkerBitmap element within list, this will be ignored.
 	 */
-	protected int itemSizeMax_;
+	protected final int itemSizeMax_;
 	/** text size for icon */
-	protected int textSize_;
+	protected final int textSize_;
 
 	/**
-	 * NOTE: src_nrm & src_sel must be same bitmap size.
-	 * @param src_nrm	source Bitmap object for normal state
-	 * @param src_sel	source Bitmap object for select state
+	 * NOTE: srcNrm & srcSel must be same bitmap size.
+	 * @param srcNrm	source Bitmap object for normal state
+	 * @param srcSel	source Bitmap object for select state
 	 * @param grid		grid point to be offset
 	 * @param textSize	text size for icon
 	 * @param maxSize	icon size threshold
 	 */
-	public MarkerBitmap( Bitmap src_nrm, Bitmap src_sel, Point grid, int textSize, int maxSize ){
-		iconBmpNormal_ = src_nrm;
-		iconBmpSelect_ = src_sel;
+	public MarkerBitmap( final Bitmap srcNrm, final Bitmap srcSel, final Point grid, final int textSize, final int maxSize ) {
+		super();
+		iconBmpNormal_ = srcNrm;
+		iconBmpSelect_ = srcSel;
 		iconGrid_ = grid;
 		textSize_ = textSize;
 		itemSizeMax_ = maxSize;
-		iconSize_.x = src_nrm.getWidth();
-		iconSize_.y = src_nrm.getHeight();
+		iconSize_.x = srcNrm.getWidth();
+		iconSize_.y = srcNrm.getHeight();
 	}
 
 	/**

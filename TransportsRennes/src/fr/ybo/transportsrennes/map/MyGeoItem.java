@@ -19,10 +19,10 @@ import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 
 public class MyGeoItem<Objet extends ObjetWithDistance> extends GeoItem {
 
-	private Objet objet;
+	private final Objet objet;
 
-	public MyGeoItem(long id, Objet objet) {
-		super(id, (int) (objet.getLatitude() * 1E6), (int) (objet.getLongitude() * 1E6));
+	public MyGeoItem(final long id, final Objet objet) {
+		super(id, (int) (objet.getLatitude() * 1.00E6), (int) (objet.getLongitude() * 1.00E6));
 		this.objet = objet;
 	}
 

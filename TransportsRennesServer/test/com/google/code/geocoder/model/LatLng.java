@@ -21,17 +21,21 @@ import java.math.BigDecimal;
  * @link http://code.google.com/intl/uk/apis/maps/documentation/javascript/reference.html#LatLng
  */
 public class LatLng {
-	private BigDecimal lat, lng;
+	private BigDecimal lat;
+	private BigDecimal lng;
 
 	public LatLng() {
+		super();
 	}
 
 	public LatLng(final BigDecimal lat, final BigDecimal lng) {
+		super();
 		this.lat = lat;
 		this.lng = lng;
 	}
 
 	public LatLng(final String lat, final String lng) {
+		super();
 		this.lat = new BigDecimal(lat);
 		this.lng = new BigDecimal(lng);
 	}
@@ -40,7 +44,7 @@ public class LatLng {
 		return lat;
 	}
 
-	public void setLat(BigDecimal lat) {
+	public void setLat(final BigDecimal lat) {
 		this.lat = lat;
 	}
 
@@ -48,7 +52,7 @@ public class LatLng {
 		return lng;
 	}
 
-	public void setLng(BigDecimal lng) {
+	public void setLng(final BigDecimal lng) {
 		this.lng = lng;
 	}
 
@@ -63,12 +67,12 @@ public class LatLng {
 	 * @param precision We round the lat/lng values
 	 * @return Returns a string of the form "lat,lng" for this LatLng.
 	 */
-	public String toUrlValue(int precision) {
+	public String toUrlValue(final int precision) {
 		return lat.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString() + "," + lng.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString();
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) {
 			return true;
 		}
@@ -76,7 +80,7 @@ public class LatLng {
 			return false;
 		}
 
-		LatLng latLng = (LatLng) o;
+		final LatLng latLng = (LatLng) o;
 
 		return !(lat != null ? !lat.equals(latLng.lat) : latLng.lat != null) && !(lng != null ? !lng.equals(latLng.lng) : latLng.lng != null);
 

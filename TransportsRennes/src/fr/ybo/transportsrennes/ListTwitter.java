@@ -17,6 +17,7 @@ package fr.ybo.transportsrennes;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -35,18 +36,18 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 	private ProgressDialog myProgressDialog;
 
-	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>());
+	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>(20));
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liste);
 		setListAdapter(new TwitterAdapter(this, messages));
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur = false;
+			private boolean erreur;
 
 			@Override
 			protected void onPreExecute() {
@@ -67,14 +68,14 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void pResult) {
-				((TwitterAdapter) getListAdapter()).notifyDataSetChanged();
+			protected void onPostExecute(final Void result) {
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(ListTwitter.this, getString(R.string.erreur_twitter), Toast.LENGTH_LONG).show();
-					ListTwitter.this.finish();
+					finish();
 				}
-				super.onPostExecute(pResult);
+				super.onPostExecute(result);
 			}
 		}.execute();
 	}

@@ -23,35 +23,32 @@ public class GeocodeResponse {
 	protected GeocoderStatus status;
 	protected List<GeocoderResult> results;
 
-	public GeocodeResponse() {
-	}
-
 	public GeocoderStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(GeocoderStatus status) {
+	public void setStatus(final GeocoderStatus status) {
 		this.status = status;
 	}
 
-	public List<GeocoderResult> getResults() {
+	public Iterable<GeocoderResult> getResults() {
 		return results;
 	}
 
-	public void setResults(List<GeocoderResult> result) {
-		this.results = result;
+	public void setResults(final List<GeocoderResult> result) {
+		results = result;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		GeocodeResponse that = (GeocodeResponse) o;
+		final GeocodeResponse that = (GeocodeResponse) obj;
 
 		return !(results != null ? !results.equals(that.results) : that.results != null) && status == that.status;
 

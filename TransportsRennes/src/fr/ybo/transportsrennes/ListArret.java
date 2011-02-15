@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes;
 
+import android.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,9 +23,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -45,7 +47,7 @@ import java.util.List;
  */
 public class ListArret extends MenuAccueil.ListActivity {
 
-	private final static LogYbo LOG_YBO = new LogYbo(ListArret.class);
+	private static final LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
 	private Ligne myLigne;
 
@@ -57,28 +59,29 @@ public class ListArret extends MenuAccueil.ListActivity {
 		}
 	}
 
-	private String currentDirection = null;
+	private String currentDirection;
 
-	public void onDirectionClick() {
-		StringBuilder requete = new StringBuilder();
+	void onDirectionClick() {
+		final StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Direction.id as directionId, Direction.direction as direction ");
 		requete.append("FROM Direction, ArretRoute ");
 		requete.append("WHERE Direction.id = ArretRoute.directionId");
 		requete.append(" AND ArretRoute.ligneId = :ligneId ");
 		requete.append("GROUP BY Direction.id, Direction.direction");
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myLigne.id));
-		int directionIndex = cursor.getColumnIndex("direction");
-		final List<String> items = new ArrayList<String>();
+		final Cursor cursor =
+				TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(myLigne.id));
+		final int directionIndex = cursor.getColumnIndex("direction");
+		final List<String> items = new ArrayList<String>(5);
 		while (cursor.moveToNext()) {
 			items.add(cursor.getString(directionIndex));
 		}
 		cursor.close();
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(getString(R.string.chooseDirection));
-		final String toutes = getString(R.string.Toutes);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseDirection));
+		final String toutes = getString(fr.ybo.transportsrennes.R.string.Toutes);
 		items.add(toutes);
 		Collections.sort(items, new Comparator<String>() {
-			public int compare(String o1, String o2) {
+			public int compare(final String o1, final String o2) {
 				if (toutes.equals(o1)) {
 					return -1;
 				}
@@ -89,11 +92,11 @@ public class ListArret extends MenuAccueil.ListActivity {
 			}
 		});
 		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int item) {
+			public void onClick(final DialogInterface dialogInterface, final int item) {
 				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
 				construireListe();
-				((TextView) findViewById(R.id.directionArretCourante)).setText(items.get(item));
-				findViewById(R.id.directionArretCouranteScroll).invalidate();
+				((TextView) findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante)).setText(items.get(item));
+				findViewById(fr.ybo.transportsrennes.R.id.directionArretCouranteScroll).invalidate();
 				getListView().invalidate();
 				dialogInterface.dismiss();
 			}
@@ -103,9 +106,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 
 	private void construireCursor() {
 		closeCurrentCursor();
-		List<String> selectionArgs = new ArrayList<String>();
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
-		StringBuilder requete = new StringBuilder();
+		final StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
 		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible ");
 		requete.append("from ArretRoute, Arret, Direction ");
@@ -133,9 +136,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 		construireCursor();
 		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
 		final ListView lv = getListView();
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final ArretAdapter arretAdapter = (ArretAdapter) ((ListView) adapterView).getAdapter();
+				final Adapter arretAdapter = (ArretAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
 				final Intent intent = new Intent(ListArret.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
@@ -152,16 +155,16 @@ public class ListArret extends MenuAccueil.ListActivity {
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.listearrets);
+		setContentView(fr.ybo.transportsrennes.R.layout.listearrets);
 		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
-		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				ListArret.this.onDirectionClick();
+		findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
+			public void onClick(final View view) {
+				onDirectionClick();
 			}
 		});
-		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
+		findViewById(fr.ybo.transportsrennes.R.id.googlemap).setOnClickListener(new View.OnClickListener() {
+			public void onClick(final View view) {
+				final Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
 				intent.putExtra("ligne", myLigne);
 				if (currentDirection != null) {
 					intent.putExtra("direction", currentDirection);
@@ -169,15 +172,15 @@ public class ListArret extends MenuAccueil.ListActivity {
 				startActivity(intent);
 			}
 		});
-		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
-		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
+		((TextView) findViewById(fr.ybo.transportsrennes.R.id.nomLong)).setText(myLigne.nomLong);
+		((ImageView) findViewById(fr.ybo.transportsrennes.R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
 		construireListe();
 	}
 
 	@Override
 	protected void onDestroy() {
 		closeCurrentCursor();
-		super.onPause();
+		super.onDestroy();
 	}
 
 	private static final int GROUP_ID = 0;
@@ -186,30 +189,30 @@ public class ListArret extends MenuAccueil.ListActivity {
 	private boolean orderDirection = true;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, R.string.menu_orderByName);
+		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, fr.ybo.transportsrennes.R.string.menu_orderByName);
 		return true;
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+	public boolean onPrepareOptionsMenu(final Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.findItem(MENU_ORDER).setTitle(orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
-		menu.findItem(MENU_ORDER).setIcon(orderDirection ? android.R.drawable.ic_menu_sort_alphabetically : android.R.drawable.ic_menu_sort_by_size);
+		menu.findItem(MENU_ORDER)
+				.setTitle(orderDirection ? fr.ybo.transportsrennes.R.string.menu_orderByName : fr.ybo.transportsrennes.R.string.menu_orderBySequence);
+		menu.findItem(MENU_ORDER).setIcon(orderDirection ? R.drawable.ic_menu_sort_alphabetically : R.drawable.ic_menu_sort_by_size);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
-		switch (item.getItemId()) {
-			case MENU_ORDER:
-				orderDirection = !orderDirection;
-				construireListe();
-				getListView().invalidate();
-				return true;
+		if (MENU_ORDER == item.getItemId()) {
+			orderDirection = !orderDirection;
+			construireListe();
+			getListView().invalidate();
+			return true;
 		}
 		return false;
 	}

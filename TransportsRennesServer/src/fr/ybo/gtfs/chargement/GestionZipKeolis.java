@@ -31,13 +31,13 @@ import java.util.zip.ZipInputStream;
 
 public final class GestionZipKeolis {
 
-	private final static String URL_BASE = "/gtfs/";
-	private final static String URL_STOP_TIMES = URL_BASE + "horaires_";
-	private final static String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
+	private static final String URL_BASE = "/gtfs/";
+	private static final String URL_STOP_TIMES = URL_BASE + "horaires_";
+	private static final String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
 
-	public static List<Correspondance> getCorrespondances(MoteurCsv moteurCsv) {
+	public static Iterable<Correspondance> getCorrespondances(final MoteurCsv moteurCsv) {
 		try {
-			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.zip"));
+			final ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.zip"));
 			zipInputStream.getNextEntry();
 			return moteurCsv.parseFile(new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024), Correspondance.class);
 		} catch (Exception exception) {
@@ -45,9 +45,9 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	public static List<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
+	public static Iterable<Horaire> chargeLigne(final MoteurCsv moteurCsv, final String ligneId) {
 		try {
-			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".zip"));
+			final ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".zip"));
 			zipInputStream.getNextEntry();
 			return moteurCsv.parseFile(new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024), Horaire.class);
 		} catch (Exception exception) {
@@ -57,19 +57,22 @@ public final class GestionZipKeolis {
 
 	public static Map<Class<?>, List<?>> getAndParseZipKeolis(final MoteurCsv moteur) {
 		final ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_ZIP_PRINCIPALE));
-		ZipEntry zipEntry;
 		String ligne;
 		BufferedReader bufReader;
-		Map<Class<?>, List<?>> retour = new HashMap<Class<?>, List<?>>();
+		final Map<Class<?>, List<?>> retour = new HashMap<Class<?>, List<?>>(10);
 		try {
 			try {
-				while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+				ZipEntry zipEntry = zipInputStream.getNextEntry();
+				while (zipEntry != null) {
 					bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
-					List<Object> objects = new ArrayList<Object>();
+					final List<Object> objects = new ArrayList<Object>(500);
 					retour.put(moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine()), objects);
-					while ((ligne = bufReader.readLine()) != null) {
+					ligne = bufReader.readLine();
+					while (ligne != null) {
 						objects.add(moteur.creerObjet(ligne));
+						ligne = bufReader.readLine();
 					}
+					zipEntry = zipInputStream.getNextEntry();
 				}
 			} finally {
 				zipInputStream.close();
@@ -81,6 +84,7 @@ public final class GestionZipKeolis {
 	}
 
 	private GestionZipKeolis() {
+		super();
 	}
 
 }

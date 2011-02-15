@@ -61,8 +61,8 @@ public class JointureCorrespondance
      *     {@link String }
      *     
      */
-    public void setArretDepartId(String value) {
-        this.arretDepartId = value;
+    public void setArretDepartId(final String value) {
+	    arretDepartId = value;
     }
 
     /**
@@ -85,8 +85,8 @@ public class JointureCorrespondance
      *     {@link String }
      *     
      */
-    public void setArretArriveeId(String value) {
-        this.arretArriveeId = value;
+    public void setArretArriveeId(final String value) {
+	    arretArriveeId = value;
     }
 
 }

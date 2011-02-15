@@ -14,7 +14,11 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.gtfs.modele.*;
+import fr.ybo.gtfs.modele.Arret;
+import fr.ybo.gtfs.modele.Calendrier;
+import fr.ybo.gtfs.modele.GestionnaireGtfs;
+import fr.ybo.gtfs.modele.Horaire;
+import fr.ybo.gtfs.modele.Ligne;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,22 +28,23 @@ import java.util.logging.Logger;
 
 public class PortionTrajetBus extends PortionTrajet {
 
-	private static final Logger logger = Logger.getLogger(PortionTrajetBus.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PortionTrajetBus.class.getName());
 
 	private static final GestionnaireGtfs GESTIONNAIRE_GTFS = GestionnaireGtfs.getInstance();
 
 	private static final int UNE_JOURNEE = 24 * 60;
 	private static final int DEUX_HEURES = 2 * 60;
 
-	private class ComparatorHoraires implements Comparator<HorairePortion> {
+	private class ComparatorHoraires implements Comparator<PortionTrajetBus.HorairePortion> {
 
 		private final int heureDepart;
 
-		private ComparatorHoraires(int heureDepart) {
+		private ComparatorHoraires(final int heureDepart) {
+			super();
 			this.heureDepart = heureDepart;
 		}
 
-		public int compare(HorairePortion o1, HorairePortion o2) {
+		public int compare(final PortionTrajetBus.HorairePortion o1, final PortionTrajetBus.HorairePortion o2) {
 			if (o1.getHeureDepart() < heureDepart && o2.getHeureDepart() >= heureDepart) {
 				return 1;
 			}
@@ -51,12 +56,12 @@ public class PortionTrajetBus extends PortionTrajet {
 	}
 
 	@Override
-	public int calculHeureArrivee(int heureDepart) {
+	public int calculHeureArrivee(final int heureDepart) {
 		if (horaireSelectionnee == null) {
 			if (horaires.isEmpty()) {
-				logger.warning("Horaires vide pour le trajet : " + toString());
+				LOGGER.warning("Horaires vide pour le trajet : " + toString());
 			}
-			Collections.sort(horaires, new ComparatorHoraires(heureDepart));
+			Collections.sort(horaires, new PortionTrajetBus.ComparatorHoraires(heureDepart));
 			horaireSelectionnee = horaires.get(0);
 			if (horaireSelectionnee.getHeureDepart() < heureDepart) {
 				horaireSelectionnee.annule();
@@ -70,7 +75,8 @@ public class PortionTrajetBus extends PortionTrajet {
 		private Integer heureDepart;
 		private Integer heureArrivee;
 
-		private HorairePortion(Integer heureDepart, Integer heureArrivee) {
+		private HorairePortion(final Integer heureDepart, final Integer heureArrivee) {
+			super();
 			this.heureDepart = heureDepart;
 			this.heureArrivee = heureArrivee;
 		}
@@ -92,31 +98,30 @@ public class PortionTrajetBus extends PortionTrajet {
 	private final Arret arretDepart;
 	private final Arret arretArrivee;
 	private final Ligne ligne;
-	private final List<HorairePortion> horaires = new ArrayList<HorairePortion>();
-	private HorairePortion horaireSelectionnee;
+	private final List<PortionTrajetBus.HorairePortion> horaires = new ArrayList<PortionTrajetBus.HorairePortion>(10);
+	private PortionTrajetBus.HorairePortion horaireSelectionnee;
 
-	public PortionTrajetBus(Arret arretDepart, Arret arretArrivee, Ligne ligne) {
+	public PortionTrajetBus(final Arret arretDepart, final Arret arretArrivee, final Ligne ligne) {
+		super();
 		this.arretDepart = arretDepart;
 		this.arretArrivee = arretArrivee;
 		this.ligne = ligne;
 	}
 
-	public boolean rechercheHoraire(EnumCalendrier calendrier, int heureDepart) {
+	public boolean hasHoraire(final EnumCalendrier calendrier, final int heureDepart) {
 		// Recupérer les trajets de l'arret/ligne
-		Horaire horaireArrivee;
-		Calendrier calendrierCourant;
-		int heureDepartFin = heureDepart + DEUX_HEURES;
-		for (Horaire horaire : GESTIONNAIRE_GTFS.getHorairesByArretId(arretDepart.id)) {
-			if (ligne.id.equals(horaire.trajet.ligneId) && ((horaire.heureDepart >= heureDepart && horaire.heureDepart <= heureDepartFin) ||
-					(horaire.heureDepart - UNE_JOURNEE) >= heureDepart && (horaire.heureDepart - UNE_JOURNEE) <= heureDepartFin)) {
-				calendrierCourant = GESTIONNAIRE_GTFS.getCalendrier(horaire.trajet.calendrierId);
-				horaireArrivee = GESTIONNAIRE_GTFS.getHoraireByArretIdAndTrajetId(arretArrivee.id, horaire.trajetId);
+		final int heureDepartFin = heureDepart + DEUX_HEURES;
+		for (final Horaire horaire : GESTIONNAIRE_GTFS.getHorairesByArretId(arretDepart.id)) {
+			if (ligne.id.equals(horaire.trajet.ligneId) && (horaire.heureDepart >= heureDepart && horaire.heureDepart <= heureDepartFin ||
+					horaire.heureDepart - UNE_JOURNEE >= heureDepart && horaire.heureDepart - UNE_JOURNEE <= heureDepartFin)) {
+				Calendrier calendrierCourant = GESTIONNAIRE_GTFS.getCalendrier(horaire.trajet.calendrierId);
+				Horaire horaireArrivee = GESTIONNAIRE_GTFS.getHoraireByArretIdAndTrajetId(arretArrivee.id, horaire.trajetId);
 				if (horaireArrivee != null && horaireArrivee.heureDepart > horaire.heureDepart) {
 					if (horaire.heureDepart >= heureDepart && calendrier.isCalendrierValide(calendrierCourant)) {
-						horaires.add(new HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart));
+						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart));
 					}
-					if ((horaire.heureDepart - UNE_JOURNEE) >= heureDepart && calendrier.veille().isCalendrierValide(calendrierCourant)) {
-						horaires.add(new HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE));
+					if (horaire.heureDepart - UNE_JOURNEE >= heureDepart && calendrier.veille().isCalendrierValide(calendrierCourant)) {
+						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE));
 					}
 
 				}
@@ -125,10 +130,10 @@ public class PortionTrajetBus extends PortionTrajet {
 		return !horaires.isEmpty();
 	}
 
-	private String formatHeure(int time) {
-		StringBuilder stringBuilder = new StringBuilder();
-		int heure = time / 60;
-		int minutes = time - (heure * 60);
+	private String formatHeure(final int time) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final int heure = time / 60;
+		final int minutes = time - heure * 60;
 		if (heure < 10) {
 			stringBuilder.append('0');
 		}
@@ -143,7 +148,7 @@ public class PortionTrajetBus extends PortionTrajet {
 
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Portion en bus :\n");
 		stringBuilder.append("\tLigne :");
 		stringBuilder.append(ligne.id);
@@ -162,8 +167,9 @@ public class PortionTrajetBus extends PortionTrajet {
 		return stringBuilder.toString();
 	}
 
+	@Override
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<ligneId>");
 		stringBuilder.append(ligne.id);
 		stringBuilder.append("</ligneId>");
@@ -188,7 +194,7 @@ public class PortionTrajetBus extends PortionTrajet {
 
     @Override
     public fr.ybo.itineraires.schema.PortionTrajet convert() {
-        fr.ybo.itineraires.schema.PortionTrajetBus retour = new fr.ybo.itineraires.schema.PortionTrajetBus();
+        final fr.ybo.itineraires.schema.PortionTrajetBus retour = new fr.ybo.itineraires.schema.PortionTrajetBus();
         retour.setLigneId(ligne.id);
         retour.setArretDepartId(arretDepart.id);
         retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));

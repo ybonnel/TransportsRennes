@@ -20,7 +20,7 @@ public class AdapterBoolean implements AdapterCsv<Boolean> {
 		return Integer.parseInt(chaine) == 1;
 	}
 
-	public String toString(Boolean aBoolean) {
-		return aBoolean ? "1" : "0";
+	public String toString(final Boolean objet) {
+		return objet ? "1" : "0";
 	}
 }

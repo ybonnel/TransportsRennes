@@ -42,60 +42,28 @@ import com.google.android.maps.GeoPoint;
 public class GeoItem implements Parcelable {
 	
 	/** id of item. */
-	protected long id_;
+	private final long id_;
 	/** item location in GeoPoint. */
-	protected GeoPoint location_;
+	private final GeoPoint location_;
 	/** selection state flag. true if selected.*/
-	protected boolean isSelected_;
+	private boolean isSelected_;
 	
 	/**
 	 * @param id item id.
 	 * @param latitudeE6 latitude of the item in microdegrees (degrees * 1E6).
 	 * @param longitudeE6 longitude of the item in microdegrees (degrees * 1E6).
 	 */
-	public GeoItem(long id, int latitudeE6, int longitudeE6 ) {
+	protected GeoItem(final long id, final int latitudeE6, final int longitudeE6) {
+		super();
 		id_ = id;
 		location_ = new GeoPoint(latitudeE6, longitudeE6);
 		isSelected_ = false;
 	}
 
-	/**
-	 * @param src source GeoItem
-	 */
-	public GeoItem(GeoItem src) {
-		id_ = src.id_;
-		location_ = new GeoPoint(src.location_.getLatitudeE6(),src.location_.getLongitudeE6());
-		isSelected_ = src.isSelected_;
-	}
-
-	/**
-	 * @param src source Parcel
-	 */
-	public GeoItem(Parcel src) {
-		id_ = src.readLong();
-		location_ = new GeoPoint(src.readInt(), src.readInt());
-		isSelected_ = src.readInt() != 0;
-	}
-
 	/* describeContents */
+	@SuppressWarnings({"MethodReturnAlwaysConstant"})
 	public int describeContents() {
 		return 0;
-	}
-
-	/**
-	 * getId
-	 * @return id of the item.
-	 */
-	public long getId() {
-		return id_;
-	}
-	
-	/**
-	 * setId
-	 * @param id of the item.
-	 */
-	public void setId(long id) {
-		id_ = id;
 	}
 
 	/**
@@ -118,33 +86,21 @@ public class GeoItem implements Parcelable {
 	 * setSelect
 	 * @param flg flag to be set.
 	 */
-	public void setSelect(boolean flg) {
+	@SuppressWarnings({"SameParameterValue"})
+	public void setSelect(final boolean flg) {
 		isSelected_ = flg;
 	}
-	
-	/**
-	 * Parcelable.Creator
-	 */
-	public static final Creator<GeoItem> CREATOR =
-		new Creator<GeoItem>() {
-		public GeoItem createFromParcel(Parcel in) {
-			return new GeoItem(in);
-		}
-		public GeoItem[] newArray(int size) {
-			return new GeoItem[size];
-		}
-	};
 
 	/**
 	 * writeToParcel
 	 * @param parcel Parcel to be written.
 	 * @param flags flag.
 	 */
-	public void writeToParcel(Parcel parcel, int flags) {
+	public void writeToParcel(final Parcel parcel, final int flags) {
 		parcel.writeLong(id_);
 		parcel.writeInt(location_.getLatitudeE6());
 		parcel.writeInt(location_.getLongitudeE6());
-		int flg = isSelected_ ? 1 : 0;
+		final int flg = isSelected_ ? 1 : 0;
 		parcel.writeInt(flg);
    }
 

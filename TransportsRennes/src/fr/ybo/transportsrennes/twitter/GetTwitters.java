@@ -1,18 +1,20 @@
 package fr.ybo.transportsrennes.twitter;
 
-import fr.ybo.transportsrennes.keolis.ErreurKeolis;
+import fr.ybo.transportsrennes.keolis.KeolisException;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collection;
 
 public class GetTwitters {
 
+	@SuppressWarnings({"StaticNonFinalField"})
 	private static GetTwitters instance = null;
 
 	private GetTwitters() {
+		super();
 	}
 
 	synchronized public static GetTwitters getInstance() {
@@ -22,7 +24,7 @@ public class GetTwitters {
 		return instance;
 	}
 
-	public ArrayList<MessageTwitter> getMessages() {
+	public Collection<MessageTwitter> getMessages() {
 		try {
 			GetTwittersHandler handler = new GetTwittersHandler();
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -34,7 +36,7 @@ public class GetTwitters {
 			parser.parse(connection.getInputStream(), handler);
 			return handler.getMessages();
 		} catch (Exception e) {
-			throw new ErreurKeolis("Erreur lors de l'interrogation de twitter", e);
+			throw new KeolisException("Erreur lors de l'interrogation de twitter", e);
 		}
 	}
 }

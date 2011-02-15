@@ -25,42 +25,43 @@ public class ItineraireRequete {
 	private EnumCalendrier calendrier;
 	private int heureDepart;
 
-	private EnumCalendrier getCalendrier(String calendrierRequete) {
+	private EnumCalendrier getCalendrier(final String calendrierRequete) {
 		EnumCalendrier calendrier = null;
 		if (calendrierRequete != null) {
 			calendrier = EnumCalendrier.fromNumCalendrier(Integer.parseInt(calendrierRequete));
 		}
 		if (calendrier == null) {
-			Calendar calendar = Calendar.getInstance();
+			final Calendar calendar = Calendar.getInstance();
 			calendrier = EnumCalendrier.fromFieldCalendar(calendar.get(Calendar.DAY_OF_WEEK));
 		}
 		return calendrier;
 	}
 
-	private int getTime(String timeRequete) {
+	private int getTime(final String timeRequete) {
 		if (timeRequete != null) {
 			return Integer.parseInt(timeRequete);
 		} else {
-			Calendar calendar = Calendar.getInstance();
-			return ((calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE));
+			final Calendar calendar = Calendar.getInstance();
+			return calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		}
 	}
 
-	public ItineraireRequete(Adresse adresseDepart, Adresse adresseArrivee, EnumCalendrier calendrier, Integer heureDepart) {
+	public ItineraireRequete(final Adresse adresseDepart, final Adresse adresseArrivee, final EnumCalendrier calendrier, final Integer heureDepart) {
+		super();
 		if (adresseDepart == null || adresseArrivee == null) {
 			throw new ItineraireException("L'adresse de départ et d'arrivee devrait être valorisées");
 		}
 		this.adresseDepart = adresseDepart;
 		this.adresseArrivee = adresseArrivee;
 		if (calendrier == null) {
-			Calendar calendar = Calendar.getInstance();
+			final Calendar calendar = Calendar.getInstance();
 			this.calendrier = EnumCalendrier.fromFieldCalendar(calendar.get(Calendar.DAY_OF_WEEK));
 		} else {
 			this.calendrier = calendrier;
 		}
 		if (heureDepart == null) {
-			Calendar calendar = Calendar.getInstance();
-			this.heureDepart = ((calendar.get(Calendar.HOUR_OF_DAY) * 60) + calendar.get(Calendar.MINUTE));
+			final Calendar calendar = Calendar.getInstance();
+			this.heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		} else {
 			this.heureDepart = heureDepart;
 		}
@@ -70,7 +71,7 @@ public class ItineraireRequete {
 		return adresseDepart;
 	}
 
-	public void setAdresseDepart(Adresse adresseDepart) {
+	public void setAdresseDepart(final Adresse adresseDepart) {
 		this.adresseDepart = adresseDepart;
 	}
 
@@ -78,7 +79,7 @@ public class ItineraireRequete {
 		return adresseArrivee;
 	}
 
-	public void setAdresseArrivee(Adresse adresseArrivee) {
+	public void setAdresseArrivee(final Adresse adresseArrivee) {
 		this.adresseArrivee = adresseArrivee;
 	}
 
@@ -86,7 +87,7 @@ public class ItineraireRequete {
 		return calendrier;
 	}
 
-	public void setCalendrier(EnumCalendrier calendrier) {
+	public void setCalendrier(final EnumCalendrier calendrier) {
 		this.calendrier = calendrier;
 	}
 
@@ -94,7 +95,7 @@ public class ItineraireRequete {
 		return heureDepart;
 	}
 
-	public void setHeureDepart(int heureDepart) {
+	public void setHeureDepart(final int heureDepart) {
 		this.heureDepart = heureDepart;
 	}
 }

@@ -18,7 +18,12 @@ import android.content.ContentValues;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.*;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -32,41 +37,38 @@ public final class UpdateDataBase {
 	public static void updateIfNecessaryDatabase() {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour());
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 			LOG_YBO.debug("Suppression des lignes chargées");
-			for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
+			for (final Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
 				 if (ligne.chargee != null
 						 && ligne.chargee) {
 					  TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
 				 }
 			}
 			LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
-			for (final Class<?> clazz : ConstantesKeolis.LIST_CLASSES_DATABASE_TO_DELETE_ON_UPDATE) {
+			for (final Class<?> clazz : ConstantesKeolis.CLASSES_DB_TO_DELETE_ON_UPDATE) {
 				TransportsRennesApplication.getDataBaseHelper().deleteAll(clazz);
 			}
 			LOG_YBO.debug("Mise à jour des donnees");
 			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS));
 			LOG_YBO.debug("Mise à jour des arrêts favoris suite à la mise à jour.");
-			Ligne ligneSelect = new Ligne();
-			Ligne ligne;
-			Arret arretSelect = new Arret();
-			Arret arret;
-			ArretRoute arretRouteSelect = new ArretRoute();
-			ArretRoute arretRoute;
-			Direction directionSelect = new Direction();
-			List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
+			final Ligne ligneSelect = new Ligne();
+			final Arret arretSelect = new Arret();
+			final ArretRoute arretRouteSelect = new ArretRoute();
+			final Direction directionSelect = new Direction();
+			final List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
 			TransportsRennesApplication.getDataBaseHelper().deleteAll(ArretFavori.class);
-			for (ArretFavori favori : favoris) {
+			for (final ArretFavori favori : favoris) {
 				ligneSelect.id = favori.ligneId;
-				ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
+				Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
 				arretSelect.id = favori.arretId;
-				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretSelect);
+				Arret arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretSelect);
 				arretRouteSelect.ligneId = favori.ligneId;
 				arretRouteSelect.arretId = favori.arretId;
-				arretRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
+				ArretRoute arretRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
 				if (ligne == null || arret == null || arretRoute == null) {
 					LOG_YBO.debug("Le favori avec arretId = " + favori.arretId + ", ligneId = " + favori.ligneId +
 							" n'a plus de correspondances dans la base -> suppression");
@@ -80,15 +82,15 @@ public final class UpdateDataBase {
 					TransportsRennesApplication.getDataBaseHelper().insert(favori);
 				}
 			}
-			dernierMiseAJour = new DernierMiseAJour();
-			dernierMiseAJour.derniereMiseAJour = dateDernierFichierKeolis;
-			TransportsRennesApplication.getDataBaseHelper().insert(dernierMiseAJour);
+			DernierMiseAJour miseAJour = new DernierMiseAJour();
+			miseAJour.derniereMiseAJour = dateDernierFichierKeolis;
+			TransportsRennesApplication.getDataBaseHelper().insert(miseAJour);
 		}
 		TransportsRennesApplication.getDataBaseHelper().endTransaction();
 		TransportsRennesApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(Ligne ligne) {
+	public static void chargeDetailLigne(final Ligne ligne) {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {
 			TransportsRennesApplication.getDataBaseHelper().beginTransaction();
@@ -106,6 +108,7 @@ public final class UpdateDataBase {
 	}
 
 	private UpdateDataBase() {
+		super();
 	}
 
 }

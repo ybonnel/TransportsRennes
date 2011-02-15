@@ -21,7 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -38,11 +39,11 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private void construireListe() throws DataBaseException {
 		setListAdapter(new FavoriAdapter(getApplicationContext(),
-				TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), null, null, "ordre")));
+				TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre")));
 		final ListView lv = getListView();
-		lv.setOnItemClickListener(new OnItemClickListener() {
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final FavoriAdapter favoriAdapter = (FavoriAdapter) ((ListView) adapterView).getAdapter();
+				final FavoriAdapter favoriAdapter = (FavoriAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				final Intent intent = new Intent(ListFavoris.this, DetailArret.class);
 				intent.putExtra("favori", favoriAdapter.getItem(position));
 				startActivity(intent);
@@ -52,23 +53,23 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		registerForContextMenu(lv);
 	}
 
-	private Runnable runnableMajToRunOnUiThread = new Runnable() {
+	private final Runnable runnableMajToRunOnUiThread = new Runnable() {
 		public void run() {
-			((FavoriAdapter) ListFavoris.this.getListAdapter()).majCalendar();
-			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris().clear();
-			((FavoriAdapter) ListFavoris.this.getListAdapter()).getFavoris()
-					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), null, null, "ordre"));
-			((FavoriAdapter) ListFavoris.this.getListAdapter()).notifyDataSetChanged();
+			((FavoriAdapter) getListAdapter()).majCalendar();
+			((FavoriAdapter) getListAdapter()).getFavoris().clear();
+			((FavoriAdapter) getListAdapter()).getFavoris()
+					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre"));
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	};
 
-	private Runnable runnableMajHoraires = new Runnable() {
+	private final Runnable runnableMajHoraires = new Runnable() {
 		public void run() {
 			while (true) {
 				try {
 					TimeUnit.SECONDS.sleep(20);
-					ListFavoris.this.runOnUiThread(runnableMajToRunOnUiThread);
-				} catch (InterruptedException e) {
+					runOnUiThread(runnableMajToRunOnUiThread);
+				} catch (InterruptedException ignore) {
 					break;
 				}
 			}
@@ -108,11 +109,11 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			final ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
 		}
@@ -120,23 +121,23 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+	public boolean onContextItemSelected(final MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
-				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+				final ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 
 				if (TransportsWidgetConfigure.isNotUsed(this, favori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(favori);
 					((FavoriAdapter) getListAdapter()).getFavoris().clear();
 					((FavoriAdapter) getListAdapter()).getFavoris().addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
-					((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				} else {
 					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
 				}
 				return true;
 			default:
-				return super.onOptionsItemSelected(item);
+				return super.onContextItemSelected(item);
 		}
 	}
 }

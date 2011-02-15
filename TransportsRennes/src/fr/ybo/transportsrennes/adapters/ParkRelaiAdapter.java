@@ -33,17 +33,17 @@ import java.util.Map;
  */
 public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 
-	private List<ParkRelai> parkRelais;
+	private final List<ParkRelai> parkRelais;
 
 	private static final double SEUIL_ROUGE = 0.25;
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>();
+	protected static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 
-	public ParkRelaiAdapter(Context context, List<ParkRelai> objects) {
+	public ParkRelaiAdapter(final Context context, final List<ParkRelai> objects) {
 		super(context, R.layout.dispoparkrelai, objects);
 		if (MAP_STATES.isEmpty()) {
 			MAP_STATES.put(1, context.getString(R.string.ferme));
@@ -62,25 +62,26 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.dispoparkrelai, null);
-			holder = new ViewHolder();
-			holder.dispoParkRelaiNom = (TextView) convertView.findViewById(R.id.dispoparkrelai_nom);
-			holder.dispoParkRelaiDistance = (TextView) convertView.findViewById(R.id.dispoparkrelai_distance);
-			holder.dispoParkRelaiText = (TextView) convertView.findViewById(R.id.dispoparkrelai_text);
-			holder.icone = (ImageView) convertView.findViewById(R.id.dispoparkrelai_image);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final ParkRelaiAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.dispoparkrelai, null);
+			holder = new ParkRelaiAdapter.ViewHolder();
+			holder.dispoParkRelaiNom = (TextView) convertView1.findViewById(R.id.dispoparkrelai_nom);
+			holder.dispoParkRelaiDistance = (TextView) convertView1.findViewById(R.id.dispoparkrelai_distance);
+			holder.dispoParkRelaiText = (TextView) convertView1.findViewById(R.id.dispoparkrelai_text);
+			holder.icone = (ImageView) convertView1.findViewById(R.id.dispoparkrelai_image);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ParkRelaiAdapter.ViewHolder) convertView1.getTag();
 		}
-		ParkRelai parkRelai = parkRelais.get(position);
+		final ParkRelai parkRelai = parkRelais.get(position);
 		holder.dispoParkRelaiNom.setText(parkRelai.name);
 		holder.dispoParkRelaiDistance.setText(parkRelai.formatDistance());
 		// Parc Relai ouvert.
 		if (parkRelai.state == 0) {
-			double poucentageDispo = ((double) parkRelai.carParkAvailable.intValue()) / ((double) (parkRelai.carParkCapacity.intValue()));
+			final double poucentageDispo = (double) parkRelai.carParkAvailable.intValue() / (double) parkRelai.carParkCapacity.intValue();
 
 
 			if (poucentageDispo < SEUIL_ROUGE) {
@@ -97,6 +98,6 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
 			holder.icone.setImageResource(R.drawable.dispo_parkrelai_rouge);
 			holder.dispoParkRelaiText.setText(MAP_STATES.get(parkRelai.state));
 		}
-		return convertView;
+		return convertView1;
 	}
 }

@@ -35,13 +35,13 @@ import java.util.Map;
  */
 public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
-	private List<Arret> arrets;
-	private LayoutInflater inflater;
-	private Calendar calendar;
-	private int now;
-	private Context myContext;
+	private final List<Arret> arrets;
+	private final LayoutInflater inflater;
+	private final Calendar calendar;
+	private final int now;
+	private final Context myContext;
 
-	public ArretGpsAdapter(Context context, List<Arret> objects) {
+	public ArretGpsAdapter(final Context context, final List<Arret> objects) {
 		super(context, R.layout.arretgps, objects);
 		calendar = Calendar.getInstance();
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
@@ -59,35 +59,32 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		Arret arret = arrets.get(position);
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.arretgps, null);
-			holder = new ViewHolder();
-			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
-			holder.arretDirection = (TextView) convertView.findViewById(R.id.arretgps_direction);
-			holder.nomArret = (TextView) convertView.findViewById(R.id.arretgps_nomArret);
-			holder.distance = (TextView) convertView.findViewById(R.id.arretgps_distance);
-			holder.tempsRestant = (TextView) convertView.findViewById(R.id.arretgps_tempsRestant);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final Arret arret = arrets.get(position);
+		final ArretGpsAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.arretgps, null);
+			holder = new ArretGpsAdapter.ViewHolder();
+			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			holder.arretDirection = (TextView) convertView1.findViewById(R.id.arretgps_direction);
+			holder.nomArret = (TextView) convertView1.findViewById(R.id.arretgps_nomArret);
+			holder.distance = (TextView) convertView1.findViewById(R.id.arretgps_distance);
+			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.arretgps_tempsRestant);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ArretGpsAdapter.ViewHolder) convertView1.getTag();
 		}
 		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
 		holder.arretDirection.setText(arret.favori.direction);
 		holder.nomArret.setText(arret.nom);
 		holder.distance.setText(arret.formatDistance());
 		holder.tempsRestant.setText(getTempsRestant(arret));
-		return convertView;
+		return convertView1;
 	}
 
-	private String getTempsRestant(Arret arret) {
-		Map<Integer,Integer> mapProchainHoraires = WidgetUpdateUtil.requete(arret.favori, 1, calendar, now);
-		if (mapProchainHoraires.get(1) == null) {
-			return "";
-		} else {
-			return WidgetUpdateUtil.formatterCalendar(myContext, mapProchainHoraires.get(1), now);
-		}
+	private CharSequence getTempsRestant(final Arret arret) {
+		final Map<Integer,Integer> mapProchainHoraires = WidgetUpdateUtil.requete(arret.favori, 1, calendar, now);
+		return mapProchainHoraires.get(1) == null ? "" : WidgetUpdateUtil.formatterCalendar(myContext, mapProchainHoraires.get(1), now);
 	}
 }

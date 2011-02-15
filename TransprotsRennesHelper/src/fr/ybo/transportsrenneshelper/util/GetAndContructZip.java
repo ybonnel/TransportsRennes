@@ -15,7 +15,7 @@
 package fr.ybo.transportsrenneshelper.util;
 
 
-import fr.ybo.transportsrenneshelper.moteurcsv.ErreurMoteurCsv;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -36,6 +36,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class GetAndContructZip {
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
@@ -48,7 +49,7 @@ public class GetAndContructZip {
 	private static final String EXTENSION_URL = ".zip";
 
 
-	public Date getLastUpdate() {
+	Date getLastUpdate() {
 		try {
 			final HttpURLConnection connection = (HttpURLConnection) new URL(URL_DONNEES_TELECHARGEABLES).openConnection();
 			connection.setRequestMethod("GET");
@@ -56,34 +57,34 @@ public class GetAndContructZip {
 			connection.connect();
 			final BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			final String chaineRecherchee = URL_RELATIVE;
-			String ligne;
-			while ((ligne = bufReader.readLine()) != null) {
+			String ligne = bufReader.readLine();
+			while (ligne != null) {
 				if (ligne.contains(chaineRecherchee)) {
 					final String chaineDate = ligne.substring(ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
 							ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + 8);
 					return SDF.parse(chaineDate);
 				}
+				ligne = bufReader.readLine();
 			}
 			return getLastUpdateBruteForce();
 		} catch (Exception exception) {
-			throw new ErreurMoteurCsv(exception);
+			throw new MoteurCsvException(exception);
 		}
 	}
 
-	public Date getLastUpdateBruteForce() {
+	Date getLastUpdateBruteForce() {
 		final GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
 		calendar.set(Calendar.MILLISECOND, 0);
-		HttpURLConnection connection;
 		int nbJours = 0;
 		while (nbJours < NB_JOURS_RECHERCHE) {
 			try {
-				connection = openHttpConnection(calendar.getTime());
+				HttpURLConnection connection = openHttpConnection(calendar.getTime());
 				connection.getInputStream();
 				return calendar.getTime();
-			} catch (final IOException ioEx) {
+			} catch (final IOException ignore) {
 				calendar.add(Calendar.DAY_OF_YEAR, -1);
 				nbJours++;
 			}
@@ -103,26 +104,24 @@ public class GetAndContructZip {
 			connection.connect();
 			return connection;
 		} catch (Exception exception) {
-			throw new ErreurMoteurCsv(exception);
+			throw new MoteurCsvException(exception);
 		}
 	}
 
-	public final static String REPERTOIRE_SORTIE = "C:/ybonnel/GTFSRennes";
-	public final static String REPERTOIRE_GTFS = REPERTOIRE_SORTIE + "/GTFS";
-	public final static String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
+	private static final String REPERTOIRE_SORTIE = "C:/ybonnel/GTFSRennes";
+	public static final String REPERTOIRE_GTFS = REPERTOIRE_SORTIE + "/GTFS";
+	public static final String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
 
 
 	public void getZipKeolis() {
 		try {
-			Date lastUpdate = getLastUpdate();
-			HttpURLConnection connection = openHttpConnection(lastUpdate);
-			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
-			ZipEntry zipEntry;
-			String ligne;
-			BufferedReader bufReader;
-			File repertoire = new File(REPERTOIRE_GTFS);
+			final Date lastUpdate = getLastUpdate();
+			final HttpURLConnection connection = openHttpConnection(lastUpdate);
+			final ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
+			//ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream("C:/ybonnel/GTFS-20110118.zip"));
+			final File repertoire = new File(REPERTOIRE_GTFS);
 			if (repertoire.exists()) {
-				for (File file : repertoire.listFiles()) {
+				for (final File file : repertoire.listFiles()) {
 					if (!file.delete()) {
 						System.err.println("Le fichier " + file.getName() + "n'a pas pu être effacé");
 					}
@@ -132,39 +131,47 @@ public class GetAndContructZip {
 					System.err.println("Le répertoire " + repertoire.getName() + "n'a pas pu être créé");
 				}
 			}
-			while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-				System.out.println("Copie du fichier " + zipEntry.getName());
-				bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
-				File file = new File(repertoire, zipEntry.getName());
-				BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
-				while ((ligne = bufReader.readLine()) != null) {
-					bufWriter.write(ligne);
-					bufWriter.write('\n');
-				}
-				bufWriter.close();
-				System.out.println("Fin de la copie du fichier " + zipEntry.getName());
-			}
+			copieFichierZip(zipInputStream, repertoire);
+
 		} catch (Exception exception) {
-			throw new ErreurMoteurCsv(exception);
+			throw new MoteurCsvException(exception);
 		}
-
-
 	}
 
-	public static void addFileToZip(File file, ZipOutputStream out) {
+	private void copieFichierZip(final ZipInputStream zipInputStream, final File repertoire) throws IOException {
+		ZipEntry zipEntry = zipInputStream.getNextEntry();
+		while (zipEntry != null) {
+			System.out.println("Copie du fichier " + zipEntry.getName());
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 * 1024);
+			final File file = new File(repertoire, zipEntry.getName());
+			final BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
+			String ligne = bufReader.readLine();
+			while (ligne != null) {
+				bufWriter.write(ligne);
+				bufWriter.write('\n');
+				ligne = bufReader.readLine();
+			}
+			bufWriter.close();
+			System.out.println("Fin de la copie du fichier " + zipEntry.getName());
+			zipEntry = zipInputStream.getNextEntry();
+		}
+	}
+
+	public static void addFileToZip(final File file, final ZipOutputStream out) {
 		try {
-			byte data[] = new byte[2048];
-			FileInputStream fi = new FileInputStream(file);
-			BufferedInputStream origin = new BufferedInputStream(fi, 2048);
-			ZipEntry entry = new ZipEntry(file.getName());
+			final FileInputStream fi = new FileInputStream(file);
+			final BufferedInputStream origin = new BufferedInputStream(fi, 2048);
+			final ZipEntry entry = new ZipEntry(file.getName());
 			out.putNextEntry(entry);
-			int count;
-			while ((count = origin.read(data, 0, 2048)) != -1) {
+			final byte[] data = new byte[2048];
+			int count = origin.read(data, 0, 2048);
+			while (count != -1) {
 				out.write(data, 0, count);
+				count = origin.read(data, 0, 2048);
 			}
 			origin.close();
 		} catch (IOException ioException) {
-			throw new ErreurMoteurCsv(ioException);
+			throw new MoteurCsvException(ioException);
 		}
 	}
 

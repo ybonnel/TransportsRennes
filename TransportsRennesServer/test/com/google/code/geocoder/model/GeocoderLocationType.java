@@ -27,7 +27,7 @@ public enum GeocoderLocationType {
 		return name();
 	}
 
-	public static GeocoderLocationType fromValue(String v) {
+	public static GeocoderLocationType fromValue(final String v) {
 		return valueOf(v);
 	}
 }

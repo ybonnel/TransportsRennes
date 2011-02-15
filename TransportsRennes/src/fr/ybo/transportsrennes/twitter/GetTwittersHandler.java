@@ -1,8 +1,6 @@
 package fr.ybo.transportsrennes.twitter;
 
 
-import fr.ybo.transportsrennes.keolis.modele.Answer;
-import fr.ybo.transportsrennes.keolis.modele.StatusKeolis;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -10,9 +8,10 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 
-public class GetTwittersHandler extends DefaultHandler {
+class GetTwittersHandler extends DefaultHandler {
 
 	private static final String MESSAGES = "messages";
 	private static final String MESSAGE = "message";
@@ -21,13 +20,13 @@ public class GetTwittersHandler extends DefaultHandler {
 
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-	private StringBuilder contenu = null;
+	private StringBuilder contenu;
 
-	private MessageTwitter messageCourant = null;
+	private MessageTwitter messageCourant;
 
-	private ArrayList<MessageTwitter> messages = null;
+	private ArrayList<MessageTwitter> messages;
 
-	public ArrayList<MessageTwitter> getMessages() {
+	public Collection<MessageTwitter> getMessages() {
 		return messages;
 	}
 

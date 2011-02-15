@@ -23,11 +23,12 @@ import java.util.Map;
 public class ClassCsv {
 	private final String separateur;
 	private final Class<?> clazz;
-	private Constructor<?> contructeur;
+	private final Constructor<?> contructeur;
 
 	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>();
 
 	public ClassCsv(final String separateur, final Class<?> clazz) {
+		super();
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {

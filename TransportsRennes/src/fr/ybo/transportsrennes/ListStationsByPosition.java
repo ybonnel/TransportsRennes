@@ -32,8 +32,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -45,6 +46,7 @@ import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -62,7 +64,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	/**
 	 * Permet d'accéder aux apis keolis.
 	 */
-	private Keolis keolis = Keolis.getInstance();
+	private final Keolis keolis = Keolis.getInstance();
 
 	/**
 	 * Le locationManager permet d'accéder au GPS du téléphone.
@@ -72,11 +74,11 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	/**
 	 * Liste des stations.
 	 */
-	private List<Station> stationIntent = null;
-	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
-	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>());
+	private List<Station> stationIntent;
+	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
+	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
 
-	private Location lastLocation = null;
+	private Location lastLocation;
 
 	/**
 	 * Permet de mettre à jour les distances des stations par rapport à une
@@ -85,48 +87,48 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	 * @param location position courante.
 	 */
 	@SuppressWarnings("unchecked")
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= (lastLocation.getAccuracy() + 50.0))) {
+	private void mettreAjoutLoc(final Location location) {
+		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
 			synchronized (stations) {
-				for (Station station : stations) {
+				for (final Station station : stations) {
 					station.calculDistance(location);
 				}
 				Collections.sort(stations, new Station.ComparatorDistance());
 			}
 			metterAJourListeStations();
-			((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}
 
-	public void onLocationChanged(Location arg0) {
+	public void onLocationChanged(final Location arg0) {
 		mettreAjoutLoc(arg0);
 	}
 
-	public void onProviderDisabled(String arg0) {
+	public void onProviderDisabled(final String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onProviderEnabled(String arg0) {
+	public void onProviderEnabled(final String arg0) {
 		desactiveGps();
 		activeGps();
 	}
 
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+	public void onStatusChanged(final String arg0, final int arg1, final Bundle arg2) {
 	}
 
 	/**
 	 * Active le GPS.
 	 */
 	private void activeGps() {
-		Criteria criteria = new Criteria();
+		final Criteria criteria = new Criteria();
 		criteria.setAccuracy(Criteria.ACCURACY_FINE);
 		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
+		final List<String> providers = locationManager.getProviders(criteria, true);
 		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000l, 20l, this);
+		for (final String providerName : providers) {
+			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
 			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
 				gpsTrouve = true;
 			}
@@ -156,16 +158,16 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 	@SuppressWarnings("unchecked")
 	private void metterAJourListeStations() {
-		String query = editText.getText().toString().toUpperCase();
+		final String query = editText.getText().toString().toUpperCase();
 		stationsFiltrees.clear();
 		synchronized (stations) {
-			for (Station station : stations) {
+			for (final Station station : stations) {
 				if (station.name.toUpperCase().contains(query.toUpperCase())) {
 					stationsFiltrees.add(station);
 				}
 			}
 		}
-		((ArrayAdapter<Station>) listView.getAdapter()).notifyDataSetChanged();
+		((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 	}
 
 	private EditText editText;
@@ -173,34 +175,34 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liststations);
-		stationIntent = (ArrayList<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("stations"));
+		stationIntent = (List<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("stations"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.liststations_input);
 		editText.addTextChangedListener(new TextWatcher() {
-			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 			}
 
-			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+			public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 			}
 
-			public void afterTextChanged(Editable editable) {
+			public void afterTextChanged(final Editable editable) {
 				metterAJourListeStations();
 			}
 		});
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				VeloAdapter veloAdapter = (VeloAdapter) ((ListView) adapterView).getAdapter();
-				Station station = veloAdapter.getItem(position);
-				String _lat = Double.toString(station.getLatitude());
-				String _lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + _lat + "," + _lon);
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final Station station = veloAdapter.getItem(position);
+				final String lat = Double.toString(station.getLatitude());
+				final String lon = Double.toString(station.getLongitude());
+				final Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + "," + lon);
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
@@ -209,7 +211,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		registerForContextMenu(listView);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur = false;
+			private boolean erreur;
 
 			@Override
 			protected void onPreExecute() {
@@ -224,7 +226,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 						stations.clear();
 						stations.addAll(stationIntent == null ? keolis.getStations() : stationIntent);
 						Collections.sort(stations, new Comparator<Station>() {
-							public int compare(Station o1, Station o2) {
+							public int compare(final Station o1, final Station o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
 							}
 						});
@@ -241,26 +243,26 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 			@Override
 			@SuppressWarnings("unchecked")
-			protected void onPostExecute(final Void pResult) {
+			protected void onPostExecute(final Void result) {
 				myProgressDialog.dismiss();
-				if (!erreur) {
+				if (erreur) {
+					final Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
+					toast.show();
+					finish();
+				} else {
 					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-						public void onClick(View view) {
-							Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-							ArrayList<Station> stationsSerializable = new ArrayList<Station>();
+						public void onClick(final View view) {
+							final Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+							final ArrayList<Station> stationsSerializable = new ArrayList<Station>();
 							stationsSerializable.addAll(stationsFiltrees);
 							intent.putExtra("stations", stationsSerializable);
 							startActivity(intent);
 						}
 					});
 					activeGps();
-					((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
-				} else {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
-					toast.show();
-					ListStationsByPosition.this.finish();
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
-				super.onPostExecute(pResult);
+				super.onPostExecute(result);
 			}
 		}.execute();
 	}
@@ -270,102 +272,101 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private static final int MENU_REFRESH = Menu.FIRST;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
+		final MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
 		item.setIcon(R.drawable.ic_menu_refresh);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
-		switch (item.getItemId()) {
-			case MENU_REFRESH:
-				new AsyncTask<Void, Void, Void>() {
+		if (MENU_REFRESH == item.getItemId()) {
+			new AsyncTask<Void, Void, Void>() {
 
-					private boolean erreur = false;
+				private boolean erreur;
 
-					@Override
-					protected void onPreExecute() {
-						super.onPreExecute();
-						myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "", getString(R.string.dialogRequeteVeloStar), true);
-					}
+				@Override
+				protected void onPreExecute() {
+					super.onPreExecute();
+					myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "", getString(R.string.dialogRequeteVeloStar), true);
+				}
 
-					@Override
-					protected Void doInBackground(final Void... pParams) {
-						try {
-							synchronized (stations) {
-								stations.clear();
-								if (stationIntent == null) {
-									stations.addAll(keolis.getStations());
-								} else {
-									ArrayList<String> ids = new ArrayList<String>();
-									for (Station station : stationIntent) {
-										ids.add(station.number);
-									}
-									stations.addAll(keolis.getStationByNumbers(ids));
+				@Override
+				protected Void doInBackground(final Void... pParams) {
+					try {
+						synchronized (stations) {
+							stations.clear();
+							if (stationIntent == null) {
+								stations.addAll(keolis.getStations());
+							} else {
+								final Collection<String> ids = new ArrayList<String>(10);
+								for (final Station station : stationIntent) {
+									ids.add(station.number);
 								}
-								Collections.sort(stations, new Comparator<Station>() {
-									public int compare(Station o1, Station o2) {
-										return o1.name.compareToIgnoreCase(o2.name);
-									}
-								});
-								stationsFiltrees.clear();
-								stationsFiltrees.addAll(stations);
+								stations.addAll(keolis.getStationByNumbers(ids));
 							}
-						} catch (Exception exception) {
-							LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
-							erreur = true;
+							Collections.sort(stations, new Comparator<Station>() {
+								public int compare(final Station o1, final Station o2) {
+									return o1.name.compareToIgnoreCase(o2.name);
+								}
+							});
+							stationsFiltrees.clear();
+							stationsFiltrees.addAll(stations);
 						}
-
-						return null;
+					} catch (Exception exception) {
+						LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
+						erreur = true;
 					}
 
-					@Override
-					@SuppressWarnings("unchecked")
-					protected void onPostExecute(final Void pResult) {
-						super.onPostExecute(pResult);
-						myProgressDialog.dismiss();
-						if (!erreur) {
-							metterAJourListeStations();
-							mettreAjoutLoc(lastLocation);
-							((ArrayAdapter<Station>) getListAdapter()).notifyDataSetChanged();
-						} else {
-							Toast toast =
-									Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
-							toast.show();
-							ListStationsByPosition.this.finish();
-						}
+					return null;
+				}
+
+				@Override
+				@SuppressWarnings("unchecked")
+				protected void onPostExecute(final Void result) {
+					super.onPostExecute(result);
+					myProgressDialog.dismiss();
+					if (erreur) {
+						final Toast toast =
+								Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
+						toast.show();
+						finish();
+					} else {
+						metterAJourListeStations();
+						mettreAjoutLoc(lastLocation);
+						((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					}
-				}.execute();
-				return true;
+				}
+			}.execute();
+			return true;
 		}
 		return false;
 	}
 
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Station station = (Station) getListAdapter().getItem(info.position);
+			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			final Station station = (Station) getListAdapter().getItem(info.position);
 			VeloFavori veloFavori = new VeloFavori();
 			veloFavori.number = station.number;
 			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
 			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-					veloFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.ajouterFavori));
+					veloFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.suprimerFavori));
 		}
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		Station station;
-		VeloFavori veloFavori;
+	public boolean onContextItemSelected(final MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Station station;
+		final VeloFavori veloFavori;
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				station = (Station) getListAdapter().getItem(info.position);

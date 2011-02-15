@@ -20,6 +20,7 @@ import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterTime;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("stop_times.txt")
 public class StopTime {
 	@BaliseCsv("trip_id")

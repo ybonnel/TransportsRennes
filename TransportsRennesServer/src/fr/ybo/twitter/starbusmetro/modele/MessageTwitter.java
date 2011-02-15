@@ -38,24 +38,27 @@ public class MessageTwitter {
 	@Persistent
 	public String texte;
 
-	public MessageTwitter(Date dateCreation, String texte) {
+	@SuppressWarnings({"AssignmentToDateFieldFromParameter"})
+	public MessageTwitter(final Date dateCreation, final String texte) {
+		super();
 		this.dateCreation = dateCreation;
 		this.texte = texte;
 	}
 
 	public MessageTwitter() {
+		super();
 	}
 
 	public Date getDateCreation() {
 		return dateCreation;
 	}
 
-	public void setTexte(String texte) {
+	public void setTexte(final String texte) {
 		this.texte = texte;
 	}
 
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("<message>");
 		stringBuilder.append("<dateCreation>");
 		stringBuilder.append(simpleDateFormat.format(dateCreation));

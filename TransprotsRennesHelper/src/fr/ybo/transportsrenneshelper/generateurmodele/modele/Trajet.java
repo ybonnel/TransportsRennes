@@ -18,6 +18,7 @@ import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 
+@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("trajets.txt")
 public class Trajet {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)

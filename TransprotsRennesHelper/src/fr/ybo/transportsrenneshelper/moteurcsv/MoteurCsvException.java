@@ -12,12 +12,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.files;
+package fr.ybo.transportsrenneshelper.moteurcsv;
 
 @SuppressWarnings("serial")
-public class ErreurGestionFiles extends RuntimeException {
+public class MoteurCsvException extends RuntimeException {
 
-	public ErreurGestionFiles(final Throwable throwable) {
+	public MoteurCsvException(final String message) {
+		super(message);
+	}
+
+	public MoteurCsvException(final String message, final Throwable throwable) {
+		super(message, throwable);
+	}
+
+	public MoteurCsvException(final Throwable throwable) {
 		super(throwable);
 	}
+
 }

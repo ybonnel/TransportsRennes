@@ -33,11 +33,12 @@ import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 public class FavoriAdapter extends BaseAdapter {
 
-	private final static LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
+	private static final LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
 
 	private final LayoutInflater mInflater;
 
@@ -46,9 +47,10 @@ public class FavoriAdapter extends BaseAdapter {
 	private int now;
 	private Calendar calendar;
 	private Calendar calendarLaVeille;
-	private Context myContext;
+	private final Context myContext;
 
 	public FavoriAdapter(final Context context, final List<ArretFavori> favoris) {
+		super();
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.favoris = favoris;
@@ -57,14 +59,14 @@ public class FavoriAdapter extends BaseAdapter {
 	}
 
 
-	public void majCalendar() {
+	public final void majCalendar() {
 		calendar = Calendar.getInstance();
 		calendarLaVeille = Calendar.getInstance();
 		calendarLaVeille.roll(Calendar.DATE, false);
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 
-	public List<ArretFavori> getFavoris() {
+	public Collection<ArretFavori> getFavoris() {
 		return favoris;
 	}
 
@@ -89,21 +91,22 @@ public class FavoriAdapter extends BaseAdapter {
 		ImageView moveDown;
 	}
 
-	public View getView(final int position, View convertView, final ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.favori, null);
-			holder = new ViewHolder();
-			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
-			holder.arret = (TextView) convertView.findViewById(R.id.nomArret);
-			holder.direction = (TextView) convertView.findViewById(R.id.directionArret);
-			holder.tempsRestant = (TextView) convertView.findViewById(R.id.tempsRestant);
-			holder.moveUp = (ImageView) convertView.findViewById(R.id.moveUp);
-			holder.moveDown = (ImageView) convertView.findViewById(R.id.moveDown);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final FavoriAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = mInflater.inflate(R.layout.favori, null);
+			holder = new FavoriAdapter.ViewHolder();
+			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
+			holder.direction = (TextView) convertView1.findViewById(R.id.directionArret);
+			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.tempsRestant);
+			holder.moveUp = (ImageView) convertView1.findViewById(R.id.moveUp);
+			holder.moveDown = (ImageView) convertView1.findViewById(R.id.moveDown);
 
-			convertView.setTag(holder);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (FavoriAdapter.ViewHolder) convertView1.getTag();
 		}
 
 		final ArretFavori favori = favoris.get(position);
@@ -113,18 +116,18 @@ public class FavoriAdapter extends BaseAdapter {
 		} else {
 			holder.moveUp.setVisibility(View.VISIBLE);
 			holder.moveUp.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
+				public void onClick(final View view) {
 					if (position > 0) {
-						int autrePosition = position - 1;
+						final int autrePosition = position - 1;
 						favoris.set(position, favoris.get(autrePosition));
 						favoris.set(autrePosition, favori);
 						favoris.get(position).ordre = position;
-						ContentValues contentValues = new ContentValues();
+						final ContentValues contentValues = new ContentValues();
 						contentValues.put("ordre", position);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId";
-						List<String> whereArgs = new ArrayList<String>(2);
+						final List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
+						final String whereClause = "arretId = :arretId and ligneId = :ligneId";
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
 						favoris.get(autrePosition).ordre = autrePosition;
@@ -134,29 +137,29 @@ public class FavoriAdapter extends BaseAdapter {
 						whereArgs.add(favoris.get(autrePosition).ligneId);
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-						FavoriAdapter.this.notifyDataSetChanged();
+						notifyDataSetChanged();
 					}
 				}
 			});
 
 		}
-		if (position == (favoris.size() - 1)) {
+		if (position == favoris.size() - 1) {
 			holder.moveDown.setVisibility(View.INVISIBLE);
 		} else {
 			holder.moveDown.setVisibility(View.VISIBLE);
 			holder.moveDown.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
+				public void onClick(final View view) {
 					if (position < favoris.size() - 1) {
-						int autrePosition = position + 1;
+						final int autrePosition = position + 1;
 						favoris.set(position, favoris.get(autrePosition));
 						favoris.set(autrePosition, favori);
 						favoris.get(position).ordre = position;
-						ContentValues contentValues = new ContentValues();
+						final ContentValues contentValues = new ContentValues();
 						contentValues.put("ordre", position);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId";
-						List<String> whereArgs = new ArrayList<String>(2);
+						final List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
+						final String whereClause = "arretId = :arretId and ligneId = :ligneId";
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
 						favoris.get(autrePosition).ordre = autrePosition;
@@ -166,7 +169,7 @@ public class FavoriAdapter extends BaseAdapter {
 						whereArgs.add(favoris.get(autrePosition).ligneId);
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
 								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
-						FavoriAdapter.this.notifyDataSetChanged();
+						notifyDataSetChanged();
 					}
 				}
 			});
@@ -176,7 +179,7 @@ public class FavoriAdapter extends BaseAdapter {
 		holder.direction.setText(favori.direction);
 		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 
-		StringBuilder requete = new StringBuilder();
+		final StringBuilder requete = new StringBuilder();
 		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(favori.ligneId);
@@ -203,19 +206,19 @@ public class FavoriAdapter extends BaseAdapter {
 		requete.append(" and Horaire.heureDepart >= :maintenant");
 		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id limit 1;");
-		int uneJournee = 24 * 60;
-		List<String> selectionArgs = new ArrayList<String>();
+		final int uneJournee = 24 * 60;
+		final List<String> selectionArgs = new ArrayList<String>(7);
 		selectionArgs.add(Integer.toString(uneJournee));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now + (uneJournee)));
+		selectionArgs.add(Integer.toString(now + uneJournee));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
 		try {
-			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+			final Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 			if (currentCursor.moveToFirst()) {
-				int prochainDepart = currentCursor.getInt(0);
+				final int prochainDepart = currentCursor.getInt(0);
 				holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
 			}
 
@@ -226,18 +229,18 @@ public class FavoriAdapter extends BaseAdapter {
 		}
 
 
-		return convertView;
+		return convertView1;
 	}
 
 
-	private String formatterCalendar(int prochainDepart, int now) {
-		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
+	private CharSequence formatterCalendar(final int prochainDepart, final int now) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
 			stringBuilder.append(myContext.getString(R.string.tropTard));
 		} else {
-			int heures = tempsEnMinutes / 60;
-			int minutes = tempsEnMinutes - heures * 60;
+			final int heures = tempsEnMinutes / 60;
+			final int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
@@ -267,7 +270,7 @@ public class FavoriAdapter extends BaseAdapter {
 		return stringBuilder.toString();
 	}
 
-	private String clauseWhereForTodayCalendrier(Calendar calendar) {
+	private String clauseWhereForTodayCalendrier(final Calendar calendar) {
 		if (JoursFeries.isJourFerie(calendar.getTime())) {
 			return "Dimanche = 1";
 		}

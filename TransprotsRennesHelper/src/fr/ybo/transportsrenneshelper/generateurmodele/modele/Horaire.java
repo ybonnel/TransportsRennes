@@ -20,6 +20,7 @@ import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("horaires.txt")
 public class Horaire {
 	@BaliseCsv("arret_id")

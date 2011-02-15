@@ -17,11 +17,11 @@ package fr.ybo.itineraires.bean;
 
 public class ItineraireException extends RuntimeException {
 
-	public ItineraireException(String message) {
+	public ItineraireException(final String message) {
 		super(message);
 	}
 
-	public ItineraireException(String message, Throwable cause) {
+	public ItineraireException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 }

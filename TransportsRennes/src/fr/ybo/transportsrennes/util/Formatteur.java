@@ -14,12 +14,16 @@
 
 package fr.ybo.transportsrennes.util;
 
-public class Formatteur {
+public final class Formatteur {
 
-	public static String formatterChaine(String chaine) {
-		StringBuilder nomLongFormateBuilder = new StringBuilder();
-		for (String champ : chaine.replaceAll("/", "-").split(" ")) {
-			for (String champ2 : champ.split("\\(")) {
+	private Formatteur() {
+		super();
+	}
+
+	public static String formatterChaine(final String chaine) {
+		final StringBuilder nomLongFormateBuilder = new StringBuilder();
+		for (final String champ : chaine.replaceAll("/", "-").split(" ")) {
+			for (final String champ2 : champ.split("\\(")) {
 				if (champ2.length() > 0) {
 					nomLongFormateBuilder.append(champ2.substring(0, 1).toUpperCase());
 					nomLongFormateBuilder.append(champ2.substring(1, champ2.length()).toLowerCase());
@@ -36,7 +40,7 @@ public class Formatteur {
 		while (nomLongFormate.contains("  ")) {
 			nomLongFormate = nomLongFormate.replaceAll("  ", " ");
 		}
-		while (nomLongFormate.startsWith(" ")) {
+		while (nomLongFormate.length() > 0 && nomLongFormate.charAt(0) == ' ') {
 			nomLongFormate = nomLongFormate.substring(1);
 		}
 		return nomLongFormate;

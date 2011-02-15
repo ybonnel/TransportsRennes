@@ -31,7 +31,7 @@ public enum GeocoderStatus {
 		return name();
 	}
 
-	public static GeocoderStatus fromValue(String v) {
+	public static GeocoderStatus fromValue(final String v) {
 		return valueOf(v);
 	}
 

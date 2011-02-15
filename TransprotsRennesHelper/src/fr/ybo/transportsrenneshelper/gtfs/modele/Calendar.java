@@ -39,65 +39,47 @@ public class Calendar {
 	public boolean dimanche;
 
 	public Calendar() {
+		super();
 
 	}
 
-	public Calendar(Calendar calendar) {
-		this.lundi = calendar.lundi;
-		this.mardi = calendar.mardi;
-		this.mercredi = calendar.mercredi;
-		this.jeudi = calendar.jeudi;
-		this.vendredi = calendar.vendredi;
-		this.samedi = calendar.samedi;
-		this.dimanche = calendar.dimanche;
+	public Calendar(final Calendar calendar) {
+		super();
+		lundi = calendar.lundi;
+		mardi = calendar.mardi;
+		mercredi = calendar.mercredi;
+		jeudi = calendar.jeudi;
+		vendredi = calendar.vendredi;
+		samedi = calendar.samedi;
+		dimanche = calendar.dimanche;
 	}
 
-	public void merge(Calendar calendar) {
-		this.lundi = this.lundi || calendar.lundi;
-		this.mardi = this.mardi || calendar.mardi;
-		this.mercredi = this.mercredi || calendar.mercredi;
-		this.jeudi = this.jeudi || calendar.jeudi;
-		this.vendredi = this.vendredi || calendar.vendredi;
-		this.samedi = this.samedi || calendar.samedi;
-		this.dimanche = this.dimanche || calendar.dimanche;
+	public void merge(final Calendar calendar) {
+		lundi = lundi || calendar.lundi;
+		mardi = mardi || calendar.mardi;
+		mercredi = mercredi || calendar.mercredi;
+		jeudi = jeudi || calendar.jeudi;
+		vendredi = vendredi || calendar.vendredi;
+		samedi = samedi || calendar.samedi;
+		dimanche = dimanche || calendar.dimanche;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (!(o instanceof Calendar)) {
-			return false;
-		}
 
-		Calendar calendar = (Calendar) o;
+		final Calendar calendar = (Calendar) obj;
 
-		if (dimanche != calendar.dimanche) {
-			return false;
-		}
-		if (jeudi != calendar.jeudi) {
-			return false;
-		}
-		if (lundi != calendar.lundi) {
-			return false;
-		}
-		if (mardi != calendar.mardi) {
-			return false;
-		}
-		if (mercredi != calendar.mercredi) {
-			return false;
-		}
-		if (samedi != calendar.samedi) {
-			return false;
-		}
-		return vendredi == calendar.vendredi;
+		return dimanche == calendar.dimanche && jeudi == calendar.jeudi && lundi == calendar.lundi && mardi == calendar.mardi &&
+				mercredi == calendar.mercredi && samedi == calendar.samedi && vendredi == calendar.vendredi;
 
 	}
 
 	@Override
 	public int hashCode() {
-		int result = (lundi ? 1 : 0);
+		int result = lundi ? 1 : 0;
 		result = 31 * result + (mardi ? 1 : 0);
 		result = 31 * result + (mercredi ? 1 : 0);
 		result = 31 * result + (jeudi ? 1 : 0);

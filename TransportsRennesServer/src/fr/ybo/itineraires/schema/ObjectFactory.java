@@ -22,14 +22,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: fr.ybo.itineraires.schema
-     * 
-     */
-    public ObjectFactory() {
-    }
-
-    /**
+	/**
      * Create an instance of {@link JointureCorrespondance }
      * 
      */

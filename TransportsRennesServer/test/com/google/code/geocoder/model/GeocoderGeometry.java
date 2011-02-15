@@ -27,7 +27,7 @@ public class GeocoderGeometry {
 		return location;
 	}
 
-	public void setLocation(LatLng location) {
+	public void setLocation(final LatLng location) {
 		this.location = location;
 	}
 
@@ -35,7 +35,7 @@ public class GeocoderGeometry {
 		return locationType;
 	}
 
-	public void setLocationType(GeocoderLocationType locationType) {
+	public void setLocationType(final GeocoderLocationType locationType) {
 		this.locationType = locationType;
 	}
 
@@ -43,20 +43,20 @@ public class GeocoderGeometry {
 		return viewport;
 	}
 
-	public void setViewport(LatLngBounds viewport) {
+	public void setViewport(final LatLngBounds viewport) {
 		this.viewport = viewport;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || getClass() != obj.getClass()) {
 			return false;
 		}
 
-		GeocoderGeometry that = (GeocoderGeometry) o;
+		final GeocoderGeometry that = (GeocoderGeometry) obj;
 
 		return !(location != null ? !location.equals(that.location) : that.location != null) && locationType == that.locationType &&
 				!(viewport != null ? !viewport.equals(that.viewport) : that.viewport != null);

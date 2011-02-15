@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
 
+@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterBoolean implements AdapterCsv<Boolean> {
 
 	public Boolean parse(final String chaine) {

@@ -20,7 +20,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "UnusedDeclaration"})
 @Table
 public class ArretFavori implements Serializable {
 	@Colonne

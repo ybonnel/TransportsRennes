@@ -14,7 +14,10 @@
 
 package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
 
+@SuppressWarnings({"UnusedDeclaration", "UnusedDeclaration"})
 public class AdapterTime implements AdapterCsv<Integer> {
+
+	private static final int MINUTES_BY_HOUR = 60;
 
 	public Integer parse(final String chaine) {
 		if (chaine == null) {
@@ -24,18 +27,16 @@ public class AdapterTime implements AdapterCsv<Integer> {
 		if (champs.length != 3) {
 			return null;
 		}
-		return Integer.parseInt(champs[0]) * 60 + Integer.parseInt(champs[1]);
+		return Integer.parseInt(champs[0]) * MINUTES_BY_HOUR + Integer.parseInt(champs[1]);
 	}
 
-	public String toString(Integer integer) {
-		if (integer == null) {
+	public String toString(final Integer objet) {
+		if (objet == null) {
 			return null;
 		}
-		StringBuilder retour = new StringBuilder();
-		int heures;
-		int minutes;
-		heures = integer / 60;
-		minutes = integer - heures * 60;
+		final StringBuilder retour = new StringBuilder();
+		final int heures = objet / MINUTES_BY_HOUR;
+		final int minutes = objet - heures * MINUTES_BY_HOUR;
 		if (heures < 10) {
 			retour.append('0');
 		}

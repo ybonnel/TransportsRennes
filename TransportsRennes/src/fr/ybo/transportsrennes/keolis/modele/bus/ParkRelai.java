@@ -21,7 +21,7 @@ import java.io.Serializable;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "UnusedDeclaration"})
 public class ParkRelai extends ObjetWithDistance implements Serializable {
 
 	/**

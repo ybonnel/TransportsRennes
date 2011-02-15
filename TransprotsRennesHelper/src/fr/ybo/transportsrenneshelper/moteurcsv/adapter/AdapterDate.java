@@ -18,20 +18,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterDate implements AdapterCsv<Date> {
 
-	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	@SuppressWarnings({"UnusedDeclaration"})
+	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
 	public Date parse(final String chaine) {
 		try {
-			return sdf.parse(chaine);
-		} catch (final ParseException e) {
+			return SDF.parse(chaine);
+		} catch (final ParseException ignored) {
 			return null;
 		}
 	}
 
-	public String toString(Date date) {
-		return sdf.format(date);
+	public String toString(final Date objet) {
+		return SDF.format(objet);
 	}
 
 }

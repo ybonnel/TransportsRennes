@@ -29,13 +29,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.Toast;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
-import fr.ybo.transportsrennes.keolis.ErreurKeolis;
+import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -52,18 +53,18 @@ import java.util.List;
 
 public class AllOnMap extends MapActivity {
 
-	private static LogYbo LOG_YBO = new LogYbo(AllOnMap.class);
+	private static final LogYbo LOG_YBO = new LogYbo(AllOnMap.class);
 
 	private MapView mapView;
-	private MyGeoClusterer clustererForArret;
-	private MyGeoClusterer clustererForVelo;
-	private MyGeoClusterer clustererForParc;
-	private MyGeoClusterer clustererForPos;
+	private MyGeoClusterer<Arret> clustererForArret;
+	private MyGeoClusterer<Station> clustererForVelo;
+	private MyGeoClusterer<ParkRelai> clustererForParc;
+	private MyGeoClusterer<PointDeVente> clustererForPos;
 	// marker icons
-	private List<MarkerBitmap> markerIconBmpsForArrets = new ArrayList<MarkerBitmap>();
-	private List<MarkerBitmap> markerIconBmpsForVelo = new ArrayList<MarkerBitmap>();
-	private List<MarkerBitmap> markerIconBmpsForParc = new ArrayList<MarkerBitmap>();
-	private List<MarkerBitmap> markerIconBmpsForPos = new ArrayList<MarkerBitmap>();
+	private final List<MarkerBitmap> markerIconBmpsForArrets = new ArrayList<MarkerBitmap>(2);
+	private final List<MarkerBitmap> markerIconBmpsForVelo = new ArrayList<MarkerBitmap>(1);
+	private final List<MarkerBitmap> markerIconBmpsForParc = new ArrayList<MarkerBitmap>(1);
+	private final List<MarkerBitmap> markerIconBmpsForPos = new ArrayList<MarkerBitmap>(1);
 	private float screenDensity;
 
 	/**
@@ -71,31 +72,31 @@ public class AllOnMap extends MapActivity {
 	 */
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("AllOnMap_dialog", true);
+		final boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("AllOnMap_dialog", true);
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mapView.displayZoomControls(true);
 		mapView.setSatellite(true);
-		MapController mapCtrl = mapView.getController();
+		final MapController mapCtrl = mapView.getController();
 
-		Bitmap bitmapBus = BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus);
+		final Bitmap bitmapBus = BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus);
 		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(25, 35), 20, 100));
 		markerIconBmpsForArrets.add(new MarkerBitmap(bitmapBus, bitmapBus, new Point(25, 35), 18, 10000));
 
-		Bitmap bitmapVelo = BitmapFactory.decodeResource(getResources(), R.drawable.icone_velo);
+		final Bitmap bitmapVelo = BitmapFactory.decodeResource(getResources(), R.drawable.icone_velo);
 		markerIconBmpsForVelo.add(new MarkerBitmap(bitmapVelo, bitmapVelo, new Point(25, 35), 20, 100));
 
-		Bitmap bitmapParc = BitmapFactory.decodeResource(getResources(), R.drawable.icone_parc);
+		final Bitmap bitmapParc = BitmapFactory.decodeResource(getResources(), R.drawable.icone_parc);
 		markerIconBmpsForParc.add(new MarkerBitmap(bitmapParc, bitmapParc, new Point(25, 35), 20, 10));
 
-		Bitmap bitmapPos = BitmapFactory.decodeResource(getResources(), R.drawable.icone_pos);
+		final Bitmap bitmapPos = BitmapFactory.decodeResource(getResources(), R.drawable.icone_pos);
 		markerIconBmpsForPos.add(new MarkerBitmap(bitmapPos, bitmapPos, new Point(25, 35), 20, 1000));
 
 
-		screenDensity = this.getResources().getDisplayMetrics().density;
+		screenDensity = getResources().getDisplayMetrics().density;
 
 		mapCtrl.setCenter(new GeoPoint(48109681, -1679277));
 		mapCtrl.setZoom(14);
@@ -109,12 +110,12 @@ public class AllOnMap extends MapActivity {
 	}
 
 	private void showDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setView(LayoutInflater.from(this).inflate(R.layout.infoallinmap, null));
 		builder.setTitle(R.string.titleInfoAllInMap);
 		builder.setCancelable(false);
 		builder.setNeutralButton(getString(R.string.Terminer), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int i) {
+			public void onClick(final DialogInterface dialogInterface, final int i) {
 				dialogInterface.cancel();
 			}
 		});
@@ -123,7 +124,7 @@ public class AllOnMap extends MapActivity {
 
 
 	private void saveAfficheMessage() {
-		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+		final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 		editor.putBoolean("AllOnMap_dialog", false);
 		editor.commit();
 	}
@@ -154,17 +155,17 @@ public class AllOnMap extends MapActivity {
 			clustererForPos =
 					new MyGeoClusterer<PointDeVente>(this, mapView, markerIconBmpsForPos, screenDensity, "pointsDeVente", ListPointsDeVente.class);
 		}
-		new BackgroundTasks().execute();
+		new AllOnMap.BackgroundTasks().execute();
 	}
 
-	private List<Arret> arrets = null;
+	private List<Arret> arrets;
 
 	private void ajouterArrets() {
 		if (!arretVisible) {
 			return;
 		}
 		if (arrets == null) {
-			StringBuilder requete = new StringBuilder();
+			final StringBuilder requete = new StringBuilder();
 			requete.append("select Arret.id as arretId, Arret.nom as arretNom,");
 			requete.append(" Ligne.id as ligneId, Ligne.nomCourt as ligneNomCourt,");
 			requete.append(" Ligne.nomLong as ligneNomLong, Direction.direction as direction,");
@@ -175,21 +176,20 @@ public class AllOnMap extends MapActivity {
 			requete.append(" and ArretRoute.directionId = Direction.id");
 			requete.append(" and Ligne.id = ArretRoute.ligneId");
 			requete.append(" order by ArretRoute.sequence");
-			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
+			final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
 
-			int arretIdIndex = cursor.getColumnIndex("arretId");
-			int arretNomIndex = cursor.getColumnIndex("arretNom");
-			int ligneIdIndex = cursor.getColumnIndex("ligneId");
-			int ligneNomCourtIndex = cursor.getColumnIndex("ligneNomCourt");
-			int ligneNomLongIndex = cursor.getColumnIndex("ligneNomLong");
-			int directionIndex = cursor.getColumnIndex("direction");
-			int latitudeIndex = cursor.getColumnIndex("latitude");
-			int longitudeIndex = cursor.getColumnIndex("longitude");
-			Arret arret;
+			final int arretIdIndex = cursor.getColumnIndex("arretId");
+			final int arretNomIndex = cursor.getColumnIndex("arretNom");
+			final int ligneIdIndex = cursor.getColumnIndex("ligneId");
+			final int ligneNomCourtIndex = cursor.getColumnIndex("ligneNomCourt");
+			final int ligneNomLongIndex = cursor.getColumnIndex("ligneNomLong");
+			final int directionIndex = cursor.getColumnIndex("direction");
+			final int latitudeIndex = cursor.getColumnIndex("latitude");
+			final int longitudeIndex = cursor.getColumnIndex("longitude");
+			arrets = new ArrayList<Arret>(1500);
 			int idGeoItem = 0;
-			arrets = new ArrayList<Arret>();
 			while (cursor.moveToNext()) {
-				arret = new Arret();
+				Arret arret = new Arret();
 				arret.id = cursor.getString(arretIdIndex);
 				arret.nom = cursor.getString(arretNomIndex);
 				arret.latitude = cursor.getDouble(latitudeIndex);
@@ -202,18 +202,20 @@ public class AllOnMap extends MapActivity {
 				arret.favori.nomArret = arret.nom;
 				arret.favori.arretId = arret.id;
 				arrets.add(arret);
-				clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem++, arret));
+				clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem, arret));
+				idGeoItem++;
 			}
 			cursor.close();
 		} else {
 			int idGeoItem = 0;
-			for (Arret arret : arrets) {
-				clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem++, arret));
+			for (final Arret arret : arrets) {
+				clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem, arret));
+				idGeoItem++;
 			}
 		}
 	}
 
-	private List<Station> stations = null;
+	private List<Station> stations;
 
 	private void ajouterVelos() {
 		if (!veloVisible) {
@@ -223,12 +225,13 @@ public class AllOnMap extends MapActivity {
 			stations = Keolis.getInstance().getStations();
 		}
 		int idGeoItem = 0;
-		for (Station station : stations) {
-			clustererForVelo.addItem(new MyGeoItem<Station>(idGeoItem++, station));
+		for (final Station station : stations) {
+			clustererForVelo.addItem(new MyGeoItem<Station>(idGeoItem, station));
+			idGeoItem++;
 		}
 	}
 
-	private List<ParkRelai> parcRelais = null;
+	private List<ParkRelai> parcRelais;
 
 	private void ajouterParcs() {
 		if (!parcVisible) {
@@ -238,12 +241,13 @@ public class AllOnMap extends MapActivity {
 			parcRelais = Keolis.getInstance().getParkRelais();
 		}
 		int idGeoItem = 0;
-		for (ParkRelai parcRelai : parcRelais) {
-			clustererForParc.addItem(new MyGeoItem<ParkRelai>(idGeoItem++, parcRelai));
+		for (final ParkRelai parcRelai : parcRelais) {
+			clustererForParc.addItem(new MyGeoItem<ParkRelai>(idGeoItem, parcRelai));
+			idGeoItem++;
 		}
 	}
 
-	private List<PointDeVente> pointsDeVente = null;
+	private List<PointDeVente> pointsDeVente;
 
 	private void ajouterPos() {
 		if (!posVisible) {
@@ -253,64 +257,65 @@ public class AllOnMap extends MapActivity {
 			pointsDeVente = Keolis.getInstance().getPointDeVente();
 		}
 		int idGeoItem = 0;
-		for (PointDeVente pointDeVente : pointsDeVente) {
-			clustererForPos.addItem(new MyGeoItem<PointDeVente>(idGeoItem++, pointDeVente));
+		for (final PointDeVente pointDeVente : pointsDeVente) {
+			clustererForPos.addItem(new MyGeoItem<PointDeVente>(idGeoItem, pointDeVente));
+			idGeoItem++;
 		}
 	}
 
-	private boolean gestionCheckBoxFaite = false;
+	private boolean gestionCheckBoxFaite;
 
 	private class BackgroundTasks extends AsyncTask<Void, Void, Void> {
 
-		boolean erreurKeolis = false;
+		boolean erreurKeolis;
 
 		@Override
-		protected Void doInBackground(Void... voids) {
+		protected Void doInBackground(final Void... voids) {
 			ajouterArrets();
 			try {
 				ajouterVelos();
 				ajouterParcs();
 				ajouterPos();
-			} catch (ErreurKeolis exceptionKeolis) {
+			} catch (KeolisException keolisException) {
 				erreurKeolis = true;
-				LOG_YBO.erreur("Erreur lors de la récupération des données Keolis", exceptionKeolis);
+				LOG_YBO.erreur("Erreur lors de la récupération des données Keolis", keolisException);
 			}
 			return null;
 		}
 
 		@Override
-		protected void onPostExecute(Void aVoid) {
+		protected void onPostExecute(final Void result) {
 			if (!gestionCheckBoxFaite) {
 				findViewById(R.id.allCheckBox).setVisibility(View.VISIBLE);
-				CheckBox checkBoxBus = (CheckBox) findViewById(R.id.checkBus);
-				CheckBox checkBoxVelo = (CheckBox) findViewById(R.id.checkVelo);
-				CheckBox checkBoxParc = (CheckBox) findViewById(R.id.checkParc);
-				CheckBox checkBoxPos = (CheckBox) findViewById(R.id.checkPos);
+				final CheckBox checkBoxBus = (CheckBox) findViewById(R.id.checkBus);
+				final CheckBox checkBoxVelo = (CheckBox) findViewById(R.id.checkVelo);
+				final CheckBox checkBoxParc = (CheckBox) findViewById(R.id.checkParc);
+				final CheckBox checkBoxPos = (CheckBox) findViewById(R.id.checkPos);
 				checkBoxBus.setChecked(true);
 				checkBoxVelo.setChecked(true);
 				checkBoxParc.setChecked(true);
 				checkBoxPos.setChecked(true);
 				checkBoxBus.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						arretVisible = ((CheckBox) view).isChecked();
+					public void onClick(final View view) {
+						arretVisible = ((Checkable) view).isChecked();
 						updateOverlays();
 					}
 				});
 				checkBoxVelo.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						veloVisible = ((CheckBox) view).isChecked();
+					public void onClick(final View view) {
+						veloVisible = ((Checkable) view).isChecked();
 						updateOverlays();
 					}
 				});
 				checkBoxParc.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						parcVisible = ((CheckBox) view).isChecked();
+					public void onClick(final View view) {
+						parcVisible = ((Checkable) view).isChecked();
 						updateOverlays();
 					}
 				});
 				checkBoxPos.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						posVisible = ((CheckBox) view).isChecked();
+					public void onClick(final View view) {
+						posVisible = ((Checkable) view).isChecked();
 						updateOverlays();
 					}
 				});
@@ -335,7 +340,7 @@ public class AllOnMap extends MapActivity {
 		}
 	}
 
-	private MyLocationOverlay myLocationOverlay = null;
+	private MyLocationOverlay myLocationOverlay;
 
 	@Override
 	protected void onResume() {
@@ -349,30 +354,30 @@ public class AllOnMap extends MapActivity {
 		super.onPause();
 	}
 
+	@SuppressWarnings({"MethodReturnAlwaysConstant"})
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
 	}
 
-	private final static int GROUP_ID = 0;
-	private final static int MENU_ID = 1;
+	private static final int GROUP_ID = 0;
+	private static final int MENU_ID = 1;
 
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
+		final MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-			case MENU_ID:
-				showDialog();
-				return true;
+		if (MENU_ID == item.getItemId()) {
+			showDialog();
+			return true;
 		}
 		return false;
 	}

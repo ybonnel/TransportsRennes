@@ -16,13 +16,11 @@ package fr.ybo.transportsrennes.map;
 
 
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.widget.Toast;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
@@ -32,34 +30,34 @@ import fr.ybo.transportsrennes.util.LogYbo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapItemizedOverlayPos extends ItemizedOverlay {
+public class MapItemizedOverlayPos extends ItemizedOverlay<OverlayItem> {
 
-	private final static LogYbo LOG_YBO = new LogYbo(MapItemizedOverlayPos.class);
+	private static final LogYbo LOG_YBO = new LogYbo(MapItemizedOverlayPos.class);
 
 	//Liste des marqueurs
-	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
-	private Context mContext;
-	private List<PointDeVente> pointDeVentes = new ArrayList<PointDeVente>();
+	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>(20);
+	private final Context mContext;
+	private final List<PointDeVente> pointDeVentes = new ArrayList<PointDeVente>(20);
 
-	private static Drawable leftBottom(Drawable drawable) {
+	private static Drawable leftBottom(final Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayPos(Drawable defaultMarker, Context context) {
+	public MapItemizedOverlayPos(final Drawable defaultMarker, final Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(OverlayItem overlay, PointDeVente pointDeVente) {
+	public void addOverlay(final OverlayItem overlay, final PointDeVente pointDeVente) {
 		mOverlays.add(overlay);
 		pointDeVentes.add(pointDeVente);
 		populate();
 	}
 
 	@Override
-	protected OverlayItem createItem(int i) {
+	protected OverlayItem createItem(final int i) {
 		return mOverlays.get(i);
 	}
 
@@ -71,24 +69,19 @@ public class MapItemizedOverlayPos extends ItemizedOverlay {
 	//Appeer quand on clique sur un marqueur
 	@Override
 	protected boolean onTap(final int index) {
-		OverlayItem item = mOverlays.get(index);
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		final OverlayItem item = mOverlays.get(index);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
 		builder.setMessage(item.getSnippet() + "\nVoulez vous ouvrir le Point de Vente dans GoogleMap?");
 		builder.setCancelable(true);
 		builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
 			public void onClick(final DialogInterface dialog, final int id) {
 				dialog.dismiss();
-				PointDeVente pointDeVente = pointDeVentes.get(index);
-				String _lat = Double.toString(pointDeVente.getLatitude());
-				String _lon = Double.toString(pointDeVente.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(pointDeVente.name) + "+@" + _lat + "," + _lon);
-				try {
-					MapItemizedOverlayPos.this.mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException noGoogleMapsException) {
-					LOG_YBO.erreur("Google maps de doit pas être présent", noGoogleMapsException);
-					Toast.makeText(MapItemizedOverlayPos.this.mContext, "Vous n'avez pas GoogleMaps d'installé...", Toast.LENGTH_LONG).show();
-				}
+				final PointDeVente pointDeVente = pointDeVentes.get(index);
+				final String lat = Double.toString(pointDeVente.getLatitude());
+				final String lon = Double.toString(pointDeVente.getLongitude());
+				final Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(pointDeVente.name) + "+@" + lat + "," + lon);
+				mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			}
 		});
 		builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -96,7 +89,7 @@ public class MapItemizedOverlayPos extends ItemizedOverlay {
 				dialog.cancel();
 			}
 		});
-		AlertDialog alert = builder.create();
+		final AlertDialog alert = builder.create();
 		alert.show();
 		return true;
 	}

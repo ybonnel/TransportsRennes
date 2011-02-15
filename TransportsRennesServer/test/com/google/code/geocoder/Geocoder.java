@@ -36,17 +36,13 @@ public class Geocoder {
 
 	private static final String GEOCODE_REQUEST_URL = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false";
 
-	public Geocoder() {
-	}
-
 	public GeocodeResponse geocode(final GeocoderRequest geocoderRequest) {
 		try {
 			final String urlString = getURL(geocoderRequest);
 
 			final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
-			URL url = new URL(urlString);
-			System.out.println(urlString);
+			final URL url = new URL(urlString);
 			final Reader reader = new InputStreamReader(url.openStream(), "utf-8");
 			return gson.fromJson(reader, GeocodeResponse.class);
 		} catch (Exception e) {

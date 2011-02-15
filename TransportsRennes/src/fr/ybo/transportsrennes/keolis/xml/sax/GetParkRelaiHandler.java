@@ -26,35 +26,35 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	/**
 	 * RELAY_PARK.
 	 */
-	public static final String RELAY_PARK = "relaypark";
+	private static final String RELAY_PARK = "relaypark";
 	/**
 	 * NAME.
 	 */
-	public static final String NAME = "name";
+	private static final String NAME = "name";
 	/**
 	 * LATITUDE.
 	 */
-	public static final String LATITUDE = "latitude";
+	private static final String LATITUDE = "latitude";
 	/**
 	 * LONGITUDE.
 	 */
-	public static final String LONGITUDE = "longitude";
+	private static final String LONGITUDE = "longitude";
 	/**
 	 * CAR_PARK_AVAILABLE.
 	 */
-	public static final String CAR_PARK_AVAILABLE = "carparkavailable";
+	private static final String CAR_PARK_AVAILABLE = "carparkavailable";
 	/**
 	 * CAR_PARK_CAPACITY.
 	 */
-	public static final String CAR_PARK_CAPACITY = "carparkcapacity";
+	private static final String CAR_PARK_CAPACITY = "carparkcapacity";
 	/**
 	 * LAST_UPDATE.
 	 */
-	public static final String LAST_UPDATE = "lastupdate";
+	private static final String LAST_UPDATE = "lastupdate";
 	/**
 	 * STATE.
 	 */
-	public static final String STATE = "state";
+	private static final String STATE = "state";
 
 	@Override
 	protected final String getBaliseData() {
@@ -66,22 +66,23 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 		return new ParkRelai();
 	}
 
+	@SuppressWarnings({"IfStatementWithTooManyBranches"})
 	@Override
-	protected final void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenu) {
+	protected final void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenu;
+			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenu);
+			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenu);
+			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
 		} else if (baliseName.equals(CAR_PARK_AVAILABLE)) {
-			currentObjectKeolis.carParkAvailable = Integer.parseInt(contenu);
+			currentObjectKeolis.carParkAvailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(CAR_PARK_CAPACITY)) {
-			currentObjectKeolis.carParkCapacity = Integer.parseInt(contenu);
+			currentObjectKeolis.carParkCapacity = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(LAST_UPDATE)) {
-			currentObjectKeolis.lastupdate = contenu;
+			currentObjectKeolis.lastupdate = contenuOfBalise;
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.state = Integer.parseInt(contenu);
+			currentObjectKeolis.state = Integer.parseInt(contenuOfBalise);
 		}
 	}
 }

@@ -42,30 +42,31 @@ import java.util.List;
 
 public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClusterer {
 
-	private Activity activity;
-	private String paramName;
-	private Class<? extends Activity> intentClass;
+	private final Activity activity;
+	private final String paramName;
+	private final Class<? extends Activity> intentClass;
 
-	public MyGeoClusterer(Activity activity, MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity, String paramName,
-	                      Class<? extends Activity> intentClass) {
+	public MyGeoClusterer(
+			final Activity activity, final MapView mapView, final List<MarkerBitmap> markerIconBmps, final float screenDensity, final String paramName,
+	                      final Class<? extends Activity> intentClass) {
 		super(mapView, markerIconBmps, screenDensity);
-		GRIDSIZE = 70;
+		gridSize = 70;
 		this.activity = activity;
 		this.paramName = paramName;
 		this.intentClass = intentClass;
 	}
 
 	@Override
-	public void createCluster(GeoItem item) {
-		MyGeoCluster cluster = new MyGeoCluster(this);
+	public void createCluster(final GeoItem item) {
+		final MyGeoClusterer.MyGeoCluster cluster = new MyGeoClusterer.MyGeoCluster(this);
 		cluster.addItem(item);
 		clusters_.add(cluster);
 	}
 
-	public class MyGeoCluster extends GeoCluster {
-		private final MyGeoClusterer clusterer;
+	public class MyGeoCluster extends GeoClusterer.GeoCluster {
+		private final MyGeoClusterer<?> clusterer;
 
-		public MyGeoCluster(MyGeoClusterer clusterer) {
+		public MyGeoCluster(final MyGeoClusterer<?> clusterer) {
 			super(clusterer);
 			this.clusterer = clusterer;
 		}
@@ -77,7 +78,7 @@ public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClustere
 			}
 			if (clusterMarker_ == null) {
 				clusterMarker_ = new MyClusterMarker<Objet>(this, markerIconBmps_, screenDensity_, activity, paramName, intentClass);
-				List<Overlay> mapOverlays = mapView_.getOverlays();
+				final List<Overlay> mapOverlays = mapView_.getOverlays();
 				mapOverlays.add(clusterMarker_);
 			}
 		}

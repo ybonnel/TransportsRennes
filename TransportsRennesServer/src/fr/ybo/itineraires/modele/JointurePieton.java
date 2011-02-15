@@ -15,14 +15,15 @@
 package fr.ybo.itineraires.modele;
 
 import fr.ybo.gtfs.modele.Arret;
-import fr.ybo.itineraires.schema.*;
+import fr.ybo.itineraires.schema.PortionTrajet;
 
 public class JointurePieton extends PortionTrajetPieton {
 
 	private final Arret arret;
 	private final Adresse adresse;
 
-	public JointurePieton(Arret arret, Adresse adresse, Double distance) {
+	public JointurePieton(final Arret arret, final Adresse adresse, final Double distance) {
+		super();
 		this.arret = arret;
 		this.adresse = adresse;
 		this.distance = distance;
@@ -32,8 +33,9 @@ public class JointurePieton extends PortionTrajetPieton {
 		return arret;
 	}
 
+	@Override
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {
 			stringBuilder.append("<tempsTrajet>");
 			stringBuilder.append(tempsTrajet);
@@ -49,8 +51,8 @@ public class JointurePieton extends PortionTrajetPieton {
 	}
 
     @Override
-    public fr.ybo.itineraires.schema.PortionTrajet convert() {
-        fr.ybo.itineraires.schema.JointurePieton retour = new fr.ybo.itineraires.schema.JointurePieton();
+    public PortionTrajet convert() {
+        final fr.ybo.itineraires.schema.JointurePieton retour = new fr.ybo.itineraires.schema.JointurePieton();
         remplirXml(retour);
         retour.setAdresse(adresse.convert());
         retour.setArretId(arret.id);

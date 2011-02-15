@@ -61,8 +61,8 @@ public class JointurePieton
      *     {@link String }
      *     
      */
-    public void setArretId(String value) {
-        this.arretId = value;
+    public void setArretId(final String value) {
+	    arretId = value;
     }
 
     /**
@@ -85,8 +85,8 @@ public class JointurePieton
      *     {@link Adresse }
      *     
      */
-    public void setAdresse(Adresse value) {
-        this.adresse = value;
+    public void setAdresse(final Adresse value) {
+	    adresse = value;
     }
 
 }

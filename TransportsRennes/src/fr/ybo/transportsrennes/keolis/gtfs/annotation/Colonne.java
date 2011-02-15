@@ -22,12 +22,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Colonne {
-	public enum TypeColonne {
+	enum TypeColonne {
 		INTEGER("INTEGER"), TEXT("TEXT"), NUMERIC("NUMERIC"), BOOLEAN("INTEGER(1)"), DATE("INTEGER");
 
-		private String sqlType;
+		private final String sqlType;
 
-		private TypeColonne(final String sqlType) {
+		TypeColonne(final String sqlType) {
 			this.sqlType = sqlType;
 		}
 
@@ -38,6 +38,6 @@ public @interface Colonne {
 
 	String name() default "";
 
-	TypeColonne type() default TypeColonne.TEXT;
+	Colonne.TypeColonne type() default Colonne.TypeColonne.TEXT;
 
 }

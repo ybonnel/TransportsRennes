@@ -22,7 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.keolis.ErreurKeolis;
+import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
@@ -37,9 +37,10 @@ public class LigneAdapter extends BaseAdapter {
 
 	private final LayoutInflater mInflater;
 
-	private List<Ligne> lignes;
+	private final List<Ligne> lignes;
 
-	public LigneAdapter(Context context, List<Ligne> lignes) throws ErreurKeolis {
+	public LigneAdapter(final Context context, final List<Ligne> lignes) throws KeolisException {
+		super();
 		mInflater = LayoutInflater.from(context);
 		this.lignes = lignes;
 	}
@@ -56,23 +57,24 @@ public class LigneAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public View getView(final int position, View convertView, final ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.ligne, null);
-			holder = new ViewHolder();
-			holder.iconeLigne = (ImageView) convertView.findViewById(R.id.iconeLigne);
-			holder.nomLong = (TextView) convertView.findViewById(R.id.nomLong);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final LigneAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = mInflater.inflate(R.layout.ligne, null);
+			holder = new LigneAdapter.ViewHolder();
+			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			holder.nomLong = (TextView) convertView1.findViewById(R.id.nomLong);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (LigneAdapter.ViewHolder) convertView1.getTag();
 		}
-		Ligne ligne = lignes.get(position);
+		final Ligne ligne = lignes.get(position);
 		holder.nomLong.setText(ligne.nomLong);
 		try {
 			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
 		} catch (Exception ignore) {
 		}
-		return convertView;
+		return convertView1;
 	}
 }

@@ -23,6 +23,7 @@ import java.io.Serializable;
  *
  * @author ybonnel
  */
+@SuppressWarnings({"UnusedDeclaration"})
 public class Station extends ObjetWithDistance implements Serializable {
 	/**
 	 * Numéro de la station.

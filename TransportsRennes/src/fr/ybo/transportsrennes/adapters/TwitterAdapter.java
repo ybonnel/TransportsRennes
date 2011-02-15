@@ -31,11 +31,11 @@ import java.util.List;
  */
 public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 
-	private List<MessageTwitter> messages;
+	private final List<MessageTwitter> messages;
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
-	private LayoutInflater inflater;
+	private final LayoutInflater inflater;
 
-	public TwitterAdapter(Context context, List<MessageTwitter> objects) {
+	public TwitterAdapter(final Context context, final List<MessageTwitter> objects) {
 		super(context, R.layout.onetwitter, objects);
 		messages = objects;
 		inflater = LayoutInflater.from(context);
@@ -46,18 +46,19 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
-		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.onetwitter, null);
-			holder = new ViewHolder();
-			holder.twitter = (TextView) convertView.findViewById(R.id.twitter);
-			convertView.setTag(holder);
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
+		View convertView1 = convertView;
+		final TwitterAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.onetwitter, null);
+			holder = new TwitterAdapter.ViewHolder();
+			holder.twitter = (TextView) convertView1.findViewById(R.id.twitter);
+			convertView1.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (TwitterAdapter.ViewHolder) convertView1.getTag();
 		}
-		MessageTwitter message = messages.get(position);
+		final MessageTwitter message = messages.get(position);
 		holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
-		return convertView;
+		return convertView1;
 	}
 }

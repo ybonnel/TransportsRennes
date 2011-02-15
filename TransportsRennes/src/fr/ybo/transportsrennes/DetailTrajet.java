@@ -18,8 +18,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -75,12 +77,12 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 		recuperationDonneesIntent();
 		gestionViewsTitle();
 		construireListe();
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				DetailTrajetAdapter arretAdapter = (DetailTrajetAdapter) ((ListView) adapterView).getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Adapter arretAdapter = (DetailTrajetAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				final Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
@@ -92,7 +94,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 	}
 
 	private void construireListe() {
-		StringBuilder requete = new StringBuilder();
+		final StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as _id, Horaire.heureDepart as heureDepart, Arret.nom as nom ");
 		requete.append("FROM Arret, Horaire_");
 		requete.append(ligne.id);
@@ -101,7 +103,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 		requete.append(" AND Horaire.trajetId = :trajetId");
 		requete.append(" AND Horaire.stopSequence > :sequence ");
 		requete.append("ORDER BY stopSequence;");
-		List<String> selectionArgs = new ArrayList<String>(2);
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(String.valueOf(trajet.id));
 		selectionArgs.add(String.valueOf(sequence));
 		LOG_YBO.debug("Exécution de " + requete.toString());

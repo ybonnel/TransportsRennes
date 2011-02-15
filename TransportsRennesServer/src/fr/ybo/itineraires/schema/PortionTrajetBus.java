@@ -73,8 +73,8 @@ public class PortionTrajetBus
      *     {@link String }
      *     
      */
-    public void setLigneId(String value) {
-        this.ligneId = value;
+    public void setLigneId(final String value) {
+	    ligneId = value;
     }
 
     /**
@@ -97,8 +97,8 @@ public class PortionTrajetBus
      *     {@link String }
      *     
      */
-    public void setArretDepartId(String value) {
-        this.arretDepartId = value;
+    public void setArretDepartId(final String value) {
+	    arretDepartId = value;
     }
 
     /**
@@ -121,8 +121,8 @@ public class PortionTrajetBus
      *     {@link String }
      *     
      */
-    public void setHeureDepart(String value) {
-        this.heureDepart = value;
+    public void setHeureDepart(final String value) {
+	    heureDepart = value;
     }
 
     /**
@@ -145,8 +145,8 @@ public class PortionTrajetBus
      *     {@link String }
      *     
      */
-    public void setArretArriveeId(String value) {
-        this.arretArriveeId = value;
+    public void setArretArriveeId(final String value) {
+	    arretArriveeId = value;
     }
 
     /**
@@ -169,8 +169,8 @@ public class PortionTrajetBus
      *     {@link String }
      *     
      */
-    public void setHeureArrivee(String value) {
-        this.heureArrivee = value;
+    public void setHeureArrivee(final String value) {
+	    heureArrivee = value;
     }
 
 }

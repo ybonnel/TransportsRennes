@@ -25,6 +25,7 @@ import twitter4j.TwitterFactory;
 
 import javax.jdo.PersistenceManager;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -34,14 +35,15 @@ import java.util.logging.Logger;
 
 class GetTwitters {
 
-	private static final Logger logger = Logger.getLogger(GetTwitters.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(GetTwitters.class.getName());
 
-	private static final String query = "select from " + MessageTwitter.class.getName() + " order by dateCreation desc range 0,20";
+	private static final String QUERY = "select from " + MessageTwitter.class.getName() + " order by dateCreation desc range 0,20";
 
 
-	private static TwitterFactory twitterFactory = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static TwitterFactory twitterFactory;
 
-	synchronized TwitterFactory getFactory() {
+	static synchronized TwitterFactory getFactory() {
 		if (twitterFactory == null) {
 			twitterFactory = new TwitterFactory();
 		}
@@ -49,38 +51,38 @@ class GetTwitters {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<MessageTwitter> getMessages() {
-		PersistenceManager persistenceManager = PersistenceFactory.get().getPersistenceManager();
-		List<MessageTwitter> messages = new ArrayList<MessageTwitter>();
+	public Iterable<MessageTwitter> getMessages() {
+		final PersistenceManager persistenceManager = PersistenceFactory.getPersistenceManagerFactory().getPersistenceManager();
+		final List<MessageTwitter> messages = new ArrayList<MessageTwitter>(20);
 		try {
 			if (LastUpdate.getInstance().isUpdate()) {
-				logger.fine("Les messages twitter sont à jour, envoie du contenu de la base de donnée");
-				messages.addAll((List<MessageTwitter>) persistenceManager.newQuery(query).execute());
+				LOGGER.fine("Les messages twitter sont à jour, envoie du contenu de la base de donnée");
+				messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
 			} else {
-				logger.fine("Les messages twitter ne sont pas à jour, récupération du contenu de twiter");
-				Twitter twitter = getFactory().getInstance();
-				ResponseList<Status> listeStatus;
+				LOGGER.fine("Les messages twitter ne sont pas à jour, récupération du contenu de twiter");
+				final Twitter twitter = getFactory().getInstance();
+				final ResponseList<Status> listeStatus;
 				try {
 					listeStatus = twitter.getUserTimeline("@starbusmetro");
 				} catch (TwitterException e) {
-					logger.log(Level.SEVERE, "Erreur lors de l'accès à twitter", e);
-					messages.addAll((List<MessageTwitter>) persistenceManager.newQuery(query).execute());
+					LOGGER.log(Level.SEVERE, "Erreur lors de l'accès à twitter", e);
+					messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
 					return messages;
 				}
-				for (Status status : listeStatus) {
+				for (final Status status : listeStatus) {
 					messages.add(new MessageTwitter(status.getCreatedAt(), status.getText()));
 				}
 				Collections.sort(messages, new Comparator<MessageTwitter>() {
-					public int compare(MessageTwitter o1, MessageTwitter o2) {
+					public int compare(final MessageTwitter o1, final MessageTwitter o2) {
 						return o2.getDateCreation().compareTo(o1.getDateCreation());
 					}
 				});
-				List<MessageTwitter> messagesBdd = (List<MessageTwitter>) persistenceManager.newQuery(query).execute();
+				final Collection<MessageTwitter> messagesBdd = (Collection<MessageTwitter>) persistenceManager.newQuery(QUERY).execute();
 				Date dateDernierMessage = null;
 				if (messagesBdd != null && !messagesBdd.isEmpty()) {
 					dateDernierMessage = messagesBdd.iterator().next().getDateCreation();
 				}
-				for (MessageTwitter message : messages) {
+				for (final MessageTwitter message : messages) {
 					if (dateDernierMessage == null || message.getDateCreation().after(dateDernierMessage)) {
 						persistenceManager.makePersistent(message);
 					}

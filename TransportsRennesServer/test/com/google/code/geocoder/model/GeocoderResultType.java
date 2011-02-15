@@ -54,7 +54,7 @@ public enum GeocoderResultType {
 	}
 
 	public static GeocoderResultType fromValue(final String v) {
-		for (GeocoderResultType c : GeocoderResultType.values()) {
+		for (final GeocoderResultType c : GeocoderResultType.values()) {
 			if (c.value.equals(v)) {
 				return c;
 			}

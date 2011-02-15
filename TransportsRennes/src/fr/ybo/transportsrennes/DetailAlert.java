@@ -23,9 +23,9 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -44,13 +44,13 @@ public class DetailAlert extends MenuAccueil.Activity {
 		if (!alert.lines.isEmpty()) {
 			((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
 		}
-		Set<String> arretsToBold = new HashSet<String>();
-		for (String line : alert.lines) {
-			StringBuilder requete = new StringBuilder();
+		final Collection<String> arretsToBold = new HashSet<String>(20);
+		for (final String line : alert.lines) {
+			final StringBuilder requete = new StringBuilder();
 			requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
 			requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
 			requete.append("and Arret.id = ArretRoute.arretId");
-			Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
+			final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
 			while (cursor.moveToNext()) {
 				arretsToBold.add(cursor.getString(0));
 			}

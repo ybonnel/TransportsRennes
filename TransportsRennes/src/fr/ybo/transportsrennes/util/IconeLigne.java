@@ -19,7 +19,11 @@ import fr.ybo.transportsrennes.R;
 
 public class IconeLigne {
 
-	public static int getIconeResource(String nomCourt) {
+	private IconeLigne() {
+		super();
+	}
+
+	public static int getIconeResource(final String nomCourt) {
 		try {
 			return R.drawable.class.getDeclaredField("i" + nomCourt.toLowerCase()).getInt(null);
 		} catch (Exception ignore) {
@@ -29,7 +33,7 @@ public class IconeLigne {
 
 
 
-	public static int getMarkeeResource(String nomCourt) {
+	public static int getMarkeeResource(final String nomCourt) {
 		try {
 			return R.drawable.class.getDeclaredField("m" + nomCourt.toLowerCase()).getInt(null);
 		} catch (Exception ignore) {

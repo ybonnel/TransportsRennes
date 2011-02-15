@@ -20,7 +20,7 @@ public class AdapterDouble implements AdapterCsv<Double> {
 		return Double.valueOf(chaine);
 	}
 
-	public String toString(Double aDouble) {
-		return aDouble.toString();
+	public String toString(final Double objet) {
+		return objet.toString();
 	}
 }

@@ -19,20 +19,32 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.*;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Calendrier;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
-	public static final String DATABASE_NAME = "keolis.db";
-	public static final int DATABASE_VERSION = 6;
+	private static final String DATABASE_NAME = "keolis.db";
+	private static final int DATABASE_VERSION = 6;
 
 	private final Base base;
 
-	private boolean transactionOpen = false;
+	private boolean transactionOpen;
 
 	public DataBaseHelper(final Context context, final List<Class<?>> classes) throws DataBaseException {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -79,39 +91,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		base.createDataBase(db);
 	}
 
-	private static interface UpgradeDatabase {
+	private interface UpgradeDatabase {
 		void upagrade(SQLiteDatabase db);
 	}
 
-	private Map<Integer, UpgradeDatabase> mapUpgrades = null;
+	private Map<Integer, DataBaseHelper.UpgradeDatabase> mapUpgrades;
 
-	private Map<Integer, UpgradeDatabase> getUpgrades() {
+	private Map<Integer, DataBaseHelper.UpgradeDatabase> getUpgrades() {
 		if (mapUpgrades == null) {
-			mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
-			mapUpgrades.put(2, new UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+			mapUpgrades = new HashMap<Integer, DataBaseHelper.UpgradeDatabase>(10);
+			mapUpgrades.put(2, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(final SQLiteDatabase db) {
 					base.getTable(VeloFavori.class).createTable(db);
 				}
 			});
-			mapUpgrades.put(3, new UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+			mapUpgrades.put(3, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(final SQLiteDatabase db) {
 					base.dropDataBase(db);
 					base.createDataBase(db);
 				}
 			});
-			mapUpgrades.put(4, new UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+			mapUpgrades.put(4, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(final SQLiteDatabase db) {
 					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
 				}
 			});
-			mapUpgrades.put(5, new UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+			mapUpgrades.put(5, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(final SQLiteDatabase db) {
 					Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
 					while (cursor.moveToNext()) {
-						String tableName = cursor.getString(0);
-						if (!tableName.equals("android_metadata") && !tableName.equals("VeloFavori") && !tableName.equals("ArretFavori")) {
+						final String tableName = cursor.getString(0);
+						if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori".equals(tableName)) {
 							db.execSQL("DROP TABLE " + tableName);
 						}
 					}
@@ -126,7 +138,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					// Gestion des favoris.
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
 					base.getTable(ArretFavori.class).createTable(db);
-					List<String> columns = new ArrayList<String>();
+					final List<String> columns = new ArrayList<String>(7);
 					columns.add("stopId");
 					columns.add("routeId");
 					columns.add("nomArret");
@@ -134,37 +146,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					columns.add("routeNomCourt");
 					columns.add("routeNomLong");
 					columns.add("ordre");
-					cursor = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
-					int arretIdIndex = cursor.getColumnIndex("stopId");
-					int ligneIdIndex = cursor.getColumnIndex("routeId");
-					int nomArretIndex = cursor.getColumnIndex("nomArret");
-					int directionIndex = cursor.getColumnIndex("direction");
-					int nomCourtIndex = cursor.getColumnIndex("routeNomCourt");
-					int nomLongIndex = cursor.getColumnIndex("routeNomLong");
-					int ordreIndex = cursor.getColumnIndex("ordre");
-					ArretFavori favori = new ArretFavori();
+					Cursor arretFavori_tmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
+					final int arretIdIndex = arretFavori_tmp.getColumnIndex("stopId");
+					final int ligneIdIndex = arretFavori_tmp.getColumnIndex("routeId");
+					final int nomArretIndex = arretFavori_tmp.getColumnIndex("nomArret");
+					final int directionIndex = arretFavori_tmp.getColumnIndex("direction");
+					final int nomCourtIndex = arretFavori_tmp.getColumnIndex("routeNomCourt");
+					final int nomLongIndex = arretFavori_tmp.getColumnIndex("routeNomLong");
+					final int ordreIndex = arretFavori_tmp.getColumnIndex("ordre");
+					final ArretFavori favori = new ArretFavori();
 					int count = 1;
-					while (cursor.moveToNext()) {
-						favori.arretId = cursor.getString(arretIdIndex);
-						favori.ligneId = cursor.getString(ligneIdIndex);
-						favori.nomArret = cursor.getString(nomArretIndex);
-						favori.direction = cursor.getString(directionIndex);
-						favori.nomCourt = cursor.getString(nomCourtIndex);
-						favori.nomLong = cursor.getString(nomLongIndex);
-						favori.ordre = cursor.isNull(ordreIndex) ? count++ : cursor.getInt(ordreIndex);
+					while (arretFavori_tmp.moveToNext()) {
+						favori.arretId = arretFavori_tmp.getString(arretIdIndex);
+						favori.ligneId = arretFavori_tmp.getString(ligneIdIndex);
+						favori.nomArret = arretFavori_tmp.getString(nomArretIndex);
+						favori.direction = arretFavori_tmp.getString(directionIndex);
+						favori.nomCourt = arretFavori_tmp.getString(nomCourtIndex);
+						favori.nomLong = arretFavori_tmp.getString(nomLongIndex);
+						favori.ordre = arretFavori_tmp.isNull(ordreIndex) ? count : arretFavori_tmp.getInt(ordreIndex);
+						count++;
 						base.insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
 				}
 			});
-			mapUpgrades.put(6, new UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
-					Cursor cursor =
+			mapUpgrades.put(6, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(final SQLiteDatabase db) {
+					final Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
 					while (cursor.moveToNext()) {
-						String tableName = cursor.getString(0);
-						if (!tableName.equals("android_metadata") && !tableName.equals("VeloFavori") && !tableName.equals("ArretFavori")) {
+						final String tableName = cursor.getString(0);
+						if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori".equals(tableName)) {
 							db.execSQL("DROP TABLE " + tableName);
 						}
 					}
@@ -183,7 +196,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+	public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 		LOG_YBO.debug("Demande de mise à jour de la base de la version " + oldVersion + " à la version " + newVersion);
 		try {
 			for (int version = oldVersion + 1; version <= newVersion; version++) {
@@ -194,11 +207,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			}
 		} catch (Exception exception) {
 			LOG_YBO.erreur("Une erreur est survenue lors de l'upgrade, on supprime le schéma et on le recrée.", exception);
-			Cursor cursor =
+			final Cursor cursor =
 					db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null, null);
 			while (cursor.moveToNext()) {
-				String tableName = cursor.getString(0);
-				if (!tableName.equals("android_metadata")) {
+				final String tableName = cursor.getString(0);
+				if (!"android_metadata".equals(tableName)) {
 					db.execSQL("DROP TABLE " + tableName);
 				}
 			}
@@ -211,9 +224,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		return base.select(getReadableDatabase(), entite, null, null, null);
 	}
 
-	public <Entite> List<Entite> select(final Entite entite, final String selection, final List<String> selectionArgs, final String orderBy)
+	public <Entite> List<Entite> select(final Entite entite, final String orderBy)
 			throws DataBaseException {
-		return base.select(getReadableDatabase(), entite, selection, selectionArgs, orderBy);
+		return base.select(getReadableDatabase(), entite, null, null, orderBy);
 	}
 
 	public <Entite> Entite selectSingle(final Entite entite) throws DataBaseException {

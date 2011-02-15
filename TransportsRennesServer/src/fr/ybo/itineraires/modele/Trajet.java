@@ -15,25 +15,26 @@
 package fr.ybo.itineraires.modele;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 public class Trajet {
-	private List<PortionTrajet> portionsTrajet = null;
+	private List<PortionTrajet> portionsTrajet;
 
-	public List<PortionTrajet> getPortionsTrajet() {
+	public Collection<PortionTrajet> getPortionsTrajet() {
 		if (portionsTrajet == null) {
-			portionsTrajet = new ArrayList<PortionTrajet>();
+			portionsTrajet = new ArrayList<PortionTrajet>(5);
 		}
 		return portionsTrajet;
 	}
 
-	private Integer tempsTrajet = null;
+	private Integer tempsTrajet;
 
-	public int calculTempsTrajet(int heureDepart) {
+	public int calculTempsTrajet(final int heureDepart) {
 		if (tempsTrajet == null) {
 			int heureCourante = heureDepart;
-			for (PortionTrajet portionTrajet : getPortionsTrajet()) {
+			for (final PortionTrajet portionTrajet : getPortionsTrajet()) {
 				heureCourante = portionTrajet.calculHeureArrivee(heureCourante);
 			}
 			tempsTrajet = heureCourante - heureDepart;
@@ -43,10 +44,10 @@ public class Trajet {
 
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder("Trajet (");
+		final StringBuilder stringBuilder = new StringBuilder("Trajet (");
 		stringBuilder.append(tempsTrajet);
 		stringBuilder.append(" minutes):\n");
-		for (PortionTrajet portion : getPortionsTrajet()) {
+		for (final PortionTrajet portion : getPortionsTrajet()) {
 			stringBuilder.append(portion.toString());
 			stringBuilder.append('\n');
 		}
@@ -54,13 +55,13 @@ public class Trajet {
 	}
 
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		if (tempsTrajet != null) {
 			stringBuilder.append("<tempsTrajet>");
 			stringBuilder.append(tempsTrajet);
 			stringBuilder.append("</tempsTrajet>");
 		}
-		for (PortionTrajet portion : getPortionsTrajet()) {
+		for (final PortionTrajet portion : getPortionsTrajet()) {
 			stringBuilder.append("<portion type=\"");
 			stringBuilder.append(portion.getClass().getSimpleName());
 			stringBuilder.append("\">");

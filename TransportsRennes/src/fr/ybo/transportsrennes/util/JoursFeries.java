@@ -15,6 +15,7 @@
 package fr.ybo.transportsrennes.util;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,19 +25,24 @@ import java.util.Set;
  */
 public class JoursFeries {
 
-	private static Set<String> joursFeries = null;
+	@SuppressWarnings({"StaticNonFinalField"})
+	private static Set<String> joursFeries;
 
-	private final static SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
+	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
 
-	public static boolean isJourFerie(Date date) {
+	private JoursFeries() {
+		super();
+	}
+
+	public static boolean isJourFerie(final Date date) {
 		return getJoursFeries().contains(SIMPLE_DATE_FORMAT.format(date));
 	}
 
-	private static Set<String> getJoursFeries() {
+	private static Collection<String> getJoursFeries() {
 		if (joursFeries != null) {
 			return joursFeries;
 		}
-		joursFeries = new HashSet<String>();
+		joursFeries = new HashSet<String>(34);
 		joursFeries.add("25122010");
 		joursFeries.add("01012011");
 		joursFeries.add("25042011");

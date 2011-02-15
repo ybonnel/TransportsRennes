@@ -23,6 +23,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterBoolean;
 import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
+@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("calendriers.txt")
 @Table
 public class Calendrier {

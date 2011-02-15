@@ -1,12 +1,13 @@
 
 package fr.ybo.itineraires.schema;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -59,11 +60,11 @@ public class Trajet {
      * 
      * 
      */
-    public List<PortionTrajet> getPortions() {
+    public Collection<PortionTrajet> getPortions() {
         if (portions == null) {
             portions = new ArrayList<PortionTrajet>();
         }
-        return this.portions;
+        return portions;
     }
 
 }

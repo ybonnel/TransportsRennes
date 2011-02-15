@@ -24,21 +24,20 @@ import android.widget.TabHost;
 public class TabAlertes extends TabActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabalertes);
 
-		Resources res = getResources();
-		TabHost tabHost = getTabHost();
-		TabHost.TabSpec spec;
-		Intent intent;
+		final Resources res = getResources();
+		final TabHost tabHost = getTabHost();
 
 		// Create an Intent to launch an Activity for the tab (to be reused)
-		intent = new Intent().setClass(this, ListAlerts.class);
+		Intent intent = new Intent().setClass(this, ListAlerts.class);
 
 		// Initialize a TabSpec for each tab and add it to the TabHost
-		spec = tabHost.newTabSpec("alertes").setIndicator(getString(R.string.alertes), res.getDrawable(android.R.drawable.ic_dialog_alert))
-				.setContent(intent);
+		TabHost.TabSpec spec =
+				tabHost.newTabSpec("alertes").setIndicator(getString(R.string.alertes), res.getDrawable(android.R.drawable.ic_dialog_alert))
+						.setContent(intent);
 		tabHost.addTab(spec);
 
 		// Do the same for the other tabs

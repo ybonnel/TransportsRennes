@@ -17,19 +17,19 @@ package fr.ybo.itineraires.util;
 
 import fr.ybo.itineraires.bean.ItineraireException;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-
 public class Key {
 
-    private static String[] keys = { "xxxxx" };
+    private static final String[] KEYS = { "xxxxx" };
 
-    public static void isValid(String key) {
+	private Key() {
+		super();
+	}
+
+	public static void valid(final String key) {
         if (key == null) {
             throw new ItineraireException("La clé doit être valorisée");
         }
-        for (String validKey : keys) {
+        for (final String validKey : KEYS) {
             if (validKey.equals(key)) {
                 return;
             }

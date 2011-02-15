@@ -17,11 +17,12 @@ package fr.ybo.itineraires.util;
 import java.util.logging.Logger;
 
 public class Chrono {
-	private static final Logger logger = Logger.getLogger(Chrono.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Chrono.class.getName());
 	private final long startTime;
 	private final String methode;
 	private long elapsedTime;
-	public Chrono(String methode) {
+	public Chrono(final String methode) {
+		super();
 		startTime = System.nanoTime();
 		this.methode = methode;
 	}
@@ -32,6 +33,6 @@ public class Chrono {
 	}
 
 	public void spool() {
-		logger.info(new StringBuilder(methode).append(" : ").append(elapsedTime/1000000).append(" ms").toString());
+		LOGGER.info(new StringBuilder(methode).append(" : ").append(elapsedTime/1000000).append(" ms").toString());
 	}
 }

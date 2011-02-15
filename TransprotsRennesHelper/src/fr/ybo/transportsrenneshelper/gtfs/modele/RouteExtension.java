@@ -18,6 +18,7 @@ import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
 
+@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("routes_extensions.txt")
 public class RouteExtension {
 

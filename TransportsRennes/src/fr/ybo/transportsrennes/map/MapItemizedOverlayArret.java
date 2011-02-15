@@ -28,32 +28,32 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapItemizedOverlayArret extends ItemizedOverlay {
+public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
 	//Liste des marqueurs
-	private ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
-	private Context mContext;
-	private List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>();
+	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>(20);
+	private final Context mContext;
+	private final List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>(20);
 
-	private static Drawable leftBottom(Drawable drawable) {
+	private static Drawable leftBottom(final Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayArret(Drawable defaultMarker, Context context) {
+	public MapItemizedOverlayArret(final Drawable defaultMarker, final Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
-	public void addOverlay(OverlayItem overlay, ArretFavori favori) {
+	public void addOverlay(final OverlayItem overlay, final ArretFavori favori) {
 		mOverlays.add(overlay);
 		arretFavoris.add(favori);
 		populate();
 	}
 
 	@Override
-	protected OverlayItem createItem(int i) {
+	protected OverlayItem createItem(final int i) {
 		return mOverlays.get(i);
 	}
 
@@ -64,11 +64,11 @@ public class MapItemizedOverlayArret extends ItemizedOverlay {
 
 	//Appeer quand on clique sur un marqueur
 	@Override
-	protected boolean onTap(int index) {
-		OverlayItem item = mOverlays.get(index);
+	protected boolean onTap(final int index) {
+		final OverlayItem item = mOverlays.get(index);
 		final ArretFavori favori = arretFavoris.get(index);
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle(item.getTitle());
 		builder.setMessage("vers " + item.getSnippet() + "\nVoulez vous ouvrir le détail?");
 		builder.setCancelable(true);
@@ -85,7 +85,7 @@ public class MapItemizedOverlayArret extends ItemizedOverlay {
 				dialog.cancel();
 			}
 		});
-		AlertDialog alert = builder.create();
+		final AlertDialog alert = builder.create();
 		alert.show();
 
 

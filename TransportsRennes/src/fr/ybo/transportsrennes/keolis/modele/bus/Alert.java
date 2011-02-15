@@ -18,9 +18,9 @@ import fr.ybo.transportsrennes.util.Formatteur;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class représentant une alerte Keolis.
@@ -36,15 +36,17 @@ import java.util.Set;
 public class Alert implements Serializable {
 
 	public Alert() {
+		super();
 	}
 
-	public Alert(Alert alert) {
-		this.title = alert.title;
-		this.starttime = alert.starttime;
-		this.endtime = alert.endtime;
-		this.majordisturbance = alert.majordisturbance;
-		this.detail = alert.detail;
-		this.link = alert.link;
+	public Alert(final Alert alert) {
+		super();
+		title = alert.title;
+		starttime = alert.starttime;
+		endtime = alert.endtime;
+		majordisturbance = alert.majordisturbance;
+		detail = alert.detail;
+		link = alert.link;
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class Alert implements Serializable {
 	/**
 	 * lines.
 	 */
-	public List<String> lines = new ArrayList<String>();
+	public final List<String> lines = new ArrayList<String>(4);
 
 	/**
 	 * majordisturbance.
@@ -79,21 +81,22 @@ public class Alert implements Serializable {
 	 */
 	public String link;
 
-	public String getDetailFormatte(Set<String> arrets) {
-		StringBuilder lignes = new StringBuilder();
-		for (String line : lines) {
+	public String getDetailFormatte(final Iterable<String> arrets) {
+		final StringBuilder lignes = new StringBuilder();
+		for (final String line : lines) {
 			lignes.append(line);
 			lignes.append(", ");
 		}
 		lignes.deleteCharAt(lignes.length() - 1);
 		lignes.deleteCharAt(lignes.length() - 1);
-		String detailFormatte =
+		final String detailFormatte =
 				detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
 						.replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
 		StringBuilder resultat = new StringBuilder();
 		char carOld = '\0';
-		for (char car : detailFormatte.toCharArray()) {
-			if (((carOld >= '0' && carOld <= '9') || (carOld >= 'a' && carOld <= 'z') || (carOld == 'é')) && car >= 'A' && car <= 'Z') {
+		for (final char car : detailFormatte.toCharArray()) {
+			//noinspection OverlyComplexBooleanExpression
+			if ((carOld >= '0' && carOld <= '9' || carOld >= 'a' && carOld <= 'z' || carOld == 'é') && car >= 'A' && car <= 'Z') {
 				// Minuscule suivie d'une majuscule, ça doit être un retour à la ligne qui manque.
 				resultat.append(".\n");
 			}
@@ -102,44 +105,44 @@ public class Alert implements Serializable {
 		}
 
 		String resultatChaine = resultat.toString();
-		for (String arretToBold : arrets) {
+		for (final String arretToBold : arrets) {
 			resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>" + arretToBold + "</b>");
 		}
 
 		// recherche des lignes à mettre en gras.
-		String[] champs = resultatChaine.split("\n");
-		resultat = new StringBuilder();
-		for (String champ : champs) {
+		final String[] champs = resultatChaine.split("\n");
+		StringBuilder stringBuilder = new StringBuilder();
+		for (final String champ : champs) {
 			if (champ.startsWith("Ligne")) {
-				resultat.append("<br/><b>");
+				stringBuilder.append("<br/><b>");
 			}
-			resultat.append(champ);
+			stringBuilder.append(champ);
 			if (champ.startsWith("Ligne")) {
-				resultat.append("</b>");
+				stringBuilder.append("</b>");
 			}
-			resultat.append("<br/>");
+			stringBuilder.append("<br/>");
 		}
-		return resultat.toString();
+		return stringBuilder.toString();
 	}
 
-	private static final HashSet<Character> caracToDelete = new HashSet<Character>();
+	private static final Collection<Character> CARAC_TO_DELETE = new HashSet<Character>(11);
 	static {
-		 caracToDelete.add(' ');
-		 caracToDelete.add('0');
-		 caracToDelete.add('1');
-		 caracToDelete.add('2');
-		 caracToDelete.add('3');
-		 caracToDelete.add('4');
-		 caracToDelete.add('5');
-		 caracToDelete.add('6');
-		 caracToDelete.add('7');
-		 caracToDelete.add('8');
-		 caracToDelete.add('9');
+		 CARAC_TO_DELETE.add(' ');
+		 CARAC_TO_DELETE.add('0');
+		 CARAC_TO_DELETE.add('1');
+		 CARAC_TO_DELETE.add('2');
+		 CARAC_TO_DELETE.add('3');
+		 CARAC_TO_DELETE.add('4');
+		 CARAC_TO_DELETE.add('5');
+		 CARAC_TO_DELETE.add('6');
+		 CARAC_TO_DELETE.add('7');
+		 CARAC_TO_DELETE.add('8');
+		 CARAC_TO_DELETE.add('9');
 	}
 
-	public String getTitleFormate() {
+	public CharSequence getTitleFormate() {
 		String titleFormate = title;
-		while (caracToDelete.contains(titleFormate.charAt(0))) {
+		while (CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {
 			titleFormate = titleFormate.substring(1);
 			if (titleFormate.startsWith("TTZ")) {
 				titleFormate = titleFormate.substring(3);

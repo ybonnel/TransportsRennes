@@ -20,30 +20,33 @@ import java.util.logging.Logger;
 
 
 public class Adresse {
-    private static final Logger logger = Logger.getLogger(Adresse.class.getName());
-	private Double latitude;
-	private Double longitude;
+    private static final Logger LOGGER = Logger.getLogger(Adresse.class.getName());
+	private final Double latitude;
+	private final Double longitude;
 
-	public Adresse(String value) {
+	public Adresse(final String value) {
+		super();
 		if (value == null) {
-            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			LOGGER.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 		}
-		String[] champs = value.split("\\|");
+		final String[] champs = value.split("\\|");
 		if (champs.length != 2) {
-            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			LOGGER.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 		}
 		try {
 			latitude = Double.parseDouble(champs[0]);
 			longitude = Double.parseDouble(champs[1]);
 		} catch (NumberFormatException exception) {
-            logger.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
+			LOGGER.severe("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'");
 			throw new ItineraireException("Pour construire une adresse il faut une valeur, format : 'latitude|longitude'", exception);
 		}
 	}
 
-	public Adresse(Double latitude, Double longitude) {
+	@SuppressWarnings({"UnusedDeclaration"})
+	public Adresse(final Double latitude, final Double longitude) {
+		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
@@ -57,7 +60,7 @@ public class Adresse {
 	}
 
 	public String toXml() {
-		StringBuilder stringBuilder = new StringBuilder();
+		final StringBuilder stringBuilder = new StringBuilder();
 		if (latitude != null) {
 			stringBuilder.append("<latitude>");
 			stringBuilder.append(latitude);
@@ -72,7 +75,7 @@ public class Adresse {
 	}
 
     public fr.ybo.itineraires.schema.Adresse convert() {
-        fr.ybo.itineraires.schema.Adresse adresseXml = new fr.ybo.itineraires.schema.Adresse();
+        final fr.ybo.itineraires.schema.Adresse adresseXml = new fr.ybo.itineraires.schema.Adresse();
         adresseXml.setLatitude(latitude);
         adresseXml.setLongitude(longitude);
         return adresseXml;

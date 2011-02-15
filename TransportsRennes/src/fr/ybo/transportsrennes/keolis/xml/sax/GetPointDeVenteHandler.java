@@ -26,47 +26,47 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 	/**
 	 * POS.
 	 */
-	public static final String POS = "pos";
+	private static final String POS = "pos";
 	/**
 	 * NAME.
 	 */
-	public static final String NAME = "name";
+	private static final String NAME = "name";
 	/**
 	 * TYPE.
 	 */
-	public static final String TYPE = "type";
+	private static final String TYPE = "type";
 	/**
 	 * ADRESSE.
 	 */
-	public static final String ADRESSE = "address";
+	private static final String ADRESSE = "address";
 	/**
 	 * CODE_POSTAL.
 	 */
-	public static final String CODE_POSTAL = "zipcode";
+	private static final String CODE_POSTAL = "zipcode";
 	/**
 	 * VILLE.
 	 */
-	public static final String VILLE = "city";
+	private static final String VILLE = "city";
 	/**
 	 * DISTRICT.
 	 */
-	public static final String DISTRICT = "district";
+	private static final String DISTRICT = "district";
 	/**
 	 * TELEPHONE.
 	 */
-	public static final String TELEPHONE = "phone";
+	private static final String TELEPHONE = "phone";
 	/**
 	 * SCHEDULE.
 	 */
-	public static final String SCHEDULE = "schedule";
+	private static final String SCHEDULE = "schedule";
 	/**
 	 * LATITUDE.
 	 */
-	public static final String LATITUDE = "latitude";
+	private static final String LATITUDE = "latitude";
 	/**
 	 * LONGITUDE.
 	 */
-	public static final String LONGITUDE = "longitude";
+	private static final String LONGITUDE = "longitude";
 
 	@Override
 	protected final String getBaliseData() {
@@ -78,28 +78,29 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 		return new PointDeVente();
 	}
 
+	@SuppressWarnings({"IfStatementWithTooManyBranches"})
 	@Override
-	protected final void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenu) {
+	protected final void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenu;
+			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(TYPE)) {
-			currentObjectKeolis.type = contenu;
+			currentObjectKeolis.type = contenuOfBalise;
 		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenu;
+			currentObjectKeolis.adresse = contenuOfBalise;
 		} else if (baliseName.equals(CODE_POSTAL)) {
-			currentObjectKeolis.codePostal = contenu;
+			currentObjectKeolis.codePostal = contenuOfBalise;
 		} else if (baliseName.equals(VILLE)) {
-			currentObjectKeolis.ville = contenu;
+			currentObjectKeolis.ville = contenuOfBalise;
 		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenu;
+			currentObjectKeolis.district = contenuOfBalise;
 		} else if (baliseName.equals(TELEPHONE)) {
-			currentObjectKeolis.telephone = contenu;
+			currentObjectKeolis.telephone = contenuOfBalise;
 		} else if (baliseName.equals(SCHEDULE)) {
-			currentObjectKeolis.schedule = contenu;
+			currentObjectKeolis.schedule = contenuOfBalise;
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenu);
+			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenu);
+			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
 		}
 	}
 }
