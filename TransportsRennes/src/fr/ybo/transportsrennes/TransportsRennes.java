@@ -20,12 +20,15 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,10 +142,48 @@ public class TransportsRennes extends Activity {
 						}
 					} else {
 						TransportsRennesApplication.verifUpdateDone();
+						afficheMessage();
 					}
 				}
 			}.execute((Void[]) null);
 		}
+	}
+
+	private void afficheMessage() {
+		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_dialog", true);
+		if (afficheMessage) {
+			showDialog();
+			saveAfficheMessage();
+		}
+
+	}
+
+	private void showDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
+		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
+		Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+		textView.setText(spanned, TextView.BufferType.SPANNABLE);
+		textView.setMovementMethod(LinkMovementMethod.getInstance());
+		builder.setView(view);
+		builder.setTitle(R.string.titleTransportsRennes);
+		builder.setCancelable(false);
+		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
+		builder.create().show();
+	}
+
+
+	private static class TerminerClickListener implements DialogInterface.OnClickListener {
+		public void onClick(DialogInterface dialogInterface, int i) {
+			dialogInterface.cancel();
+		}
+	}
+
+
+	private void saveAfficheMessage() {
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+		editor.putBoolean("TransportsRennes_dialog", false);
+		editor.commit();
 	}
 
 	@SuppressWarnings({"unused", "WeakerAccess"})
@@ -290,6 +331,7 @@ public class TransportsRennes extends Activity {
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
 	private static final int MENU_MAP_ID = 2;
+	//private static final int MENU_ITINERAIRE = 3;
 	private static final int MENU_LOAD_LINES = 3;
 
 
@@ -300,6 +342,8 @@ public class TransportsRennes extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
+		/*MenuItem itemItineraires = menu.add(GROUP_ID, MENU_ITINERAIRE, Menu.NONE, R.string.menu_itineraires);
+		itemItineraires.setIcon(android.R.drawable.ic_menu_directions);*/
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		return true;
@@ -310,7 +354,7 @@ public class TransportsRennes extends Activity {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case MENU_ID:
-				TextView message = new TextView(this);
+				/*TextView message = new TextView(this);
 				message.setPadding(8, 8, 8, 8);
 				message.setTextSize(18);
 				Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
@@ -318,12 +362,17 @@ public class TransportsRennes extends Activity {
 				message.setMovementMethod(LinkMovementMethod.getInstance());
 				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				builder.setView(message).setCancelable(true);
-				builder.create().show();
+				builder.create().show();*/
+				showDialog();
 				return true;
 			case MENU_MAP_ID:
-				Intent intent = new Intent(this, AllOnMap.class);
-				startActivity(intent);
+				Intent intentMap = new Intent(this, AllOnMap.class);
+				startActivity(intentMap);
 				return true;
+			/*case MENU_ITINERAIRE:
+				Intent intentItineraire = new Intent(this, ItineraireRequete.class);
+				startActivity(intentItineraire);
+				return true;*/
 			case MENU_LOAD_LINES:
 				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));

@@ -136,6 +136,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@SuppressWarnings({"unchecked"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);

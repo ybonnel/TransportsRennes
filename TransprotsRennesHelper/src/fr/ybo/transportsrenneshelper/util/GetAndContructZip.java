@@ -146,13 +146,13 @@ public class GetAndContructZip {
 		}
 	}
 
+	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	private void copieFichierZip(ZipInputStream zipInputStream, File repertoire) throws IOException {
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
 		while (zipEntry != null) {
 			System.out.println("Copie du fichier " + zipEntry.getName());
 			File file = new File(repertoire, zipEntry.getName());
-			@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"}) BufferedReader bufReader =
-					new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 			try {
 				String ligne = bufReader.readLine();
@@ -163,7 +163,6 @@ public class GetAndContructZip {
 				}
 			} finally {
 				bufWriter.close();
-				bufReader.close();
 			}
 			System.out.println("Fin de la copie du fichier " + zipEntry.getName());
 			zipEntry = zipInputStream.getNextEntry();

@@ -56,24 +56,22 @@ public final class GestionZipKeolis {
 		}
 	}
 
+	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, DataBaseHelper dataBaseHelper) {
 		try {
 			HttpURLConnection connection = openConnectionForStopTime(ligneId);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
 			zipInputStream.getNextEntry();
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
-			try {
-				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
-			} finally {
-				bufReader.close();
-			}
-
+			moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
+			connection.disconnect();
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}
 
 	}
 
+	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static void getAndParseZipKeolis(MoteurCsv moteur) throws GestionFilesException, MoteurCsvException, DataBaseException {
 		try {
 			HttpURLConnection connection = openHttpConnection();
@@ -92,7 +90,6 @@ public final class GestionZipKeolis {
 					}
 				} finally {
 					TransportsRennesApplication.getDataBaseHelper().endTransaction();
-					bufReader.close();
 				}
 				LOG_YBO.debug("Fin du traitement du fichier " + zipEntry.getName());
 				zipEntry = zipInputStream.getNextEntry();

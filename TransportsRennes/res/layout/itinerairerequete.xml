@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <TextView android:id="@+id/dateItineraire"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:textSize="24dip"
+              android:textStyle="bold"
+              android:textColor="#aaaaaa"
+              android:paddingLeft="5dip"
+              android:paddingTop="10dip"
+              android:gravity="center_vertical"
+              android:drawableRight="@android:drawable/ic_menu_more"/>
+    <TextView android:id="@+id/heureItineraire"
+              android:layout_height="wrap_content"
+              android:layout_width="wrap_content"
+              android:textSize="24dip"
+              android:textStyle="bold"
+              android:textColor="#aaaaaa"
+              android:paddingRight="5dip"
+              android:paddingTop="10dip"
+              android:gravity="center_vertical"
+              android:drawableRight="@android:drawable/ic_menu_more"
+              android:layout_alignParentRight="true"/>
+    <TextView android:id="@+id/textAdresseDepart"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:textSize="20dip"
+              android:paddingTop="10dip"
+              android:paddingLeft="5dip"
+              android:text="@string/textAdresseDepart"
+              android:layout_below="@id/dateItineraire"/>
+    <EditText android:id="@+id/adresseDepart"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:background="@android:drawable/editbox_background"
+              android:inputType="textNoSuggestions"
+              android:imeOptions="normal"
+              android:hint="@string/hint_positionCourante"
+              android:layout_below="@id/textAdresseDepart"/>
+    <TextView android:id="@+id/exempleAdresseDepart"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:textSize="12dip"
+              android:text="@string/exempleAdresse"
+              android:layout_below="@id/adresseDepart"/>
+    <TextView android:id="@+id/textAdresseArrivee"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:textSize="20dip"
+              android:paddingTop="20dip"
+              android:paddingLeft="5dip"
+              android:text="@string/textAdresseArrivee"
+              android:layout_below="@id/exempleAdresseDepart"/>
+    <EditText android:id="@+id/adresseArrivee"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:background="@android:drawable/editbox_background"
+              android:inputType="textNoSuggestions"
+              android:imeOptions="normal"
+              android:hint="@string/hint_positionCourante"
+              android:layout_below="@id/textAdresseArrivee"/>
+    <TextView android:id="@+id/exempleAdresseArrivee"
+              android:layout_height="wrap_content"
+              android:layout_width="fill_parent"
+              android:textSize="12dip"
+              android:text="@string/exempleAdresse"
+              android:layout_below="@id/adresseArrivee"/>
+    <Button android:id="@+id/itineraireTermine"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/Terminer"
+            android:gravity="center"
+            android:textSize="18dip"
+            android:layout_marginTop="20dip"
+            android:layout_marginLeft="30dip"
+            android:layout_below="@id/exempleAdresseArrivee"/>
+</RelativeLayout>
