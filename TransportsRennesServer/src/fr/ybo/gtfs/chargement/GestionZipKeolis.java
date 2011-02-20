@@ -22,10 +22,7 @@ import fr.ybo.gtfs.modele.Horaire;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -52,7 +49,7 @@ public final class GestionZipKeolis {
 	}
 
 	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
-	public static Iterable<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
+	public static Collection<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
 		try {
 			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".zip"));
 			try {

@@ -19,8 +19,10 @@ import fr.ybo.gtfs.csv.annotation.BaliseCsv;
 import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
+import java.io.Serializable;
+
 @FichierCsv("correspondances.txt")
-public class Correspondance {
+public class Correspondance implements Serializable {
 
 	@BaliseCsv("arretId")
 	public String arretId;

@@ -20,8 +20,10 @@ import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterBoolean;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
+import java.io.Serializable;
+
 @FichierCsv("arrets_routes.txt")
-public class ArretRoute {
+public class ArretRoute implements Serializable {
 	@BaliseCsv("arret_id")
 	public String arretId;
 	@BaliseCsv("ligne_id")

@@ -18,14 +18,16 @@ import fr.ybo.gtfs.csv.annotation.BaliseCsv;
 import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
+import java.io.Serializable;
+
 @FichierCsv("trajets.txt")
-public class Trajet {
-	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
-	public Integer id;
-	@BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
-	public Integer calendrierId;
-	@BaliseCsv("ligne_id")
-	public String ligneId;
-	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
-	public Integer directionId;
+public class Trajet implements Serializable {
+    @BaliseCsv(value = "id", adapter = AdapterInteger.class)
+    public Integer id;
+    @BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
+    public Integer calendrierId;
+    @BaliseCsv("ligne_id")
+    public String ligneId;
+    @BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
+    public Integer directionId;
 }

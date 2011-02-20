@@ -80,7 +80,7 @@ public class MoteurCsv {
 	}
 
 	@SuppressWarnings({"unchecked", "TypeMayBeWeakened"})
-	public <Objet> Iterable<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz) throws IOException {
+	public <Objet> Collection<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz) throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 		Collection<Objet> objets = new ArrayList<Objet>(500);
 		String ligne = bufReader.readLine();

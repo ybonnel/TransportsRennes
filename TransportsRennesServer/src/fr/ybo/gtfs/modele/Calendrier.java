@@ -20,8 +20,10 @@ import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterBoolean;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
+import java.io.Serializable;
+
 @FichierCsv("calendriers.txt")
-public class Calendrier {
+public class Calendrier implements Serializable {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
 	public Integer id;
 	@BaliseCsv(value = "lundi", adapter = AdapterBoolean.class)
