@@ -1,9 +1,6 @@
 package fr.ybo.itineraires;
 
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.EnumCalendrier;
 import fr.ybo.itineraires.schema.ItineraireReponse;

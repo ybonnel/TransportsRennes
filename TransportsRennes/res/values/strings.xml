@@ -12,17 +12,15 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
     <!-- Messages -->
-    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer quelques dizaines de secondes, voulez vous l\'effectuer maintenant?</string>
+    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer quelques dizaines de secondes, voulez-vous l\'effectuer maintenant?</string>
     <string name="titleInfoAllInMap">Bienvenue dans la carte multi-modale</string>
-    <!-- A traduire -->
     <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes</string>
     <string name="infoAllInMap">Le but de cette carte est d\'afficher tous les points d\'intérêts de l\'application sur une seule carte. Pour des raisons de lisibilité, il n\'est pas possible d\'afficher tout les points, c\'est donc des regroupements qui sont affichés. Le nombre affiché sur l\'icône est le nombre de points d\'intérêts contenus dans la zone associée. Pour ouvrir le détail correspondant à un regroupement, il suffit de cliquer deux fois de suite sur l\'icône.</string>
-    <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez vous l\'effectuer maintenant? Attention, vous devrez charger à nouveau les horaires que vous avez déjà chargés.</string>
+    <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez-vous l\'effectuer maintenant? Attention, vous devrez charger à nouveau les horaires que vous avez déjà chargés.</string>
     <string name="infoChargementGtfs">Chargement des données du STAR.</string>
     <string name="verificationUpdate">Recherche de mise à jour.</string>
     <string name="rechercheArrets">Recherche des arrêts de bus.</string>
@@ -31,21 +29,17 @@
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
     <string name="dialogRequeteParkRelais">Interrogation du STAR.</string>
     <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
-    <!-- Traduction à compléter -->
     <string name="dialogAPropos">L\'application Transports Rennes a été développée dans le cadre de l\'ouverture des données du réseau STAR et du service LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Cette application a été inscrite au concours "Rennes Métropole en accès libre", si vous aimez l\'application vous pouvez voter pour elle : &lt;a href=\'http://www.data.rennes-metropole.fr/fr/le-concours/le-vote-du-public.html\'&gt;data.rennes-metropole&lt;/a&gt;.&lt;br/&gt;Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas en m\'envoyer toute suggestion ou problème.</string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
-    <!-- A traduire -->
     <string name="textAdresseDepart">Départ</string>
-    <!-- A traduire -->
     <string name="textAdresseArrivee">Destination</string>
     <string name="exempleAdresse">Ex : place sainte anne, Rennes</string>
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="hint_recherchePointDeVente">Recherche de Points de vente</string>
     <string name="hint_rechercheStation">Recherche de stations</string>
-    <!-- A traduire -->
     <string name="hint_positionCourante">Position courante</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="directionEntete">Direction :</string>
@@ -57,7 +51,6 @@
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
     <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
     <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (5 minutes sur un Nexus One), et occupera environ 8,5Mo de données, mais vous permettra d\'accéder à tous les horaires en mode offline. Êtes-vous sûr de vouloir les charger (wifi fortement conseillé)?</string>
-    <!-- A traduire -->
     <string name="geocodageAdresseDepart">Geo-codage de l\'adresse de départ</string>
     <string name="geocodageAdresseArrivee">Geo-codage de l\'adresse de destination</string>
     <string name="calculItineraire">Calcul des itinéraires possibles en cours.</string>
@@ -84,7 +77,6 @@
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
-    <!-- A Traduire -->
     <string name="menu_itineraires">Calcul d\'itinéraires</string>
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
@@ -111,15 +103,14 @@
     <string name="erreur_interrogationStar">Une erreur est survenu lors de l\'interrogation du STAR sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="erreur_interrogationVeloStar">Une erreur est survenu lors de l\'interrogation du service LE vélo STAR sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="erreur_twitter">Erreur lors de la récupération des messages twitter.</string>
+    <string name="erreur_quotaTwitter">Le nombre de demandes à twitter pour votre IP a été dépassée (150/h). Cette limitation sera remise à zero le %1$s</string>
     <string name="erreur_verifUpdate">Erreur lors de la vérification de mise à jour sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant d\'essayer d\'ajouter des widgets.</string>
     <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
-    <!-- A traduire -->
     <string name="erreur_geocodage">Une erreur est survenue lors du géo-codage de l\'adresse, veuillez réessayer plus tard.</string>
     <string name="erreur_pasAdresseDepart">Aucune correspondance n\'a été trouvé pour l\'adresse de départ</string>
     <string name="erreur_pasAdresseArrivee">Aucune correspondance n\'a été trouvé pour l\'adresse de destination</string>
-    <!-- A traduire -->
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
     <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
     <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>
