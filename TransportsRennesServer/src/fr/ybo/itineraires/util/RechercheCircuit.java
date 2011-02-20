@@ -42,7 +42,7 @@ public class RechercheCircuit {
 		this.adresseArrivee = adresseArrivee;
 	}
 
-	private final Collection<Trajet> bestTrajets = new ArrayList<Trajet>(3);
+	private final Collection<Trajet> bestTrajets = new ArrayList<Trajet>(10);
 
 	public Iterable<Chrono> calculCircuits(EnumCalendrier calendrier, int heureDepart) {
 		Collection<Chrono> chronos = new ArrayList<Chrono>(5);
@@ -83,7 +83,7 @@ public class RechercheCircuit {
 		Chrono sortTrajets = new Chrono("SortTrajets");
 		Collections.sort(trajets, new RechercheCircuit.ComparatorTrajet(heureDepart));
 		chronos.add(sortTrajets.stop());
-		bestTrajets.addAll(trajets.subList(0, trajets.size() > 3 ? 3 : trajets.size()));
+		bestTrajets.addAll(trajets.subList(0, trajets.size() > 10 ? 10 : trajets.size()));
 		return chronos;
 	}
 

@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
@@ -53,4 +54,10 @@ public class Arret extends ObjetWithDistance implements Serializable {
 	public double getLongitude() {
 		return longitude;
 	}
+
+    public static Arret getArret(String arretId) {
+        Arret arret = new Arret();
+        arret.id = arretId;
+        return TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
+    }
 }

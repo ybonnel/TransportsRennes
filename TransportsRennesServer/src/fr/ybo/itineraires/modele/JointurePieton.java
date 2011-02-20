@@ -55,6 +55,8 @@ public class JointurePieton extends PortionTrajetPieton {
 		remplirXml(retour);
 		retour.setAdresse(adresse.convert());
 		retour.setArretId(arret.id);
-		return retour;
+        PortionTrajet portionTrajet = new PortionTrajet();
+        portionTrajet.setJointurePieton(retour);
+		return portionTrajet;
 	}
 }

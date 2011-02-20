@@ -15,9 +15,11 @@
 package fr.ybo.itineraires.bean;
 
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.EnumCalendrier;
-import fr.ybo.itineraires.schema.ItineraireReponse;
 import org.restlet.data.Form;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
@@ -25,7 +27,7 @@ import org.restlet.resource.ServerResource;
 public class ItineraireServerResource extends ServerResource implements ItineraireResource {
 
 	@Get
-	public ItineraireReponse calculItineraire() {
+	public String calculItineraire() {
 		Form form = getRequest().getResourceRef().getQueryAsForm();
 		String key = form.getValues("key");
 		Adresse adresseDepart = new Adresse(form.getValues("adresseDepart"));
@@ -33,7 +35,7 @@ public class ItineraireServerResource extends ServerResource implements Itinerai
 		Integer heureDepart = form.getValues("heureDepart") == null ? null : Integer.parseInt(form.getValues("heureDepart"));
 		EnumCalendrier calendrier =
 				EnumCalendrier.fromNumCalendrier(form.getValues("calendrier") == null ? null : Integer.parseInt(form.getValues("calendrier")));
-
-		return ItineraireBean.calculItineraire(key, adresseDepart, adresseArrivee, heureDepart, calendrier);
+        Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        return gson.toJson(ItineraireBean.calculItineraire(key, adresseDepart, adresseArrivee, heureDepart, calendrier));
 	}
 }

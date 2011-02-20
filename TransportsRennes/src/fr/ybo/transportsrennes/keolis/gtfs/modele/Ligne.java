@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
@@ -60,4 +61,10 @@ public class Ligne implements Serializable {
 		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper);
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
 	}
+
+    public static Ligne getLigne(String ligneId) {
+        Ligne ligne = new Ligne();
+        ligne.id = ligneId;
+        return TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
+    }
 }

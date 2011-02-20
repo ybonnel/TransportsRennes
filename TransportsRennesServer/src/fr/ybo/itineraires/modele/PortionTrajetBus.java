@@ -198,6 +198,8 @@ public class PortionTrajetBus extends PortionTrajet {
 		retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));
 		retour.setArretArriveeId(arretArrivee.id);
 		retour.setHeureArrivee(formatHeure(horaireSelectionnee.getHeureArrivee()));
-		return retour;
+        fr.ybo.itineraires.schema.PortionTrajet portionTrajet = new fr.ybo.itineraires.schema.PortionTrajet();
+        portionTrajet.setPortionTrajetBus(retour);
+		return portionTrajet;
 	}
 }

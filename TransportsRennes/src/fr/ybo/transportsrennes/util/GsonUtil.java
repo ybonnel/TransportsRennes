@@ -12,28 +12,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.itineraires.schema;
+package fr.ybo.transportsrennes.util;
 
-public class JointurePieton
-    extends PortionTrajetPieton
-{
-    protected String arretId;
-    protected Adresse adresse;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-    public String getArretId() {
-        return arretId;
+public class GsonUtil {
+
+    private static Gson instance;
+
+    public static synchronized Gson getInstance() {
+        if (instance == null) {
+            instance = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+        }
+        return instance;
     }
-
-    public void setArretId(final String value) {
-	    arretId = value;
-    }
-
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(final Adresse value) {
-	    adresse = value;
-    }
-
 }

@@ -44,12 +44,14 @@ public class JointureCorrespondance extends PortionTrajetPieton {
 		return stringBuilder.toString();
 	}
 
-	@Override
+    @Override
 	public PortionTrajet convert() {
 		fr.ybo.itineraires.schema.JointureCorrespondance retour = new fr.ybo.itineraires.schema.JointureCorrespondance();
 		remplirXml(retour);
 		retour.setArretDepartId(arretDepart.id);
 		retour.setArretArriveeId(arretArrivee.id);
-		return retour;
+        PortionTrajet portionTrajet = new PortionTrajet();
+        portionTrajet.setJointureCorrespondance(retour);
+		return portionTrajet;
 	}
 }

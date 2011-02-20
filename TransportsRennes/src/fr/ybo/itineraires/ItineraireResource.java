@@ -12,28 +12,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.itineraires.schema;
+package fr.ybo.itineraires;
 
-public class JointurePieton
-    extends PortionTrajetPieton
-{
-    protected String arretId;
-    protected Adresse adresse;
 
-    public String getArretId() {
-        return arretId;
-    }
+import fr.ybo.itineraires.schema.ItineraireReponse;
+import org.restlet.resource.Get;
 
-    public void setArretId(final String value) {
-	    arretId = value;
-    }
+public interface ItineraireResource {
 
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(final Adresse value) {
-	    adresse = value;
-    }
+    @Get
+    String calculItineraire();
 
 }

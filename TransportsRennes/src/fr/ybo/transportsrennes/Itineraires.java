@@ -16,20 +16,21 @@ package fr.ybo.transportsrennes;
 
 import android.os.Bundle;
 import fr.ybo.itineraires.schema.ItineraireReponse;
-import fr.ybo.itineraires.schema.Trajet;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
+import fr.ybo.transportsrennes.adapters.TrajetAdapter;
+import fr.ybo.transportsrennes.util.GsonUtil;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 
-	/**
-	 * Called when the activity is first created.
-	 */
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.itineraires);
-		ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getSerializableExtra("itineraireReponse");
-		Trajet trajet = itineraireReponse.getTrajets().iterator().next();
-
-	}
+    /**
+     * Called when the activity is first created.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.itineraires);
+        ItineraireReponse itineraireReponse = GsonUtil.getInstance().fromJson(getIntent().getStringExtra("itinerairesReponse"), ItineraireReponse.class);
+        int heureDepart = getIntent().getIntExtra("heureDepart", 0);
+        setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
+    }
 }

@@ -331,8 +331,8 @@ public class TransportsRennes extends Activity {
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
 	private static final int MENU_MAP_ID = 2;
-	//private static final int MENU_ITINERAIRE = 3;
-	private static final int MENU_LOAD_LINES = 3;
+	private static final int MENU_ITINERAIRE = 3;
+	private static final int MENU_LOAD_LINES = 4;
 
 
 	@Override
@@ -342,8 +342,8 @@ public class TransportsRennes extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
-		/*MenuItem itemItineraires = menu.add(GROUP_ID, MENU_ITINERAIRE, Menu.NONE, R.string.menu_itineraires);
-		itemItineraires.setIcon(android.R.drawable.ic_menu_directions);*/
+		MenuItem itemItineraires = menu.add(GROUP_ID, MENU_ITINERAIRE, Menu.NONE, R.string.menu_itineraires);
+		itemItineraires.setIcon(android.R.drawable.ic_menu_directions);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		return true;
@@ -354,25 +354,16 @@ public class TransportsRennes extends Activity {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case MENU_ID:
-				/*TextView message = new TextView(this);
-				message.setPadding(8, 8, 8, 8);
-				message.setTextSize(18);
-				Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
-				message.setText(spanned, TextView.BufferType.SPANNABLE);
-				message.setMovementMethod(LinkMovementMethod.getInstance());
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setView(message).setCancelable(true);
-				builder.create().show();*/
 				showDialog();
 				return true;
 			case MENU_MAP_ID:
 				Intent intentMap = new Intent(this, AllOnMap.class);
 				startActivity(intentMap);
 				return true;
-			/*case MENU_ITINERAIRE:
+			case MENU_ITINERAIRE:
 				Intent intentItineraire = new Intent(this, ItineraireRequete.class);
 				startActivity(intentItineraire);
-				return true;*/
+				return true;
 			case MENU_LOAD_LINES:
 				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));

@@ -21,6 +21,6 @@ import org.restlet.resource.Get;
 public interface ItineraireResource {
 
     @Get
-    ItineraireReponse calculItineraire();
+    String calculItineraire();
 
 }

@@ -1,61 +1,65 @@
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package fr.ybo.itineraires.schema;
 
-import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
+public class PortionTrajetBus
+{
+    protected String ligneId;
+    protected String arretDepartId;
+    protected String heureDepart;
+    protected String arretArriveeId;
+    protected String heureArrivee;
 
-@SuppressWarnings({"serial"})
-public class PortionTrajetBus extends PortionTrajet {
-	public String ligneId;
-	public String arretDepartId;
-	public String heureDepart;
-	public String arretArriveeId;
-	public String heureArrivee;
+    public String getLigneId() {
+        return ligneId;
+    }
 
-	private Ligne ligne = null;
-	private Arret arretDepart = null;
-	private Arret arretArrivee = null;
+    public void setLigneId(final String value) {
+	    ligneId = value;
+    }
 
-	public Ligne getLigne() {
-		if (ligne == null) {
-			ligne = new Ligne();
-			ligne.id = ligneId;
-			ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
-		}
-		return ligne;
-	}
+    public String getArretDepartId() {
+        return arretDepartId;
+    }
 
-	public Arret getArretDepart() {
-		if (arretDepart == null) {
-			arretDepart = new Arret();
-			arretDepart.id = arretDepartId;
-			arretDepart = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretDepart);
-		}
-		return arretDepart;
-	}
+    public void setArretDepartId(final String value) {
+	    arretDepartId = value;
+    }
 
-	public Arret getArretArrivee() {
-		if (arretArrivee == null) {
-			arretArrivee = new Arret();
-			arretArrivee.id = arretArriveeId;
-			arretArrivee = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretArrivee);
-		}
-		return arretArrivee;
-	}
+    public String getHeureDepart() {
+        return heureDepart;
+    }
 
+    public void setHeureDepart(final String value) {
+	    heureDepart = value;
+    }
 
-	@Override
-	public void remplirAttribut(String name, String contenu) {
-		if ("ligneId".equals(name)) {
-			ligneId = contenu;
-		} else if ("arretDepartId".equals(name)) {
-			arretDepartId = contenu;
-		} else if ("heureDepart".equals(name)) {
-			heureDepart = contenu;
-		} else if ("arretArriveeId".equals(name)) {
-			arretArriveeId = contenu;
-		} else if ("heureArrivee".equals(name)) {
-			heureArrivee = contenu;
-		}
-	}
+    public String getArretArriveeId() {
+        return arretArriveeId;
+    }
+
+    public void setArretArriveeId(final String value) {
+	    arretArriveeId = value;
+    }
+
+    public String getHeureArrivee() {
+        return heureArrivee;
+    }
+
+    public void setHeureArrivee(final String value) {
+	    heureArrivee = value;
+    }
+
 }

@@ -82,6 +82,10 @@
     <!-- A traduire -->
     <string name="geocodageAdresseDepart">Geo-codage de l\'adresse de départ</string>
     <string name="geocodageAdresseArrivee">Geo-codage de l\'adresse de destination</string>
+    <string name="calculItineraire">Calcul des itinéraires possibles en cours.</string>
+    <string name="depart">Départ à %1$s</string>
+    <string name="arrivee">Arrivée à %1$s</string>
+    <string name="fonctionBeta">Attention, cette fonctionnalité est en bêta, elle est amenée à évoluer de manière importante dans les prochaines versions, n\'hésitez pas à remonter vos suggestions.</string>
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">LE vélo STAR</string>
     <string name="btn_velo_favori">Stations favorites</string>
@@ -151,4 +155,5 @@
     <!-- A traduire -->
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
     <string name="erreur_calculItineraires">Une erreur est suvenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
+    <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>
 </resources>
