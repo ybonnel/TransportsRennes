@@ -150,7 +150,7 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void afficheMessage() {
-		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_dialog", true);
+		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes141_dialog", true);
 		if (afficheMessage) {
 			showDialog();
 			saveAfficheMessage();
@@ -182,7 +182,7 @@ public class TransportsRennes extends Activity {
 
 	private void saveAfficheMessage() {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		editor.putBoolean("TransportsRennes_dialog", false);
+		editor.putBoolean("TransportsRennes141_dialog", false);
 		editor.commit();
 	}
 
