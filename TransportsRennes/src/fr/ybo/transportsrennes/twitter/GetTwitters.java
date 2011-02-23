@@ -31,8 +31,8 @@ public class GetTwitters {
 			HttpURLConnection connection = (HttpURLConnection) new URL("http://transports-rennes.appspot.com/twitterstarbusmetro").openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(20000);
+            connection.setReadTimeout(20000);
 			connection.connect();
 			parser.parse(connection.getInputStream(), handler);
 			return handler.getMessages();

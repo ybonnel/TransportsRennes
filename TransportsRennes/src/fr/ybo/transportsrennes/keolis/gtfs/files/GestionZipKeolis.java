@@ -49,8 +49,8 @@ public final class GestionZipKeolis {
 			HttpURLConnection connection = (HttpURLConnection) new URL(URL_STOP_TIMES + ligneId + ".zip").openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(20000);
+            connection.setReadTimeout(20000);
 			connection.connect();
 			return connection;
 		} catch (IOException ioException) {
@@ -110,8 +110,8 @@ public final class GestionZipKeolis {
 			HttpURLConnection connection = (HttpURLConnection) new URL(URL_LAST_UPDATE).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(20000);
+            connection.setReadTimeout(20000);
 			connection.connect();
 			Date date;
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()), 100);
@@ -132,8 +132,8 @@ public final class GestionZipKeolis {
 			HttpURLConnection connection = (HttpURLConnection) new URL(URL_ZIP_PRINCIPALE).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
-            connection.setConnectTimeout(10000);
-            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(20000);
+            connection.setReadTimeout(20000);
 			connection.connect();
 			return connection;
 		} catch (IOException ioException) {

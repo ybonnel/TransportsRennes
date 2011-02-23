@@ -22,7 +22,7 @@ import org.apache.http.params.HttpParams;
 
 public class HttpUtils {
 
-    private static final int CONNECTION_TIMEOUT = 10000;
+    private static final int CONNECTION_TIMEOUT = 20000;
 
     public static HttpClient getHttpClient() {
         HttpParams myHttpParams = new BasicHttpParams();
