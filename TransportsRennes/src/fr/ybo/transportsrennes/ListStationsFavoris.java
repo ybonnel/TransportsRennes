@@ -70,6 +70,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		setListAdapter(new VeloAdapter(getApplicationContext(), stations));
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@SuppressWarnings({"unchecked"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				Station station = veloAdapter.getItem(position);
@@ -100,9 +101,10 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					for (VeloFavori favori : velosFavoris) {
 						numbers.add(favori.number);
 					}
+                    Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
 					synchronized (stations) {
 						stations.clear();
-						stations.addAll(keolis.getStationByNumbers(numbers));
+						stations.addAll(stationsTmp);
 						Collections.sort(stations, new Comparator<Station>() {
 							public int compare(Station o1, Station o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
@@ -168,9 +170,10 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 						for (VeloFavori favori : velosFavoris) {
 							numbers.add(favori.number);
 						}
+                        Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
 						synchronized (stations) {
 							stations.clear();
-							stations.addAll(keolis.getStationByNumbers(numbers));
+							stations.addAll(stationsTmp);
 							Collections.sort(stations, new Comparator<Station>() {
 								public int compare(Station o1, Station o2) {
 									return o1.name.compareToIgnoreCase(o2.name);

@@ -215,9 +215,10 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
+                    List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente() : pointsDeVenteIntent);
 					synchronized (pointsDeVente) {
 						pointsDeVente.clear();
-						pointsDeVente.addAll(pointsDeVenteIntent == null ? keolis.getPointDeVente() : pointsDeVenteIntent);
+						pointsDeVente.addAll(listPdvTmp);
 						Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
 							public int compare(PointDeVente o1, PointDeVente o2) {
 								return o1.name.compareToIgnoreCase(o2.name);

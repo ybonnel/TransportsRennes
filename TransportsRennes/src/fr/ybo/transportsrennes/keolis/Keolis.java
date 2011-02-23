@@ -25,12 +25,12 @@ import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
+import fr.ybo.transportsrennes.util.HttpUtils;
 import fr.ybo.transportsrennes.util.LogYbo;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -117,7 +117,7 @@ public final class Keolis {
 	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler) {
 		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
 		long startTime = System.nanoTime() / 1000;
-		HttpClient httpClient = new DefaultHttpClient();
+		HttpClient httpClient = HttpUtils.getHttpClient();
 		HttpUriRequest httpPost = new HttpPost(url);
 		Answer<?> answer;
 		try {

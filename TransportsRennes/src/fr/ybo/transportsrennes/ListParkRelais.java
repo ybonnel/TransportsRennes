@@ -218,9 +218,10 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
+                    List<ParkRelai> parkRelaisTmp = (parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
 					synchronized (parkRelais) {
 						parkRelais.clear();
-						parkRelais.addAll(parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
+						parkRelais.addAll(parkRelaisTmp);
 						Collections.sort(parkRelais, new Comparator<ParkRelai>() {
 							public int compare(ParkRelai o1, ParkRelai o2) {
 								return o1.name.compareToIgnoreCase(o2.name);
@@ -293,8 +294,9 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				@Override
 				protected Void doInBackground(Void... pParams) {
 					try {
+                        List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
 						synchronized (parkRelais) {
-							majParkRelais();
+							majParkRelais(parkRelaisTmp);
 						}
 					} catch (Exception exception) {
 						LOG_YBO.erreur("Erreur dans ListParkRelais.doInBackGround", exception);
@@ -304,16 +306,16 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 					return null;
 				}
 
-				private void majParkRelais() {
+				private void majParkRelais(List<ParkRelai> parkRelaisTmp) {
 					parkRelais.clear();
 					if (parkRelaiIntent == null) {
-						parkRelais.addAll(keolis.getParkRelais());
+						parkRelais.addAll(parkRelaisTmp);
 					} else {
 						Collection<String> ids = new ArrayList<String>(parkRelaiIntent.size());
 						for (ParkRelai parc : parkRelaiIntent) {
 							ids.add(parc.name);
 						}
-						for (ParkRelai parc : keolis.getParkRelais()) {
+						for (ParkRelai parc : parkRelaisTmp) {
 							if (ids.contains(parc.name)) {
 								parkRelais.add(parc);
 							}
