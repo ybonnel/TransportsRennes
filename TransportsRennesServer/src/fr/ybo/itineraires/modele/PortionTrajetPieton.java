@@ -18,7 +18,7 @@ public abstract class PortionTrajetPieton extends PortionTrajet {
 
 	double distance;
 	// Vitesse d'un piéton en m/h
-	private static final double VITESSE_PIETON = 4000;
+	private static final double VITESSE_PIETON = 3000;
 
 	Integer tempsTrajet;
 

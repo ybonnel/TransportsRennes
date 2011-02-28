@@ -19,7 +19,7 @@ import fr.ybo.itineraires.bean.ItineraireException;
 
 public class Key {
 
-	private static final String[] KEYS = {"xxxxx"};
+	private static final String[] KEYS = {"YboItineraires01*"};
 
 	private Key() {
 	}

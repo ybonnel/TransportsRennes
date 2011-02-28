@@ -40,6 +40,15 @@
         <servlet-name>TwitterStarBusMetro</servlet-name>
         <url-pattern>/twitterstarbusmetro</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>KeepSinglettonAlive</servlet-name>
+        <servlet-class>fr.ybo.itineraires.KeepSinglettonAlive</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>KeepSinglettonAlive</servlet-name>
+        <url-pattern>/KeepSinglettonAlive</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>

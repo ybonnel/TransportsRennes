@@ -54,15 +54,18 @@ public class PortionTrajetBus extends PortionTrajet {
 		}
 	}
 
+	private static final int MARGE_TEMPS = 2;
+
 	@Override
 	public int calculHeureArrivee(int heureDepart) {
+		int heureDepartAvecMarge = heureDepart + MARGE_TEMPS;
 		if (horaireSelectionnee == null) {
 			if (horaires.isEmpty()) {
 				LOGGER.warning("Horaires vide pour le trajet : " + toString());
 			}
-			Collections.sort(horaires, new PortionTrajetBus.ComparatorHoraires(heureDepart));
+			Collections.sort(horaires, new PortionTrajetBus.ComparatorHoraires(heureDepartAvecMarge));
 			horaireSelectionnee = horaires.get(0);
-			if (horaireSelectionnee.getHeureDepart() < heureDepart) {
+			if (horaireSelectionnee.getHeureDepart() < heureDepartAvecMarge) {
 				horaireSelectionnee.annule();
 			}
 			horaires.clear();
