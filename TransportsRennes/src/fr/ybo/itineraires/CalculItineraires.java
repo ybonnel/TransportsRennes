@@ -16,7 +16,7 @@ public class CalculItineraires {
     private static final LogYbo LOG_YBO = new LogYbo(CalculItineraires.class);
 
     private static final String URL_BASE = "http://transports-rennes.appspot.com/rest/itineraires";
-    private static final String KEY = "xxxxx";
+    private static final String KEY = "YboItineraires01*";
 
     private static CalculItineraires instance;
 

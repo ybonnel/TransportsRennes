@@ -39,6 +39,10 @@ public class LogYbo {
 		Log.e(tag, message, throwable);
 	}
 
+	public void erreur(String message) {
+		Log.e(tag, message);
+	}
+
 	@SuppressWarnings({"SameParameterValue"})
 	public void warn(String message) {
 		Log.w(tag, message);

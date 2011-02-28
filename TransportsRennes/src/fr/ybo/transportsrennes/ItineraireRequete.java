@@ -40,12 +40,15 @@ import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.schema.ItineraireReponse;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.util.GsonUtil;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements LocationListener {
+
+	private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);
 
     /**
      * Le locationManager permet d'accéder au GPS du téléphone.
@@ -289,6 +292,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
                 super.onPostExecute(result);
                 progressDialog.dismiss();
                 if (reponse.getErreur() != null) {
+	                LOG_YBO.erreur(reponse.getErreur());
                     Toast.makeText(ItineraireRequete.this, R.string.erreur_calculItineraires, Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
