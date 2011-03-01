@@ -12,24 +12,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.itineraires.schema;
+package fr.ybo.itineraires.modele;
 
-public class PortionTrajetBus
+import java.io.Serializable;
+
+public class JointureCorrespondance
+    extends PortionTrajetPieton implements Serializable
 {
-    protected String ligneId;
     protected String arretDepartId;
-    protected String heureDepart;
     protected String arretArriveeId;
-    protected String heureArrivee;
-	protected String direction;
-
-    public String getLigneId() {
-        return ligneId;
-    }
-
-    public void setLigneId(final String value) {
-	    ligneId = value;
-    }
 
     public String getArretDepartId() {
         return arretDepartId;
@@ -37,14 +28,6 @@ public class PortionTrajetBus
 
     public void setArretDepartId(final String value) {
 	    arretDepartId = value;
-    }
-
-    public String getHeureDepart() {
-        return heureDepart;
-    }
-
-    public void setHeureDepart(final String value) {
-	    heureDepart = value;
     }
 
     public String getArretArriveeId() {
@@ -55,19 +38,4 @@ public class PortionTrajetBus
 	    arretArriveeId = value;
     }
 
-    public String getHeureArrivee() {
-        return heureArrivee;
-    }
-
-    public void setHeureArrivee(final String value) {
-	    heureArrivee = value;
-    }
-
-	public String getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
 }

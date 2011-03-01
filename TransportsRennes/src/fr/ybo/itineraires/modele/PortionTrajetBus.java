@@ -12,9 +12,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.itineraires.schema;
+package fr.ybo.itineraires.modele;
 
-public class PortionTrajetBus
+import java.io.Serializable;
+
+public class PortionTrajetBus implements Serializable
 {
     protected String ligneId;
     protected String arretDepartId;

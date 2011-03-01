@@ -45,9 +45,9 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import fr.ybo.itineraires.CalculItineraires;
 import fr.ybo.itineraires.modele.Adresse;
+import fr.ybo.itineraires.modele.Converter;
 import fr.ybo.itineraires.schema.ItineraireReponse;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
-import fr.ybo.transportsrennes.util.GsonUtil;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.text.SimpleDateFormat;
@@ -284,7 +284,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			});
 			builder.create().show();
 		} else {
-		// Choix de l'adresse de destination
+			// Choix de l'adresse de destination
 			List<String> adresses = new ArrayList<String>(reponseArriveeTmp.getResults().size());
 			for (GeocoderResult result : reponseArriveeTmp.getResults()) {
 				adresses.add(result.getFormattedAddress());
@@ -342,7 +342,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 					Toast.makeText(ItineraireRequete.this, R.string.erreur_calculItineraires, Toast.LENGTH_LONG).show();
 				} else {
 					Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-					intent.putExtra("itinerairesReponse", GsonUtil.getInstance().toJson(reponse));
+					intent.putExtra("itinerairesReponse", Converter.convert(reponse));
 					int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					intent.putExtra("heureDepart", heureDepart);
 					startActivity(intent);
@@ -380,7 +380,6 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			majTextViews();
 		}
 	};
-
 
 
 	@Override
