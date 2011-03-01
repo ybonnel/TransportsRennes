@@ -253,8 +253,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		} else {
 			if (reponseDepart != null && reponseDepart.getResults().size() > 1 || reponseArrivee != null && reponseArrivee.getResults().size() > 1) {
 				traiterAdresseMultiple(reponseDepart, reponseArrivee);
-			} else if (reponseDepart != null && reponseArrivee != null) {
-				calculItineraire(reponseDepart.getResults().get(0), reponseArrivee.getResults().get(0));
+			} else {
+				calculItineraire(reponseDepart == null ? null : reponseDepart.getResults().get(0), reponseArrivee == null ? null : reponseArrivee.getResults().get(0));
 			}
 		}
 	}
@@ -262,7 +262,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 	private void traiterAdresseMultiple(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
 		final GeocodeResponse reponseDepartTmp = reponseDepart;
 		final GeocodeResponse reponseArriveeTmp = reponseArrivee;
-		if (reponseDepart.getResults().size() > 1) {
+		if (reponseDepart != null && reponseDepart.getResults().size() > 1) {
 			// Choix de l'adresse de départ
 			List<String> adresses = new ArrayList<String>(reponseDepartTmp.getResults().size());
 			for (GeocoderResult result : reponseDepartTmp.getResults()) {
@@ -272,13 +272,13 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			builder.setTitle(R.string.textAdresseArrivee);
 			builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
-					if (reponseArriveeTmp.getResults().size() > 1) {
+					if (reponseArriveeTmp != null && reponseArriveeTmp.getResults().size() > 1) {
 						GeocoderResult result = reponseDepartTmp.getResults().get(item);
 						reponseDepartTmp.getResults().clear();
 						reponseDepartTmp.getResults().add(result);
 						traiterAdresseMultiple(reponseDepartTmp, reponseArriveeTmp);
 					} else {
-						calculItineraire(reponseDepartTmp.getResults().get(item), reponseArriveeTmp.getResults().get(0));
+						calculItineraire(reponseDepartTmp.getResults().get(item), reponseArriveeTmp == null ? null : reponseArriveeTmp.getResults().get(0));
 					}
 				}
 			});
@@ -293,7 +293,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			builder.setTitle(R.string.textAdresseArrivee);
 			builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int item) {
-					calculItineraire(reponseDepartTmp.getResults().get(0), reponseArriveeTmp.getResults().get(item));
+					calculItineraire(reponseDepartTmp == null ? null : reponseDepartTmp.getResults().get(0), reponseArriveeTmp.getResults().get(item));
 				}
 			});
 			builder.create().show();
