@@ -48,6 +48,17 @@
                android:src="@android:drawable/ic_dialog_map"
                android:layout_alignParentRight="true"/>
 
+    <ImageView android:id="@+id/alerte"
+              android:paddingLeft="2dip"
+              android:paddingTop="2dip"
+              android:paddingBottom="1dip"
+              android:layout_width="wrap_content"
+              android:layout_height="30dip"
+              android:src="@android:drawable/ic_dialog_alert"
+              android:layout_below="@id/iconeLigne"
+              android:layout_alignParentLeft="true" />
+
+
     <TextView android:id="@+id/directionEntete"
               android:paddingLeft="5dip"
               android:paddingTop="5dip"
@@ -59,7 +70,7 @@
               android:gravity="center_vertical|left"
               android:text="@string/directionEntete"
               android:layout_below="@id/iconeLigne"
-              android:layout_alignParentLeft="true"/>
+              android:layout_toRightOf="@id/alerte"/>
 
     <HorizontalScrollView
             android:id="@+id/directionArretCouranteScroll"

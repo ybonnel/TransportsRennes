@@ -19,17 +19,22 @@ import android.appwidget.AppWidgetManager;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
+import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.Constantes;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
@@ -88,6 +93,21 @@ public class TransportsRennesApplication extends Application {
 			myTraker.trackPageView("/TransportsRennesApplication/Version/" + info.versionName);
 		} catch (PackageManager.NameNotFoundException ignore) {
 		}
+
+		// Récupération des alertes
+		new AsyncTask<Void, Void, Void>(){
+			@Override
+			protected Void doInBackground(Void... voids) {
+				try {
+					for (Alert alert : Keolis.getInstance().getAlerts()) {
+						lignesWithAlerts.addAll(alert.lines);
+					}
+				} catch (Exception ignored) {
+
+				}
+				return null;
+			}
+		}.execute();
 	}
 
 	@SuppressWarnings({"StaticNonFinalField"})
@@ -117,5 +137,11 @@ public class TransportsRennesApplication extends Application {
 
 	public static TransportsRennesApplication.MyTraker getTraker() {
 		return myTraker;
+	}
+
+	private static Set<String> lignesWithAlerts = new HashSet<String>();
+
+	public static boolean hasAlert(String ligneNomCourt) {
+		return lignesWithAlerts.contains(ligneNomCourt);
 	}
 }

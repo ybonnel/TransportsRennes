@@ -278,6 +278,18 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				}
 			}
 		});
+		if (TransportsRennesApplication.hasAlert(myLigne.nomCourt)) {
+			findViewById(R.id.alerte).setVisibility(View.VISIBLE);
+			findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View view) {
+					Intent intent = new Intent(DetailArret.this, ListAlerts.class);
+					intent.putExtra("ligne", myLigne);
+					startActivity(intent);
+				}
+			});
+		} else {
+			findViewById(R.id.alerte).setVisibility(View.GONE);
+		}
 	}
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance) {

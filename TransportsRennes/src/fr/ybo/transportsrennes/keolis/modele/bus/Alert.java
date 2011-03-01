@@ -146,6 +146,8 @@ public class Alert implements Serializable {
 			titleFormate = titleFormate.substring(1);
 			if (titleFormate.startsWith("TTZ")) {
 				titleFormate = titleFormate.substring(3);
+			} else if (titleFormate.startsWith("kl")) {
+				titleFormate = titleFormate.substring(2);
 			}
 		}
 		return Formatteur.formatterChaine(titleFormate);

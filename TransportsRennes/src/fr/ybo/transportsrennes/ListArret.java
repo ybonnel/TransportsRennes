@@ -14,7 +14,6 @@
 
 package fr.ybo.transportsrennes;
 
-import android.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -162,7 +161,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 				onDirectionClick();
 			}
 		});
-		findViewById(fr.ybo.transportsrennes.R.id.googlemap).setOnClickListener(new View.OnClickListener() {
+		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
 				intent.putExtra("ligne", myLigne);
@@ -172,8 +171,20 @@ public class ListArret extends MenuAccueil.ListActivity {
 				startActivity(intent);
 			}
 		});
-		((TextView) findViewById(fr.ybo.transportsrennes.R.id.nomLong)).setText(myLigne.nomLong);
-		((ImageView) findViewById(fr.ybo.transportsrennes.R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
+		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
+		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
+		if (TransportsRennesApplication.hasAlert(myLigne.nomCourt)) {
+			findViewById(R.id.alerte).setVisibility(View.VISIBLE);
+			findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener(){
+				public void onClick(View view) {
+					Intent intent = new Intent(ListArret.this, ListAlerts.class);
+					intent.putExtra("ligne", myLigne);
+					startActivity(intent);
+				}
+			});
+		} else {
+			findViewById(R.id.alerte).setVisibility(View.GONE);
+		}
 		construireListe();
 	}
 
@@ -191,7 +202,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, fr.ybo.transportsrennes.R.string.menu_orderByName);
+		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, R.string.menu_orderByName);
 		return true;
 	}
 
@@ -199,8 +210,8 @@ public class ListArret extends MenuAccueil.ListActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		menu.findItem(MENU_ORDER)
-				.setTitle(orderDirection ? fr.ybo.transportsrennes.R.string.menu_orderByName : fr.ybo.transportsrennes.R.string.menu_orderBySequence);
-		menu.findItem(MENU_ORDER).setIcon(orderDirection ? R.drawable.ic_menu_sort_alphabetically : R.drawable.ic_menu_sort_by_size);
+				.setTitle(orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
+		menu.findItem(MENU_ORDER).setIcon(orderDirection ? android.R.drawable.ic_menu_sort_alphabetically : android.R.drawable.ic_menu_sort_by_size);
 		return true;
 	}
 

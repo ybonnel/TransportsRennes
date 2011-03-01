@@ -21,12 +21,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -48,9 +48,12 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
+	private Ligne ligne;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ligne = (Ligne) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("ligne"));
 		setContentView(R.layout.liste);
 		setListAdapter(new AlertAdapter(this, alerts));
 		ListView lv = getListView();
@@ -58,7 +61,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@SuppressWarnings({"TypeMayBeWeakened"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Serializable alert = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
+				Serializable alert = (Serializable) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(ListAlerts.this, DetailAlert.class);
 				intent.putExtra("alert", alert);
 				startActivity(intent);
@@ -83,9 +86,21 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 						while (alerte.lines.size() > 1) {
 							Alert newAlerte = new Alert(alerte);
 							newAlerte.lines.add(alerte.lines.remove(0));
-							alerts.add(newAlerte);
+							if (ligne != null) {
+								if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
+									alerts.add(newAlerte);
+								}
+							} else {
+								alerts.add(newAlerte);
+							}
 						}
-						alerts.add(alerte);
+						if (ligne != null) {
+							if (ligne.nomCourt.equals(alerte.lines.get(0))) {
+								alerts.add(alerte);
+							}
+						} else {
+							alerts.add(alerte);
+						}
 					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur dans ListAlerts.doInBackGround", exception);
