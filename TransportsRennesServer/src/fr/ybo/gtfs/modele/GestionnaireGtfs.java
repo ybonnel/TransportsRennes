@@ -83,6 +83,10 @@ public class GestionnaireGtfs {
 	private Map<Integer, Direction> directions;
 	private Map<GestionnaireGtfs.CoupleLigne, Collection<Correspondance>> correspondances;
 
+	public String getDirection(int directionId) {
+		return directions.get(directionId).direction;
+	}
+
 	public Collection<Correspondance> getCorrespondances(GestionnaireGtfs.CoupleLigne coupleLigne) {
 		return correspondances.get(coupleLigne);
 	}

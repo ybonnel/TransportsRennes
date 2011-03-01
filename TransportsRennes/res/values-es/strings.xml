@@ -66,7 +66,7 @@
 <string name="btn_bus_gps">Paradas cercanas</string>
 <string name="btn_alert">Alertas</string>
 <string name="btn_parking">Park and Ride</string>
-<string name="btn_tickets">Puntos de venta</string>
+<string name="menu_tickets">Puntos de venta</string>
 <!-- Libellés de menus -->
 <string name="menu_prochainArrets">Próximos horarios</string>
 <string name="menu_allArrets">Todas las horas</string>
@@ -78,7 +78,7 @@
 <string name="menu_apropos">Acerca de</string>
 <string name="menu_carte">Mapa</string>
 <string name="menu_loadLines">Cargar todas las líneas</string>
-<string name="menu_itineraires">Plan de Viaje</string>
+<string name="btn_itineraires">Plan de Viaje</string>
 <!-- Widget -->
 <string name="widget_choix">Elija de uno a tres paradas favoritas.</string>
 <!-- Génériques -->

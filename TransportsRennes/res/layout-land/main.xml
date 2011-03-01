@@ -57,9 +57,9 @@
                 style="@style/HomeButton"
                 android:text="@string/btn_velo_favori"
                 android:drawableTop="@drawable/home_btn_velo_favori"/>
-        <Button android:id="@+id/home_btn_tickets"
+        <Button android:id="@+id/home_btn_itineraires"
                 style="@style/HomeButton"
-                android:text="@string/btn_tickets"
-                android:drawableTop="@drawable/home_btn_tickets"/>
+                android:text="@string/btn_itineraires"
+                android:drawableTop="@drawable/home_btn_itineraire"/>
     </TableRow>
 </TableLayout>

@@ -87,7 +87,7 @@
     <string name="btn_bus_gps">Arrêts à proximité</string>
     <string name="btn_alert">Alertes</string>
     <string name="btn_parking">Parcs relais</string>
-    <string name="btn_tickets">Points de vente</string>
+    <string name="menu_tickets">Points de vente</string>
     <!-- Libellés de menus -->
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
@@ -99,7 +99,7 @@
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
-    <string name="menu_itineraires">Calcul d\'itinéraires</string>
+    <string name="btn_itineraires">Calcul d\'itinéraires</string>
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
     <!-- Génériques -->

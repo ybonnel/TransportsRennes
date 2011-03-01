@@ -76,10 +76,12 @@ public class PortionTrajetBus extends PortionTrajet {
 	private static class HorairePortion {
 		private Integer heureDepart;
 		private Integer heureArrivee;
+		private String direction;
 
-		private HorairePortion(Integer heureDepart, Integer heureArrivee) {
+		private HorairePortion(Integer heureDepart, Integer heureArrivee, String direction) {
 			this.heureDepart = heureDepart;
 			this.heureArrivee = heureArrivee;
+			this.direction = direction;
 		}
 
 		public Integer getHeureDepart() {
@@ -117,12 +119,13 @@ public class PortionTrajetBus extends PortionTrajet {
 				Calendrier calendrierCourant = GESTIONNAIRE_GTFS.getCalendrier(horaire.trajet.calendrierId);
 				Horaire horaireArrivee = GESTIONNAIRE_GTFS.getHoraireByArretIdAndTrajetId(arretArrivee.id, horaire.trajetId);
 				if (horaireArrivee != null && horaireArrivee.heureDepart > horaire.heureDepart) {
+					String direction = GESTIONNAIRE_GTFS.getDirection(horaireArrivee.trajet.directionId);
 					if (horaire.heureDepart >= heureDepart && calendrier.isCalendrierValide(calendrierCourant)) {
-						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart));
+						horaires.add(new PortionTrajetBus.HorairePortion(horaire.heureDepart, horaireArrivee.heureDepart, direction));
 					}
 					if (horaire.heureDepart - UNE_JOURNEE >= heureDepart && calendrier.veille().isCalendrierValide(calendrierCourant)) {
 						horaires.add(
-								new PortionTrajetBus.HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE));
+								new PortionTrajetBus.HorairePortion(horaire.heureDepart - UNE_JOURNEE, horaireArrivee.heureDepart - UNE_JOURNEE, direction));
 					}
 
 				}
@@ -201,6 +204,7 @@ public class PortionTrajetBus extends PortionTrajet {
 		retour.setHeureDepart(formatHeure(horaireSelectionnee.getHeureDepart()));
 		retour.setArretArriveeId(arretArrivee.id);
 		retour.setHeureArrivee(formatHeure(horaireSelectionnee.getHeureArrivee()));
+		retour.setDirection(horaireSelectionnee.direction);
         fr.ybo.itineraires.schema.PortionTrajet portionTrajet = new fr.ybo.itineraires.schema.PortionTrajet();
         portionTrajet.setPortionTrajetBus(retour);
 		return portionTrajet;

@@ -84,7 +84,7 @@
     <string name="btn_bus_gps">Nearest stops</string>
     <string name="btn_alert">Warnings</string>
     <string name="btn_parking">Park &amp; Ride</string>
-    <string name="btn_tickets">Points of sale</string>
+    <string name="menu_tickets">Points of sale</string>
     <!-- Libellés de menus -->
     <string name="menu_prochainArrets">Upcoming timetable</string>
     <string name="menu_allArrets">All times</string>
@@ -96,7 +96,7 @@
     <string name="menu_apropos">About</string>
     <string name="menu_carte">Map</string>
     <string name="menu_loadLines">Load all bus lines</string>
-    <string name="menu_itineraires">Routes calculation</string>
+    <string name="btn_itineraires">Routes calculation</string>
     <!-- Widget -->
     <string name="widget_choix">Choose from one to three favorite stops.</string>
     <!-- Génériques -->

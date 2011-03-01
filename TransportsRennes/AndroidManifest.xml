@@ -47,9 +47,9 @@
         <activity android:name=".PointsDeVentesOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ItineraireRequete" android:configChanges="orientation|keyboardHidden" android:label="@string/menu_itineraires"
+        <activity android:name=".ItineraireRequete" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
-        <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/menu_itineraires"
+        <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
         <receiver android:name=".TransportsWidget">
             <intent-filter>

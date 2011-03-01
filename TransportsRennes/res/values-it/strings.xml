@@ -66,7 +66,7 @@
 <string name="btn_bus_gps">Fermate vicino a lei.</string>
 <string name="btn_alert">Ultim\'ora</string>
 <string name="btn_parking">Parcheggi</string>
-<string name="btn_tickets">POS</string>
+<string name="menu_tickets">POS</string>
 <!-- Libellés de menus -->
 <string name="menu_prochainArrets">prossimi orari</string>
 <string name="menu_allArrets">Tutti gli orari</string>
@@ -78,7 +78,7 @@
 <string name="menu_apropos">Informazioni su</string>
 <string name="menu_carte">Mappa</string>
 <string name="menu_loadLines">scaricare tutte le linee d\'autobus</string>
-<string name="menu_itineraires">Calcolo dei percorsi</string>
+<string name="btn_itineraires">Calcolo dei percorsi</string>
 <!-- Widget -->
 <string name="widget_choix">Scegli da uno a tre fermate dell\'autobus favorite</string>
 <!-- Génériques -->

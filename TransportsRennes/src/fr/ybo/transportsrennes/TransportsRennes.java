@@ -66,7 +66,7 @@ public class TransportsRennes extends Activity {
 		Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
 		Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
 		Button btnParking = (Button) findViewById(R.id.home_btn_parking);
-		Button btnPointsDeVente = (Button) findViewById(R.id.home_btn_tickets);
+		Button btnItineraires = (Button) findViewById(R.id.home_btn_itineraires);
 		btnBus.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onBusClick();
@@ -102,9 +102,9 @@ public class TransportsRennes extends Activity {
 				onParkingClick();
 			}
 		});
-		btnPointsDeVente.setOnClickListener(new View.OnClickListener() {
+		btnItineraires.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				onPointsDeVenteClick();
+				onItinerairesClick();
 			}
 		});
 		if (TransportsRennesApplication.isUpdateNecessaire()) {
@@ -229,8 +229,8 @@ public class TransportsRennes extends Activity {
 	}
 
 	@SuppressWarnings({"unused", "WeakerAccess"})
-	public void onPointsDeVenteClick() {
-		Intent intent = new Intent(this, ListPointsDeVente.class);
+	public void onItinerairesClick() {
+		Intent intent = new Intent(this, ItineraireRequete.class);
 		startActivity(intent);
 	}
 
@@ -331,7 +331,7 @@ public class TransportsRennes extends Activity {
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
 	private static final int MENU_MAP_ID = 2;
-	private static final int MENU_ITINERAIRE = 3;
+	private static final int MENU_TICKETS = 3;
 	private static final int MENU_LOAD_LINES = 4;
 
 
@@ -342,8 +342,8 @@ public class TransportsRennes extends Activity {
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
-		MenuItem itemItineraires = menu.add(GROUP_ID, MENU_ITINERAIRE, Menu.NONE, R.string.menu_itineraires);
-		itemItineraires.setIcon(android.R.drawable.ic_menu_directions);
+		MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
+		itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		return true;
@@ -360,9 +360,9 @@ public class TransportsRennes extends Activity {
 				Intent intentMap = new Intent(this, AllOnMap.class);
 				startActivity(intentMap);
 				return true;
-			case MENU_ITINERAIRE:
-				Intent intentItineraire = new Intent(this, ItineraireRequete.class);
-				startActivity(intentItineraire);
+			case MENU_TICKETS:
+				Intent intentTickets = new Intent(this, ListPointsDeVente.class);
+				startActivity(intentTickets);
 				return true;
 			case MENU_LOAD_LINES:
 				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
