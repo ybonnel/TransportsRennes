@@ -31,6 +31,7 @@
 <string name="dialogRequetePointsDeVente">Ricerca nel STAR</string>
 <string name="dialogAPropos">L\'applicazione Transports Rennes é sviluppata nel quadro dell\'apertura dei dati della rete STAR e Le vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Questa applicazion é sviluppata e gestita da una sola persona durante tempo personale, quindi, grazie per la vostra indulgenza.&lt;br/&gt;Sentitevi liberi di scrivermi con eventuali problemi e/o suggerimenti.</string>
 <string name="detailarret_empty">Oggi, nessun autobus di più. E possibile vedere tutti gli autobus della giornata o scegliere una particolare data utilizzando il menu.</string>
+<string name="itineraires_empty">Nessun percorso è stato trovato per questi indirizzi.</string>
 <string name="hint_rechercherarret">Ricerca fermate.</string>
 <string name="listfavori_empty">Nessun preferiti trovati.</string>
 <string name="go_googlemap">Vedere su Google Maps.</string>

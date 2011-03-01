@@ -47,6 +47,7 @@
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le
         menu.
     </string>
+    <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>

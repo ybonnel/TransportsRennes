@@ -44,6 +44,7 @@
         problem.
     </string>
     <string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular date using the menu.</string>
+    <string name="itineraires_empty">No itinerary has been found for these addresses.</string>
     <string name="hint_rechercherarret">Bus stop search.</string>
     <string name="listfavori_empty">No favorites found.</string>
     <string name="go_googlemap">View on GoogleMap</string>
