@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -107,6 +108,7 @@ public class TransportsRennes extends Activity {
 				onItinerairesClick();
 			}
 		});
+		afficheMessage();
 		if (TransportsRennesApplication.isUpdateNecessaire()) {
 			new AsyncTask<Void, Void, Void>() {
 
@@ -142,7 +144,6 @@ public class TransportsRennes extends Activity {
 						}
 					} else {
 						TransportsRennesApplication.verifUpdateDone();
-						afficheMessage();
 					}
 				}
 			}.execute((Void[]) null);
@@ -154,8 +155,31 @@ public class TransportsRennes extends Activity {
 		if (afficheMessage) {
 			showDialog();
 			saveAfficheMessage();
+		} else {
+			boolean afficheMessageVotez = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_votez", true);
+			if (afficheMessageVotez) {
+				showDialogVotez();
+				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+				editor.putBoolean("TransportsRennes_votez", false);
+				editor.commit();
+			}
 		}
 
+	}
+
+	private void showDialogVotez() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(R.string.message_votez);
+		builder.setTitle(R.string.titleTransportsRennes);
+		builder.setCancelable(false);
+		builder.setPositiveButton(R.string.votez, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int i) {
+				Uri uri = Uri.parse("http://www.data.rennes-metropole.fr/le-concours/le-vote-en-ligne");
+				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+			}
+		});
+		builder.setNegativeButton(R.string.pasvotez, new TransportsRennes.TerminerClickListener());
+		builder.create().show();
 	}
 
 	private void showDialog() {
