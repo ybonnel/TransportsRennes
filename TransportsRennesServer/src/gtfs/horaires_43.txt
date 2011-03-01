@@ -1,0 +1,11 @@
+terminus,heure_depart,trajet_id,stop_sequence,arret_id
+0,467,3914,1,gare1
+0,471,3914,2,ptchadu4
+0,476,3914,3,vitrdan2
+0,479,3914,4,lychate2
+1,480,3914,5,lycurie2
+0,455,6079,1,gare1
+0,459,6079,2,ptchadu4
+0,464,6079,3,vitrdan2
+0,467,6079,4,lychate2
+1,468,6079,5,lycurie2

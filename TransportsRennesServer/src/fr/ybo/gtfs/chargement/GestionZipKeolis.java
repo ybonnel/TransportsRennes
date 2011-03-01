@@ -15,49 +15,39 @@
 package fr.ybo.gtfs.chargement;
 
 import fr.ybo.gtfs.csv.moteur.MoteurCsv;
-import fr.ybo.gtfs.csv.moteur.MoteurCsvException;
 import fr.ybo.gtfs.modele.Correspondance;
 import fr.ybo.gtfs.modele.Horaire;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.Collection;
 
 public final class GestionZipKeolis {
 
 	private static final String URL_BASE = "/gtfs/";
 	private static final String URL_STOP_TIMES = URL_BASE + "horaires_";
-	private static final String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
 
 	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static Iterable<Correspondance> getCorrespondances(MoteurCsv moteurCsv) {
 		try {
-			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.zip"));
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.txt")), 8 << 10);
 			try {
-				zipInputStream.getNextEntry();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
 				return moteurCsv.parseFile(bufferedReader, Correspondance.class);
 			} finally {
-				zipInputStream.close();
+				bufferedReader.close();
 			}
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}
 	}
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static Collection<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
 		try {
-			ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".zip"));
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".txt")), 8 << 10);
 			try {
-				zipInputStream.getNextEntry();
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
 				return moteurCsv.parseFile(bufferedReader, Horaire.class);
 			} finally {
-				zipInputStream.close();
+				bufferedReader.close();
 			}
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
@@ -65,30 +55,17 @@ public final class GestionZipKeolis {
 	}
 
 	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
-	public static Map<Class<?>, List<?>> getAndParseZipKeolis(MoteurCsv moteur) {
-		ZipInputStream zipInputStream = new ZipInputStream(GestionZipKeolis.class.getResourceAsStream(URL_ZIP_PRINCIPALE));
-		Map<Class<?>, List<?>> retour = new HashMap<Class<?>, List<?>>(10);
+	public static <ObjetKeolis> Collection<ObjetKeolis> getAndParseKeolis(MoteurCsv moteur, String file, Class<ObjetKeolis> clazz) {
 		try {
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_BASE + file)), 8 << 10);
 			try {
-				ZipEntry zipEntry = zipInputStream.getNextEntry();
-				while (zipEntry != null) {
-					BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
-					List<Object> objects = new ArrayList<Object>(500);
-					retour.put(moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine()), objects);
-					String ligne = bufReader.readLine();
-					while (ligne != null) {
-						objects.add(moteur.creerObjet(ligne));
-						ligne = bufReader.readLine();
-					}
-					zipEntry = zipInputStream.getNextEntry();
-				}
+				return moteur.parseFile(bufferedReader, clazz);
 			} finally {
-				zipInputStream.close();
+				bufferedReader.close();
 			}
-		} catch (IOException ioException) {
-			throw new MoteurCsvException(ioException);
+		} catch (Exception exception) {
+			throw new GestionFilesException(exception);
 		}
-		return retour;
 	}
 
 	private GestionZipKeolis() {

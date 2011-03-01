@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -85,10 +86,14 @@ public class MoteurCsv {
 		}
 	}
 
-	@SuppressWarnings({"unchecked", "TypeMayBeWeakened"})
 	public <Objet> Iterable<Objet> parseFile(File file, Class<Objet> clazz) throws MoteurCsvException, IOException {
+		return parseFile(new FileInputStream(file), clazz);
+	}
+
+	@SuppressWarnings({"unchecked"})
+	public <Objet> Iterable<Objet> parseFile(InputStream stream, Class<Objet> clazz) throws MoteurCsvException, IOException {
 		Collection<Objet> objets = new ArrayList<Objet>(1000);
-		BufferedReader bufReader = new BufferedReader(new InputStreamReader(new FileInputStream(file)), 8 << 10);
+		BufferedReader bufReader = new BufferedReader(new InputStreamReader(stream), 8 << 10);
 		try {
 			nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 			String ligne = bufReader.readLine();

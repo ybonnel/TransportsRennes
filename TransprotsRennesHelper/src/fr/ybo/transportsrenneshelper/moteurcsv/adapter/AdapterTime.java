@@ -24,7 +24,7 @@ public class AdapterTime implements AdapterCsv<Integer> {
 			return null;
 		}
 		String[] champs = chaine.split(":");
-		if (champs.length != 3) {
+		if (champs.length < 2) {
 			return null;
 		}
 		return Integer.parseInt(champs[0]) * MINUTES_BY_HOUR + Integer.parseInt(champs[1]);

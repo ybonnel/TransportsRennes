@@ -40,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 
 	private final Base base;
 
@@ -189,6 +189,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					base.getTable(Arret.class).createTable(db);
 					base.getTable(Calendrier.class).createTable(db);
 					base.getTable(Trajet.class).createTable(db);
+				}
+			});
+			mapUpgrades.put(7, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(SQLiteDatabase db) {
+					db.execSQL("DELETE FROM DernierMiseAJour");
 				}
 			});
 		}

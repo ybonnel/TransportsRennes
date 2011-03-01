@@ -39,4 +39,12 @@ public class Calendrier {
 	public boolean samedi;
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class)
 	public boolean dimanche;
+
+	public boolean isSemaine() {
+		return (lundi && mardi && mercredi && jeudi && vendredi && samedi && !dimanche);
+	}
+
+	public boolean isDimanche() {
+		return (!lundi && !mardi && !mercredi && !jeudi && !vendredi && !samedi && dimanche);
+	}
 }

@@ -80,6 +80,7 @@ public class GestionnaireGtfs {
 	private Map<Integer, Calendrier> calendriers;
 	private Map<String, Map<Integer, Horaire>> horaires = new HashMap<String, Map<Integer, Horaire>>(1500);
 	private Map<String, Ligne> lignes;
+	private Map<Integer, Direction> directions;
 	private Map<GestionnaireGtfs.CoupleLigne, Collection<Correspondance>> correspondances;
 
 	public Collection<Correspondance> getCorrespondances(GestionnaireGtfs.CoupleLigne coupleLigne) {
@@ -130,7 +131,6 @@ public class GestionnaireGtfs {
 		return instance;
 	}
 
-	private Map<Class<?>, List<?>> retourMoteur = null;
 	private MoteurCsv moteur = null;
 
 	private MoteurCsv getMoteur() {
@@ -140,39 +140,39 @@ public class GestionnaireGtfs {
 		return moteur;
 	}
 
-	public Map<Class<?>, List<?>> getRetourMoteur() {
-		if (retourMoteur == null) {
-			retourMoteur = GestionZipKeolis.getAndParseZipKeolis(getMoteur());
-		}
-		return retourMoteur;
-	}
-
 	@SuppressWarnings("unchecked")
 	private GestionnaireGtfs() {
 		long startTime = System.nanoTime();
+		directions = new HashMap<Integer, Direction>();
+		for (Direction direction : GestionZipKeolis.getAndParseKeolis(getMoteur(), "directions.txt", Direction.class)) {
+			directions.put(direction.id, direction);
+		}
 		arrets = new HashMap<String, Arret>(1500);
-		for (Arret arret : (List<Arret>) getRetourMoteur().get(Arret.class)) {
+		for (Arret arret : GestionZipKeolis.getAndParseKeolis(getMoteur(), "arrets.txt", Arret.class)) {
 			arrets.put(arret.id, arret);
 		}
 
 		arretsRoutesByArretId = new HashMap<String, Map<String, ArretRoute>>(1500);
-		for (ArretRoute arretRoute : (List<ArretRoute>) getRetourMoteur().get(ArretRoute.class)) {
+		for (ArretRoute arretRoute : GestionZipKeolis.getAndParseKeolis(getMoteur(), "arrets_routes.txt", ArretRoute.class)) {
 			if (!arretsRoutesByArretId.containsKey(arretRoute.arretId)) {
-				arretsRoutesByArretId.put(arretRoute.arretId, new HashMap<String, ArretRoute>(100));
+				arretsRoutesByArretId.put(arretRoute.arretId, new HashMap<String, ArretRoute>(2));
 			}
 			arretsRoutesByArretId.get(arretRoute.arretId).put(arretRoute.ligneId, arretRoute);
 		}
+
 		calendriers = new HashMap<Integer, Calendrier>(20);
-		for (Calendrier calendrier : (List<Calendrier>) getRetourMoteur().get(Calendrier.class)) {
+		for (Calendrier calendrier : GestionZipKeolis.getAndParseKeolis(getMoteur(), "calendriers.txt", Calendrier.class)) {
 			calendriers.put(calendrier.id, calendrier);
 		}
+
 		lignes = new HashMap<String, Ligne>(67);
-		for (Ligne ligne : (List<Ligne>) getRetourMoteur().get(Ligne.class)) {
+		for (Ligne ligne : GestionZipKeolis.getAndParseKeolis(getMoteur(), "lignes.txt", Ligne.class)) {
 			lignes.put(ligne.id, ligne);
 		}
+
 		Map<Integer, Trajet> trajets;
 		trajets = new HashMap<Integer, Trajet>(2500);
-		for (Trajet trajet : (List<Trajet>) getRetourMoteur().get(Trajet.class)) {
+		for (Trajet trajet : GestionZipKeolis.getAndParseKeolis(getMoteur(), "trajets.txt", Trajet.class)) {
 			trajets.put(trajet.id, trajet);
 		}
 		for (Ligne ligne : lignes.values()) {
@@ -186,6 +186,7 @@ public class GestionnaireGtfs {
 				horaires.get(horaire.arretId).put(horaire.trajetId, horaire);
 			}
 		}
+
 		correspondances =
 				new HashMap<GestionnaireGtfs.CoupleLigne, Collection<Correspondance>>(200);
 		for (Correspondance correspondance : GestionZipKeolis.getCorrespondances(getMoteur())) {

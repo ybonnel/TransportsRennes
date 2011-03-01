@@ -56,14 +56,14 @@ public class TransportsRennesApplication extends Application {
 
 	public static synchronized boolean isUpdateNecessaire() {
 		if (dateDerniereVerifUpdate == null) {
-			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate", null);
+			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate150", null);
 		}
 		return dateDerniereVerifUpdate == null || !dateCourante.equals(dateDerniereVerifUpdate) || databaseHelper.selectSingle(MISE_A_JOUR) == null;
 	}
 
 	public static void verifUpdateDone() {
 		SharedPreferences.Editor edit = sharedPreferences.edit();
-		edit.putString("dateDerniereVerifUpdate", dateCourante);
+		edit.putString("dateDerniereVerifUpdate150", dateCourante);
 		dateDerniereVerifUpdate = dateCourante;
 		edit.commit();
 	}

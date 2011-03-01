@@ -21,6 +21,7 @@ import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
 import java.io.File;
+import java.io.IOException;
 
 @SuppressWarnings({"UseOfSystemOutOrSystemErr", "WeakerAccess"})
 public class Main {
@@ -29,7 +30,7 @@ public class Main {
 	}
 
 	@SuppressWarnings({"UnusedParameters"})
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
 		GetAndContructZip getAndContructZip = new GetAndContructZip();
 		getAndContructZip.getZipKeolis();
@@ -51,6 +52,7 @@ public class Main {
 		generateur.remplirTrajets();
 		generateur.remplirArretRoutes();
 		generateur.remplirCorrespondance();
+		generateur.ajoutDonnesMetro();
 		generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
 		generateur.rechercherPointsInterets();
 		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");

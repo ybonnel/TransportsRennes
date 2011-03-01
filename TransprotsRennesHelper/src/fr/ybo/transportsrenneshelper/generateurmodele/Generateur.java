@@ -21,6 +21,7 @@ import fr.ybo.transportsrenneshelper.generateurmodele.modele.Calendrier;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Correspondance;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Direction;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Horaire;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Ligne;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Trajet;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
@@ -29,6 +30,8 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
+import fr.ybo.transportsrenneshelper.keolis.GetMetro;
+import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.util.CalculDistance;
@@ -40,6 +43,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -209,7 +213,6 @@ public class Generateur {
 	private static final double DISTANCE_LNG_IN_DEGREE = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
 
 	public void remplirCorrespondance() {
-		// Trajets avec une correspondance
 		for (Arret arret : arrets.values()) {
 			for (Arret correspondance : arrets.values()) {
 				if (hasFastCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id)) {
@@ -458,5 +461,171 @@ public class Generateur {
 			ordre++;
 			lignes.add(ligne);
 		}
+	}
+
+	private int indDirectionMetro1 = 0;
+	private int indDirectionMetro2 = 0;
+
+	private void ajoutDirectionsMetro() {
+		// Ajout des direction pour le metro;
+		for (Integer directionId : directions.keySet()) {
+			if (directionId > indDirectionMetro1) {
+				indDirectionMetro1 = directionId;
+			}
+		}
+		indDirectionMetro1++;
+		indDirectionMetro2 = indDirectionMetro1 + 1;
+		Direction directionMetro1 = new Direction();
+		directionMetro1.id = indDirectionMetro1;
+		directionMetro1.direction = "J.F. Kennedy";
+		Direction directionMetro2 = new Direction();
+		directionMetro2.direction = "La Poterie";
+		directionMetro2.id = indDirectionMetro2;
+		directions.put(directionMetro1.id, directionMetro1);
+		directions.put(directionMetro2.id, directionMetro2);
+	}
+
+	private void ajoutArretsMetro() {
+		// Ajout des arrets de metro.
+		for (MetroStation station : GetMetro.getStations()) {
+			Arret arret1 = new Arret();
+			Arret arret2 = new Arret();
+			arret1.id = station.getId() + "1";
+			arret2.id = station.getId() + "2";
+			arret1.longitude = station.getLongitude();
+			arret2.longitude = station.getLongitude();
+			arret1.latitude = station.getLatitude();
+			arret2.latitude = station.getLatitude();
+			arret1.nom = station.getName();
+			arret2.nom = station.getName();
+			arrets.put(arret1.id, arret1);
+			arrets.put(arret2.id, arret2);
+		}
+	}
+
+	private void ajoutArretRouteMetro() {
+		// ArretRoute pour le métro.
+		for (MetroStation station : GetMetro.getStations()) {
+			ArretRoute arretRoute1 = new ArretRoute();
+			ArretRoute arretRoute2 = new ArretRoute();
+			arretRoute1.accessible = true;
+			arretRoute2.accessible = true;
+			arretRoute1.arretId = station.getId() + "1";
+			arretRoute2.arretId = station.getId() + "2";
+			arretRoute1.directionId = indDirectionMetro1;
+			arretRoute2.directionId = indDirectionMetro2;
+			arretRoute1.ligneId = "a";
+			arretRoute2.ligneId = "a";
+			arretRoute1.sequence = station.getRankingPlatformDirection1();
+			arretRoute2.sequence = station.getRankingPlatformDirection2() == null ? 1 : station.getRankingPlatformDirection2();
+			if (!arrets.get(arretRoute1.arretId).nom.equals(directions.get(indDirectionMetro1).direction)) {
+				arretsRoutes.add(arretRoute1);
+			}
+			if (!arrets.get(arretRoute2.arretId).nom.equals(directions.get(indDirectionMetro2).direction)) {
+				arretsRoutes.add(arretRoute2);
+			}
+		}
+	}
+
+	private int semaineId = 0;
+	private int dimancheId = 0;
+
+	private void ajoutCalendrierMetro() {
+		int maxCalendrierId = 0;
+		for (Calendrier calendrier : calendriers) {
+			if (calendrier.isSemaine()) {
+				semaineId = calendrier.id;
+			}
+			if (calendrier.isDimanche()) {
+				dimancheId = calendrier.id;
+			}
+			if (calendrier.id > maxCalendrierId) {
+				maxCalendrierId = calendrier.id;
+			}
+		}
+		// Calendrier pour le métro.
+		// Si les calendrier n'ont pas été trouvé on les crée.
+		if (semaineId == 0) {
+			Calendrier calendrier = new Calendrier();
+			calendrier.id = (++maxCalendrierId);
+			calendrier.lundi = true;
+			calendrier.mardi = true;
+			calendrier.mercredi = true;
+			calendrier.jeudi = true;
+			calendrier.vendredi = true;
+			calendrier.samedi = false;
+			calendrier.dimanche = false;
+			calendriers.add(calendrier);
+		}
+		if (dimancheId == 0) {
+			Calendrier calendrier = new Calendrier();
+			calendrier.id = (++maxCalendrierId);
+			calendrier.lundi = false;
+			calendrier.mardi = false;
+			calendrier.mercredi = false;
+			calendrier.jeudi = false;
+			calendrier.vendredi = false;
+			calendrier.samedi = false;
+			calendrier.dimanche = true;
+			calendriers.add(calendrier);
+		}
+	}
+
+	private void ajoutLigneMetro() {
+		Ligne ligneMetro = new Ligne();
+		ligneMetro.id = "a";
+		ligneMetro.nomCourt = "a";
+		ligneMetro.nomLong = "La Poterie <> J.F. Kennedy";
+		ligneMetro.ordre = 70;
+		lignes.add(ligneMetro);
+	}
+
+	@SuppressWarnings({"unchecked"})
+	private void ajoutTrajetEtHoraires() throws IOException {
+		int trajetIdMax = 0;
+		for (List<Trajet> trajetByLigne : trajets.values()) {
+			for (Trajet trajet : trajetByLigne) {
+				if (trajetIdMax < trajet.id) {
+					trajetIdMax = trajet.id;
+				}
+			}
+		}
+		trajetIdMax++;
+		Map<Integer, Trajet> trajetMetro = new HashMap<Integer, Trajet>();
+		List<Class<?>> clazz = new ArrayList<Class<?>>();
+		clazz.add(HoraireMetro.class);
+		MoteurCsv moteurMetro = new MoteurCsv(clazz);
+		List<Horaire> horairesMetro = new ArrayList<Horaire>();
+		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"), HoraireMetro.class)) {
+			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, semaineId, indDirectionMetro1, indDirectionMetro2)) {
+				horairesMetro.add(horaire);
+				if (!trajetMetro.containsKey(horaire.trajetId)) {
+					trajetMetro.put(horaire.trajetId, horaire.trajet);
+				}
+			}
+			trajetIdMax += 2;
+		}
+
+		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"), HoraireMetro.class)) {
+			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, dimancheId, indDirectionMetro1, indDirectionMetro2)) {
+				horairesMetro.add(horaire);
+				if (!trajetMetro.containsKey(horaire.trajetId)) {
+					trajetMetro.put(horaire.trajetId, horaire.trajet);
+				}
+			}
+			trajetIdMax += 2;
+		}
+		horairesByLigneId.put("a", horairesMetro);
+		trajets.put("a", new ArrayList<Trajet>());
+		trajets.get("a").addAll(trajetMetro.values());
+	}
+
+	public void ajoutDonnesMetro() throws IOException {
+		ajoutDirectionsMetro();
+		ajoutArretsMetro();
+		ajoutArretRouteMetro();
+		ajoutCalendrierMetro();
+		ajoutLigneMetro();
+		ajoutTrajetEtHoraires();
 	}
 }
