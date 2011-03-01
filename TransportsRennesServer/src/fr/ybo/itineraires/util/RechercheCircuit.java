@@ -97,7 +97,15 @@ public class RechercheCircuit {
 		public int compare(Trajet o1, Trajet o2) {
 			int tempsTrajet1 = o1.calculTempsTrajet(heureDepart);
 			int tempsTrajet2 = o2.calculTempsTrajet(heureDepart);
-			return tempsTrajet1 < tempsTrajet2 ? -1 : tempsTrajet1 == tempsTrajet2 ? 0 : 1;
+			if (tempsTrajet1 < tempsTrajet2) {
+				return -1;
+			}
+			if (tempsTrajet1 > tempsTrajet2) {
+				return 1;
+			}
+			int tempsTrajetPieton1 = o1.calculTempsTrajetPieton();
+			int tempsTrajetPieton2 = o2.calculTempsTrajetPieton();
+			return tempsTrajetPieton1 < tempsTrajetPieton2 ? -1 : tempsTrajetPieton1 == tempsTrajetPieton2 ? 0 : 1;
 		}
 	}
 

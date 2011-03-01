@@ -42,6 +42,21 @@ public class Trajet {
 		return tempsTrajet;
 	}
 
+
+	private Integer tempsTrajetPieton = null;
+
+	public int calculTempsTrajetPieton() {
+		if (tempsTrajetPieton == null) {
+			tempsTrajetPieton = 0;
+			for (PortionTrajet portionTrajet : getPortionsTrajet()) {
+				if (portionTrajet instanceof PortionTrajetPieton) {
+					tempsTrajetPieton += ((PortionTrajetPieton) portionTrajet).tempsTrajet;
+				}
+			}
+		}
+		return tempsTrajetPieton;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder("Trajet (");
