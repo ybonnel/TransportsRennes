@@ -29,8 +29,6 @@ public class KeepSinglettonAlive extends HttpServlet {
 		resp.setContentType("text/html");
 		resp.setCharacterEncoding("utf-8");
 		GestionnaireGtfs.getInstance();
-		resp.getWriter().println("<html><body>");
 		resp.getWriter().println("Singletton is alive");
-		resp.getWriter().println("</html></body>");
 	}
 }
