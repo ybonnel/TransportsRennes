@@ -20,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import fr.ybo.itineraires.ItinerairesException;
 import fr.ybo.itineraires.schema.PortionTrajet;
@@ -117,11 +116,11 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
         holder.heureArrivee1.setText(portionTrajetBus1.getHeureArrivee());
         holder.arrivee1.setText(Arret.getArret(portionTrajetBus1.getArretArriveeId()).nom);
         if (portionTrajetBus2 == null) {
-            holder.iconePortion2.setVisibility(View.INVISIBLE);
-            holder.heureDepart2.setVisibility(View.INVISIBLE);
-            holder.depart2.setVisibility(View.INVISIBLE);
-            holder.heureArrivee2.setVisibility(View.INVISIBLE);
-            holder.arrivee2.setVisibility(View.INVISIBLE);
+            holder.iconePortion2.setVisibility(View.GONE);
+            holder.heureDepart2.setVisibility(View.GONE);
+            holder.depart2.setVisibility(View.GONE);
+            holder.heureArrivee2.setVisibility(View.GONE);
+            holder.arrivee2.setVisibility(View.GONE);
         } else {
             holder.iconePortion2.setVisibility(View.VISIBLE);
             holder.heureDepart2.setVisibility(View.VISIBLE);
