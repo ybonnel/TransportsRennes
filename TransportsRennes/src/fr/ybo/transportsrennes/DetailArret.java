@@ -397,7 +397,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailLigne(myLigne);
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
 					erreur = true;

@@ -1,0 +1,68 @@
+id,nom_court,nom_long,ordre
+01,1,Chêne Germain / Longs Champs <> Saint-Jacques-de-la-Lande (Morinais),1
+02,2,Grand Quartier <> La Poterie / Haut Sancé,2
+03,3,Saint Laurent <> Alma,3
+04,4,Beauregard <> Beaulieu Atalante,4
+05,5,Patton <> Lycée Bréquigny,5
+06,6,Cesson-Sévigné (Base de Loisirs) <> Rennes (République),6
+07,7,Chantepie (Rosa Parks) <> Rennes (République),7
+08,8,Saint Grégoire <> Rennes (La Poterie),8
+09,9,Saint Laurent <> Cleunay Centre Commercial,9
+11,11,Z.I. Ouest (Petit Pré) / Stade Rennais <> Saint Saëns / Z.I. Sud-Est (Charmilles),10
+30,30,Stade Rennais <> Cesson-Sévigné (La Rigourdière),11
+31,31,Churchill / Bourgogne <> Beaulieu (Ecole de Chimie),12
+32,32,Triangle <> Beaulieu Atalante,13
+33,33,Saint-Jacques-de-la-Lande / Bréquigny <> La Poterie / Chantepie (Cucé),14
+34,34,Z.I. Sud-Est / La Poterie <> Cesson-Sévigné (Saint Etienne),15
+40,40,République <> Beaulieu Atalante,16
+41,41,Gares <> Longs Champs / Gaudinais,17
+42,42,Gares <> Z.I. Sud-Est (Charmilles),18
+43,43,Gares <> Joliot Curie,19
+44,44,République <> Joliot Curie,20
+45,45,Villejean Université <> Lande du Breil,21
+50,50,Rennes (République) <> Thorigné-Fouillard,22
+51,51,Rennes (Sainte Anne) <> Betton,23
+52,52,Saint-Gilles / Pacé <> Rennes (Villejean Université) <> Montgermont / La Chapelle-des-Fougeretz,24
+53,53,Rennes (République) <> Vezin le Coquet / L'Hermitage / La Chapelle-Thouarault,25
+54,54,Rennes (Charles de Gaulle) <> Le Rheu / Cintré,26
+55,55,Rennes (Charles de Gaulle) <> Mordelles / Le Verger,27
+56,56,Rennes (Charles de Gaulle) <> Chavagne,28
+57,57,Rennes (République) <> Saint-Jacques-de-la-Lande / Bruz,29
+59,59,Vern-sur-Seiche <> Rennes (La Poterie) / Rennes (Henri Fréville) <> Bruz,30
+61,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon,31
+64,64,Rennes (République) <> Acigné,32
+65,65,Rennes (Villejean Université) <> Pacé / Parthenay / Clayes,33
+67,67,Rennes (République) <> Cesson-Sévigné / Brécé,34
+68,68,Rennes (Villejean Université) <> Gévezé,35
+70,70,Rennes (Sainte Anne) <> Saint-Sulpice-La-Forêt,36
+71,71,Rennes (Sainte Anne) <> Betton / Chevaigné,37
+72,72,Rennes (Henri Fréville) <> Chartres / Pont-Péan,38
+73,73,Rennes (La Poterie) <> Vern-sur-Seiche / Saint-Armel / Corps-Nuds,39
+74,74,Rennes (Henri Fréville) <> Orgères / Bourgbarré,40
+75,75,Rennes (La Poterie) <> Nouvoitou,41
+76,76,Rennes (Villejean Université) <> Le Rheu / Vezin le Coquet,42
+77,77,Rennes (Villejean Université) <> Pacé,43
+78,78,Rennes (Villejean Université) <> Betton / Saint-Grégoire,44
+91,91,Pont-Réan / Bruz / Chartres <> Noyal-Châtillon-sur-Seiche,45
+92,92,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Sévigné),46
+93,93,Cintré <> L'Hermitage (Gare),47
+94,94,Saint-Sulpice-la-Forêt / Chevaigné <> Betton,48
+158,KL,Rennes (République) <> Campus de Ker-Lann,49
+100,100,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande,50
+150,150,Rennes (République) <> Thorigné-Fouillard,51
+151,151,Rennes (Sainte Anne) <> Betton,52
+152,152,Rennes (Lycée Basch) <> Clayes / Saint-Gilles,53
+153,153,Rennes (République) <> Vezin le Coquet / L'Hermitage / La Chapelle-Thouarault,54
+154,154,Rennes (République) <> Le Rheu,55
+155,155,Rennes (République) <> Mordelles,56
+156,156,Rennes (République) <> Chavagne,57
+157,157,Rennes (République) <> Bruz,58
+159,159,Rennes (Henri Fréville) <> Bruz,59
+161,161,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon / Bourgbarré,60
+164,164,Rennes (République) <> Acigné,61
+172,172,Rennes (Henri Fréville) <> Chartres / Pont-Péan,62
+173,173,Rennes (La Poterie) <> Saint-Armel / Corps-Nuds,63
+SNT1,STN,République <> Villejean,64
+SNT2,STN,République <> Beaulieu Atalante,65
+TTZ,TTZ,Rennes <> Touche Tizon,66
+a,a,La Poterie <> J.F. Kennedy,70

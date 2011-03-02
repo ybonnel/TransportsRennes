@@ -62,7 +62,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailLigne(ligne);
+					UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
 					erreur = true;

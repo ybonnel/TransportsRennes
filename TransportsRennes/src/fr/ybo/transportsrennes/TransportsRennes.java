@@ -269,7 +269,7 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
-					UpdateDataBase.updateIfNecessaryDatabase();
+					UpdateDataBase.updateIfNecessaryDatabase(getResources());
 					Collection<String> ligneIds = new HashSet<String>(10);
 					for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
 						if (!ligneIds.contains(favori.ligneId)) {
@@ -287,7 +287,7 @@ public class TransportsRennes extends Activity {
 										.setMessage(getString(R.string.infoChargementGtfs) + getString(R.string.chargementLigneFavori, nomLigne));
 							}
 						});
-						UpdateDataBase.chargeDetailLigne(ligne);
+						UpdateDataBase.chargeDetailLigne(ligne, getResources());
 					}
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
@@ -311,7 +311,7 @@ public class TransportsRennes extends Activity {
 	private void verifierUpgrade() {
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources());
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -428,7 +428,7 @@ public class TransportsRennes extends Activity {
 											getString(R.string.infoChargementGtfs) + '\n' + getString(R.string.premierAccesLigne, nomLigne));
 								}
 							});
-							UpdateDataBase.chargeDetailLigne(ligne);
+							UpdateDataBase.chargeDetailLigne(ligne, getResources());
 						}
 					}
 				} catch (Exception exception) {

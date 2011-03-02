@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import android.content.res.Resources;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
@@ -53,12 +54,12 @@ public class Ligne implements Serializable {
 	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper) {
+	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper, Resources resources) {
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
 		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);
 		MoteurCsv moteur = new MoteurCsv(classes);
-		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper);
+		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper, resources);
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
 	}
 

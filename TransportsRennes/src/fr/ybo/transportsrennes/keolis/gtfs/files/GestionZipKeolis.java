@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
+import android.content.res.Resources;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
@@ -26,64 +28,65 @@ import fr.ybo.transportsrennes.util.LogYbo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 public final class GestionZipKeolis {
 
 	private static final LogYbo LOG_YBO = new LogYbo(GestionZipKeolis.class);
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
-	private static final String URL_BASE = "http://yanbonnel.perso.sfr.fr/GTFSRennes/1.5.0/";
-	private static final String URL_STOP_TIMES = URL_BASE + "horaires_";
-	private static final String URL_LAST_UPDATE = URL_BASE + "last_update.txt";
-	private static final String URL_ZIP_PRINCIPALE = URL_BASE + "GTFSRennesPrincipal.zip";
+	private static final String URL_STOP_TIMES = "horaires_";
 
-	private static HttpURLConnection openConnectionForStopTime(String ligneId) throws GestionFilesException {
+	private static CoupleResourceFichier getResourceForStopTime(String ligneId) throws GestionFilesException {
 
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(URL_STOP_TIMES + ligneId + ".zip").openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-            connection.setConnectTimeout(20000);
-            connection.setReadTimeout(20000);
-			connection.connect();
-			return connection;
-		} catch (IOException ioException) {
-			throw new GestionFilesException(ioException);
+			String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
+			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(null);
+			return new CoupleResourceFichier(resourceId, nomResource + ".txt");
+		} catch (Exception exception) {
+			throw new GestionFilesException(exception);
 		}
 	}
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
-	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, DataBaseHelper dataBaseHelper) {
+	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, DataBaseHelper dataBaseHelper, Resources resources) {
 		try {
-			HttpURLConnection connection = openConnectionForStopTime(ligneId);
-			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
-			zipInputStream.getNextEntry();
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
-			moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
-			connection.disconnect();
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
+			try {
+				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
+			} finally {
+				bufReader.close();
+			}
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}
 
 	}
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
-	public static void getAndParseZipKeolis(MoteurCsv moteur) throws GestionFilesException, MoteurCsvException, DataBaseException {
+	private static final CoupleResourceFichier[] RESOURCES_PRINCIPALE = {new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
+			new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"),
+			new CoupleResourceFichier(R.raw.calendriers, "calendriers.txt"),
+			new CoupleResourceFichier(R.raw.directions, "directions.txt"),
+			new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
+			new CoupleResourceFichier(R.raw.trajets, "trajets.txt")};
+
+	private static class CoupleResourceFichier {
+		private final int resourceId;
+		private final String fichier;
+
+		private CoupleResourceFichier(int resourceId, String fichier) {
+			this.resourceId = resourceId;
+			this.fichier = fichier;
+		}
+	}
+
+	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException, MoteurCsvException, DataBaseException {
 		try {
-			HttpURLConnection connection = openHttpConnection();
-			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
-			ZipEntry zipEntry = zipInputStream.getNextEntry();
-			while (zipEntry != null) {
-				LOG_YBO.debug("Debut du traitement du fichier " + zipEntry.getName());
-				BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
+			for (CoupleResourceFichier resource : RESOURCES_PRINCIPALE) {
+				LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);
+				BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(resource.resourceId)), 8 << 10);
 				try {
-					moteur.nouveauFichier(zipEntry.getName(), bufReader.readLine());
+					moteur.nouveauFichier(resource.fichier, bufReader.readLine());
 					TransportsRennesApplication.getDataBaseHelper().beginTransaction();
 					String ligne = bufReader.readLine();
 					while (ligne != null) {
@@ -91,13 +94,12 @@ public final class GestionZipKeolis {
 						ligne = bufReader.readLine();
 					}
 				} finally {
+					bufReader.close();
 					TransportsRennesApplication.getDataBaseHelper().endTransaction();
 				}
-				LOG_YBO.debug("Fin du traitement du fichier " + zipEntry.getName());
-				zipEntry = zipInputStream.getNextEntry();
+				LOG_YBO.debug("Fin du traitement du fichier " + resource.fichier);
 			}
 			TransportsRennesApplication.getDataBaseHelper().close();
-			connection.disconnect();
 			LOG_YBO.debug("Fin getAndParseZipKeolis.");
 		} catch (IOException e) {
 			throw new GestionFilesException(e);
@@ -105,39 +107,16 @@ public final class GestionZipKeolis {
 	}
 
 
-	public static Date getLastUpdate() {
+	public static Date getLastUpdate(Resources resources) {
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(URL_LAST_UPDATE).openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-            connection.setConnectTimeout(20000);
-            connection.setReadTimeout(20000);
-			connection.connect();
-			Date date;
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()), 100);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(R.raw.last_update)), 100);
 			try {
-				date = SDF.parse(bufReader.readLine());
+				return SDF.parse(bufReader.readLine());
 			} finally {
 				bufReader.close();
 			}
-			connection.disconnect();
-			return date;
 		} catch (Exception exception) {
 			throw new KeolisException("Erreur lors de la récupération du fichier last_update", exception);
-		}
-	}
-
-	private static HttpURLConnection openHttpConnection() throws GestionFilesException {
-		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(URL_ZIP_PRINCIPALE).openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-            connection.setConnectTimeout(20000);
-            connection.setReadTimeout(20000);
-			connection.connect();
-			return connection;
-		} catch (IOException ioException) {
-			throw new GestionFilesException(ioException);
 		}
 	}
 

@@ -1,0 +1,10 @@
+terminus,heure_depart,trajet_id,stop_sequence,arret_id
+0,425,6892,1,chverc
+0,426,6892,2,noecin1
+1,432,6892,3,gareher
+0,1057,6039,1,gareher
+0,1063,6039,2,noecin2
+1,1064,6039,3,chverc
+0,449,6547,1,chverc
+0,450,6547,2,noecin1
+1,456,6547,3,gareher

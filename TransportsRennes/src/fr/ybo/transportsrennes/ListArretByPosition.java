@@ -338,7 +338,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				try {
-					UpdateDataBase.chargeDetailLigne(myLigne);
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				} catch (Exception exception) {
 					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
 					erreur = true;

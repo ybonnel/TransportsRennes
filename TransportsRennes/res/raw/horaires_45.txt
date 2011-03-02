@@ -1,0 +1,13 @@
+terminus,heure_depart,trajet_id,stop_sequence,arret_id
+0,495,3251,1,villj6
+1,502,3251,2,lanbrei1
+0,755,3441,1,lanbrei1
+1,762,3441,2,villj6
+0,1015,6893,1,lanbrei1
+1,1022,6893,2,villj6
+0,490,5853,1,lanbrei1
+1,495,5853,2,villj6
+0,480,2406,1,villj6
+1,487,2406,2,lanbrei1
+0,1020,1144,1,lanbrei1
+1,1027,1144,2,villj6

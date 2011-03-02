@@ -15,6 +15,7 @@
 package fr.ybo.transportsrennes.keolis.gtfs;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
@@ -34,10 +35,10 @@ public final class UpdateDataBase {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	public static void updateIfNecessaryDatabase() {
+	public static void updateIfNecessaryDatabase(Resources resources) {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour());
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate();
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(resources);
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
 				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
@@ -52,7 +53,7 @@ public final class UpdateDataBase {
 				TransportsRennesApplication.getDataBaseHelper().deleteAll(clazz);
 			}
 			LOG_YBO.debug("Mise à jour des donnees");
-			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS));
+			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), resources);
 			LOG_YBO.debug("Mise à jour des arrêts favoris suite à la mise à jour.");
 			Ligne ligneSelect = new Ligne();
 			Arret arretSelect = new Arret();
@@ -89,11 +90,11 @@ public final class UpdateDataBase {
 		TransportsRennesApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(Ligne ligne) {
+	public static void chargeDetailLigne(Ligne ligne, Resources resources) {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {
 			TransportsRennesApplication.getDataBaseHelper().beginTransaction();
-			ligne.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper());
+			ligne.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper(), resources);
 			ligne.chargee = Boolean.TRUE;
 			ContentValues values = new ContentValues();
 			values.put("chargee", 1);
