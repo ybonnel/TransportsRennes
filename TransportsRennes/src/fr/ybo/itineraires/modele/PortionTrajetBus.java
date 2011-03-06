@@ -23,7 +23,7 @@ public class PortionTrajetBus implements Serializable
     protected String heureDepart;
     protected String arretArriveeId;
     protected String heureArrivee;
-	protected String direction;
+	protected Integer directionId;
 
     public String getLigneId() {
         return ligneId;
@@ -65,11 +65,11 @@ public class PortionTrajetBus implements Serializable
 	    heureArrivee = value;
     }
 
-	public String getDirection() {
-		return direction;
+	public Integer getDirectionId() {
+		return directionId;
 	}
 
-	public void setDirection(String direction) {
-		this.direction = direction;
+	public void setDirectionId(Integer directionId) {
+		this.directionId = directionId;
 	}
 }

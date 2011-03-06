@@ -33,6 +33,8 @@ public class ArretFavori implements Serializable {
 	public String nomArret;
 	@Colonne
 	public String direction;
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	public Integer directionId;
 	@Colonne
 	public String nomCourt;
 	@Colonne

@@ -91,7 +91,7 @@ public class Converter {
 		jointure.setArretDepartId(jointureJson.getArretDepartId());
 		jointure.setHeureDepart(jointureJson.getHeureDepart());
 		jointure.setLigneId(jointureJson.getLigneId());
-		jointure.setDirection(jointureJson.getDirection());
+		jointure.setDirectionId(jointureJson.getDirectionId());
 		return jointure;
 	}
 }

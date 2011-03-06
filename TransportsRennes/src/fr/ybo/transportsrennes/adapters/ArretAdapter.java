@@ -72,6 +72,7 @@ public class ArretAdapter extends CursorAdapter {
 		mInflater = LayoutInflater.from(activity);
 		nameCol = cursor.getColumnIndex("arretName");
 		directionCol = cursor.getColumnIndex("direction");
+		directionIdCol = cursor.getColumnIndex("directionId");
 		arretIdCol = cursor.getColumnIndex("_id");
 		//		accessibleCol = cursor.getColumnIndex("accessible");
 	}
@@ -79,6 +80,7 @@ public class ArretAdapter extends CursorAdapter {
 	private final LayoutInflater mInflater;
 	private final int nameCol;
 	private final int directionCol;
+	private final int directionIdCol;
 	private final int arretIdCol;
 	//	private final int accessibleCol;
 
@@ -112,6 +114,7 @@ public class ArretAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 		String name = cursor.getString(nameCol);
 		String direction = cursor.getString(directionCol);
+		Integer directionId = cursor.getInt(directionIdCol);
 		//		boolean accessible = (cursor.getInt(accessibleCol) == 1);
 		favori.arretId = cursor.getString(arretIdCol);
 		final String arretId = favori.arretId;
@@ -121,7 +124,7 @@ public class ArretAdapter extends CursorAdapter {
 		holder.isFavori.setImageResource(
 				TransportsRennesApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off :
 						android.R.drawable.btn_star_big_on);
-		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, activity));
+		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, directionId, activity));
 		if (setCorrespondances.contains(arretId)) {
 			correspondancesWithDetail(holder, arretId);
 		} else {
@@ -173,8 +176,8 @@ public class ArretAdapter extends CursorAdapter {
 			/** Construction requête. */
 			StringBuilder requete = new StringBuilder();
 			requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-			requete.append(
-					" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
+			requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
+			requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, Direction.id as directionId ");
 			requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
 			requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
 			requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
@@ -197,6 +200,7 @@ public class ArretAdapter extends CursorAdapter {
 			int arretIdIndex = cursor.getColumnIndex("arretId");
 			int ligneIdIndex = cursor.getColumnIndex("ligneId");
 			int directionIndex = cursor.getColumnIndex("direction");
+			int directionIdIndex = cursor.getColumnIndex("directionId");
 			int arretNomIndex = cursor.getColumnIndex("arretNom");
 			int latitudeIndex = cursor.getColumnIndex("latitude");
 			int longitudeIndex = cursor.getColumnIndex("longitude");
@@ -212,6 +216,7 @@ public class ArretAdapter extends CursorAdapter {
 				arret.favori.arretId = arret.id;
 				arret.favori.ligneId = cursor.getString(ligneIdIndex);
 				arret.favori.direction = cursor.getString(directionIndex);
+				arret.favori.directionId = cursor.getInt(directionIdIndex);
 				arret.nom = cursor.getString(arretNomIndex);
 				arret.favori.nomArret = arret.nom;
 				arret.latitude = cursor.getDouble(latitudeIndex);

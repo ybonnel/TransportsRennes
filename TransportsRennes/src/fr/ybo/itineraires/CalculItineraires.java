@@ -15,7 +15,7 @@ public class CalculItineraires {
 
     private static final LogYbo LOG_YBO = new LogYbo(CalculItineraires.class);
 
-    private static final String URL_BASE = "http://5.transports-rennes.appspot.com/rest/itineraires";
+    private static final String URL_BASE = "http://6.transports-rennes.appspot.com/rest/itineraires";
     private static final String KEY = "YboItineraires01*";
 
     private static CalculItineraires instance;
@@ -33,6 +33,7 @@ public class CalculItineraires {
     public ItineraireReponse calculItineraires(Adresse adresseDepart, Adresse adresseArrive, Calendar calendar) {
         ClientResource cr = new ClientResource(getUrl(adresseDepart, adresseArrive, calendar));
         ItineraireResource resource = cr.wrap(ItineraireResource.class);
+	    LOG_YBO.debug(resource.calculItineraire());
         return GsonUtil.getInstance().fromJson(resource.calculItineraire(), ItineraireReponse.class);
     }
 

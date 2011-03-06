@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
@@ -32,4 +33,15 @@ public class Direction {
 	@BaliseCsv("direction")
 	@Colonne
 	public String direction;
+
+
+	private static Direction directionSelect = null;
+
+	public static String getDirectionById(int id) {
+		if (directionSelect == null) {
+			directionSelect = new Direction();
+		}
+		directionSelect.id = id;
+		return TransportsRennesApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
+	}
 }

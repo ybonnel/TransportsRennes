@@ -57,7 +57,7 @@ public final class GestionZipKeolis {
 	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static <ObjetKeolis> Collection<ObjetKeolis> getAndParseKeolis(MoteurCsv moteur, String file, Class<ObjetKeolis> clazz) {
 		try {
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_BASE + file)), 8 << 10);
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_BASE + file), "utf-8"), 8 << 10);
 			try {
 				return moteur.parseFile(bufferedReader, clazz);
 			} finally {

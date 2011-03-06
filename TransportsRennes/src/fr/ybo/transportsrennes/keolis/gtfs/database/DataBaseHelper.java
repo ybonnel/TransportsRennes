@@ -40,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	private final Base base;
 
@@ -194,6 +194,55 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			mapUpgrades.put(7, new DataBaseHelper.UpgradeDatabase() {
 				public void upagrade(SQLiteDatabase db) {
 					db.execSQL("DELETE FROM DernierMiseAJour");
+				}
+			});
+			mapUpgrades.put(8, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(SQLiteDatabase db) {
+					// Gestion des favoris.
+					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
+					base.getTable(ArretFavori.class).createTable(db);
+					List<String> columns = new ArrayList<String>(7);
+					columns.add("arretId");
+					columns.add("ligneId");
+					columns.add("nomArret");
+					columns.add("direction");
+					columns.add("nomCourt");
+					columns.add("nomLong");
+					columns.add("ordre");
+					Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
+					int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
+					int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
+					int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+					int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+					int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
+					int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
+					int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+					ArretFavori favori = new ArretFavori();
+					while (arretFavoriTmp.moveToNext()) {
+						favori.arretId = arretFavoriTmp.getString(arretIdIndex);
+						favori.ligneId = arretFavoriTmp.getString(ligneIdIndex);
+						favori.nomArret = arretFavoriTmp.getString(nomArretIndex);
+						favori.direction = arretFavoriTmp.getString(directionIndex);
+						favori.nomCourt = arretFavoriTmp.getString(nomCourtIndex);
+						favori.nomLong = arretFavoriTmp.getString(nomLongIndex);
+						favori.ordre = arretFavoriTmp.getInt(ordreIndex);
+
+						StringBuilder requete = new StringBuilder();
+						requete.append("SELECT Direction.id FROM ArretRoute, Direction WHERE ");
+						requete.append("ArretRoute.directionId = Direction.id ");
+						requete.append("AND Direction.direction = :direction ");
+						requete.append("AND ArretRoute.arretId = :arretId ");
+						String[] selectionArgs = new String[2];
+						selectionArgs[0] = favori.direction;
+						selectionArgs[1] = favori.arretId;
+						Cursor cursor = db.rawQuery(requete.toString(), selectionArgs);
+						cursor.moveToNext();
+						favori.directionId = cursor.getInt(0);
+						cursor.close();
+
+						base.insert(db, favori);
+					}
+					db.execSQL("DROP TABLE ArretFavori_tmp");
 				}
 			});
 		}

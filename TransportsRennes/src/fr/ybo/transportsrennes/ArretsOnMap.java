@@ -57,7 +57,7 @@ public class ArretsOnMap extends MapActivity {
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Arret.id as _id, Arret.nom as arretName,");
+		requete.append("select Arret.id as _id, Arret.nom as arretName, Direction.id as directionId");
 		requete.append(" Direction.direction as direction, Arret.latitude as latitude, Arret.longitude ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
@@ -80,6 +80,7 @@ public class ArretsOnMap extends MapActivity {
 			String id = cursor.getString(cursor.getColumnIndex("_id"));
 			String nom = cursor.getString(cursor.getColumnIndex("arretName"));
 			String direction = cursor.getString(cursor.getColumnIndex("direction"));
+			int directionId = cursor.getInt(cursor.getColumnIndex("directionId"));
 			int latitude = (int) (cursor.getDouble(cursor.getColumnIndex("latitude")) * 1.0E6);
 			int longitude = (int) (cursor.getDouble(cursor.getColumnIndex("longitude")) * 1.0E6);
 			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
@@ -99,6 +100,7 @@ public class ArretsOnMap extends MapActivity {
 			OverlayItem overlayitem = new OverlayItem(geoPoint, nom, direction);
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.direction = direction;
+			arretFavori.directionId = directionId;
 			arretFavori.nomArret = nom;
 			arretFavori.ligneId = myLigne.id;
 			arretFavori.nomCourt = myLigne.nomCourt;

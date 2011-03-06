@@ -21,7 +21,6 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
@@ -80,12 +79,13 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				Adapter arretAdapter = adapterView.getAdapter();
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);
 				Intent intent = new Intent(DetailTrajet.this, DetailArret.class);
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
+				intent.putExtra("directionId", direction.id);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);
 			}
