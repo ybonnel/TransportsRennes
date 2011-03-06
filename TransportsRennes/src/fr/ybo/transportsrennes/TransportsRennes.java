@@ -156,11 +156,11 @@ public class TransportsRennes extends Activity {
 			showDialog();
 			saveAfficheMessage();
 		} else {
-			boolean afficheMessageVotez = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_votez", true);
+			boolean afficheMessageVotez = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_votez153", true);
 			if (afficheMessageVotez) {
 				showDialogVotez();
 				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-				editor.putBoolean("TransportsRennes_votez", false);
+				editor.putBoolean("TransportsRennes_votez153", false);
 				editor.commit();
 			}
 		}
