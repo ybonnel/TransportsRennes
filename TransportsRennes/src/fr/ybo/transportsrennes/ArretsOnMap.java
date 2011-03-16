@@ -57,7 +57,7 @@ public class ArretsOnMap extends MapActivity {
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Arret.id as _id, Arret.nom as arretName, Direction.id as directionId");
+		requete.append("select Arret.id as _id, Arret.nom as arretName, Direction.id as directionId,");
 		requete.append(" Direction.direction as direction, Arret.latitude as latitude, Arret.longitude ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
