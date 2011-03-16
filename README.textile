@@ -7,3 +7,7 @@ Cette application est disponible gratuitement sur le market Android.
 h1. License
 
 L'ensemble du code source est sous "GPL v3":http://www.gnu.org/licenses/gpl-3.0.html.
+
+h1. Installation
+Voir "Wiki":https://github.com/ybonnel/TransportsRennes/wiki.
+
