@@ -31,8 +31,11 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 public class MoteurCsv {
@@ -147,13 +150,20 @@ public class MoteurCsv {
 		try {
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 			try {
-				ClassCsv classCsv = mapFileClasses.get(clazz.getAnnotation(FichierCsv.class).value());
-				Collection<String> nomChamps = new ArrayList<String>(10);
+				final ClassCsv classCsv = mapFileClasses.get(clazz.getAnnotation(FichierCsv.class).value());
+				List<String> nomChamps = new ArrayList<String>(10);
 				for (String champ : classCsv.getNomChamps()) {
 					if (!champsNoWrites.contains(champ)) {
 						nomChamps.add(champ);
 					}
 				}
+				Collections.sort(nomChamps, new Comparator<String>() {
+					public int compare(String o1, String o2) {
+						int thisVal = classCsv.getOrdre(o1);
+						int anotherVal = classCsv.getOrdre(o2);
+						return (thisVal<anotherVal ? -1 : (thisVal==anotherVal ? 0 : 1));
+					}
+				});
 				writeEntete(bufWriter, nomChamps, classCsv);
 				for (Objet objet : objets) {
 					writeLigne(bufWriter, nomChamps, classCsv, objet);
@@ -179,6 +189,7 @@ public class MoteurCsv {
 			BaliseCsv baliseCsv = field.getAnnotation(BaliseCsv.class);
 			if (baliseCsv != null) {
 				classCsv.setChampCsv(baliseCsv.value(), new ChampCsv(baliseCsv.adapter(), field));
+				classCsv.putOrdre(baliseCsv.value(), baliseCsv.ordre());
 			}
 		}
 		mapFileClasses.put(fichierCsv.value(), classCsv);

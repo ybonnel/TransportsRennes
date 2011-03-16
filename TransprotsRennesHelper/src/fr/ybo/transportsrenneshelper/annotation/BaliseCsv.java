@@ -29,4 +29,6 @@ public @interface BaliseCsv {
 	Class<? extends AdapterCsv<?>> adapter() default AdapterString.class;
 
 	String value();
+
+	int ordre() default 0;
 }

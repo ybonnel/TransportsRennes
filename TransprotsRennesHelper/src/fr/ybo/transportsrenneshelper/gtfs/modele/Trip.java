@@ -21,14 +21,18 @@ import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 @SuppressWarnings("UnusedDeclaration")
 @FichierCsv("trips.txt")
 public class Trip {
-	@BaliseCsv("trip_id")
+	@BaliseCsv(value = "trip_id", ordre = 0)
 	public String id;
-	@BaliseCsv("service_id")
+	@BaliseCsv(value = "service_id", ordre = 1)
 	public String serviceId;
-	@BaliseCsv("route_id")
+	@BaliseCsv(value = "route_id", ordre = 2)
 	public String routeId;
-	@BaliseCsv("trip_headsign")
+	@BaliseCsv(value = "trip_headsign", ordre = 3)
 	public String headSign;
+	@BaliseCsv(value = "direction_id", ordre = 4)
+	public String directionId;
+	@BaliseCsv(value = "block_id", ordre = 5)
+	public String blockId;
 
 	public Calendar getCalendar() {
 		return GestionnaireGtfs.getInstance().getMapCalendars().get(serviceId);

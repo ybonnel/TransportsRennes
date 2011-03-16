@@ -23,14 +23,24 @@ import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterTime;
 @SuppressWarnings("UnusedDeclaration")
 @FichierCsv("stop_times.txt")
 public class StopTime {
-	@BaliseCsv("trip_id")
+	@BaliseCsv(value = "trip_id", ordre = 0)
 	public String tripId;
-	@BaliseCsv("stop_id")
+	@BaliseCsv(value = "stop_id", ordre = 1)
 	public String stopId;
-	@BaliseCsv(value = "departure_time", adapter = AdapterTime.class)
-	public int heureDepart;
-	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class)
+	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class, ordre = 2)
 	public int stopSequence;
+	@BaliseCsv(value = "arrival_time", adapter = AdapterTime.class, ordre = 3)
+	public int heureArrivee;
+	@BaliseCsv(value = "departure_time", adapter = AdapterTime.class, ordre = 4)
+	public int heureDepart;
+	@BaliseCsv(value = "stop_headsign", ordre = 5)
+	public String headSign;
+	@BaliseCsv(value = "pickup_type", ordre = 6)
+	public String pickupType;
+	@BaliseCsv(value = "drop_off_type", ordre = 7)
+	public String dropOffType;
+	@BaliseCsv(value = "shape_dist_traveled", ordre = 8)
+	public String shapDistTraveled;
 
 	public String getKey() {
 		return tripId + stopId;
@@ -49,4 +59,6 @@ public class StopTime {
 		return "StopTime{" + "tripId='" + tripId + '\'' + ", stopId='" + stopId + '\'' + ", heureDepart=" + heureDepart + ", stopSequence=" +
 				stopSequence + '}';
 	}
+
+	public Trip trip;
 }

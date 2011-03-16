@@ -22,14 +22,26 @@ import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterDouble;
 @FichierCsv("stops.txt")
 public class Stop {
 
-	@BaliseCsv("stop_id")
+	@BaliseCsv(value = "stop_id", ordre = 0)
 	public String id;
-	@BaliseCsv("stop_name")
+	@BaliseCsv(value = "stop_code", ordre = 1)
+	public String code;
+	@BaliseCsv(value = "stop_name", ordre = 2)
 	public String nom;
-	@BaliseCsv(value = "stop_lat", adapter = AdapterDouble.class)
+	@BaliseCsv(value = "stop_desc", ordre = 3)
+	public String desc;
+	@BaliseCsv(value = "stop_lat", adapter = AdapterDouble.class, ordre = 4)
 	public double latitude;
-	@BaliseCsv(value = "stop_lon", adapter = AdapterDouble.class)
+	@BaliseCsv(value = "stop_lon", adapter = AdapterDouble.class, ordre = 5)
 	public double longitude;
+	@BaliseCsv(value = "zone_id", ordre = 6)
+	public String zoneId;
+	@BaliseCsv(value = "stop_url", ordre = 7)
+	public String url;
+	@BaliseCsv(value = "location_type", ordre = 8)
+	public String locationType;
+	@BaliseCsv(value = "parent_station", ordre = 9)
+	public String parentStation;
 
 	@Override
 	public String toString() {

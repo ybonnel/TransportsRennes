@@ -16,6 +16,8 @@ package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
 import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
 import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
+import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterTime;
 
 import java.io.Serializable;
@@ -140,6 +142,63 @@ public class HoraireMetro implements Serializable {
 		horaire.trajet = trajet;
 		horaire.trajetId = trajet.id;
 		return horaire;
+	}
+
+	public List<StopTime> getStopTime(int trajetId, int calendrierId, String headSign1, String headSign2) {
+		List<StopTime> horaires = new ArrayList<StopTime>();
+		// Génération du trajet.
+		Trip trip1 = new Trip();
+		trip1.routeId = "a";
+		trip1.serviceId = Integer.toString(calendrierId);
+		trip1.id = Integer.toString(trajetId);
+		trip1.headSign = headSign1;
+		Trip trip2 = new Trip();
+		trip2.routeId = "a";
+		trip2.serviceId = Integer.toString(calendrierId);
+		trip2.id = Integer.toString(trajetId+1);
+		trip2.headSign = headSign2;
+		horaires.add(newStopTime("POT1", pot1, 1, trip1));
+		horaires.add(newStopTime("BLO1", blo1, 2, trip1));
+		horaires.add(newStopTime("TRI1", tri1, 3, trip1));
+		horaires.add(newStopTime("ITA1", ita1, 4, trip1));
+		horaires.add(newStopTime("HFR1", hfr1, 5, trip1));
+		horaires.add(newStopTime("GCL1", gcl1, 6, trip1));
+		horaires.add(newStopTime("JCA1", jca1, 7, trip1));
+		horaires.add(newStopTime("GAR1", gar1, 8, trip1));
+		horaires.add(newStopTime("CDG1", cdg1, 9, trip1));
+		horaires.add(newStopTime("REP1", rep1, 10, trip1));
+		horaires.add(newStopTime("STA1", sta1, 11, trip1));
+		horaires.add(newStopTime("ANF1", anf1, 12, trip1));
+		horaires.add(newStopTime("PON1", pon1, 13, trip1));
+		horaires.add(newStopTime("VU1", vu1, 14, trip1));
+		horaires.add(newStopTime("JFK1", jfk1, 15, trip1));
+		horaires.add(newStopTime("JFK2", jfk2, 1, trip2));
+		horaires.add(newStopTime("VU2", vu2, 2, trip2));
+		horaires.add(newStopTime("PON2", pon2, 3, trip2));
+		horaires.add(newStopTime("ANF2", anf2, 4, trip2));
+		horaires.add(newStopTime("STA2", sta2, 5, trip2));
+		horaires.add(newStopTime("REP2", rep2, 6, trip2));
+		horaires.add(newStopTime("CDG2", cdg2, 7, trip2));
+		horaires.add(newStopTime("GAR2", gar2, 8, trip2));
+		horaires.add(newStopTime("JCA2", jca2, 9, trip2));
+		horaires.add(newStopTime("GCL2", gcl2, 10, trip2));
+		horaires.add(newStopTime("HFR2", hfr2, 11, trip2));
+		horaires.add(newStopTime("ITA2", ita2, 12, trip2));
+		horaires.add(newStopTime("TRI2", tri2, 13, trip2));
+		horaires.add(newStopTime("BLO2", blo2, 14, trip2));
+		horaires.add(newStopTime("POT2", pot2, 15, trip2));
+		return horaires;
+	}
+
+	private StopTime newStopTime(String arretId, int heureDepart, int stopSequence, Trip trip) {
+		StopTime stopTime = new StopTime();
+		stopTime.tripId = trip.id;
+		stopTime.trip = trip;
+		stopTime.heureArrivee = heureDepart;
+		stopTime.heureDepart = heureDepart;
+		stopTime.stopId = arretId;
+		stopTime.stopSequence = stopSequence;
+		return stopTime;
 	}
 
 

@@ -21,12 +21,24 @@ import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
 @FichierCsv("routes.txt")
 public class Route {
 
-	@BaliseCsv("route_id")
+	@BaliseCsv(value = "route_id", ordre = 0)
 	public String id;
-	@BaliseCsv("route_short_name")
+	@BaliseCsv(value = "agency_id", ordre = 1)
+	public String agencyId;
+	@BaliseCsv(value = "route_short_name", ordre = 2)
 	public String nomCourt;
-	@BaliseCsv("route_long_name")
+	@BaliseCsv(value = "route_long_name", ordre = 3)
 	public String nomLong;
+	@BaliseCsv(value = "route_desc", ordre = 4)
+	public String description;
+	@BaliseCsv(value = "route_type", ordre = 5)
+	public String type;
+	@BaliseCsv(value = "route_url", ordre = 6)
+	public String url;
+	@BaliseCsv(value = "route_color", ordre = 7)
+	public String color;
+	@BaliseCsv(value = "route_text_color", ordre = 8)
+	public String textColor;
 
 	public String nomCourtFormatte;
 

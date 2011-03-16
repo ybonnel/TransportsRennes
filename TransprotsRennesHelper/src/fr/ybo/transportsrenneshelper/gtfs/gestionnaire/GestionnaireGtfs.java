@@ -51,7 +51,7 @@ public class GestionnaireGtfs {
 
 	private File repertoire;
 
-	private MoteurCsv moteurCsv;
+	public MoteurCsv moteurCsv;
 
 	private GestionnaireGtfs() {
 	}

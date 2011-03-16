@@ -16,12 +16,25 @@ package fr.ybo.transportsrenneshelper;
 
 
 import fr.ybo.transportsrenneshelper.generateurmodele.Generateur;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
 import fr.ybo.transportsrenneshelper.gtfs.compression.CompressionTripAndCalendar;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
+import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
+import fr.ybo.transportsrenneshelper.keolis.GetMetro;
+import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
+import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings({"UseOfSystemOutOrSystemErr", "WeakerAccess"})
 public class Main {
@@ -43,7 +56,8 @@ public class Main {
 		System.out.println("Après compression : ");
 		afficheCompteurs();
 		long timeElapsed = System.currentTimeMillis() - startTime;
-		Generateur generateur = new Generateur();
+		genereGtfsOptimises();
+		/*Generateur generateur = new Generateur();
 		generateur.remplirArrets();
 		generateur.remplirCalendrier();
 		generateur.remplirDirections();
@@ -54,7 +68,7 @@ public class Main {
 		generateur.remplirCorrespondance();
 		generateur.ajoutDonnesMetro();
 		generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
-		generateur.rechercherPointsInterets();
+		generateur.rechercherPointsInterets();*/
 		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
 	}
 
@@ -64,6 +78,150 @@ public class Main {
 		System.out.println("\tNombre de Routes : " + GestionnaireGtfs.getInstance().getMapRoutes().size());
 		System.out.println("\tNombre de Stops : " + GestionnaireGtfs.getInstance().getMapStops().size());
 		System.out.println("\tNombre de Trips : " + GestionnaireGtfs.getInstance().getMapTrips().size());
+	}
+
+	private static boolean isSemaine(Calendar calendar) {
+		return (calendar.lundi && calendar.mardi && calendar.mercredi && calendar.jeudi && calendar.vendredi && calendar.samedi && !calendar.dimanche);
+	}
+
+	private static boolean isDimanche(Calendar calendar) {
+		return (!calendar.lundi && !calendar.mardi && !calendar.mercredi && !calendar.jeudi && !calendar.vendredi && !calendar.samedi && calendar.dimanche);
+
+	}
+
+	private static void genereGtfsOptimises() throws IOException {
+		MoteurCsv moteurCsv = GestionnaireGtfs.getInstance().moteurCsv;
+		//agency on le garde
+		//calendars
+		// Ajout des données de métro.
+		List<Stop> stops = new ArrayList<Stop>(GestionnaireGtfs.getInstance().getMapStops().values());
+		List<Calendar> calendars = new ArrayList<Calendar>(GestionnaireGtfs.getInstance().getMapCalendars().values());
+		List<Route> routes = new ArrayList<Route>(GestionnaireGtfs.getInstance().getMapRoutes().values());
+		List<StopTime> stopTimes = new ArrayList<StopTime>(GestionnaireGtfs.getInstance().getMapStopTimes().values());
+		List<Trip> trips = new ArrayList<Trip>(GestionnaireGtfs.getInstance().getMapTrips().values());
+		String headSign1 = "J.F. Kennedy";
+		String headSign2 = "La Poterie";
+		/* Ajout des stops */
+		for (MetroStation station : GetMetro.getStations()) {
+			Stop stop1 = new Stop();
+			Stop stop2 = new Stop();
+			stop1.id = station.getId() + "1";
+			stop2.id = station.getId() + "2";
+			stop1.nom = station.getName();
+			stop2.nom = station.getName();
+			stop1.latitude = station.getLatitude();
+			stop2.latitude = station.getLatitude();
+			stop1.longitude = station.getLongitude();
+			stop2.longitude = station.getLongitude();
+			stops.add(stop1);
+			stops.add(stop2);
+		}
+		int semaineId = 0;
+		int dimancheId = 0;
+		int maxCalendarId = 0;
+		// Ajout des calendrier.
+		for (Calendar calendar : calendars) {
+			if (isSemaine(calendar)) {
+				semaineId = Integer.parseInt(calendar.id);
+			}
+			if (isDimanche(calendar)) {
+				dimancheId = Integer.parseInt(calendar.id);
+			}
+			if (Integer.parseInt(calendar.id) > maxCalendarId) {
+				maxCalendarId = Integer.parseInt(calendar.id);
+			}
+		}
+		// Calendrier pour le métro.
+		// Si les calendrier n'ont pas été trouvé on les crée.
+		if (semaineId == 0) {
+			Calendar calendrier = new Calendar();
+			calendrier.id = Integer.toString(++maxCalendarId);
+			calendrier.lundi = true;
+			calendrier.mardi = true;
+			calendrier.mercredi = true;
+			calendrier.jeudi = true;
+			calendrier.vendredi = true;
+			calendrier.samedi = true;
+			calendrier.dimanche = false;
+			calendrier.startDate = calendars.get(0).startDate;
+			calendrier.endDate = calendars.get(0).endDate;
+			calendars.add(calendrier);
+		}
+		if (dimancheId == 0) {
+			Calendar calendrier = new Calendar();
+			calendrier.id = Integer.toString(++maxCalendarId);
+			calendrier.lundi = false;
+			calendrier.mardi = false;
+			calendrier.mercredi = false;
+			calendrier.jeudi = false;
+			calendrier.vendredi = false;
+			calendrier.samedi = false;
+			calendrier.dimanche = true;
+			calendrier.startDate = calendars.get(0).startDate;
+			calendrier.endDate = calendars.get(0).endDate;
+			calendars.add(calendrier);
+		}
+		// Ajout de la Route
+
+		Route ligneMetro = new Route();
+		ligneMetro.id = "a";
+		ligneMetro.nomCourt = "a";
+		ligneMetro.nomLong = "La Poterie <> J.F. Kennedy";
+		ligneMetro.agencyId = "1";
+		ligneMetro.type = "1";
+		routes.add(ligneMetro);
+
+		int tripIdMax = 0;
+		for (Trip trip : trips) {
+			if (tripIdMax < Integer.parseInt(trip.id)) {
+				tripIdMax = Integer.parseInt(trip.id);
+			}
+		}
+		tripIdMax++;
+
+		Map<String, Trip> trajetMetro = new HashMap<String, Trip>();
+		List<Class<?>> clazz = new ArrayList<Class<?>>();
+		clazz.add(HoraireMetro.class);
+		MoteurCsv moteurMetro = new MoteurCsv(clazz);
+		List<StopTime> horairesMetro = new ArrayList<StopTime>();
+		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Main.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"), HoraireMetro.class)) {
+			for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, semaineId, headSign1, headSign2)) {
+				horairesMetro.add(horaire);
+				if (!trajetMetro.containsKey(horaire.tripId)) {
+					trajetMetro.put(horaire.tripId, horaire.trip);
+				}
+			}
+			tripIdMax += 2;
+		}
+
+		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"), HoraireMetro.class)) {
+			for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, dimancheId, headSign1, headSign2)) {
+				horairesMetro.add(horaire);
+				if (!trajetMetro.containsKey(horaire.tripId)) {
+					trajetMetro.put(horaire.tripId, horaire.trip);
+				}
+			}
+			tripIdMax += 2;
+		}
+		trips.addAll(trajetMetro.values());
+		stopTimes.addAll(horairesMetro);
+
+
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "calendar.txt"),
+				calendars, Calendar.class);
+		// routes
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "routes.txt"),
+				routes, Route.class);
+		// stopTimes
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stop_times.txt"),
+				stopTimes, StopTime.class);
+		// stops
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stops.txt"),
+				stops, Stop.class);
+		// stops
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "trips.txt"),
+				trips, Trip.class);
+
 	}
 
 }

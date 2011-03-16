@@ -27,6 +27,8 @@ public class ClassCsv {
 
 	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(10);
 
+	private final Map<String, Integer> ordres = new HashMap<String, Integer>();
+
 	public ClassCsv(String separateur, Class<?> clazz) throws MoteurCsvException {
 		this.separateur = separateur;
 		this.clazz = clazz;
@@ -61,6 +63,14 @@ public class ClassCsv {
 
 	public void setChampCsv(String nomCsv, ChampCsv champCsv) {
 		mapOfFields.put(nomCsv, champCsv);
+	}
+
+	public void putOrdre(String nomCsv, int ordre) {
+		ordres.put(nomCsv, ordre);
+	}
+
+	public int getOrdre(String nomCsv) {
+		return ordres.get(nomCsv);
 	}
 
 }

@@ -21,22 +21,26 @@ import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
 @FichierCsv("calendar.txt")
 public class Calendar {
 
-	@BaliseCsv("service_id")
+	@BaliseCsv(value = "service_id", ordre = 0)
 	public String id;
-	@BaliseCsv(value = "monday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "monday", adapter = AdapterBoolean.class, ordre = 1)
 	public boolean lundi;
-	@BaliseCsv(value = "tuesday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "tuesday", adapter = AdapterBoolean.class, ordre = 2)
 	public boolean mardi;
-	@BaliseCsv(value = "wednesday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "wednesday", adapter = AdapterBoolean.class, ordre = 3)
 	public boolean mercredi;
-	@BaliseCsv(value = "thursday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "thursday", adapter = AdapterBoolean.class, ordre = 4)
 	public boolean jeudi;
-	@BaliseCsv(value = "friday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "friday", adapter = AdapterBoolean.class, ordre = 5)
 	public boolean vendredi;
-	@BaliseCsv(value = "saturday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "saturday", adapter = AdapterBoolean.class, ordre = 6)
 	public boolean samedi;
-	@BaliseCsv(value = "sunday", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "sunday", adapter = AdapterBoolean.class, ordre = 7)
 	public boolean dimanche;
+	@BaliseCsv(value = "start_date", ordre = 8)
+	public String startDate;
+	@BaliseCsv(value = "end_date", ordre = 9)
+	public String endDate;
 
 	public Calendar() {
 
@@ -50,6 +54,8 @@ public class Calendar {
 		vendredi = calendar.vendredi;
 		samedi = calendar.samedi;
 		dimanche = calendar.dimanche;
+		startDate = calendar.startDate;
+		endDate = calendar.endDate;
 	}
 
 	public void merge(Calendar calendar) {
