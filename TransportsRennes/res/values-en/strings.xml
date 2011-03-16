@@ -37,9 +37,7 @@
     <string name="dialogRequeteParkRelais">STAR query</string>
     <string name="dialogRequetePointsDeVente">STAR query</string>
     <string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the STAR and LE vélo STAR (&lt;a
-        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;This application has been entered in the contest
-        "Rennes Métropole en accès libre", if you like the application you can vote for it: &lt;a href =
-        \'http://www.data.rennes-metropole.fr/le-concours/le-vote-en-ligne\'&gt;data.rennes-metropole&lt;/a&gt;.&lt;br/&gt;This application is
+        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;This application is
         developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free to send me any suggestions or
         problem.
     </string>
@@ -137,8 +135,4 @@
     <string name="erreur_gpsPasPret">The GPS position has not yet been found.</string>
     <string name="erreur_calculItineraires">An error occurred when calculating the route, please try again later.</string>
     <string name="erreur_multipleAdresses">Found several addresses, please detail address</string>
-
-    <string name="message_votez">If you like this application, vote for Transports Rennes</string>
-    <string name="votez">Vote</string>
-    <string name="pasvotez">Do not vote</string>
 </resources>

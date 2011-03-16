@@ -115,9 +115,5 @@
 <string name="erreur_gpsPasPret">La posición GPS no se ha encontrado todavía.</string>
 <string name="erreur_calculItineraires">Se produjo un error al calcular la ruta, por favor, inténtelo de nuevo más tarde.</string>
 <string name="erreur_multipleAdresses">Varias direcciones que se encuentran, por favor, especifique la dirección</string>
-
-    <string name="message_votez">Si te gusta esta aplicación, el voto de Transports Rennes</string>
-    <string name="votez">Votar</string>
-    <string name="pasvotez">No vote</string>
 </resources>
 

@@ -38,9 +38,7 @@
     <string name="dialogRequeteParkRelais">Interrogation du STAR.</string>
     <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
     <string name="dialogAPropos">Transports Rennes : application "Rennes Métropole en accès libre", sources des données : Data Keolis Rennes (&lt;a
-        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Cette application a été inscrite au concours "Rennes
-        Métropole en accès libre", si vous aimez l\'application vous pouvez voter pour elle : &lt;a
-        href=\'http://www.data.rennes-metropole.fr/le-concours/le-vote-en-ligne\'&gt;data.rennes-metropole&lt;/a&gt;.&lt;br/&gt;Cette application est
+        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Cette application est
         développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas en m\'envoyer
         toute suggestion ou problème.
     </string>
@@ -146,8 +144,4 @@
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
     <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
     <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>
-
-    <string name="message_votez">Si vous aimez cette application, votez pour Transports Rennes</string>
-    <string name="votez">Voter</string>
-    <string name="pasvotez">Ne pas voter</string>
 </resources>
