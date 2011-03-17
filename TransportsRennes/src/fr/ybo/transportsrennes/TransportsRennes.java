@@ -59,6 +59,51 @@ public class TransportsRennes extends Activity {
 		super.onCreate(savedInstanceState);
 		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
 		setContentView(R.layout.main);
+		afficheMessage();
+		assignerBoutons();
+		if (TransportsRennesApplication.isUpdateNecessaire()) {
+			new AsyncTask<Void, Void, Void>() {
+
+				private boolean erreur;
+
+				@Override
+				protected void onPreExecute() {
+					myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.verificationUpdate), true);
+				}
+
+				@Override
+				protected Void doInBackground(Void... pParams) {
+
+					try {
+						verifierUpgrade();
+					} catch (Exception exception) {
+						LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
+						erreur = true;
+					}
+					return null;
+				}
+
+				@Override
+				protected void onPostExecute(Void result) {
+					super.onPostExecute(result);
+					myProgressDialog.dismiss();
+					if (erreur) {
+						Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG).show();
+						if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
+							LOG_YBO.warn(
+									"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
+							finish();
+						}
+					} else {
+						TransportsRennesApplication.verifUpdateDone();
+					}
+				}
+			}.execute((Void[]) null);
+		}
+	}
+
+	private void assignerBoutons() {
+
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
 		Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
 		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
@@ -107,46 +152,6 @@ public class TransportsRennes extends Activity {
 				onItinerairesClick();
 			}
 		});
-		afficheMessage();
-		if (TransportsRennesApplication.isUpdateNecessaire()) {
-			new AsyncTask<Void, Void, Void>() {
-
-				private boolean erreur;
-
-				@Override
-				protected void onPreExecute() {
-					myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.verificationUpdate), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
-
-					try {
-						verifierUpgrade();
-					} catch (Exception exception) {
-						LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-						erreur = true;
-					}
-					return null;
-				}
-
-				@Override
-				protected void onPostExecute(Void result) {
-					super.onPostExecute(result);
-					myProgressDialog.dismiss();
-					if (erreur) {
-						Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG).show();
-						if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-							LOG_YBO.warn(
-									"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
-							finish();
-						}
-					} else {
-						TransportsRennesApplication.verifUpdateDone();
-					}
-				}
-			}.execute((Void[]) null);
-		}
 	}
 
 	private void afficheMessage() {
@@ -186,49 +191,41 @@ public class TransportsRennes extends Activity {
 		editor.commit();
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onAlertClick() {
 		Intent intent = new Intent(this, TabAlertes.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onBusClick() {
 		Intent intent = new Intent(this, BusRennes.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onBusFavoriClick() {
 		Intent intent = new Intent(this, ListFavoris.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onBusGpsClick() {
 		Intent intent = new Intent(this, ListArretByPosition.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onVeloClick() {
 		Intent intent = new Intent(this, ListStationsByPosition.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onVeloFavoriClick() {
 		Intent intent = new Intent(this, ListStationsFavoris.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onParkingClick() {
 		Intent intent = new Intent(this, ListParkRelais.class);
 		startActivity(intent);
 	}
 
-	@SuppressWarnings({"unused", "WeakerAccess"})
 	public void onItinerairesClick() {
 		Intent intent = new Intent(this, ItineraireRequete.class);
 		startActivity(intent);
@@ -326,6 +323,7 @@ public class TransportsRennes extends Activity {
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.main);
+		assignerBoutons();
 	}
 
 	private static final int GROUP_ID = 0;
