@@ -85,33 +85,4 @@ public class GeocoderRequest {
 		sb.append('}');
 		return sb.toString();
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-
-		GeocoderRequest that = (GeocoderRequest) obj;
-
-		return !(address != null ? !address.equals(that.address) : that.address != null) &&
-				!(bounds != null ? !bounds.equals(that.bounds) : that.bounds != null) &&
-				!(language != null ? !language.equals(that.language) : that.language != null) &&
-				!(location != null ? !location.equals(that.location) : that.location != null) &&
-				!(region != null ? !region.equals(that.region) : that.region != null);
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = address != null ? address.hashCode() : 0;
-		result = 31 * result + (bounds != null ? bounds.hashCode() : 0);
-		result = 31 * result + (language != null ? language.hashCode() : 0);
-		result = 31 * result + (location != null ? location.hashCode() : 0);
-		result = 31 * result + (region != null ? region.hashCode() : 0);
-		return result;
-	}
 }

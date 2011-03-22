@@ -58,33 +58,6 @@ public class GeocoderResult {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-
-		GeocoderResult that = (GeocoderResult) obj;
-
-		return !(addressComponents != null ? !addressComponents.equals(that.addressComponents) : that.addressComponents != null) &&
-				!(formattedAddress != null ? !formattedAddress.equals(that.formattedAddress) : that.formattedAddress != null) &&
-				!(geometry != null ? !geometry.equals(that.geometry) : that.geometry != null) &&
-				!(types != null ? !types.equals(that.types) : that.types != null);
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = types != null ? types.hashCode() : 0;
-		result = 31 * result + (formattedAddress != null ? formattedAddress.hashCode() : 0);
-		result = 31 * result + (addressComponents != null ? addressComponents.hashCode() : 0);
-		result = 31 * result + (geometry != null ? geometry.hashCode() : 0);
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("GeocoderResult");

@@ -40,28 +40,6 @@ public class GeocodeResponse {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-
-		GeocodeResponse that = (GeocodeResponse) obj;
-
-		return !(results != null ? !results.equals(that.results) : that.results != null) && status == that.status;
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = status != null ? status.hashCode() : 0;
-		result = 31 * result + (results != null ? results.hashCode() : 0);
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("GeocodeResponse");

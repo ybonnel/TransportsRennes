@@ -69,29 +69,6 @@ public class LatLng {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-
-		LatLng latLng = (LatLng) obj;
-
-		return !(lat != null ? !(lat.compareTo(latLng.lat) == 0) : latLng.lat != null) &&
-				!(lng != null ? !(lng.compareTo(latLng.lng) == 0) : latLng.lng != null);
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = lat != null ? lat.hashCode() : 0;
-		result = 31 * result + (lng != null ? lng.hashCode() : 0);
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("LatLng");

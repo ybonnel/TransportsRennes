@@ -49,31 +49,6 @@ class GeocoderAddressComponent {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null || getClass() != obj.getClass()) {
-			return false;
-		}
-
-		GeocoderAddressComponent that = (GeocoderAddressComponent) obj;
-
-		return !(longName != null ? !longName.equals(that.longName) : that.longName != null) &&
-				!(shortName != null ? !shortName.equals(that.shortName) : that.shortName != null) &&
-				!(types != null ? !types.equals(that.types) : that.types != null);
-
-	}
-
-	@Override
-	public int hashCode() {
-		int result = longName != null ? longName.hashCode() : 0;
-		result = 31 * result + (shortName != null ? shortName.hashCode() : 0);
-		result = 31 * result + (types != null ? types.hashCode() : 0);
-		return result;
-	}
-
-	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("GeocoderAddressComponent");

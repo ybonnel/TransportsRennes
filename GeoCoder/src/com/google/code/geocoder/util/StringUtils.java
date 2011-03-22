@@ -14,11 +14,24 @@
 
 package com.google.code.geocoder.util;
 
+/**
+ * Classe utilitaire pour les chaines de caractères.
+ * @author ybonnel
+ *
+ */
 public class StringUtils {
 
+	/**
+	 * Constructeur privé pour empécher l'instanciation de la classe.
+	 */
 	private StringUtils() {
 	}
 
+	/**
+	 * Permet de vérifier qu'une chaine n'est pas vide.
+	 * @param string chaine.
+	 * @return false si la chaine est null ou vide (longueur 0), true sinon.
+	 */
 	public static boolean isNotBlank(CharSequence string) {
 		return string != null && string.length() > 0;
 	}
