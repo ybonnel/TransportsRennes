@@ -112,7 +112,7 @@ public class GetAndContructZip {
 		}
 	}
 
-	private static final String REPERTOIRE_SORTIE = "C:/ybonnel/GTFSRennes";
+	private static final String REPERTOIRE_SORTIE = "/home/ybonnel/data/GTFSRennes";
 	public static final String REPERTOIRE_GTFS = REPERTOIRE_SORTIE + "/GTFS";
 	public static final String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
 

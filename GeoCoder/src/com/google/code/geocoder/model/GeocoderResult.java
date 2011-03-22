@@ -75,7 +75,6 @@ public class GeocoderResult {
 
 	}
 
-	@SuppressWarnings({"MethodWithMoreThanThreeNegations"})
 	@Override
 	public int hashCode() {
 		int result = types != null ? types.hashCode() : 0;

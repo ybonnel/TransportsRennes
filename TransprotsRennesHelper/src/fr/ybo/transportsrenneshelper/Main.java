@@ -36,13 +36,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"UseOfSystemOutOrSystemErr", "WeakerAccess"})
 public class Main {
 
 	private Main() {
 	}
 
-	@SuppressWarnings({"UnusedParameters"})
 	public static void main(String[] args) throws IOException {
 		long startTime = System.currentTimeMillis();
 		GetAndContructZip getAndContructZip = new GetAndContructZip();

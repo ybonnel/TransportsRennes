@@ -16,7 +16,6 @@ package com.google.code.geocoder.model;
 
 import java.io.Serializable;
 
-@SuppressWarnings({"UnusedDeclaration"})
 class AddressDetails implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -84,7 +83,6 @@ class AddressDetails implements Serializable {
 		this.subPremise = subPremise;
 	}
 
-	@SuppressWarnings({"OverlyComplexBooleanExpression"})
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -106,7 +104,6 @@ class AddressDetails implements Serializable {
 
 	}
 
-	@SuppressWarnings({"MethodWithMoreThanThreeNegations"})
 	@Override
 	public int hashCode() {
 		int result = country != null ? country.hashCode() : 0;

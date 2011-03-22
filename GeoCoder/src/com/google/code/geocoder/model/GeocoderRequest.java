@@ -105,7 +105,6 @@ public class GeocoderRequest {
 
 	}
 
-	@SuppressWarnings({"MethodWithMoreThanThreeNegations"})
 	@Override
 	public int hashCode() {
 		int result = address != null ? address.hashCode() : 0;

@@ -18,10 +18,10 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
+import com.google.code.geocoder.util.StringUtils;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import fr.ybo.transportsrennes.util.StringUtils;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
