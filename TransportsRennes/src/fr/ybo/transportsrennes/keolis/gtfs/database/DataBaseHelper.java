@@ -40,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
 	private final Base base;
 
