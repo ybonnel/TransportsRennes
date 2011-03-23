@@ -54,8 +54,8 @@ public class Main {
 		System.out.println("Après compression : ");
 		afficheCompteurs();
 		long timeElapsed = System.currentTimeMillis() - startTime;
-		genereGtfsOptimises();
-		/*Generateur generateur = new Generateur();
+		//genereGtfsOptimises();
+		Generateur generateur = new Generateur();
 		generateur.remplirArrets();
 		generateur.remplirCalendrier();
 		generateur.remplirDirections();
@@ -66,7 +66,7 @@ public class Main {
 		generateur.remplirCorrespondance();
 		generateur.ajoutDonnesMetro();
 		generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
-		generateur.rechercherPointsInterets();*/
+		generateur.rechercherPointsInterets();
 		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
 	}
 

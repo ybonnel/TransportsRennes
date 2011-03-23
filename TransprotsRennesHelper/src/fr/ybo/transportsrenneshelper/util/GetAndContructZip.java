@@ -120,6 +120,7 @@ public class GetAndContructZip {
 	public void getZipKeolis() {
 		try {
 			Date lastUpdate = getLastUpdate();
+			System.out.println("Date du fichier : " + SDF.format(lastUpdate));
 			HttpURLConnection connection = openHttpConnection(lastUpdate);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
 			//ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream("C:/ybonnel/GTFS-20110118.zip"));
