@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.code.geocoder.model.LatLng;
@@ -15,7 +17,7 @@ import com.google.code.geocoder.model.LatLngBounds;
  * @author ybonnel
  *
  */
-public class GeocoderTest {
+public class GeoCoderTest {
 	
 	private Geocoder geocoder = new Geocoder();
 	

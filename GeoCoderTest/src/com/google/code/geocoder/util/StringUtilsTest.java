@@ -1,4 +1,4 @@
-package com.google.co.geocoder.util;
+package com.google.code.geocoder.util;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
