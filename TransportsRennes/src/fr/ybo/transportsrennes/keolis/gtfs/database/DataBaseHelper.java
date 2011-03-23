@@ -196,7 +196,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					db.execSQL("DELETE FROM DernierMiseAJour");
 				}
 			});
-			mapUpgrades.put(8, new DataBaseHelper.UpgradeDatabase() {
+			mapUpgrades.put(9, new DataBaseHelper.UpgradeDatabase() {
 				public void upagrade(SQLiteDatabase db) {
 					// Gestion des favoris.
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
@@ -226,20 +226,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						favori.nomCourt = arretFavoriTmp.getString(nomCourtIndex);
 						favori.nomLong = arretFavoriTmp.getString(nomLongIndex);
 						favori.ordre = arretFavoriTmp.getInt(ordreIndex);
-
-						StringBuilder requete = new StringBuilder();
-						requete.append("SELECT Direction.id FROM ArretRoute, Direction WHERE ");
-						requete.append("ArretRoute.directionId = Direction.id ");
-						requete.append("AND Direction.direction = :direction ");
-						requete.append("AND ArretRoute.arretId = :arretId ");
-						String[] selectionArgs = new String[2];
-						selectionArgs[0] = favori.direction;
-						selectionArgs[1] = favori.arretId;
-						Cursor cursor = db.rawQuery(requete.toString(), selectionArgs);
-						cursor.moveToNext();
-						favori.directionId = cursor.getInt(0);
-						cursor.close();
-
 						base.insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");

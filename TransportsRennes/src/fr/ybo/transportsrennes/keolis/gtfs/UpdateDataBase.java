@@ -76,7 +76,6 @@ public final class UpdateDataBase {
 				} else {
 					directionSelect.id = arretRoute.directionId;
 					favori.direction = TransportsRennesApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
-					favori.directionId = arretRoute.directionId;
 					favori.nomArret = arret.nom;
 					favori.nomCourt = ligne.nomCourt;
 					favori.nomLong = ligne.nomLong;

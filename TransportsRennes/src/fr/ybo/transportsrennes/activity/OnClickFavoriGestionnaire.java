@@ -37,16 +37,13 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	private Ligne ligne;
 	private final String nomArret;
 	private final String direction;
-	private final Integer directionId;
 	private final ArretFavori myFavori = new ArretFavori();
 	private final Activity activity;
 
-	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, int directionId, Activity activity) {
+	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity) {
 		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
-		this.directionId = directionId;
-
 		myFavori.arretId = arretId;
 		myFavori.ligneId = ligne.id;
 		this.activity = activity;
@@ -99,7 +96,6 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			myFavori.nomCourt = ligne.nomCourt;
 			myFavori.nomLong = ligne.nomLong;
 			myFavori.direction = direction;
-			myFavori.directionId = directionId;
 			myFavori.nomArret = nomArret;
 			TransportsRennesApplication.getDataBaseHelper().insert(myFavori);
 			imageView.setImageResource(android.R.drawable.btn_star_big_on);

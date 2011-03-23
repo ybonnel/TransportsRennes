@@ -243,7 +243,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		requete.append(" Arret.latitude as arretLatitude,");
 		requete.append(" Arret.longitude as arretLongitude,");
 		requete.append(" Direction.direction as favoriDirection,");
-		requete.append(" Direction.id as favoriDirectionId,");
 		requete.append(" Ligne.id as ligneId,");
 		requete.append(" Ligne.nomCourt as nomCourt,");
 		requete.append(" Ligne.nomLong as nomLong ");
@@ -258,7 +257,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		int latitudeIndex = cursor.getColumnIndex("arretLatitude");
 		int longitudeIndex = cursor.getColumnIndex("arretLongitude");
 		int directionIndex = cursor.getColumnIndex("favoriDirection");
-		int directionIdIndex = cursor.getColumnIndex("favoriDirectionId");
 		int ligneIdIndex = cursor.getColumnIndex("ligneId");
 		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
 		int nomLongIndex = cursor.getColumnIndex("nomLong");
@@ -270,7 +268,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			arret.longitude = cursor.getDouble(longitudeIndex);
 			arret.favori = new ArretFavori();
 			arret.favori.direction = cursor.getString(directionIndex);
-			arret.favori.directionId = cursor.getInt(directionIdIndex);
 			arret.favori.ligneId = cursor.getString(ligneIdIndex);
 			arret.favori.nomCourt = cursor.getString(nomCourtIndex);
 			arret.favori.nomLong = cursor.getString(nomLongIndex);

@@ -131,7 +131,7 @@ public class WidgetUpdateUtil {
 		requete.append(" and Trajet.ligneId = :routeId1");
 		requete.append(" and Horaire.arretId = :arretId1");
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append(" and Trajet.directionId = :directionId1 ");
+		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
 		requete.append("select Horaire.heureDepart as _id ");
 		requete.append("from Calendrier,  Horaire_");
@@ -144,7 +144,7 @@ public class WidgetUpdateUtil {
 		requete.append(" and Trajet.ligneId = :routeId2");
 		requete.append(" and Horaire.arretId = :arretId2");
 		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Trajet.directionId = :directionId2 ");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id limit ");
 		requete.append(limit);
 		int uneJournee = 24 * 60;
@@ -154,11 +154,9 @@ public class WidgetUpdateUtil {
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		Map<Integer, Integer> mapProchainsDepart = new HashMap<Integer, Integer>(limit);
 		try {
 			int count = 1;

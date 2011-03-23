@@ -107,7 +107,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			favori.arretId = getIntent().getExtras().getString("idArret");
 			favori.nomArret = getIntent().getExtras().getString("nomArret");
 			favori.direction = getIntent().getExtras().getString("direction");
-			favori.directionId = getIntent().getExtras().getInt("directionId");
 			Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 			if (ligne == null) {
 				finish();
@@ -147,12 +146,11 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Trajet.id = Horaire.trajetId");
 		requete.append(" and Trajet.ligneId = :ligneId");
 		requete.append(" and Horaire.arretId = :arretId");
-		requete.append(" and Trajet.directionId = :directionId");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(favori.directionId));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts.");
 		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
@@ -176,8 +174,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Trajet.calendrierId = Calendrier.id");
 		requete.append(" and Trajet.ligneId = :routeId1");
 		requete.append(" and Horaire.arretId = :arretId1");
-		requete.append(" and Horaire.heureDepart >= :maintenantHier");
-		requete.append(" and Trajet.directionId = :directionId1 ");
+		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
+		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
 		requete.append("select Horaire.heureDepart as _id,");
 		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
@@ -191,7 +189,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		requete.append(" and Trajet.ligneId = :routeId2");
 		requete.append(" and Horaire.arretId = :arretId2");
 		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Trajet.directionId = :directionId2");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id;");
 		List<String> selectionArgs = new ArrayList<String>(7);
 		int uneJournee = 24 * 60;
@@ -199,11 +197,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
 		long startTime = System.currentTimeMillis();
 		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
@@ -308,8 +304,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		/** Construction requête. */
 		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-		requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
-		requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, Direction.id as directionId ");
+		requete.append(
+				" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
 		requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
 		requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
 		requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
@@ -332,7 +328,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		int arretIdIndex = cursor.getColumnIndex("arretId");
 		int ligneIdIndex = cursor.getColumnIndex("ligneId");
 		int directionIndex = cursor.getColumnIndex("direction");
-		int directionIdIndex = cursor.getColumnIndex("directionId");
 		int arretNomIndex = cursor.getColumnIndex("arretNom");
 		int latitudeIndex = cursor.getColumnIndex("latitude");
 		int longitudeIndex = cursor.getColumnIndex("longitude");
@@ -348,7 +343,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			arret.favori.arretId = arret.id;
 			arret.favori.ligneId = cursor.getString(ligneIdIndex);
 			arret.favori.direction = cursor.getString(directionIndex);
-			arret.favori.directionId = cursor.getInt(directionIdIndex);
 			arret.nom = cursor.getString(arretNomIndex);
 			arret.favori.nomArret = arret.nom;
 			arret.latitude = cursor.getDouble(latitudeIndex);

@@ -108,7 +108,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible, Direction.id as directionId ");
+		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
 		requete.append(" ArretRoute.ligneId = :ligneId");
@@ -143,7 +143,6 @@ public class ListArret extends MenuAccueil.ListActivity {
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
 				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
-				intent.putExtra("directionId", cursor.getInt(cursor.getColumnIndex("directionId")));
 				intent.putExtra("ligne", myLigne);
 				startActivity(intent);
 			}

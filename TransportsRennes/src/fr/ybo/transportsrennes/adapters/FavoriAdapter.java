@@ -190,7 +190,7 @@ public class FavoriAdapter extends BaseAdapter {
 		requete.append(" and Trajet.ligneId = :routeId1");
 		requete.append(" and Horaire.arretId = :arretId1");
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append(" and Trajet.directionId = :directionId1 ");
+		requete.append(" and Horaire.terminus = 0 ");
 		requete.append("UNION ");
 		requete.append("select Horaire.heureDepart as _id ");
 		requete.append("from Calendrier,  Horaire_");
@@ -203,7 +203,7 @@ public class FavoriAdapter extends BaseAdapter {
 		requete.append(" and Trajet.ligneId = :routeId2");
 		requete.append(" and Horaire.arretId = :arretId2");
 		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Trajet.directionId = :directionId2");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by _id limit 1;");
 		int uneJournee = 24 * 60;
 		List<String> selectionArgs = new ArrayList<String>(7);
@@ -211,11 +211,9 @@ public class FavoriAdapter extends BaseAdapter {
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		selectionArgs.add(favori.ligneId);
 		selectionArgs.add(favori.arretId);
 		selectionArgs.add(Integer.toString(now));
-		selectionArgs.add(Integer.toString(favori.directionId));
 		try {
 			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 			if (currentCursor.moveToFirst()) {

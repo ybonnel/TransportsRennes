@@ -180,8 +180,7 @@ public class AllOnMap extends MapActivity {
 				requete.append("select Arret.id as arretId, Arret.nom as arretNom,");
 				requete.append(" Ligne.id as ligneId, Ligne.nomCourt as ligneNomCourt,");
 				requete.append(" Ligne.nomLong as ligneNomLong, Direction.direction as direction,");
-				requete.append(" Arret.latitude as latitude, Arret.longitude as longitude, ");
-				requete.append(" Direction.id as directionId ");
+				requete.append(" Arret.latitude as latitude, Arret.longitude as longitude ");
 				requete.append("from ArretRoute, Arret, Direction, Ligne ");
 				requete.append("where");
 				requete.append(" ArretRoute.arretId = Arret.id");
@@ -196,7 +195,6 @@ public class AllOnMap extends MapActivity {
 				int ligneNomCourtIndex = cursor.getColumnIndex("ligneNomCourt");
 				int ligneNomLongIndex = cursor.getColumnIndex("ligneNomLong");
 				int directionIndex = cursor.getColumnIndex("direction");
-				int directionIdIndex = cursor.getColumnIndex("directionId");
 				int latitudeIndex = cursor.getColumnIndex("latitude");
 				int longitudeIndex = cursor.getColumnIndex("longitude");
 				arrets = new ArrayList<Arret>(1500);
@@ -209,7 +207,6 @@ public class AllOnMap extends MapActivity {
 					arret.longitude = cursor.getDouble(longitudeIndex);
 					arret.favori = new ArretFavori();
 					arret.favori.direction = cursor.getString(directionIndex);
-					arret.favori.directionId = cursor.getInt(directionIdIndex);
 					arret.favori.ligneId = cursor.getString(ligneIdIndex);
 					arret.favori.nomCourt = cursor.getString(ligneNomCourtIndex);
 					arret.favori.nomLong = cursor.getString(ligneNomLongIndex);
