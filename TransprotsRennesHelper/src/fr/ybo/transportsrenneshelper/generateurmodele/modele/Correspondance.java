@@ -14,20 +14,18 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
-
-@SuppressWarnings({"WeakerAccess", "UnusedDeclaration"})
 @FichierCsv("correspondances.txt")
 public class Correspondance {
 
-	@BaliseCsv("arretId")
+	@BaliseCsv(value = "arretId", ordre = 0)
 	public String arretId;
-	@BaliseCsv("correspondanceId")
+	@BaliseCsv(value = "correspondanceId", ordre = 1)
 	public String correspondanceId;
-	@BaliseCsv(value = "distance", adapter = AdapterInteger.class)
+	@BaliseCsv(value = "distance", adapter = AdapterInteger.class, ordre = 2)
 	public Integer distance;
 
 	public Correspondance(String arretId, String correspondanceId, Integer distance) {

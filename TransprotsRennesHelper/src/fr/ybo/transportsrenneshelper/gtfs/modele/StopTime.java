@@ -14,13 +14,12 @@
 
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.adapter.AdapterTime;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterTime;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("stop_times.txt")
 public class StopTime {
 	@BaliseCsv(value = "trip_id", ordre = 0)

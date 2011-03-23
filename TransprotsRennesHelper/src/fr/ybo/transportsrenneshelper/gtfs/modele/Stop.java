@@ -14,11 +14,10 @@
 
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterDouble;
+import fr.ybo.moteurcsv.adapter.AdapterDouble;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("stops.txt")
 public class Stop {
 

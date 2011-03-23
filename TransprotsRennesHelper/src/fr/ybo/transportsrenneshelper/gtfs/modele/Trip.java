@@ -14,11 +14,10 @@
 
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("trips.txt")
 public class Trip {
 	@BaliseCsv(value = "trip_id", ordre = 0)

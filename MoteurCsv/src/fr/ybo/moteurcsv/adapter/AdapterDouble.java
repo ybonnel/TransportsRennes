@@ -12,28 +12,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
+package fr.ybo.moteurcsv.adapter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+public class AdapterDouble implements AdapterCsv<Double> {
 
-@SuppressWarnings({"UnusedDeclaration"})
-public class AdapterDate implements AdapterCsv<Date> {
-
-	@SuppressWarnings({"UnusedDeclaration"})
-	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
-
-	public Date parse(String chaine) {
-		try {
-			return SDF.parse(chaine);
-		} catch (ParseException ignored) {
-			return null;
-		}
+	public Double parse(String chaine) {
+		return Double.valueOf(chaine);
 	}
 
-	public String toString(Date objet) {
-		return SDF.format(objet);
+	public String toString(Double objet) {
+		return objet.toString();
 	}
-
 }

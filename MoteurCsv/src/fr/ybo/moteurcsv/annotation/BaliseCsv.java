@@ -12,12 +12,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.moteurcsv.annotation;
 
-@SuppressWarnings({"UnusedDeclaration"})
-public class AdapterDouble implements AdapterCsv<Double> {
+import fr.ybo.moteurcsv.adapter.AdapterCsv;
+import fr.ybo.moteurcsv.adapter.AdapterString;
 
-	public Double parse(String chaine) {
-		return Double.valueOf(chaine);
-	}
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface BaliseCsv {
+
+	Class<? extends AdapterCsv<?>> adapter() default AdapterString.class;
+
+	String value();
+
+	int ordre() default 0;
 }

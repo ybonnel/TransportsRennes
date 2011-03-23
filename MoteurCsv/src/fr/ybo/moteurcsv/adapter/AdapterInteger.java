@@ -12,12 +12,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.moteurcsv.adapter;
 
-@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterInteger implements AdapterCsv<Integer> {
 
 	public Integer parse(String chaine) {
 		return Integer.valueOf(chaine);
+	}
+
+	public String toString(Integer objet) {
+		return objet.toString();
 	}
 }

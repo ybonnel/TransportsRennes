@@ -12,19 +12,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.annotation;
+package fr.ybo.moteurcsv.adapter;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public class AdapterString implements AdapterCsv<String> {
+	public String parse(String chaine) {
+		return chaine;
+	}
 
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
-public @interface FichierCsv {
-
-	String separateur() default ",";
-
-	String value();
-
+	public String toString(String objet) {
+		return objet;
+	}
 }

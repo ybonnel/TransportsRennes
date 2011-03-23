@@ -14,18 +14,18 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterDouble;
+import fr.ybo.moteurcsv.adapter.AdapterDouble;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
 @FichierCsv( "arrets.txt")
 public class Arret {
-	@BaliseCsv("id")
+	@BaliseCsv(value = "id", ordre = 0)
 	public String id;
-	@BaliseCsv("nom")
+	@BaliseCsv(value = "nom", ordre = 1)
 	public String nom;
-	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
+	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class, ordre = 2)
 	public double latitude;
-	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
+	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class, ordre = 3)
 	public double longitude;
 }

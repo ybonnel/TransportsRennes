@@ -14,11 +14,10 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("trajets.txt")
 public class Trajet {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)

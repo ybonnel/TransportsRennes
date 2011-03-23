@@ -12,17 +12,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.moteurcsv;
-
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.modele.ChampCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.modele.ClassCsv;
+package fr.ybo.moteurcsv;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,23 +32,30 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
+import fr.ybo.moteurcsv.modele.ChampCsv;
+import fr.ybo.moteurcsv.modele.ClassCsv;
+
 public class MoteurCsv {
 
-	private final Map<String, ClassCsv> mapFileClasses = new HashMap<String, ClassCsv>(10);
+	private final Map<String, ClassCsv> mapFileClasses = new HashMap<String, ClassCsv>(5);
 
 	private String[] enteteCourante;
 
 	private ClassCsv classCourante;
 
-	public MoteurCsv(Iterable<Class<?>> classes) throws MoteurCsvException {
+	public MoteurCsv(Iterable<Class<?>> classes) {
 		for (Class<?> clazz : classes) {
 			scannerClass(clazz);
 		}
 	}
 
-	private Object creerObjet(String ligne) throws MoteurCsvException {
+	public Object creerObjet(String ligne) {
 		if (classCourante == null) {
-			throw new MoteurCsvException("La m�thode creerObjet a �t�e appel�e sans que la m�thode nouveauFichier n'est �t� appel�e.");
+			throw new MoteurCsvException("La méthode creerObjet a étée appelée sans que la méthode nouveauFichier n'est été appelée.");
 		}
 		try {
 			Object objetCsv = classCourante.getContructeur().newInstance((Object[]) null);
@@ -74,41 +75,79 @@ public class MoteurCsv {
 			return objetCsv;
 		} catch (Exception e) {
 			throw new MoteurCsvException(
-					"Erreur � l'instanciation de la class " + classCourante.getClazz().getSimpleName() + " pour la ligne " + ligne, e);
+					"Erreur à l'instanciation de la class " + classCourante.getClazz().getSimpleName() + " pour la ligne " + ligne, e);
 		}
 	}
 
-	private void nouveauFichier(String nomFichier, String entete) throws MoteurCsvException {
+	public void nouveauFichier(String nomFichier, String entete) {
 		classCourante = mapFileClasses.get(nomFichier);
 		if (classCourante == null) {
-			throw new MoteurCsvException("Le fichier " + nomFichier + " n'as pas de classe associ�e");
+			throw new MoteurCsvException("Le fichier " + nomFichier + " n'as pas de classe associée");
 		}
 		enteteCourante = entete.split(classCourante.getSeparateur());
 		if (Character.isIdentifierIgnorable(enteteCourante[0].charAt(0))) {
 			enteteCourante[0] = enteteCourante[0].substring(1);
 		}
 	}
+	
+	public static interface InsertObject<Objet> {
+		public void insertObject(Objet objet);
+	}
+	
+	private static class InsertInList<Objet> implements InsertObject<Objet> {
+		
+		private List<Objet> objets;
+		
+		public InsertInList(List<Objet> objets) {
+			this.objets = objets;
+		}
 
-	public <Objet> Iterable<Objet> parseFile(File file, Class<Objet> clazz) throws MoteurCsvException, IOException {
-		return parseFile(new FileInputStream(file), clazz);
+		@Override
+		public void insertObject(Objet objet) {
+			objets.add(objet);
+		}
+	}
+	
+	public <Objet> List<Objet> parseInputStream(InputStream intputStream, Class<Objet> clazz) {
+		List<Objet> objets = new ArrayList<Objet>();
+		parseFileAndInsert(new BufferedReader(new InputStreamReader(intputStream)), clazz, new InsertInList<Objet>(objets));
+		return objets;
 	}
 
-	@SuppressWarnings({"unchecked"})
-	public <Objet> Iterable<Objet> parseFile(InputStream stream, Class<Objet> clazz) throws MoteurCsvException, IOException {
-		Collection<Objet> objets = new ArrayList<Objet>(1000);
-		BufferedReader bufReader = new BufferedReader(new InputStreamReader(stream), 8 << 10);
+	@SuppressWarnings("unchecked")
+	public <Objet> void parseFileAndInsert(BufferedReader bufReader, Class<Objet> clazz, InsertObject<Objet> insert) {
 		try {
 			nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 			String ligne = bufReader.readLine();
 			while (ligne != null) {
-				objets.add((Objet) creerObjet(ligne));
+				insert.insertObject((Objet) creerObjet(ligne));
 				ligne = bufReader.readLine();
 			}
-		} finally {
-			bufReader.close();
+		} catch (IOException ioException) {
+			throw new MoteurCsvException(ioException);
 		}
-		return objets;
 	}
+
+	private void scannerClass(Class<?> clazz) {
+		FichierCsv fichierCsv = clazz.getAnnotation(FichierCsv.class);
+		if (fichierCsv == null) {
+			throw new MoteurCsvException("Annotation FichierCsv non présente sur la classe " + clazz.getSimpleName());
+		}
+		if (mapFileClasses.get(fichierCsv.value()) != null) {
+			return;
+		}
+		ClassCsv classCsv = new ClassCsv(fichierCsv.separateur(), clazz);
+		for (Field field : clazz.getDeclaredFields()) {
+			BaliseCsv baliseCsv = field.getAnnotation(BaliseCsv.class);
+			if (baliseCsv != null) {
+				classCsv.setChampCsv(baliseCsv.value(), new ChampCsv(baliseCsv.adapter(), field));
+				classCsv.putOrdre(baliseCsv.value(), baliseCsv.ordre());
+			}
+		}
+		mapFileClasses.put(fichierCsv.value(), classCsv);
+	}
+	
+
 
 	private void writeEntete(BufferedWriter bufWriter, Iterable<String> nomChamps, ClassCsv classCsv) throws IOException {
 		boolean first = true;
@@ -141,7 +180,6 @@ public class MoteurCsv {
 		bufWriter.write('\n');
 	}
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	public <Objet> void writeFile(File file, Iterable<Objet> objets, Class<Objet> clazz) {
 		writeFile(file, objets, clazz, new HashSet<String>(1000));
 	}
@@ -174,24 +212,5 @@ public class MoteurCsv {
 		} catch (Exception exception) {
 			throw new MoteurCsvException(exception);
 		}
-	}
-
-	private void scannerClass(Class<?> clazz) throws MoteurCsvException {
-		FichierCsv fichierCsv = clazz.getAnnotation(FichierCsv.class);
-		if (fichierCsv == null) {
-			throw new MoteurCsvException("Annotation FichierCsv non présente sur la classe " + clazz.getSimpleName());
-		}
-		if (mapFileClasses.get(fichierCsv.value()) != null) {
-			return;
-		}
-		ClassCsv classCsv = new ClassCsv(fichierCsv.separateur(), clazz);
-		for (Field field : clazz.getDeclaredFields()) {
-			BaliseCsv baliseCsv = field.getAnnotation(BaliseCsv.class);
-			if (baliseCsv != null) {
-				classCsv.setChampCsv(baliseCsv.value(), new ChampCsv(baliseCsv.adapter(), field));
-				classCsv.putOrdre(baliseCsv.value(), baliseCsv.ordre());
-			}
-		}
-		mapFileClasses.put(fichierCsv.value(), classCsv);
 	}
 }

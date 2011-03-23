@@ -12,15 +12,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.moteurcsv.adapter;
+package fr.ybo.moteurcsv.adapter;
 
-public class AdapterDouble implements AdapterCsv<Double> {
+public interface AdapterCsv<Objet> {
 
-	public Double parse(String chaine) {
-		return Double.valueOf(chaine);
-	}
+	Objet parse(String chaine);
 
-	public String toString(Double objet) {
-		return objet.toString();
-	}
+	String toString(Objet objet);
 }

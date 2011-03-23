@@ -14,7 +14,16 @@
 
 package fr.ybo.transportsrenneshelper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrenneshelper.generateurmodele.Generateur;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
 import fr.ybo.transportsrenneshelper.gtfs.compression.CompressionTripAndCalendar;
@@ -26,15 +35,7 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
 
@@ -54,7 +55,7 @@ public class Main {
 		System.out.println("Après compression : ");
 		afficheCompteurs();
 		long timeElapsed = System.currentTimeMillis() - startTime;
-		//genereGtfsOptimises();
+		// genereGtfsOptimises();
 		Generateur generateur = new Generateur();
 		generateur.remplirArrets();
 		generateur.remplirCalendrier();
@@ -79,18 +80,20 @@ public class Main {
 	}
 
 	private static boolean isSemaine(Calendar calendar) {
-		return (calendar.lundi && calendar.mardi && calendar.mercredi && calendar.jeudi && calendar.vendredi && calendar.samedi && !calendar.dimanche);
+		return (calendar.lundi && calendar.mardi && calendar.mercredi && calendar.jeudi && calendar.vendredi
+				&& calendar.samedi && !calendar.dimanche);
 	}
 
 	private static boolean isDimanche(Calendar calendar) {
-		return (!calendar.lundi && !calendar.mardi && !calendar.mercredi && !calendar.jeudi && !calendar.vendredi && !calendar.samedi && calendar.dimanche);
+		return (!calendar.lundi && !calendar.mardi && !calendar.mercredi && !calendar.jeudi && !calendar.vendredi
+				&& !calendar.samedi && calendar.dimanche);
 
 	}
 
 	private static void genereGtfsOptimises() throws IOException {
 		MoteurCsv moteurCsv = GestionnaireGtfs.getInstance().moteurCsv;
-		//agency on le garde
-		//calendars
+		// agency on le garde
+		// calendars
 		// Ajout des données de métro.
 		List<Stop> stops = new ArrayList<Stop>(GestionnaireGtfs.getInstance().getMapStops().values());
 		List<Calendar> calendars = new ArrayList<Calendar>(GestionnaireGtfs.getInstance().getMapCalendars().values());
@@ -182,7 +185,10 @@ public class Main {
 		clazz.add(HoraireMetro.class);
 		MoteurCsv moteurMetro = new MoteurCsv(clazz);
 		List<StopTime> horairesMetro = new ArrayList<StopTime>();
-		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Main.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"), HoraireMetro.class)) {
+		final List<HoraireMetro> horairesMetroCsv = new ArrayList<HoraireMetro>();
+		for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(
+				Main.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"),
+				HoraireMetro.class)) {
 			for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, semaineId, headSign1, headSign2)) {
 				horairesMetro.add(horaire);
 				if (!trajetMetro.containsKey(horaire.tripId)) {
@@ -192,7 +198,10 @@ public class Main {
 			tripIdMax += 2;
 		}
 
-		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"), HoraireMetro.class)) {
+		for (HoraireMetro horaireMetro : moteurMetro
+				.parseInputStream(Generateur.class
+						.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"),
+						HoraireMetro.class)) {
 			for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, dimancheId, headSign1, headSign2)) {
 				horairesMetro.add(horaire);
 				if (!trajetMetro.containsKey(horaire.tripId)) {
@@ -204,21 +213,15 @@ public class Main {
 		trips.addAll(trajetMetro.values());
 		stopTimes.addAll(horairesMetro);
 
-
-		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "calendar.txt"),
-				calendars, Calendar.class);
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "calendar.txt"), calendars, Calendar.class);
 		// routes
-		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "routes.txt"),
-				routes, Route.class);
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "routes.txt"), routes, Route.class);
 		// stopTimes
-		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stop_times.txt"),
-				stopTimes, StopTime.class);
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stop_times.txt"), stopTimes, StopTime.class);
 		// stops
-		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stops.txt"),
-				stops, Stop.class);
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "stops.txt"), stops, Stop.class);
 		// stops
-		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "trips.txt"),
-				trips, Trip.class);
+		moteurCsv.writeFile(new File(GetAndContructZip.REPERTOIRE_OUT, "trips.txt"), trips, Trip.class);
 
 	}
 

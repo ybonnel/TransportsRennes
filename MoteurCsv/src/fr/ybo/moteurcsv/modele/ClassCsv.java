@@ -12,9 +12,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.moteurcsv.modele;
+package fr.ybo.moteurcsv.modele;
 
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -23,21 +23,19 @@ import java.util.Map;
 public class ClassCsv {
 	private final String separateur;
 	private final Class<?> clazz;
-	private final Constructor<?> contructeur;
+	private Constructor<?> contructeur;
 
-	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(10);
+	private final Map<String, ChampCsv> mapOfFields = new HashMap<String, ChampCsv>(5);
 
 	private final Map<String, Integer> ordres = new HashMap<String, Integer>();
 
-	public ClassCsv(String separateur, Class<?> clazz) throws MoteurCsvException {
+	public ClassCsv(String separateur, Class<?> clazz) {
 		this.separateur = separateur;
 		this.clazz = clazz;
 		try {
 			contructeur = clazz.getDeclaredConstructor((Class<?>[]) null);
-		} catch (SecurityException e) {
-			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
-		} catch (NoSuchMethodException e) {
-			throw new MoteurCsvException("Erreur a la r�cup�ration du constructeur de " + clazz.getSimpleName(), e);
+		} catch (Exception e) {
+			throw new MoteurCsvException("Erreur a la récupération du constructeur de " + clazz.getSimpleName(), e);
 		}
 	}
 

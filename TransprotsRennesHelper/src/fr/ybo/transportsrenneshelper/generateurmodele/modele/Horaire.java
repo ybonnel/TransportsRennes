@@ -15,23 +15,22 @@
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("horaires.txt")
 public class Horaire {
-	@BaliseCsv("arret_id")
+	@BaliseCsv(value = "arret_id", ordre = 0)
 	public String arretId;
-	@BaliseCsv(value = "trajet_id", adapter = AdapterInteger.class)
+	@BaliseCsv(value = "trajet_id", adapter = AdapterInteger.class, ordre = 1)
 	public int trajetId;
-	@BaliseCsv(value = "heure_depart", adapter = AdapterInteger.class)
+	@BaliseCsv(value = "heure_depart", adapter = AdapterInteger.class, ordre = 2)
 	public int heureDepart;
-	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class)
+	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class, ordre = 3)
 	public int stopSequence;
-	@BaliseCsv(value = "terminus", adapter = AdapterBoolean.class)
+	@BaliseCsv(value = "terminus", adapter = AdapterBoolean.class, ordre = 4)
 	public boolean terminus;
 
 	public Trajet trajet;

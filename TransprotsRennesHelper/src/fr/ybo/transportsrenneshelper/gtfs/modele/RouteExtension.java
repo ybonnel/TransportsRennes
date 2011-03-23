@@ -14,11 +14,10 @@
 
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("routes_extensions.txt")
 public class RouteExtension {
 

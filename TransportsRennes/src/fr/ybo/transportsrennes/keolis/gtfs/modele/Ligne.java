@@ -15,16 +15,16 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 import android.content.res.Resources;
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.Serializable;

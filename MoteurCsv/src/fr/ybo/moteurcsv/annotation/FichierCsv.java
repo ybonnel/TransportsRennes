@@ -12,9 +12,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.moteurcsv.annotation;
 
-public interface AdapterCsv<Objet> {
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	Objet parse(String chaine);
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface FichierCsv {
+
+	String separateur() default ",";
+
+	String value();
+
 }

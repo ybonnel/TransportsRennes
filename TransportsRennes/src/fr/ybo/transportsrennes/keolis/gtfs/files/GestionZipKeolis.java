@@ -15,14 +15,16 @@
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
+import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Table;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsvException;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.BufferedReader;
@@ -53,7 +55,18 @@ public final class GestionZipKeolis {
 		try {
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
 			try {
-				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, dataBaseHelper, ligneId);
+
+				final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
+				table.addSuffixeToTableName(ligneId);
+				final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+				table.dropTable(db);
+				table.createTable(db);
+				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
+					public void insertObject(Horaire objet) {
+						table.insert(db, objet);
+					};
+						
+				});
 			} finally {
 				bufReader.close();
 			}

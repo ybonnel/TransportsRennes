@@ -15,13 +15,13 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.FichierCsv;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterBoolean;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter.AdapterInteger;
 
 @SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("arrets_routes.txt")

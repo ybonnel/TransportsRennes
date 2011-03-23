@@ -15,23 +15,22 @@
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterBoolean;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings("UnusedDeclaration")
 @FichierCsv("arrets_routes.txt")
 public class ArretRoute {
-	@BaliseCsv("arret_id")
+	@BaliseCsv( value = "arret_id", ordre = 0)
 	public String arretId;
-	@BaliseCsv("ligne_id")
+	@BaliseCsv( value = "ligne_id", ordre = 1)
 	public String ligneId;
-	@BaliseCsv( value = "direction_id", adapter = AdapterInteger.class)
+	@BaliseCsv( value = "direction_id", adapter = AdapterInteger.class, ordre = 2)
 	public int directionId;
-	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class)
+	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class, ordre = 3)
 	public int sequence;
-	@BaliseCsv( value = "accessbile", adapter = AdapterBoolean.class)
+	@BaliseCsv( value = "accessbile", adapter = AdapterBoolean.class, ordre = 4)
 	public Boolean accessible;
 
 }

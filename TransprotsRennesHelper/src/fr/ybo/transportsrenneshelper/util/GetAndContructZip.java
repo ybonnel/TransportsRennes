@@ -15,8 +15,6 @@
 package fr.ybo.transportsrenneshelper.util;
 
 
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,7 +34,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
+
 public class GetAndContructZip {
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
@@ -147,7 +146,6 @@ public class GetAndContructZip {
 		}
 	}
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	private void copieFichierZip(ZipInputStream zipInputStream, File repertoire) throws IOException {
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
 		while (zipEntry != null) {

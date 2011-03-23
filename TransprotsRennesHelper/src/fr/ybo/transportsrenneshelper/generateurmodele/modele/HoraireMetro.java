@@ -14,16 +14,17 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele.modele;
 
-import fr.ybo.transportsrenneshelper.annotation.BaliseCsv;
-import fr.ybo.transportsrenneshelper.annotation.FichierCsv;
-import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterTime;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.ybo.moteurcsv.adapter.AdapterTime;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
+
+@SuppressWarnings("serial")
 @FichierCsv("horaires_metro.txt")
 public class HoraireMetro implements Serializable {
 	@BaliseCsv(value = "POT1", adapter = AdapterTime.class)

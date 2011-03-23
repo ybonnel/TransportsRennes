@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="libs/org.restlet.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GeoCoder"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MoteurCsv"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

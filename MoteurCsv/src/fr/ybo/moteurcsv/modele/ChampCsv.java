@@ -12,22 +12,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrenneshelper.moteurcsv.modele;
+package fr.ybo.moteurcsv.modele;
 
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
-import fr.ybo.transportsrenneshelper.moteurcsv.adapter.AdapterCsv;
+import fr.ybo.moteurcsv.adapter.AdapterCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("UnusedDeclaration")
 public class ChampCsv {
 
 	private final Class<? extends AdapterCsv<?>> adapter;
 	private static final Map<Class<? extends AdapterCsv<?>>, AdapterCsv<?>> MAP_ADAPTERS =
-			new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(10);
+			new HashMap<Class<? extends AdapterCsv<?>>, AdapterCsv<?>>(5);
 	private final Field field;
 
 	public ChampCsv(Class<? extends AdapterCsv<?>> adapter, Field field) {
@@ -47,10 +46,10 @@ public class ChampCsv {
 	public AdapterCsv<Object> getNewAdapterCsv() {
 		if (!MAP_ADAPTERS.containsKey(adapter)) {
 			try {
-				Constructor<? extends AdapterCsv<?>> constructeur = adapter.getConstructor((Class<?>[]) null);
-				MAP_ADAPTERS.put(adapter, constructeur.newInstance((Object[]) null));
-			} catch (Exception e) {
-				throw new MoteurCsvException(e);
+				Constructor<? extends AdapterCsv<?>> construteur = adapter.getConstructor((Class<?>[]) null);
+				MAP_ADAPTERS.put(adapter, construteur.newInstance((Object[]) null));
+			} catch (Exception exception) {
+				throw new MoteurCsvException(exception);
 			}
 		}
 		return (AdapterCsv<Object>) MAP_ADAPTERS.get(adapter);

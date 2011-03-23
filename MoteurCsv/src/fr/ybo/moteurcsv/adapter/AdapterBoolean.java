@@ -12,12 +12,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.keolis.gtfs.moteur.adapter;
+package fr.ybo.moteurcsv.adapter;
 
-@SuppressWarnings({"UnusedDeclaration"})
 public class AdapterBoolean implements AdapterCsv<Boolean> {
 
 	public Boolean parse(String chaine) {
 		return Integer.parseInt(chaine) == 1;
+	}
+
+	public String toString(Boolean objet) {
+		return objet ? "1" : "0";
 	}
 }

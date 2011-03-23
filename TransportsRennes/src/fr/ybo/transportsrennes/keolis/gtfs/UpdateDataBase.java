@@ -16,6 +16,7 @@ package fr.ybo.transportsrennes.keolis.gtfs;
 
 import android.content.ContentValues;
 import android.content.res.Resources;
+import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
@@ -25,7 +26,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.keolis.gtfs.moteur.MoteurCsv;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.util.Date;

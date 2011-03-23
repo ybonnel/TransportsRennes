@@ -14,29 +14,6 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele;
 
-
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Arret;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.ArretRoute;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Calendrier;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Correspondance;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Direction;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Horaire;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Ligne;
-import fr.ybo.transportsrenneshelper.generateurmodele.modele.Trajet;
-import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
-import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-import fr.ybo.transportsrenneshelper.keolis.GetMetro;
-import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsv;
-import fr.ybo.transportsrenneshelper.moteurcsv.MoteurCsvException;
-import fr.ybo.transportsrenneshelper.util.CalculDistance;
-import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -55,8 +32,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipOutputStream;
 
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Arret;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.ArretRoute;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Calendrier;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Correspondance;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Direction;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Horaire;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Ligne;
+import fr.ybo.transportsrenneshelper.generateurmodele.modele.Trajet;
+import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
+import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
+import fr.ybo.transportsrenneshelper.keolis.GetMetro;
+import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
+import fr.ybo.transportsrenneshelper.util.CalculDistance;
+import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
-@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
 public class Generateur {
 
 	private final Collection<Ligne> lignes = new ArrayList<Ligne>(67);
@@ -101,7 +98,6 @@ public class Generateur {
 			}
 		}
 
-
 		int maxDirectionLength = 0;
 		Direction directionLongue = null;
 		for (Direction direction : directions.values()) {
@@ -112,7 +108,8 @@ public class Generateur {
 		}
 		for (ArretRoute arretRoute : arretsRoutes) {
 			if (directionLongue != null && arretRoute.directionId == directionLongue.id) {
-				System.out.println("Direction avec le nom le plus long : " + directionLongue.direction + " pour la ligne " + arretRoute.ligneId);
+				System.out.println("Direction avec le nom le plus long : " + directionLongue.direction
+						+ " pour la ligne " + arretRoute.ligneId);
 				break;
 			}
 		}
@@ -153,8 +150,10 @@ public class Generateur {
 		}
 		moteurCsv.writeFile(new File(repertoire, "trajets.txt"), trajetsTmp, Trajet.class);
 		for (Ligne ligne : lignes) {
-			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id), Horaire.class);
-			System.out.println("Nombre d'horaire pour la ligne " + ligne.id + " : " + horairesByLigneId.get(ligne.id).size());
+			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id),
+					Horaire.class);
+			System.out.println("Nombre d'horaire pour la ligne " + ligne.id + " : "
+					+ horairesByLigneId.get(ligne.id).size());
 		}
 		genereZips(repertoire);
 	}
@@ -218,7 +217,8 @@ public class Generateur {
 				if (hasFastCorrespondance(arret, correspondance) && !arret.id.equals(correspondance.id)) {
 					double distance = calculDistanceBetweenArrets(arret, correspondance);
 					if (distance < DISTANCE_CORRESPONDANCE_REEL) {
-						correspondances.add(new Correspondance(arret.id, correspondance.id, (int) Math.round(distance)));
+						correspondances
+								.add(new Correspondance(arret.id, correspondance.id, (int) Math.round(distance)));
 					}
 				}
 			}
@@ -226,7 +226,8 @@ public class Generateur {
 	}
 
 	private static double calculDistanceBetweenArrets(Arret arretDepart, Arret arretArrivee) {
-		return new CalculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude, arretArrivee.longitude).calculDistance();
+		return new CalculDistance(arretDepart.latitude, arretDepart.longitude, arretArrivee.latitude,
+				arretArrivee.longitude).calculDistance();
 	}
 
 	private boolean hasFastCorrespondance(Arret arret1, Arret arret2) {
@@ -286,8 +287,10 @@ public class Generateur {
 				int max = 0;
 				String chaine = null;
 				for (Map.Entry<String, Integer> entryChaineCount : countByChaine.entrySet()) {
-					if (entryChaineCount.getValue() > max && (entryChaineCount.getKey().startsWith(arret.id + ',') ||
-							!entryChaineCount.getKey().endsWith(',' + arret.id + ',') && entryChaineCount.getKey().contains(',' + arret.id + ','))) {
+					if (entryChaineCount.getValue() > max
+							&& (entryChaineCount.getKey().startsWith(arret.id + ',') || !entryChaineCount.getKey()
+									.endsWith(',' + arret.id + ',')
+									&& entryChaineCount.getKey().contains(',' + arret.id + ','))) {
 						// Chemin trouvé
 						max = entryChaineCount.getValue();
 						chaine = entryChaineCount.getKey();
@@ -335,8 +338,8 @@ public class Generateur {
 					System.err.println("Pas de direction trouvée!!!!!");
 				}
 				arretRoute.directionId = directionId;
-				arretRoute.accessible = GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible &&
-						GestionnaireGtfs.getInstance().getRouteExtensions().get(arretRoute.ligneId).accessible;
+				arretRoute.accessible = GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible
+						&& GestionnaireGtfs.getInstance().getRouteExtensions().get(arretRoute.ligneId).accessible;
 				arretsRoutes.add(arretRoute);
 			}
 		}
@@ -517,7 +520,8 @@ public class Generateur {
 			arretRoute1.ligneId = "a";
 			arretRoute2.ligneId = "a";
 			arretRoute1.sequence = station.getRankingPlatformDirection1();
-			arretRoute2.sequence = station.getRankingPlatformDirection2() == null ? 1 : station.getRankingPlatformDirection2();
+			arretRoute2.sequence = station.getRankingPlatformDirection2() == null ? 1 : station
+					.getRankingPlatformDirection2();
 			if (!arrets.get(arretRoute1.arretId).nom.equals(directions.get(indDirectionMetro1).direction)) {
 				arretsRoutes.add(arretRoute1);
 			}
@@ -580,7 +584,6 @@ public class Generateur {
 		lignes.add(ligneMetro);
 	}
 
-	@SuppressWarnings({"unchecked"})
 	private void ajoutTrajetEtHoraires() throws IOException {
 		int trajetIdMax = 0;
 		for (List<Trajet> trajetByLigne : trajets.values()) {
@@ -596,8 +599,11 @@ public class Generateur {
 		clazz.add(HoraireMetro.class);
 		MoteurCsv moteurMetro = new MoteurCsv(clazz);
 		List<Horaire> horairesMetro = new ArrayList<Horaire>();
-		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"), HoraireMetro.class)) {
-			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, semaineId, indDirectionMetro1, indDirectionMetro2)) {
+		for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(
+				Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"),
+				HoraireMetro.class)) {
+			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, semaineId, indDirectionMetro1,
+					indDirectionMetro2)) {
 				horairesMetro.add(horaire);
 				if (!trajetMetro.containsKey(horaire.trajetId)) {
 					trajetMetro.put(horaire.trajetId, horaire.trajet);
@@ -606,8 +612,12 @@ public class Generateur {
 			trajetIdMax += 2;
 		}
 
-		for (HoraireMetro horaireMetro : moteurMetro.parseFile(Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"), HoraireMetro.class)) {
-			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, dimancheId, indDirectionMetro1, indDirectionMetro2)) {
+		for (HoraireMetro horaireMetro : moteurMetro
+				.parseInputStream(Generateur.class
+						.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"),
+						HoraireMetro.class)) {
+			for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax, dimancheId, indDirectionMetro1,
+					indDirectionMetro2)) {
 				horairesMetro.add(horaire);
 				if (!trajetMetro.containsKey(horaire.trajetId)) {
 					trajetMetro.put(horaire.trajetId, horaire.trajet);
