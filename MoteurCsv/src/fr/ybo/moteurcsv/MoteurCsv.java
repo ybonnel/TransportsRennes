@@ -24,14 +24,11 @@ import java.io.InputStreamReader;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-
 
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
@@ -55,7 +52,8 @@ public class MoteurCsv {
 
 	public Object creerObjet(String ligne) {
 		if (classCourante == null) {
-			throw new MoteurCsvException("La méthode creerObjet a étée appelée sans que la méthode nouveauFichier n'est été appelée.");
+			throw new MoteurCsvException(
+					"La méthode creerObjet a étée appelée sans que la méthode nouveauFichier n'est été appelée.");
 		}
 		try {
 			Object objetCsv = classCourante.getContructeur().newInstance((Object[]) null);
@@ -74,8 +72,8 @@ public class MoteurCsv {
 			}
 			return objetCsv;
 		} catch (Exception e) {
-			throw new MoteurCsvException(
-					"Erreur à l'instanciation de la class " + classCourante.getClazz().getSimpleName() + " pour la ligne " + ligne, e);
+			throw new MoteurCsvException("Erreur à l'instanciation de la class "
+					+ classCourante.getClazz().getSimpleName() + " pour la ligne " + ligne, e);
 		}
 	}
 
@@ -89,15 +87,15 @@ public class MoteurCsv {
 			enteteCourante[0] = enteteCourante[0].substring(1);
 		}
 	}
-	
+
 	public static interface InsertObject<Objet> {
 		public void insertObject(Objet objet);
 	}
-	
+
 	private static class InsertInList<Objet> implements InsertObject<Objet> {
-		
+
 		private List<Objet> objets;
-		
+
 		public InsertInList(List<Objet> objets) {
 			this.objets = objets;
 		}
@@ -107,10 +105,11 @@ public class MoteurCsv {
 			objets.add(objet);
 		}
 	}
-	
+
 	public <Objet> List<Objet> parseInputStream(InputStream intputStream, Class<Objet> clazz) {
 		List<Objet> objets = new ArrayList<Objet>();
-		parseFileAndInsert(new BufferedReader(new InputStreamReader(intputStream)), clazz, new InsertInList<Objet>(objets));
+		parseFileAndInsert(new BufferedReader(new InputStreamReader(intputStream)), clazz, new InsertInList<Objet>(
+				objets));
 		return objets;
 	}
 
@@ -146,14 +145,13 @@ public class MoteurCsv {
 		}
 		mapFileClasses.put(fichierCsv.value(), classCsv);
 	}
-	
 
-
-	private void writeEntete(BufferedWriter bufWriter, Iterable<String> nomChamps, ClassCsv classCsv) throws IOException {
+	private void writeEntete(BufferedWriter bufWriter, Iterable<String> nomChamps, ClassCsv classCsv)
+			throws IOException {
 		boolean first = true;
 		for (String nomChamp : nomChamps) {
 			if (!first) {
-				bufWriter.write(classCsv.getSeparateur());
+				bufWriter.write(classCsv.getSeparateurWithoutEscape());
 			}
 			bufWriter.write(nomChamp);
 			first = false;
@@ -166,7 +164,7 @@ public class MoteurCsv {
 		boolean first = true;
 		for (String nomChamp : nomChamps) {
 			if (!first) {
-				bufWriter.write(classCsv.getSeparateur());
+				bufWriter.write(classCsv.getSeparateurWithoutEscape());
 			}
 			ChampCsv champCsv = classCsv.getChampCsv(nomChamp);
 			champCsv.getField().setAccessible(true);
@@ -180,26 +178,20 @@ public class MoteurCsv {
 		bufWriter.write('\n');
 	}
 
-	public <Objet> void writeFile(File file, Iterable<Objet> objets, Class<Objet> clazz) {
-		writeFile(file, objets, clazz, new HashSet<String>(1000));
-	}
-
-	private <Objet> void writeFile(File file, Iterable<Objet> objets, AnnotatedElement clazz, Collection<String> champsNoWrites) {
+	public <Objet> void writeFile(File file, Iterable<Objet> objets, AnnotatedElement clazz) {
 		try {
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 			try {
 				final ClassCsv classCsv = mapFileClasses.get(clazz.getAnnotation(FichierCsv.class).value());
 				List<String> nomChamps = new ArrayList<String>(10);
 				for (String champ : classCsv.getNomChamps()) {
-					if (!champsNoWrites.contains(champ)) {
-						nomChamps.add(champ);
-					}
+					nomChamps.add(champ);
 				}
 				Collections.sort(nomChamps, new Comparator<String>() {
 					public int compare(String o1, String o2) {
 						int thisVal = classCsv.getOrdre(o1);
 						int anotherVal = classCsv.getOrdre(o2);
-						return (thisVal<anotherVal ? -1 : (thisVal==anotherVal ? 0 : 1));
+						return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
 					}
 				});
 				writeEntete(bufWriter, nomChamps, classCsv);

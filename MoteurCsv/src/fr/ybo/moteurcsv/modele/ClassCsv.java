@@ -58,6 +58,16 @@ public class ClassCsv {
 	public String getSeparateur() {
 		return separateur;
 	}
+	
+	private String separateurWithoutEscape = null;
+
+	public String getSeparateurWithoutEscape() {
+		if (separateurWithoutEscape == null) {
+			separateurWithoutEscape = separateur.replaceAll("\\\\", "");
+		}
+		return separateurWithoutEscape;
+		
+	}
 
 	public void setChampCsv(String nomCsv, ChampCsv champCsv) {
 		mapOfFields.put(nomCsv, champCsv);
