@@ -14,6 +14,12 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.database;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -29,12 +35,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -229,6 +229,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 						base.insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
+					// Verrue pour la ligne 67 et sa boucle.
+					Cursor ligne67 = db.query("Ligne", new String[]{"Chargee"}, "id = 67", null, null, null, null);
+					if (ligne67.moveToFirst() && !ligne67.isNull(0) && ligne67.getInt(0) == 1) {
+						db.execSQL("UPDATE Horaire_67 SET terminus = 1 WHERE arretId = 'repto1' AND stopSequence > 3");
+					}
 				}
 			});
 		}

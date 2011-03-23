@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings({"UnusedDeclaration", "serial"})
+@SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
 @Table
 public class Ligne implements Serializable {
