@@ -14,70 +14,92 @@
 
 package com.google.code.geocoder;
 
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.LatLng;
-import com.google.code.geocoder.model.LatLngBounds;
-import com.google.code.geocoder.util.StringUtils;
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderRequest;
+import com.google.code.geocoder.model.LatLng;
+import com.google.code.geocoder.model.LatLngBounds;
+import com.google.code.geocoder.util.Constantes;
+import com.google.code.geocoder.util.StringUtils;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Géocodeur d'adresse.
+ * @author ybonnel
+ *
  */
-public class Geocoder {
+public final class Geocoder {
 
-	private static final String GEOCODE_REQUEST_URL = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false";
+	/**
+	 * Constructeur privé pour empécher l'instanciation.
+	 */
+	private Geocoder() {
+	}
 
-	public GeocodeResponse geocode(GeocoderRequest geocoderRequest) {
+	/**
+	 * Effecture le géo-codage d'une adresse.
+	 * @param geocoderRequest la requète.
+	 * @return la réponse.
+	 */
+	public static GeocodeResponse geocode(GeocoderRequest geocoderRequest) {
+		GeocodeResponse reponse = null;
 		try {
 			String urlString = getURL(geocoderRequest);
 
 			Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
 			URL url = new URL(urlString);
-			Reader reader = new InputStreamReader(url.openStream(), "utf-8");
+			Reader reader = new InputStreamReader(url.openStream(), Constantes.ENCODAGE);
 			try {
-				return gson.fromJson(reader, GeocodeResponse.class);
+				reponse = gson.fromJson(reader, GeocodeResponse.class);
 			} finally {
 				reader.close();
 			}
 		} catch (Exception e) {
+			// FIXME meilleure gestion des erreurs!
 			e.printStackTrace();
-			return null;
 		}
+		return reponse;
 	}
 
-	private String getURL(GeocoderRequest geocoderRequest) throws UnsupportedEncodingException {
+	/**
+	 * Construction de l'url d'appel.
+	 * @param geocoderRequest requète.
+	 * @return l'url.
+	 * @throws UnsupportedEncodingException ne peux pas arriver!
+	 */
+	private static String getURL(GeocoderRequest geocoderRequest) throws UnsupportedEncodingException {
 		String address = geocoderRequest.getAddress();
 		LatLngBounds bounds = geocoderRequest.getBounds();
 		String language = geocoderRequest.getLanguage();
 		String region = geocoderRequest.getRegion();
 		LatLng location = geocoderRequest.getLocation();
 
-		String urlString = GEOCODE_REQUEST_URL;
+		String urlString = Constantes.GEOCODE_REQUEST_URL;
 		if (StringUtils.isNotBlank(address)) {
-			urlString += "&address=" + URLEncoder.encode(address, "UTF-8");
+			urlString += "&address=" + URLEncoder.encode(address, Constantes.ENCODAGE);
 		} else if (location != null) {
-			urlString += "&latlng=" + URLEncoder.encode(location.toUrlValue(), "UTF-8");
+			urlString += "&latlng=" + URLEncoder.encode(location.toUrlValue(), Constantes.ENCODAGE);
 		} else {
 			throw new IllegalArgumentException("Address or location not defined");
 		}
 		if (StringUtils.isNotBlank(language)) {
-			urlString += "&language=" + URLEncoder.encode(language, "UTF-8");
+			urlString += "&language=" + URLEncoder.encode(language, Constantes.ENCODAGE);
 		}
 		if (StringUtils.isNotBlank(region)) {
-			urlString += "&region=" + URLEncoder.encode(region, "UTF-8");
+			urlString += "&region=" + URLEncoder.encode(region, Constantes.ENCODAGE);
 		}
 		if (bounds != null) {
-			urlString += "&bounds=" + URLEncoder.encode(bounds.getSouthwest().toUrlValue() + '|' + bounds.getNortheast().toUrlValue(), "UTF-8");
+			urlString += "&bounds="
+					+ URLEncoder.encode(bounds.getSouthwest().toUrlValue() + '|' + bounds.getNortheast().toUrlValue(),
+							Constantes.ENCODAGE);
 		}
 		return urlString;
 	}

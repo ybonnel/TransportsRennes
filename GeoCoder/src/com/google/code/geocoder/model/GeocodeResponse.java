@@ -17,35 +17,57 @@ package com.google.code.geocoder.model;
 import java.util.List;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Réponse du géocodage.
+ * @author ybonnel
+ *
  */
 public class GeocodeResponse {
+	/**
+	 * Status.
+	 */
 	private GeocoderStatus status;
+	/**
+	 * Résultats.
+	 */
 	private List<GeocoderResult> results;
 
+	/**
+	 * @return status.
+	 */
 	public GeocoderStatus getStatus() {
 		return status;
 	}
 
+	/**
+	 * 
+	 * @param status le status.
+	 */
 	public void setStatus(GeocoderStatus status) {
 		this.status = status;
 	}
 
+	/**
+	 * @return les résultats.
+	 */
 	public List<GeocoderResult> getResults() {
 		return results;
 	}
 
+	/**
+	 * 
+	 * @param result les résultats.
+	 */
 	public void setResults(List<GeocoderResult> result) {
 		results = result;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GeocodeResponse");
-		sb.append("{status=").append(status);
-		sb.append(", results=").append(results);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GeocodeResponse");
+		stringBuilder.append("{status=").append(status);
+		stringBuilder.append(", results=").append(results);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

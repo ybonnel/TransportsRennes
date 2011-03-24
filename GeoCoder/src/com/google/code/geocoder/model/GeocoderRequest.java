@@ -14,75 +14,138 @@
 
 package com.google.code.geocoder.model;
 
-
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Réquète pour le géo-codage.
+ * 
+ * @author ybonnel
+ * 
  */
 public class GeocoderRequest {
-	private String address;         //Address. Optional.
-	private String language;        //Preferred language for results. Optional.
-	private String region;          //Country code top-level domain within which to search. Optional.
-	private LatLngBounds bounds;    //LatLngBounds within which to search. Optional.
-	private LatLng location;        //LatLng about which to search. Optional.
+	/**
+	 * Address. Optional.
+	 */
+	private String address;
+	/**
+	 * Preferred language for results. Optional.
+	 */
+	private String language;
+	/**
+	 * Country code top-level domain within which to search. Optional.
+	 */
+	private String region;
+	/**
+	 * LatLngBounds within which to search. Optional.
+	 */
+	private LatLngBounds bounds;
+	/**
+	 * LatLng about which to search. Optional.
+	 */
+	private LatLng location;
 
+	/**
+	 * Constructeur.
+	 */
 	public GeocoderRequest() {
 	}
 
+	/**
+	 * Constructeur.
+	 * 
+	 * @param address
+	 *            adresse.
+	 * @param language
+	 *            langue.
+	 */
 	public GeocoderRequest(String address, String language) {
 		this.address = address;
 		this.language = language;
 	}
 
+	/**
+	 * @return the address
+	 */
 	public String getAddress() {
 		return address;
 	}
 
+	/**
+	 * @param address
+	 *            the address to set
+	 */
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public LatLngBounds getBounds() {
-		return bounds;
-	}
-
-	public void setBounds(LatLngBounds bounds) {
-		this.bounds = bounds;
-	}
-
+	/**
+	 * @return the language
+	 */
 	public String getLanguage() {
 		return language;
 	}
 
+	/**
+	 * @param language
+	 *            the language to set
+	 */
 	public void setLanguage(String language) {
 		this.language = language;
 	}
 
-	public LatLng getLocation() {
-		return location;
-	}
-
-	public void setLocation(LatLng location) {
-		this.location = location;
-	}
-
+	/**
+	 * @return the region
+	 */
 	public String getRegion() {
 		return region;
 	}
 
+	/**
+	 * @param region
+	 *            the region to set
+	 */
 	public void setRegion(String region) {
 		this.region = region;
 	}
 
+	/**
+	 * @return the bounds
+	 */
+	public LatLngBounds getBounds() {
+		return bounds;
+	}
+
+	/**
+	 * @param bounds
+	 *            the bounds to set
+	 */
+	public void setBounds(LatLngBounds bounds) {
+		this.bounds = bounds;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public LatLng getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location
+	 *            the location to set
+	 */
+	public void setLocation(LatLng location) {
+		this.location = location;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GeocoderRequest");
-		sb.append("{address='").append(address).append('\'');
-		sb.append(", bounds=").append(bounds);
-		sb.append(", language='").append(language).append('\'');
-		sb.append(", location=").append(location);
-		sb.append(", region='").append(region).append('\'');
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GeocoderRequest");
+		stringBuilder.append("{address='").append(address).append('\'');
+		stringBuilder.append(", bounds=").append(bounds);
+		stringBuilder.append(", language='").append(language).append('\'');
+		stringBuilder.append(", location=").append(location);
+		stringBuilder.append(", region='").append(region).append('\'');
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

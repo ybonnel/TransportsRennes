@@ -19,36 +19,74 @@ import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Constructeur de requètes.
+ * 
+ * @author ybonnel
+ * 
  */
 public class GeocoderRequestBuilder {
+	/**
+	 * Requete.
+	 */
 	private final GeocoderRequest geocoderRequest = new GeocoderRequest();
 
+	/**
+	 * @param address
+	 *            l'adresse.
+	 * @return référence au builder.
+	 */
 	public GeocoderRequestBuilder setAddress(String address) {
 		geocoderRequest.setAddress(address);
 		return this;
 	}
 
+	/**
+	 * @param language
+	 *            la langue.
+	 * @return référence au builder.
+	 */
 	public GeocoderRequestBuilder setLanguage(String language) {
 		geocoderRequest.setLanguage(language);
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param region
+	 *            la région.
+	 * @return référence au builder.
+	 */
 	public GeocoderRequestBuilder setRegion(String region) {
 		geocoderRequest.setRegion(region);
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param bounds
+	 *            LatLngBounds within which to search.
+	 * @return référence au builder.
+	 */
 	public GeocoderRequestBuilder setBounds(LatLngBounds bounds) {
 		geocoderRequest.setBounds(bounds);
 		return this;
 	}
 
+	/**
+	 * 
+	 * @param location
+	 *            la position.
+	 * @return référence au builder.
+	 */
 	public GeocoderRequestBuilder setLocation(LatLng location) {
 		geocoderRequest.setLocation(location);
 		return this;
 	}
 
+	/**
+	 * 
+	 * @return la requete.
+	 */
 	public GeocoderRequest getGeocoderRequest() {
 		return geocoderRequest;
 	}

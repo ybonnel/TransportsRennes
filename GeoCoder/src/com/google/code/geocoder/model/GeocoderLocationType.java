@@ -15,19 +15,30 @@
 package com.google.code.geocoder.model;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Type de géo-localisation.
+ * 
+ * @author ybonnel
+ * 
  */
 public enum GeocoderLocationType {
+	/**
+	 * Indicates that the returned result is approximate.
+	 */
 	APPROXIMATE,
+	/**
+	 * Indicates that the returned result is the geometric center of a result
+	 * such as a polyline (for example, a street) or polygon (region).
+	 */
 	GEOMETRIC_CENTER,
+	/**
+	 * Indicates that the returned result reflects an approximation (usually on
+	 * a road) interpolated between two precise points (such as intersections).
+	 * Interpolated results are generally returned when rooftop geocodes are
+	 * unavailable for a street address.
+	 */
 	RANGE_INTERPOLATED,
+	/**
+	 * Indicates that the returned result reflects a precise geocode.
+	 */
 	ROOFTOP;
-
-	public String value() {
-		return name();
-	}
-
-	public static GeocoderLocationType fromValue(String v) {
-		return valueOf(v);
-	}
 }

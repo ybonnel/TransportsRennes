@@ -17,45 +17,74 @@ package com.google.code.geocoder.model;
 import java.util.List;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Composant d'un adresse.
+ * @author ybonnel
+ *
  */
 class GeocoderAddressComponent {
+	/**
+	 * Nom long.
+	 */
 	private String longName;
+	/**
+	 * Nom court.
+	 */
 	private String shortName;
+	/**
+	 * Types.
+	 */
 	private List<String> types;
 
+	/**
+	 * @return nom long.
+	 */
 	public String getLongName() {
 		return longName;
 	}
 
+	/**
+	 * @param longName nom long.
+	 */
 	public void setLongName(String longName) {
 		this.longName = longName;
 	}
 
+	/**
+	 * @return le nom court.
+	 */
 	public String getShortName() {
 		return shortName;
 	}
 
+	/**
+	 * @param shortName le nom court.
+	 */
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
 
+	/**
+	 * @return les types.
+	 */
 	public List<String> getTypes() {
 		return types;
 	}
 
+	/**
+	 * @param types les types.
+	 */
 	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GeocoderAddressComponent");
-		sb.append("{longName='").append(longName).append('\'');
-		sb.append(", shortName='").append(shortName).append('\'');
-		sb.append(", types=").append(types);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GeocoderAddressComponent");
+		stringBuilder.append("{longName='").append(longName).append('\'');
+		stringBuilder.append(", shortName='").append(shortName).append('\'');
+		stringBuilder.append(", types=").append(types);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

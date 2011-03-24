@@ -15,43 +15,74 @@
 package com.google.code.geocoder.model;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Limites (cadre de latitude/longitude).
  */
 public class LatLngBounds {
+	/**
+	 * Coin sud-ouest.
+	 */
 	private LatLng southwest;
+	/**
+	 * Coin nord-est.
+	 */
 	private LatLng northeast;
 
+	/**
+	 * Construteur.
+	 */
 	public LatLngBounds() {
 	}
 
+	/**
+	 * Constructeur.
+	 * 
+	 * @param southwest
+	 *            coin sud-ouest.
+	 * @param northeast
+	 *            coin nord-est.
+	 */
 	public LatLngBounds(LatLng southwest, LatLng northeast) {
 		this.southwest = southwest;
 		this.northeast = northeast;
 	}
 
+	/**
+	 * @return the southwest
+	 */
 	public LatLng getSouthwest() {
 		return southwest;
 	}
 
+	/**
+	 * @param southwest
+	 *            the southwest to set
+	 */
 	public void setSouthwest(LatLng southwest) {
 		this.southwest = southwest;
 	}
 
+	/**
+	 * @return the northeast
+	 */
 	public LatLng getNortheast() {
 		return northeast;
 	}
 
+	/**
+	 * @param northeast
+	 *            the northeast to set
+	 */
 	public void setNortheast(LatLng northeast) {
 		this.northeast = northeast;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("LatLngBounds");
-		sb.append("{southwest=").append(southwest);
-		sb.append(", northeast=").append(northeast);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("LatLngBounds");
+		stringBuilder.append("{southwest=").append(southwest);
+		stringBuilder.append(", northeast=").append(northeast);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

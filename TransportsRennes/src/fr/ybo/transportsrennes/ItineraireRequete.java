@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -37,23 +42,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+
 import fr.ybo.itineraires.CalculItineraires;
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.Converter;
 import fr.ybo.itineraires.schema.ItineraireReponse;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements LocationListener {
 
@@ -198,10 +200,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 
 			@Override
 			protected Void doInBackground(Void... voids) {
-				Geocoder geocoder = new Geocoder();
 				if (adresseDepart != null) {
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr").getGeocoderRequest();
-					reponseDepart = geocoder.geocode(geocoderRequest);
+					reponseDepart = Geocoder.geocode(geocoderRequest);
 					if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
 						return null;
@@ -214,7 +215,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 						}
 					});
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr").getGeocoderRequest();
-					reponseArrivee = geocoder.geocode(geocoderRequest);
+					reponseArrivee = Geocoder.geocode(geocoderRequest);
 					if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
 						return null;

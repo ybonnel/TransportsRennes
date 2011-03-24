@@ -16,48 +16,93 @@ package com.google.code.geocoder.model;
 
 import java.math.BigDecimal;
 
+import com.google.code.geocoder.util.Constantes;
+
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
- * @link http://code.google.com/intl/uk/apis/maps/documentation/javascript/reference.html#LatLng
+ * Latitude/Longitude.
+ * 
+ * @author ybonnel
+ * 
  */
 public class LatLng {
+	/**
+	 * Latitude.
+	 */
 	private BigDecimal lat;
+	/**
+	 * Longitude.
+	 */
 	private BigDecimal lng;
 
+	/**
+	 * Constructeur.
+	 */
 	public LatLng() {
 	}
 
+	/**
+	 * Constructeur.
+	 * 
+	 * @param lat
+	 *            latitude.
+	 * @param lng
+	 *            longitude.
+	 */
 	public LatLng(BigDecimal lat, BigDecimal lng) {
 		this.lat = lat;
 		this.lng = lng;
 	}
 
+	/**
+	 * Constructeur.
+	 * 
+	 * @param lat
+	 *            latitude.
+	 * @param lng
+	 *            longitude.
+	 */
 	public LatLng(String lat, String lng) {
 		this.lat = new BigDecimal(lat);
 		this.lng = new BigDecimal(lng);
 	}
 
+
+	/**
+	 * @return the lat
+	 */
 	public BigDecimal getLat() {
 		return lat;
 	}
 
+	/**
+	 * @param lat
+	 *            the lat to set
+	 */
 	public void setLat(BigDecimal lat) {
 		this.lat = lat;
 	}
 
+	/**
+	 * @return the lng
+	 */
 	public BigDecimal getLng() {
 		return lng;
 	}
 
+	/**
+	 * @param lng
+	 *            the lng to set
+	 */
 	public void setLng(BigDecimal lng) {
 		this.lng = lng;
 	}
 
 	/**
-	 * @return Returns a string of the form "lat,lng" for this LatLng. We round the lat/lng values to 6 decimal places by default.
+	 * @return Returns a string of the form "lat,lng" for this LatLng. We round
+	 *         the lat/lng values to 6 decimal places by default.
 	 */
 	public String toUrlValue() {
-		return toUrlValue(6);
+		return toUrlValue(Constantes.DEFAULT_PRECISION);
 	}
 
 	/**
@@ -65,16 +110,17 @@ public class LatLng {
 	 * @return Returns a string of the form "lat,lng" for this LatLng.
 	 */
 	public String toUrlValue(int precision) {
-		return lat.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString() + ',' + lng.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString();
+		return lat.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString() + ','
+				+ lng.setScale(precision, BigDecimal.ROUND_HALF_EVEN).toString();
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("LatLng");
-		sb.append("{lat=").append(lat);
-		sb.append(", lng=").append(lng);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("LatLng");
+		stringBuilder.append("{lat=").append(lat);
+		stringBuilder.append(", lng=").append(lng);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

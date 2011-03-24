@@ -19,7 +19,7 @@ package com.google.code.geocoder.util;
  * @author ybonnel
  *
  */
-public class StringUtils {
+public final class StringUtils {
 
 	/**
 	 * Constructeur privé pour empécher l'instanciation de la classe.

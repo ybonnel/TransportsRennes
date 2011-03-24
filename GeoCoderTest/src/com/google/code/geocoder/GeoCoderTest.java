@@ -5,8 +5,6 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.code.geocoder.model.LatLng;
@@ -19,8 +17,6 @@ import com.google.code.geocoder.model.LatLngBounds;
  */
 public class GeoCoderTest {
 	
-	private Geocoder geocoder = new Geocoder();
-	
 	/**
 	 * Test avec une adresse bidon.
 	 */
@@ -32,7 +28,7 @@ public class GeoCoderTest {
 		builder.setLanguage("fr");
 		builder.setRegion("bretagne");
 		System.out.println(builder.getGeocoderRequest().toString());
-		GeocodeResponse response = geocoder.geocode(builder.getGeocoderRequest());
+		GeocodeResponse response = Geocoder.geocode(builder.getGeocoderRequest());
 		System.out.println(response.toString());
 		assertNotNull(response);
 		assertEquals( GeocoderStatus.ZERO_RESULTS, response.getStatus());
@@ -45,7 +41,7 @@ public class GeoCoderTest {
 	public void testGeocode_adresse1Resultat() {
 		GeocoderRequestBuilder builder = new GeocoderRequestBuilder();
 		builder.setAddress("91 rue de paris, Rennes");
-		GeocodeResponse response = geocoder.geocode(builder.getGeocoderRequest());
+		GeocodeResponse response = Geocoder.geocode(builder.getGeocoderRequest());
 		System.out.println(response.toString());
 		assertNotNull(response);
 		assertEquals( GeocoderStatus.OK, response.getStatus());
@@ -60,7 +56,7 @@ public class GeoCoderTest {
 	public void testGeocode_adresseMultipleResultat() {
 		GeocoderRequestBuilder builder = new GeocoderRequestBuilder();
 		builder.setAddress("91 rue de paris, 35");
-		GeocodeResponse response = geocoder.geocode(builder.getGeocoderRequest());
+		GeocodeResponse response = Geocoder.geocode(builder.getGeocoderRequest());
 		System.out.println(response.toString());
 		assertNotNull(response);
 		assertEquals( GeocoderStatus.OK, response.getStatus());

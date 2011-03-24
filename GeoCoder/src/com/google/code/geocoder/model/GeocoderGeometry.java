@@ -14,47 +14,79 @@
 
 package com.google.code.geocoder.model;
 
-
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Géometry : localisation.
+ * 
+ * @author ybonnel
+ * 
  */
 public class GeocoderGeometry {
+	/**
+	 * Latitude et longitude.
+	 */
 	private LatLng location;
+	/**
+	 * Type de géo-localisation.
+	 */
 	private GeocoderLocationType locationType;
+	/**
+	 * Précision.
+	 */
 	private LatLngBounds viewport;
 
+	/**
+	 * @return the location
+	 */
 	public LatLng getLocation() {
 		return location;
 	}
 
+	/**
+	 * @param location
+	 *            the location to set
+	 */
 	public void setLocation(LatLng location) {
 		this.location = location;
 	}
 
+	/**
+	 * @return the locationType
+	 */
 	public GeocoderLocationType getLocationType() {
 		return locationType;
 	}
 
+	/**
+	 * @param locationType
+	 *            the locationType to set
+	 */
 	public void setLocationType(GeocoderLocationType locationType) {
 		this.locationType = locationType;
 	}
 
+	/**
+	 * @return the viewport
+	 */
 	public LatLngBounds getViewport() {
 		return viewport;
 	}
 
+	/**
+	 * @param viewport
+	 *            the viewport to set
+	 */
 	public void setViewport(LatLngBounds viewport) {
 		this.viewport = viewport;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GeocoderGeometry");
-		sb.append("{location=").append(location);
-		sb.append(", locationType=").append(locationType);
-		sb.append(", viewport=").append(viewport);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GeocoderGeometry");
+		stringBuilder.append("{location=").append(location);
+		stringBuilder.append(", locationType=").append(locationType);
+		stringBuilder.append(", viewport=").append(viewport);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }

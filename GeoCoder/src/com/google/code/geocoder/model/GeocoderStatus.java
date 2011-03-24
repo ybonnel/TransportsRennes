@@ -15,24 +15,40 @@
 package com.google.code.geocoder.model;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Status retour.
+ * 
+ * @author ybonnel
+ * 
  */
 public enum GeocoderStatus {
 
+	/**
+	 * Erreur.
+	 */
 	ERROR,
+	/**
+	 * Indique généralement que l'adresse n'a pas été fournie.
+	 */
 	INVALID_REQUEST,
+	/**
+	 * Ok.
+	 */
 	OK,
+	/**
+	 * Quota dépassé.
+	 */
 	OVER_QUERY_LIMIT,
+	/**
+	 * Refusée, seule google sait pourquoi.
+	 */
 	REQUEST_DENIED,
+	/**
+	 * Erreur inconnue.
+	 */
 	UNKNOWN_ERROR,
+	/**
+	 * Aucun résultat.
+	 */
 	ZERO_RESULTS;
-
-	public String value() {
-		return name();
-	}
-
-	public static GeocoderStatus fromValue(String v) {
-		return valueOf(v);
-	}
 
 }

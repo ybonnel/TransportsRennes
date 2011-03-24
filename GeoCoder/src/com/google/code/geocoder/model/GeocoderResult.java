@@ -17,55 +17,98 @@ package com.google.code.geocoder.model;
 import java.util.List;
 
 /**
- * @author <a href="mailto:panchmp@gmail.com">Michael Panchenko</a>
+ * Résultat du géocodage.
+ * 
+ * @author ybonnel
+ * 
  */
 public class GeocoderResult {
+	/**
+	 * Types.
+	 */
 	private List<String> types;
+	/**
+	 * Adresse formattée.
+	 */
 	private String formattedAddress;
+	/**
+	 * Composantes de l'adresse.
+	 */
 	private List<GeocoderAddressComponent> addressComponents;
+	/**
+	 * Geométry (localisation).
+	 */
 	private GeocoderGeometry geometry;
 
+	/**
+	 * @return the types
+	 */
 	public List<String> getTypes() {
 		return types;
 	}
 
+	/**
+	 * @param types
+	 *            the types to set
+	 */
 	public void setTypes(List<String> types) {
 		this.types = types;
 	}
 
+	/**
+	 * @return the formattedAddress
+	 */
 	public String getFormattedAddress() {
 		return formattedAddress;
 	}
 
+	/**
+	 * @param formattedAddress
+	 *            the formattedAddress to set
+	 */
 	public void setFormattedAddress(String formattedAddress) {
 		this.formattedAddress = formattedAddress;
 	}
 
+	/**
+	 * @return the addressComponents
+	 */
 	public List<GeocoderAddressComponent> getAddressComponents() {
 		return addressComponents;
 	}
 
+	/**
+	 * @param addressComponents
+	 *            the addressComponents to set
+	 */
 	public void setAddressComponents(List<GeocoderAddressComponent> addressComponents) {
 		this.addressComponents = addressComponents;
 	}
 
+	/**
+	 * @return the geometry
+	 */
 	public GeocoderGeometry getGeometry() {
 		return geometry;
 	}
 
+	/**
+	 * @param geometry
+	 *            the geometry to set
+	 */
 	public void setGeometry(GeocoderGeometry geometry) {
 		this.geometry = geometry;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("GeocoderResult");
-		sb.append("{types=").append(types);
-		sb.append(", formattedAddress='").append(formattedAddress).append('\'');
-		sb.append(", addressComponents=").append(addressComponents);
-		sb.append(", geometry=").append(geometry);
-		sb.append('}');
-		return sb.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("GeocoderResult");
+		stringBuilder.append("{types=").append(types);
+		stringBuilder.append(", formattedAddress='").append(formattedAddress).append('\'');
+		stringBuilder.append(", addressComponents=").append(addressComponents);
+		stringBuilder.append(", geometry=").append(geometry);
+		stringBuilder.append('}');
+		return stringBuilder.toString();
 	}
 }
