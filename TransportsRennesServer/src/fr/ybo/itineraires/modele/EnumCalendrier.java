@@ -14,9 +14,9 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.gtfs.modele.Calendrier;
-
 import java.util.Calendar;
+
+import fr.ybo.gtfs.modele.Calendrier;
 
 public enum EnumCalendrier {
 	LUNDI(1) {
@@ -100,7 +100,6 @@ public enum EnumCalendrier {
 
 	private final int numCalendrier;
 
-	@SuppressWarnings({"WeakerAccess"})
 	EnumCalendrier(int numCalendrier) {
 		this.numCalendrier = numCalendrier;
 	}

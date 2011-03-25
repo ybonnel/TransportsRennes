@@ -78,7 +78,6 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 		return new PointDeVente();
 	}
 
-	@SuppressWarnings({"IfStatementWithTooManyBranches", "OverlyComplexMethod"})
 	@Override
 	protected void remplirObjectKeolis(PointDeVente currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {

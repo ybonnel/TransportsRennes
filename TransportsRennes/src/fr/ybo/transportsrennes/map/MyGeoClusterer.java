@@ -30,15 +30,17 @@
 
 package fr.ybo.transportsrennes.map;
 
+import java.util.List;
+
 import android.app.Activity;
+
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
+
 import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.GeoClusterer;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
-
-import java.util.List;
 
 public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClusterer {
 
@@ -57,7 +59,7 @@ public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClustere
 
 	@Override
 	public void createCluster(GeoItem item) {
-		MyGeoClusterer<?>.MyGeoCluster cluster = new MyGeoClusterer.MyGeoCluster(this);
+		MyGeoCluster cluster = new MyGeoCluster(this);
 		cluster.addItem(item);
 		clusters.add(cluster);
 	}

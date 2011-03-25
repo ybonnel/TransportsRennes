@@ -14,12 +14,13 @@
 
 package fr.ybo.gtfs.modele;
 
+import java.io.Serializable;
+
 import fr.ybo.gtfs.csv.annotation.BaliseCsv;
 import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
-import java.io.Serializable;
-
+@SuppressWarnings("serial")
 @FichierCsv("directions.txt")
 public class Direction implements Serializable {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)

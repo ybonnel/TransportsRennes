@@ -14,11 +14,12 @@
 
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
-import fr.ybo.transportsrennes.keolis.modele.Answer;
-import fr.ybo.transportsrennes.keolis.modele.StatusKeolis;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import fr.ybo.transportsrennes.keolis.modele.Answer;
+import fr.ybo.transportsrennes.keolis.modele.StatusKeolis;
 
 /**
  * Handler pour les appels à Keolis.
@@ -59,7 +60,6 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	/**
 	 * StringBuilder servant au parsing xml.
 	 */
-	@SuppressWarnings({"StringBufferField"})
 	private StringBuilder contenu;
 
 	@Override

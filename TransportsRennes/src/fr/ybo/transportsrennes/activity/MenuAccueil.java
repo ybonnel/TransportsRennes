@@ -36,7 +36,6 @@ public class MenuAccueil {
 		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_accueil).setIcon(R.drawable.ic_menu_home);
 	}
 
-	@SuppressWarnings({"BooleanMethodNameMustStartWithQuestion"})
 	private static boolean onOptionsItemSelected(Context context, MenuItem item) {
 		if (item.getItemId() == MENU_ID) {
 			Intent intent = new Intent(context, TransportsRennes.class);

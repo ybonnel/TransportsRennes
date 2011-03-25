@@ -15,24 +15,23 @@
 package fr.ybo.transportsrennes.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.util.Formatteur;
-import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
-
-	private static final LogYbo LOG_YBO = new LogYbo(MapItemizedOverlayParking.class);
 
 	//Liste des marqueurs
 	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>(4);

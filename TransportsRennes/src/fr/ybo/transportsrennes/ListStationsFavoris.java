@@ -14,6 +14,12 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -35,12 +41,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.
@@ -120,7 +120,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
 			protected void onPostExecute(Void result) {
 				myProgressDialog.dismiss();
 				if (erreur) {
@@ -189,7 +188,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				}
 
 				@Override
-				@SuppressWarnings("unchecked")
 				protected void onPostExecute(Void result) {
 					myProgressDialog.dismiss();
 					if (erreur) {

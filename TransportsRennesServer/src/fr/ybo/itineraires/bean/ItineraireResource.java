@@ -15,7 +15,6 @@
 package fr.ybo.itineraires.bean;
 
 
-import fr.ybo.itineraires.schema.ItineraireReponse;
 import org.restlet.resource.Get;
 
 public interface ItineraireResource {

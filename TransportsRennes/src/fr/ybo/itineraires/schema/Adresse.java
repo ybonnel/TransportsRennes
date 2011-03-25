@@ -14,7 +14,6 @@
 
 package fr.ybo.itineraires.schema;
 
-import java.io.Serializable;
 
 public class Adresse {
 

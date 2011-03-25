@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -39,11 +44,6 @@ import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les points de vente par distances de la
@@ -80,7 +80,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	 *
 	 * @param location position courante.
 	 */
-	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
@@ -149,7 +148,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 	private ProgressDialog myProgressDialog;
 
-	@SuppressWarnings("unchecked")
 	private void metterAJourListe() {
 		String query = editText.getText().toString().toUpperCase();
 		pointsDeVenteFiltres.clear();
@@ -236,7 +234,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				if (erreur) {

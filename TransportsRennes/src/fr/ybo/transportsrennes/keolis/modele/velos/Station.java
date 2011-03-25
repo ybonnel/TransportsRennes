@@ -14,16 +14,16 @@
 
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 /**
  * Classe représentant une station de velo star.
  *
  * @author ybonnel
  */
-@SuppressWarnings({"UnusedDeclaration", "serial"})
+@SuppressWarnings("serial")
 public class Station extends ObjetWithDistance implements Serializable {
 	/**
 	 * Numéro de la station.

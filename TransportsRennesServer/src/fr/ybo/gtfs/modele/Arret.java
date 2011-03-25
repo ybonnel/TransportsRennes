@@ -14,12 +14,13 @@
 
 package fr.ybo.gtfs.modele;
 
+import java.io.Serializable;
+
 import fr.ybo.gtfs.csv.annotation.BaliseCsv;
 import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterDouble;
 
-import java.io.Serializable;
-
+@SuppressWarnings("serial")
 @FichierCsv("arrets.txt")
 public class Arret implements Serializable {
 	@BaliseCsv("id")

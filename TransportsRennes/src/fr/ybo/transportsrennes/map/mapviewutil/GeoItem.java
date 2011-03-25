@@ -33,6 +33,7 @@ package fr.ybo.transportsrennes.map.mapviewutil;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.android.maps.GeoPoint;
 
 /**
@@ -67,7 +68,6 @@ public class GeoItem implements Parcelable {
 	}
 
 	/* describeContents */
-	@SuppressWarnings({"MethodReturnAlwaysConstant"})
 	public int describeContents() {
 		return 0;
 	}
@@ -95,7 +95,6 @@ public class GeoItem implements Parcelable {
 	 *
 	 * @param flg flag to be set.
 	 */
-	@SuppressWarnings({"SameParameterValue"})
 	public void setSelect(boolean flg) {
 		isSelected = flg;
 	}

@@ -14,11 +14,6 @@
 
 package fr.ybo.gtfs.csv.moteur;
 
-import fr.ybo.gtfs.csv.annotation.BaliseCsv;
-import fr.ybo.gtfs.csv.annotation.FichierCsv;
-import fr.ybo.gtfs.csv.moteur.modele.ChampCsv;
-import fr.ybo.gtfs.csv.moteur.modele.ClassCsv;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -26,6 +21,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import fr.ybo.gtfs.csv.annotation.BaliseCsv;
+import fr.ybo.gtfs.csv.annotation.FichierCsv;
+import fr.ybo.gtfs.csv.moteur.modele.ChampCsv;
+import fr.ybo.gtfs.csv.moteur.modele.ClassCsv;
 
 public class MoteurCsv {
 
@@ -79,7 +79,7 @@ public class MoteurCsv {
 		return classCourante.getClazz();
 	}
 
-	@SuppressWarnings({"unchecked", "TypeMayBeWeakened"})
+	@SuppressWarnings("unchecked")
 	public <Objet> Collection<Objet> parseFile(BufferedReader bufReader, Class<Objet> clazz) throws IOException {
 		nouveauFichier(clazz.getAnnotation(FichierCsv.class).value(), bufReader.readLine());
 		Collection<Objet> objets = new ArrayList<Objet>(500);

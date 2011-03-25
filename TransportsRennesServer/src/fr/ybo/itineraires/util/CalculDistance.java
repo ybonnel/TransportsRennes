@@ -15,8 +15,6 @@
 package fr.ybo.itineraires.util;
 
 
-@SuppressWarnings(
-		{"ConstantNamingConvention", "LocalVariableNamingConvention", "NonConstantFieldWithUpperCaseName", "InstanceVariableNamingConvention"})
 class CalculDistance {
 
 	private static final int MAXITERS = 20;
@@ -49,7 +47,6 @@ class CalculDistance {
 	private double sigma;
 
 
-	@SuppressWarnings({"OverlyComplexArithmeticExpression"})
 	private double iterationCalcul(double lambda) {
 		double cosLambda = Math.cos(lambda);
 		double sinLambda = Math.sin(lambda);

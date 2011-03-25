@@ -16,6 +16,7 @@ package fr.ybo.itineraires.modele;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class JointureCorrespondance
     extends PortionTrajetPieton implements Serializable
 {

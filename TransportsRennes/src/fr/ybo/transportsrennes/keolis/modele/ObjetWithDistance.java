@@ -15,9 +15,9 @@
 package fr.ybo.transportsrennes.keolis.modele;
 
 
-import android.location.Location;
-
 import java.util.Comparator;
+
+import android.location.Location;
 
 public abstract class ObjetWithDistance {
 
@@ -65,7 +65,6 @@ public abstract class ObjetWithDistance {
 	 *
 	 * @return la distance formattée.
 	 */
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	public CharSequence formatDistance() {
 		if (distance == null) {
 			return "";

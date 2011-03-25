@@ -14,6 +14,22 @@
 
 package fr.ybo.transportsrennes.keolis;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+
 import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
@@ -27,20 +43,6 @@ import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
 import fr.ybo.transportsrennes.util.HttpUtils;
 import fr.ybo.transportsrennes.util.LogYbo;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Classe d'accés aux API Keolis. Cette classe est une singletton.
@@ -54,7 +56,6 @@ public final class Keolis {
 	/**
 	 * Instance du singletton.
 	 */
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static Keolis instance;
 
 	/**

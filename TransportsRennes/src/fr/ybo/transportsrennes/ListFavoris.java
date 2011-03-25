@@ -14,6 +14,9 @@
 
 package fr.ybo.transportsrennes;
 
+import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -22,15 +25,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author ybonnel
@@ -43,9 +43,8 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				FavoriAdapter favoriAdapter = (FavoriAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				Intent intent = new Intent(ListFavoris.this, DetailArret.class);
-				intent.putExtra("favori", favoriAdapter.getItem(position));
+				intent.putExtra("favori", (Serializable) adapterView.getAdapter().getItem(position));
 				startActivity(intent);
 			}
 		});

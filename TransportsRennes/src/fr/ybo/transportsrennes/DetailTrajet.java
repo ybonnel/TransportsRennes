@@ -14,6 +14,9 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,10 +32,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Activitée permettant d'afficher le détail d'un trajet
@@ -40,8 +39,6 @@ import java.util.List;
  * @author ybonnel
  */
 public class DetailTrajet extends MenuAccueil.ListActivity {
-
-	private static final LogYbo LOG_YBO = new LogYbo(DetailTrajet.class);
 
 	private Cursor currentCursor;
 

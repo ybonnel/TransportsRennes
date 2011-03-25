@@ -14,18 +14,17 @@
 
 package fr.ybo.transportsrennes;
 
+import java.io.Serializable;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.LigneAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * Activité affichant les lignes de bus..
@@ -40,9 +39,8 @@ public class BusRennes extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"TypeMayBeWeakened"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Serializable ligne = (Serializable) ((AdapterView<ListAdapter>) adapterView).getItemAtPosition(position);
+				Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(BusRennes.this, ListArret.class);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);

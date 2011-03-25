@@ -25,7 +25,6 @@ import java.util.Set;
  */
 public class JoursFeries {
 
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static Set<String> joursFeries;
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");

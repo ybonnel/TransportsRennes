@@ -27,7 +27,6 @@ public enum EnumCalendrier {
 
 	private final int numCalendrier;
 
-	@SuppressWarnings({"WeakerAccess"})
 	EnumCalendrier(int numCalendrier) {
 		this.numCalendrier = numCalendrier;
 	}

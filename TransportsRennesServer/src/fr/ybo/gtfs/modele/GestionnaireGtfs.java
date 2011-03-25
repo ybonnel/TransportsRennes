@@ -14,9 +14,6 @@
 
 package fr.ybo.gtfs.modele;
 
-import fr.ybo.gtfs.chargement.GestionZipKeolis;
-import fr.ybo.gtfs.csv.moteur.MoteurCsv;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,8 +22,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import fr.ybo.gtfs.chargement.GestionZipKeolis;
+import fr.ybo.gtfs.csv.moteur.MoteurCsv;
+
 public class GestionnaireGtfs {
 
+	@SuppressWarnings("serial")
 	public static class CoupleLigne implements Serializable {
 		public final String ligneId1;
 		public final String ligneId2;
@@ -125,7 +126,6 @@ public class GestionnaireGtfs {
 		return lignes.get(ligneId);
 	}
 
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static GestionnaireGtfs instance;
 
 	public static synchronized GestionnaireGtfs getInstance() {
@@ -144,7 +144,6 @@ public class GestionnaireGtfs {
 		return moteur;
 	}
 
-	@SuppressWarnings("unchecked")
 	private GestionnaireGtfs() {
 		long startTime = System.nanoTime();
 		directions = new HashMap<Integer, Direction>();

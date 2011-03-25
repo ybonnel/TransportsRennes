@@ -1,16 +1,16 @@
 package fr.ybo.transportsrennes.twitter;
 
-import fr.ybo.transportsrennes.keolis.KeolisException;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import fr.ybo.transportsrennes.keolis.KeolisException;
+
 public class GetTwitters {
 
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static GetTwitters instance;
 
 	private GetTwitters() {

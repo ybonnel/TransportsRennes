@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -43,11 +48,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances de la
@@ -80,7 +80,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	 *
 	 * @param location position courante.
 	 */
-	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
@@ -147,7 +146,6 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		desactiveGps();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void metterAJourListeArrets() {
 		String query = editText.getText().toString().toUpperCase();
 		arretsFiltrees.clear();

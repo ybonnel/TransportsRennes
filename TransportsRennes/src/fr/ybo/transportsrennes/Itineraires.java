@@ -18,7 +18,6 @@ import android.os.Bundle;
 import fr.ybo.itineraires.modele.ItineraireReponse;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TrajetAdapter;
-import fr.ybo.transportsrennes.util.GsonUtil;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 

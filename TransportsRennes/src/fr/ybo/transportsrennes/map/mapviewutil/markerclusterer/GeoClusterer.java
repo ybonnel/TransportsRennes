@@ -30,20 +30,22 @@
 
 package fr.ybo.transportsrennes.map.mapviewutil.markerclusterer;
 
-import android.graphics.Point;
-import android.os.Handler;
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.Projection;
-import fr.ybo.transportsrennes.map.mapviewutil.GeoBounds;
-import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import android.graphics.Point;
+import android.os.Handler;
+
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.Projection;
+
+import fr.ybo.transportsrennes.map.mapviewutil.GeoBounds;
+import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 
 /**
  * Class for Clustering geotagged content.
@@ -247,7 +249,6 @@ public class GeoClusterer {
 	/**
 	 * reset current viewport.
 	 */
-	@SuppressWarnings({"ObjectEquality"})
 	public void resetViewport() {
 		List<GeoItem> tmpItems = new ArrayList<GeoItem>(100);
 		int removed = 0;

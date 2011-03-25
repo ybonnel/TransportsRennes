@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -30,11 +35,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
 
 public class FavoriAdapter extends BaseAdapter {
 
@@ -232,7 +232,6 @@ public class FavoriAdapter extends BaseAdapter {
 	}
 
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	private CharSequence formatterCalendar(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;

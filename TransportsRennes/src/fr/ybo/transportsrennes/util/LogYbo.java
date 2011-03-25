@@ -14,10 +14,10 @@
 
 package fr.ybo.transportsrennes.util;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import android.util.Log;
 
 public class LogYbo {
 
@@ -43,7 +43,6 @@ public class LogYbo {
 		Log.e(tag, message);
 	}
 
-	@SuppressWarnings({"SameParameterValue"})
 	public void warn(String message) {
 		Log.w(tag, message);
 	}
@@ -57,14 +56,12 @@ public class LogYbo {
 		return mapStartTimes;
 	}
 
-	@SuppressWarnings({"UnusedDeclaration"})
 	public void startChrono(String message) {
 		if (IS_DEBUG) {
 			getMapStartTimes().put(message, System.nanoTime());
 		}
 	}
 
-	@SuppressWarnings({"UnusedDeclaration"})
 	public void stopChrono(String message) {
 		if (IS_DEBUG) {
 			long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;

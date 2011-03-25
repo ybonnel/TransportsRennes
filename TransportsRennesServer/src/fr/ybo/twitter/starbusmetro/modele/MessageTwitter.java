@@ -14,14 +14,15 @@
 
 package fr.ybo.twitter.starbusmetro.modele;
 
-import com.google.appengine.api.datastore.Key;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
+import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
 public class MessageTwitter {
@@ -35,7 +36,6 @@ public class MessageTwitter {
 	@Persistent
 	public String texte;
 
-	@SuppressWarnings({"AssignmentToDateFieldFromParameter"})
 	public MessageTwitter(Date dateCreation, String texte) {
 		this.dateCreation = dateCreation;
 		this.texte = texte;
@@ -46,6 +46,13 @@ public class MessageTwitter {
 
 	public Date getDateCreation() {
 		return dateCreation;
+	}
+
+	/**
+	 * @return the key
+	 */
+	public Key getKey() {
+		return key;
 	}
 
 	public String toXml() {

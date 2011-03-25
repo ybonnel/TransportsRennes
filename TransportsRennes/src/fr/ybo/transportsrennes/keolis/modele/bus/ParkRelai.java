@@ -14,14 +14,14 @@
 
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 /**
  * @author ybonnel
  */
-@SuppressWarnings({"serial", "UnusedDeclaration"})
+@SuppressWarnings("serial")
 public class ParkRelai extends ObjetWithDistance implements Serializable {
 
 	/**

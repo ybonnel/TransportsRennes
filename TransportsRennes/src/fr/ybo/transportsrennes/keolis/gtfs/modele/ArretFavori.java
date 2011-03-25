@@ -14,13 +14,13 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import java.io.Serializable;
+
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
-import java.io.Serializable;
-
-@SuppressWarnings({"serial", "UnusedDeclaration"})
+@SuppressWarnings("serial")
 @Table
 public class ArretFavori implements Serializable {
 	@Colonne

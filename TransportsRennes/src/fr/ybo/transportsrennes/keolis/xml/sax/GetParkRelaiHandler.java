@@ -66,7 +66,6 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 		return new ParkRelai();
 	}
 
-	@SuppressWarnings({"IfStatementWithTooManyBranches"})
 	@Override
 	protected void remplirObjectKeolis(ParkRelai currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {

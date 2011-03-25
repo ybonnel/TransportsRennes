@@ -14,6 +14,10 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,10 +29,6 @@ import fr.ybo.transportsrennes.adapters.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ListTwitter extends MenuAccueil.ListActivity {
 
@@ -67,7 +67,6 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();

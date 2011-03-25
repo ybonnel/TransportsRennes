@@ -14,20 +14,19 @@
 
 package fr.ybo.gtfs.chargement;
 
-import fr.ybo.gtfs.csv.moteur.MoteurCsv;
-import fr.ybo.gtfs.modele.Correspondance;
-import fr.ybo.gtfs.modele.Horaire;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Collection;
+
+import fr.ybo.gtfs.csv.moteur.MoteurCsv;
+import fr.ybo.gtfs.modele.Correspondance;
+import fr.ybo.gtfs.modele.Horaire;
 
 public final class GestionZipKeolis {
 
 	private static final String URL_BASE = "/gtfs/";
 	private static final String URL_STOP_TIMES = URL_BASE + "horaires_";
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static Iterable<Correspondance> getCorrespondances(MoteurCsv moteurCsv) {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream("/gtfs/correspondances.txt")), 8 << 10);
@@ -54,7 +53,6 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	@SuppressWarnings({"IOResourceOpenedButNotSafelyClosed"})
 	public static <ObjetKeolis> Collection<ObjetKeolis> getAndParseKeolis(MoteurCsv moteur, String file, Class<ObjetKeolis> clazz) {
 		try {
 			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_BASE + file), "utf-8"), 8 << 10);

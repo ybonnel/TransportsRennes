@@ -14,9 +14,9 @@
 
 package fr.ybo.itineraires.modele;
 
-import fr.ybo.itineraires.bean.ItineraireException;
-
 import java.util.logging.Logger;
+
+import fr.ybo.itineraires.bean.ItineraireException;
 
 
 public class Adresse {
@@ -43,7 +43,6 @@ public class Adresse {
 		}
 	}
 
-	@SuppressWarnings({"UnusedDeclaration"})
 	public Adresse(Double latitude, Double longitude) {
 		this.latitude = latitude;
 		this.longitude = longitude;

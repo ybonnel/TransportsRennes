@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -29,11 +34,6 @@ import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
 
@@ -59,7 +59,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"TypeMayBeWeakened"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				Serializable alert = (Serializable) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(ListAlerts.this, DetailAlert.class);
@@ -110,7 +109,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();

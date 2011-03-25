@@ -74,7 +74,6 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 	 *
 	 * @param location position courante.
 	 */
-	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;

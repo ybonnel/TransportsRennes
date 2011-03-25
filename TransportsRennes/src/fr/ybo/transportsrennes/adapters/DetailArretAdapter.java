@@ -63,7 +63,6 @@ public class DetailArretAdapter extends CursorAdapter {
 		((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText(formatterCalendar(prochainDepart, now));
 	}
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	private CharSequence formatterCalendar(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
@@ -96,7 +95,6 @@ public class DetailArretAdapter extends CursorAdapter {
 		return stringBuilder.toString();
 	}
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	private CharSequence formatterCalendarHeure(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;

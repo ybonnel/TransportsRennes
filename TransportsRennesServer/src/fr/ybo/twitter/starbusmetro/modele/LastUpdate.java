@@ -18,7 +18,6 @@ import java.util.Date;
 
 public class LastUpdate {
 
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static LastUpdate instance;
 
 	public static synchronized LastUpdate getInstance() {

@@ -14,13 +14,13 @@
 
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import fr.ybo.transportsrennes.util.Formatteur;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+
+import fr.ybo.transportsrennes.util.Formatteur;
 
 /**
  * Class représentant une alerte Keolis.
@@ -139,7 +139,6 @@ public class Alert implements Serializable {
 		CARAC_TO_DELETE.add('9');
 	}
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	public CharSequence getTitleFormate() {
 		String titleFormate = title;
 		while (CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {

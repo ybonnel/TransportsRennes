@@ -14,16 +14,16 @@
 
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 /**
  * Un point de vente.
  *
  * @author ybonnel
  */
-@SuppressWarnings({"serial", "UnusedDeclaration"})
+@SuppressWarnings("serial")
 public class PointDeVente extends ObjetWithDistance implements Serializable {
 	/**
 	 * Nom du point de vente.

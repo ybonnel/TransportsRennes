@@ -14,6 +14,9 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -31,11 +34,13 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
@@ -47,9 +52,6 @@ import fr.ybo.transportsrennes.map.MyGeoClusterer;
 import fr.ybo.transportsrennes.map.MyGeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AllOnMap extends MapActivity {
 
@@ -360,7 +362,6 @@ public class AllOnMap extends MapActivity {
 		super.onPause();
 	}
 
-	@SuppressWarnings({"MethodReturnAlwaysConstant"})
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;

@@ -21,7 +21,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
-@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("trajets.txt")
 @Table
 public class Trajet {

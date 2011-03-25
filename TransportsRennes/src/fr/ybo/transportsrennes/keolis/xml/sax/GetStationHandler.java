@@ -82,7 +82,6 @@ public class GetStationHandler extends KeolisHandler<Station> {
 		return new Station();
 	}
 
-	@SuppressWarnings({"IfStatementWithTooManyBranches", "OverlyComplexMethod"})
 	@Override
 	protected void remplirObjectKeolis(Station currentObjectKeolis, String baliseName, String contenuOfBalise) {
 		if (baliseName.equals(NUMBER)) {

@@ -14,16 +14,6 @@
 
 package fr.ybo.twitter.starbusmetro;
 
-import fr.ybo.twitter.starbusmetro.database.PersistenceFactory;
-import fr.ybo.twitter.starbusmetro.modele.LastUpdate;
-import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
-import twitter4j.ResponseList;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-
-import javax.jdo.PersistenceManager;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,6 +23,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.jdo.PersistenceManager;
+
+import twitter4j.ResponseList;
+import twitter4j.Status;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import fr.ybo.twitter.starbusmetro.database.PersistenceFactory;
+import fr.ybo.twitter.starbusmetro.modele.LastUpdate;
+import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
+
 class GetTwitters {
 
 	private static final Logger LOGGER = Logger.getLogger(GetTwitters.class.getName());
@@ -40,7 +41,6 @@ class GetTwitters {
 	private static final String QUERY = "select from " + MessageTwitter.class.getName() + " order by dateCreation desc range 0,20";
 
 
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static TwitterFactory twitterFactory;
 
 	private static synchronized TwitterFactory getFactory() {

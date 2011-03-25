@@ -15,13 +15,14 @@
 package fr.ybo.gtfs.modele;
 
 
+import java.io.Serializable;
+
 import fr.ybo.gtfs.csv.annotation.BaliseCsv;
 import fr.ybo.gtfs.csv.annotation.FichierCsv;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterBoolean;
 import fr.ybo.gtfs.csv.moteur.adapter.AdapterInteger;
 
-import java.io.Serializable;
-
+@SuppressWarnings("serial")
 @FichierCsv("horaires.txt")
 public class Horaire implements Serializable {
 	@BaliseCsv("arret_id")

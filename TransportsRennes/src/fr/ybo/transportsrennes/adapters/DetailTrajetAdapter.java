@@ -58,7 +58,6 @@ public class DetailTrajetAdapter extends CursorAdapter {
 		((DetailTrajetAdapter.ViewHolder) view.getTag()).heurePassage.setText(formatterCalendarHeure(prochainDepart));
 	}
 
-	@SuppressWarnings({"TypeMayBeWeakened"})
 	private CharSequence formatterCalendarHeure(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;

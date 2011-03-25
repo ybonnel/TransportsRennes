@@ -16,6 +16,7 @@ package fr.ybo.itineraires.modele;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class PortionTrajetBus implements Serializable
 {
     protected String ligneId;

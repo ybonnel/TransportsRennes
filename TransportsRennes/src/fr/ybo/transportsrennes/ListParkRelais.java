@@ -14,6 +14,12 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -41,12 +47,6 @@ import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de la
@@ -83,7 +83,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 	 *
 	 * @param location position courante.
 	 */
-	@SuppressWarnings("unchecked")
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
 			lastLocation = location;
@@ -153,7 +152,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 	private ProgressDialog myProgressDialog;
 
-	@SuppressWarnings("unchecked")
 	private void metterAJourListeParkRelais() {
 		String query = editText.getText().toString().toUpperCase();
 		synchronized (parkRelais) {
@@ -239,7 +237,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			}
 
 			@Override
-			@SuppressWarnings("unchecked")
 			protected void onPostExecute(Void result) {
 				myProgressDialog.dismiss();
 				if (erreur) {
@@ -332,7 +329,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				}
 
 				@Override
-				@SuppressWarnings("unchecked")
 				protected void onPostExecute(Void result) {
 					myProgressDialog.dismiss();
 					if (erreur) {

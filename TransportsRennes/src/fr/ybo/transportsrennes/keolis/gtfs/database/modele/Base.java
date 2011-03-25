@@ -14,13 +14,13 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.database.modele;
 
-import android.database.sqlite.SQLiteDatabase;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import android.database.sqlite.SQLiteDatabase;
+import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 
 public class Base {
 
@@ -74,7 +74,6 @@ public class Base {
 		mapClassTable.get(clazz).insert(db, entite);
 	}
 
-	@SuppressWarnings({"SameParameterValue"})
 	public <Entite> List<Entite> select(SQLiteDatabase db, Entite entite, String selection, Collection<String> selectionArgs, String orderBy)
 			throws DataBaseException {
 		Class<?> clazz = entite.getClass();
