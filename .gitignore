@@ -9,3 +9,4 @@ TransportsRennes/gen
 **/.pmd
 **/.fbprefs
 **/.settings/*findbugs*
+**/bin
