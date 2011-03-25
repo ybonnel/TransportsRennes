@@ -18,9 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Représente une correspondance.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("correspondances.txt")
 public class Correspondance {
-
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "arretId", ordre = 0)
 	public String arretId;
 	@BaliseCsv(value = "correspondanceId", ordre = 1)

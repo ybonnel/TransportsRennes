@@ -18,12 +18,16 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Extension aux routes.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("routes_extensions.txt")
 public class RouteExtension {
-
+	// CHECKSTYLE:OFF
 	@BaliseCsv("route_id")
 	public String routeId;
-
 	@BaliseCsv(value = "route_accessible", adapter = AdapterBoolean.class)
 	public Boolean accessible;
 }

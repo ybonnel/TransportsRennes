@@ -20,8 +20,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Horaire.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("horaires.txt")
 public class Horaire {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "arret_id", ordre = 0)
 	public String arretId;
 	@BaliseCsv(value = "trajet_id", adapter = AdapterInteger.class, ordre = 1)

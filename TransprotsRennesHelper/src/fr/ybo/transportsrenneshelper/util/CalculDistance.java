@@ -14,10 +14,13 @@
 
 package fr.ybo.transportsrenneshelper.util;
 
-
-@SuppressWarnings(
-		{"ConstantNamingConvention", "LocalVariableNamingConvention", "NonConstantFieldWithUpperCaseName", "OverlyComplexArithmeticExpression"})
+/**
+ * Classe permettant le calcul de distance entre deux points GPS.
+ * @author ybonnel
+ */
 public class CalculDistance {
+
+	// CHECKSTYLE:OFF
 
 	private static final int MAXITERS = 20;
 
@@ -43,14 +46,13 @@ public class CalculDistance {
 	private double sinU1;
 	private double cosU1cosU2;
 	private double sinU1sinU2;
-	@SuppressWarnings({"InstanceVariableNamingConvention"})
 	private double A;
-	@SuppressWarnings({"InstanceVariableNamingConvention"})
 	private double L;
 	private double deltaSigma;
 	private double sigma;
 
 
+	
 	private double iterationCalcul(double lambda) {
 		double cosLambda = Math.cos(lambda);
 		double sinLambda = Math.sin(lambda);

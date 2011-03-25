@@ -18,8 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Représente une direction.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("directions.txt")
 public class Direction {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class, ordre = 0)
 	public int id;
 	@BaliseCsv(value = "direction", ordre = 1)

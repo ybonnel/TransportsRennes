@@ -18,8 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Représente un trajet de bus.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("trajets.txt")
 public class Trajet {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
 	public int id;
 	@BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
@@ -28,4 +34,6 @@ public class Trajet {
 	public String ligneId;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
 	public int directionId;
+	@BaliseCsv( value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
+	public Integer macroDirection;
 }

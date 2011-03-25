@@ -20,8 +20,14 @@ import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 
+/**
+ * StopTime GTFS.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("stop_times.txt")
 public class StopTime {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "trip_id", ordre = 0)
 	public String tripId;
 	@BaliseCsv(value = "stop_id", ordre = 1)

@@ -18,8 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@FichierCsv( "arrets.txt")
+/**
+ * Un arrêt.
+ * @author ybonnel
+ *
+ */
+@FichierCsv("arrets.txt")
 public class Arret {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "nom", ordre = 1)

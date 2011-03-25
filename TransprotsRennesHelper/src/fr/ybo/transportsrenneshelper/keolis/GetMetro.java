@@ -16,10 +16,29 @@ package fr.ybo.transportsrenneshelper.keolis;
 
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 
-public class GetMetro {
+/**
+ * Permet d'accéder aux stations de métro, sans pour autant faire un appel à Keolis à chaque fois.
+ * Une sorte de proxy/cache.
+ * @author ybonnel
+ *
+ */
+public final class GetMetro {
+	
+	/**
+	 * Constructeur privé pour empécher l'instanciation.
+	 */
+	private GetMetro() {
+	}
 
+	/**
+	 * Stations de métro.
+	 */
 	private static Iterable<MetroStation> stations = null;
 
+	/**
+	 * 
+	 * @return les stations de métro.
+	 */
 	public static Iterable<MetroStation> getStations() {
 		if (stations == null) {
 			stations = Keolis.getInstance().getMetroStation();

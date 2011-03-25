@@ -14,7 +14,13 @@
 
 package fr.ybo.transportsrenneshelper.keolis.modele;
 
+/**
+ * Représente une station de métro.
+ * @author ybonnel
+ *
+ */
 public class MetroStation {
+	// CHECKSTYLE:OFF
 	private String id;
 	private String name;
 	private double latitude;

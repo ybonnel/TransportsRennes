@@ -28,16 +28,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings({"UseOfSystemOutOrSystemErr"})
+/**
+ * Compression des trips et calendar (et horaires du coup).
+ * @author ybonnel
+ *
+ */
 public class CompressionTripAndCalendar {
 
-	private static class Trajet {
+	/**
+	 * Représente un trajet, avec tous ses horaires associés.
+	 * @author ybonnel
+	 *
+	 */
+	private static final class Trajet {
 
+		/**
+		 * Constructeur.
+		 * @param stopTimes listes des horaires.
+		 */
 		private Trajet(List<StopTime> stopTimes) {
 			this.stopTimes = stopTimes;
 			key = genereKey();
 		}
 
+		/**
+		 * Génération de la clé.
+		 * La clé et la suite des stopId avec leurs horaires.
+		 * @return la clé.
+		 */
 		private String genereKey() {
 			Collections.sort(stopTimes, new Comparator<StopTime>() {
 				public int compare(StopTime o1, StopTime o2) {
@@ -52,12 +70,26 @@ public class CompressionTripAndCalendar {
 			return keyBuilder.toString();
 		}
 
-		private final String key;
+		/**
+		 * La clé.
+		 */
+		private String key;
 
-		public final List<StopTime> stopTimes;
+		/**
+		 * Liste des horaires.
+		 */
+		private List<StopTime> stopTimes;
 
-		public final List<String> tripIds = new ArrayList<String>(1000);
+		/**
+		 * Identifiants des trips.
+		 */
+		private List<String> tripIds = new ArrayList<String>();
 
+		/**
+		 * Ajout d'un trip.
+		 * @param tripId tripId.
+		 * @param calendar calendar du trip.
+		 */
 		public void addTripId(String tripId, Calendar calendar) {
 			if (this.calendar == null) {
 				this.calendar = new Calendar(calendar);
@@ -67,20 +99,34 @@ public class CompressionTripAndCalendar {
 			tripIds.add(tripId);
 		}
 
-		public Calendar calendar;
+		/**
+		 * Calendar (mergé).
+		 */
+		private Calendar calendar;
 
+		/**
+		 * 
+		 * @return la clé.
+		 */
 		public String getKey() {
 			return key;
 		}
 	}
 
-	private final Map<String, CompressionTripAndCalendar.Trajet> trajets = new HashMap<String, CompressionTripAndCalendar.Trajet>(1000);
+	/**
+	 * Map des trajets (par leurs clé).
+	 */
+	private final Map<String, CompressionTripAndCalendar.Trajet> trajets =
+		new HashMap<String, CompressionTripAndCalendar.Trajet>();
 
 
+	/**
+	 * Compression.
+	 */
 	public void compressTripsAndCalendars() {
 		for (Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
-			CompressionTripAndCalendar.Trajet trajet =
-					new CompressionTripAndCalendar.Trajet(GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id));
+			CompressionTripAndCalendar.Trajet trajet = new CompressionTripAndCalendar.Trajet(GestionnaireGtfs
+					.getInstance().getStopTimesForOnTrip(tripActuel.id));
 			if (!trajets.containsKey(trajet.getKey())) {
 				trajets.put(trajet.getKey(), trajet);
 			}
@@ -88,14 +134,23 @@ public class CompressionTripAndCalendar {
 		}
 	}
 
+	/**
+	 * Remplace les anciennes données par les données compressées.
+	 */
 	public void replaceTripGenereCalendarAndCompressStopTimes() {
-		Collection<Trip> newTrips = new ArrayList<Trip>(1000);
-		Collection<StopTime> newStopTimes = new ArrayList<StopTime>(1000);
+		Collection<Trip> newTrips = new ArrayList<Trip>();
+		Collection<StopTime> newStopTimes = new ArrayList<StopTime>();
 		int calendarId = 1;
-		Map<Calendar, String> newCalendars = new HashMap<Calendar, String>(20);
+		Map<Calendar, String> newCalendars = new HashMap<Calendar, String>();
 		int tripId = 1;
 		for (CompressionTripAndCalendar.Trajet trajet : trajets.values()) {
 			Trip tripCourant = GestionnaireGtfs.getInstance().getMapTrips().get(trajet.tripIds.get(0));
+			int macroDirection = tripCourant.directionId;
+			for (String tripIdFind : trajet.tripIds) {
+				if (GestionnaireGtfs.getInstance().getMapTrips().get(tripIdFind).directionId != macroDirection) {
+					System.err.println("ALERTE macroDirection diférent pour des mêmes trajet!!!");
+				}
+			}
 			tripCourant.id = String.valueOf(tripId);
 			tripId++;
 			if (!newCalendars.containsKey(trajet.calendar)) {
@@ -119,7 +174,8 @@ public class CompressionTripAndCalendar {
 		for (StopTime stopTime : newStopTimes) {
 			if (GestionnaireGtfs.getInstance().getMapStopTimes().containsKey(stopTime.getKey())) {
 				System.err.println("StopTimes présent plusieurs fois après compression :");
-				System.err.println("Ancien : " + GestionnaireGtfs.getInstance().getMapStopTimes().get(stopTime.getKey()).toString());
+				System.err.println("Ancien : "
+						+ GestionnaireGtfs.getInstance().getMapStopTimes().get(stopTime.getKey()).toString());
 				System.err.println("Nouveau : " + stopTime.toString());
 			}
 			GestionnaireGtfs.getInstance().getMapStopTimes().put(stopTime.getKey(), stopTime);

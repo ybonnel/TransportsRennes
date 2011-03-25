@@ -20,8 +20,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Un calendrier.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("calendriers.txt")
 public class Calendrier {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class, ordre = 0)
 	public int id;
 	@BaliseCsv(value = "lundi", adapter = AdapterBoolean.class, ordre = 1)

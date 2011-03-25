@@ -40,7 +40,7 @@ public class Answer<ObjectKeolis> {
 	 */
 	public Collection<ObjectKeolis> getData() {
 		if (data == null) {
-			data = new ArrayList<ObjectKeolis>(50);
+			data = new ArrayList<ObjectKeolis>();
 		}
 		return data;
 	}

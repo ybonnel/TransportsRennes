@@ -18,9 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Extension aux stops GTFS.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("stops_extensions.txt")
 public class StopExtension {
-
+	// CHECKSTYLE:OFF
 	@BaliseCsv("stop_id")
 	public String stopId;
 

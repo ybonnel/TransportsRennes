@@ -24,9 +24,14 @@ import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 
+
+/**
+ * Horaires du métro.
+ */
 @SuppressWarnings("serial")
 @FichierCsv("horaires_metro.txt")
 public class HoraireMetro implements Serializable {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "POT1", adapter = AdapterTime.class)
 	public Integer pot1;
 	@BaliseCsv(value = "BLO1", adapter = AdapterTime.class)
@@ -96,11 +101,13 @@ public class HoraireMetro implements Serializable {
 		trajet1.directionId = direction1Id;
 		trajet1.id = trajetId;
 		trajet1.ligneId = "a";
+		trajet1.macroDirection = 0;
 		Trajet trajet2 = new Trajet();
 		trajet2.calendrierId = calendrierId;
 		trajet2.directionId = direction2Id;
 		trajet2.id = trajetId + 1;
 		trajet2.ligneId = "a";
+		trajet2.macroDirection = 1;
 		horaires.add(newHoraire("POT1", pot1, 1, false, trajet1));
 		horaires.add(newHoraire("BLO1", blo1, 2, false, trajet1));
 		horaires.add(newHoraire("TRI1", tri1, 3, false, trajet1));
@@ -153,11 +160,13 @@ public class HoraireMetro implements Serializable {
 		trip1.serviceId = Integer.toString(calendrierId);
 		trip1.id = Integer.toString(trajetId);
 		trip1.headSign = headSign1;
+		trip1.directionId = 0;
 		Trip trip2 = new Trip();
 		trip2.routeId = "a";
 		trip2.serviceId = Integer.toString(calendrierId);
 		trip2.id = Integer.toString(trajetId+1);
 		trip2.headSign = headSign2;
+		trip2.directionId = 0;
 		horaires.add(newStopTime("POT1", pot1, 1, trip1));
 		horaires.add(newStopTime("BLO1", blo1, 2, trip1));
 		horaires.add(newStopTime("TRI1", tri1, 3, trip1));

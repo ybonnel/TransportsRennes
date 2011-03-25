@@ -14,10 +14,8 @@
 
 package fr.ybo.transportsrenneshelper;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,12 +35,33 @@ import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
-public class Main {
+/**
+ * Classe réalisant l'enchènement des traitements.
+ * @author ybonnel
+ *
+ */
+public final class Main {
 
+	/**
+	 * Constructeur privé pour empécher l'instanciation.
+	 */
 	private Main() {
 	}
 
+	/**
+	 * Main.
+	 * @param args innutile.
+	 * @throws IOException problème d'entrée/sortie.
+	 */
 	public static void main(String[] args) throws IOException {
+		genereGtfs(false);
+	}
+	/**
+	 * Traitement principale.
+	 * @param toGtfs si true, on génère du GTFS, sinon on génère dans l'autre format.
+	 * @throws IOException problème d'entrée/sortie.
+	 */
+	private static void genereGtfs(boolean toGtfs) throws IOException {
 		long startTime = System.currentTimeMillis();
 		GetAndContructZip getAndContructZip = new GetAndContructZip();
 		getAndContructZip.getZipKeolis();
@@ -55,22 +74,29 @@ public class Main {
 		System.out.println("Après compression : ");
 		afficheCompteurs();
 		long timeElapsed = System.currentTimeMillis() - startTime;
-		// genereGtfsOptimises();
-		Generateur generateur = new Generateur();
-		generateur.remplirArrets();
-		generateur.remplirCalendrier();
-		generateur.remplirDirections();
-		generateur.remplirHoraires();
-		generateur.remplirLignes();
-		generateur.remplirTrajets();
-		generateur.remplirArretRoutes();
-		generateur.remplirCorrespondance();
-		generateur.ajoutDonnesMetro();
-		generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
-		generateur.rechercherPointsInterets();
+		if (toGtfs) {
+			genereGtfsOptimises();
+		} else {
+			Generateur generateur = new Generateur();
+			generateur.remplirArrets();
+			generateur.remplirCalendrier();
+			generateur.remplirDirections();
+			generateur.remplirHoraires();
+			generateur.remplirLignes();
+			generateur.remplirTrajets();
+			generateur.remplirArretRoutes();
+			generateur.remplirCorrespondance();
+			generateur.ajoutDonnesMetro();
+			generateur.genererFichiers(new File(GetAndContructZip.REPERTOIRE_OUT));
+			generateur.rechercherPointsInterets();
+		}
 		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
+		
 	}
 
+	/**
+	 * Affiche les compteurs des données GTFS.
+	 */
 	private static void afficheCompteurs() {
 		System.out.println("\tNombre de Calendars : " + GestionnaireGtfs.getInstance().getMapCalendars().size());
 		System.out.println("\tNombre de StopTimes : " + GestionnaireGtfs.getInstance().getMapStopTimes().size());
@@ -79,19 +105,32 @@ public class Main {
 		System.out.println("\tNombre de Trips : " + GestionnaireGtfs.getInstance().getMapTrips().size());
 	}
 
+	/**
+	 * @param calendar un calendar.
+	 * @return true si c'est un calendar "semaine" (tous les jours sauf le dimanche).
+	 */
 	private static boolean isSemaine(Calendar calendar) {
 		return (calendar.lundi && calendar.mardi && calendar.mercredi && calendar.jeudi && calendar.vendredi
 				&& calendar.samedi && !calendar.dimanche);
 	}
 
+	/**
+	 * @param calendar
+	 *            un calendar.
+	 * @return true si c'est un calendar "semaine" (tous les jours sauf le
+	 *         dimanche).
+	 */
 	private static boolean isDimanche(Calendar calendar) {
 		return (!calendar.lundi && !calendar.mardi && !calendar.mercredi && !calendar.jeudi && !calendar.vendredi
 				&& !calendar.samedi && calendar.dimanche);
-
 	}
 
+	/**
+	 * Génère un GTFS optimisé.
+	 * @throws IOException problème d'entrée/sortie.
+	 */
 	private static void genereGtfsOptimises() throws IOException {
-		MoteurCsv moteurCsv = GestionnaireGtfs.getInstance().moteurCsv;
+		MoteurCsv moteurCsv = GestionnaireGtfs.getInstance().getMoteurCsv();
 		// agency on le garde
 		// calendars
 		// Ajout des données de métro.
@@ -185,7 +224,6 @@ public class Main {
 		clazz.add(HoraireMetro.class);
 		MoteurCsv moteurMetro = new MoteurCsv(clazz);
 		List<StopTime> horairesMetro = new ArrayList<StopTime>();
-		final List<HoraireMetro> horairesMetroCsv = new ArrayList<HoraireMetro>();
 		for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(
 				Main.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_semaine.txt"),
 				HoraireMetro.class)) {

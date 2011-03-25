@@ -36,18 +36,54 @@ import java.util.zip.ZipOutputStream;
 
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 
+/**
+ * Gestion du zip Keolis.
+ * @author ybonnel
+ *
+ */
 public class GetAndContructZip {
+	/**
+	 * Format de la date dans le nom du fichier.
+	 */
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
+	
+	/**
+	 * Taille du format de la date.
+	 */
+	private static final int TRAILLE_FORMAT_DATE = 8;
 
+	/**
+	 * Nombre de jours de recherche en mode brute-force.
+	 */
 	private static final int NB_JOURS_RECHERCHE = 200;
 
+	/**
+	 * Chemin de fichier GTFS.
+	 */
 	private static final String URL_RELATIVE = "fileadmin/OpenDataFiles/GTFS/GTFS-";
+	/**
+	 * Url du site Keolis.
+	 */
 	private static final String URL_KEOLIS = "http://data.keolis-rennes.com/";
+	/**
+	 * Url de base pour le fichier.
+	 */
 	private static final String BASE_URL = URL_KEOLIS + URL_RELATIVE;
-	private static final String URL_DONNEES_TELECHARGEABLES = URL_KEOLIS + "fr/les-donnees/donnees-telechargeables.html";
+	/**
+	 * URL de la page des données téléchargeables.
+	 */
+	private static final String URL_DONNEES_TELECHARGEABLES = URL_KEOLIS
+			+ "fr/les-donnees/donnees-telechargeables.html";
+	/**
+	 * Extension du fichier.
+	 */
 	private static final String EXTENSION_URL = ".zip";
 
 
+	/**
+	 * Récupère la date de dernière mise à jour du fichier Keolis.
+	 * @return la date trouvée.
+	 */
 	private Date getLastUpdate() {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(URL_DONNEES_TELECHARGEABLES).openConnection();
@@ -60,8 +96,9 @@ public class GetAndContructZip {
 				String chaineRecherchee = URL_RELATIVE;
 				while (ligne != null) {
 					if (ligne.contains(chaineRecherchee)) {
-						String chaineDate = ligne.substring(ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
-								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + 8);
+						String chaineDate = ligne.substring(
+								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
+								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + TRAILLE_FORMAT_DATE);
 						return SDF.parse(chaineDate);
 					}
 					ligne = bufReader.readLine();
@@ -75,6 +112,10 @@ public class GetAndContructZip {
 		}
 	}
 
+	/**
+	 * Récupère la date de dernière mise à jour Keolis en mode brute-force.
+	 * @return la date trouvée.
+	 */
 	private Date getLastUpdateBruteForce() {
 		GregorianCalendar calendar = new GregorianCalendar();
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -95,10 +136,21 @@ public class GetAndContructZip {
 		return null;
 	}
 
+	/**
+	 * Récupère l'URL du fichier Keolis à partir d'une date donnée.
+	 * @param date la date.
+	 * @return l'url.
+	 * @throws MalformedURLException ne doit pas arriver.
+	 */
 	private URL getUrlKeolisFromDate(Date date) throws MalformedURLException {
 		return new URL(BASE_URL + SDF.format(date) + EXTENSION_URL);
 	}
 
+	/**
+	 * Ouvre un connection http vers le fichier Keolis pour une date donnée.
+	 * @param dateFileKeolis la date.
+	 * @return la connection http.
+	 */
 	private HttpURLConnection openHttpConnection(Date dateFileKeolis) {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) getUrlKeolisFromDate(dateFileKeolis).openConnection();
@@ -111,11 +163,33 @@ public class GetAndContructZip {
 		}
 	}
 
-	private static final String REPERTOIRE_SORTIE = "/home/ybonnel/data/GTFSRennes";
+	/**
+	 * Répertoire Data issue de la variable d'environnement YBO_DEV_DATA.
+	 */
+	private static final String YBO_DEV_DATA = System.getenv("YBO_DEV_DATA");
+	/**
+	 * Répertoire des datas par défaut.
+	 */
+	private static final String YBO_DEV_DATA_DEFAULT = "/home/ybonnel/dev/data";
+
+	/**
+	 * Répertoire de travail.
+	 */
+	private static final String REPERTOIRE_SORTIE = (YBO_DEV_DATA == null ? YBO_DEV_DATA_DEFAULT : YBO_DEV_DATA)
+			+ "/GTFSRennes";
+	/**
+	 * Répertoire des fichiers gtfs.
+	 */
 	public static final String REPERTOIRE_GTFS = REPERTOIRE_SORTIE + "/GTFS";
+	/**
+	 * Répertoire de sortie des fichiers finaux.
+	 */
 	public static final String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
 
 
+	/**
+	 * Récupère le zip Keolis et l'extrait dans le repertoire GTFS.
+	 */
 	public void getZipKeolis() {
 		try {
 			Date lastUpdate = getLastUpdate();
@@ -146,12 +220,18 @@ public class GetAndContructZip {
 		}
 	}
 
+	/**
+	 * Copie les fichiers d'un zip dans un répertoire.
+	 * @param zipInputStream le zip.
+	 * @param repertoire le répertoire de sortie.
+	 * @throws IOException problème d'entrée/sortie.
+	 */
 	private void copieFichierZip(ZipInputStream zipInputStream, File repertoire) throws IOException {
 		ZipEntry zipEntry = zipInputStream.getNextEntry();
 		while (zipEntry != null) {
 			System.out.println("Copie du fichier " + zipEntry.getName());
 			File file = new File(repertoire, zipEntry.getName());
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream), 8 << 10);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(zipInputStream));
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 			try {
 				String ligne = bufReader.readLine();
@@ -167,19 +247,29 @@ public class GetAndContructZip {
 			zipEntry = zipInputStream.getNextEntry();
 		}
 	}
+	
+	/**
+	 * Taille du buffer.
+	 */
+	private static final int TRAILLE_BUFFER = 2048;
 
+	/**
+	 * Ajoute un fichier à un zip.
+	 * @param file le fichier.
+	 * @param out le zip.
+	 */
 	public static void addFileToZip(File file, ZipOutputStream out) {
 		try {
 			FileInputStream fi = new FileInputStream(file);
-			BufferedInputStream origin = new BufferedInputStream(fi, 2048);
+			BufferedInputStream origin = new BufferedInputStream(fi, TRAILLE_BUFFER);
 			try {
 				ZipEntry entry = new ZipEntry(file.getName());
 				out.putNextEntry(entry);
-				byte[] data = new byte[2048];
-				int count = origin.read(data, 0, 2048);
+				byte[] data = new byte[TRAILLE_BUFFER];
+				int count = origin.read(data, 0, TRAILLE_BUFFER);
 				while (count != -1) {
 					out.write(data, 0, count);
-					count = origin.read(data, 0, 2048);
+					count = origin.read(data, 0, TRAILLE_BUFFER);
 				}
 			} finally {
 				origin.close();

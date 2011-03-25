@@ -59,7 +59,6 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	/**
 	 * StringBuilder servant au parsing xml.
 	 */
-	@SuppressWarnings({"StringBufferField"})
 	private StringBuilder contenu;
 
 	@Override
@@ -111,7 +110,8 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
 	 * @param baliseName          nom de la balise.
 	 * @param contenuOfBalise     contenu de la balise.
 	 */
-	protected abstract void remplirObjectKeolis(ObjetKeolis currentObjectKeolis, String baliseName, String contenuOfBalise);
+	protected abstract void remplirObjectKeolis(ObjetKeolis currentObjectKeolis, String baliseName,
+			String contenuOfBalise);
 
 	@Override
 	public void startDocument() throws SAXException {

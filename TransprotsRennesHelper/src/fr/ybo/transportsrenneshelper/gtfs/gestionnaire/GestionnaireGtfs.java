@@ -32,8 +32,14 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.StopExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 
-public class GestionnaireGtfs {
+/**
+ * Gestionnaire des fichiers GTFS.
+ */
+public final class GestionnaireGtfs {
 
+	/**
+	 * Liste des classes associées aux fichiers GTFS.
+	 */
 	private static final List<Class<?>> GTFS_CLASSES = new ArrayList<Class<?>>(7);
 
 	static {
@@ -46,38 +52,82 @@ public class GestionnaireGtfs {
 		GTFS_CLASSES.add(RouteExtension.class);
 	}
 
+	/**
+	 * Instance (singleton).
+	 */
 	private static GestionnaireGtfs gestionnaire;
 
+	/**
+	 * Répertoire de lecture.
+	 */
 	private File repertoire;
 
-	public MoteurCsv moteurCsv;
+	/**
+	 * Moteur CSV.
+	 */
+	private MoteurCsv moteurCsv;
 
+	/**
+	 * Constructeur privé pour empécher l'instanciation en dehors du singleton.
+	 */
 	private GestionnaireGtfs() {
 	}
 
+	/**
+	 * Création de l'instance.
+	 * @param repertoireGtfs répertoire de lecture.
+	 */
 	public static synchronized void initInstance(File repertoireGtfs) {
 		gestionnaire = new GestionnaireGtfs();
 		gestionnaire.repertoire = repertoireGtfs;
 		gestionnaire.moteurCsv = new MoteurCsv(GTFS_CLASSES);
 	}
 
+	/**
+	 * @return l'instance.
+	 */
 	public static synchronized GestionnaireGtfs getInstance() {
 		return gestionnaire;
 	}
 
+	/**
+	 * Calendars (par id).
+	 */
 	private Map<String, Calendar> calendars;
+	/**
+	 * Routes (par id).
+	 */
 	private Map<String, Route> routes;
+	/**
+	 * Stops (par id).
+	 */
 	private Map<String, Stop> stops;
+	/**
+	 * StopTimes (par clé : tripId + stopId).
+	 */
 	private Map<String, StopTime> stopTimes;
+	/**
+	 * Trips (par id).
+	 */
 	private Map<String, Trip> trips;
+	/**
+	 * StopExtension (par stopId).
+	 */
 	private Map<String, StopExtension> stopExtensions;
+	/**
+	 * RouteExtension (par routeId).
+	 */
 	private Map<String, RouteExtension> routeExtensions;
 
+	/**
+	 * @return les stopExtensions (par stopId);
+	 */
 	public Map<String, StopExtension> getStopExtensions() {
 		if (stopExtensions == null) {
-			stopExtensions = new HashMap<String, StopExtension>(500);
+			stopExtensions = new HashMap<String, StopExtension>();
 			try {
-				for (StopExtension stopExtension : moteurCsv.parseInputStream(new FileInputStream( new File(repertoire, "stops_extensions.txt")), StopExtension.class)) {
+				for (StopExtension stopExtension : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "stops_extensions.txt")), StopExtension.class)) {
 					stopExtensions.put(stopExtension.stopId, stopExtension);
 				}
 			} catch (IOException e) {
@@ -87,11 +137,15 @@ public class GestionnaireGtfs {
 		return stopExtensions;
 	}
 
+	/**
+	 * @return les RouteExtensions (par routeId).
+	 */
 	public Map<String, RouteExtension> getRouteExtensions() {
 		if (routeExtensions == null) {
-			routeExtensions = new HashMap<String, RouteExtension>(67);
+			routeExtensions = new HashMap<String, RouteExtension>();
 			try {
-				for (RouteExtension routeExtension : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "routes_extensions.txt")), RouteExtension.class)) {
+				for (RouteExtension routeExtension : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "routes_extensions.txt")), RouteExtension.class)) {
 					routeExtensions.put(routeExtension.routeId, routeExtension);
 				}
 			} catch (IOException e) {
@@ -101,11 +155,15 @@ public class GestionnaireGtfs {
 		return routeExtensions;
 	}
 
+	/**
+	 * @return les calendars (par id).
+	 */
 	public Map<String, Calendar> getMapCalendars() {
 		if (calendars == null) {
-			calendars = new HashMap<String, Calendar>(10);
+			calendars = new HashMap<String, Calendar>();
 			try {
-				for (Calendar calendar : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "calendar.txt")), Calendar.class)) {
+				for (Calendar calendar : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "calendar.txt")), Calendar.class)) {
 					if (calendars.containsKey(calendar.id)) {
 						System.err.println("Calendar présent plusieurs fois");
 						System.err.println("Premier : " + calendars.get(calendar.id).toString());
@@ -120,11 +178,15 @@ public class GestionnaireGtfs {
 		return calendars;
 	}
 
+	/**
+	 * @return Les routes (par routeId).
+	 */
 	public Map<String, Route> getMapRoutes() {
 		if (routes == null) {
-			routes = new HashMap<String, Route>(67);
+			routes = new HashMap<String, Route>();
 			try {
-				for (Route route : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "routes.txt")), Route.class)) {
+				for (Route route : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "routes.txt")), Route.class)) {
 					if (routes.containsKey(route.id)) {
 						System.err.println("Route présente plusieurs fois");
 						System.err.println("Première : " + routes.get(route.id).toString());
@@ -139,11 +201,15 @@ public class GestionnaireGtfs {
 		return routes;
 	}
 
+	/**
+	 * @return les stops (par id).
+	 */
 	public Map<String, Stop> getMapStops() {
 		if (stops == null) {
-			stops = new HashMap<String, Stop>(500);
+			stops = new HashMap<String, Stop>();
 			try {
-				for (Stop stop : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "stops.txt")), Stop.class)) {
+				for (Stop stop : getMoteurCsv().parseInputStream(new FileInputStream(new File(repertoire, "stops.txt")),
+						Stop.class)) {
 					if (stops.containsKey(stop.id)) {
 						System.err.println("Stop présent plusieurs fois");
 						System.err.println("Premier : " + stops.get(stop.id).toString());
@@ -158,11 +224,15 @@ public class GestionnaireGtfs {
 		return stops;
 	}
 
+	/**
+	 * @return les stopsTimes (par clé -> tripId + stopId).
+	 */
 	public Map<String, StopTime> getMapStopTimes() {
 		if (stopTimes == null) {
-			stopTimes = new HashMap<String, StopTime>(5000);
+			stopTimes = new HashMap<String, StopTime>();
 			try {
-				for (StopTime stopTime : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "stop_times.txt")), StopTime.class)) {
+				for (StopTime stopTime : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "stop_times.txt")), StopTime.class)) {
 					if (stopTimes.containsKey(stopTime.getKey())) {
 						System.err.println("StopTime présent plusieurs fois");
 						System.err.println("Premier : " + stopTimes.get(stopTime.getKey()).toString());
@@ -177,11 +247,15 @@ public class GestionnaireGtfs {
 		return stopTimes;
 	}
 
+	/**
+	 * @return les trips (par id).
+	 */
 	public Map<String, Trip> getMapTrips() {
 		if (trips == null) {
-			trips = new HashMap<String, Trip>(500);
+			trips = new HashMap<String, Trip>();
 			try {
-				for (Trip trip : moteurCsv.parseInputStream(new FileInputStream(new File(repertoire, "trips.txt")), Trip.class)) {
+				for (Trip trip : getMoteurCsv().parseInputStream(
+						new FileInputStream(new File(repertoire, "trips.txt")), Trip.class)) {
 					if (trips.containsKey(trip.id)) {
 						System.err.println("Trip présent plusieurs fois");
 						System.err.println("Premier : " + trips.get(trip.id).toString());
@@ -196,14 +270,21 @@ public class GestionnaireGtfs {
 		return trips;
 	}
 
+	/**
+	 * Map des stopTimes par tripId.
+	 */
 	private Map<String, List<StopTime>> mapStopTimesByTripId;
 
+	/**
+	 * @param tripId un tripId;
+	 * @return les stopsTimes associés au tripId.
+	 */
 	public List<StopTime> getStopTimesForOnTrip(String tripId) {
 		if (mapStopTimesByTripId == null) {
-			mapStopTimesByTripId = new HashMap<String, List<StopTime>>(500);
+			mapStopTimesByTripId = new HashMap<String, List<StopTime>>();
 			for (StopTime stopTime : getMapStopTimes().values()) {
 				if (!mapStopTimesByTripId.containsKey(stopTime.tripId)) {
-					mapStopTimesByTripId.put(stopTime.tripId, new ArrayList<StopTime>(100));
+					mapStopTimesByTripId.put(stopTime.tripId, new ArrayList<StopTime>());
 				}
 				mapStopTimesByTripId.get(stopTime.tripId).add(stopTime);
 			}
@@ -212,7 +293,17 @@ public class GestionnaireGtfs {
 		return mapStopTimesByTripId.get(tripId);
 	}
 
+	/**
+	 * Reset de la map des stopsTimes par tripId.
+	 */
 	public void resetMapStopTimesByTripId() {
 		mapStopTimesByTripId = null;
+	}
+
+	/**
+	 * @return le moteur csv.
+	 */
+	public MoteurCsv getMoteurCsv() {
+		return moteurCsv;
 	}
 }

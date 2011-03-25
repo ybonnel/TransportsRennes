@@ -18,8 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Réprésente une ligne.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("lignes.txt")
 public class Ligne {
+	// CHECKSTYLE:OFF
 	@BaliseCsv("id")
 	public String id;
 	@BaliseCsv("nom_court")

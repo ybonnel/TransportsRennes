@@ -18,9 +18,14 @@ import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Un stop GTFS.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("stops.txt")
 public class Stop {
-
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "stop_id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "stop_code", ordre = 1)

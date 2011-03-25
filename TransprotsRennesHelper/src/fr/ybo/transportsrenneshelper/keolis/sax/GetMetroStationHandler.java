@@ -16,8 +16,14 @@ package fr.ybo.transportsrenneshelper.keolis.sax;
 
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 
+/**
+ * Handler pour les stations de métro.
+ * @author ybonnel
+ *
+ */
 public class GetMetroStationHandler extends KeolisHandler<MetroStation> {
 
+	// CHECKSTYLE:OFF
 	private static final String STATION = "station";
 	private static final String ID = "id";
 	private static final String NAME = "name";
@@ -29,6 +35,7 @@ public class GetMetroStationHandler extends KeolisHandler<MetroStation> {
 	private static final String RANKING_PLATFORM_DIRECTION_2 = "rankingPlatformDirection2";
 	private static final String FLOORS = "floors";
 	private static final String LAST_UPDATE = "lastupdate";
+	// CHECKSTYLE:ON
 	@Override
 	protected String getBaliseData() {
 		return STATION;

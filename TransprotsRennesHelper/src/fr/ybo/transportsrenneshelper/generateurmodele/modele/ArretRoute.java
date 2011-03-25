@@ -20,8 +20,14 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Représente l'association Arrêt <-> route.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("arrets_routes.txt")
 public class ArretRoute {
+	// CHECKSTYLE:OFF
 	@BaliseCsv( value = "arret_id", ordre = 0)
 	public String arretId;
 	@BaliseCsv( value = "ligne_id", ordre = 1)
@@ -30,7 +36,9 @@ public class ArretRoute {
 	public int directionId;
 	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class, ordre = 3)
 	public int sequence;
-	@BaliseCsv( value = "accessbile", adapter = AdapterBoolean.class, ordre = 4)
+	@BaliseCsv( value = "accessible", adapter = AdapterBoolean.class, ordre = 4)
 	public Boolean accessible;
+	@BaliseCsv( value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
+	public Integer macroDirection;
 
 }

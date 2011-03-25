@@ -18,9 +18,16 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Un calendar GTFS.
+ * 
+ * @author ybonnel
+ * 
+ */
 @FichierCsv("calendar.txt")
 public class Calendar {
 
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "service_id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "monday", adapter = AdapterBoolean.class, ordre = 1)
@@ -46,6 +53,10 @@ public class Calendar {
 
 	}
 
+	/**
+	 * Constructeur par copie.
+	 * @param calendar
+	 */
 	public Calendar(Calendar calendar) {
 		lundi = calendar.lundi;
 		mardi = calendar.mardi;
@@ -58,6 +69,10 @@ public class Calendar {
 		endDate = calendar.endDate;
 	}
 
+	/**
+	 * Merge de deux calendar.
+	 * @param calendar
+	 */
 	public void merge(Calendar calendar) {
 		lundi = lundi || calendar.lundi;
 		mardi = mardi || calendar.mardi;
@@ -76,8 +91,9 @@ public class Calendar {
 
 		Calendar calendar = (Calendar) obj;
 
-		return dimanche == calendar.dimanche && jeudi == calendar.jeudi && lundi == calendar.lundi && mardi == calendar.mardi &&
-				mercredi == calendar.mercredi && samedi == calendar.samedi && vendredi == calendar.vendredi;
+		return dimanche == calendar.dimanche && jeudi == calendar.jeudi && lundi == calendar.lundi
+				&& mardi == calendar.mardi && mercredi == calendar.mercredi && samedi == calendar.samedi
+				&& vendredi == calendar.vendredi;
 
 	}
 
@@ -95,7 +111,7 @@ public class Calendar {
 
 	@Override
 	public String toString() {
-		return "Calendar{" + "id='" + id + '\'' + ", lundi=" + lundi + ", mardi=" + mardi + ", mercredi=" + mercredi + ", jeudi=" + jeudi +
-				", vendredi=" + vendredi + ", samedi=" + samedi + ", dimanche=" + dimanche + '}';
+		return "Calendar{" + "id='" + id + '\'' + ", lundi=" + lundi + ", mardi=" + mardi + ", mercredi=" + mercredi
+				+ ", jeudi=" + jeudi + ", vendredi=" + vendredi + ", samedi=" + samedi + ", dimanche=" + dimanche + '}';
 	}
 }

@@ -17,9 +17,14 @@ package fr.ybo.transportsrenneshelper.gtfs.modele;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
+/**
+ * Une route.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("routes.txt")
 public class Route {
-
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "route_id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "agency_id", ordre = 1)

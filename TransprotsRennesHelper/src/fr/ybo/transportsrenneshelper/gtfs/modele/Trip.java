@@ -14,12 +14,19 @@
 
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
 
+/**
+ * Un Trip GTFS.
+ * @author ybonnel
+ *
+ */
 @FichierCsv("trips.txt")
 public class Trip {
+	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "trip_id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "service_id", ordre = 1)
@@ -28,8 +35,8 @@ public class Trip {
 	public String routeId;
 	@BaliseCsv(value = "trip_headsign", ordre = 3)
 	public String headSign;
-	@BaliseCsv(value = "direction_id", ordre = 4)
-	public String directionId;
+	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class, ordre = 4)
+	public Integer directionId;
 	@BaliseCsv(value = "block_id", ordre = 5)
 	public String blockId;
 

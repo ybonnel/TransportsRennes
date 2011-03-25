@@ -35,7 +35,6 @@ public final class Keolis {
 	/**
 	 * Instance du singletton.
 	 */
-	@SuppressWarnings({"StaticNonFinalField"})
 	private static Keolis instance;
 
 	/**
@@ -80,7 +79,6 @@ public final class Keolis {
 	 * @param url           url.
 	 * @param handler       handler.
 	 * @return liste d'objets Keolis.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	@SuppressWarnings("unchecked")
 	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler) {
@@ -107,7 +105,6 @@ public final class Keolis {
 	 * Appel les API Keolis pour récupérer les stations de metros.
 	 *
 	 * @return les stations de metro.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	public Iterable<MetroStation> getMetroStation() {
 		return appelKeolis(getUrl(COMMANDE_METRO), new GetMetroStationHandler());
