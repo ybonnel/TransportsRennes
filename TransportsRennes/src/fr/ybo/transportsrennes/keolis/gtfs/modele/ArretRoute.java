@@ -23,7 +23,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
 import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
-@SuppressWarnings({"UnusedDeclaration"})
 @FichierCsv("arrets_routes.txt")
 @Table
 public class ArretRoute {
@@ -35,6 +34,11 @@ public class ArretRoute {
 	@Colonne
 	@PrimaryKey
 	public String ligneId;
+	// FIXME Ajout de macroDirection : migration de base à faire.
+	@BaliseCsv( value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
+	@Colonne
+	@PrimaryKey
+	public Integer macroDirection;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
 	@Colonne(type = Colonne.TypeColonne.INTEGER)
 	public Integer directionId;
