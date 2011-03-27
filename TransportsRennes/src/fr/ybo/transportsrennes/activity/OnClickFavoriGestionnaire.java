@@ -40,12 +40,14 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	private final ArretFavori myFavori = new ArretFavori();
 	private final Activity activity;
 
-	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity) {
+	public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity,
+			int macroDirection) {
 		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
 		myFavori.arretId = arretId;
 		myFavori.ligneId = ligne.id;
+		myFavori.macroDirection = macroDirection;
 		this.activity = activity;
 	}
 

@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -42,15 +47,10 @@ import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -74,30 +74,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private Calendar calendar = Calendar.getInstance();
 	private Calendar calendarLaVeille = Calendar.getInstance();
 
-	private String clauseWhereForTodayCalendrier(Calendar calendar) {
-		if (JoursFeries.isJourFerie(calendar.getTime())) {
-			return "Dimanche = 1";
-		}
-		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				return "Lundi = 1";
-			case Calendar.TUESDAY:
-				return "Mardi = 1";
-			case Calendar.WEDNESDAY:
-				return "Mercredi = 1";
-			case Calendar.THURSDAY:
-				return "Jeudi = 1";
-			case Calendar.FRIDAY:
-				return "Vendredi = 1";
-			case Calendar.SATURDAY:
-				return "Samedi = 1";
-			case Calendar.SUNDAY:
-				return "Dimanche = 1";
-			default:
-				return null;
-		}
-	}
-
 	private ArretFavori favori;
 
 	private void recuperationDonneesIntent() {
@@ -107,6 +83,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			favori.arretId = getIntent().getExtras().getString("idArret");
 			favori.nomArret = getIntent().getExtras().getString("nomArret");
 			favori.direction = getIntent().getExtras().getString("direction");
+			favori.macroDirection = getIntent().getExtras().getInt("macroDirection");
 			Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 			if (ligne == null) {
 				finish();
@@ -134,78 +111,14 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private ListAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.ligneId = :ligneId");
-		requete.append(" and Horaire.arretId = :arretId");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by Horaire.heureDepart;");
-		List<String> selectionArgs = new ArrayList<String>(2);
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer tous les horaires des arrêts.");
-		long startTime = System.currentTimeMillis();
-		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		long elapsedTime = System.currentTimeMillis() - startTime;
-		LOG_YBO.debug(
-				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
+		currentCursor = Horaire.getAllHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection, calendar);
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
 	private ListAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId1");
-		requete.append(" and Horaire.arretId = :arretId1");
-		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append(" and Horaire.terminus = 0 ");
-		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId2");
-		requete.append(" and Horaire.arretId = :arretId2");
-		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by _id;");
-		List<String> selectionArgs = new ArrayList<String>(7);
-		int uneJournee = 24 * 60;
-		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now));
-		LOG_YBO.debug("Exécution de la requête permettant de récupérer les arrêts avec les temps avant les prochains bus");
-		long startTime = System.currentTimeMillis();
-		currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-		long elapsedTime = System.currentTimeMillis() - startTime;
-		LOG_YBO.debug(
-				"Exécution de la requête permettant de récupérer les arrêts terminée : " + currentCursor.getCount() + " en " + elapsedTime + "ms");
+		currentCursor = Horaire.getProchainHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection,
+				null, calendar);
 		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
 	}
 
@@ -304,8 +217,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		/** Construction requête. */
 		StringBuilder requete = new StringBuilder();
 		requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-		requete.append(
-				" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
+		requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
+		requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection ");
 		requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
 		requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
 		requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
@@ -333,6 +246,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		int longitudeIndex = cursor.getColumnIndex("longitude");
 		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
 		int nomLongIndex = cursor.getColumnIndex("nomLong");
+		int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 
 		List<Arret> arrets = new ArrayList<Arret>(20);
 
@@ -349,6 +263,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			arret.longitude = cursor.getDouble(longitudeIndex);
 			arret.favori.nomCourt = cursor.getString(nomCourtIndex);
 			arret.favori.nomLong = cursor.getString(nomLongIndex);
+			arret.favori.macroDirection = cursor.getInt(macroDirectionIndex);
 			if (!arret.id.equals(favori.arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
 				arret.calculDistance(locationArret);
 				if (arret.distance < DISTANCE_MAX_METRE) {

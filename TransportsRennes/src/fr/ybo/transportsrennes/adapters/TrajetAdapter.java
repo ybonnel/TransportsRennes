@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -32,8 +34,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.List;
 
 public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
@@ -67,17 +67,19 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
 	private static class ClickArret implements View.OnClickListener {
 
-		private ClickArret(Arret arret, String direction, Ligne ligne, Context context) {
+		private ClickArret(Arret arret, String direction, Ligne ligne, Context context, Integer macroDirection) {
 			this.arret = arret;
 			this.context = context;
 			this.direction = direction;
 			this.ligne = ligne;
+			this.macroDirection = macroDirection;
 		}
 
 		private Arret arret;
 		private String direction;
 		private Context context;
 		private Ligne ligne;
+		private Integer macroDirection;
 
 		public void onClick(View view) {
 			Intent intent = new Intent(context, DetailArret.class);
@@ -85,6 +87,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 			intent.putExtra("nomArret", arret.nom);
 			intent.putExtra("direction", direction);
 			intent.putExtra("ligne", ligne);
+			intent.putExtra("macroDirection", macroDirection);
 			context.startActivity(intent);
 		}
 	}
@@ -141,12 +144,14 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 		holder.departPieton.setText(context.getString(R.string.depart, formatHeure(heureDepart)));
 		holder.arriveePieton.setText(context.getString(R.string.arrivee, formatHeure(heureArrivee)));
 		holder.iconePortion1.setImageResource(IconeLigne.getIconeResource(ligne1.nomCourt));
-		ClickArret clickArretDepart1 = new ClickArret(arretDepart1, Direction.getDirectionById(portionTrajetBus1.getDirectionId()), ligne1, context);
+		ClickArret clickArretDepart1 = new ClickArret(arretDepart1, Direction.getDirectionById(portionTrajetBus1
+				.getDirectionId()), ligne1, context, portionTrajetBus1.getMacroDirection());
 		holder.heureDepart1.setText(portionTrajetBus1.getHeureDepart());
 		holder.heureDepart1.setOnClickListener(clickArretDepart1);
 		holder.depart1.setText(arretDepart1.nom);
 		holder.depart1.setOnClickListener(clickArretDepart1);
-		ClickArret clickArretArrivee1 = new ClickArret(arretArrivee1, Direction.getDirectionById(portionTrajetBus1.getDirectionId()), ligne1, context);
+		ClickArret clickArretArrivee1 = new ClickArret(arretArrivee1, Direction.getDirectionById(portionTrajetBus1
+				.getDirectionId()), ligne1, context, portionTrajetBus1.getMacroDirection());
 		holder.heureArrivee1.setText(portionTrajetBus1.getHeureArrivee());
 		holder.heureArrivee1.setOnClickListener(clickArretArrivee1);
 		holder.arrivee1.setText(arretArrivee1.nom);
@@ -167,12 +172,14 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 			Arret arretDepart2 = Arret.getArret(portionTrajetBus2.getArretDepartId());
 			Arret arretArrivee2 = Arret.getArret(portionTrajetBus2.getArretArriveeId());
 			holder.iconePortion2.setImageResource(IconeLigne.getIconeResource(ligne2.nomCourt));
-			ClickArret clickArretDepart2 = new ClickArret(arretDepart2, Direction.getDirectionById(portionTrajetBus2.getDirectionId()), ligne2, context);
+			ClickArret clickArretDepart2 = new ClickArret(arretDepart2, Direction.getDirectionById(portionTrajetBus2
+					.getDirectionId()), ligne2, context, portionTrajetBus2.getMacroDirection());
 			holder.heureDepart2.setText(portionTrajetBus2.getHeureDepart());
 			holder.heureDepart2.setOnClickListener(clickArretDepart2);
 			holder.depart2.setText(arretDepart2.nom);
 			holder.depart2.setOnClickListener(clickArretDepart2);
-			ClickArret clickArretArrivee2 = new ClickArret(arretArrivee2, Direction.getDirectionById(portionTrajetBus2.getDirectionId()), ligne2, context);
+			ClickArret clickArretArrivee2 = new ClickArret(arretArrivee2, Direction.getDirectionById(portionTrajetBus2
+					.getDirectionId()), ligne2, context, portionTrajetBus2.getMacroDirection());
 			holder.heureArrivee2.setText(portionTrajetBus2.getHeureArrivee());
 			holder.heureArrivee2.setOnClickListener(clickArretArrivee2);
 			holder.arrivee2.setText(arretArrivee2.nom);

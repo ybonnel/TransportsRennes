@@ -29,6 +29,9 @@ public class ArretFavori implements Serializable {
 	@Colonne
 	@PrimaryKey
 	public String ligneId;
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@PrimaryKey
+	public Integer macroDirection;
 	@Colonne
 	public String nomArret;
 	@Colonne

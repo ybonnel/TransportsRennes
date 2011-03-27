@@ -15,25 +15,27 @@
 package fr.ybo.transportsrennes.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.DetailArret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
 	//Liste des marqueurs
-	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>(20);
+	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private final Context mContext;
-	private final List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>(20);
+	private final List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>();
 
 	private static Drawable leftBottom(Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);

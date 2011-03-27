@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.adapters;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.WidgetUpdateUtil;
 
@@ -84,7 +84,9 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	}
 
 	private CharSequence getTempsRestant(Arret arret) {
-		Map<Integer, Integer> mapProchainHoraires = WidgetUpdateUtil.requete(arret.favori, 1, calendar, now);
-		return mapProchainHoraires.get(1) == null ? "" : WidgetUpdateUtil.formatterCalendar(myContext, mapProchainHoraires.get(1), now);
+		List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId, arret.favori.arretId,
+				arret.favori.macroDirection, 1, calendar);
+		return prochainsDeparts.isEmpty() ? "" : WidgetUpdateUtil.formatterCalendar(myContext, prochainsDeparts.get(0),
+				now);
 	}
 }

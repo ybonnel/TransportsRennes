@@ -14,23 +14,19 @@
 
 package fr.ybo.transportsrennes.util;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
 import android.view.View;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.TransportsWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 
 public class WidgetUpdateUtil {
 
@@ -116,106 +112,79 @@ public class WidgetUpdateUtil {
 		views.setViewVisibility(R.id.layout_3arret, View.VISIBLE);
 	}
 
-	public static Map<Integer, Integer> requete(ArretFavori favori, int limit, Calendar calendar, int now) {
-		Calendar calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.roll(Calendar.DATE, false);
-		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId1");
-		requete.append(" and Horaire.arretId = :arretId1");
-		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append(" and Horaire.terminus = 0 ");
-		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId2");
-		requete.append(" and Horaire.arretId = :arretId2");
-		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by _id limit ");
-		requete.append(limit);
-		int uneJournee = 24 * 60;
-		// Réquète.
-		List<String> selectionArgs = new ArrayList<String>(7);
-		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now));
-		Map<Integer, Integer> mapProchainsDepart = new HashMap<Integer, Integer>(limit);
-		try {
-			int count = 1;
-			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-			while (currentCursor.moveToNext()) {
-				mapProchainsDepart.put(count, currentCursor.getInt(0));
-				count++;
-			}
-			currentCursor.close();
-		} catch (SQLiteException ignored) {
-		}
-		return mapProchainsDepart;
-	}
-
 	private static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		Map<Integer, Integer> mapProchainsDepart = requete(favoris.get(0), 4, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant1_1arret, mapProchainsDepart.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant2_1arret, mapProchainsDepart.get(2) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart.get(2), now));
-		remoteViews.setTextViewText(R.id.tempsRestant3_1arret, mapProchainsDepart.get(3) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart.get(3), now));
-		remoteViews.setTextViewText(R.id.tempsRestant4_1arret, mapProchainsDepart.get(4) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart.get(4), now));
+		List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+				favoris.get(0).arretId, favoris.get(0).macroDirection, 4, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant1_1arret,
+				prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts.get(0), now));
+		remoteViews.setTextViewText(
+				R.id.tempsRestant2_1arret,
+				prochainsDeparts.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts.get(1), now));
+		remoteViews.setTextViewText(
+				R.id.tempsRestant3_1arret,
+				prochainsDeparts.size() < 3 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts.get(2), now));
+		remoteViews.setTextViewText(
+				R.id.tempsRestant4_1arret,
+				prochainsDeparts.size() < 4 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts.get(3), now));
 
 	}
 
 	private static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 2, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant11_2arret, mapProchainsDepart1.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart1.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant12_2arret, mapProchainsDepart1.get(2) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart1.get(2), now));
-		Map<Integer, Integer> mapProchainsDepart2 = requete(favoris.get(1), 2, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant21_2arret, mapProchainsDepart2.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart2.get(1), now));
-		remoteViews.setTextViewText(R.id.tempsRestant22_2arret, mapProchainsDepart2.get(2) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart2.get(2), now));
+		List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+				favoris.get(0).arretId, favoris.get(0).macroDirection, 2, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant11_2arret,
+				prochainsDeparts1.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts1.get(0), now));
+		remoteViews.setTextViewText(
+				R.id.tempsRestant12_2arret,
+				prochainsDeparts1.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts1.get(1), now));
+		List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
+				favoris.get(1).arretId, favoris.get(1).macroDirection, 2, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant21_2arret,
+				prochainsDeparts2.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts2.get(0), now));
+		remoteViews.setTextViewText(
+				R.id.tempsRestant22_2arret,
+				prochainsDeparts2.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts2.get(1), now));
 	}
 
 	private static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		Map<Integer, Integer> mapProchainsDepart1 = requete(favoris.get(0), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant1_3arret, mapProchainsDepart1.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart1.get(1), now));
+		List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+				favoris.get(0).arretId, favoris.get(0).macroDirection, 1, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant1_3arret,
+				prochainsDeparts1.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts1.get(0), now));
 
-		Map<Integer, Integer> mapProchainsDepart2 = requete(favoris.get(1), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant2_3arret, mapProchainsDepart2.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart2.get(1), now));
+		List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
+				favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant2_3arret,
+				prochainsDeparts2.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts2.get(0), now));
 
-		Map<Integer, Integer> mapProchainsDepart3 = requete(favoris.get(2), 1, calendar, now);
-		remoteViews.setTextViewText(R.id.tempsRestant3_3arret, mapProchainsDepart3.get(1) == null ? "" :
-				context.getString(R.string.dans) + ' ' + formatterCalendar(context, mapProchainsDepart3.get(1), now));
+		List<Integer> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
+				favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
+		remoteViews.setTextViewText(
+				R.id.tempsRestant3_3arret,
+				prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+						+ formatterCalendar(context, prochainsDeparts3.get(0), now));
 	}
 
 	public static String formatterCalendar(Context context, int prochainDepart, int now) {
@@ -253,29 +222,5 @@ public class WidgetUpdateUtil {
 			}
 		}
 		return stringBuilder.toString();
-	}
-
-	private static String clauseWhereForTodayCalendrier(Calendar calendar) {
-		if (JoursFeries.isJourFerie(calendar.getTime())) {
-			return "Dimanche = 1";
-		}
-		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				return "Lundi = 1";
-			case Calendar.TUESDAY:
-				return "Mardi = 1";
-			case Calendar.WEDNESDAY:
-				return "Mercredi = 1";
-			case Calendar.THURSDAY:
-				return "Jeudi = 1";
-			case Calendar.FRIDAY:
-				return "Vendredi = 1";
-			case Calendar.SATURDAY:
-				return "Samedi = 1";
-			case Calendar.SUNDAY:
-				return "Dimanche = 1";
-			default:
-				return null;
-		}
 	}
 }

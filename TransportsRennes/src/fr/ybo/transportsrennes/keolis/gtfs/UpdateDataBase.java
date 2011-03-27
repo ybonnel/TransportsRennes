@@ -14,6 +14,9 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs;
 
+import java.util.Date;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.res.Resources;
 import fr.ybo.moteurcsv.MoteurCsv;
@@ -27,9 +30,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.Date;
-import java.util.List;
 
 public final class UpdateDataBase {
 
@@ -68,6 +68,7 @@ public final class UpdateDataBase {
 				Arret arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretSelect);
 				arretRouteSelect.ligneId = favori.ligneId;
 				arretRouteSelect.arretId = favori.arretId;
+				arretRouteSelect.macroDirection = favori.macroDirection;
 				ArretRoute arretRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
 				if (ligne == null || arret == null || arretRoute == null) {
 					LOG_YBO.debug("Le favori avec arretId = " + favori.arretId + ", ligneId = " + favori.ligneId +

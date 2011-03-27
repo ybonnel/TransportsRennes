@@ -14,6 +14,10 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -43,10 +47,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-
 
 public class TransportsRennes extends Activity {
 
@@ -61,45 +61,42 @@ public class TransportsRennes extends Activity {
 		setContentView(R.layout.main);
 		afficheMessage();
 		assignerBoutons();
-		if (TransportsRennesApplication.isUpdateNecessaire()) {
-			new AsyncTask<Void, Void, Void>() {
+		new AsyncTask<Void, Void, Void>() {
 
-				private boolean erreur;
+			private boolean erreur;
 
-				@Override
-				protected void onPreExecute() {
-					myProgressDialog = ProgressDialog.show(TransportsRennes.this, "", getString(R.string.verificationUpdate), true);
+			@Override
+			protected void onPreExecute() {
+				myProgressDialog = ProgressDialog.show(TransportsRennes.this, "",
+						getString(R.string.verificationUpdate), true);
+			}
+
+			@Override
+			protected Void doInBackground(Void... pParams) {
+
+				try {
+					verifierUpgrade();
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
+					erreur = true;
 				}
+				return null;
+			}
 
-				@Override
-				protected Void doInBackground(Void... pParams) {
-
-					try {
-						verifierUpgrade();
-					} catch (Exception exception) {
-						LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-						erreur = true;
-					}
-					return null;
-				}
-
-				@Override
-				protected void onPostExecute(Void result) {
-					super.onPostExecute(result);
-					myProgressDialog.dismiss();
-					if (erreur) {
-						Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG).show();
-						if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-							LOG_YBO.warn(
-									"La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
-							finish();
-						}
-					} else {
-						TransportsRennesApplication.verifUpdateDone();
+			@Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG)
+							.show();
+					if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
+						LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
+						finish();
 					}
 				}
-			}.execute((Void[]) null);
-		}
+			}
+		}.execute((Void[]) null);
 	}
 
 	private void assignerBoutons() {

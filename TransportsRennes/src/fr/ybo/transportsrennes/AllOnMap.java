@@ -182,7 +182,7 @@ public class AllOnMap extends MapActivity {
 				requete.append("select Arret.id as arretId, Arret.nom as arretNom,");
 				requete.append(" Ligne.id as ligneId, Ligne.nomCourt as ligneNomCourt,");
 				requete.append(" Ligne.nomLong as ligneNomLong, Direction.direction as direction,");
-				requete.append(" Arret.latitude as latitude, Arret.longitude as longitude ");
+				requete.append(" Arret.latitude as latitude, Arret.longitude as longitude, ArretRoute.macroDirection as macroDirection ");
 				requete.append("from ArretRoute, Arret, Direction, Ligne ");
 				requete.append("where");
 				requete.append(" ArretRoute.arretId = Arret.id");
@@ -199,6 +199,7 @@ public class AllOnMap extends MapActivity {
 				int directionIndex = cursor.getColumnIndex("direction");
 				int latitudeIndex = cursor.getColumnIndex("latitude");
 				int longitudeIndex = cursor.getColumnIndex("longitude");
+				int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 				arrets = new ArrayList<Arret>(1500);
 				int idGeoItem = 0;
 				while (cursor.moveToNext()) {
@@ -214,6 +215,7 @@ public class AllOnMap extends MapActivity {
 					arret.favori.nomLong = cursor.getString(ligneNomLongIndex);
 					arret.favori.nomArret = arret.nom;
 					arret.favori.arretId = arret.id;
+					arret.favori.macroDirection = cursor.getInt(macroDirectionIndex);
 					arrets.add(arret);
 					clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem, arret));
 					idGeoItem++;

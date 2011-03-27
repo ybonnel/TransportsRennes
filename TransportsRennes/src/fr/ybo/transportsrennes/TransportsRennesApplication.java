@@ -14,27 +14,22 @@
 
 package fr.ybo.transportsrennes;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import android.app.Application;
 import android.appwidget.AppWidgetManager;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.Constantes;
 
@@ -49,33 +44,10 @@ public class TransportsRennesApplication extends Application {
 		return databaseHelper;
 	}
 
-	private static String dateDerniereVerifUpdate;
-
-	private static String dateCourante;
-
-	private static SharedPreferences sharedPreferences;
-
-	private static final DernierMiseAJour MISE_A_JOUR = new DernierMiseAJour();
-
-	public static synchronized boolean isUpdateNecessaire() {
-		if (dateDerniereVerifUpdate == null) {
-			dateDerniereVerifUpdate = sharedPreferences.getString("dateDerniereVerifUpdate150", null);
-		}
-		return dateDerniereVerifUpdate == null || !dateCourante.equals(dateDerniereVerifUpdate) || databaseHelper.selectSingle(MISE_A_JOUR) == null;
-	}
-
-	public static void verifUpdateDone() {
-		SharedPreferences.Editor edit = sharedPreferences.edit();
-		edit.putString("dateDerniereVerifUpdate150", dateCourante);
-		dateDerniereVerifUpdate = dateCourante;
-		edit.commit();
-	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		dateCourante = new SimpleDateFormat("yyyyMMdd").format(new Date());
-		sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);

@@ -243,7 +243,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		requete.append(" Direction.direction as favoriDirection,");
 		requete.append(" Ligne.id as ligneId,");
 		requete.append(" Ligne.nomCourt as nomCourt,");
-		requete.append(" Ligne.nomLong as nomLong ");
+		requete.append(" Ligne.nomLong as nomLong, ");
+		requete.append(" ArretRoute.macroDirection as macroDirection ");
 		requete.append("FROM Arret, ArretRoute, Ligne, Direction ");
 		requete.append("WHERE Arret.id = ArretRoute.arretId");
 		requete.append(" AND ArretRoute.ligneId = Ligne.id");
@@ -258,6 +259,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		int ligneIdIndex = cursor.getColumnIndex("ligneId");
 		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
 		int nomLongIndex = cursor.getColumnIndex("nomLong");
+		int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 		while (cursor.moveToNext()) {
 			Arret arret = new Arret();
 			arret.id = cursor.getString(arretIdIndex);
@@ -271,6 +273,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			arret.favori.nomLong = cursor.getString(nomLongIndex);
 			arret.favori.nomArret = arret.nom;
 			arret.favori.arretId = arret.id;
+			arret.favori.macroDirection = cursor.getInt(macroDirectionIndex);
 			arrets.add(arret);
 		}
 		cursor.close();
@@ -285,6 +288,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			ArretFavori arretFavori = new ArretFavori();
 			arretFavori.arretId = arret.id;
 			arretFavori.ligneId = arret.favori.ligneId;
+			arretFavori.macroDirection = arret.favori.macroDirection;
 			arretFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretFavori);
 			menu.setHeaderTitle(arret.nom);
 			menu.add(Menu.NONE, arretFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
@@ -312,6 +316,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.arretId = arret.id;
 				arretFavori.ligneId = arret.favori.ligneId;
+				arretFavori.macroDirection = arret.favori.macroDirection;
 				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {

@@ -14,6 +14,11 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,11 +38,6 @@ import fr.ybo.transportsrennes.adapters.ArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Liste des arrêts d'une ligne de bus.
@@ -108,7 +108,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible ");
+		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible, ArretRoute.macroDirection as macroDirection ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
 		requete.append(" ArretRoute.ligneId = :ligneId");
@@ -143,6 +143,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
 				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
+				intent.putExtra("macroDirection", cursor.getInt(cursor.getColumnIndex("macroDirection")));
 				intent.putExtra("ligne", myLigne);
 				startActivity(intent);
 			}

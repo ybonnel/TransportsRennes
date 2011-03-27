@@ -24,6 +24,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Base;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -40,14 +42,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 10;
 
 	private final Base base;
 
 	private boolean transactionOpen;
 
+	private Context context;
+
 	public DataBaseHelper(Context context, List<Class<?>> classes) throws DataBaseException {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
+		this.context = context;
 		base = new Base(classes);
 	}
 
@@ -92,7 +97,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	}
 
 	private interface UpgradeDatabase {
-		void upagrade(SQLiteDatabase db);
+		void upagrade(SQLiteDatabase db, Context context);
 	}
 
 	private Map<Integer, DataBaseHelper.UpgradeDatabase> mapUpgrades;
@@ -101,23 +106,23 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 		if (mapUpgrades == null) {
 			mapUpgrades = new HashMap<Integer, DataBaseHelper.UpgradeDatabase>(10);
 			mapUpgrades.put(2, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					base.getTable(VeloFavori.class).createTable(db);
 				}
 			});
 			mapUpgrades.put(3, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					base.dropDataBase(db);
 					base.createDataBase(db);
 				}
 			});
 			mapUpgrades.put(4, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
 				}
 			});
 			mapUpgrades.put(5, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
@@ -171,7 +176,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				}
 			});
 			mapUpgrades.put(6, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
@@ -192,12 +197,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 				}
 			});
 			mapUpgrades.put(7, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					db.execSQL("DELETE FROM DernierMiseAJour");
 				}
 			});
 			mapUpgrades.put(9, new DataBaseHelper.UpgradeDatabase() {
-				public void upagrade(SQLiteDatabase db) {
+				public void upagrade(SQLiteDatabase db, Context context) {
 					// Gestion des favoris.
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
 					base.getTable(ArretFavori.class).createTable(db);
@@ -236,6 +241,89 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 					}
 				}
 			});
+			mapUpgrades.put(10, new DataBaseHelper.UpgradeDatabase() {
+				public void upagrade(SQLiteDatabase db, Context context) {
+					Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+							" type = 'table'", null, null, null, null);
+					while (cursor.moveToNext()) {
+						String tableName = cursor.getString(0);
+						if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName)
+								&& !"ArretFavori".equals(tableName)) {
+							db.execSQL("DROP TABLE " + tableName);
+						}
+					}
+					cursor.close();
+					base.getTable(Direction.class).createTable(db);
+					base.getTable(ArretRoute.class).createTable(db);
+					base.getTable(DernierMiseAJour.class).createTable(db);
+					base.getTable(Ligne.class).createTable(db);
+					base.getTable(Arret.class).createTable(db);
+					base.getTable(Calendrier.class).createTable(db);
+					base.getTable(Trajet.class).createTable(db);
+					// Gestion des favoris.
+					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
+					base.getTable(ArretFavori.class).createTable(db);
+					List<String> columns = new ArrayList<String>(7);
+					columns.add("arretId");
+					columns.add("ligneId");
+					columns.add("nomArret");
+					columns.add("direction");
+					columns.add("nomCourt");
+					columns.add("nomLong");
+					columns.add("ordre");
+					Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null,
+							null, null, null);
+					int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
+					int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
+					int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+					int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+					int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
+					int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
+					int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+					ArretFavori favori = new ArretFavori();
+					List<Class<?>> classCsv = new ArrayList<Class<?>>();
+					classCsv.add(ArretRoute.class);
+					classCsv.add(Direction.class);
+					MoteurCsv moteur = new MoteurCsv(classCsv);
+					Map<String, Map<String, List<ArretRoute>>> mapArretsRoutes = new HashMap<String, Map<String, List<ArretRoute>>>();
+					for (ArretRoute arretRoute : moteur.parseInputStream(
+							context.getResources().openRawResource(R.raw.arrets_routes), ArretRoute.class)) {
+						if (!mapArretsRoutes.containsKey(arretRoute.ligneId)) {
+							mapArretsRoutes.put(arretRoute.ligneId, new HashMap<String, List<ArretRoute>>());
+						}
+						if (!mapArretsRoutes.get(arretRoute.ligneId).containsKey(arretRoute.arretId)) {
+							mapArretsRoutes.get(arretRoute.ligneId)
+									.put(arretRoute.arretId, new ArrayList<ArretRoute>());
+						}
+						mapArretsRoutes.get(arretRoute.ligneId).get(arretRoute.arretId).add(arretRoute);
+					}
+					Map<Integer, String> directions = new HashMap<Integer, String>();
+
+					for (Direction direction : moteur.parseInputStream(
+							context.getResources().openRawResource(R.raw.directions), Direction.class)) {
+						directions.put(direction.id, direction.direction);
+					}
+					while (arretFavoriTmp.moveToNext()) {
+						favori.arretId = arretFavoriTmp.getString(arretIdIndex);
+						favori.ligneId = arretFavoriTmp.getString(ligneIdIndex);
+						favori.nomArret = arretFavoriTmp.getString(nomArretIndex);
+						favori.direction = arretFavoriTmp.getString(directionIndex);
+						favori.nomCourt = arretFavoriTmp.getString(nomCourtIndex);
+						favori.nomLong = arretFavoriTmp.getString(nomLongIndex);
+						favori.ordre = arretFavoriTmp.getInt(ordreIndex);
+						if (mapArretsRoutes.containsKey(favori.ligneId)
+								&& mapArretsRoutes.get(favori.ligneId).containsKey(favori.arretId)) {
+							for (ArretRoute arretRoute : mapArretsRoutes.get(favori.ligneId).get(favori.arretId)) {
+								favori.macroDirection = arretRoute.macroDirection;
+							}
+						}
+						if (favori.macroDirection != null) {
+							base.insert(db, favori);
+						}
+					}
+					db.execSQL("DROP TABLE ArretFavori_tmp");
+				}
+			});
 		}
 		return mapUpgrades;
 	}
@@ -247,7 +335,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 			for (int version = oldVersion + 1; version <= newVersion; version++) {
 				if (getUpgrades().containsKey(version)) {
 					LOG_YBO.debug("Lancement de la mise à jour pour la version " + version);
-					getUpgrades().get(version).upagrade(db);
+					getUpgrades().get(version).upagrade(db, context);
 				}
 			}
 		} catch (Exception exception) {

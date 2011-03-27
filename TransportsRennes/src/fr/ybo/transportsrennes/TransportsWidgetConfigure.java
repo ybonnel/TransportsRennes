@@ -14,6 +14,12 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -28,12 +34,6 @@ import fr.ybo.transportsrennes.adapters.FavoriAdapterForWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TransportsWidgetConfigure extends ListActivity {
 

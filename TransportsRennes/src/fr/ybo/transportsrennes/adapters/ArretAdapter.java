@@ -14,6 +14,14 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,14 +43,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Adapteur pour les arrêts.
@@ -73,6 +73,7 @@ public class ArretAdapter extends CursorAdapter {
 		nameCol = cursor.getColumnIndex("arretName");
 		directionCol = cursor.getColumnIndex("direction");
 		arretIdCol = cursor.getColumnIndex("_id");
+		macroDirectionCol = cursor.getColumnIndex("macroDirection");
 		//		accessibleCol = cursor.getColumnIndex("accessible");
 	}
 
@@ -80,6 +81,7 @@ public class ArretAdapter extends CursorAdapter {
 	private final int nameCol;
 	private final int directionCol;
 	private final int arretIdCol;
+	private final int macroDirectionCol;
 	//	private final int accessibleCol;
 
 
@@ -114,6 +116,7 @@ public class ArretAdapter extends CursorAdapter {
 		String direction = cursor.getString(directionCol);
 		//		boolean accessible = (cursor.getInt(accessibleCol) == 1);
 		favori.arretId = cursor.getString(arretIdCol);
+		favori.macroDirection = cursor.getInt(macroDirectionCol);
 		final String arretId = favori.arretId;
 		final ArretAdapter.ViewHolder holder = (ArretAdapter.ViewHolder) view.getTag();
 		holder.nomArret.setText(name);
@@ -121,7 +124,8 @@ public class ArretAdapter extends CursorAdapter {
 		holder.isFavori.setImageResource(
 				TransportsRennesApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off :
 						android.R.drawable.btn_star_big_on);
-		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction, activity));
+		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction,
+				activity, favori.macroDirection));
 		if (setCorrespondances.contains(arretId)) {
 			correspondancesWithDetail(holder, arretId);
 		} else {
@@ -173,8 +177,8 @@ public class ArretAdapter extends CursorAdapter {
 			/** Construction requête. */
 			StringBuilder requete = new StringBuilder();
 			requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-			requete.append(
-					" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude, Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong ");
+			requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
+			requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection ");
 			requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
 			requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
 			requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
@@ -202,6 +206,7 @@ public class ArretAdapter extends CursorAdapter {
 			int longitudeIndex = cursor.getColumnIndex("longitude");
 			int nomCourtIndex = cursor.getColumnIndex("nomCourt");
 			int nomLongIndex = cursor.getColumnIndex("nomLong");
+			int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 
 			List<Arret> arrets = new ArrayList<Arret>(20);
 
@@ -218,6 +223,7 @@ public class ArretAdapter extends CursorAdapter {
 				arret.longitude = cursor.getDouble(longitudeIndex);
 				arret.favori.nomCourt = cursor.getString(nomCourtIndex);
 				arret.favori.nomLong = cursor.getString(nomLongIndex);
+				arret.favori.macroDirection = cursor.getInt(macroDirectionIndex);
 				if (!arret.id.equals(arretId) || !arret.favori.ligneId.equals(favori.ligneId)) {
 					arret.calculDistance(locationArret);
 					if (arret.distance < DISTANCE_MAX_METRE) {

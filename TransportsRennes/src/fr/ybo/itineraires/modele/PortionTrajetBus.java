@@ -25,6 +25,7 @@ public class PortionTrajetBus implements Serializable
     protected String arretArriveeId;
     protected String heureArrivee;
 	protected Integer directionId;
+	protected Integer macroDirection;
 
     public String getLigneId() {
         return ligneId;
@@ -73,4 +74,20 @@ public class PortionTrajetBus implements Serializable
 	public void setDirectionId(Integer directionId) {
 		this.directionId = directionId;
 	}
+
+	/**
+	 * @return the macroDirection
+	 */
+	public Integer getMacroDirection() {
+		return macroDirection;
+	}
+
+	/**
+	 * @param macroDirection
+	 *            the macroDirection to set
+	 */
+	public void setMacroDirection(Integer macroDirection) {
+		this.macroDirection = macroDirection;
+	}
+
 }

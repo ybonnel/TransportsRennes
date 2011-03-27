@@ -1,21 +1,22 @@
 package fr.ybo.itineraires;
 
 
+import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+
+import org.restlet.resource.ClientResource;
+
 import fr.ybo.itineraires.modele.Adresse;
 import fr.ybo.itineraires.modele.EnumCalendrier;
 import fr.ybo.itineraires.schema.ItineraireReponse;
 import fr.ybo.transportsrennes.util.GsonUtil;
 import fr.ybo.transportsrennes.util.LogYbo;
-import org.restlet.resource.ClientResource;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Calendar;
 
 public class CalculItineraires {
 
     private static final LogYbo LOG_YBO = new LogYbo(CalculItineraires.class);
 
-    private static final String URL_BASE = "http://6.transports-rennes.appspot.com/rest/itineraires";
+	private static final String URL_BASE = "http://7.transports-rennes.appspot.com/rest/itineraires";
     private static final String KEY = "YboItineraires01*";
 
     private static CalculItineraires instance;

@@ -21,7 +21,6 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +31,8 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 public class FavoriAdapter extends BaseAdapter {
@@ -126,16 +125,18 @@ public class FavoriAdapter extends BaseAdapter {
 						List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId";
+						whereArgs.add(Integer.toString(favoris.get(position).macroDirection));
+						String whereClause = "arretId = :arretId and ligneId = :ligneId and macroDirection = :macroDirection";
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
 						contentValues.put("ordre", autrePosition);
 						whereArgs.clear();
 						whereArgs.add(favoris.get(autrePosition).arretId);
 						whereArgs.add(favoris.get(autrePosition).ligneId);
+						whereArgs.add(Integer.toString(favoris.get(autrePosition).macroDirection));
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
 						notifyDataSetChanged();
 					}
 				}
@@ -158,16 +159,18 @@ public class FavoriAdapter extends BaseAdapter {
 						List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId";
+						whereArgs.add(Integer.toString(favoris.get(position).macroDirection));
+						String whereClause = "arretId = :arretId and ligneId = :ligneId and macroDirection = :macroDirection";
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
 						contentValues.put("ordre", autrePosition);
 						whereArgs.clear();
 						whereArgs.add(favoris.get(autrePosition).arretId);
 						whereArgs.add(favoris.get(autrePosition).ligneId);
+						whereArgs.add(Integer.toString(favoris.get(autrePosition).macroDirection));
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[2]));
+								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
 						notifyDataSetChanged();
 					}
 				}
@@ -178,50 +181,13 @@ public class FavoriAdapter extends BaseAdapter {
 		holder.direction.setText(favori.direction);
 		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 
-		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId1");
-		requete.append(" and Horaire.arretId = :arretId1");
-		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append(" and Horaire.terminus = 0 ");
-		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(favori.ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId2");
-		requete.append(" and Horaire.arretId = :arretId2");
-		requete.append(" and Horaire.heureDepart >= :maintenant");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by _id limit 1;");
-		int uneJournee = 24 * 60;
-		List<String> selectionArgs = new ArrayList<String>(7);
-		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(favori.ligneId);
-		selectionArgs.add(favori.arretId);
-		selectionArgs.add(Integer.toString(now));
 		try {
-			Cursor currentCursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-			if (currentCursor.moveToFirst()) {
-				int prochainDepart = currentCursor.getInt(0);
-				holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
-			}
+			List<Integer> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
+					favori.macroDirection, 1, calendar);
 
-			currentCursor.close();
+			if (!prochainsDepart.isEmpty()) {
+				holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0), now));
+			}
 		} catch (SQLiteException sqlException) {
 			LOG_YBO.erreur("Erreur SQL reçue lors de la récupération du prochain départ, ça doit pas arriver, mais on ignore l'erreur au cas où",
 					sqlException);
@@ -267,30 +233,6 @@ public class FavoriAdapter extends BaseAdapter {
 			}
 		}
 		return stringBuilder.toString();
-	}
-
-	private String clauseWhereForTodayCalendrier(Calendar calendar) {
-		if (JoursFeries.isJourFerie(calendar.getTime())) {
-			return "Dimanche = 1";
-		}
-		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				return "Lundi = 1";
-			case Calendar.TUESDAY:
-				return "Mardi = 1";
-			case Calendar.WEDNESDAY:
-				return "Mercredi = 1";
-			case Calendar.THURSDAY:
-				return "Jeudi = 1";
-			case Calendar.FRIDAY:
-				return "Vendredi = 1";
-			case Calendar.SATURDAY:
-				return "Samedi = 1";
-			case Calendar.SUNDAY:
-				return "Dimanche = 1";
-			default:
-				return null;
-		}
 	}
 
 }
