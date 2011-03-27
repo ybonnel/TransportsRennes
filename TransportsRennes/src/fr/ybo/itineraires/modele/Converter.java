@@ -92,7 +92,7 @@ public class Converter {
 		jointure.setHeureDepart(jointureJson.getHeureDepart());
 		jointure.setLigneId(jointureJson.getLigneId());
 		jointure.setDirectionId(jointureJson.getDirectionId());
-		jointure.setMacroDirection(jointureJson.getMacroDirection());
+		jointure.setMacroDirection(jointureJson.getMacroDirectionId());
 		return jointure;
 	}
 }

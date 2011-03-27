@@ -87,7 +87,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 			intent.putExtra("nomArret", arret.nom);
 			intent.putExtra("direction", direction);
 			intent.putExtra("ligne", ligne);
-			intent.putExtra("macroDirection", macroDirection);
+			intent.putExtra("macroDirection", (int) macroDirection);
 			context.startActivity(intent);
 		}
 	}
