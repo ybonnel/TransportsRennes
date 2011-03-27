@@ -206,8 +206,8 @@ public class WidgetUpdateUtil {
 
 		}
 		try {
-			List<Integer> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
-					favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
+			List<Integer> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(2).ligneId,
+					favoris.get(2).arretId, favoris.get(2).macroDirection, 1, calendar);
 			remoteViews.setTextViewText(
 					R.id.tempsRestant3_3arret,
 					prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
