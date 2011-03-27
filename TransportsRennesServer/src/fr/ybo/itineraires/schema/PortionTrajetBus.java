@@ -9,6 +9,7 @@ public class PortionTrajetBus
     protected String arretArriveeId;
     protected String heureArrivee;
 	protected Integer directionId;
+	protected Integer macroDirectionId;
 
     public String getLigneId() {
         return ligneId;
@@ -57,4 +58,20 @@ public class PortionTrajetBus
 	public void setDirectionId(Integer directionId) {
 		this.directionId = directionId;
 	}
+
+	/**
+	 * @return the macroDirectionId
+	 */
+	public Integer getMacroDirectionId() {
+		return macroDirectionId;
+	}
+
+	/**
+	 * @param macroDirectionId
+	 *            the macroDirectionId to set
+	 */
+	public void setMacroDirectionId(Integer macroDirectionId) {
+		this.macroDirectionId = macroDirectionId;
+	}
+
 }

@@ -31,4 +31,6 @@ public class Trajet implements Serializable {
     public String ligneId;
     @BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
     public Integer directionId;
+	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class)
+	public Integer macroDirection;
 }

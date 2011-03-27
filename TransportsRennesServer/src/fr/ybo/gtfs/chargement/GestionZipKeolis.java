@@ -42,7 +42,9 @@ public final class GestionZipKeolis {
 
 	public static Collection<Horaire> chargeLigne(MoteurCsv moteurCsv, String ligneId) {
 		try {
-			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId + ".txt")), 8 << 10);
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
+					GestionZipKeolis.class.getResourceAsStream(URL_STOP_TIMES + ligneId.toLowerCase() + ".txt")),
+					8 << 10);
 			try {
 				return moteurCsv.parseFile(bufferedReader, Horaire.class);
 			} finally {

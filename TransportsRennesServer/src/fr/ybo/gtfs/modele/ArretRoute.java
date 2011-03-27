@@ -29,6 +29,8 @@ public class ArretRoute implements Serializable {
 	public String arretId;
 	@BaliseCsv("ligne_id")
 	public String ligneId;
+	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class)
+	public Integer macroDirection;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
 	public Integer directionId;
 	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
