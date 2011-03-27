@@ -74,7 +74,7 @@ public class ArretAdapter extends CursorAdapter {
 		directionCol = cursor.getColumnIndex("direction");
 		arretIdCol = cursor.getColumnIndex("_id");
 		macroDirectionCol = cursor.getColumnIndex("macroDirection");
-		//		accessibleCol = cursor.getColumnIndex("accessible");
+		accessibleCol = cursor.getColumnIndex("accessible");
 	}
 
 	private final LayoutInflater mInflater;
@@ -82,7 +82,7 @@ public class ArretAdapter extends CursorAdapter {
 	private final int directionCol;
 	private final int arretIdCol;
 	private final int macroDirectionCol;
-	//	private final int accessibleCol;
+	private final int accessibleCol;
 
 
 	private static class ViewHolder {
@@ -91,7 +91,7 @@ public class ArretAdapter extends CursorAdapter {
 		private ImageView isFavori;
 		private ImageView correspondance;
 		private LinearLayout detailCorrespondance;
-		//		ImageView iconeHandicap;
+		private ImageView iconeHandicap;
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class ArretAdapter extends CursorAdapter {
 		holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
 		holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
 		holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
-		//		holder.iconeHandicap = (ImageView) view.findViewById(R.id.iconeHandicap);
+		holder.iconeHandicap = (ImageView) view.findViewById(R.id.iconeHandicap);
 		view.setTag(holder);
 		return view;
 
@@ -114,7 +114,7 @@ public class ArretAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 		String name = cursor.getString(nameCol);
 		String direction = cursor.getString(directionCol);
-		//		boolean accessible = (cursor.getInt(accessibleCol) == 1);
+		boolean accessible = (cursor.getInt(accessibleCol) == 1);
 		favori.arretId = cursor.getString(arretIdCol);
 		favori.macroDirection = cursor.getInt(macroDirectionCol);
 		final String arretId = favori.arretId;
@@ -142,7 +142,7 @@ public class ArretAdapter extends CursorAdapter {
 				}
 			}
 		});
-		//		holder.iconeHandicap.setVisibility(accessible ? View.VISIBLE : View.INVISIBLE);
+		holder.iconeHandicap.setVisibility(accessible ? View.VISIBLE : View.GONE);
 	}
 
 	private void correspondancesNoDetail(ArretAdapter.ViewHolder holder) {
