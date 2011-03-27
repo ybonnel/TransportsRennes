@@ -97,7 +97,8 @@ public class Horaire {
 		Calendar calendarLaVeille = Calendar.getInstance();
 		calendarLaVeille.roll(Calendar.DATE, false);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
+		requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
+		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -110,7 +111,8 @@ public class Horaire {
 		requete.append(" and Trajet.macroDirection = :macroDirection1");
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
 		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("select Horaire.heureDepart as _id,");
+		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
