@@ -81,6 +81,7 @@ public class Horaire {
 		requete.append(" and Trajet.ligneId = :ligneId");
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Trajet.macroDirection = :macroDirection");
+		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(ligneId);
@@ -109,6 +110,7 @@ public class Horaire {
 		requete.append(" and Trajet.ligneId = :routeId1");
 		requete.append(" and Horaire.arretId = :arretId1");
 		requete.append(" and Trajet.macroDirection = :macroDirection1");
+		requete.append(" and Trajet.macroDirection = :macroDirection");
 		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
 		requete.append("UNION ");
 		requete.append("select Horaire.heureDepart as _id,");
@@ -123,6 +125,7 @@ public class Horaire {
 		requete.append(" and Trajet.ligneId = :routeId2");
 		requete.append(" and Horaire.arretId = :arretId2");
 		requete.append(" and Trajet.macroDirection = :macroDirection2");
+		requete.append(" and Trajet.macroDirection = :macroDirection");
 		requete.append(" and Horaire.heureDepart >= :maintenant");
 		requete.append(" order by _id ");
 		if (limit != null) {
