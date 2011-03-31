@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,9 +85,13 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	}
 
 	private CharSequence getTempsRestant(Arret arret) {
-		List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId, arret.favori.arretId,
-				arret.favori.macroDirection, 1, calendar);
-		return prochainsDeparts.isEmpty() ? "" : WidgetUpdateUtil.formatterCalendar(myContext, prochainsDeparts.get(0),
-				now);
+		try {
+			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
+					arret.favori.arretId, arret.favori.macroDirection, 1, calendar);
+			return prochainsDeparts.isEmpty() ? "" : WidgetUpdateUtil.formatterCalendar(myContext,
+					prochainsDeparts.get(0), now);
+		} catch (SQLiteException ignore) {
+			return "";
+		}
 	}
 }
