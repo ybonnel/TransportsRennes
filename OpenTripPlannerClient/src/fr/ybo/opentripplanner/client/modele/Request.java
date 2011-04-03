@@ -20,8 +20,8 @@ public class Request {
 	private static String WALK_SPEED = "walkSpeed";
 	private static String WHEELCHAIR = "wheelchair";
 	private static String MIN_TRANSFER_TIME = "minTransferTime";
-	private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mi:ss");
+	private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
+	private static SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
 	private Double fromPlaceLatitude;
 	private Double fromPlaceLongitude;
@@ -37,6 +37,88 @@ public class Request {
 	private Integer minTransferTime;
 	private Integer numItineraries;
 	private Boolean showIntermediateStops;
+
+	public Request(Double fromPlaceLatitude, Double fromPlaceLongitude, Double toPlaceLatitude,
+			Double toPlaceLongitude, Date date) {
+		super();
+		this.fromPlaceLatitude = fromPlaceLatitude;
+		this.fromPlaceLongitude = fromPlaceLongitude;
+		this.toPlaceLatitude = toPlaceLatitude;
+		this.toPlaceLongitude = toPlaceLongitude;
+		this.date = date;
+	}
+
+	/**
+	 * @param arriveBy
+	 *            the arriveBy to set
+	 */
+	public void setArriveBy(Boolean arriveBy) {
+		this.arriveBy = arriveBy;
+	}
+
+	/**
+	 * @param wheelchair
+	 *            the wheelchair to set
+	 */
+	public void setWheelchair(Boolean wheelchair) {
+		this.wheelchair = wheelchair;
+	}
+
+	/**
+	 * @param maxWalkDistance
+	 *            the maxWalkDistance to set
+	 */
+	public void setMaxWalkDistance(Double maxWalkDistance) {
+		this.maxWalkDistance = maxWalkDistance;
+	}
+
+	/**
+	 * @param walkSpeed
+	 *            the walkSpeed to set
+	 */
+	public void setWalkSpeed(Double walkSpeed) {
+		this.walkSpeed = walkSpeed;
+	}
+
+	/**
+	 * @param optimize
+	 *            the optimize to set
+	 */
+	public void setOptimize(OptimizeType optimize) {
+		this.optimize = optimize;
+	}
+
+	/**
+	 * @param modes
+	 *            the modes to set
+	 */
+	public void setModes(TraverseModeSet modes) {
+		this.modes = modes;
+	}
+
+	/**
+	 * @param minTransferTime
+	 *            the minTransferTime to set
+	 */
+	public void setMinTransferTime(Integer minTransferTime) {
+		this.minTransferTime = minTransferTime;
+	}
+
+	/**
+	 * @param numItineraries
+	 *            the numItineraries to set
+	 */
+	public void setNumItineraries(Integer numItineraries) {
+		this.numItineraries = numItineraries;
+	}
+
+	/**
+	 * @param showIntermediateStops
+	 *            the showIntermediateStops to set
+	 */
+	public void setShowIntermediateStops(Boolean showIntermediateStops) {
+		this.showIntermediateStops = showIntermediateStops;
+	}
 
 	private StringBuilder stringBuilder;
 	private boolean firstParam;

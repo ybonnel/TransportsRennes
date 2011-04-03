@@ -12,13 +12,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package fr.ybo.opentripplanner.client.modele;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 
 /**
  * An Itinerary is one complete way of getting from the start location to the end location.
@@ -84,9 +78,7 @@ public class Itinerary {
      * trip on a particular vehicle. So a trip where the use walks to the Q train, transfers to the
      * 6, then walks to their destination, has four legs.
      */
-    @XmlElementWrapper(name = "legs")
-    @XmlElement(name = "leg")
-    public List<Leg> legs = new ArrayList<Leg>();
+	public Legs legs = null;
 
     /**
      * This itinerary has a greater slope than the user requested (but there are no possible 
@@ -94,32 +86,4 @@ public class Itinerary {
      */
     public boolean tooSloped = false;
 
-    /** 
-     * adds leg to array list
-     * @param leg
-     */
-    public void addLeg(Leg leg) {
-        if(leg != null)
-            legs.add(leg);
-    }
-
-    /** 
-     * remove the leg from the list of legs 
-     * @param leg object to be removed
-     */
-    public void removeLeg(Leg leg) {
-        if(leg != null) {
-            legs.remove(leg);
-        }
-    }
-    
-    public void removeBogusLegs() {
-        Iterator<Leg> it = legs.iterator();
-        while (it.hasNext()) {
-            Leg leg = it.next();
-            if (leg.isBogusWalkLeg()) {
-                it.remove();
-            }
-        }
-    }
 }

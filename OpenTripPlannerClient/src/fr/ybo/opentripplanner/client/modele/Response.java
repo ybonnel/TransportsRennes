@@ -13,8 +13,6 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
-import java.util.HashMap;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -24,23 +22,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Response {
 
-    private HashMap<String, String> requestParameters;
     private TripPlan plan;
     private PlannerError error = null;
 
-    // note order the getters below is semi-important, in that that's the order printed by jersey in the return
-    // e.g., from a human readable standpoint, it's tradition to have request params, followed by plan, followed by errors
-
-    /**
-     * A dictionary of the parameters provided in the request that triggered this response.
-     */
-    public HashMap<String, String> getRequestParameters() {
-        return requestParameters;
-    }
-
-    public void setRequestParameters(HashMap<String, String> requestParameters) {
-        this.requestParameters = requestParameters;
-    }
 
     /**
      * The actual trip plan.

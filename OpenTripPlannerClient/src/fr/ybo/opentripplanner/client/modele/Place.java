@@ -42,12 +42,6 @@ public class Place {
      */
     public Double lat = null;
 
-    /**
-     * Returns the geometry in GeoJSON format
-     * @return
-     */
-	public String geometry;
-
     public Place() {
     }
 

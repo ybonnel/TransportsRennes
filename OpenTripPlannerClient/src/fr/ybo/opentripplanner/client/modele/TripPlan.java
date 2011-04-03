@@ -13,11 +13,9 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-import javax.xml.bind.annotation.XmlElementWrapper;
+
+import java.util.Date;
 
 /**
  * A TripPlan is a set of ways to get from point A to point B at time T.
@@ -40,8 +38,7 @@ public class TripPlan {
     /** 
      * A list of possible itineraries. 
      */
-    @XmlElementWrapper(name="itineraries")
-    public List<Itinerary> itinerary = new ArrayList<Itinerary>();
+	public Itineraries itineraries = null;
 
     public TripPlan() {}
     
@@ -49,9 +46,5 @@ public class TripPlan {
         this.from = from;
         this.to = to;
         this.date = date;
-    }
-    
-    public void addItinerary(Itinerary itinerary) {
-        this.itinerary.add(itinerary);
     }
 }
