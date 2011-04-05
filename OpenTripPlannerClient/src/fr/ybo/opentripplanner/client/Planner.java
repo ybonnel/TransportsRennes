@@ -12,8 +12,8 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package fr.ybo.opentripplanner.client;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -25,25 +25,31 @@ import fr.ybo.opentripplanner.client.modele.Response;
 
 public class Planner {
 
-	public Response getItineraries(Request request) throws OpenTripPlannerException {
+	private String urlPlanner;
+
+	protected Planner(String baseUrl) {
+		urlPlanner = baseUrl + Constantes.URL_PLANER;
+	}
+
+	protected Response getItineraries(Request request) throws OpenTripPlannerException {
+		Response reponse;
 		try {
-			URL url = new URL(request.constructUrl(Constantes.URL_PLANER));
+			URL url = new URL(request.constructUrl(urlPlanner));
 			URLConnection connection = url.openConnection();
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream(),
-					Constantes.ENCODAGE));
-			StringBuilder stringBuilder = new StringBuilder();
-			String ligne;
-			while ((ligne = bufReader.readLine()) != null) {
-				stringBuilder.append(ligne);
+
+			Gson gson = new GsonBuilder().setDateFormat(Constantes.DATE_FORMAT).create();
+			Reader reader = new InputStreamReader(connection.getInputStream(), Constantes.ENCODAGE);
+			try {
+				reponse = gson.fromJson(reader, Response.class);
+			} finally {
+				reader.close();
 			}
-			bufReader.close();
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
-			return gson.fromJson(stringBuilder.toString(), Response.class);
 		} catch (Exception exception) {
 			throw new OpenTripPlannerException(exception);
 		}
+		return reponse;
     }
 
 }

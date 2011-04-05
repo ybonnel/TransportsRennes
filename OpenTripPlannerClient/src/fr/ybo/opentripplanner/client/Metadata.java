@@ -25,6 +25,12 @@ import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 
 public class Metadata {
 
+	private String urlMetadata;
+
+	protected Metadata(String baseUrl) {
+		urlMetadata = baseUrl + Constantes.URL_METADATA;
+	}
+
 	/**
 	 * Returns metadata about the graph -- presently, this is just the extent of
 	 * the graph.
@@ -34,10 +40,10 @@ public class Metadata {
 	 * @throws OpenTripPlannerException
 	 *             en cas de problème.
 	 */
-	public static GraphMetadata getMetadata() throws OpenTripPlannerException {
+	protected GraphMetadata getMetadata() throws OpenTripPlannerException {
 		GraphMetadata reponse = null;
 		try {
-			URL url = new URL(Constantes.URL_METADATA);
+			URL url = new URL(urlMetadata);
 			URLConnection connection = url.openConnection();
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");

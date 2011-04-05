@@ -19,14 +19,6 @@ import fr.ybo.opentripplanner.client.modele.Response;
 
 public class PlannerTest {
 
-	@Test
-	public void testDateFormat() throws ParseException {
-		String date = "2011-04-05T12:00:00+02:00";
-		String format = "yyyy-MM-dd'T'HH:mm:ss";
-		SimpleDateFormat SDF = new SimpleDateFormat(format);
-		System.out.println(SDF.parse(date));
-	}
-
 	// 91 rue de paris :
 	// lat=48.1138212, lng=-1.6606638
 	// 29 rue d'antrain
@@ -37,8 +29,8 @@ public class PlannerTest {
 		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = SDF.parse("05/04/2011 12:00:00");
 		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
-		Planner planner = new Planner();
-		Response response = planner.getItineraries(request);
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://127.0.0.1:8080");
+		Response response = client.getItineraries(request);
 		assertNotNull(response);
 		assertNull(response.getError());
 		assertNotNull(response.getPlan());
@@ -92,6 +84,15 @@ public class PlannerTest {
 		assertEquals("STA1", leg.to.stopId.id);
 		leg = itineraire.legs.leg.get(4);
 		assertEquals("WALK", leg.mode);
+	}
+
+	@Test(expected = OpenTripPlannerException.class)
+	public void testPlannerError() throws ParseException, OpenTripPlannerException {
+		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = SDF.parse("05/04/2011 12:00:00");
+		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://tutu:8080");
+		client.getItineraries(request);
 	}
 
 }
