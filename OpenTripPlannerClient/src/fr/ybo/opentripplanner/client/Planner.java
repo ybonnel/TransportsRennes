@@ -28,7 +28,6 @@ public class Planner {
 	public Response getItineraries(Request request) throws OpenTripPlannerException {
 		try {
 			URL url = new URL(request.constructUrl(Constantes.URL_PLANER));
-			System.out.println(url.toString());
 			URLConnection connection = url.openConnection();
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setRequestProperty("Accept", "application/json");
@@ -40,7 +39,6 @@ public class Planner {
 				stringBuilder.append(ligne);
 			}
 			bufReader.close();
-			System.out.println(stringBuilder.toString());
 			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 			return gson.fromJson(stringBuilder.toString(), Response.class);
 		} catch (Exception exception) {

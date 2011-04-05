@@ -14,11 +14,10 @@
 package fr.ybo.opentripplanner.client.modele;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * One leg of a trip -- that is, a temporally continuous piece of the journey that takes place on a
@@ -45,27 +44,27 @@ public class Leg {
     /**
      * The mode (e.g., <code>Walk</code>) used when traversing this leg.
      */
-    @XmlAttribute
+	@SerializedName(value = "@mode", validate = false)
     public String mode = TraverseMode.WALK.toString();
 
     /**
      * For transit legs, the route of the bus or train being used. For non-transit legs, the name of
      * the street being traversed.
      */
-    @XmlAttribute
+	@SerializedName(value = "@route", validate = false)
     public String route = "";
 
     /**
      * For transit legs, the headsign of the bus or train being used. For non-transit legs, null.
      */
-    @XmlAttribute
+	@SerializedName(value = "@headsign", validate = false)
     public String headsign = null;
 
     /**
      * For transit legs, the ID of the transit agency that operates the service used for this leg.
      * For non-transit legs, null.
      */
-    @XmlAttribute
+	@SerializedName(value = "@agencyId", validate = false)
     public String agencyId = null;
     
     /**
@@ -83,8 +82,7 @@ public class Leg {
      * For non-transit legs, null.
      * This field is optional i.e. it is always null unless "showIntermediateStops" parameter is set to "true" in the planner request.
      */
-    @XmlElementWrapper(name = "intermediateStops")
-    public List<Place> stop;
+	public IntermediateStops intermediateStops = null;
     
     /**
      * The leg's geometry.
@@ -94,22 +92,7 @@ public class Leg {
     /**
      * A series of turn by turn instructions used for walking, biking and driving. 
      */
-    @XmlElementWrapper(name = "steps")
-    public List<WalkStep> walkSteps;
-
-    /**
-     * bogus walk legs are those that have 0.0 distance, and just one instruction 
-     * @return boolean true if the leg is bogus 
-     */
-    public boolean isBogusWalkLeg() {
-        boolean retVal = false;
-        if( TraverseMode.WALK.toString().equals(this.mode)         &&
-            (this.walkSteps == null || this.walkSteps.size() <= 1) && 
-            this.distance == 0) {
-            retVal = true;
-        }
-        return retVal;
-    }
+	public Steps steps = null;
     
     /** 
      * The leg's duration in milliseconds
