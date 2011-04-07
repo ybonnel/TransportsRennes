@@ -14,21 +14,19 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/widget_bg"
-                android:id="@+id/widgetlayout">
+                android:background="@drawable/appwidget_bg"
+                android:id="@+id/widgetlayout" android:layout_width="wrap_content" android:layout_height="wrap_content">
     <RelativeLayout
             android:id="@+id/layout_1arret"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:visibility="invisible">
+            android:visibility="visible">
 
         <ImageView android:id="@+id/iconeLigne_1arret"
                    android:layout_width="45dip"
                    android:layout_height="44dip"
-                   android:paddingTop="19dip"
-                   android:paddingLeft="20dip"
+                   android:paddingTop="5dip"
+                   android:paddingLeft="5dip"
                    android:gravity="center_vertical|center_horizontal"/>
 
         <TextView android:id="@+id/nomArret_1arret"
@@ -38,7 +36,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="12dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_toRightOf="@id/iconeLigne_1arret"/>
 
@@ -48,7 +46,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="9dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_below="@id/nomArret_1arret"
                   android:layout_alignLeft="@id/nomArret_1arret"/>
@@ -59,7 +57,7 @@
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_below="@id/iconeLigne_1arret"
                   android:layout_alignParentLeft="true"/>
@@ -70,7 +68,7 @@
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_below="@id/tempsRestant1_1arret"
                   android:layout_alignParentLeft="true"/>
@@ -81,7 +79,7 @@
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_below="@id/tempsRestant2_1arret"
                   android:layout_alignParentLeft="true"/>
@@ -92,7 +90,7 @@
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
-                  android:textColor="#080808"
+                  android:textColor="#E1E1E1"
                   android:gravity="center_vertical|left"
                   android:layout_below="@id/tempsRestant3_1arret"
                   android:layout_alignParentLeft="true"/>
