@@ -52,13 +52,13 @@ import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import fr.ybo.itineraires.CalculItineraires;
 import fr.ybo.opentripplanner.client.Constantes;
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
+import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements LocationListener {

@@ -1,4 +1,4 @@
-package fr.ybo.itineraires;
+package fr.ybo.transportsrennes.util;
 
 import fr.ybo.opentripplanner.client.ClientOpenTripPlanner;
 

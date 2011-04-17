@@ -75,7 +75,6 @@ public class PlannerTest {
 		// Première étape, à pied jusqu'à l'arret oberthur.
 		Leg leg = itineraire.legs.leg.get(0);
 		assertEquals("WALK", leg.mode);
-		System.out.println(leg.from.name);
 		
 
 		// Bus de oberthur à république
@@ -83,7 +82,7 @@ public class PlannerTest {
 		assertEquals("BUS", leg.mode);
 		assertEquals("3", leg.route);
 		assertEquals("3 | Alma", leg.headsign);
-		System.out.println(leg.from.name);
+		System.out.println(leg.legGeometry);
 		assertEquals("oberthu1", leg.from.stopId.id);
 		assertEquals("repjaurs", leg.to.stopId.id);
 
