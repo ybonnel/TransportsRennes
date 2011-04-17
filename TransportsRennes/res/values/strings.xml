@@ -144,4 +144,8 @@
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
     <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
     <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>
+    
+    <string name="erreur_outOfBounds">L\'itinéraire demandé possède des adresses en déhors de la zone couverte.</string>
+    <string name="erreur_noTransitTimes">Aucun bus trouvé pour l\'heure demandée.</string>
+    <string name="erreur_pathNotFound">Aucun itinéraire trouvé.</string>
 </resources>

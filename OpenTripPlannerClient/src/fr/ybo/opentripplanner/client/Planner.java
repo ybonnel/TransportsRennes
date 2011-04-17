@@ -47,7 +47,7 @@ public class Planner {
 				reader.close();
 			}
 		} catch (Exception exception) {
-			throw new OpenTripPlannerException(exception);
+			throw new OpenTripPlannerException(exception, request);
 		}
 		return reponse;
     }

@@ -15,7 +15,12 @@
 package fr.ybo.transportsrennes;
 
 import android.os.Bundle;
-import fr.ybo.itineraires.modele.ItineraireReponse;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import fr.ybo.opentripplanner.client.Constantes;
+import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TrajetAdapter;
 
@@ -28,8 +33,9 @@ public class Itineraires extends MenuAccueil.ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
-        ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable("itinerairesReponse");
+        Gson gson = new GsonBuilder().setDateFormat(Constantes.DATE_FORMAT).create();
+        Response itineraireReponse = gson.fromJson(getIntent().getExtras().getString("itinerairesReponse"), Response.class);
         int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-        setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
+        setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
     }
 }

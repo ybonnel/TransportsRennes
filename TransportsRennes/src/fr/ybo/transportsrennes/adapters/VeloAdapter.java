@@ -14,6 +14,9 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.Collection;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +27,6 @@ import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Adapteur pour les alerts.

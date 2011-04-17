@@ -18,6 +18,16 @@ import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 
 public class PlannerTest {
+	
+
+	@Test
+	public void testPlannerAno() throws ParseException, OpenTripPlannerException {
+		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = SDF.parse("05/04/2011 12:00:00");
+		Request request = new Request(48.3349386, -1.1211244, 48.1160495, -1.6789079, date);
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://transports-rennes.ic-s.org");
+		client.getItineraries(request);
+	}
 
 	// 91 rue de paris :
 	// lat=48.1138212, lng=-1.6606638
@@ -29,7 +39,7 @@ public class PlannerTest {
 		SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = SDF.parse("05/04/2011 12:00:00");
 		Request request = new Request(48.1138212, -1.6606638, 48.1160495, -1.6789079, date);
-		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://127.0.0.1:8080");
+		ClientOpenTripPlanner client = new ClientOpenTripPlanner("http://transports-rennes.ic-s.org");
 		Response response = client.getItineraries(request);
 		assertNotNull(response);
 		assertNull(response.getError());
@@ -65,12 +75,15 @@ public class PlannerTest {
 		// Première étape, à pied jusqu'à l'arret oberthur.
 		Leg leg = itineraire.legs.leg.get(0);
 		assertEquals("WALK", leg.mode);
+		System.out.println(leg.from.name);
+		
 
 		// Bus de oberthur à république
 		leg = itineraire.legs.leg.get(1);
 		assertEquals("BUS", leg.mode);
 		assertEquals("3", leg.route);
 		assertEquals("3 | Alma", leg.headsign);
+		System.out.println(leg.from.name);
 		assertEquals("oberthu1", leg.from.stopId.id);
 		assertEquals("repjaurs", leg.to.stopId.id);
 

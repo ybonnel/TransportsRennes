@@ -49,11 +49,15 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import fr.ybo.itineraires.CalculItineraires;
-import fr.ybo.itineraires.modele.Adresse;
-import fr.ybo.itineraires.modele.Converter;
-import fr.ybo.itineraires.schema.ItineraireReponse;
+import fr.ybo.opentripplanner.client.Constantes;
+import fr.ybo.opentripplanner.client.OpenTripPlannerException;
+import fr.ybo.opentripplanner.client.modele.Message;
+import fr.ybo.opentripplanner.client.modele.Request;
+import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -301,25 +305,29 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 	}
 
 	private void calculItineraire(final GeocoderResult resultDepart, final GeocoderResult resultArrivee) {
-		final Adresse adresseDepart = new Adresse();
-		final Adresse adresseArrivee = new Adresse();
+		double latitudeDepart;
+		double longitudeDepart;
+		double latitudeArrivee;
+		double longitudeArrivee;
 		if (resultDepart != null) {
-			adresseDepart.latitude = resultDepart.getGeometry().getLocation().getLat().doubleValue();
-			adresseDepart.longitude = resultDepart.getGeometry().getLocation().getLng().doubleValue();
+			latitudeDepart = resultDepart.getGeometry().getLocation().getLat().doubleValue();
+			longitudeDepart = resultDepart.getGeometry().getLocation().getLng().doubleValue();
 		} else {
-			adresseDepart.latitude = lastLocation.getLatitude();
-			adresseDepart.longitude = lastLocation.getLongitude();
+			latitudeDepart = lastLocation.getLatitude();
+			longitudeDepart = lastLocation.getLongitude();
 		}
 		if (resultArrivee != null) {
-			adresseArrivee.latitude = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
-			adresseArrivee.longitude = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
+			latitudeArrivee = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
+			longitudeArrivee = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
 		} else {
-			adresseArrivee.latitude = lastLocation.getLatitude();
-			adresseArrivee.longitude = lastLocation.getLongitude();
+			latitudeArrivee = lastLocation.getLatitude();
+			longitudeArrivee = lastLocation.getLongitude();
 		}
+		final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee, calendar.getTime());
 		new AsyncTask<Void, Void, Void>() {
 			private ProgressDialog progressDialog;
-			private ItineraireReponse reponse;
+			private Response reponse;
+			private boolean erreurGrave = false;
 
 			@Override
 			protected void onPreExecute() {
@@ -329,7 +337,13 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 
 			@Override
 			protected Void doInBackground(Void... voids) {
-				reponse = CalculItineraires.getInstance().calculItineraires(adresseDepart, adresseArrivee, calendar);
+				try {
+					reponse = CalculItineraires.getInstance().getItineraries(request);
+				} catch (OpenTripPlannerException openTripPlannerException) {
+					LOG_YBO.erreur("Erreur lors du calcul d'itinéraire", openTripPlannerException);
+					LOG_YBO.erreur("Request : " + openTripPlannerException.getRequest().toString());
+					erreurGrave = true;
+				}
 				return null;
 			}
 
@@ -337,12 +351,27 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				progressDialog.dismiss();
-				if (reponse.getErreur() != null) {
-					LOG_YBO.erreur(reponse.getErreur());
+				if (erreurGrave) {
 					Toast.makeText(ItineraireRequete.this, R.string.erreur_calculItineraires, Toast.LENGTH_LONG).show();
+				} else if (reponse.getError() != null) {
+					LOG_YBO.erreur(reponse.getError().getMsg());
+					int message = R.string.erreur_calculItineraires;
+					switch (Message.findEnumById(reponse.getError().getId())) {							
+						case OUTSIDE_BOUNDS:
+							message = R.string.erreur_outOfBounds;
+							break;
+						case NO_TRANSIT_TIMES:
+							message = R.string.erreur_noTransitTimes;
+							break;
+						case PATH_NOT_FOUND:
+							message = R.string.erreur_pathNotFound;
+							break;
+					}
+					Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
 				} else {
 					Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-					intent.putExtra("itinerairesReponse", Converter.convert(reponse));
+					Gson gson = new GsonBuilder().setDateFormat(Constantes.DATE_FORMAT).create();
+					intent.putExtra("itinerairesReponse", gson.toJson(reponse));
 					int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					intent.putExtra("heureDepart", heureDepart);
 					startActivity(intent);

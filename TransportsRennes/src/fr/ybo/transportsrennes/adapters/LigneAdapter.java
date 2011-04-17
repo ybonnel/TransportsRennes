@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +27,6 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.List;
 
 public class LigneAdapter extends BaseAdapter {
 
