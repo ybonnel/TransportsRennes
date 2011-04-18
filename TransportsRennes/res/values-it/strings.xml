@@ -46,6 +46,7 @@
 <string name="directionEntete">Direzione:</string>
 <string name="premierAccesLigne">Primo accesso alla linea %1$s, scaricamento dei dati.</string>
 <string name="tooMuchFavoris">Ha già selezionato tre favoriti fermate.</string>
+<string name="justOneFavori">Ha già selezionato un favorite fermate.</string>
 <string name="activeGps">Per godere di questa pagina, é preferibile attivare il GPS.</string>
 <string name="ajouterFavori">Aggiungere ai favoriti.</string>
 <string name="suprimerFavori">Cancellare dai favoriti.</string>
@@ -81,6 +82,7 @@
 <string name="btn_itineraires">Calcolo dei percorsi</string>
 <!-- Widget -->
 <string name="widget_choix">Scegli da uno a tre fermate dell\'autobus favorite</string>
+<string name="widget11_choix">Scegli uno fermate d\'autobus favorite</string>
 <!-- Génériques -->
 <string name="Terminer">Terminare</string>
 <string name="Toutes">Tutte le</string>

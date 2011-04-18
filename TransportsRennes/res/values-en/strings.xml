@@ -57,6 +57,7 @@
     <string name="directionEntete">Towards :</string>
     <string name="premierAccesLigne">First access to line %1$s, loading data.</string>
     <string name="tooMuchFavoris">Already selected three favorite stops</string>
+    <string name="justOneFavori">Already selected one favorite stop</string>
     <string name="activeGps">To fully enjoy this page, it is preferable to activate your GPS.</string>
     <string name="ajouterFavori">Add to favorites</string>
     <string name="suprimerFavori">Remove from favorites</string>
@@ -97,6 +98,7 @@
     <string name="btn_itineraires">Routes calculation</string>
     <!-- Widget -->
     <string name="widget_choix">Choose from one to three favorite stops.</string>
+    <string name="widget11_choix">Choose one favorite stop.</string>
     <!-- Génériques -->
     <string name="Terminer">Finish</string>
     <string name="Toutes">All</string>

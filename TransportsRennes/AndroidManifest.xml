@@ -52,12 +52,20 @@
         <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
         <activity android:name=".TrajetOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <receiver android:name=".TransportsWidget">
+        <receiver android:name=".TransportsWidget" android:label="@string/widget22_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/transportswidget"/>
+        </receiver>
+        
+        <receiver android:name=".TransportsWidget11" android:label="@string/widget11_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/transportswidget11"/>
         </receiver>
         <!-- Used for install referrer tracking -->
         <receiver android:name="com.google.android.apps.analytics.AnalyticsReceiver" android:exported="true">

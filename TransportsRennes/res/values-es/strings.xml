@@ -46,6 +46,7 @@
 <string name="directionEntete">Dirección :</string>
 <string name="premierAccesLigne">Primer acceso a la línea de %1$s, carga de datos.</string>
 <string name="tooMuchFavoris">Ya hay tres favoritos seleccionados</string>
+<string name="justOneFavori">Ya hay uno favorito seleccionado</string>
 <string name="activeGps">Para disfrutar plenamente de esta página, es aconsejable para activar el GPS.</string>
 <string name="ajouterFavori">Añadir a Favoritos</string>
 <string name="suprimerFavori">Eliminar de Favoritos</string>
@@ -81,6 +82,7 @@
 <string name="btn_itineraires">Plan de Viaje</string>
 <!-- Widget -->
 <string name="widget_choix">Elija de uno a tres paradas favoritas.</string>
+<string name="widget11_choix">Elija uno parada favorita.</string>
 <!-- Génériques -->
 <string name="Terminer">Finalizar</string>
 <string name="Toutes">Todas</string>

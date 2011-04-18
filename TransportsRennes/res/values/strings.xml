@@ -15,6 +15,9 @@
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
+    
+    <string name="widget11_name">Transports Rennes 1x1</string>
+    <string name="widget22_name">Transports Rennes 2x2</string>
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer
         quelques dizaines de secondes, voulez-vous l\'effectuer maintenant?
@@ -60,6 +63,7 @@
     <string name="directionEntete">Direction :</string>
     <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
     <string name="tooMuchFavoris">Déjà trois arrêts favoris sélectionnés</string>
+    <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>
     <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
     <string name="ajouterFavori">Ajouter aux favoris</string>
     <string name="suprimerFavori">Supprimer des favoris</string>
@@ -100,6 +104,7 @@
     <string name="btn_itineraires">Calcul d\'itinéraires</string>
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
+    <string name="widget11_choix">Choisissez de un arrêt favori.</string>
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
     <string name="Toutes">Toutes</string>
