@@ -16,6 +16,7 @@ package fr.ybo.opentripplanner.client.modele;
 
 import java.util.List;
 
+
 /**
  * This represents an error in trip planning.
  *

@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -24,8 +26,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
-
-import java.util.List;
 
 /**
  * Adapteur pour les points de vente.

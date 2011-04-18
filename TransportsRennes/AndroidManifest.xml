@@ -51,6 +51,7 @@
                   android:theme="@android:style/Theme"/>
         <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
+        <activity android:name=".TrajetOnMap" android:configChanges="orientation|keyboardHidden"/>
         <receiver android:name=".TransportsWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

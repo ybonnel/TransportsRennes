@@ -14,6 +14,10 @@
 
 package fr.ybo.transportsrennes.adapters;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,10 +30,6 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class FavoriAdapterForWidget extends BaseAdapter {
 

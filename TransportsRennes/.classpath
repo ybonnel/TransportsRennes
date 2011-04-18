@@ -3,10 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="libs/gson-1.6.jar"/>
 	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="libs/org.restlet.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/GeoCoder"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/MoteurCsv"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/OpenTripPlannerClient"/>
+	<classpathentry kind="lib" path="libs/gson-1.7-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

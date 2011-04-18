@@ -102,4 +102,11 @@ public class EncodedPolylineBean implements Serializable {
 
         return encodeString.toString();
     }
+
+	@Override
+	public String toString() {
+		return "EncodedPolylineBean [points=" + points + ", levels=" + levels + ", length=" + length + "]";
+	}
+    
+    
 }

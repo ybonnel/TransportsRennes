@@ -115,5 +115,9 @@
 <string name="erreur_gpsPasPret">La posizione GPS non è stato ancora trovata.</string>
 <string name="erreur_calculItineraires">È verificato un errore nel calcolo del percorso, si prega di riprovare più tardi.</string>
 <string name="erreur_multipleAdresses">Diversi indirizzi trovati, si prega di specificare l\'indirizzo</string>
+
+    <string name="erreur_outOfBounds">Il percorso ha richiesto gli indirizzi al di fuori dell\'area coperta.</string>
+    <string name="erreur_noTransitTimes">Nessun bus scoperto per il tempo richiesto.</string>
+    <string name="erreur_pathNotFound">Nessun percorso trovato.</string>
 </resources>
 

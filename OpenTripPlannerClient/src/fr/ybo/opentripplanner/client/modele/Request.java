@@ -187,4 +187,16 @@ public class Request {
 
 	}
 
+	@Override
+	public String toString() {
+		return "Request [fromPlaceLatitude=" + fromPlaceLatitude + ", fromPlaceLongitude=" + fromPlaceLongitude
+				+ ", toPlaceLatitude=" + toPlaceLatitude + ", toPlaceLongitude=" + toPlaceLongitude + ", date=" + date
+				+ ", arriveBy=" + arriveBy + ", wheelchair=" + wheelchair + ", maxWalkDistance=" + maxWalkDistance
+				+ ", walkSpeed=" + walkSpeed + ", optimize=" + optimize + ", modes=" + modes + ", minTransferTime="
+				+ minTransferTime + ", numItineraries=" + numItineraries + ", showIntermediateStops="
+				+ showIntermediateStops + ", stringBuilder=" + stringBuilder + ", firstParam=" + firstParam + "]";
+	}
+	
+	
+
 }
