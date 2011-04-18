@@ -14,6 +14,8 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.util.List;
+
 
 /**
  * This represents an error in trip planning.
@@ -24,6 +26,7 @@ public class PlannerError {
     private int    id;
     private String msg;
 
+    private List<String> missing = null;
     private boolean noPath = false;
 
     /** An error where no path has been found, but no points are missing */
@@ -44,6 +47,20 @@ public class PlannerError {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @param missing the list of point names which cannot be found (from, to, intermediate.n)
+     */
+    public void setMissing(List<String> missing) {
+        this.missing = missing;
+    }
+
+    /**
+     * @return the list of point names which cannot be found (from, to, intermediate.n)
+     */
+    public List<String> getMissing() {
+        return missing;
     }
 
     /**

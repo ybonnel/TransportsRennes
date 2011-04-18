@@ -1,5 +1,7 @@
 package fr.ybo.transportsrennes.util;
 
+import com.google.android.maps.GeoPoint;
+
 public class Coordinate {
 	
 	private double x;
@@ -19,6 +21,10 @@ public class Coordinate {
 	public Coordinate(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+	
+	public GeoPoint toGeoPoint() {
+		return new GeoPoint((int)(x*1.0E6), (int)(y*1.0E6));
 	}
 	
 	

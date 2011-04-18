@@ -14,28 +14,40 @@
 
 package fr.ybo.transportsrennes;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import fr.ybo.opentripplanner.client.Constantes;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TrajetAdapter;
+import fr.ybo.transportsrennes.util.GsonUtil;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.itineraires);
-        Gson gson = new GsonBuilder().setDateFormat(Constantes.DATE_FORMAT).create();
-        Response itineraireReponse = gson.fromJson(getIntent().getExtras().getString("itinerairesReponse"), Response.class);
-        int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-        setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
-    }
+	/**
+	 * Called when the activity is first created.
+	 */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.itineraires);
+		Response itineraireReponse = GsonUtil.getGson().fromJson(
+				getIntent().getExtras().getString("itinerairesReponse"), Response.class);
+		int heureDepart = getIntent().getIntExtra("heureDepart", 0);
+		setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
+		ListView lv = getListView();
+		lv.setTextFilterEnabled(true);
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Itinerary trajet = (Itinerary) adapterView.getItemAtPosition(position);
+				Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
+				intent.putExtra("trajet", GsonUtil.getGson().toJson(trajet));
+				startActivity(intent);
+			}
+
+		});
+	}
 }
