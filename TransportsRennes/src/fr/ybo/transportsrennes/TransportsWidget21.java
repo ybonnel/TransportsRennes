@@ -14,10 +14,8 @@
 
 package fr.ybo.transportsrennes;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,17 +27,17 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.LogYbo;
-import fr.ybo.transportsrennes.util.WidgetUpdateUtil;
+import fr.ybo.transportsrennes.util.Widget21UpdateUtil;
 
-public class TransportsWidget extends AppWidgetProvider {
+public class TransportsWidget21 extends AppWidgetProvider {
 
-	private static final LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
+	private static final LogYbo LOG_YBO = new LogYbo(TransportsWidget21.class);
 
 	private static final Map<Integer, Timer> MAP_TIMERS_BY_WIDGET_ID = new HashMap<Integer, Timer>(5);
 
 	public static void verifKiller(Context context, AppWidgetManager appWidgetManager) {
 		if (MAP_TIMERS_BY_WIDGET_ID.isEmpty()) {
-			for (int widgetId : TransportsWidgetConfigure.getWidgetIds(context)) {
+			for (int widgetId : TransportsWidget21Configure.getWidgetIds(context)) {
 				LOG_YBO.debug("Le widget " + widgetId + " a du être killer, on le relance");
 				updateAppWidget(context, appWidgetManager, widgetId);
 			}
@@ -64,7 +62,7 @@ public class TransportsWidget extends AppWidgetProvider {
 					MAP_TIMERS_BY_WIDGET_ID.get(appWidgetId).cancel();
 					MAP_TIMERS_BY_WIDGET_ID.remove(appWidgetId);
 				}
-				TransportsWidgetConfigure.deleteSettings(context, appWidgetId);
+				TransportsWidget21Configure.deleteSettings(context, appWidgetId);
 			}
 		}
 		super.onDeleted(context, appWidgetIds);
@@ -79,44 +77,41 @@ public class TransportsWidget extends AppWidgetProvider {
 	@Override
 	public void onDisabled(Context context) {
 		LOG_YBO.debug("onDisable");
-		TransportsWidgetConfigure.deleteAllSettings(context);
+		TransportsWidget21Configure.deleteAllSettings(context);
 		super.onDisabled(context);
 	}
+
 
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 		LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
 		if (MAP_TIMERS_BY_WIDGET_ID.containsKey(appWidgetId)) {
 			return;
 		}
-		List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
-		if (favorisSelects.isEmpty()) {
+		ArretFavori favoriSelect = TransportsWidget21Configure.loadSettings(context, appWidgetId);
+		if (favoriSelect == null) {
 			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
 			return;
 		}
-		ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
-		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-		for (ArretFavori favoriSelect : favorisSelects) {
-			ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
-			if (favoriBdd == null) {
-				LOG_YBO.debug("FavoriBdd null");
-				return;
-			}
-			if (favoriBdd.nomArret.length() > 13) {
-				favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 12) + "...";
-			}
-			if (favoriBdd.direction.length() > 18) {
-				favoriBdd.direction = favoriBdd.direction.substring(0, 16) + "...";
-			}
-			favorisBdd.add(favoriBdd);
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets21);
+		ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
+		if (favoriBdd == null) {
+			LOG_YBO.debug("FavoriBdd null");
+			return;
 		}
-		WidgetUpdateUtil.updateAppWidget(context, views, favorisBdd, Calendar.getInstance());
+		if (favoriBdd.nomArret.length() > 10) {
+			favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 8) + "...";
+		}
+		if (favoriBdd.direction.length() > 13) {
+			favoriBdd.direction = favoriBdd.direction.substring(0, 11) + "...";
+		}
+		Widget21UpdateUtil.updateAppWidget(context, views, favoriBdd, Calendar.getInstance());
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 		Timer timer = new Timer();
 		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
 			MAP_TIMERS_BY_WIDGET_ID.put(appWidgetId, timer);
 		}
-		timer.scheduleAtFixedRate(new TransportsWidget.MyTime(context, appWidgetManager, favorisBdd, appWidgetId),
+		timer.scheduleAtFixedRate(new TransportsWidget21.MyTime(context, appWidgetManager, favoriBdd, appWidgetId),
 				2000, 1000);
 	}
 
@@ -124,14 +119,14 @@ public class TransportsWidget extends AppWidgetProvider {
 		final AppWidgetManager appWidgetManager;
 		final Context context;
 
-		private final ArrayList<ArretFavori> favoris;
+		private final ArretFavori favori;
 		private final int appWidgetId;
 		private int now;
 
-		MyTime(Context context, AppWidgetManager appWidgetManager, ArrayList<ArretFavori> favoris, int appWidgetId) {
+		MyTime(Context context, AppWidgetManager appWidgetManager, ArretFavori favori, int appWidgetId) {
 			this.context = context;
 			this.appWidgetManager = appWidgetManager;
-			this.favoris = favoris;
+			this.favori = favori;
 			this.appWidgetId = appWidgetId;
 			now = -1;
 		}
@@ -142,24 +137,25 @@ public class TransportsWidget extends AppWidgetProvider {
 			int newNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 			if (newNow != now) {
 				now = newNow;
-				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-				WidgetUpdateUtil.updateAppWidget(context, remoteViews, favoris, calendar);
+				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets21);
+				Widget21UpdateUtil.updateAppWidget(context, remoteViews, favori, calendar);
 				appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 			}
 		}
 	}
 
-
 	@Override
 	public void onReceive(Context context, Intent intent) {
+		LOG_YBO.debug("onReceive");
 		// v1.5 fix that doesn't call onDelete Action
 		String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-			int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.INVALID_APPWIDGET_ID);
 			if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
 				super.onReceive(context, intent);
 			} else {
-				onDeleted(context, new int[]{appWidgetId});
+				onDeleted(context, new int[] { appWidgetId });
 			}
 		} else if (action.startsWith("YboClick")) {
 			String[] champs = action.split("_");
@@ -182,4 +178,3 @@ public class TransportsWidget extends AppWidgetProvider {
 		super.onReceive(context, intent);
 	}
 }
-

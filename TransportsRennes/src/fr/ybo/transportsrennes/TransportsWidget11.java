@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -96,20 +97,21 @@ public class TransportsWidget11 extends AppWidgetProvider {
 			LOG_YBO.debug("FavoriBdd null");
 			return;
 		}
-		if (favoriBdd.nomArret.length() > 8) {
-			favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 6) + "...";
+		if (favoriBdd.nomArret.length() > 10) {
+			favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 8) + "...";
 		}
-		if (favoriBdd.direction.length() > 10) {
-			favoriBdd.direction = favoriBdd.direction.substring(0, 8) + "...";
+		if (favoriBdd.direction.length() > 12) {
+			favoriBdd.direction = favoriBdd.direction.substring(0, 10) + "...";
 		}
-		Widget11UpdateUtil.updateAppWidget(context, views, favoriBdd);
+		Widget11UpdateUtil.updateAppWidget(context, views, favoriBdd, Calendar.getInstance());
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 		Timer timer = new Timer();
 		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
 			MAP_TIMERS_BY_WIDGET_ID.put(appWidgetId, timer);
 		}
-		timer.scheduleAtFixedRate(new TransportsWidget11.MyTime(context, appWidgetManager, favoriBdd, appWidgetId), 2000, 2000);
+		timer.scheduleAtFixedRate(new TransportsWidget11.MyTime(context, appWidgetManager, favoriBdd, appWidgetId),
+				2000, 1000);
 	}
 
 	private static class MyTime extends TimerTask {
@@ -118,20 +120,26 @@ public class TransportsWidget11 extends AppWidgetProvider {
 
 		private final ArretFavori favori;
 		private final int appWidgetId;
+		private int now;
 
 		MyTime(Context context, AppWidgetManager appWidgetManager, ArretFavori favori, int appWidgetId) {
 			this.context = context;
 			this.appWidgetManager = appWidgetManager;
 			this.favori = favori;
 			this.appWidgetId = appWidgetId;
+			now = -1;
 		}
 
 		@Override
 		public void run() {
-			LOG_YBO.debug("MyTimer.run");
-			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets11);
-			Widget11UpdateUtil.updateAppWidget(context, remoteViews, favori);
-			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+			Calendar calendar = Calendar.getInstance();
+			int newNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+			if (newNow != now) {
+				now = newNow;
+				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets11);
+				Widget11UpdateUtil.updateAppWidget(context, remoteViews, favori, calendar);
+				appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+			}
 		}
 	}
 

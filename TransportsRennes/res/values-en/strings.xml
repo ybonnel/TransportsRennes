@@ -117,6 +117,7 @@
     <string name="twitter">Twitter</string>
     <string name="oui">Yes</string>
     <string name="non">No</string>
+    <string name="prochain">Next : </string>
     <!-- Erreurs -->
     <string name="erreur_chargementStar">An error occurred while retrieving data from the STAR surely due to network problems, try again later.
     </string>

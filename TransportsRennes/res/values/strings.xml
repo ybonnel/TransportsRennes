@@ -17,6 +17,7 @@
     <string name="app_name">Transports Rennes</string>
     
     <string name="widget11_name">Transports Rennes 1x1</string>
+    <string name="widget21_name">Transports Rennes 2x1</string>
     <string name="widget22_name">Transports Rennes 2x2</string>
     <!-- Messages -->
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer
@@ -123,6 +124,7 @@
     <string name="twitter">Twitter</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
+    <string name="prochain">Prochain : </string>
     <!-- Erreurs -->
     <string name="erreur_chargementStar">Une erreur est survenue lors de la récupération des données du STAR sûrement due à un problème réseau,
         réessayez plus tard.

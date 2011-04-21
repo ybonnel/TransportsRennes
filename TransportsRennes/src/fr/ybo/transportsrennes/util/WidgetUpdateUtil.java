@@ -34,20 +34,21 @@ public class WidgetUpdateUtil {
 	private WidgetUpdateUtil() {
 	}
 
-	public static void updateAppWidget(Context context, RemoteViews views, ArrayList<ArretFavori> favoris) {
+	public static void updateAppWidget(Context context, RemoteViews views, ArrayList<ArretFavori> favoris,
+			Calendar calendar) {
 
 		switch (favoris.size()) {
 			case 1:
 				updateAppWidget1Arret(context, views, favoris.get(0));
-				remplirRemoteViews1Arret(context, views, favoris);
+				remplirRemoteViews1Arret(context, views, favoris, calendar);
 				break;
 			case 2:
 				updateAppWidget2Arret(context, views, favoris.get(0), favoris.get(1));
-				remplirRemoteViews2Arret(context, views, favoris);
+				remplirRemoteViews2Arret(context, views, favoris, calendar);
 				break;
 			case 3:
 				updateAppWidget3Arret(context, views, favoris.get(0), favoris.get(1), favoris.get(2));
-				remplirRemoteViews3Arret(context, views, favoris);
+				remplirRemoteViews3Arret(context, views, favoris, calendar);
 				break;
 		}
 	}
@@ -119,9 +120,8 @@ public class WidgetUpdateUtil {
 		views.setViewVisibility(R.id.layout_3arret, View.VISIBLE);
 	}
 
-	private static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
-
-		Calendar calendar = Calendar.getInstance();
+	private static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+			Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		try {
 			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
@@ -148,8 +148,8 @@ public class WidgetUpdateUtil {
 
 	}
 
-	private static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
-		Calendar calendar = Calendar.getInstance();
+	private static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+			Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		try {
 			List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
@@ -181,8 +181,8 @@ public class WidgetUpdateUtil {
 		}
 	}
 
-	private static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris) {
-		Calendar calendar = Calendar.getInstance();
+	private static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+			Calendar calendar) {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		try {
 			List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
