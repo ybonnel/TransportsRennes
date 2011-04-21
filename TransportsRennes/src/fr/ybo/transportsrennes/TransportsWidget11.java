@@ -90,19 +90,19 @@ public class TransportsWidget11 extends AppWidgetProvider {
 			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
 			return;
 		}
-		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-			ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
-			if (favoriBdd == null) {
-				LOG_YBO.debug("FavoriBdd null");
-				return;
-			}
-			if (favoriBdd.nomArret.length() > 13) {
-				favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 12) + "...";
-			}
-			if (favoriBdd.direction.length() > 18) {
-				favoriBdd.direction = favoriBdd.direction.substring(0, 16) + "...";
-			}
-			Widget11UpdateUtil.updateAppWidget(context, views, favoriBdd);
+		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets11);
+		ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
+		if (favoriBdd == null) {
+			LOG_YBO.debug("FavoriBdd null");
+			return;
+		}
+		if (favoriBdd.nomArret.length() > 8) {
+			favoriBdd.nomArret = favoriBdd.nomArret.substring(0, 6) + "...";
+		}
+		if (favoriBdd.direction.length() > 10) {
+			favoriBdd.direction = favoriBdd.direction.substring(0, 8) + "...";
+		}
+		Widget11UpdateUtil.updateAppWidget(context, views, favoriBdd);
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 		Timer timer = new Timer();
@@ -129,7 +129,7 @@ public class TransportsWidget11 extends AppWidgetProvider {
 		@Override
 		public void run() {
 			LOG_YBO.debug("MyTimer.run");
-			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets11);
 			Widget11UpdateUtil.updateAppWidget(context, remoteViews, favori);
 			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 		}

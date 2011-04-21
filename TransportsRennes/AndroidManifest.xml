@@ -59,6 +59,11 @@
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/transportswidget"/>
         </receiver>
+        <activity android:name=".TransportsWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
         
         <receiver android:name=".TransportsWidget11" android:label="@string/widget11_name">
             <intent-filter>
@@ -67,17 +72,17 @@
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/transportswidget11"/>
         </receiver>
+        <activity android:name=".TransportsWidget11Configure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
         <!-- Used for install referrer tracking -->
         <receiver android:name="com.google.android.apps.analytics.AnalyticsReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
         </receiver>
-        <activity android:name=".TransportsWidgetConfigure">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
-            </intent-filter>
-        </activity>
 
         <uses-library android:name="com.google.android.maps"/>
     </application>

@@ -51,6 +51,7 @@ public class TransportsRennesApplication extends Application {
 		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
+		TransportsWidget11.verifKiller(getApplicationContext(), appWidgetManager);
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();

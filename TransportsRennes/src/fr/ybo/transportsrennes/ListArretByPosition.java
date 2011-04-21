@@ -317,7 +317,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				arretFavori.arretId = arret.id;
 				arretFavori.ligneId = arret.favori.ligneId;
 				arretFavori.macroDirection = arret.favori.macroDirection;
-				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)) {
+				if (TransportsWidgetConfigure.isNotUsed(this, arretFavori)
+						&& TransportsWidget11Configure.isNotUsed(this, arretFavori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(arretFavori);
 				} else {
 					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();

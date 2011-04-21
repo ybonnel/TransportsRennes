@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -104,7 +105,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			imageView.invalidate();
 		} else {
 			// Supression d'un favori.
-			if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)) {
+			if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)
+					&& TransportsWidget11Configure.isNotUsed(activity, myFavori)) {
 				TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
 				imageView.setImageResource(android.R.drawable.btn_star_big_off);
 				imageView.invalidate();

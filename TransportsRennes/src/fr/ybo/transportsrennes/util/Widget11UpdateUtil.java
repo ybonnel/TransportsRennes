@@ -44,12 +44,14 @@ public class Widget11UpdateUtil {
 		Calendar calendar = Calendar.getInstance();
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		try {
-			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId,
-					favori.arretId,favori.macroDirection, 1, calendar);
+			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
+					favori.macroDirection, 2, calendar);
 			views.setTextViewText(
 					R.id.tempsRestant,
-					prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts.get(0), now));
+					prochainsDeparts.size() < 1 ? "" : formatterCalendar(context, prochainsDeparts.get(0), now));
+			views.setTextViewText(
+					R.id.tempsRestantFutur,
+					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1), now));
 		} catch (SQLiteException ignore) {
 
 		}
@@ -57,38 +59,22 @@ public class Widget11UpdateUtil {
 
 	public static String formatterCalendar(Context context, int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
-		if (tempsEnMinutes < 0) {
-			stringBuilder.append(context.getString(R.string.tropTard));
-		} else {
-			int heures = tempsEnMinutes / 60;
-			int minutes = tempsEnMinutes - heures * 60;
-			boolean tempsAjoute = false;
-			if (heures > 0) {
-				stringBuilder.append(heures);
-				stringBuilder.append(' ');
-				stringBuilder.append(context.getString(R.string.miniHeures));
-				stringBuilder.append(' ');
-				tempsAjoute = true;
-			}
-			if (minutes > 0) {
-				if (heures <= 0) {
-					stringBuilder.append(minutes);
-					stringBuilder.append(' ');
-					stringBuilder.append(context.getString(R.string.miniMinutes));
-				} else {
-					if (minutes < 10) {
-						stringBuilder.append('0');
-					}
-					stringBuilder.append(minutes);
-				}
-				tempsAjoute = true;
-			}
-			if (!tempsAjoute) {
-				stringBuilder.append("0 ");
-				stringBuilder.append(context.getString(R.string.miniMinutes));
-			}
+
+		int heures = prochainDepart / 60;
+		int minutes = prochainDepart - heures * 60;
+		if (heures >= 24) {
+			heures -= 24;
 		}
+		if (heures < 10) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(heures);
+		stringBuilder.append(':');
+		if (minutes < 10) {
+			stringBuilder.append('0');
+		}
+		stringBuilder.append(minutes);
+
 		return stringBuilder.toString();
 	}
 }

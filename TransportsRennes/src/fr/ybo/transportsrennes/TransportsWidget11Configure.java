@@ -86,7 +86,7 @@ public class TransportsWidget11Configure extends ListActivity {
 				} else {
 					saveSettings(TransportsWidget11Configure.this, appWidgetId, favoriSelectionne);
 					AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidget11Configure.this);
-					TransportsWidget.updateAppWidget(TransportsWidget11Configure.this, appWidgetManager, appWidgetId);
+					TransportsWidget11.updateAppWidget(TransportsWidget11Configure.this, appWidgetManager, appWidgetId);
 					Intent resultValue = new Intent();
 					resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 					setResult(RESULT_OK, resultValue);
