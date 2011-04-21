@@ -13,6 +13,7 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.Currency;
 import java.util.Locale;
 
@@ -21,7 +22,9 @@ import java.util.Locale;
  * @author novalis
  *
  */
-public class WrappedCurrency {
+public class WrappedCurrency implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
     private Currency value;
     
     public WrappedCurrency() {

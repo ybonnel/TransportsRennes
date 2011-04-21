@@ -15,14 +15,16 @@ package fr.ybo.opentripplanner.client.modele;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * A TripPlan is a set of ways to get from point A to point B at time T.
  */
-public class TripPlan {
+public class TripPlan implements Serializable {
 
-    /** 
+	private static final long serialVersionUID = 1L;
+	/** 
      * The time and date of travel 
      */
     public Date date = null;

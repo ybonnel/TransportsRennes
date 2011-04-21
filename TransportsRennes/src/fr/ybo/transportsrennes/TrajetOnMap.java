@@ -39,7 +39,6 @@ import fr.ybo.opentripplanner.client.modele.TraverseMode;
 import fr.ybo.transportsrennes.map.LineItemizedOverlay;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsrennes.util.Coordinate;
-import fr.ybo.transportsrennes.util.GsonUtil;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
@@ -54,7 +53,7 @@ public class TrajetOnMap extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trajet_map);
-		Itinerary trajet = GsonUtil.getGson().fromJson(getIntent().getStringExtra("trajet"), Itinerary.class);
+		Itinerary trajet = (Itinerary) getIntent().getSerializableExtra("trajet");
 
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);

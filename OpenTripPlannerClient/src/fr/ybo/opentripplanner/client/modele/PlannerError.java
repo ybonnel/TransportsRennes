@@ -14,6 +14,7 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -21,9 +22,10 @@ import java.util.List;
  * This represents an error in trip planning.
  *
  */
-public class PlannerError {
+public class PlannerError implements Serializable {
 
-    private int    id;
+	private static final long serialVersionUID = 1L;
+	private int    id;
     private String msg;
 
     private List<String> missing = null;

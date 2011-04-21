@@ -14,6 +14,8 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
+
 /**
  * Represents one instruction in walking directions. Three examples from New York City:
  * <p>
@@ -39,7 +41,9 @@ package fr.ybo.opentripplanner.client.modele;
  * everything else false <br/>
  * </p>
  * */
-public class WalkStep {
+public class WalkStep implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     /**
      * The distance in meters that this step takes.

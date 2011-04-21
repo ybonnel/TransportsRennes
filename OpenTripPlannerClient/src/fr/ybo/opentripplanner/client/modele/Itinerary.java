@@ -12,12 +12,15 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * An Itinerary is one complete way of getting from the start location to the end location.
  */
-public class Itinerary {
+public class Itinerary implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     /**
      * Duration of the trip on this itinerary, in milliseconds.

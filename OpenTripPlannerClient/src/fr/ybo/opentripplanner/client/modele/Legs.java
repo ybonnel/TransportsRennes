@@ -1,10 +1,13 @@
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Legs {
+public class Legs implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	public Legs() {
 	}
 

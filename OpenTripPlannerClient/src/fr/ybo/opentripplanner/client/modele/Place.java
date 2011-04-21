@@ -13,13 +13,13 @@
 
 package fr.ybo.opentripplanner.client.modele; 
 
-import java.util.logging.Logger;
+import java.io.Serializable;
 
 /** 
 * A Place is where a journey starts or ends, or a transit stop along the way.
 */ 
-public class Place {
-    protected static final Logger LOGGER = Logger.getLogger(Place.class.getCanonicalName());
+public class Place implements Serializable {
+	private static final long serialVersionUID = 1L;
 
     /** 
      * For transit stops, the name of the stop.  For points of interest, the name of the POI.

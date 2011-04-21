@@ -13,6 +13,8 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -20,9 +22,10 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  */
 @XmlRootElement
-public class Response {
+public class Response implements Serializable {
 
-    private TripPlan plan;
+	private static final long serialVersionUID = 1L;
+	private TripPlan plan;
     private PlannerError error = null;
 
 

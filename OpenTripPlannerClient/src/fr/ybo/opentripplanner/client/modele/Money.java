@@ -13,6 +13,7 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.Currency;
 
@@ -20,7 +21,9 @@ import java.util.Currency;
  * <strong>Fare support is very, very preliminary.</strong>
  *
  */
-public class Money implements Comparable<Money> {
+public class Money implements Comparable<Money>, Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     /**
      * The currency of the money.

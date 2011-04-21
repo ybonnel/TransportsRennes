@@ -23,7 +23,6 @@ import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TrajetAdapter;
-import fr.ybo.transportsrennes.util.GsonUtil;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 
@@ -34,8 +33,7 @@ public class Itineraires extends MenuAccueil.ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.itineraires);
-		Response itineraireReponse = GsonUtil.getGson().fromJson(
-				getIntent().getExtras().getString("itinerairesReponse"), Response.class);
+		Response itineraireReponse = (Response) getIntent().getExtras().getSerializable("itinerairesReponse");
 		int heureDepart = getIntent().getIntExtra("heureDepart", 0);
 		setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
 		ListView lv = getListView();
@@ -44,7 +42,7 @@ public class Itineraires extends MenuAccueil.ListActivity {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				Itinerary trajet = (Itinerary) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
-				intent.putExtra("trajet", GsonUtil.getGson().toJson(trajet));
+				intent.putExtra("trajet", trajet);
 				startActivity(intent);
 			}
 

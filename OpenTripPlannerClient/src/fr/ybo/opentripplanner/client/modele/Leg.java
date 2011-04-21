@@ -13,6 +13,7 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -24,7 +25,9 @@ import com.google.gson.annotations.SerializedName;
  * particular vehicle (or on foot).
  */
 
-public class Leg {
+public class Leg implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
     /**
      * The date and time this leg begins.

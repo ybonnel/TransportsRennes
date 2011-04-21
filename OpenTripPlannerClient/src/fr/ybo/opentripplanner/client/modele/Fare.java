@@ -13,16 +13,16 @@
 
 package fr.ybo.opentripplanner.client.modele;
 
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 /**
  * <p><strong>Fare support has not yet been implemented.</strong>
  * </p><p>
  * Fare is a set of fares for different classes of users.</p>
  */
-public class Fare {
-    protected static final Logger LOGGER = Logger.getLogger(Fare.class.getCanonicalName());
+public class Fare implements Serializable {
+	private static final long serialVersionUID = 1L;
 
     public static enum FareType {
         regular, student, senior, tram, special
