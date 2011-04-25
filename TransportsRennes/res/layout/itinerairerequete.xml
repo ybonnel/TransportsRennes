@@ -60,12 +60,14 @@
               android:paddingLeft="5dip"
               android:text="@string/textAdresseDepart"
               android:layout_below="@id/dateItineraire"/>
-    <EditText android:id="@+id/adresseDepart"
+              
+    <AutoCompleteTextView android:id="@+id/adresseDepart"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="normal"
+              android:completionThreshold="6"
               android:hint="@string/hint_positionCourante"
               android:layout_below="@id/textAdresseDepart"/>
     <TextView android:id="@+id/exempleAdresseDepart"
@@ -82,12 +84,13 @@
               android:paddingLeft="5dip"
               android:text="@string/textAdresseArrivee"
               android:layout_below="@id/exempleAdresseDepart"/>
-    <EditText android:id="@+id/adresseArrivee"
+    <AutoCompleteTextView android:id="@+id/adresseArrivee"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="normal"
+              android:completionThreshold="6"
               android:hint="@string/hint_positionCourante"
               android:layout_below="@id/textAdresseArrivee"/>
     <TextView android:id="@+id/exempleAdresseArrivee"

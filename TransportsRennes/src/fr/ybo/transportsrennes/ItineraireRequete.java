@@ -14,7 +14,6 @@
 
 package fr.ybo.transportsrennes;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,8 +34,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -50,15 +52,13 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
-import com.google.code.geocoder.model.LatLngBounds;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
-import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
+import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -153,6 +153,22 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		calendar = Calendar.getInstance();
 		dateItineraire = (TextView) findViewById(R.id.dateItineraire);
 		heureItineraire = (TextView) findViewById(R.id.heureItineraire);
+		AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
+		AdresseAdapter adapterDepart = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		adresseDepart.setAdapter(adapterDepart);
+		AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
+		AdresseAdapter adapterArrivee = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		adresseArrivee.setAdapter(adapterArrivee);
+		adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					terminer();
+					return true;
+				}
+				return false;
+			}
+		});
 		majTextViews();
 		dateItineraire.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
@@ -207,17 +223,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 
 			@Override
 			protected Void doInBackground(Void... voids) {
-				LatLngBounds bounds = null;
-				try {
-					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
-					bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
-							metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
-							new BigDecimal(metadata.getMinLongitude())));
-				} catch (OpenTripPlannerException ignore) {
-				}
 				if (adresseDepart != null) {
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseDepart)
-							.setLanguage("fr").setBounds(bounds).getGeocoderRequest();
+							.setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
 					reponseDepart = Geocoder.geocode(geocoderRequest);
 					if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
@@ -231,7 +239,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 						}
 					});
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseArrivee)
-							.setLanguage("fr").setBounds(bounds).getGeocoderRequest();
+							.setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
 					reponseArrivee = Geocoder.geocode(geocoderRequest);
 					if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
@@ -440,4 +448,5 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		}
 		return null;
 	}
+
 }

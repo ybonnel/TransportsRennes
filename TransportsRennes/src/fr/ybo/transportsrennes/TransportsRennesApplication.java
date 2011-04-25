@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,11 +27,15 @@ import android.os.Build;
 import android.os.Handler;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
+import com.google.code.geocoder.model.LatLng;
+import com.google.code.geocoder.model.LatLngBounds;
 
+import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.Constantes;
 
 /**
@@ -73,6 +78,10 @@ public class TransportsRennesApplication extends Application {
 					for (Alert alert : Keolis.getInstance().getAlerts()) {
 						lignesWithAlerts.addAll(alert.lines);
 					}
+					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+					bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
+							metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
+							new BigDecimal(metadata.getMinLongitude())));
 				} catch (Exception ignored) {
 
 				}
@@ -113,4 +122,11 @@ public class TransportsRennesApplication extends Application {
 	public static boolean hasAlert(String ligneNomCourt) {
 		return lignesWithAlerts.contains(ligneNomCourt);
 	}
+
+	private static LatLngBounds bounds;
+
+	public static LatLngBounds getBounds() {
+		return bounds;
+	}
+
 }
