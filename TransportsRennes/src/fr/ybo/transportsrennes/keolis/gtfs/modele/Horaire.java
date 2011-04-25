@@ -14,7 +14,6 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -55,7 +54,6 @@ public class Horaire {
 
 	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-
 	public static List<Integer> getProchainHorairesAsList(String ligneId, String arretId, int macroDirection,
 			Integer limit, Calendar calendar) throws SQLiteException {
 		List<Integer> prochainsDeparts = new ArrayList<Integer>();
@@ -81,7 +79,12 @@ public class Horaire {
 		requete.append(" and Trajet.ligneId = :ligneId");
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Trajet.macroDirection = :macroDirection");
-		requete.append(" and Horaire.terminus = 0");
+
+		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendar.getTime())) {
+			requete.append(" and Horaire.terminus = 0");
+		} else {
+			requete.append(" and Horaire.terminus = 2");
+		}
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(ligneId);
@@ -97,57 +100,65 @@ public class Horaire {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Calendar calendarLaVeille = Calendar.getInstance();
 		calendarLaVeille.roll(Calendar.DATE, false);
+
+		int uneJournee = 24 * 60;
+		// Réquète.
+		List<String> selectionArgs = new ArrayList<String>(7);
 		StringBuilder requete = new StringBuilder();
-		requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId1");
-		requete.append(" and Horaire.arretId = :arretId1");
-		requete.append(" and Trajet.macroDirection = :macroDirection1");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-		requete.append("UNION ");
-		requete.append("select Horaire.heureDepart as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-		requete.append("from Calendrier,  Horaire_");
-		requete.append(ligneId);
-		requete.append(" as Horaire, Trajet ");
-		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.ligneId = :routeId2");
-		requete.append(" and Horaire.arretId = :arretId2");
-		requete.append(" and Trajet.macroDirection = :macroDirection2");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" and Horaire.heureDepart >= :maintenant");
+		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendarLaVeille.getTime())) {
+			requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
+			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+			requete.append("from Calendrier,  Horaire_");
+			requete.append(ligneId);
+			requete.append(" as Horaire, Trajet ");
+			requete.append("where ");
+			requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
+			requete.append(" and Trajet.id = Horaire.trajetId");
+			requete.append(" and Trajet.calendrierId = Calendrier.id");
+			requete.append(" and Trajet.ligneId = :routeId1");
+			requete.append(" and Horaire.arretId = :arretId1");
+			requete.append(" and Trajet.macroDirection = :macroDirection1");
+			requete.append(" and Horaire.terminus = 0");
+			requete.append(" and Horaire.heureDepart >= :maintenantHier ");
+
+			selectionArgs.add(Integer.toString(uneJournee));
+			selectionArgs.add(ligneId);
+			selectionArgs.add(arretId);
+			selectionArgs.add(Integer.toString(macroDirection));
+			selectionArgs.add(Integer.toString(now + uneJournee));
+		}
+		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendar.getTime())) {
+			if (requete.length() > 0) {
+				requete.append("UNION ");
+			}
+			requete.append("select Horaire.heureDepart as _id,");
+			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+			requete.append("from Calendrier,  Horaire_");
+			requete.append(ligneId);
+			requete.append(" as Horaire, Trajet ");
+			requete.append("where ");
+			requete.append(clauseWhereForTodayCalendrier(calendar));
+			requete.append(" and Trajet.id = Horaire.trajetId");
+			requete.append(" and Trajet.calendrierId = Calendrier.id");
+			requete.append(" and Trajet.ligneId = :routeId2");
+			requete.append(" and Horaire.arretId = :arretId2");
+			requete.append(" and Trajet.macroDirection = :macroDirection2");
+			requete.append(" and Horaire.terminus = 0");
+			requete.append(" and Horaire.heureDepart >= :maintenant");
+
+			selectionArgs.add(ligneId);
+			selectionArgs.add(arretId);
+			selectionArgs.add(Integer.toString(macroDirection));
+			selectionArgs.add(Integer.toString(now));
+		}
 		requete.append(" order by _id ");
 		if (limit != null) {
 			requete.append("limit ");
 			requete.append(limit);
 		}
-		int uneJournee = 24 * 60;
-		// Réquète.
-		List<String> selectionArgs = new ArrayList<String>(7);
-		selectionArgs.add(Integer.toString(uneJournee));
-		selectionArgs.add(ligneId);
-		selectionArgs.add(arretId);
-		selectionArgs.add(Integer.toString(macroDirection));
-		selectionArgs.add(Integer.toString(now + uneJournee));
-		selectionArgs.add(ligneId);
-		selectionArgs.add(arretId);
-		selectionArgs.add(Integer.toString(macroDirection));
-		selectionArgs.add(Integer.toString(now));
 		LOG_YBO.debug("Requete : " + requete.toString());
 		LOG_YBO.debug("SelectionArgs : " + selectionArgs);
-		return TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
-				selectionArgs);
+		return TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 	}
 
 	private static String clauseWhereForTodayCalendrier(Calendar calendar) {

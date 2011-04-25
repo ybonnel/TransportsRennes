@@ -29,11 +29,17 @@ public class JoursFeries {
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("ddMMyyyy");
 
+	private static final SimpleDateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM");
+
 	private JoursFeries() {
 	}
 
 	public static boolean isJourFerie(Date date) {
 		return getJoursFeries().contains(SIMPLE_DATE_FORMAT.format(date));
+	}
+
+	public static boolean is1erMai(Date date) {
+		return "0101".equals(SIMPLE_DATE_FORMAT_1ER_MAI.format(date));
 	}
 
 	private static Collection<String> getJoursFeries() {
