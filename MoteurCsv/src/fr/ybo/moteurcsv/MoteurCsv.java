@@ -21,7 +21,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -178,7 +177,7 @@ public class MoteurCsv {
 		bufWriter.write('\n');
 	}
 
-	public <Objet> void writeFile(File file, Iterable<Objet> objets, AnnotatedElement clazz) {
+	public <Objet> void writeFile(File file, Iterable<Objet> objets, Class<Objet> clazz) {
 		try {
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(file));
 			try {
