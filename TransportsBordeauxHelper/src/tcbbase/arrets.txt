@@ -1,0 +1,3337 @@
+identifiant,nom
+TBC1000MAL53A,Saint-Médard-en-Jalles - Malterre
+TBC1002PGA46A,Pessac - Petit Gazinet
+TBC1005LIB23R,Bègles - Liberté
+TBC1006BEA46R,Pessac - Beauséjour
+TBC1007BON80A,Pessac - Boncour
+TBC1008UCB91A,Bassens - U.C.B.B
+TBC1009JON63A,Artigues-pres-Bordeaux - Jonquilles
+TBC100BERT9R,Bordeaux - Berthelot
+TBC1010PIC84R,Pessac - Picardie
+TBC1011RPA62R,Cenon - Rue de la Paix
+TBC1012BER52A,Le Haillan - Bernède
+TBC1013RAM71A,Saint-Médard-en-Jalles - Ramond
+TBC1014TIL20A,Bordeaux - Tillet
+TBC1015OAU49R,Mérignac - Oscar Auriac
+TBC1017BAL91A,Saint-Louis-de-Montferrand - Ballet
+TBC1020MON44A,Pessac - Monge
+TBC1021LIS58A,Parempuyre - Lisière du Vignoble
+TBC1022PAC34A,Talence - Pacaris
+TBC1023RIV08R,Bordeaux - Rives
+TBC1026BOY55A,Eysines - La Boyauderie
+TBC1027MAN35R,Mérignac - Pierre Mendès France
+TBC1029PEY93R,Ambares-et-Lagrave - Peychaud
+TBC1031BAL91R,Saint-Louis-de-Montferrand - Ballet
+TBC1034INR21A,Villenave-d'Ornon - INRA
+TBC1035PRA75A,Mérignac - Pradas
+TBC1036GAL50A,Mérignac - Le Galus
+TBC1038NAN22,Bordeaux - Nansouty
+TBC103RDP84A,Pessac - Rond-Point
+TBC1040RON45A,Pessac - Ronsard
+TBC1041MNE80A,Gradignan - Maison Neuve
+TBC1042LIE16R,Bordeaux - Lièges
+TBC1045ALB43R,Gradignan - Saint-Albe
+TBC1046CGR37A,Le Taillan-Médoc - Cante-Gric
+TBC1049PAE07A,Bouliac - Parc de l'Etoile
+TBC1051CEZ52A,Le Haillan - Collège Emile Zola
+TBC1052POT64R,Artigues-pres-Bordeaux - Le Poteau
+TBC1054JAB94A,Ambares-et-Lagrave - Jambes
+TBC1056CAR58A,Parempuyre - Carnot
+TBC1057LAG56R,Le Bouscat - Lagrange
+TBC1059BEC52A,Le Haillan - Bechade
+TBC1060COM06R,Floirac - Combes
+TBC1061ANS30R,Mérignac - Beutre Antenne Sociale
+TBC1065VEL52R,Bordeaux - Vélodrome
+TBC1066FON55A,Eysines - La Fontaine
+TBC1067LMI47A,Bordeaux - Louis Mie
+TBC1068CAN55R,Eysines - Cantinolle
+TBC1069RPE43R,Gradignan - Route de Pessac
+TBC106GRA94R,Ambares-et-Lagrave - La Grave d'Ambarès
+TBC1070MOZ52A,Le Haillan - Mermoz
+TBC1073VCU8A,Cenon - Vieille Cure
+TBC1074GAM13A,Bordeaux - Gambetta
+TBC1075EZO08R,Cenon - Emile Zola
+TBC1076RIV27R,Bordeaux - Rivière
+TBC107714J45R,Talence - 14 Juillet
+TBC1078RIC16R,Bordeaux - Rue Richelieu
+TBC107MAR07A,Bouliac - Marronniers
+TBC1080LAN47R,Bordeaux - Landiras
+TBC1081BRU57A,Bruges - Bruges Hôtel de Ville
+TBC1084CRO34R,Bègles - Croizat
+TBC1085VER64R,Artigues-pres-Bordeaux - Verdot
+TBC1086DEM75R,Mérignac - Demosthène
+TBC1087LUG58A,Parempuyre - Lugat
+TBC1088MAR91A,Ambes - Le Marquis
+TBC1089JOU91A,Saint-Louis-de-Montferrand - Jourdane
+TBC108COM46R,Cestas - Combelongue
+TBC1090MON91A,Ambes - Montaigne
+TBC1091PCI36R,Mérignac - Plein Ciel
+TBC1092MOU37A,Blanquefort - Jean Moulin
+TBC1093PLA58R,Blanquefort - Anita Conti
+TBC1094PECH9R,Bordeaux - Pêcheurs
+TBC1095QFR91R,Bassens - Quai Français
+TBC1099MAL23A,Bordeaux - Malbec
+TBC109FRA46R,Pessac - France
+TBC10LIB55A,Le Taillan-Médoc - Mairie du Taillan Médoc
+TBC1101ASS27R,Bordeaux - Pôle emploi Bastide
+TBC1102KYR22A,Bordeaux - Kyrié
+TBC1103RUN62R,Cenon - Rue de l'Union
+TBC1104RLA53A,Saint-Médard-en-Jalles - Route de Lacanau
+TBC1105MAD91A,Saint-Louis-de-Montferrand - Madran
+TBC1106AIG52A,Le Haillan - L'Aiglon
+TBC1107COC66A,Lormont - Jean Cocteau
+TBC1108LAN93A,Carbon-Blanc - La Lande
+TBC1109DUC27A,Le Bouscat - Ducourneau
+TBC110PIC46R,Pessac - Picardie
+TBC1110RAM71R,Saint-Médard-en-Jalles - Ramond
+TBC1111FFE48A,Bordeaux - Francisco Ferrer
+TBC1113WIL34R,Talence - Collège Victor Louis
+TBC1115CAL57A,Bordeaux - Calvé
+TBC1116RPA76R,Le Bouscat - R.P.A La Bérengère
+TBC1117GPH66R,Lormont - Gérard Philipe
+TBC1118CAS50A,Mérignac - Castelneau
+TBC111COI20R,Villenave-d'Ornon - Coin
+TBC1120PRI58R,Parempuyre - Le Printemps
+TBC1121GEN91R,Ambes - Gendarmerie
+TBC1122SKA21R,Villenave-d'Ornon - Le Skating
+TBC1123PER44A,Pessac - Perrin
+TBC1124AIG52R,Le Haillan - L'Aiglon
+TBC1127LAV3R,Lormont - Lavergne
+TBC1129DUF91R,Ambes - Dufresne
+TBC112CET71A,Saint-Médard-en-Jalles - C.E.T.E
+TBC1130PRO82R,Saint-Médard-en-Jalles - Proust
+TBC1131ALO46A,Pessac - Alouette
+TBC1133MOL37R,Le Taillan-Médoc - Molière
+TBC1135FIN20A,Villenave-d'Ornon - Les Finances
+TBC1136FRA47A,Pessac - Fraternité
+TBC1137DEH52A,Le Haillan - Dehès
+TBC1138CAR35R,Pessac - Cardinal
+TBC1139NAU10A,Bordeaux - Naujac
+TBC1140SEM83A,Talence - Sembat
+TBC1141PAI21A,Villenave-d'Ornon - Rue de la Paix
+TBC1142TAR47R,Pessac - Tartifume
+TBC1144CHA03R,Bordeaux - Chantiers de la Garonne
+TBC1145TES82R,Le Haillan - Les 5 chemins
+TBC1146MOU03A,Bordeaux - Grands Moulins
+TBC1147NOU22A,Bègles - Nouzarède
+TBC1149PRO82A,Saint-Médard-en-Jalles - Proust
+TBC114BER35A,Mérignac - Berlioz
+TBC1150POU47A,Pessac - Le Poujeau
+TBC1151EMI42R,Gradignan - Edouard Michel
+TBC1153PAP23A,Pessac - Pape Clément (Place Sellier)
+TBC1155SOC52R,Le Haillan - Socrate
+TBC1156CHY41A,Gradignan - Chouiney
+TBC1157PAR55R,Le Taillan-Médoc - La Pargaud
+TBC1158PRI47R,Bordeaux - Privat
+TBC115EFA38R,Lormont - Lycée Elie Faure
+TBC1160LUC49A,Mérignac - Lucassot
+TBC1162DFE55A,Saint-Médard-en-Jalles - Docteur Férié
+TBC1163BAR30A,Mérignac - M.A.S Barail
+TBC1164HOR03R,Bordeaux - Hortense
+TBC1165JCU73R,Mérignac - Joliot Curie
+TBC1166JPU90A,Bassens - Jardin Public
+TBC1169MAT06A,Bordeaux - Mattéoti
+TBC116MAU12R,Bordeaux - Maurian
+TBC1170COU13R,Bordeaux - Courteault
+TBC1171MAD42R,Gradignan - La Madeleine
+TBC1172JOU11R,Bordeaux - Terres Neuves (station Tram)
+TBC1176FOR51A,Mérignac - La Forêt
+TBC1177CIG63A,Artigues-pres-Bordeaux - Cigales
+TBC1180COU21A,Villenave-d'Ornon - Couhins
+TBC1181MAG47A,Pessac - Magonty
+TBC1182MAZ82A,Saint-Médard-en-Jalles - Mazeau
+TBC1183JJA06A,Floirac - Jean Jaurès
+TBC1187FON63A,Artigues-pres-Bordeaux - Fontaudin
+TBC1189CAZ49A,Mérignac - Cazanove
+TBC118VI543A,Gradignan - Village 5
+TBC1190RUG58R,Parempuyre - Rue de la Gare
+TBC1191CAS32A,Floirac - Castés
+TBC1192ARI03R,Bordeaux - André Ricard
+TBC1193SAI02A,Bordeaux - Saïgon
+TBC1194HLE24R,Pessac - Hôpital Haut-Lévêque
+TBC1195FER08R,Cenon - Jules Ferry
+TBC1196CHA20R,Cadaujac - Chantecric
+TBC1197MEY46A,Pessac - Meyraud
+TBC1200ROU08R,Floirac - Rousseau
+TBC1203CFA80R,Pessac - AFPA Pessac
+TBC1204FOU07A,Bouliac - Fourney
+TBC1205VIN05R,Bordeaux - Vincent
+TBC1206LEY12R,Bordeaux - Leygues
+TBC1207BAR81R,Pessac - Bardanac
+TBC1209LGR49R,Mérignac - La Grave
+TBC120COT90A,Bassens - Les Coteaux
+TBC1210LUZ24R,Bordeaux - Luze
+TBC1211JAM91R,Ambes - Jamois
+TBC1212LBA49A,Mérignac - Labatut
+TBC1215HIP54A,Eysines - Hippodrome
+TBC1216DES84R,Pessac - Desbats
+TBC1219ASS31R,Bordeaux - Pôle emploi - Crama
+TBC121LMA92A,Ambes - Le Mayne
+TBC1220MON40R,Talence - Montherlant
+TBC1222BEL48A,Bordeaux - Belleville
+TBC1223JCU73A,Mérignac - Joliot Curie
+TBC1224BER23A,Bordeaux - Bertin
+TBC1225ERA47A,Pessac - Les Erables
+TBC1226TES82A,Le Haillan - Les 5 Chemins
+TBC1227COL49A,Mérignac - Colette
+TBC1228REN54A,Bordeaux - Ernest Renan
+TBC122SCA27R,Le Bouscat - Sadi Carnot
+TBC1230HOT31A,Bordeaux - Les Hôtels
+TBC1231RBEG9R,Bordeaux - Rue de Bègles
+TBC1233SBE54R,Eysines - Simone de Beauvoir
+TBC1234ROS50R,Mérignac - Rostand
+TBC1235MIC48A,Mérignac - Michelet
+TBC1237HGU06R,Floirac - Hauts de Guitres
+TBC1238MEY46R,Pessac - Meyraud
+TBC1240CAS09R,Bordeaux - Caserne Nansouty
+TBC1241AUR11R,Bordeaux - Auriac
+TBC1247DAS31R,Bordeaux - Dassault
+TBC124EPE12R,Bordeaux - Epernay
+TBC1252EDI45R,Bordeaux - Edison
+TBC1253MRA50R,Mérignac - Monrabeau
+TBC1254BAR81A,Pessac - Bardanac
+TBC1255LAV38A,Lormont - Lavergne
+TBC1258EUR44A,Pessac - Europarc
+TBC1259LAR16R,Bordeaux - Lartigue
+TBC125FAU63A,Artigues-pres-Bordeaux - Fauvettes
+TBC1260QBR02A,Bordeaux - Quai de Brienne
+TBC1261ALL22A,Bègles - Allende
+TBC1263DAU51A,Bordeaux - Dauphine
+TBC1264BER16R,Mérignac - Bertheau
+TBC1266JEA45A,Bordeaux - Jeanne d'Arc
+TBC1268TIL92A,Ambes - Tillède
+TBC1269FLA92R,Ambes - Fort Lajard
+TBC126PFR54R,Bordeaux - Pins-Francs
+TBC1270RAD46A,Pessac - Radio
+TBC1271CHO21R,Villenave-d'Ornon - Chopin
+TBC1275DAG11A,Bordeaux - Daguin
+TBC1276NIE03A,Bordeaux - Maréchal Niel
+TBC1277VIG56A,Eysines - Le Vigean
+TBC1278GER37R,Le Taillan-Médoc - Germignan
+TBC127VHU93R,Carbon-Blanc - Victor Hugo
+TBC1280CAN84A,Pessac - Sarget
+TBC1281CCO08R,Bouliac - Bouliac Centre Commercial (Gabarre)
+TBC1283SOC52A,Le Haillan - Socrate
+TBC1284RUE52A,Le Haillan - Ruet
+TBC1285AS47R,Pessac - Les As
+TBC1288BRU09R,Bordeaux - Brun
+TBC1289PEG47R,Pessac - Charles Péguy
+TBC128RBEG9A,Bordeaux - Rue de Bègles
+TBC1290CHAI9A,Bordeaux - Cité Chaigneau
+TBC129114J23A,Bègles - 14 Juillet
+TBC1293AS47A,Pessac - Les As
+TBC1294GOI50A,Mérignac - Goillot
+TBC1297ZAA46A,Pessac - Z.A d'Auguste
+TBC1298PES46A,Pessac - Parc d'Espagne
+TBC1299BLA46R,Cestas - Blayais
+TBC1300GCA56A,Eysines - Le Grand Caillou
+TBC1301COM46A,Pessac - Combelongue
+TBC1303PTP92R,Saint-Vincent-de-Paul - Pont de Peyre
+TBC1304FRAT8A,Floirac - Fraternité
+TBC1305LMA93R,Carbon-Blanc - Lamartine
+TBC1306LMOR5R,Cenon - La Morlette
+TBC1309JAU45R,Pessac - Jaubert
+TBC130MCO07A,Lormont - Maison de Convalescence
+TBC1310LEP12A,Mérignac - Le Pont
+TBC1312FON55R,Eysines - La Fontaine
+TBC1313BOI46A,Pessac - Boiron
+TBC1316SHU46A,Pessac - Saint-Hubert
+TBC1317FOR52R,Mérignac - La Forêt
+TBC1318MOU42A,Gradignan - Stade de Moulerens
+TBC1319TAB66A,Lormont - Abel Gance
+TBC1320GPH66A,Lormont - Gérard Philipe
+TBC1321PRO75A,Mérignac - Procession
+TBC1323BAR09R,Bordeaux - Barrière d'Arès
+TBC1325VEL54A,Le Bouscat - Vélodrome
+TBC1330MAR50R,Mérignac - Marronniers
+TBC1331QVI91R,Bassens - Quai de Vial (Everite)
+TBC1332DUT13A,Bordeaux - Dutertre
+TBC1337REB06A,Floirac - Rébédech
+TBC1338AFR21R,Villenave-d'Ornon - Anatole France
+TBC1339RON45R,Pessac - Ronsard
+TBC1341PES46R,Pessac - Parc d'Espagne
+TBC1344CIG63R,Artigues-pres-Bordeaux - Cigales
+TBC1346MAL92R,Saint-Vincent-de-Paul - Malbrède
+TBC1347JMO34R,Bègles - Place Jean Moulin
+TBC1348LUC43R,Gradignan - Primevères
+TBC1349MAR46A,Pessac - Marne
+TBC1350CAY42A,Gradignan - Prieuré de Cayac
+TBC1351SQM08R,Cenon - Square Monrepos
+TBC1352GAL50R,Mérignac - Le Galus
+TBC1353BAR93A,Ambares-et-Lagrave - Baraille
+TBC1354BOZ06A,Floirac - Berlioz
+TBC1355BER53R,Saint-Médard-en-Jalles - Berlincan
+TBC1357JJA90A,Carbon-Blanc - Jean Jaurès
+TBC1358MOZ45R,Pessac - Mozart
+TBC135GAM35A,Mérignac - Avenue Gambetta
+TBC1361MOZ41R,Talence - Place Mozart
+TBC1364LAT05A,Bordeaux - Latresne
+TBC1366CAM48R,Mérignac - Campana
+TBC1370JAC07A,Floirac - La Jacquotte
+TBC1373LUM02A,Bègles - Frères Lumière
+TBC1374CAY42R,Gradignan - Prieuré de Cayac
+TBC1376CIM91R,Ambes - Cimetière d'Ambès
+TBC1378POT64A,Artigues-pres-Bordeaux - Le Poteau
+TBC1379LAT09R,Bordeaux - Latule
+TBC137CAM11R,Bordeaux - Campeyraut
+TBC1381LIE16A,Bordeaux - Lièges
+TBC1386LSMEDO,Saint-Aubin-de-Médoc - Lycée Sud Médoc
+TBC1387SAL22A,Bègles - Salengro
+TBC1389MOU92A,Bassens - Domaine de Moulerin
+TBC1390EDI45A,Bordeaux - Edison
+TBC1391BHA92A,Ambes - Béchade
+TBC1392MAR07R,Bouliac - Marronniers
+TBC1396PAS90R,Bassens - Pasteur
+TBC1398MOU64R,Artigues-pres-Bordeaux - La Moune
+TBC1399CEL92A,Ambes - Célibatorium
+TBC139EUS48A,Pessac - André Eustache
+TBC13CHA53R,Saint-Médard-en-Jalles - Chateaubriand
+TBC1400BOL09A,Bordeaux - Bolivar
+TBC1403MAG03A,Lormont - Magendie
+TBC1404SAB03R,Bordeaux - Sabarots
+TBC1406VHU93A,Carbon-Blanc - Victor Hugo
+TBC1407ALO55A,Le Taillan-Médoc - Aloha
+TBC1408IMH31A,Bordeaux - Imhotep
+TBC1409BRU75R,Mérignac - Clos des Bruyères
+TBC140DEL32A,Floirac - Delacroix
+TBC1410MAR13A,Bordeaux - Marionneau
+TBC1411CET71R,Saint-Médard-en-Jalles - C.E.T.E
+TBC1413BER16A,Mérignac - Bertheau
+TBC1415UCB91R,Bassens - U.C.B.B
+TBC1418CED06R,Floirac - Cèdres
+TBC1419LUG58R,Parempuyre - Lugat
+TBC141VIR16A,Bordeaux - Virginia
+TBC1420CAP11R,Bordeaux - Capelle
+TBC1421CAR55R,Eysines - Les Cares
+TBC1422JJB11R,Bordeaux - Curie
+TBC1423PAU21A,Villenave-d'Ornon - Pauge
+TBC1427MEU90R,Bassens - Meunier
+TBC142819M91A,Ambes - 19 Mars 1962
+TBC1430CAB08R,Floirac - Cabannes
+TBC1432BRI31A,Bordeaux - Bricaud
+TBC1435EXP31A,Bordeaux - Parc des Expositions
+TBC1436JAC48A,Bordeaux - Jacquet
+TBC1437ECO08R,Cenon - Emile Combes
+TBC1439BOU32R,Floirac - Bourbon
+TBC143ERA07R,Bouliac - Erables
+TBC1440LAC31A,Bordeaux - CAF
+TBC1442PGU09R,Bordeaux - Pont du Guit
+TBC1443BON92R,Ambes - Bonnet (rue St Exupéry)
+TBC1447LYA24R,Pessac - Lyautey
+TBC1448LAK76R,Le Bouscat - Lakanal
+TBC1449GOU50A,Mérignac - Gouraud
+TBC144COT07A,Bouliac - Avenue du Coteau (vers Berliquet)
+TBC1450CAUS5A,Floirac - Caussade
+TBC1451BRA03A,Bordeaux - Quai de Brazza
+TBC1452HIL02A,Bègles - Clos de Hilde
+TBC1453MEU16R,Bordeaux - Meunier
+TBC1456MFR50A,Mérignac - Mendès France
+TBC1457LAM92R,Saint-Louis-de-Montferrand - La Motte
+TBC1459CAS57A,Bordeaux - Castillon
+TBC145MUR16R,Bordeaux - Murat
+TBC1460LAM92A,Saint-Louis-de-Montferrand - La Motte
+TBC1461AUS27R,Bruges - Avenue Ausone
+TBC1464MON05A,Floirac - Côte de Monrepos
+TBC1465SRO27A,Cenon - Saint-Romain
+TBC1466VAL48A,Mérignac - Vallon
+TBC1467HON55A,Le Taillan-Médoc - Hontane
+TBC146MCA40A,Bordeaux - Mac Carthy
+TBC1470BAZ75R,Mérignac - Bazin
+TBC1474CHP63A,Artigues-pres-Bordeaux - Charles Perrault
+TBC1475JEAH9A,Bordeaux - Jean Hameau
+TBC1476AQU57R,Bruges - Avenue d'Aquitaine
+TBC1478ALO55R,Le Taillan-Médoc - Aloha
+TBC1479CRU31A,Bordeaux - Cruchet
+TBC1480TYFA85,Artigues-pres-Bordeaux - Artigues Tout y Faut
+TBC1481LAN55R,Le Taillan-Médoc - La Landotte
+TBC1484BEL53A,Saint-Médard-en-Jalles - Belfort
+TBC1485BAZ75A,Mérignac - Bazin
+TBC1486IND80R,Pessac - Parc Industriel
+TBC1489LIB55R,Le Taillan-Médoc - Mairie du Taillan Médoc
+TBC148CHA53A,Saint-Médard-en-Jalles - Chateaubriand
+TBC1491EZO08A,Cenon - Emile Zola
+TBC1492LES53A,Saint-Médard-en-Jalles - Lestage
+TBC1495TIL92R,Ambes - Tillède
+TBC1497DES47A,Pessac - Descartes
+TBC1498FOU92R,Ambes - Le Fourat
+TBC1499CAR46A,Pessac - Carnot
+TBC149PAST9R,Bordeaux - Pasteur
+TBC14SCR53R,Le Haillan - Ste Christine
+TBC1501MOU37R,Blanquefort - Jean Moulin
+TBC1503GAR58A,Blanquefort - Gare de Blanquefort
+TBC1504NANS9R,Bordeaux - Nansouty
+TBC1505SAU63R,Artigues-pres-Bordeaux - Sauternes
+TBC1506MMQ10R,Pessac - Montaigne - Montesquieu
+TBC1508SBR10A,Bordeaux - St-Bruno - Hôtel de Région
+TBC1509BAR30R,Mérignac - M.A.S Barail
+TBC150GAR91R,Bordeaux - Gare d'Orléans
+TBC1511SYB90R,Bassens - Sybille
+TBC1512SEN03R,Lormont - Quai Numa Sensine
+TBC1513BOU03A,Bordeaux - Bouthier
+TBC1514EUR93A,Ambares-et-Lagrave - Europe
+TBC1515JMO91R,Ambes - Jean Moulin
+TBC1516LIG94R,Ambares-et-Lagrave - Lignac
+TBC1518MRL93A,Ambares-et-Lagrave - Merle
+TBC151LSM55,Saint-Médard-en-Jalles - Lycée Sud Médoc
+TBC1520GAZ38A,Bordeaux - Gaz de Bordeaux
+TBC1522ARC44R,Pessac - Archimède
+TBC1523GAL92A,Saint-Vincent-de-Paul - La Galliasse
+TBC1524CIM91A,Ambes - Cimetière d'Ambès
+TBC1527BFL32A,Lormont - Bois Fleuri
+TBC1529MAC23A,Pessac - Macédo
+TBC152RDP84R,Pessac - Rond-Point
+TBC1530LIB92R,Ambares-et-Lagrave - Liberté
+TBC1531ZAH80A,Gradignan - Z.A Haut-Vigneau
+TBC1532HVI43R,Gradignan - Haut Vigneau
+TBC1533BAR38R,Bordeaux - Barrès
+TBC1537CAP36A,Mérignac - Capeyron
+TBC1540POI56A,Le Bouscat - Poincaré
+TBC1541LAC91R,Ambes - Lachenal
+TBC1542MAI91R,Saint-Louis-de-Montferrand - Mairie de St Louis de Montferrand
+TBC1543ARN80R,Pessac - Hôpital Xavier Arnozan
+TBC1544RCA43A,Gradignan - Route de Canéjan
+TBC1545TBO02R,Bordeaux - Terres de Borde
+TBC1546KEN63A,Lormont - Kennedy (vers Rocade)
+TBC1549VIR63R,Artigues-pres-Bordeaux - Virecourt
+TBC1550HIP53R,Saint-Médard-en-Jalles - Centre Hippique
+TBC1551VIL42R,Gradignan - Le Télégraphe
+TBC1552HAM58R,Parempuyre - Hameau du Château
+TBC1553LAG58A,Blanquefort - Lycée Agricole
+TBC1555MUS92R,Bassens - Domaine de Muscadet
+TBC1559AST37A,Le Taillan-Médoc - Avenue du Stade
+TBC155IND80A,Pessac - Parc Industriel
+TBC1562MAR05R,Cenon - Cenon Marègue
+TBC1564FLU02R,Bègles - Centre d'Activités Fluviales
+TBC1564PO58R,Blanquefort - Les 4 Ponts
+TBC1565CAN36R,Eysines - Canter
+TBC1567EME07R,Bouliac - Centre Emetteur
+TBC1568JAC35A,Pessac - Colonel Jacqui
+TBC1569NPE35R,Pessac - Nancel Pénard
+TBC1570CAI90R,Bassens - Cailleau
+TBC1571MAL92A,Saint-Vincent-de-Paul - Malbrède
+TBC1574GUT80A,Pessac - Gutenberg
+TBC1576CAN80A,Pessac - Avenue de Canéjan
+TBC1578MAT27R,Bruges - Mathieu
+TBC157CLE54R,Bordeaux - Clemenceau
+TBC1580BUR35R,Mérignac - Le Burck
+TBC1581BAR38A,Bordeaux - Barrès
+TBC1582ALL38A,Lormont - Allende
+TBC1583JOF35A,Mérignac - Maréchal Joffre
+TBC1585LAM90R,Bassens - Lamartine
+TBC1586SOM90R,Bassens - Somme
+TBC1588HCA56R,Blanquefort - Hameau de Canteret
+TBC1589PFL36A,Eysines - Place Florale
+TBC1590PER53A,Saint-Médard-en-Jalles - Pericot
+TBC1591VI443R,Pessac - Village 4
+TBC1592TER58A,Blanquefort - Terrefort
+TBC1594CAIR9A,Bordeaux - Cité Cairon
+TBC1595BAOR9A,Bordeaux - Barrière d'Ornano
+TBC159MFR50R,Mérignac - Mendès France
+TBC1601FDR06R,Floirac - Floirac Dravemont
+TBC1606BOU16A,Bordeaux - Bourse du Travail
+TBC1610BJU13A,Bordeaux - Barrière Judaïque
+TBC1611V234R,Pessac - Village 2
+TBC1613NCO73A,Mérignac - Nungesser et Coli
+TBC1614LVL08A,Talence - Lycée Victor Louis
+TBC1615ROC42A,Gradignan - Rochefort
+TBC1616TBEAUS,Gradignan - Beausoleil
+TBC1617VIL42A,Gradignan - Le Télégraphe
+TBC1618EGR42A,Gradignan - Eglise de Gradignan
+TBC1619ORNO43,Gradignan - Stade Ornon
+TBC1621CGR43A,Gradignan - Cimetière de Gradignan
+TBC1623PCU32R,Artigues-pres-Bordeaux - Pierre Curie
+TBC1624GBE23R,Bègles - Dilly (Gare de Bègles)
+TBC1628CUR37R,Le Taillan-Médoc - Allée de Curé
+TBC1629RDO16R,Bordeaux - Résidences du Domaine
+TBC162ROS50A,Mérignac - Rostand
+TBC1630PBO07R,Bouliac - Pont de Bouliac
+TBC1631BEC43R,Pessac - Le B.E.C
+TBC1632HBA51R,Mérignac - Henri Barbusse
+TBC1633LYC21A,Talence - Lycée Kastler
+TBC1634LVL08R,Talence - Lycée Victor Louis
+TBC163VER06A,Floirac - Versant
+TBC1640TRU51R,Mérignac - Truffaut
+TBC1641ACA03A,Lormont - Acacias
+TBC1643VI543R,Gradignan - Village 5
+TBC1647RPI20R,Bègles - Hôpital Robert Picqué
+TBC1648LGR42R,Gradignan - Lycée des Graves
+TBC1649AVI57R,Bordeaux - Rue d'Aviau
+TBC164PLO92R,Ambes - Port Lopès
+TBC1650PAU57A,Bordeaux - Paulin
+TBC1652PBO54R,Bordeaux - Parc Bordelais
+TBC1653LAB54R,Bordeaux - Labottière
+TBC1654PER54A,Le Bouscat - Pérès
+TBC1656LYC21R,Talence - Lycée Kastler
+TBC1657GRU57A,Bordeaux - Gruet
+TBC165MAH47A,Bordeaux - Mahéla
+TBC1660ARC02A,Bègles - Jeanne d'Arc
+TBC1661SOL42R,Gradignan - Solarium
+TBC1663MCE36R,Mérignac - Mérignac Centre
+TBC1665EAR42R,Talence - Ecole d'Architecture
+TBC1666RAY32A,Floirac - Collège G.Rayet
+TBC1667MNE42R,Gradignan - Maison Neuve
+TBC1668MOU42R,Gradignan - Stade de Moulerens
+TBC1669RPE42A,Gradignan - Route de Pessac
+TBC1670REI42R,Gradignan - Hameau de la Reine
+TBC1671AVU21R,Talence - Avenue de l'Université
+TBC1672MEI90R,Bassens - Résidence Meignan
+TBC1673EGR42R,Gradignan - Eglise de Gradignan
+TBC1675NOL92R,Ambes - Noliquet
+TBC1676ROS90R,Bassens - La Roseraie
+TBC167719M91R,Ambes - 19 Mars 1962
+TBC1679TRO92A,Ambes - Troubadis
+TBC167EUR44R,Pessac - Europarc
+TBC1682LAC92R,Ambes - Lacone
+TBC1683MIR92R,Ambes - Mirambeau
+TBC1684BRG92R,Ambes - Beauregard
+TBC1686ECO57R,Le Bouscat - Emile Combes
+TBC1687CLA75R,Mérignac - Clarines
+TBC168TRA05A,Bordeaux - Boulevard Trarieux
+TBC1691BON75R,Mérignac - Chemin Bon Air
+TBC1692TOU51A,Bordeaux - Tourny
+TBC1693LAN58A,Parempuyre - Landegrand
+TBC1694TER58R,Blanquefort - Terrefort
+TBC1695ACA73A,Mérignac - Acacias
+TBC1696LIN73A,Mérignac - Lindberg
+TBC1697MLI73A,Mérignac - Martyrs de la Libération
+TBC1698BOI94A,Ambares-et-Lagrave - Bois Vert
+TBC1699JMA73A,Mérignac - Jean Macé
+TBC169VIL58R,Parempuyre - Villa
+TBC16MOR82R,Le Haillan - La Morandière
+TBC1700BOU50R,Mérignac - Bourranville
+TBC1701BEA93R,Ambares-et-Lagrave - Beaujet
+TBC1702ROU49A,Mérignac - Château Rouquey
+TBC1703AVI53R,Saint-Médard-en-Jalles - Allée Vieille
+TBC1705ENG10R,Bordeaux - Enghien
+TBC1706BCH90A,Bassens - La Chênaie
+TBC1708CAY58R,Blanquefort - Caychac Bourg
+TBC170VOL02R,Bordeaux - Voltaire
+TBC1710BPD90R,Bassens - Pomme d'Or
+TBC1711BON75A,Mérignac - Chemin Bon Air
+TBC1713MFO46A,Pessac - Maréchal Foch
+TBC1715CHR41R,Bordeaux - Hôpital Pellegrin (entrée est)
+TBC1716NUY91A,Bordeaux - Nuyens
+TBC1717MEI95R,Bassens - Place Meignan
+TBC1718FLI06R,Floirac - Floirac Libération
+TBC1719PLA06R,Floirac - Les Plateaux
+TBC171TBO02A,Bordeaux - Terres de Borde
+TBC1720ECO57A,Le Bouscat - Emile Combes
+TBC1722VIN03A,Lormont - Professeur Vincent
+TBC1723MORL5,Cenon - La Morlette
+TBC1724LAV74R,Bassens - Lavoir
+TBC1725PAG75A,Mérignac - Pagnol
+TBC1726ARI03A,Cenon - André Ricard
+TBC1731VIE58A,Parempuyre - Lot. de la Vieille Eglise
+TBC1732GAL92R,Saint-Vincent-de-Paul - La Galliasse
+TBC1735ARC02R,Bègles - Jeanne d'Arc
+TBC1736RMA58R,Parempuyre - Rue de Macau
+TBC1737BLA52R,Eysines - Blanc
+TBC1738LAG56A,Le Bouscat - Lagrange
+TBC1740ZIC58A,Bruges - Z.I de Campilleau
+TBC1741VHU91R,Saint-Louis-de-Montferrand - St Louis de Montferrand (Victor Hugo)
+TBC1742LAL63R,Artigues-pres-Bordeaux - La Lande
+TBC1743EGR63R,Artigues-pres-Bordeaux - Eglise Romane
+TBC1745CLO49A,Mérignac - Chemin Long
+TBC1747MSO01A,Mérignac - Mérignac Soleil
+TBC1749BAOR9R,Bordeaux - Barrière d'Ornano
+TBC174RCA43R,Gradignan - Route de Canéjan
+TBC1751PMA92R,Saint-Vincent-de-Paul - Le Petit Marais
+TBC1753PCA50A,Mérignac - Parc de Capeyron
+TBC1754RME76A,Le Bouscat - Libération
+TBC1755AND58R,Blanquefort - Andrian
+TBC1756BSM09A,Bordeaux - Barrière Saint-Médard
+TBC1757BPE09A,Bordeaux - Barrière de Pessac
+TBC1758PECH9A,Bordeaux - Pêcheurs
+TBC175RME52A,Le Haillan - Rue du Médoc
+TBC1760STE52R,Bordeaux - Stade Stéhélin
+TBC1761VIO52R,Bordeaux - Violettes
+TBC1762MER30A,Mérignac - Mérignac Soleil (Centre Commercial)
+TBC1763LAG58R,Blanquefort - Lycée Agricole
+TBC1764HIP56R,Le Bouscat - Hippodrome
+TBC1767V234A,Pessac - Village 2
+TBC1768AUS34A,Pessac - Ausone
+TBC1769TGA56A,Bruges - Tour de Gassies
+TBC176RMA58A,Parempuyre - Rue de Macau
+TBC1770CHP08R,Bordeaux - Charles Perrens
+TBC1771GEO47R,Bordeaux - Boulevard George V
+TBC1772PAN58A,Parempuyre - Pablo Neruda
+TBC1773RBO58A,Parempuyre - Route de Bordeaux
+TBC1774MIC93R,Ambares-et-Lagrave - Mickaëlis
+TBC1775CHR53R,Saint-Médard-en-Jalles - Chemin du Roy
+TBC1776MIC93A,Ambares-et-Lagrave - Mickaëlis
+TBC1777MHA52A,Le Haillan - Mairie du Haillan
+TBC1778SAU63A,Artigues-pres-Bordeaux - Sauternes
+TBC1779VMA53A,Saint-Médard-en-Jalles - Village de Magudas
+TBC177MON05R,Floirac - Côte de Monrepos
+TBC1780JUL53R,Saint-Médard-en-Jalles - Julien
+TBC1781ALA49A,Mérignac - Ecole Arnaud Lafon
+TBC1784DUC27R,Le Bouscat - Ducourneau
+TBC1785CBL93A,Carbon-Blanc - Carbon Blanc Centre
+TBC1786REN76R,Le Bouscat - Renaudel
+TBC1788REP58A,Blanquefort - Mairie de Blanquefort
+TBC1789MBO56A,Le Bouscat - Mairie du Bouscat
+TBC1790ABO94A,Lormont - Avenue de Bordeaux
+TBC1792RAL51R,Bordeaux - Roger Allo
+TBC1795ALA49R,Mérignac - Ecole Arnaud Lafon
+TBC1796PRO63A,Artigues-pres-Bordeaux - Provinces
+TBC1799VIA07R,Bouliac - Vialle
+TBC179LAF08R,Floirac - Laffargue
+TBC17GAM04R,Bordeaux - Gambetta
+TBC1800DUP06R,Bordeaux - Dupas
+TBC1801CDEL9R,Bordeaux - Stade Chaban Delmas
+TBC1802VHU91A,Saint-Louis-de-Montferrand - St Louis de Montferrand (Victor Hugo)
+TBC1803PGA10R,Bordeaux - Palais Gallien
+TBC1804XAIN9R,Bordeaux - Xaintrailles
+TBC1805DUP03R,Lormont - Quai Dupeyron
+TBC1807MAT06R,Bordeaux - Mattéoti
+TBC1808LBR02A,Bordeaux - Grand-Lebrun
+TBC1809BRI03A,Lormont - Lormont Bas (A. Briand)
+TBC180FRA46A,Pessac - France
+TBC1811SEM06R,Bordeaux - Sembat
+TBC1813BER56R,Le Bouscat - Bert
+TBC18153TO42R,Gradignan - Les 3 Tours
+TBC1817BER56A,Le Bouscat - Bert
+TBC1818CMA07A,Ambares-et-Lagrave - Collège Claude Massé
+TBC181PUY53R,Saint-Médard-en-Jalles - Puyo
+TBC1820RCO93A,Ambares-et-Lagrave - René Coty
+TBC1821MAM93R,Ambares-et-Lagrave - Mairie d'Ambarès
+TBC1822AUS34R,Pessac - Ausone
+TBC1823SAG94A,Ambares-et-Lagrave - Sabarèges
+TBC1825CHP63R,Artigues-pres-Bordeaux - Charles Perrault
+TBC1826LAL63A,Artigues-pres-Bordeaux - La Lande
+TBC1827EGR63A,Artigues-pres-Bordeaux - Eglise Romane
+TBC1828QVI91A,Bassens - Quai de Vial (Everite)
+TBC1829CBL10A,Bordeaux - Croix Blanche
+TBC182MAH47R,Bordeaux - Mahéla
+TBC1830FAU63R,Artigues-pres-Bordeaux - Fauvettes
+TBC1831CMA07R,Ambares-et-Lagrave - Collège Claude Massé
+TBC1833RBO58R,Parempuyre - Route de Bordeaux
+TBC1834EGL58R,Parempuyre - Place de l'Eglise
+TBC1837PRA92R,Ambares-et-Lagrave - Jean Prat
+TBC1838BAR91R,Bassens - La Baranquine
+TBC1840LES93A,Ambares-et-Lagrave - Du Roy
+TBC1841TES49A,Mérignac - Tournesol
+TBC1844VER06R,Floirac - Versant
+TBC1845RVE58R,Parempuyre - Rue de la Vieille Eglise
+TBC1846MAR64R,Artigues-pres-Bordeaux - Mairie d'Artigues
+TBC1848BAR93R,Ambares-et-Lagrave - Baraille
+TBC1849AUS95A,Carbon-Blanc - Ausone
+TBC184CHE46A,Pessac - Les Chênes
+TBC1850JUI80R,Gradignan - Maréchal Juin
+TBC1851PNO93R,Ambares-et-Lagrave - Paulin de Nole
+TBC1853AMB94A,Ambares-et-Lagrave - Ambarès Eglise
+TBC18598MA90A,Bassens - Mairie de Bassens
+TBC185TIL20R,Bordeaux - Tillet
+TBC1860CLL66R,Lormont - Clairière de Lormont
+TBC1862FRO92R,Ambares-et-Lagrave - Le Fronton
+TBC1866MOU82A,Mérignac - Cité des Pins
+TBC1867MRL93R,Ambares-et-Lagrave - Merle
+TBC1868JJA27R,Bruges - Jean Jaurès (vers passage à niveau)
+TBC186HOR03A,Bordeaux - Hortense
+TBC1870TEM94A,Ambares-et-Lagrave - Templiers
+TBC1872MOE21A,Villenave-d'Ornon - Monnet
+TBC1873CUR21R,Villenave-d'Ornon - Pierre Curie
+TBC1874MOE21R,Villenave-d'Ornon - Monnet
+TBC1875MRY57A,Bruges - Martyrs de la Résistance
+TBC1878LBL57R,Le Bouscat - Louis Blanc
+TBC1879EGB57R,Bruges - Eglise de Bruges
+TBC187EVA83A,Pessac - E. Vaillant
+TBC1881ETO07R,Bouliac - La Belle Etoile
+TBC1882PMA92A,Saint-Vincent-de-Paul - Le Petit Marais
+TBC1883AMB92A,Ambes - Ambès Eglise
+TBC1884LAP67A,Artigues-pres-Bordeaux - La Prairie
+TBC1885CAS91R,Saint-Louis-de-Montferrand - Castelneau
+TBC1888COU91R,Ambes - Docteur Couaillac
+TBC1889FLA92A,Ambes - Fort Lajard
+TBC1891JOU91R,Saint-Louis-de-Montferrand - Jourdane
+TBC1894TOU53R,Saint-Aubin-de-Médoc - Pas de la Tourte
+TBC1896JOU92R,Saint-Louis-de-Montferrand - Les Prés de Jourdanne
+TBC1898CHE92R,Ambares-et-Lagrave - Beauvais
+TBC189VHU8R,Cenon - Victor Hugo
+TBC18FRA34A,Talence - Franklin
+TBC1903CEL92R,Ambes - Célibatorium
+TBC1906JOU92A,Saint-Louis-de-Montferrand - Les Prés de Jourdanne
+TBC19078MA90R,Bassens - Mairie de Bassens
+TBC1908PEG74A,Bassens - Péguy
+TBC1909FOU92A,Ambes - Le Fourat
+TBC190STA47R,Pessac - Rue du Stand
+TBC1910LAB90R,Bassens - Labourets
+TBC1912TRO92R,Ambes - Troubadis
+TBC1913BOU91R,Saint-Louis-de-Montferrand - Le Bousquet
+TBC1914CHA91R,Ambes - La Gare de la Chapelle
+TBC1915BOU92R,Ambes - La Bousquette
+TBC1917LSM71,Saint-Médard-en-Jalles - Lycée Sud Médoc
+TBC1919TRE52R,Eysines - Treytins
+TBC191PBO07A,Bouliac - Pont de Bouliac
+TBC1920BEA93A,Ambares-et-Lagrave - Beaujet
+TBC1922BFL32R,Lormont - Bois Fleuri
+TBC1923DOU91R,Bassens - Richelieu
+TBC1925LIB76A,Le Bouscat - Libération
+TBC1926GRO93A,Ambares-et-Lagrave - Les Garouilles
+TBC1929HRE01R,Bordeaux - St-Bruno - Hôtel de Région
+TBC1930JAM91A,Ambes - Jamois
+TBC1932MEI90A,Bassens - Résidence Meignan
+TBC1933LAT58A,Blanquefort - De Lattre de Tassigny
+TBC19344PA32A,Cenon - 4 Pavillons (vers Rocade)
+TBC1936GRA93R,Ambares-et-Lagrave - Avenue de Grandjean
+TBC1937CHA91A,Ambes - La Gare de la Chapelle
+TBC1939ASO37R,Le Taillan-Médoc - Avenue de Soulac
+TBC1943SEU51A,Bordeaux - Eglise Saint-Seurin
+TBC1944STE52A,Bordeaux - Stade Stéhélin
+TBC1945GRA93A,Ambares-et-Lagrave - Avenue de Grandjean
+TBC1949DEL27R,Bruges - Delattre
+TBC194SEG13A,Bordeaux - Seguineau
+TBC1954VAN95R,Carbon-Blanc - Vignau Anglade (Clos Favol)
+TBC1956LAN58R,Parempuyre - Landegrand
+TBC1957SBE48R,Mérignac - Ste Bernadette
+TBC1958BON92A,Ambes - Bonnet
+TBC1959MAN09A,Bordeaux - Mandron
+TBC1961MYA58A,Parempuyre - Montoya
+TBC1963ECU57A,Le Bouscat - Rue des Ecus
+TBC1964JOU31A,Bordeaux - 40 Journaux
+TBC1965JOU01A,Bordeaux - Journu Auber
+TBC1967LBL57A,Le Bouscat - Louis Blanc
+TBC1968PMA38R,Bordeaux - Place Maran
+TBC1969LAF80R,Pessac - La Fontaine
+TBC1971PDO01R,Bordeaux - Paul Doumer
+TBC1972JMO34A,Bègles - Place Jean Moulin
+TBC1973ALL36R,Bruges - Allard
+TBC1974GRA45A,Pessac - Grangeneuve
+TBC1975ECO36A,Bruges - Rue des Ecoles
+TBC1976CHA90R,Bassens - Château Pomerol
+TBC1977RUG58A,Parempuyre - Rue de la Gare
+TBC1978TRU36R,Mérignac - Avenue du Truc
+TBC1979RVE58A,Parempuyre - Rue de la Vieille Eglise
+TBC1981DPELU,Mérignac - Domaine de Pelus
+TBC1983TAR93A,Ambares-et-Lagrave - Tarrey
+TBC1984LAB93R,Ambares-et-Lagrave - La Blanche
+TBC1987GAL95A,Carbon-Blanc - Maréchal Gallieni
+TBC1988PEY93A,Ambares-et-Lagrave - Peychaud
+TBC198MQU56A,Blanquefort - Montesquieu
+TBC1994YVB58R,Parempuyre - Yvan Bric
+TBC1995VER93A,Carbon-Blanc - Vergers
+TBC1996MGU92R,Ambares-et-Lagrave - Moulin du Gua
+TBC1997COL49R,Mérignac - Colette
+TBC1998MBL58R,Blanquefort - Mairie de Blanquefort
+TBC199LIV48A,Bordeaux - Livran
+TBC1GRA43R,Gradignan - Granet
+TBC2000PCU63A,Artigues-pres-Bordeaux - Pierre Curie
+TBC2002LST93R,Ambares-et-Lagrave - Du Roy
+TBC2004LIB76R,Le Bouscat - Libération
+TBC2006AMB93A,Ambares-et-Lagrave - Ambarès Centre
+TBC2009LIB92A,Ambares-et-Lagrave - Liberté
+TBC2010REP58R,Blanquefort - République
+TBC2011BOU92A,Ambes - La Bousquette
+TBC2012COL58R,Blanquefort - Collège de Blanquefort
+TBC2013BRE93A,Ambares-et-Lagrave - Barre
+TBC2017BRT93A,Ambares-et-Lagrave - Barot
+TBC2019EUR07R,Ambares-et-Lagrave - Europe
+TBC201PSJ08R,Bordeaux - Pont Saint-Jean
+TBC2020DFE55R,Saint-Médard-en-Jalles - Docteur Férié
+TBC2021ASO37A,Le Taillan-Médoc - Avenue de Soulac
+TBC2024LAU71R,Saint-Médard-en-Jalles - Lauba
+TBC2028FUT93A,Carbon-Blanc - Futaies
+TBC2029GRO93R,Ambares-et-Lagrave - Les Garouilles
+TBC202BLA52A,Eysines - Blanc
+TBC2031ECH45A,Pessac - Les Echoppes
+TBC2032CIM71A,Saint-Médard-en-Jalles - Cimetière de Saint-Médard
+TBC20338MA37R,Blanquefort - 8 Mai
+TBC2034MOL27R,Bruges - Commandant Mollière
+TBC2036ROU71A,Saint-Médard-en-Jalles - Rousseau
+TBC2038DUR93A,Ambares-et-Lagrave - Durandeau
+TBC2041TREY74,Eysines - Treytins
+TBC2042CFE93A,Ambares-et-Lagrave - Courtefesse
+TBC2046JOF08A,Cenon - Maréchal Joffre
+TBC2047PIE27A,Bordeaux - Boulevard Pierre 1er
+TBC2048ECO08A,Cenon - Emile Combes
+TBC204ECU57R,Le Bouscat - Rue des Ecus
+TBC2050AMI62A,Cenon - Rue de l'Amitié
+TBC2051GAR53A,Saint-Aubin-de-Médoc - Les Garouilles
+TBC2053GGA37A,Blanquefort - Général de Gaulle
+TBC2056TIL93A,Ambares-et-Lagrave - Le Tillac
+TBC2058GUE72R,Mérignac - Gustave Eiffel
+TBC2059TOU90R,Bassens - Toutaud
+TBC2060PIE27R,Le Bouscat - Boulevard Pierre 1er
+TBC2064DBL37A,Le Taillan-Médoc - Dame Blanche
+TBC2066ROS90A,Bassens - La Roseraie
+TBC2068RNEAUX,Mérignac - Les Renardeaux
+TBC206GER37A,Le Taillan-Médoc - Germignan
+TBC2070MAR27R,Le Bouscat - Marronniers
+TBC2071TER93A,Carbon-Blanc - Terrasson
+TBC2072CFE93R,Ambares-et-Lagrave - Courtefesse
+TBC2074BLQ27A,Floirac - Blanqui
+TBC2076SOM90A,Bassens - Somme
+TBC2077POI27A,Bordeaux - Poirson
+TBC2078QFR91A,Bassens - Quai Français
+TBC2079MEU90A,Bassens - Meunier
+TBC2080MAC90A,Bassens - Collège Manon Cormier
+TBC2081EXU91A,Ambes - Saint-Exupéry
+TBC2088BRG92A,Ambes - Beauregard
+TBC208LEY09A,Bordeaux - Leybardie
+TBC2090DOU91A,Bassens - Richelieu
+TBC2093GEN91A,Ambes - Gendarmerie
+TBC2095MRO13A,Bordeaux - Moulin Rouge
+TBC2097TYF64R,Artigues-pres-Bordeaux - Artigues Tout y Faut
+TBC2098CEG77A,Blanquefort - Caychac Eglise
+TBC2099LAG92A,Ambares-et-Lagrave - La Gorp
+TBC209BERT9A,Bordeaux - Berthelot
+TBC2102FRO50A,Mérignac - Frères Robinson
+TBC2103BRT93R,Ambares-et-Lagrave - Barot
+TBC2104CLA75A,Mérignac - Clarines
+TBC2105CIM75A,Mérignac - Cimetière Intercommunal
+TBC2107BLQ27R,Bordeaux - Blanqui
+TBC210DUM52A,Eysines - Dumont
+TBC2113SYB90A,Bassens - Sybille
+TBC2114PAI06R,Floirac - La Paix
+TBC2117DOR50R,Mérignac - Dorgelès
+TBC2118NOL92A,Ambes - Noliquet
+TBC211TUR52A,Le Haillan - Turenne
+TBC2121DAN10R,Bordeaux - Dandicolle
+TBC2123BAR91A,Bassens - La Baranquine
+TBC2126MAR27A,Le Bouscat - Marronniers
+TBC2127CAS91A,Saint-Louis-de-Montferrand - Castelneau
+TBC2128BNT92A,Ambares-et-Lagrave - Bernatet
+TBC2129CHE07A,Ambares-et-Lagrave - Chemin de la Vie
+TBC212LAJ03R,Bordeaux - Lajaunie
+TBC2130CAY77R,Blanquefort - Caychac Eglise
+TBC2131CAI90A,Bassens - Cailleau
+TBC2133PTE58A,Parempuyre - Le Printemps
+TBC2134JJA90R,Bassens - Jean Jaurès
+TBC2136LIB90A,Bassens - Liberté
+TBC2137VIR63A,Artigues-pres-Bordeaux - Virecourt
+TBC2139SCA27A,Le Bouscat - Sadi Carnot
+TBC213ESC82A,Saint-Médard-en-Jalles - Les Escarrets
+TBC2140DUF91A,Ambes - Dufresne
+TBC2142COM95A,Carbon-Blanc - Collège Manon Cormier
+TBC2143MFO94R,Ambares-et-Lagrave - Maréchal Foch
+TBC2144CSP94A,Ambares-et-Lagrave - Clos Saint-Pierre
+TBC2145BRE93R,Ambares-et-Lagrave - Barre
+TBC2146AMB93R,Ambares-et-Lagrave - Ambarès Centre
+TBC2147DHO94R,Ambares-et-Lagrave - Domaine d'Hostein
+TBC2148MFO94A,Ambares-et-Lagrave - Maréchal Foch
+TBC214VER54R,Le Bouscat - Verdun
+TBC2150DHO94A,Ambares-et-Lagrave - Domaine d'Hostein
+TBC2151GRA94A,Ambares-et-Lagrave - La Grave d'Ambarès
+TBC2154DBL37R,Le Taillan-Médoc - Dame Blanche
+TBC2156CHE92A,Ambares-et-Lagrave - Beauvais
+TBC2157MJO90R,Bassens - Maréchal Joffre
+TBC2158CHE07R,Ambares-et-Lagrave - Chemin de la Vie
+TBC2159FLU56A,Eysines - Frères Lumière (Rte de Pauillac)
+TBC2160PTP92A,Saint-Vincent-de-Paul - Pont de Peyre
+TBC2161GAR91A,Bordeaux - Gare d'Orléans
+TBC2163RAY16R,Bordeaux - Raynal (centre commercial)
+TBC2164FON20A,Bordeaux - Fonfrède
+TBC2166BEA95R,Bassens - Beauval
+TBC2167TOUR9A,Bordeaux - Tourville
+TBC2168JCB92A,Carbon-Blanc - Bourdieu
+TBC2169FOY93A,Carbon-Blanc - Foyer Municipal
+TBC2170FAU94A,Ambares-et-Lagrave - Faulat
+TBC2171GAL95R,Bassens - Maréchal Gallieni
+TBC2172AUS95R,Carbon-Blanc - Ausone
+TBC2173TER93R,Ambares-et-Lagrave - Terrasson
+TBC2175LAN93R,Carbon-Blanc - La Lande
+TBC2177MAC90R,Bassens - Collège Manon Cormier
+TBC2178GEP36R,Pessac - Collège Gérard Philipe
+TBC2179ZOL95R,Bassens - Emile Zola
+TBC217VVI53R,Saint-Aubin-de-Médoc - Village de Villepreux
+TBC2180FUT93R,Carbon-Blanc - Futaies
+TBC2181COM95R,Carbon-Blanc - Collège Manon Cormier
+TBC2183MJO90A,Bassens - Maréchal Joffre
+TBC2184MFR06R,Floirac - Mendès France
+TBC2185BOULI8,Floirac - Bouliac Centre Commercial (Gabarre)
+TBC2186MIM03A,Lormont - Mimosas
+TBC218LES51A,Bordeaux - Lestonnat
+TBC2190ASC07R,Bouliac - Les Pelouses d'Ascott
+TBC2191JOF08R,Cenon - Maréchal Joffre
+TBC2194ATE03A,Lormont - Ateliers Municipaux
+TBC2195DUP03A,Lormont - Quai Dupeyron
+TBC2196BRI03R,Lormont - Lormont Bas (A. Briand)
+TBC2198DOR05R,Bordeaux - Dorgelès
+TBC2199FOU07R,Bouliac - Fourney
+TBC219HLE24A,Pessac - Hôpital Haut-Lévêque
+TBC21CHU12A,Bordeaux - Churchill
+TBC2201TEM94R,Ambares-et-Lagrave - Templiers
+TBC2205PGA57A,Bruges - Pont du Gail
+TBC2207FLE57A,Bruges - Fleuranceau
+TBC2208ADM57A,Le Bouscat - Centre Administratif
+TBC2209MRY57R,Bruges - Martyrs de la résistance
+TBC2210FLE57R,Bruges - Fleuranceau
+TBC2211PGA57R,Bruges - Pont du Gail
+TBC2212ADM57R,Le Bouscat - Centre Administratif
+TBC2213MAR57R,Bruges - Maryse Bastié
+TBC2215CAS57R,Bordeaux - Castillon
+TBC2216POI57R,Le Bouscat - Poincaré
+TBC2218ARB58A,Parempuyre - Carrière de Bos
+TBC221DEL51R,Bordeaux - Gabriel Delaunay
+TBC2220ZIC58R,Bruges - Z.I de Campilleau
+TBC2221VIE58R,Parempuyre - Lot. de la Vieille Eglise
+TBC2222ARB58R,Parempuyre - Carrière de Bos
+TBC2223LIB90R,Bassens - Liberté
+TBC2224GAR53R,Saint-Aubin-de-Médoc - Les Garouilles
+TBC2225HOT31R,Bordeaux - Les Hôtels
+TBC2227LOR66A,Lormont - Lormont Village
+TBC2229TIL93R,Ambares-et-Lagrave - Le Tillac
+TBC222LUC49R,Mérignac - Lucassot
+TBC2230VER93R,Carbon-Blanc - Vergers
+TBC2231MES95R,Carbon-Blanc - Mesquita
+TBC2233ECM63R,Artigues-pres-Bordeaux - Echangeur du Moulinat
+TBC2234CLE56A,Bruges - Clemenceau
+TBC2235JJA06R,Floirac - Jean Jaurès
+TBC2238VAU22R,Bordeaux - Vaucouleurs
+TBC2239TBEA50,Mérignac - Beaudésert
+TBC2240FOY93R,Carbon-Blanc - Foyer Municipal
+TBC2241MFL08A,Floirac - Mairie de Floirac
+TBC2242VET07R,Bouliac - Vettiner (côté arceaux vélo)
+TBC2245ABO94R,Carbon-Blanc - Avenue de Bordeaux
+TBC2246ASC07A,Bouliac - Les Pelouses d'Ascott
+TBC2247SAL23A,Bordeaux - Salinières
+TBC2248MAM93A,Ambares-et-Lagrave - Mairie d'Ambarès
+TBC2249BOI94R,Ambares-et-Lagrave - Bois Vert
+TBC2250FAYZEA,Bouliac - Fayzeau
+TBC2251MFR94R,Ambares-et-Lagrave - Mendès France
+TBC2252TRA05R,Bordeaux - Boulevard Trarieux
+TBC2253CBL93R,Carbon-Blanc - Carbon Blanc Centre
+TBC2254LAG92R,Ambares-et-Lagrave - La Gorp
+TBC2255MLI73R,Mérignac - Martyrs de la Libération
+TBC2256CLP94R,Ambares-et-Lagrave - Clos du Prieuré
+TBC2259LIN73R,Mérignac - Lindberg
+TBC225SOO20A,Villenave-d'Ornon - Soors
+TBC2263ASS27A,Bordeaux - Pôle emploi Bastide
+TBC2265SAG94R,Ambares-et-Lagrave - Sabarèges
+TBC2267ACA73R,Mérignac - Acacias
+TBC2268FLI06A,Floirac - Floirac Libération
+TBC226GVE67A,Artigues-pres-Bordeaux - Grand Veneur
+TBC2270AMB94R,Ambares-et-Lagrave - Ambarès Eglise
+TBC2271ETO07A,Bouliac - La Belle Etoile
+TBC2273MCE73R,Mérignac - Mérignac Centre (Médiathèque)
+TBC2275FAU94R,Ambares-et-Lagrave - Faulat
+TBC2278MRT51R,Mérignac - Martin
+TBC2279LAF08A,Floirac - Laffargue
+TBC227FAV20A,Villenave-d'Ornon - Farvarque
+TBC2280JOU16R,Bordeaux - Terres Neuves (station Tram)
+TBC2282NAN23A,Bordeaux - Caserne Nansouty
+TBC2283FBU02R,Bordeaux - Ferdinand Buisson
+TBC2285BER07A,Bouliac - Berliquet
+TBC2286PRA36A,Mérignac - Allée de la Prairie
+TBC2288JAB94R,Ambares-et-Lagrave - Jambes
+TBC228PLA06A,Floirac - Les Plateaux
+TBC2290AQU57A,Bruges - Avenue d'Aquitaine
+TBC2291SEM06A,Bordeaux - Sembat
+TBC2294CPE16R,Bordeaux - Capelle
+TBC2295CEN38A,Lormont - Centre Commercial (4 Pavillons)
+TBC2296EFM32A,Lormont - Esplanade F. Mitterrand
+TBC2297NOU02R,Bègles - Noutary
+TBC2298MIT06R,Floirac - Mitterrand
+TBC2299MIT06A,Floirac - Mitterrand
+TBC229FMA05A,Bordeaux - Lycée F. Mauriac
+TBC22PAC34R,Talence - Pacaris
+TBC2303BEL02R,Bordeaux - Belcier
+TBC230JJA56R,Le Bouscat - Jean Jaurès
+TBC231BAG20A,Talence - Bagatelle
+TBC2324CAR09A,Bordeaux - Carros
+TBC2326CDEL9A,Bordeaux - Stade Chaban Delmas
+TBC2327BAR09A,Bordeaux - Barrière d'Arès
+TBC2328BJU09A,Bordeaux - Barrière Judaïque (Cité Administrative)
+TBC2329CARN9A,Bordeaux - Carnot
+TBC2330BMED9A,Bordeaux - Barrière du Médoc
+TBC2331CALI9A,Bordeaux - Calixte Camelle
+TBC2333SMA09A,Bordeaux - Médoc (Place St Martial)
+TBC2334RAVE9A,Bordeaux - Place Ravezies
+TBC2336RAV09R,Bordeaux - Place Ravezies
+TBC2337GPAR9R,Bordeaux - Grand Parc
+TBC2338TIVO9R,Bordeaux - Tivoli
+TBC2339BMED9R,Bordeaux - Barrière du Médoc
+TBC2340BSM09R,Bordeaux - Barrière Saint-Médard
+TBC2341BJU09R,Bordeaux - Barrière Judaïque
+TBC2342JPA09R,Bordeaux - Jeu de Paume (Cité Administrative)
+TBC2343BPE09R,Bordeaux - Barrière de Pessac
+TBC2344GEOV9R,Bordeaux - Boulevard George V
+TBC2346CAR09R,Bordeaux - Carros
+TBC2347PCAU9R,Bordeaux - Pont de Cauderès
+TBC2348ROO09R,Bordeaux - Boulevard Roosevelt
+TBC2349BTOU9R,Bordeaux - Barrière de Toulouse
+TBC2350JEAH9R,Bordeaux - Jean Hameau
+TBC235DUM52R,Eysines - Dumont
+TBC2364ARI06A,Cenon - Aristide Briand
+TBC236PMA56A,Blanquefort - Parc de Majolan
+TBC2375E2M05A,Cenon - Entre-Deux-Mers
+TBC2376CAL62R,Cenon - Calmette
+TBC2378CAL62A,Cenon - Calmette
+TBC237DOU03A,Bordeaux - Poste de Douane
+TBC2381EGL32A,Floirac - Eglise de Floirac
+TBC2383EGL32R,Floirac - Eglise de Floirac
+TBC2385E2M05R,Cenon - Entre-Deux-Mers
+TBC2386AFR05R,Cenon - Anatole France
+TBC2387PCA05R,Bordeaux - Petit Cardinal
+TBC238PGN75R,Mérignac - Pagneau
+TBC2397SNI20A,Bordeaux - Saint-Nicolas
+TBC2398KER20A,Bordeaux - Kergomard
+TBC2399NAN22A,Bordeaux - Nansouty
+TBC239LAP38R,Lormont - Collège Lapierre
+TBC2400BTO11A,Bordeaux - Boulevard Roosevelt
+TBC2403FON20R,Bordeaux - Fonfrède
+TBC2404SNI20R,Bordeaux - Saint-Nicolas
+TBC240DUR23A,Bègles - Durcy
+TBC2411MAR51A,Bordeaux - Martyrs de la Résistance
+TBC2412DEL51A,Bordeaux - Gabriel Delaunay
+TBC2413RDO16A,Bordeaux - Résidences du Domaine
+TBC2416VIR16R,Bordeaux - Virginia
+TBC2417LOP16R,Bordeaux - Place Lopès
+TBC2418MOS16R,Bordeaux - Place Moscou
+TBC2419BAT16R,Bordeaux - Stade Batany
+TBC2420ADM16R,Bordeaux - Cité administrative
+TBC2421MAN16R,Bordeaux - Georges Mandel
+TBC2422SEU51R,Bordeaux - Eglise Saint-Seurin
+TBC2423PME51R,Bordeaux - Poste de Mériadeck
+TBC2425JAR16R,Mérignac - Stade du Jard
+TBC2426MON16R,Mérignac - Montesquieu
+TBC242DOM51A,Bordeaux - Domion
+TBC2430ARC80R,Pessac - Archimède
+TBC2431LAN80A,Pessac - Langevin
+TBC2432PMO41A,Talence - Place Mozart
+TBC2434MDQ45R,Talence - La Médoquine
+TBC2436MEU16A,Bordeaux - Meunier
+TBC243TUR52R,Le Haillan - Turenne
+TBC2442PDO01A,Bordeaux - Paul Doumer
+TBC2443JPU15R,Bordeaux - Jardin Public
+TBC2444GAM04A,Bordeaux - Gambetta
+TBC2446CHAN9R,Bordeaux - Cité Chantecrit
+TBC2447RST53R,Le Haillan - Rue du Stade
+TBC2448CMU34A,Pessac - Clinique Mutualiste
+TBC2449DRO34A,Pessac - Facultés Droit et Lettres
+TBC244SEN03A,Lormont - Quai Numa Sensine
+TBC2451CMU34R,Pessac - Clinique Mutualiste
+TBC2452RME53A,Le Haillan - Rue du Médoc
+TBC2453BEL13A,Bordeaux - Bel Air
+TBC2454ETC13A,Bordeaux - Etchénique
+TBC2455BOU50A,Mérignac - Bourranville
+TBC2456MME01A,Mérignac - Mérignac Centre (Médiathèque)
+TBC2457MME50A,Mérignac - Mairie de Mérignac
+TBC2458CHD50A,Mérignac - Avenue Château d'Eau
+TBC2459MAG82A,Mérignac - Avenue de Magudas
+TBC245RPE43A,Gradignan - Route de Pessac
+TBC2460TCPI50,Mérignac - Cité des Pins
+TBC2461MAR50A,Mérignac - Marronniers
+TBC2463CHD50R,Mérignac - Avenue Château d'Eau
+TBC2464PCA50R,Mérignac - Parc de Capeyron
+TBC2465MME50R,Mérignac - Mairie de Mérignac
+TBC2466MDO50R,Mérignac - Marx Dormoy
+TBC2467MON01R,Mérignac - Place Mondésir
+TBC2468PIN13R,Bordeaux - Allée des Pins
+TBC2469BAR13R,Bordeaux - Barrière d'Arès
+TBC246DOM51R,Bordeaux - Domion
+TBC2470CHA13R,Bordeaux - La Chartreuse
+TBC2472GOU50R,Mérignac - Gouraud
+TBC2473JMA73R,Mérignac - Jean Macé
+TBC2474NCO73R,Mérignac - Nungesser et Coli
+TBC2478MON23R,Pessac - Monbalon 2
+TBC247LAC92A,Ambes - Lacone
+TBC2480SCH02R,Villenave-d'Ornon - Schweitzer
+TBC2481LMA53R,Saint-Médard-en-Jalles - Lamartine
+TBC2482STA55A,Le Taillan-Médoc - Stade Municipal
+TBC2484BEN34R,Talence - Bénédigues
+TBC2485EPA20A,Villenave-d'Ornon - Epargne
+TBC2487SAR21A,Villenave-d'Ornon - Sarcignan
+TBC2488PBR62A,Cenon - Brossolette
+TBC2489EUR15A,Bordeaux - Place de l'Europe
+TBC2491CPO20A,Villenave-d'Ornon - Château Pontac (devant Centre Cial)
+TBC2493CAM62A,Cenon - Camparian
+TBC2494SAR21R,Villenave-d'Ornon - Sarcignan
+TBC2497SNP53R,Saint-Médard-en-Jalles - S.N.P.E.
+TBC2499DAG36A,Mérignac - Lycée Daguin
+TBC249BRE48A,Mérignac - Brémontier
+TBC24THM22A,Bègles - Thomas
+TBC2500PEX55R,Le Taillan-Médoc - Pexotto
+TBC2501MIN71R,Saint-Médard-en-Jalles - Clairière de Mingot
+TBC2503HIP53A,Saint-Médard-en-Jalles - Centre Hippique
+TBC2508ARC66R,Lormont - L'Archevêque
+TBC250GEL71A,Saint-Médard-en-Jalles - Gelès
+TBC2510HGU06A,Floirac - Hauts de Guitres
+TBC2511PFL36R,Eysines - Place Florale
+TBC2512JAR16A,Mérignac - Stade du Jard
+TBC2513BIB02A,Bègles - Bibliothèque
+TBC2514ACA24R,Pessac - Collège F. Mitterrand
+TBC2515GLU32R,Artigues-pres-Bordeaux - Gay Lussac
+TBC2516MOU64A,Artigues-pres-Bordeaux - La Moune
+TBC2517GLO52A,Eysines - Le Grand Louis
+TBC2521DOR34A,Bègles - Le Dorat
+TBC2522MON91R,Ambes - Montaigne
+TBC2524JAC35R,Pessac - Colonel Jacqui
+TBC2528V134R,Talence - Village 1
+TBC252AHL44A,Pessac - Avenue du Haut-Lévêque
+TBC2532MIM03R,Lormont - Mimosas
+TBC2533PBR62R,Cenon - Brossolette
+TBC2535CPA53A,Saint-Aubin-de-Médoc - Les Campanules
+TBC2537HIL02R,Bègles - Clos de Hilde
+TBC2544CHA90A,Carbon-Blanc - Château Pomerol
+TBC2545CAN36A,Le Bouscat - Canter
+TBC2546HIP54R,Eysines - Hippodrome
+TBC2547RBL07A,Bouliac - La Route Bleue
+TBC2548CLP94A,Ambares-et-Lagrave - Clos du Prieuré
+TBC254914J23R,Bègles - 14 Juillet
+TBC254LESP9R,Bordeaux - Lespiault
+TBC2550PMAR9T,Bordeaux - Place Maran
+TBC2554AST37R,Le Taillan-Médoc - Avenue du Stade
+TBC25574PO58A,Blanquefort - Les 4 Ponts
+TBC2558EXU91R,Ambes - Saint-Exupéry
+TBC2559LVE46A,Pessac - Lino Ventura
+TBC2560DEH77A,Blanquefort - Déhèz
+TBC2561AND58A,Blanquefort - Andrian
+TBC2562SBR10R,Bordeaux - St-Bruno - Hôtel de Région
+TBC2563BRI91A,Saint-Louis-de-Montferrand - Brisson
+TBC2565BRI91R,Saint-Louis-de-Montferrand - Brisson
+TBC2567LVE46R,Pessac - Lino Ventura
+TBC2570HIP56A,Bruges - Hippodrome
+TBC2572HON20R,Villenave-d'Ornon - La Hontan
+TBC2573RCO94R,Ambares-et-Lagrave - René Coty (Pasteur)
+TBC2576CUR37A,Le Taillan-Médoc - Allée de Curé
+TBC2577ANS49R,Mérignac - Beutre Antenne Sociale
+TBC2579RES53R,Le Haillan - Résidence Chanteclerc
+TBC2583GRA02A,Villenave-d'Ornon - Les Gravières
+TBC2584AGR37R,Le Taillan-Médoc - Agrières
+TBC2585VVI53A,Saint-Aubin-de-Médoc - Village de Villepreux
+TBC2586RME36R,Bruges - Route du Médoc
+TBC2587GBE23A,Bègles - Dilly (Gare de Bègles)
+TBC2589MGU92A,Ambares-et-Lagrave - Moulin du Gua
+TBC258MON35R,Mérignac - Montaigne
+TBC2590HCA56A,Blanquefort - Hameau de Canteret
+TBC2591TAN02A,Bègles - Tandonnet
+TBC2592MBE02R,Bègles - Mairie de Bègles
+TBC2593CNO36R,Bruges - Cimetière Nord
+TBC2594STR51R,Mérignac - Strélitzias
+TBC2596RCH52A,Le Haillan - Résidence Chanteclerc
+TBC2599MCE08A,Cenon - Mairie de Cenon
+TBC259JAC48R,Bordeaux - Jacquet
+TBC25FRO50R,Mérignac - Frères Robinson
+TBC2600BOR37A,Le Taillan-Médoc - Bois des Ormes
+TBC2601UMK36A,Bruges - Bruges Centre
+TBC2602STAUGU,Bordeaux - Eglise Saint-Augustin
+TBC2606GPO02A,Bègles - Parc d'Activité du Grand Port
+TBC2607CLA40R,Lormont - Collège Lapierre
+TBC2609FLU02A,Bègles - Centre d'Activités Fluviales
+TBC260MAR06R,Floirac - Martouret
+TBC2610MBR02A,Bordeaux - Marché de Brienne
+TBC2611QCA02A,Bègles - Bègles Plage
+TBC2614RAY06R,Floirac - Collège G.Rayet
+TBC2615ACA24A,Pessac - Collège F. Mitterrand
+TBC261ATE03R,Lormont - Ateliers Municipaux
+TBC2620ALB43A,Gradignan - Saint-Albe
+TBC2621STLO04,Bordeaux - Saint-Louis
+TBC2623COJEAN,Villenave-d'Ornon - Courréjean
+TBC2626HVI43A,Gradignan - Haut Vigneau
+TBC2628THS41A,Talence - Thouars
+TBC2629UMK36R,Bruges - Bruges Centre
+TBC262ROC48A,Bordeaux - Docteur Rocaz
+TBC2630EYQ35A,Mérignac - Collège Les Eyquems
+TBC2631HPO73R,Mérignac - Mérignac Centre
+TBC2633AVU21A,Talence - Avenue de l'Université
+TBC2635URS36R,Bruges - URSSAF
+TBC2636CPA53R,Saint-Aubin-de-Médoc - Les Campanules
+TBC2639ATA36R,Eysines - Avenue du Taillan
+TBC2640MIGRO,Eysines - Eysines Migron
+TBC2641CRO72A,Mérignac - Croustet
+TBC2642BME54R,Bordeaux - Barrière du Médoc
+TBC2643TPA57R,Bordeaux - Temps Passé
+TBC2645AUS57R,Le Bouscat - Avenue Ausone
+TBC2648MYA58R,Parempuyre - Montoya
+TBC2649CAY77A,Blanquefort - Caychac Bourg
+TBC2651LJM06R,Blanquefort - Lycée Jean Monnet
+TBC2655GAR58R,Blanquefort - Gare de Blanquefort
+TBC2656MFR94A,Ambares-et-Lagrave - Mendès France
+TBC2657COL58A,Blanquefort - Collège de Blanquefort
+TBC265DOU03R,Bordeaux - Poste de Douane
+TBC2660MCA95A,Carbon-Blanc - Mairie de Carbon Blanc
+TBC2661CAT94A,Ambares-et-Lagrave - C.A.T
+TBC2668TRE15A,Bordeaux - Trébod
+TBC266BRI21R,Villenave-d'Ornon - Brignon
+TBC2670PFR46A,Pessac - France
+TBC2671BOI46R,Pessac - Boiron
+TBC2672EGB23R,Bègles - Eglise de Bègles
+TBC2674ALL36A,Bruges - Allard
+TBC2678DOU27R,Bruges - Douanes Françaises
+TBC2679MIL27R,Bruges - Zone de Fret (Milan)
+TBC267MIR64R,Artigues-pres-Bordeaux - Mirail
+TBC2681LIG94A,Ambares-et-Lagrave - Lignac
+TBC2682FON72A,Mérignac - Foncastel
+TBC2683PLO92A,Ambes - Port Lopès
+TBC2684AUG49R,Bordeaux - Eglise Saint-Augustin
+TBC2685MSE21R,Villenave-d'Ornon - Mansencal
+TBC2686GUI47R,Bordeaux - Guilbaud
+TBC2688GUI47A,Bordeaux - Guilbaud
+TBC2689BTO20A,Bordeaux - Barrière de Toulouse
+TBC268COR06A,Floirac - Cornier
+TBC2690LEY20A,Talence - Croix de Leysotte
+TBC2691RPI20A,Villenave-d'Ornon - Hôpital Robert Picqué
+TBC2692JOF20A,Villenave-d'Ornon - Maréchal Joffre
+TBC2693MAL20A,Villenave-d'Ornon - Mallet
+TBC2694BAR20A,Cadaujac - Château Bardins
+TBC2695CB020A,Cadaujac - Château Bouscaut
+TBC2696TBOUS,Cadaujac - Le Bouscaut
+TBC2697TAS20R,Villenave-d'Ornon - De Lattre de Tassigny
+TBC2698LEY02A,Villenave-d'Ornon - Clos de Leyran
+TBC2699SAL20R,Villenave-d'Ornon - Sallegourde
+TBC26MON23A,Pessac - Monbalon 2
+TBC2700TAS20A,Villenave-d'Ornon - De Lattre de Tassigny
+TBC2701CBO20R,Cadaujac - Château Bouscaut
+TBC2703RCA21A,Villenave-d'Ornon - Résidence Le Château
+TBC2704PEX55A,Le Taillan-Médoc - Pexotto
+TBC2705LAM20R,Cadaujac - Lamothe
+TBC2706BAR20R,Cadaujac - Château Bardins
+TBC2707PTL20R,Villenave-d'Ornon - Pont de Langon
+TBC2708PYR20R,Villenave-d'Ornon - Pyrénées
+TBC2709SOO20R,Villenave-d'Ornon - Soors
+TBC2710TER20R,Villenave-d'Ornon - Terrefort
+TBC2711CPO20R,Villenave-d'Ornon - Château Pontac (vers Rocade)
+TBC2712MAY20R,Villenave-d'Ornon - Pont de la Maye Poste
+TBC2713MAL20R,Bègles - Mallet
+TBC2715JOF20R,Bègles - Maréchal Joffre
+TBC2716FAV20R,Bègles - Farvarque
+TBC2717LEY20R,Bègles - Croix de Leysotte
+TBC2718BAG20R,Bègles - Bagatelle
+TBC2719LEY02R,Villenave-d'Ornon - Clos de Leyran
+TBC271RIG76A,Le Bouscat - Rigal
+TBC2720PYR20A,Villenave-d'Ornon - Pyrénées
+TBC2721GAL02R,Villenave-d'Ornon - Galgon
+TBC2722GRA02R,Villenave-d'Ornon - Les Gravières
+TBC2724ALS21R,Villenave-d'Ornon - Alsace-Lorraine
+TBC2725MED36A,Villenave-d'Ornon - Médiathèque
+TBC2726BON21R,Villenave-d'Ornon - Bonnardel
+TBC2727CAM21R,Villenave-d'Ornon - Camparian
+TBC2728LEO21R,Villenave-d'Ornon - Collège Pont de la Maye
+TBC2729RCA21R,Villenave-d'Ornon - Résidence Le Château
+TBC2731MEN48A,Pessac - Les Menhirs
+TBC2732NOE48A,Pessac - Collège Noès
+TBC2733LAF80A,Pessac - La Fontaine
+TBC2734POU46R,Pessac - Poudrière
+TBC2735POR84R,Pessac - Pont de l'Orient
+TBC2736PAP23R,Pessac - Pape Clément (Place Sellier)
+TBC2737ORI47R,Pessac - Pont de l'Orient
+TBC2738CIM47R,Pessac - Cimetière
+TBC2739EJC47R,Pessac - Ecole Jean Cordier
+TBC273LAN55A,Le Taillan-Médoc - La Landotte
+TBC2740BPE10R,Bordeaux - Barrière de Pessac
+TBC2741BOU45R,Bordeaux - Caserne Boudet
+TBC2742STR45R,Bordeaux - Strasbourg
+TBC2743NAV45R,Bordeaux - Navarre
+TBC2744COS45A,Bordeaux - Costedoat
+TBC2745EUL23R,Bordeaux - Sainte-Eulalie
+TBC2746CUR45R,Bordeaux - Cursol
+TBC274PTP91R,Saint-Louis-de-Montferrand - Petit Peyronnet
+TBC2751BOU45A,Bordeaux - Caserne Boudet
+TBC2752BPE45A,Bordeaux - Barrière de Pessac
+TBC2753CAM11A,Bordeaux - Campeyraut
+TBC2754CHP08A,Bordeaux - Charles Perrens
+TBC2755EJC47A,Pessac - Ecole Jean Cordier
+TBC2756CIM47A,Pessac - Cimetière
+TBC2757ORI47A,Pessac - Pont de l'Orient
+TBC2759BAL47A,Pessac - Les Bois de l'Alouette
+TBC2761JJA45A,Pessac - Avenue Jean Jaurès
+TBC2762JAU45A,Pessac - Jaubert
+TBC2763PES35A,Pessac - Pessac Centre
+TBC2764MON46A,Pessac - Le Monteil
+TBC2765XAR46A,Pessac - Xavier Arnozan
+TBC2766CAS46A,Pessac - Castaing
+TBC2767VCB46A,Pessac - Village Cap de Bos
+TBC2768POU46A,Pessac - Poudrière
+TBC2769TAS46A,Cestas - De Lattre de Tassigny (vers Gazinet)
+TBC276BER06R,Floirac - Béraldi
+TBC2770GAZINE,Cestas - Cestas Gazinet
+TBC2771TAS46R,Cestas - De Lattre de Tassigny (vers Rte d'Arcachon)
+TBC2772PTO46A,Pessac - Les Prés de Toctoucau
+TBC2774BEL44R,Pessac - Bellevue
+TBC2775PTO46R,Cestas - Les Prés de Toctoucau
+TBC2776ZAA46R,Cestas - Z.A d'Auguste
+TBC2777FOU46R,Cestas - Fougnet
+TBC2778PGA46R,Cestas - Petit Gazinet
+TBC2779VCB46R,Pessac - Village Cap de Bos
+TBC2780MAR46R,Pessac - Marne
+TBC2781SHU46R,Pessac - Saint-Hubert
+TBC2782CAS46R,Pessac - Castaing
+TBC2783ALO46R,Pessac - Alouette
+TBC2784XAR46R,Pessac - Xavier Arnozan
+TBC2785MFO46R,Pessac - Maréchal Foch
+TBC2786MON46R,Pessac - Le Monteil
+TBC2787GRA45R,Pessac - Grangeneuve
+TBC2788PES35R,Pessac - Pessac Centre
+TBC2789JJA45R,Pessac - Avenue Jean Jaurès
+TBC2790ECH45R,Pessac - Les Echoppes
+TBC2791PHB45R,Pessac - Parc Haut Brion
+TBC2792ABA83A,Talence - Anciens Abattoirs
+TBC2796CHA45A,Pessac - La Châtaigneraie
+TBC2797CHA45R,Pessac - La Châtaigneraie
+TBC2798PEG47A,Pessac - Charles Péguy
+TBC2799TRI47A,Pessac - Le Trinquet
+TBC279MAN13R,Bordeaux - Manège
+TBC2800TRI44A,Pessac - Le Trinquet
+TBC2802FAN84A,Pessac - Fanning Lafontaine
+TBC2804COR84A,Pessac - Corneille
+TBC2807TUL44A,Pessac - Les Tulipes
+TBC2808ARA45R,Pessac - Arago (Médiathèque)
+TBC2809FAU84R,Pessac - Fauvettes
+TBC2810ORE84A,Pessac - Orée du Bois
+TBC2811FAU84A,Pessac - Fauvettes
+TBC2812AFP84A,Pessac - AFPA Pessac
+TBC2813MAG84A,Pessac - Magonty
+TBC2814ARC80A,Pessac - Archimède
+TBC2815MAD84A,Pessac - Madran
+TBC2816FOR45R,Pessac - La Forge
+TBC2817HLV46R,Pessac - Boulevard du Haut Livrac
+TBC2818ORE84R,Pessac - Orée du Bois
+TBC2819DAU84R,Pessac - Dauphiné
+TBC281FAU47R,Pessac - Fauré
+TBC2820BLA46A,Pessac - Blayais
+TBC2821STC84R,Pessac - Stade Cap de Bos
+TBC2822LEC46R,Pessac - Général Leclerc
+TBC2823YVB58A,Parempuyre - Yvan Bric
+TBC2824HLV46A,Pessac - Boulevard du Haut Livrac
+TBC2825FOR45A,Pessac - La Forge
+TBC2826ARA45A,Pessac - Arago (Médiathèque)
+TBC2827MAC23R,Pessac - Macédo
+TBC2829ASS31A,Bordeaux - Pôle emploi - Crama
+TBC2830JEA45R,Bordeaux - Jeanne d'Arc
+TBC2833CCO31A,Bordeaux - Centre Commercial
+TBC2836CEN38R,Lormont - Centre Commercial (4 Pavillons)
+TBC2838BAO38R,Bordeaux - Libre Service de Gros
+TBC2839EXP31R,Bordeaux - Parc des Expositions (Porte C)
+TBC283TAR47A,Pessac - Tartifume
+TBC2840EIF44R,Pessac - Eiffel
+TBC2843COR84R,Pessac - Corneille
+TBC2844CHI84R,Pessac - Le Chiquet
+TBC2845PHE84R,Pessac - Phénix Haut Brion
+TBC2846FAN84R,Pessac - Fanning Lafontaine
+TBC2847MDQ45A,Bordeaux - La Médoquine
+TBC2848GRO53A,Saint-Médard-en-Jalles - Gare Routière (av. du Gal de Gaulle)
+TBC2849BER80A,Gradignan - Bersol
+TBC284PER54R,Bordeaux - Pérès
+TBC2850BRE46A,Pessac - Bretagne
+TBC2851BEL44A,Pessac - Bellevue
+TBC2852CAPBOS,Pessac - Cap de Bos
+TBC2853LPL48A,Pessac - Lot. Les Platanes
+TBC2854EUS48R,Pessac - André Eustache
+TBC2855LPL48R,Pessac - Lot. Les Platanes
+TBC2856MEN48R,Pessac - Les Menhirs
+TBC285CAR21A,Villenave-d'Ornon - Les Iris
+TBC2863CAR48A,Pessac - Cardinal
+TBC2864SMA48A,Pessac - Pessac Gare (station Tram)
+TBC2865MON44R,Pessac - Monge
+TBC2868EAR42A,Gradignan - Ecole d'Architecture
+TBC2869PES92A,Ambes - Escarraguel (rue Cézanne)
+TBC286BER51R,Bordeaux - Docteur Bert
+TBC2870ARN80A,Pessac - Hôpital Xavier Arnozan
+TBC2871ALO80R,Pessac - Alouette
+TBC2872LEP80R,Pessac - L.E.P de Gerde
+TBC2873MAG80A,Pessac - Magellan
+TBC2874POI21R,Villenave-d'Ornon - Poincaré
+TBC2875MAG80R,Pessac - Magellan
+TBC2877RES47A,Pessac - Résistance
+TBC2878POI21A,Villenave-d'Ornon - Poincaré
+TBC2879BAL47R,Pessac - Les Bois de l'Alouette
+TBC2880SER44R,Pessac - Serpent
+TBC2881ALO80A,Pessac - Alouette
+TBC2882LYA24A,Pessac - Lyautey
+TBC2883RES47R,Pessac - Résistance
+TBC2885PAU21R,Villenave-d'Ornon - Pauge
+TBC2886COU21R,Villenave-d'Ornon - Couhins
+TBC2887MOU55R,Eysines - Moussa
+TBC2888VBOU02,Villenave-d'Ornon - Villenave Bourg
+TBC288VER31R,Bordeaux - Vergne
+TBC2890AMO34A,Bègles - Stade André Moga
+TBC2894CMO41A,Gradignan - Croix de Monjous
+TBC2895GAL41R,Bordeaux - Maréchal Gallieni
+TBC2897AUR21A,Villenave-d'Ornon - Auriol
+TBC2898BME56A,Le Bouscat - Barrière du Médoc
+TBC2899RIG21A,Villenave-d'Ornon - Rigaillou
+TBC2900ESC82R,Saint-Médard-en-Jalles - Les Escarrets
+TBC2901FIN20R,Villenave-d'Ornon - Les Finances
+TBC2902ESC91A,Ambes - Escarraguel (Pl. Escarraguel)
+TBC2904CALI9R,Bordeaux - Calixte Camelle
+TBC2905BEN34A,Talence - Bénédigues
+TBC2906PFR52A,Bordeaux - Pins-Francs
+TBC2907EGH52R,Le Haillan - Eglise du Haillan
+TBC2908CVE52A,Bordeaux - Cage Verte
+TBC2909LEP80A,Pessac - L.E.P de Gerde
+TBC290DRD93A,Ambares-et-Lagrave - Durandeau
+TBC2910MAI36A,Eysines - 8 Mai 1945
+TBC2912HON55R,Le Taillan-Médoc - Hontane
+TBC2915BRO56A,Le Bouscat - Brossolette
+TBC2916BRO56R,Le Bouscat - Brossolette
+TBC2917POI56R,Le Bouscat - Poincaré
+TBC2918LAV56R,Le Bouscat - Lavigne
+TBC2919LAV56A,Le Bouscat - Lavigne
+TBC291CAZ49R,Mérignac - Cazanove
+TBC2920DES56A,Le Bouscat - Desmaison
+TBC2921DES56R,Le Bouscat - Desmaison
+TBC2922JJA56A,Le Bouscat - Jean Jaurès
+TBC2923MBO56R,Le Bouscat - Mairie du Bouscat
+TBC2924ANF56A,Le Bouscat - Anatole France
+TBC2925ANF56R,Le Bouscat - Anatole France
+TBC2926DEL76R,Le Bouscat - Hôpital Suburbain
+TBC2928SGE56R,Le Bouscat - Ste Germaine
+TBC2929GGA36R,Bruges - Général de Gaulle
+TBC292ETA06R,Floirac - Etangs
+TBC2930GGA36A,Le Bouscat - Général de Gaulle
+TBC2931TGA56R,Eysines - Tour de Gassies
+TBC2932GCA56R,Eysines - Le Grand Caillou
+TBC2933TLA52A,Eysines - Toulouse Lautrec
+TBC2934TLA52R,Eysines - Toulouse Lautrec
+TBC2935ACA52R,Eysines - Collège Albert Camus
+TBC2936ACA52A,Eysines - Collège Albert Camus
+TBC2937GGA55A,Eysines - Général de Gaulle
+TBC2938GGA55R,Eysines - Général de Gaulle
+TBC2939EYB55A,Eysines - Cimetière d'Eysines
+TBC293RAD46R,Pessac - Radio
+TBC2940BOY55R,Le Haillan - La Boyauderie
+TBC2942ABO37R,Le Taillan-Médoc - Avenue de la Boétie
+TBC2943TCI37A,Le Taillan-Médoc - Taillan Cimetière
+TBC2944BOR37R,Le Taillan-Médoc - Bois des Ormes
+TBC2945AEROGA,Mérignac - Aéroport
+TBC2946MOL37A,Le Taillan-Médoc - Molière
+TBC2947TABOET,Le Taillan-Médoc - La Boétie
+TBC2948BUR35A,Mérignac - Le Burck
+TBC2949MSM82A,Saint-Médard-en-Jalles - Mairie de St Médard
+TBC294THS41R,Talence - Thouars
+TBC2950LIB52R,Eysines - Libération
+TBC2951AVT52A,Eysines - Avenue du Taillan
+TBC2952AVT52R,Eysines - Avenue du Taillan
+TBC2953CIM52R,Eysines - Cimetière d'Eysines
+TBC2954VGE56A,Eysines - Le Vigean (Centre Commercial)
+TBC2955VGE56R,Eysines - Le Vigean (Centre Commercial)
+TBC2956RPA56A,Eysines - Route de Pauillac
+TBC2957RPA56R,Eysines - Route de Pauillac
+TBC2958CPH56A,Eysines - Cap de Haut
+TBC2959CPH56R,Eysines - Cap de Haut
+TBC2960HBL56R,Eysines - Horizons bleus
+TBC2961HBL56A,Eysines - Horizons Bleus
+TBC2962FLU56R,Eysines - Frères Lumière (Rte de Pauillac)
+TBC2963JAL56A,Blanquefort - Les Jalles
+TBC2964PMA56R,Blanquefort - Parc de Majolan
+TBC2965PER53R,Saint-Médard-en-Jalles - Pericot
+TBC2966MQU56R,Blanquefort - Montesquieu
+TBC2967GAM37R,Blanquefort - Ferry
+TBC296PGN75A,Mérignac - Pagneau
+TBC2972CAU02R,Bordeaux - Rue de Caudéran
+TBC2973BSM51A,Bordeaux - Barrière Saint-Médard
+TBC297414J51R,Bordeaux - 14 Juillet
+TBC2975LBR03A,Bordeaux - Grand-Lebrun
+TBC2976LBR02R,Bordeaux - Grand-Lebrun
+TBC2977STA52R,Bordeaux - Saint-Amand
+TBC2978PFR52R,Bordeaux - Pins-Francs
+TBC2979PCA52A,Bordeaux - Parc d'échange du Caillou
+TBC297LBRO9R,Bordeaux - Lewis-Brown
+TBC2980PCA52R,Bordeaux - Parc d'échange du Caillou
+TBC2981RJJ52A,Eysines - Rue Jean Jaurès
+TBC2982GLO52R,Mérignac - Le Grand Louis
+TBC2983MAI36R,Eysines - 8 Mai 1945
+TBC2986EYSINE,Eysines - Eysines Centre
+TBC2987COU52A,Eysines - Coubertin
+TBC2988COU52R,Mérignac - Coubertin
+TBC2989ANT52R,Eysines - Antoune
+TBC2990TIL52A,Eysines - Tilleuls
+TBC2991GUY52R,Eysines - Guynemer
+TBC2993SNP53A,Saint-Médard-en-Jalles - S.N.P.E.
+TBC2994RRO52A,Le Haillan - Résidence Rostand
+TBC2995RRO52R,Le Haillan - Résidence Rostand
+TBC2997MFO08A,Cenon - Maréchal Foch
+TBC2998CEZ52R,Le Haillan - Collège Emile Zola
+TBC2999EGH52A,Le Haillan - Eglise du Haillan
+TBC299MON50A,Bordeaux - Place Mondésir
+TBC2BRI21A,Villenave-d'Ornon - Brignon
+TBC3000CLE52R,Le Haillan - Clemenceau
+TBC3001RME52R,Le Haillan - Rue du Médoc
+TBC3002HAILLA,Le Haillan - Parc Ste Christine
+TBC3003PCO31R,Bordeaux - Palais des Congrès
+TBC3004CCO31R,Bordeaux - Centre Commercial
+TBC3005JOU31R,Bordeaux - 40 Journaux
+TBC3006LAU31R,Bordeaux - Les Aubiers
+TBC3007RAV38R,Le Bouscat - Ravezies (Gare St Louis)
+TBC300GMA12A,Bordeaux - Hôpital Pellegrin (Grand Maurian)
+TBC3015CIM32R,Lormont - Cimetière de Lormont
+TBC3016CBEAU,Cenon - Beausite
+TBC3017MFO08R,Cenon - Maréchal Foch
+TBC3025PBO51A,Bordeaux - Parc Bordelais
+TBC3026CVE52R,Bordeaux - Cage Verte
+TBC3027RES53A,Le Haillan - Résidence Chanteclerc
+TBC3028ENS34A,Pessac - Enseirb
+TBC3029ENS34R,Pessac - Enseirb
+TBC3030RST53A,Le Haillan - Rue du Stade
+TBC3031RME53R,Le Haillan - Rue du Médoc
+TBC3032CHE53R,Saint-Médard-en-Jalles - Herriot (Centre Commercial)
+TBC3033CHE53A,Saint-Médard-en-Jalles - Herriot (Centre Commercial)
+TBC3034LMA53A,Saint-Médard-en-Jalles - Lamartine
+TBC3035CGA82R,Saint-Médard-en-Jalles - Château Gajac
+TBC3036CGA82A,Saint-Médard-en-Jalles - Château Gajac
+TBC3037GAD03R,Saint-Médard-en-Jalles - Gadret
+TBC3038GAD03A,Saint-Médard-en-Jalles - Gadret
+TBC3039MGA82R,Saint-Médard-en-Jalles - Moulin de Gajac
+TBC303RPA62A,Cenon - Rue de la Paix
+TBC3040MGA82A,Saint-Médard-en-Jalles - Moulin de Gajac
+TBC3041RCO82R,Saint-Médard-en-Jalles - Route de Corbiac
+TBC3042RCO82A,Saint-Médard-en-Jalles - Route de Corbiac
+TBC3043PRE82A,Saint-Médard-en-Jalles - République
+TBC3044PRE82R,Saint-Médard-en-Jalles - République
+TBC3045EGS53R,Saint-Médard-en-Jalles - Eglise de St Médard
+TBC3046EGS53A,Saint-Médard-en-Jalles - Eglise de St Médard
+TBC3047CLU53A,Saint-Médard-en-Jalles - Le Club des Pins
+TBC3048CLU53R,Saint-Médard-en-Jalles - Le Club des Pins
+TBC3049COL53R,Saint-Médard-en-Jalles - Collège d'Hastignan (devant le Collège)
+TBC304RAVE37,Bordeaux - Place Ravezies
+TBC3050COL53A,Saint-Médard-en-Jalles - Collège d'Hastignan (face au Collège)
+TBC3051AQU53R,Saint-Médard-en-Jalles - Espace Aquatique (devant la Piscine)
+TBC3052AQU53A,Saint-Médard-en-Jalles - Espace Aquatique (face à la Piscine)
+TBC3053VCE53R,Saint-Médard-en-Jalles - Village de Cerillan
+TBC3054VCE53A,Saint-Médard-en-Jalles - Village de Cerillan
+TBC3056VIS53R,Saint-Médard-en-Jalles - Village d'Issac
+TBC3057VIS53A,Saint-Médard-en-Jalles - Village d'Issac
+TBC3058MAL53R,Saint-Médard-en-Jalles - Malterre
+TBC3059MSM82R,Saint-Médard-en-Jalles - Mairie de St Médard
+TBC305DEL91A,Ambes - Delacroix
+TBC3061GAD30A,Saint-Médard-en-Jalles - Gadret
+TBC3062GAD30R,Saint-Médard-en-Jalles - Gadret
+TBC3063TISSA,Saint-Médard-en-Jalles - Issac
+TBC3066MSA53A,Saint-Aubin-de-Médoc - Eglise de Saint-Aubin
+TBC3068JBO53A,Saint-Aubin-de-Médoc - Joli Bois
+TBC3069LAF40R,Talence - Lafontaine
+TBC3070TOU53A,Saint-Aubin-de-Médoc - Pas de la Tourte
+TBC3071RPI53R,Saint-Aubin-de-Médoc - Route de Picot
+TBC3072RPI53A,Saint-Aubin-de-Médoc - Route de Picot
+TBC3073AUB03A,Saint-Aubin-de-Médoc - Saint-Aubin Cimetière
+TBC3074PMA53R,Le Haillan - Place du Mayne
+TBC3075ANO53A,Saint-Aubin-de-Médoc - Allée du Nord
+TBC3076MAE53R,Saint-Aubin-de-Médoc - Mayne d'Estève
+TBC3077TPINS,Saint-Aubin-de-Médoc - Pinsoles
+TBC3078PMA53A,Le Haillan - Place du Mayne
+TBC3079BIC53R,Saint-Aubin-de-Médoc - Le Bichou
+TBC3080ANO53R,Saint-Aubin-de-Médoc - Allée du Nord
+TBC3081RJA53R,Le Haillan - Rue Jean Jaurès
+TBC3082MAE53A,Saint-Aubin-de-Médoc - Mayne d'Estève
+TBC3083RJA53A,Le Haillan - Rue Jean Jaurès
+TBC3085BEC53A,Saint-Aubin-de-Médoc - Allée des Bécasses
+TBC3086BIC53A,Saint-Aubin-de-Médoc - Le Bichou
+TBC3087BEC53R,Saint-Aubin-de-Médoc - Allée des Bécasses
+TBC3088MIN71A,Saint-Médard-en-Jalles - Clairière de Mingot
+TBC3089GOU82A,Saint-Médard-en-Jalles - Goujon
+TBC3090ACA82A,Saint-Médard-en-Jalles - Avenue de Capeyron
+TBC3091ACA82R,Saint-Médard-en-Jalles - Avenue de Capeyron
+TBC3092VMA53R,Saint-Médard-en-Jalles - Village de Magudas
+TBC3094AVI53A,Saint-Médard-en-Jalles - Allée Vieille
+TBC3095MOC53R,Saint-Médard-en-Jalles - Moulin de Caupian
+TBC3097CAP36R,Mérignac - Capeyron
+TBC3098TAN02R,Bègles - Tandonnet
+TBC309MOZ45A,Pessac - Mozart
+TBC30BOB41R,Gradignan - Bobet
+TBC3101LFI40A,Talence - Lafitte
+TBC3104EYQ35R,Mérignac - Collège Les Eyquems
+TBC310611N75A,Mérignac - Place du 11 Novembre
+TBC3107RBE75R,Mérignac - Résidence Beausite
+TBC3108RBE75A,Mérignac - Résidence Beausite
+TBC310BER01A,Bordeaux - Berthelot
+TBC3111TRU36A,Mérignac - Avenue du Truc
+TBC3112PRA36R,Mérignac - Allée de la Prairie
+TBC3113JBL36A,Mérignac - Jean Blanc
+TBC3114JBL36R,Mérignac - Jean Blanc
+TBC3115LAF40A,Talence - Lafontaine
+TBC3116AVE36R,Bruges - Avenue de l'Europe
+TBC3117AVE36A,Bruges - Avenue de l'Europe
+TBC3118RED36A,Bruges - Rue du Réduit
+TBC3119DUC36R,Bruges - Ducasse
+TBC3120DUC36A,Bruges - Ducasse
+TBC3121ECO36R,Bruges - Rue des Ecoles
+TBC3122CNO36A,Bruges - Cimetière Nord (devant le Cimetière)
+TBC3123LFI40R,Talence - Lafitte
+TBC3124URS36A,Bruges - URSSAF
+TBC3125CLA36R,Bruges - Claudeville
+TBC312MOR82A,Le Haillan - La Morandière
+TBC3130EGA12A,Bordeaux - Eglise Saint-Augustin
+TBC3131GRA12A,Mérignac - La Grappe d'Or
+TBC3133HAK12R,Bordeaux - Bir Hakeim
+TBC3134GAL12R,Bordeaux - Maréchal Gallieni
+TBC3137JJB11A,Bordeaux - Curie
+TBC3138DAG11R,Bordeaux - Daguin
+TBC3139BBE11A,Bordeaux - Barrière de Bègles
+TBC3140VAU43A,Bordeaux - Vaucouleurs
+TBC3141BTO22A,Bordeaux - Barrière de Toulouse (Bd Albert 1er)
+TBC3143CAR35A,Pessac - Cardinal
+TBC3144SOC80R,Pessac - Socrate
+TBC3146NOE48R,Pessac - Collège Noès
+TBC3149VEN67A,Artigues-pres-Bordeaux - Vendangeurs
+TBC3151BGO15A,Bordeaux - Boulevard Godard
+TBC3152BGO15R,Bordeaux - Boulevard Godard
+TBC3153TRE15R,Bordeaux - Trébod
+TBC3157PCA51A,Bordeaux - Poste de Caudéran
+TBC3158EGC51A,Bordeaux - Eglise de Caudéran
+TBC3159STE51A,Bordeaux - Stade Stéhélin
+TBC315EGL58A,Parempuyre - Place de l'Eglise
+TBC3160BER51A,Bordeaux - Docteur Bert
+TBC3161MRT51A,Mérignac - Martin
+TBC3163PBA51A,Mérignac - Henri Barbusse
+TBC3164STR51A,Mérignac - Strélitzias
+TBC3167CAR51R,Bordeaux - Carton
+TBC3168STE51R,Bordeaux - Stade Stéhélin
+TBC3169EGC51R,Bordeaux - Eglise de Caudéran
+TBC316FSO47R,Bordeaux - François de Sourdis
+TBC3170DAU51R,Bordeaux - Dauphine
+TBC3171PCA51R,Bordeaux - Poste de Caudéran
+TBC3173CGO15A,Bordeaux - Camille Godard
+TBC3177CGO15R,Bordeaux - Camille Godard
+TBC3179SEG10A,Bordeaux - Ségur
+TBC317LEN05A,Bordeaux - Collège L. Lenoir
+TBC3182LAF22A,Bordeaux - Lafontaine
+TBC3183FEL22A,Bègles - Fellonneau
+TBC3184THO22A,Bègles - Cité Thorez
+TBC3186CFRANC,Bègles - César Franck (rue Rameau)
+TBC3187PNERU,Bègles - Collège Pablo Neruda
+TBC3188THO22R,Bègles - Cité Thorez
+TBC3189SAL22R,Bègles - Salengro
+TBC318BILL9A,Bordeaux - Billaudel (rue Malbec)
+TBC3190KYR22R,Bordeaux - Kyrié
+TBC3191CAP22R,Bordeaux - Capucins
+TBC3193DUH22R,Bègles - Duhamel
+TBC3194DO323A,Bègles - Le Dorat 1-3
+TBC3196MRE23R,Bègles - Martyrs de la Résistance
+TBC3197LIB23A,Bègles - Liberté
+TBC3198CRO23R,Bègles - Croizat
+TBC3199EGB23A,Bègles - Eglise de Bègles
+TBC319CAP16A,Bordeaux - Capucins
+TBC31GRO53R,Saint-Médard-en-Jalles - Gare Routière (av. du Gal de Gaulle)
+TBC3200MBE23R,Bègles - Mairie de Bègles
+TBC3201DO223A,Bègles - Le Dorat 2
+TBC3202KOS23A,Bègles - Kosma
+TBC3203DO323R,Bègles - Le Dorat 1-3
+TBC3204MRE23A,Bègles - Martyrs de la Résistance
+TBC3205PEL23R,Bordeaux - Pelleport
+TBC3206CAP23R,Bordeaux - Capucins
+TBC3207FSO48A,Bordeaux - François de Sourdis
+TBC320SER44A,Pessac - Serpent
+TBC3211PNI48A,Mérignac - Passage à niveau
+TBC3212AGA48R,Mérignac - Avenue Gambetta
+TBC3213AGA48A,Mérignac - Avenue Gambetta
+TBC3214BRE48R,Mérignac - Brémontier
+TBC3215ABR48R,Mérignac - Aristide Briand
+TBC3216GBA04R,Bordeaux - Galerie des Beaux Arts
+TBC3217ROO40A,Talence - Pont de Cauderès
+TBC3218ROO40R,Talence - Pont de Cauderès
+TBC3219DUP40A,Talence - Duplantier
+TBC321ROU53A,Saint-Médard-en-Jalles - Roux
+TBC3220CSZ83A,Talence - Chemin de Suzon
+TBC3223MON40A,Talence - Montherlant
+TBC3224THO41R,Talence - Piscine de Thouars
+TBC3225THO41A,Talence - Piscine de Thouars
+TBC3226CTH41R,Talence - Château de Thouars
+TBC3227CTH41A,Talence - Château de Thouars
+TBC3228CMO41R,Gradignan - Croix de Monjous
+TBC3229MIG41R,Gradignan - Mignonne
+TBC322PRI47A,Bordeaux - Privat
+TBC3230MAU80A,Gradignan - Collège A. Mauguin
+TBC3231MAU80R,Gradignan - Collège A. Mauguin
+TBC3232MON80A,Gradignan - Montfort
+TBC3233AIR80R,Gradignan - Les Airelles
+TBC3234STE80A,Gradignan - Les Stellaires
+TBC3235STE80R,Gradignan - Les Stellaires
+TBC3236CAM80A,Gradignan - Les Campanules
+TBC3237CAM80R,Gradignan - Les Campanules
+TBC3238BAR80A,Gradignan - Barthès
+TBC3239BRU80R,Gradignan - Les Brunelles
+TBC323SEV40A,Talence - Sévène
+TBC3240BRU80A,Gradignan - Les Brunelles
+TBC3241CAZ41R,Gradignan - Moulin de Cazeaux
+TBC3242COA76A,Le Bouscat - Collège Ausone
+TBC3243DRO34R,Pessac - Facultés Droit et Lettres
+TBC3244GAZ38R,Bordeaux - Gaz de Bordeaux
+TBC3247ORN80A,Gradignan - Stade Ornon
+TBC3250GAU01R,Bordeaux - Gaussen
+TBC3251VI643A,Gradignan - Village 6 IUT (côté Resto U)
+TBC3252NPE35A,Pessac - Nancel Pénard
+TBC3253JPU90R,Bassens - Jardin Public
+TBC3256SLE58R,Blanquefort - Solesse
+TBC3257IMH31R,Bordeaux - Imhotep
+TBC3259LMA92R,Ambes - Le Mayne
+TBC325EC982A,Eysines - Echangeur n°9
+TBC3260STS92R,Ambares-et-Lagrave - Saint-Sever
+TBC3264LAB01A,Bordeaux - Labarde
+TBC3265DEH77R,Blanquefort - Déhèz
+TBC3266SLE58A,Blanquefort - Solesse
+TBC326AFP84R,Pessac - AFPA Pessac
+TBC3270TGARE,Saint-Médard-en-Jalles - Gare Routière
+TBC3271NEN63R,Artigues-pres-Bordeaux - Nénuphars
+TBC3272ROU71R,Saint-Médard-en-Jalles - Rousseau
+TBC3273DOR05A,Bordeaux - Dorgelès
+TBC3274RBL07R,Bouliac - La Route Bleue
+TBC3276ZAH80R,Gradignan - Z.A Haut-Vigneau
+TBC3277CLA36A,Bruges - Claudeville
+TBC3278GAM51R,Bordeaux - Gambetta
+TBC327JAL56R,Eysines - Les Jalles
+TBC3280MBR02R,Bordeaux - Marché de Brienne
+TBC3281GPO02R,Bègles - Parc d'Activité du Grand Port
+TBC3283RAY06A,Floirac - Collège G.Rayet
+TBC3285NEN63A,Artigues-pres-Bordeaux - Nénuphars
+TBC3286CRO34A,Bègles - Croizat
+TBC3289MBE02A,Bègles - Mairie de Bègles
+TBC328MER53R,Le Haillan - Mermoz
+TBC3291AMO34R,Bègles - Stade André Moga
+TBC3294V134A,Talence - Village 1
+TBC3295PAL62A,Lormont - Palombes
+TBC3296COU91A,Ambes - Docteur Couaillac
+TBC3297ABO37A,Le Taillan-Médoc - Avenue de la Boétie
+TBC3298VIN03R,Lormont - Professeur Vincent
+TBC32ROU49R,Mérignac - Château Rouquey
+TBC3300BRU03A,Lormont - Brutails
+TBC3302TCI37R,Le Taillan-Médoc - Taillan Cimetière
+TBC3303MAI32R,Lormont - Mairie de Lormont
+TBC3305JJB34A,Bègles - Capelle
+TBC3307LIB36A,Mérignac - Libération
+TBC3309BAN03R,Bordeaux - Banlin
+TBC330TES49R,Mérignac - Tournesol
+TBC3310GEOV9A,Bordeaux - Boulevard George V
+TBC3312MER53A,Le Haillan - Mermoz
+TBC3313VAN95A,Carbon-Blanc - Vignau Anglade (Clos Favol)
+TBC3314BAN03A,Bordeaux - Banlin
+TBC3315CRO72R,Mérignac - Croustet
+TBC3317LOP16A,Bordeaux - Place Lopès
+TBC3318FON72R,Mérignac - Foncastel
+TBC3319GLO36A,Eysines - Le Grand Louis
+TBC331BEC43A,Pessac - Le B.E.C
+TBC3322CRO23A,Bègles - Croizat
+TBC3323VI643R,Gradignan - Village 6 IUT
+TBC3324MHA52R,Le Haillan - Mairie du Haillan
+TBC3325LIB36R,Mérignac - Libération
+TBC3326ARC66A,Lormont - L'Archevêque
+TBC3329LAVI3R,Bordeaux - Lavigne
+TBC332BOZ06R,Floirac - Berlioz
+TBC3330JCB92R,Carbon-Blanc - Bourdieu
+TBC3331ECO82R,Saint-Médard-en-Jalles - Corbiac
+TBC3334LAB76R,Bordeaux - Labarde
+TBC3336ATA36A,Eysines - Avenue du Taillan
+TBC3338TOCTO,Pessac - Toctoucau
+TBC333SNC02R,Bordeaux - Cité SNCF
+TBC3341TCHA05,Villenave-d'Ornon - Piscine Chambéry
+TBC3342MAL80,Gradignan - Malartic
+TBC3346ECO82A,Saint-Médard-en-Jalles - Corbiac
+TBC3347LYC30A,Mérignac - Lycées de Mérignac
+TBC3348LAVI3A,Bordeaux - Lavigne
+TBC3349LABRO,Bègles - Alexis Labro
+TBC334LES56A,Le Bouscat - Les Ecus
+TBC3350HON20A,Villenave-d'Ornon - La Hontan
+TBC3351SKA21A,Villenave-d'Ornon - Le Skating
+TBC3352ORP20R,Bègles - Orphelins
+TBC3353ANP23A,Bègles - Pôle emploi Bègles
+TBC3354ORP20A,Villenave-d'Ornon - Orphelins
+TBC3355KOS22R,Bègles - Kosma
+TBC3356CIM71R,Saint-Médard-en-Jalles - Cimetière de Saint-Médard
+TBC3357LES53R,Saint-Médard-en-Jalles - Lestage
+TBC3358LAT58R,Blanquefort - De Lattre de Tassigny
+TBC3359ANP23R,Bègles - Pôle emploi Bègles
+TBC335TOU10A,Bordeaux - Tourny
+TBC3369GBE22A,Bègles - Gare de Bègles
+TBC3370ALL22R,Bègles - Allende
+TBC337BLA27R,Le Bouscat - Blanqui
+TBC3397LAG78A,Blanquefort - Salle de Breillan
+TBC3398LAG78R,Blanquefort - Salle de Breillan
+TBC339ZIC46R,Cestas - Z.I de Cestas
+TBC3401MON78A,Blanquefort - Montaigne
+TBC3402MON78R,Blanquefort - Montaigne
+TBC3408JAC78A,Blanquefort - Jacques
+TBC3409JAC78R,Blanquefort - Jacques
+TBC3410BRE78A,Blanquefort - Stade Breillan
+TBC3411BRE78R,Blanquefort - Stade Breillan
+TBC3415PPUY79,Parempuyre - Libération
+TBC3416FOR58A,Blanquefort - Ford
+TBC3419FOR58R,Blanquefort - Ford
+TBC341STA55R,Le Taillan-Médoc - Stade Municipal
+TBC3420LYC58A,Blanquefort - Lycée du Bâtiment
+TBC3421LYC58R,Blanquefort - Lycée du Bâtiment
+TBC342VER54A,Bordeaux - Verdun
+TBC3432MAI91A,Saint-Louis-de-Montferrand - Mairie de St Louis de Montferrand
+TBC3435FLA46R,Pessac - Flandres
+TBC3436CAN46R,Pessac - Canaris
+TBC3439EUR43R,Gradignan - Eurofac
+TBC3440EUR43A,Gradignan - Eurofac
+TBC344PRA75R,Mérignac - Pradas
+TBC3453MAL06R,Cenon - Mallarmé
+TBC3454MAL06A,Cenon - Mallarmé
+TBC3455ARI06R,Cenon - Aristide Briand
+TBC3456VIL06R,Cenon - Villon
+TBC3457SCH06A,Cenon - Schweitzer
+TBC3458SCH06R,Cenon - Schweitzer
+TBC345SCR53A,Le Haillan - Ste Christine
+TBC3465CAS05R,Cenon - Cassagne
+TBC3466CAS05A,Cenon - Cassagne
+TBC346MET73R,Mérignac - Météo France
+TBC3475CBA92A,Ambes - Célibatorium
+TBC3476PUB92A,Ambes - Ambès Eglise
+TBC3477PUB92R,Ambes - Ambès Eglise
+TBC3479PAI20A,Villenave-d'Ornon - Pont de la Maye (vers Rocade)
+TBC347VIA07A,Bouliac - Vialle
+TBC348RJJ52R,Eysines - Rue Jean Jaurès
+TBC349TRU51A,Mérignac - Truffaut
+TBC34P2V32R,Lormont - Place des 2 Villes (vers Buttinière)
+TBC3500BEL51A,Bordeaux - Bel-Orme
+TBC3501VIC20R,Bordeaux - Victoire (Somme)
+TBC3508PET41A,Talence - Pelletan
+TBC3509PET41R,Talence - Pelletan
+TBC350COU56A,Le Bouscat - Courbet
+TBC3510MAI38R,Lormont - Mairie de Lormont
+TBC3520LAM40A,Talence - Lamartine
+TBC3521PGA43R,Gradignan - Prince de Galles
+TBC3522PGA43A,Gradignan - Prince de Galles
+TBC3526BX211A,Bordeaux - Bordeaux 2
+TBC3527PEL41A,Bordeaux - Bordeaux 2
+TBC3529GAL41A,Bordeaux - Maréchal Gallieni
+TBC3530AND23A,Bordeaux - Hôpital Saint-André
+TBC353POU47R,Pessac - Le Poujeau
+TBC3540SAL23R,Bordeaux - Salinières
+TBC3541CAT23A,Bordeaux - Sainte-Catherine
+TBC3542CAT23R,Bordeaux - Sainte-Catherine
+TBC3545STALI3,Bordeaux - Stalingrad (Arrêt de descente)
+TBC3546VIC20A,Bordeaux - Victoire (Somme)
+TBC3547REP16A,Bordeaux - République
+TBC3548REP16R,Bordeaux - République
+TBC3549VIC16A,Bordeaux - Victoire (A. Briand)
+TBC354CHE16R,Bordeaux - Chevalier
+TBC3550VIC22A,Bordeaux - Victoire (Marne)
+TBC3552P2V32A,Cenon - Place des 2 Villes (vers Rocade)
+TBC3553ANT43R,Pessac - Esplanade des Antilles
+TBC3554ANT43A,Pessac - Esplanade des Antilles
+TBC3558TOU51R,Bordeaux - Tourny
+TBC3559JPU51R,Bordeaux - Jardin Public
+TBC355TRO55R,Le Taillan-Médoc - Terre Rouge
+TBC3560TOUR51,Bordeaux - Tourny
+TBC3561MFL08R,Floirac - Mairie de Floirac
+TBC3568BOU10R,Bordeaux - Caserne Boudet
+TBC356MIG41A,Gradignan - Mignonne
+TBC3572MEYSI,Eysines - Mairie d'Eysines
+TBC3577ART41R,Talence - Arts & Métiers
+TBC3578ART41A,Talence - Arts & Métiers
+TBC3579FBU02A,Bordeaux - Ferdinand Buisson
+TBC3581LUCA80,Mérignac - Domaine de Lucatet
+TBC3583BIB10R,Bordeaux - Hôtel de police
+TBC3585PAL02A,Bordeaux - Paludate
+TBC358LAM90A,Bassens - Lamartine
+TBC3605TSTA27,Bordeaux - Stalingrad (arrêt de montée)
+TBC3606BUT38,Lormont - Buttinière
+TBC3608LAT05R,Bordeaux - Latresne
+TBC3609LEN05R,Bordeaux - Collège L. Lenoir
+TBC360LAJ22A,Bordeaux - Lajarte
+TBC3610FMA05R,Bordeaux - Lycée F. Mauriac
+TBC3611DUB05A,Floirac - Dubedout
+TBC3612DUB05R,Cenon - Dubedout
+TBC361FRA34R,Talence - Franklin
+TBC3620PLA08A,Floirac - Plateaux
+TBC3621PLA08R,Floirac - Plateaux
+TBC3622PIN08A,Floirac - Pinel
+TBC3623PIN08R,Floirac - Pinel
+TBC3624CEB62A,Cenon - Beausite
+TBC3625CEB62R,Cenon - Beausite
+TBC3626JJA62A,Cenon - Jean Jaurès
+TBC3627JJA62R,Cenon - Jean Jaurès
+TBC3631VIG64A,Artigues-pres-Bordeaux - La Vigne
+TBC3632VIG64R,Artigues-pres-Bordeaux - La Vigne
+TBC3634BUTI06,Lormont - Buttinière
+TBC3636LES67A,Artigues-pres-Bordeaux - Domaine de Lestrille
+TBC3638LAF67A,Artigues-pres-Bordeaux - La Ferme
+TBC363CBL72R,Mérignac - Chardons Bleus
+TBC3647MUN51R,Bordeaux - Quinconces Munich (arrêt de descente)
+TBC3648QUI51A,Bordeaux - Quinconces Orléans (arrêt de montée)
+TBC3649GIC38A,Bordeaux - GIC FO
+TBC364PER16R,Bordeaux - Périnot
+TBC3650GIC38R,Bordeaux - GIC FO
+TBC3652CAF38A,Bordeaux - Caisse des Dépôts
+TBC3653CAF38R,Bordeaux - Caisse des Dépôts
+TBC3654VER38R,Bordeaux - Vergne
+TBC3656CLE90A,Bassens - Clémentel
+TBC3657CLE90R,Bassens - Clémentel
+TBC3658COU90R,Bassens - Coutenceau
+TBC3659COU90A,Bassens - Coutenceau
+TBC365BER82A,Le Haillan - Berles
+TBC3661COT90R,Bassens - Les Coteaux
+TBC3662FON94R,Carbon-Blanc - La Fontaine
+TBC3663JFE95R,Carbon-Blanc - Jules Ferry
+TBC3664JFE95A,Carbon-Blanc - Jules Ferry
+TBC3665FUT95A,Carbon-Blanc - Futaies
+TBC3666CCB92R,Carbon-Blanc - Collège de Carbon-Blanc
+TBC3667CCB92A,Carbon-Blanc - Collège de Carbon-Blanc
+TBC3668TER95R,Bassens - Tertre
+TBC3669TER95A,Carbon-Blanc - Tertre
+TBC3670BEA95A,Carbon-Blanc - Beauval
+TBC3671TRI95R,Carbon-Blanc - Triviaux
+TBC3672TRI95A,Carbon-Blanc - Triviaux
+TBC3673MIT92R,Carbon-Blanc - Mitterrand
+TBC3674MIT92A,Carbon-Blanc - Mitterrand
+TBC3675CHS92R,Carbon-Blanc - Chemin du Sourd
+TBC3678BRE52R,Eysines - Breteil
+TBC3679CIM52A,Eysines - Cimetière d'Eysines
+TBC367FRA51R,Bordeaux - Fragonard
+TBC3680LYP56A,Eysines - Lycée Charles Peguy
+TBC368PCI36A,Mérignac - Plein Ciel
+TBC369LEB56R,Le Bouscat - Léon Blum
+TBC36RUS06R,Floirac - Russel
+TBC370MAY20A,Villenave-d'Ornon - Pont de la Maye Poste
+TBC371PXO21R,Talence - Peixotto
+TBC372TIL52R,Eysines - Tilleuls
+TBC373LIC46R,Cestas - Lou Licot
+TBC374LAG12A,Mérignac - La Glacière
+TBC375BLE51A,Bordeaux - Bleuets
+TBC376RUE52R,Le Haillan - Ruet
+TBC3779PVI57A,Bruges - Pont du Vigean
+TBC3780PVI57R,Bruges - Pont du Vigean
+TBC3781GAS57A,Bruges - Centre Tour de Gassies
+TBC3786DUP07A,Bordeaux - Dupas
+TBC3787MCR62A,Bordeaux - Monte-Cristo
+TBC3788QDE07R,Bordeaux - Quai Deschamps (vers Pl. Stalingrad)
+TBC3789MCR07R,Bordeaux - Monte-Cristo
+TBC378BOU31A,Bordeaux - Les Aubiers
+TBC3790DEL76A,Le Bouscat - Hôpital Suburbain
+TBC3791CAP76R,Le Bouscat - Capelle
+TBC3792ALL40A,Talence - Allende
+TBC3793ALL40R,Talence - Allende
+TBC3794THO21R,Villenave-d'Ornon - Thouars
+TBC3797PEI08A,Talence - Peixotto
+TBC3799CRE40R,Talence - Rond-Point Crespy
+TBC379VER07A,Bouliac - Vergne
+TBC3800CRE40A,Talence - Rond-Point Crespy
+TBC3801VIC16R,Bordeaux - Victoire (A. Briand)
+TBC3802VIC34,Bordeaux - Victoire (Pasteur)
+TBC3803UNIT43,Pessac - Unitec
+TBC3807LES43A,Gradignan - Lestage
+TBC3808LES43R,Gradignan - Lestage
+TBC3809ERM43A,Gradignan - L'Ermitage
+TBC380TAB66R,Lormont - Abel Gance
+TBC3810ERM43R,Gradignan - L'Ermitage
+TBC3819PEI42A,Talence - Peixotto (station Tram)
+TBC381GOU82R,Saint-Médard-en-Jalles - Goujon
+TBC3820CGR02A,Bègles - Domaine de la Plantation
+TBC3821CGR02R,Bègles - Domaine de la Plantation
+TBC3822GAL02A,Villenave-d'Ornon - Galgon
+TBC3823PJUST,Bordeaux - Palais de Justice
+TBC3824PBO23R,Bordeaux - Porte de Bourgogne
+TBC3825PBOUR,Bordeaux - Porte de Bourgogne
+TBC3826MUS23A,Bordeaux - Musée d'Aquitaine
+TBC382LEC54A,Le Bouscat - Général Leclerc
+TBC3835EGS82R,Saint-Aubin-de-Médoc - Eglise de Saint-Aubin
+TBC383BHA92R,Ambes - Béchade
+TBC3854PJU16R,Bordeaux - Palais de Justice
+TBC3856GAL20A,Villenave-d'Ornon - Galgon
+TBC3857SCH20A,Villenave-d'Ornon - Schweitzer
+TBC3858PJU16A,Bordeaux - Palais de Justice
+TBC3859GAF16A,Bordeaux - G. Fauré
+TBC385LEB56A,Le Bouscat - Léon Blum
+TBC3860TRI16A,Mérignac - Trianon
+TBC3861BLU16A,Mérignac - Léon Blum
+TBC3862BLU16R,Mérignac - Léon Blum
+TBC3863TRI16R,Mérignac - Trianon
+TBC3864GAF16R,Mérignac - G. Fauré
+TBC3866BOU44R,Pessac - Bougnard (station Tram)
+TBC3867BOU44A,Pessac - Bougnard
+TBC3868UNIT46,Pessac - Unitec
+TBC3869BME54A,Le Bouscat - Barrière du Médoc
+TBC386VCU8R,Cenon - Vieille Cure
+TBC3870FMI44A,Pessac - Collège F. Mitterrand
+TBC3871FMI44R,Pessac - Collège F. Mitterrand
+TBC3872BOS44A,Pessac - Bosquet
+TBC3873BOS44R,Pessac - Bosquet
+TBC3877VICT34,Bordeaux - Victoire (Pasteur)
+TBC3878CVL08A,Talence - Collège Victor Louis
+TBC3879CVL08R,Talence - Collège Victor Louis
+TBC387BRA03R,Bordeaux - Quai de Brazza
+TBC3880LYH21A,Talence - Lycée Hôtelier
+TBC3881LYH21R,Talence - Lycée Hôtelier
+TBC3882THO34R,Villenave-d'Ornon - Thouars
+TBC3883INR34A,Villenave-d'Ornon - INRA
+TBC3884JSI21A,Villenave-d'Ornon - Jules Simon
+TBC3885JSI21R,Villenave-d'Ornon - Jules Simon
+TBC3888NUY91R,Bordeaux - Nuyens
+TBC3889BER92A,Saint-Louis-de-Montferrand - Belle Rive
+TBC388CHO21A,Villenave-d'Ornon - Chopin
+TBC3890STM93R,Carbon-Blanc - Service Technique Municipal
+TBC3891STM93A,Carbon-Blanc - Service Technique Municipal
+TBC3894CAS92A,Bassens - Castéra
+TBC3895CAS92R,Bassens - Castéra
+TBC3896CME92A,Bassens - Clemenceau
+TBC3897CME92R,Bassens - Clemenceau
+TBC3898PEG92A,Bassens - Péguy
+TBC3899PEG92R,Bassens - Péguy
+TBC38MOU03R,Bordeaux - Grands Moulins
+TBC3900BEL92A,Ambares-et-Lagrave - Belloc
+TBC3901CIB92A,Ambares-et-Lagrave - Cité Bel Air
+TBC3902CIB92R,Ambares-et-Lagrave - Cité Bel Air
+TBC390LUC43A,Gradignan - Primevères
+TBC3911CLA92A,Ambares-et-Lagrave - Clanis
+TBC3912CLA92R,Ambares-et-Lagrave - Clanis
+TBC3913ESP92R,Saint-Louis-de-Montferrand - Espagnet
+TBC3914ESP92A,Saint-Louis-de-Montferrand - Espagnet
+TBC3917TRE93A,Ambares-et-Lagrave - Treuil
+TBC3918TRE93R,Ambares-et-Lagrave - Treuil
+TBC3919STS93A,Ambares-et-Lagrave - Saint-Sever
+TBC391COS45R,Bordeaux - Costedoat
+TBC3921SDE93A,Ambares-et-Lagrave - Saint-Denis
+TBC3922SDE93R,Ambares-et-Lagrave - Saint-Denis
+TBC3923DROY93,Ambares-et-Lagrave - Du Roy
+TBC3925VIV94A,Ambares-et-Lagrave - Vivaldi
+TBC3926VIV94R,Ambares-et-Lagrave - Vivaldi
+TBC3927BRO94A,Ambares-et-Lagrave - Broustey
+TBC3928BRO94R,Ambares-et-Lagrave - Broustey
+TBC3929PEL94A,Ambares-et-Lagrave - Pelet
+TBC392RIC16A,Bordeaux - Rue Richelieu
+TBC3930PEL94R,Ambares-et-Lagrave - Pelet
+TBC3939SUR94A,Ambares-et-Lagrave - Surin
+TBC3940SUR94R,Ambares-et-Lagrave - Surin
+TBC3941CPA94A,Saint-Vincent-de-Paul - Clos Palu
+TBC3942CPA94R,Saint-Vincent-de-Paul - Clos Palu
+TBC3943STV94A,Saint-Vincent-de-Paul - Saint Vincent de Paul
+TBC3944PMA58R,Bordeaux - Place Maran
+TBC3945GAR77R,Parempuyre - Gare de Parempuyre
+TBC3946GAR77A,Parempuyre - Gare de Parempuyre
+TBC3947PEY77R,Blanquefort - Peybois
+TBC3948PEY77A,Blanquefort - Peybois
+TBC3949MOR77R,Blanquefort - Cora Morton
+TBC394DON09R,Bordeaux - Donnet
+TBC3950MOR77A,Blanquefort - Cora Morton
+TBC3951DUM77R,Blanquefort - Dumas
+TBC3952DUM77A,Blanquefort - Dumas
+TBC3953GIL77R,Blanquefort - Gilamon
+TBC3954GIL77A,Blanquefort - Gilamon
+TBC3959MAL77R,Blanquefort - Malagène
+TBC3960MAL77A,Blanquefort - Malagène
+TBC3961LYC77A,Blanquefort - Lycée du Bâtiment (Entrée)
+TBC3967VAS77A,Parempuyre - Vassivey
+TBC3968MQU65R,Blanquefort - Montesquieu
+TBC3969GES82A,Le Haillan - Gestform
+TBC396COT07R,Bouliac - Avenue du Coteau (vers Pl. Vettiner)
+TBC3970GES82R,Le Haillan - Gestform
+TBC3974GBL37R,Blanquefort - Gare de Blanquefort
+TBC3975BMO37A,Saint-Médard-en-Jalles - Bois de Mont
+TBC3976BMO37R,Saint-Médard-en-Jalles - Bois de Mont
+TBC3977CFM37A,Saint-Médard-en-Jalles - Collège F.Mauriac
+TBC3978DEL37R,Saint-Médard-en-Jalles - Collège F.Mauriac
+TBC3979REP37A,Saint-Médard-en-Jalles - République (Boétie)
+TBC3980DAS37A,Bordeaux - Marcel Dassault
+TBC3981DAS37R,Bordeaux - Marcel Dassault
+TBC3984MER72A,Eysines - Mermoz
+TBC3985MER72R,Eysines - Mermoz
+TBC3986MLI52A,Eysines - Moulineau
+TBC3987MLI52R,Le Haillan - Moulineau
+TBC3988HOR52A,Eysines - Ecole d'horticulture
+TBC3989HOR52R,Eysines - Ecole d'horticulture
+TBC398JUD54R,Eysines - Jude
+TBC3990PLA52A,Eysines - Lycée de la Plaine
+TBC3991PLA52R,Eysines - Lycée de la Plaine
+TBC399SBE54A,Eysines - Simone de Beauvoir
+TBC39FRA47R,Pessac - Fraternité
+TBC3PTL20A,Villenave-d'Ornon - Pont de Langon
+TBC4002LAG52A,Eysines - Le Lagunet
+TBC4003LAG52R,Eysines - Le Lagunet
+TBC4004MON52A,Eysines - Montalieu
+TBC4005GALI02,Bordeaux - Galin Terminus
+TBC4008PEX40A,Talence - Peixotto (station Tram)
+TBC4009BOE37R,Le Taillan-Médoc - La Boétie
+TBC400GMA12R,Bordeaux - Hôpital Pellegrin (Grand Maurian)
+TBC4010MAL27R,Bruges - Malraux
+TBC4011MAL27A,Bruges - Malraux
+TBC4015GLA71A,Saint-Médard-en-Jalles - Glaena
+TBC4017JOU71A,Saint-Médard-en-Jalles - Jossomme
+TBC401CHE67A,Artigues-pres-Bordeaux - Chevreuils
+TBC4020COM76R,Le Bouscat - Combes
+TBC4021COM76A,Le Bouscat - Combes
+TBC4022CLE76A,Le Bouscat - Clemenceau
+TBC4024BAC27R,Bruges - Bacchus
+TBC4025BAC27A,Bruges - Bacchus
+TBC4026LAG37A,Blanquefort - Lycée Agricole
+TBC4027LAG37R,Blanquefort - Lycée Agricole
+TBC4029CAN77R,Blanquefort - Canteret
+TBC402PAU22R,Bègles - Saint-Paulin
+TBC4030CAN77A,Blanquefort - Canteret
+TBC4031PJUS16,Bordeaux - Palais de Justice
+TBC4034PSJ08A,Bordeaux - Pont Saint-Jean
+TBC4035CUR62A,Cenon - Curie
+TBC4036CUR62R,Cenon - Curie
+TBC4037MCE62R,Cenon - Mairie de Cenon
+TBC4039LAU90R,Lormont - Lauriers (station Tram)
+TBC403FER08A,Cenon - Jules Ferry
+TBC4040LAU90A,Lormont - Lauriers
+TBC4041PEY67A,Artigues-pres-Bordeaux - Parc du Peyrou
+TBC4042CIM67A,Artigues-pres-Bordeaux - Cimetière Intercommunal
+TBC4043ORN43T,Gradignan - Stade Ornon
+TBC4044CGRAD,Gradignan - Cimetière de Gradignan
+TBC4045TBOUGN,Pessac - Bougnard Terminus
+TBC4046TUN43,Pessac - Unitec (station Tram)
+TBC404LAL20R,Villenave-d'Ornon - Lalanne
+TBC4050CLG58R,Bruges - Clos de Graves
+TBC4051CLG58A,Bruges - Clos de Graves
+TBC4055LIS91R,Lormont - Lissandre
+TBC4057BGEN9A,Bordeaux - Barrière Saint-Genès
+TBC4058QMUN01,Bordeaux - Quinconces Munich
+TBC4059QUIN55,Bordeaux - Quinconces Orléans
+TBC40603CA58A,Bordeaux - Les 3 Cardinaux
+TBC40613CA58R,Bordeaux - Les 3 Cardinaux
+TBC4065SAI84A,Pessac - Saige
+TBC406PAS90A,Bassens - Pasteur
+TBC4074PRA42R,Gradignan - La Prairie
+TBC4075PRA42A,Gradignan - La Prairie
+TBC407CAUM5A,Floirac - Côte de Caumont
+TBC4084PAI20R,Villenave-d'Ornon - Pont de La Maye
+TBC408LAF23R,Bordeaux - Lafontaine
+TBC4094ARFO64,Artigues-pres-Bordeaux - Fontderode
+TBC40EAU13A,Bordeaux - Château d'Eau
+TBC4105MES43A,Gradignan - Mésanges
+TBC4106MES43R,Gradignan - Mésanges
+TBC410EDI44A,Pessac - Edison
+TBC4114LSMBM,Le Taillan-Médoc - Lycée Sud Médoc (Bois de Mont)
+TBC411BER53A,Saint-Médard-en-Jalles - Berlincan
+TBC4124JBOT03,Bordeaux - Jardin Botanique
+TBC4128ASP37A,Bordeaux - Antennes Sportives
+TBC4129ASP37R,Bordeaux - Antennes Sportives
+TBC412KER20R,Bordeaux - Kergomard
+TBC4134MEG42A,Gradignan - Mégevie
+TBC4137PMA36R,Gradignan - Parc de Mandavit
+TBC4138PMA36A,Gradignan - Parc de Mandavit
+TBC4141GUY58R,Blanquefort - Guynemer
+TBC4142GUY58A,Blanquefort - Guynemer
+TBC414EGB57A,Bruges - Eglise de Bruges
+TBC4154BGEN9R,Bordeaux - Barrière Saint-Genès
+TBC4155VIC22R,Bordeaux - Victoire (Marne)
+TBC4156PCA02A,Bordeaux - Petit Cardinal
+TBC4157QUI01A,Bordeaux - Quinconces Munich
+TBC415MAL23R,Bordeaux - Malbec
+TBC416CAN55A,Eysines - Cantinolle
+TBC4177BRE66R,Lormont - Jacques Brel
+TBC4178BRE66A,Lormont - Jacques Brel
+TBC417CLE52A,Le Haillan - Clemenceau
+TBC418LES56R,Le Bouscat - Les Ecus
+TBC419EDI44R,Pessac - Edison
+TBC41CAR55A,Eysines - Les Cares
+TBC4204QORL02,Bordeaux - Quinconces Orléans
+TBC4206FRL56A,Eysines - Frères Lumière (rue de Langlet)
+TBC4207FRL56R,Eysines - Frères Lumière (rue de Langlet)
+TBC420MALB09,Bordeaux - Malbec
+TBC4215CFM71R,Saint-Médard-en-Jalles - Collège F.Mauriac
+TBC4216ZOL82A,Saint-Aubin-de-Médoc - Zola
+TBC4217ZOL82R,Saint-Aubin-de-Médoc - Zola
+TBC4218VER82A,Saint-Aubin-de-Médoc - Verdelet
+TBC421BRU22A,Bordeaux - Brun
+TBC4220RN82A,Saint-Aubin-de-Médoc - RN 215
+TBC4223CAP76A,Le Bouscat - Capelle
+TBC4224LSME37,Saint-Aubin-de-Médoc - Lycée Sud Médoc
+TBC422MFR06A,Floirac - Mendès France
+TBC423EFM32R,Lormont - Esplanade F. Mitterrand
+TBC424AFR05A,Cenon - Anatole France
+TBC425CUR24R,Pessac - Curie
+TBC4274CHA37A,Blanquefort - Charcot
+TBC4275CHA37R,Blanquefort - Charcot
+TBC427SAT06A,Floirac - Satie
+TBC428STR45A,Bordeaux - Strasbourg
+TBC430MAR91R,Ambes - Le Marquis
+TBC431TAR93R,Ambares-et-Lagrave - Tarrey
+TBC4334RGR52A,Eysines - Rue des Graves
+TBC4335RGR52R,Eysines - Rue des Graves
+TBC436SEV40R,Talence - Sévène
+TBC4396PEU15R,Bordeaux - Place de l'Europe
+TBC43BAL27R,Bruges - Balguerie
+TBC440BLA27A,Le Bouscat - Blanqui
+TBC4429BRA01A,Bordeaux - Blanqui
+TBC4430PIS01A,Bordeaux - Piscine Tissot
+TBC444SAT06R,Floirac - Satie
+TBC445BOU03R,Bordeaux - Bouthier
+TBC446MMQ10A,Pessac - Montaigne - Montesquieu
+TBC4474ABR35A,Mérignac - Aristide Briand
+TBC4475ABR35R,Mérignac - Aristide Briand
+TBC449BRI57A,Bruges - Brion
+TBC44AIR80A,Gradignan - Les Airelles
+TBC450CCO02A,Bègles - Rives d'Arcins
+TBC4514FRAT8R,Floirac - Fraternité
+TBC451CRE42R,Talence - CREPS
+TBC4524STAL91,Bordeaux - Stalingrad (arrêt de montée)
+TBC452EIF44A,Pessac - Eiffel
+TBC4534ESM20A,Villenave-d'Ornon - Eglise Saint-Martin
+TBC455NAV45A,Bordeaux - Navarre
+TBC4564BAL44R,Pessac - Balzac
+TBC4565BAL44A,Pessac - Balzac
+TBC456NANSTY,Bordeaux - Nansouty
+TBC4574LUZ15A,Bordeaux - Luze
+TBC4575PRE10R,Bordeaux - Préfecture
+TBC4577PME50R,Bordeaux - Poste de Mériadeck
+TBC457LES51R,Bordeaux - Lestonnat
+TBC458CHI84A,Pessac - Le Chiquet
+TBC459MAR24A,Bordeaux - Martinique
+TBC460PLA75A,Mérignac - Plaisance
+TBC4610FLPA32,Floirac - Parc Municipal
+TBC4611PAR32A,Floirac - Parc Municipal
+TBC461MAR05A,Cenon - Cenon Marègue
+TBC462EGH53A,Le Haillan - Eglise du Haillan
+TBC463CAM48A,Mérignac - Campana
+TBC464QCA02R,Bègles - Bègles Plage
+TBC4650MAL18R,Gradignan - Malartic
+TBC4651MAL18A,Gradignan - Malartic
+TBC465MAR64A,Artigues-pres-Bordeaux - Mairie d'Artigues
+TBC467CAS73A,Mérignac - Cassin
+TBC4680BUTT63,Lormont - Buttinière
+TBC468RPE42R,Gradignan - Route de Pessac
+TBC4690QUIN54,Bordeaux - Quinconces Orléans
+TBC469CRU31R,Bordeaux - Cruchet
+TBC46ALE89A,Cadaujac - Avenue de Léognan
+TBC4700RIC38R,Bordeaux - Richaud
+TBC470LAB93A,Ambares-et-Lagrave - La Blanche
+TBC471TAF20A,Bordeaux - Taffanel
+TBC472MFO20A,Villenave-d'Ornon - Maréchal Foch
+TBC4730CLLO66,Lormont - Clairière de Lormont
+TBC4731LOR66R,Lormont - Lormont Village
+TBC4732DOMR66,Lormont - Domaine du Manoir
+TBC4733DOMA66,Lormont - Domaine du Manoir
+TBC4734CAS66R,Artigues-pres-Bordeaux - La Cascade
+TBC4735CAS66A,Artigues-pres-Bordeaux - La Cascade
+TBC4736BUTT66,Lormont - Buttinière
+TBC473TEC67A,Artigues-pres-Bordeaux - Techeney
+TBC4740TOQU67,Artigues-pres-Bordeaux - La Toque Cuivrée
+TBC4741STAD67,Artigues-pres-Bordeaux - Stade
+TBC4742ZAAR67,Artigues-pres-Bordeaux - Z.A Artigues
+TBC474ZIC46A,Pessac - Z.I de Cestas
+TBC4750LISS62,Lormont - Lissandre
+TBC475EMA42A,Talence - Ecole de Management
+TBC476STA47A,Pessac - Rue du Stand
+TBC4770HAM44R,Pessac - Hameaux de l'Alouette
+TBC4771HAM44A,Pessac - Hameaux de l'Alouette
+TBC4772DAU44R,Pessac - Dauphiné
+TBC477FON49A,Mérignac - La Fontaine
+TBC4790AUR21R,Villenave-d'Ornon - Auriol
+TBC47MIR92A,Ambes - Mirambeau
+TBC4800RIC37A,Bordeaux - Richaud
+TBC480SEM45A,Pessac - Sembat
+TBC481PBE42R,Gradignan - Prof. Bernard
+TBC4831MES95A,Carbon-Blanc - Mesquita
+TBC4834CHO92A,Ambares-et-Lagrave - Cholet
+TBC4835CHO92R,Saint-Louis-de-Montferrand - Cholet
+TBC483ACA03R,Lormont - Acacias
+TBC4850SAI94A,Saint-Vincent-de-Paul - Saint Vincent de Paul
+TBC485SMA48R,Pessac - Pessac Gare (station Tram)
+TBC4861SAU11A,Bordeaux - Saint-Augustin
+TBC4862SAU11R,Bordeaux - Saint-Augustin
+TBC487PALO62,Lormont - Palombes
+TBC48804PA32R,Lormont - 4 Pavillons (vers Buttinière)
+TBC488PBE42A,Gradignan - Prof. Bernard
+TBC490BON80R,Pessac - Boncour
+TBC4911MAT62A,Bordeaux - Mattéoti
+TBC4940PEP77A,Blanquefort - Pépinières
+TBC4941PEP77R,Blanquefort - Pépinières
+TBC494PRA92A,Ambares-et-Lagrave - Jean Prat
+TBC4950LSM53A,Saint-Aubin-de-Médoc - Lycée Sud Médoc
+TBC495MON21R,Villenave-d'Ornon - Montherlant
+TBC4970EPI66A,Artigues-pres-Bordeaux - Epis
+TBC4971EPI66R,Artigues-pres-Bordeaux - Epis
+TBC49CSZ40R,Talence - Chemin de Suzon
+TBC500COU56R,Le Bouscat - Courbet
+TBC5010RMA36R,Bruges - Manaud
+TBC5011RMA36A,Bruges - Manaud
+TBC502REI42A,Gradignan - Hameau de la Reine
+TBC503SOU21R,Villenave-d'Ornon - Parc Sourreil
+TBC504CED06A,Floirac - Cèdres
+TBC505TIV57R,Bordeaux - Tivoli
+TBC5070PHT45A,Pessac - Parc Haut Brion
+TBC507VIG56R,Eysines - Le Vigean
+TBC508MET71R,Saint-Médard-en-Jalles - Métairie
+TBC5090RPA08R,Cenon - RPA Gambetta
+TBC5091RPA08A,Floirac - RPA Gambetta
+TBC50AHL44R,Pessac - Avenue du Haut-Lévêque
+TBC510PTP91A,Saint-Louis-de-Montferrand - Petit Peyronnet
+TBC511ALE89R,Cadaujac - Avenue de Léognan
+TBC512BRU57R,Bruges - Bruges Hôtel de Ville
+TBC513PAI06A,Floirac - La Paix
+TBC5141CHS90R,Carbon-Blanc - Chemin du Sourd
+TBC514CAR46R,Pessac - Carnot
+TBC515RED36R,Bruges - Rue du Réduit
+TBC516TOUR9R,Bordeaux - Tourville
+TBC5185CHB53A,Saint-Aubin-de-Médoc - Allée de la Chambre
+TBC5186CHB53R,Saint-Aubin-de-Médoc - Allée de la Chambre
+TBC5187GEN53A,Saint-Aubin-de-Médoc - Genêts
+TBC5188GEN53R,Saint-Aubin-de-Médoc - Genêts
+TBC5189GAL53A,Saint-Aubin-de-Médoc - Galips
+TBC518GEN21A,Villenave-d'Ornon - La Générale
+TBC5190GAL53R,Saint-Aubin-de-Médoc - Galips
+TBC5191MATH39A,Le Taillan-Médoc - Mathyadeux
+TBC5192FCHAUXR,Le Taillan-Médoc - Four à Chaux
+TBC5193GELESR,Le Taillan-Médoc - Gelès
+TBC5195TANA39,Le Taillan-Médoc - Tanaïs
+TBC5196CHADEYA,Le Taillan-Médoc - Machadey
+TBC5198JMO79A,Blanquefort - Lycée Jean Monnet
+TBC51MAR06A,Floirac - Martouret
+TBC5205JZAY6A,Cenon - Jean Zay
+TBC5206JZAY6R,Cenon - Jean Zay
+TBC5207GOYA6A,Cenon - Goya
+TBC5208GOYA6R,Cenon - Goya
+TBC520CNO27A,Bruges - Cimetière Nord (av. Périé)
+TBC5210PGE03R,Bordeaux - Pôle Universitaire de Gestion
+TBC5211PGE03A,Bordeaux - Pôle Universitaire de Gestion
+TBC5220FDRA06,Floirac - Floirac Dravemont
+TBC5221CLE32R,Cenon - Clemenceau
+TBC5222CLE32A,Cenon - Clemenceau
+TBC5225MCE35A,Mérignac - Mérignac Centre
+TBC5226FDR32R,Floirac - Floirac Dravemont
+TBC522GEP36A,Pessac - Collège Gérard Philipe
+TBC524BEA46A,Pessac - Beauséjour
+TBC525VRT06R,Floirac - Verts Coteaux
+TBC5263POR84A,Pessac - Pont de L'Orient
+TBC5264OUL50A,Mérignac - Ouley
+TBC5265OUL50R,Mérignac - Ouley
+TBC526RAC40A,Talence - Racine
+TBC5270MSO49A,Mérignac - Mérignac Soleil
+TBC5271LAR01A,Mérignac - Parc Peyandreau
+TBC5272ANP49R,Mérignac - Parc Peyandreau
+TBC5273KEN49A,Mérignac - Kennedy
+TBC5274KEN49R,Mérignac - Kennedy
+TBC5275CHE58R,Parempuyre - Les Chênes
+TBC5276CHE58A,Parempuyre - Les Chênes
+TBC5277LAB70A,Bordeaux - Labarde
+TBC5278LAB70R,Bordeaux - Labarde
+TBC5279DAS24A,Pessac - Dassault
+TBC5280ZAL44A,Pessac - Cazalet
+TBC5281ZAL44R,Pessac - Cazalet
+TBC5282HLIVRA,Pessac - Haut Livrac
+TBC5283ARLAC,Mérignac - Fontaine d'Arlac
+TBC5284PEY46A,Mérignac - Peychotte
+TBC5285PCE46A,Pessac - Pessac Centre (Trendel)
+TBC5286PCE46R,Pessac - Pessac Centre (Trendel)
+TBC5288LAN46R,Pessac - Flandres
+TBC5289CNA46R,Pessac - Canaris
+TBC5290CBO46R,Pessac - Cap de Bos
+TBC5291STM47A,Pessac - Sainte-Marie
+TBC5292STM47R,Pessac - Sainte-Marie
+TBC5293TPES23,Pessac - Pessac Centre (station Tram)
+TBC5294PESS48,Pessac - Pessac Centre (station Tram)
+TBC5297PCE81R,Pessac - Pessac Centre (station Tram)
+TBC5298LPC81R,Pessac - Lycée Pape Clément
+TBC5299LPC81A,Pessac - Lycée Pape Clément
+TBC529GAS52A,Le Haillan - Gasquet
+TBC52ROU53R,Saint-Médard-en-Jalles - Roux
+TBC5300LUC81A,Mérignac - Domaine de Lucatet
+TBC5301CCE81A,Mérignac - Clinique des cèdres
+TBC5302CCE81R,Mérignac - Clinique des Cèdres
+TBC530311N81R,Mérignac - Place du 11 Novembre
+TBC5304BIS39A,Mérignac - Campus de Bissy
+TBC5305BIS39R,Mérignac - Campus de Bissy
+TBC5309PAL30A,Mérignac - Volta
+TBC5310PAL30R,Mérignac - Volta
+TBC5313AVT72A,Eysines - 19 Mars 1962
+TBC5314AVT72R,Eysines - 19 Mars 1962
+TBC5315QMUN03,Bordeaux - Quinconces Munich
+TBC5316CPI51R,Mérignac - Cité des Pins
+TBC5319PFE82A,Saint-Médard-en-Jalles - Parc de Feydit
+TBC531SRO27R,Cenon - Saint-Romain
+TBC5320PFE82R,Saint-Médard-en-Jalles - Parc de Feydit
+TBC5321COB82A,Saint-Médard-en-Jalles - Corbiac
+TBC5322COB82R,Saint-Médard-en-Jalles - Corbiac
+TBC5323FET82A,Saint-Médard-en-Jalles - Feydit
+TBC5324FET82R,Saint-Médard-en-Jalles - Feydit
+TBC5325CRO03A,Saint-Aubin-de-Médoc - Croix Vieille
+TBC5326CRO03R,Saint-Aubin-de-Médoc - Croix Vieille
+TBC5327VIG71A,Saint-Médard-en-Jalles - Vignalot
+TBC5328VIG71R,Saint-Médard-en-Jalles - Vignalot
+TBC5329DAR71R,Saint-Médard-en-Jalles - Darwin
+TBC532LBA49R,Mérignac - Labatut
+TBC5330DAR71A,Saint-Médard-en-Jalles - Darwin
+TBC5331SIE71R,Saint-Médard-en-Jalles - Sieyès
+TBC5332SIE71A,Saint-Médard-en-Jalles - Sieyès
+TBC5334RPB37R,Saint-Médard-en-Jalles - République (Boétie)
+TBC533PRO75R,Mérignac - Procession
+TBC5344CHB34A,Pessac - Chiquet Brion
+TBC5345CHB34R,Pessac - Chiquet Brion
+TBC5346LAM34A,Pessac - Lamartine
+TBC5347LAM34R,Pessac - Lamartine
+TBC5349GPE34,Pessac - Pessac Gare
+TBC534PEY02A,Bordeaux - Peyronnet (côté Poste)
+TBC5350IMA,Mérignac - IMA
+TBC5351DAS70R,Mérignac - Dassault
+TBC5352DAS70A,Mérignac - Dassault
+TBC5357DIE70R,Mérignac - Diesel
+TBC5359PEL70R,Mérignac - Domaine de Pelus
+TBC535PNO93A,Ambares-et-Lagrave - Paulin De Nole
+TBC5360PYT70A,Mérignac - Pythagore
+TBC5361PYT70R,Mérignac - Pythagore
+TBC5363BAT16A,Bordeaux - Stade Batany
+TBC536BRI31R,Bordeaux - Bricaud
+TBC5374CAB95R,Carbon-Blanc - Mouline
+TBC5375COM13R,Bordeaux - Combes
+TBC5376COMB13,Bordeaux - Combes
+TBC5377MIT13R,Mérignac - François Mitterrand
+TBC5378MIT13A,Mérignac - François Mitterrand
+TBC537MON10A,Bordeaux - Mondenard
+TBC5380MOU13A,Bordeaux - Moulin Rouge
+TBC5384BF76TE,Bordeaux - Bassins à Flot Terminus
+TBC5385BFLO01,Bordeaux - Bassins à Flot
+TBC538BAR80R,Gradignan - Barthès
+TBC5390MFR66A,Lormont - Mendès France
+TBC5391MFR66R,Lormont - Mendès France
+TBC539FOU46A,Pessac - Fougnet
+TBC53BRE52A,Eysines - Breteil
+TBC5407PIS10R,Bordeaux - Piscine Grand Parc
+TBC5408PIS10A,Bordeaux - Piscine Grand Parc
+TBC5417HOPI41,Bordeaux - Hôpital Pellegrin
+TBC5418BLA94A,Saint-Vincent-de-Paul - Blanchet
+TBC5419BLA94R,Saint-Vincent-de-Paul - Blanchet
+TBC541LUM02R,Bègles - Frères Lumière
+TBC5424BEL16A,Bordeaux - Bel Air
+TBC542NOU02A,Bègles - Noutary
+TBC5447AUB36A,Bordeaux - Les Aubiers (station Tram)
+TBC5448BOI58R,Bruges - Villabois (arrêt de descente)
+TBC5449BOI58A,Bruges - Villabois
+TBC5452ECO29,Blanquefort - Ecoparc
+TBC5453AUB58A,Bordeaux - Les Aubiers (station Tram)
+TBC5454TGB56A,Blanquefort - Gare de Blanquefort
+TBC5455MON56A,Eysines - Montalieu
+TBC5457CIM38A,Lormont - Cimetière de Lormont
+TBC5458CCO38R,Bordeaux - Centre Commercial du Lac
+TBC5459CCO38A,Bordeaux - Centre Commercial du Lac
+TBC545PUY53A,Saint-Médard-en-Jalles - Puyo
+TBC5460LAR38A,Bordeaux - Laroque
+TBC5467MIT75A,Parempuyre - Espace François Mitterrand
+TBC5468MIT75R,Parempuyre - Espace François Mitterrand
+TBC5469GAM77R,Blanquefort - Ferry
+TBC546ANT52A,Eysines - Antoune
+TBC5470AUB37A,Bordeaux - Les Aubiers (station Tram)
+TBC5471LAC58A,Blanquefort - Parc des Lacs
+TBC5472LAC58R,Blanquefort - Parc des Lacs
+TBC5473NUN58A,Blanquefort - Nungesser
+TBC5474NUN58R,Blanquefort - Nungesser
+TBC5475VAS77R,Parempuyre - Vassivey
+TBC5476LAC31R,Bordeaux - CAF
+TBC5477AUB31,Bordeaux - Les Aubiers (station Tram)
+TBC5479BZFR27,Bruges - Zone de Fret
+TBC547COR12A,Mérignac - Cours d'Ornano
+TBC5480REI38A,Bordeaux - Reinson
+TBC5481REI38R,Bordeaux - Reinson
+TBC5485LAN37A,Blanquefort - Alcide Lançon
+TBC5486LAN37R,Blanquefort - Alcide Lançon
+TBC5487LATE9R,Bordeaux - Latécoère
+TBC5489CAP92R,Carbon-Blanc - Capdeboscq
+TBC548PAE07R,Bouliac - Parc de l'Etoile
+TBC5490CAP92A,Carbon-Blanc - Capdeboscq
+TBC5491CAL92A,Carbon-Blanc - Calmette
+TBC5492CAL92R,Carbon-Blanc - Calmette
+TBC5493CUR92A,Carbon-Blanc - Joliot Curie
+TBC5494CUR92R,Carbon-Blanc - Joliot Curie
+TBC5495GARD92,Lormont - La Gardette (Bassens - Carbon Blanc)
+TBC549TIVO9A,Bordeaux - Tivoli
+TBC54AMB92R,Ambes - Ambès Eglise
+TBC5504GARD90,Lormont - La Gardette (Bassens - Carbon Blanc)
+TBC5506CAR94R,Carbon-Blanc - Carbouney
+TBC5507CAR94A,Carbon-Blanc - Carbouney
+TBC5509MOU94A,Carbon-Blanc - Mouline
+TBC550LAU71A,Saint-Médard-en-Jalles - Lauba
+TBC5511GARD95,Lormont - La Gardette (Bassens - Carbon Blanc)
+TBC551311N95A,Carbon-Blanc - 11 Novembre
+TBC551411N95R,Carbon-Blanc - 11 Novembre
+TBC5515GUY95R,Carbon-Blanc - Guyon
+TBC5516GUY95A,Carbon-Blanc - Guyon
+TBC5517LAN95R,Carbon-Blanc - Lannes (Collège Manon Cormier)
+TBC5518LAN95A,Carbon-Blanc - Lannes (Collège Manon Cormier)
+TBC551ARS44A,Pessac - Arsonval
+TBC5524ACI45A,Pessac - Aciéries
+TBC5525ACI45R,Pessac - Aciéries
+TBC5526BA106A,Mérignac - BA 106
+TBC5536TAU41A,Bordeaux - Tauzin
+TBC5537TAU41R,Bordeaux - Tauzin
+TBC553COC66R,Lormont - Jean Cocteau
+TBC5542RPQ38A,Bordeaux - Rond Point de Québec
+TBC554VHU71A,Saint-Médard-en-Jalles - Victor Hugo
+TBC5553TRQ82A,Saint-Aubin-de-Médoc - Tronquet
+TBC5554TRQ82R,Saint-Aubin-de-Médoc - Tronquet
+TBC5555SAN34R,Bègles - Sangnier
+TBC5556SAN34A,Bègles - Sangnier
+TBC5557TNEU24,Bègles - Terres Neuves
+TBC5558BRA11A,Bordeaux - Brascassat
+TBC5559BRA11R,Bordeaux - Brascassat
+TBC555LAN42A,Gradignan - Lange
+TBC5560JBO85R,Bordeaux - Jardin Botanique
+TBC5563BUT67,Lormont - Buttinière
+TBC556MAD84R,Pessac - Madran
+TBC5573EGL82R,Mérignac - Mérignac Centre (Eglise)
+TBC5574CIC47R,Pessac - Cicéron
+TBC5575CIC47A,Pessac - Cicéron
+TBC5576STAL38,Bordeaux - Stalingrad
+TBC557REB06R,Floirac - Rébédech
+TBC5593COV58A,Parempuyre - Colverts
+TBC5594COV58R,Parempuyre - Colverts
+TBC5599CCH21R,Villenave-d'Ornon - Collège Chambéry
+TBC5600CCH21A,Villenave-d'Ornon - Collège Chambéry
+TBC5606CAM37R,Bordeaux - Camping International
+TBC5607CAM37A,Bordeaux - Camping International
+TBC5608BLANQA,Bordeaux - Blanqui
+TBC5609BLANQR,Bordeaux - Blanqui
+TBC560CAUM5R,Floirac - Côte de Caumont
+TBC5610TBRAN,Bordeaux - Brandenburg
+TBC5612BOLI09,Bordeaux - Bolivar
+TBC5613LAB31A,Bordeaux - Labarde
+TBC5614PIS31A,Bordeaux - Piscine Tissot
+TBC5617STJ09R,Bordeaux - Gare Saint-Jean (arrêt de descente)
+TBC5618GAREST,Bordeaux - Gare Saint-Jean
+TBC5619STJ09A,Bordeaux - Gare Saint-Jean (arrêt de montée)
+TBC561RAC54R,Bordeaux - Racine
+TBC5621GBA04A,Bordeaux - Galerie des Beaux Arts
+TBC5622VIG01A,Mérignac - Vigneau
+TBC5623VIG01R,Mérignac - Vigneau
+TBC5624DAG01R,Mérignac - Lycée Daguin
+TBC5625AUB03R,Saint-Aubin-de-Médoc - Saint-Aubin Cimetière
+TBC5626TVILL3,Saint-Aubin-de-Médoc - Villepreux
+TBC5627GBE15A,Bègles - Gare de Bègles
+TBC5628TCAY06,Blanquefort - Caychac
+TBC5629LAP10R,Pessac - La Paillère
+TBC562CRE42A,Talence - CREPS
+TBC5633DOU10A,Talence - Dourout
+TBC5636LEB33A,Le Bouscat - 8 Mai 1945
+TBC5638LEB33R,Le Bouscat - 8 Mai 1945
+TBC5639GAR07R,Lormont - La Gardette (Bassens - Carbon Blanc)
+TBC563GRA52A,Le Haillan - La Gravière
+TBC5640MAG07A,Lormont - Magendie
+TBC5641PME07A,Bassens - Place Meignan
+TBC5643PME07R,Bassens - Place Meignan
+TBC5644RCO07R,Ambares-et-Lagrave - René Coty
+TBC5645PON07A,Ambares-et-Lagrave - Pontet
+TBC5646PON07R,Ambares-et-Lagrave - Pontet
+TBC5647SAU07A,Ambares-et-Lagrave - Sauvin
+TBC5648SAU07R,Ambares-et-Lagrave - Sauvin
+TBC5649PAR07A,Ambares-et-Lagrave - Parabelle (arrêt de descente)
+TBC5650TPAR07,Ambares-et-Lagrave - Parabelle
+TBC5651CAR36A,Villenave-d'Ornon - Les Iris
+TBC5652HPP21R,Gradignan - Hippodrome
+TBC5653STC23R,Pessac - Stade Cap de Bos
+TBC5659DAS24R,Pessac - Dassault
+TBC565MOS16A,Bordeaux - Place Moscou
+TBC5660CAN24A,Pessac - Avenue de Canéjan
+TBC5661MUS24R,Bordeaux - Musée d'Aquitaine
+TBC5664GUE30A,Mérignac - Gustave Eiffel
+TBC5665GUE30R,Mérignac - Gustave Eiffel
+TBC5666GLA36R,Gradignan - Grande Lande
+TBC566MIR64A,Artigues-pres-Bordeaux - Mirail
+TBC5671ALS36R,Villenave-d'Ornon - Alsace-Lorraine
+TBC5672MED36R,Villenave-d'Ornon - Médiathèque
+TBC5673LPL30R,Mérignac - Laplace
+TBC5674LPL30A,Mérignac - Laplace
+TBC5675LOG34R,Mérignac - Logey
+TBC5676LOG34A,Mérignac - Logey
+TBC5677MSO01R,Mérignac - Mérignac Soleil
+TBC56784CH34R,Mérignac - Quatre chemins
+TBC56794CH34A,Mérignac - Quatre chemins
+TBC567SAB03A,Bordeaux - Sabarots
+TBC5680INR34R,Villenave-d'Ornon - INRA
+TBC5681PEU34R,Villenave-d'Ornon - Les Peupliers
+TBC5682PEU34A,Villenave-d'Ornon - Les Peupliers
+TBC5683GME34R,Villenave-d'Ornon - Salle Georges Méliès
+TBC5684GME34A,Villenave-d'Ornon - Salle Georges Méliès
+TBC5685MEN34R,Bègles - Mendes France
+TBC5686MEN34A,Bègles - Mendes France
+TBC5687PAP34A,Bègles - Denis Papin
+TBC5688PAP34R,Bègles - Denis Papin
+TBC5689ARCI34,Bègles - Rives d'Arcins
+TBC5690DAG01A,Mérignac - Lycée Daguin
+TBC5691LMA37R,Blanquefort - Blanquefort Cimetière
+TBC5692LMA37A,Blanquefort - Blanquefort Cimetière
+TBC5694FXA36R,Gradignan - François Xavier
+TBC5695FXA36A,Gradignan - François Xavier
+TBC5698LOR36A,Gradignan - Mairie de Gradignan
+TBC5699LOR36R,Gradignan - Mairie de Gradignan
+TBC5701POU36R,Gradignan - Poumey
+TBC5702POU36A,Gradignan - Poumey
+TBC5703CAND44,Pessac - Candau
+TBC5704HLV44R,Pessac - Boulevard du Haut Livrac
+TBC5705BRU25R,Villenave-d'Ornon - Bruca
+TBC5706HLV44A,Pessac - Boulevard du Haut Livrac
+TBC5707VIL44R,Pessac - Villeneuve
+TBC5708VIL44A,Pessac - Villeneuve
+TBC570VHU71R,Saint-Médard-en-Jalles - Victor Hugo
+TBC5713BRU25A,Villenave-d'Ornon - Bruca
+TBC5714COJ36A,Villenave-d'Ornon - Courréjean
+TBC5715COJ36R,Villenave-d'Ornon - Courréjean
+TBC5716BO76R,Parempuyre - Bourdillot
+TBC5717BO76A,Parempuyre - Bourdillot
+TBC5718JON76R,Parempuyre - Jonc
+TBC5719JON76A,Parempuyre - Jonc
+TBC571EMI42A,Gradignan - Edouard Michel
+TBC5720BIG76A,Parempuyre - Bigeau
+TBC5721BIG76R,Parempuyre - Bigeau
+TBC5726DUC88A,Villenave-d'Ornon - Ducros
+TBC5727DUC88R,Villenave-d'Ornon - Ducros
+TBC5728CLE88R,Villenave-d'Ornon - Clémenceau
+TBC5729CLE88A,Villenave-d'Ornon - Clémenceau
+TBC572CAS32R,Floirac - Castés
+TBC5730PAG88A,Villenave-d'Ornon - Pagnol
+TBC5731PAG88R,Villenave-d'Ornon - Pagnol
+TBC5732HOU88R,Villenave-d'Ornon - Hourcade
+TBC5733HOU88A,Villenave-d'Ornon - Hourcade
+TBC5734GAL28A,Bordeaux - Galin
+TBC5735MEL15A,Bègles - Salle Georges Méliès
+TBC5736CHA32R,Bordeaux - Cité Chantecrit
+TBC5737RPQ32R,Bordeaux - Rond Point de Québec
+TBC5738LBR32R,Bordeaux - Lewis-Brown
+TBC573CHR53A,Saint-Médard-en-Jalles - Chemin du Roy
+TBC5740DVI32R,Bordeaux - Docteur Vincent
+TBC5741DVI32A,Bordeaux - Docteur Vincent
+TBC5742TBOU32,Bouliac - Bouliac Centre Commercial
+TBC5743RPF15A,Bordeaux - Rond Point Marie Fel
+TBC5744RPF15R,Bordeaux - Rond Point Marie Fel
+TBC5745PCA28A,Bordeaux - Petit Cardinal
+TBC5746RAC92R,Carbon-Blanc - Racine
+TBC5747DOU92A,Bassens - Douanes
+TBC574DAS31A,Bordeaux - Dassault
+TBC57545CHE11,Le Haillan - 5 Chemins
+TBC5755ZCA11A,Le Haillan - Toussaint Catros
+TBC5757RAC92A,Carbon-Blanc - Racine
+TBC5758DAS11R,Mérignac - Dassault
+TBC5759DAS11A,Mérignac - Dassault
+TBC575DUP40R,Talence - Duplantier
+TBC5760TBE11R,Mérignac - Beaudésert
+TBC5761BEA92R,Bassens - Centre de secours
+TBC5762BEA92A,Bassens - Centre de secours
+TBC5763GNO11R,Mérignac - Grange Noire
+TBC5764GNO11A,Mérignac - Grange Noire
+TBC5765ZIPH11,Mérignac - ZI du Phare
+TBC5766MVI92A,Saint-Vincent-de-Paul - Mairie de Saint Vincent
+TBC5767MVI92R,Saint-Vincent-de-Paul - Mairie de Saint Vincent
+TBC5769STJ11A,Bordeaux - Gare Saint-Jean (sous la Halle)
+TBC576FON49R,Mérignac - La Fontaine
+TBC5770STJ11R,Bordeaux - Gare Saint-Jean (rue St Vincent de Paul)
+TBC5773CSP92R,Ambares-et-Lagrave - Clos Saint-Pierre
+TBC5776CST92R,Bassens - Castéra
+TBC5777CAI92R,Bassens - Cailleau
+TBC5778CAI92A,Bassens - Cailleau
+TBC5779GBA92R,Bassens - Gare de Bassens
+TBC577ROMAIN,Pessac - Romainville
+TBC5780GBA92A,Bassens - Gare de Bassens
+TBC5782GSJEAN,Bordeaux - Gare Saint-Jean
+TBC5783JEU16A,Mérignac - Jeunesse
+TBC5784JEU16R,Mérignac - Jeunesse
+TBC5785DOU92R,Bassens - Douanes
+TBC5786CPR16A,Mérignac - Capeyron
+TBC5787CPR16R,Mérignac - Capeyron
+TBC5788ROB16R,Mérignac - Bosquets
+TBC5789ROB16A,Mérignac - Bosquets
+TBC578POI27R,Bordeaux - Poirson
+TBC5790JBOT45,Bordeaux - Jardin Botanique
+TBC5791BOTA45,Bordeaux - Jardin Botanique
+TBC5792BBE10A,Bordeaux - Barrière de Bègles
+TBC5793RBE10R,Bordeaux - Rue de Bègles
+TBC5794RBE10A,Bordeaux - Rue de Bègles
+TBC5795BIL10A,Bordeaux - Billaudel
+TBC5796BIL10R,Bordeaux - Billaudel
+TBC5797CUR10R,Floirac - Curie
+TBC5798CUR10A,Floirac - Curie
+TBC5799CEN51R,Cenon - Cenon Gare
+TBC5800CEN51A,Cenon - Cenon Gare
+TBC5801STA45A,Bordeaux - Stalingrad
+TBC5802STA45R,Bordeaux - Stalingrad
+TBC5805ARC34A,Bègles - Rives d'Arcins
+TBC5807PMO42R,Pessac - Paul Montagne
+TBC5808PMO42A,Pessac - Paul Montagne
+TBC5809LAR42A,Pessac - Larouillat
+TBC580AMI62R,Cenon - Rue de l`Amitié
+TBC5810LAR42R,Pessac - Larouillat
+TBC5811FOR42R,Pessac - Forestier
+TBC5812FOR42A,Pessac - Forestier
+TBC5813SBE42A,Mérignac - Ste Bernadette
+TBC5814ABR42A,Mérignac - Aristide Briand
+TBC5815PEY42R,Mérignac - Peychotte
+TBC5816GRA42R,Mérignac - La Grappe d'Or
+TBC5817GAL42R,Mérignac - Galliéni
+TBC5818BOU42A,Mérignac - Bourranville
+TBC5819BOU42R,Mérignac - Bourranville
+TBC581LAT09A,Bordeaux - Latule
+TBC5820GCA42A,Mérignac - Gare de Caudéran
+TBC5821GCA42R,Mérignac - Gare de Caudéran
+TBC5822MON42A,Mérignac - Montesquieu
+TBC5823MON42R,Mérignac - Montesquieu
+TBC5824CCA42R,Mérignac - Collège Capeyron
+TBC5825CCA42A,Mérignac - Collège Capeyron
+TBC5826TRU42A,Mérignac - Truc
+TBC5827TRU42R,Mérignac - Truc
+TBC5828TAS42R,Mérignac - Tassigny
+TBC5829TAS42A,Mérignac - Tassigny
+TBC582BAO38A,Bordeaux - Libre Service de Gros
+TBC5832BFL40A,Lormont - Bois Fleuri
+TBC5833BFL40R,Lormont - Bois Fleuri
+TBC5834GRA40A,Lormont - Gravières
+TBC5835GRA40R,Lormont - Gravières
+TBC5836TLAU40,Lormont - Lauriers Terminus
+TBC5837ARL42R,Mérignac - Fontaine d'Arlac
+TBC5838POU68A,Artigues-pres-Bordeaux - Pouqueyras
+TBC5839POU64A,Artigues-pres-Bordeaux - Pouqueyras
+TBC583MSE21A,Villenave-d'Ornon - Mansencal
+TBC5840BVE11A,Bordeaux - Brienne Vernet
+TBC5841BVE11R,Bordeaux - Brienne Vernet
+TBC5842QBR11A,Bordeaux - Quai de Brienne
+TBC584ALB47R,Bordeaux - Albret
+TBC5851TBEA16,Mérignac - Mérignac Centre (René Coty)
+TBC5852PLA40A,Cenon - Plaisance
+TBC5853PLA40R,Cenon - Plaisance
+TBC5854DES45R,Bordeaux - Quai Deschamps
+TBC5857BTR45A,Bordeaux - Sainte-Eulalie
+TBC5858MLO40A,Lormont - Mairie de Lormont
+TBC585JUD54A,Eysines - Jude
+TBC5860CFR43R,Bègles - César Franck (av. Allende)
+TBC5861ALL43R,Bègles - Allende
+TBC5862GOU43A,Bègles - Gounod
+TBC5863GOU43R,Bègles - Gounod
+TBC5864RTO43R,Bègles - Hôpital Robert Picqué
+TBC5865RTO43A,Bègles - Hôpital Robert Picqué
+TBC5866ARA43R,Bègles - Arago
+TBC5867BUF43R,Bègles - Buffon
+TBC5868SAL43R,Bègles - Ecole Salengro
+TBC5869ROC43R,Bègles - Rocher
+TBC586COR32A,Floirac - Cornier
+TBC5870TBPOST,Bègles - Bègles Poste
+TBC5871JVE43A,Bègles - Jules Verne
+TBC5872MIC43A,Bègles - Michelet
+TBC5873LAU43A,Bègles - Lauriol
+TBC5874FER43A,Bègles - Ecole La Ferrade
+TBC5875VHUG43,Bègles - Victor Hugo
+TBC5876PNE43R,Bègles - Collège Pablo Neruda
+TBC5877DES87R,Pessac - Desbats
+TBC5878CAR87A,Pessac - Cardinal
+TBC5879COA33A,Le Bouscat - Collège Ausone
+TBC5880LAN33A,Le Bouscat - Lanet
+TBC5881LAN33R,Le Bouscat - Lanet
+TBC5882CLE77R,Blanquefort - Cardinal Lecot
+TBC5883CLE77A,Blanquefort - Cardinal Lecot
+TBC5884AEY33A,Bordeaux - Avenue d'Eysines
+TBC5885AEY33R,Bordeaux - Avenue d'Eysines
+TBC5886TAS33A,Bordeaux - Tassigny
+TBC5887TAS33R,Bordeaux - Tassigny
+TBC5888EGC33A,Bordeaux - Eglise de Caudéran
+TBC5889EGC33R,Bordeaux - Eglise de Caudéran
+TBC588HUT36R,Bruges - La Hutte
+TBC5890RLA33A,Bordeaux - Rue de Lacanau
+TBC5891RLA33R,Bordeaux - Rue de Lacanau
+TBC5892RIC33R,Bordeaux - Rue Richelieu
+TBC5893THO43R,Bègles - Thomas (rue Laverny)
+TBC5894BIB36A,Bègles - Bibliothèque
+TBC5895BIB36R,Bègles - Bibliothèque
+TBC5896LDAG42,Mérignac - Lycée Daguin
+TBC5897PEY20R,Talence - Peydavant
+TBC5898PEY20A,Talence - Peydavant
+TBC5899RCR20R,Talence - Résidence Crespy
+TBC589PAR48A,Mérignac - Rue de Paris
+TBC5900RCR20A,Talence - Résidence Crespy
+TBC5901BON20R,Talence - Bontemps
+TBC5902BON20A,Talence - Bontemps
+TBC5903LTONDU,Bordeaux - Tondu
+TBC5904ROC41A,Bordeaux - Docteur Rocaz
+TBC5905FER41A,Bordeaux - Ferry
+TBC5906PAS41A,Bordeaux - Hermitage
+TBC5907HOC41A,Bordeaux - Hoche
+TBC5908MOS41A,Bordeaux - Place Moscou
+TBC5909LOP41A,Bordeaux - Place Lopès
+TBC590VI443A,Pessac - Village 4
+TBC5910CHA41A,Bordeaux - Chaumet
+TBC5911LON41A,Bordeaux - Longchamps
+TBC5912RAV41A,Bordeaux - Ravel
+TBC5913SAE41A,Bordeaux - Saint Saëns
+TBC5914LAG41A,Bordeaux - Lagraveyre
+TBC5915CVE41A,Bordeaux - Cage Verte
+TBC5916PFRA41,Bordeaux - Pins-Francs
+TBC5917FRA41R,Bordeaux - Fragonard
+TBC5918SAE41R,Bordeaux - Saint Saëns
+TBC5919RAV41R,Bordeaux - Ravel
+TBC591RAL51A,Bordeaux - Roger Allo
+TBC5920LON41R,Bordeaux - Longchamps
+TBC5921LES41R,Bordeaux - Lestonnat
+TBC5922SBA41R,Bordeaux - Stade Batany
+TBC5923BEL41R,Bordeaux - Bel Air
+TBC5926ALF10A,Floirac - Alfonséa
+TBC5927ALF10R,Floirac - Alfonséa
+TBC5928CCBO10,Bouliac - Bouliac Centre Commercial
+TBC592VHU8A,Cenon - Victor Hugo
+TBC5931GOL37R,Bordeaux - Golf de Bordeaux
+TBC5932GOL37A,Bordeaux - Golf de Bordeaux
+TBC5935BTO10R,Bordeaux - Barrière de Toulouse (Bd Albert 1er)
+TBC5936JVI29A,Bruges - Jean Villar
+TBC5937JVI29R,Bruges - Jean Villar
+TBC5938GAS29R,Bruges - Centre Tour de Gassies
+TBC5940DAM62A,Bouliac - Domaine d'Amanieu
+TBC5941DAM62R,Bouliac - Domaine d'Amanieu
+TBC5942SMU29A,Bruges - Forum des Associations
+TBC5943SMU29R,Bruges - Forum des Associations
+TBC5944PRE46R,Le Bouscat - Préceinte
+TBC5945PRE46A,Le Bouscat - Préceinte
+TBC5946PRI72A,Bordeaux - Parc Rivière
+TBC5947PRI72R,Bordeaux - Parc Rivière
+TBC5948DOP72R,Eysines - Domaine du Pinsan
+TBC5949DOP72A,Eysines - Domaine du Pinsan
+TBC594MON35A,Mérignac - Montaigne
+TBC5950NCI72R,Eysines - Nouveau Cimetière
+TBC5951NCI72A,Eysines - Nouveau Cimetière
+TBC5953POL26A,Bordeaux - Hôtel de Police
+TBC5954DAN26A,Bordeaux - Dandicolle
+TBC5955TAT46A,Bordeaux - Galerie Tatry
+TBC5956TAT46R,Bordeaux - Galerie Tatry
+TBC5957FPO46R,Bordeaux - Frères Portmann
+TBC5958FPO46A,Bordeaux - Frères Portmann
+TBC5959TRI46A,Bordeaux - Trinité
+TBC5960TRI46R,Bordeaux - Trinité
+TBC5961EUR46R,Bordeaux - Place de l'Europe
+TBC5963PDO46A,Le Bouscat - Parc d'Ormoy
+TBC5964PDO46R,Le Bouscat - Parc d'Ormoy
+TBC5965MBO46A,Le Bouscat - Mairie du Bouscat
+TBC5966MBO46R,Le Bouscat - Mairie du Bouscat
+TBC5967LAF46R,Le Bouscat - Lafont
+TBC5968LAF46A,Le Bouscat - Lafont
+TBC5969RAV46A,Le Bouscat - Ravezies (Gare St Louis)
+TBC5970RAV46R,Bordeaux - Place Ravezies
+TBC5971PBL56A,Blanquefort - La Renney
+TBC5972PBL56R,Blanquefort - La Renney
+TBC5973LYC56A,Blanquefort - Maurian
+TBC5974LYC56R,Blanquefort - Maurian
+TBC5975CAY56A,Blanquefort - Caychac La Rivière
+TBC5976CAY56R,Blanquefort - Caychac La Rivière
+TBC5978ACU79R,Le Taillan-Médoc - Allée de Curé
+TBC5979ACU79A,Le Taillan-Médoc - Allée de Curé
+TBC5980CEY79R,Eysines - Cimetière d'Eysines
+TBC5981LEN15A,Bègles - Lénine
+TBC5982LEN15R,Bègles - Lénine
+TBC5983BON93R,Ambes - Bonnet (rue de la Déportation)
+TBC5984MON32A,Lormont - Montaigne
+TBC5985MTA32R,Lormont - Montaigne
+TBC5986APA32A,Lormont - Avenue de Paris
+TBC5987APA32R,Lormont - Avenue de Paris
+TBC5988RAM93A,Lormont - La Ramade
+TBC5989RAM93R,Lormont - La Ramade
+TBC598SOU54R,Bordeaux - Soubiras
+TBC5990ARC93A,Lormont - L'Archevêque
+TBC5991ARC93R,Lormont - L'Archevêque
+TBC5992TEN26R,Bordeaux - Tenot
+TBC5993DUB26R,Bordeaux - Dubourdieu
+TBC5994BER26R,Bordeaux - Bergonié
+TBC5995TRE26R,Bordeaux - Treuils
+TBC59GRA43A,Gradignan - Granet
+TBC5VRT06A,Floirac - Verts Coteaux
+TBC601MCA40R,Mérignac - Mac Carthy
+TBC604MAN09R,Bordeaux - Mandron
+TBC605GEL71R,Saint-Médard-en-Jalles - Gelès
+TBC606CHA03A,Bordeaux - Chantiers de la Garonne
+TBC608PEL23A,Bordeaux - Pelleport
+TBC609MER47R,Pessac - Merle
+TBC610COI20A,Villenave-d'Ornon - Coin
+TBC611CAB08A,Floirac - Cabannes
+TBC613TER20A,Villenave-d'Ornon - Terrefort
+TBC617AUS27A,Le Bouscat - Avenue Ausone
+TBC618DES64A,Artigues-pres-Bordeaux - Desclaux
+TBC61BER52R,Le Haillan - Bernède
+TBC620XAI48A,Bordeaux - Xaintrailles
+TBC621VET07A,Bouliac - Vettiner
+TBC622LAF23A,Bordeaux - Lafontaine
+TBC623MET71A,Saint-Médard-en-Jalles - Métairie
+TBC624NAN23R,Bordeaux - Caserne Nansouty
+TBC6263TO42A,Gradignan - Les 3 Tours
+TBC629DO223R,Bègles - Le Dorat 2
+TBC631RIV08A,Bordeaux - Rives
+TBC6326JUI81R,Gradignan - Maréchal Juin
+TBC6327MOZ86A,Gradignan - Mozart
+TBC6328MOZ86R,Gradignan - Mozart
+TBC6329GFAU74,Bordeaux - G. Fauré
+TBC632COS53R,Saint-Médard-en-Jalles - COSEC
+TBC6330FDR80R,Floirac - Floirac Dravemont
+TBC6331CHS94A,Carbon-Blanc - Chemin du Sourd
+TBC6332BPA94A,Ambares-et-Lagrave - Bout du Parc
+TBC6333BPA94R,Ambares-et-Lagrave - Bout du Parc
+TBC6334JPR49A,Ambares-et-Lagrave - Jean Prat
+TBC6335JPR49R,Ambares-et-Lagrave - Jean Prat
+TBC6336GNO48R,Mérignac - Grange Noire (Ateliers Municipaux)
+TBC6338CMA49R,Ambares-et-Lagrave - Collège Claude Massé
+TBC6339CMA49A,Ambares-et-Lagrave - Collège Claude Massé
+TBC633HLI46R,Pessac - Haut Livrac
+TBC6340DES50A,Bordeaux - Quai Deschamps (vers quai de Queyries)
+TBC6342LIN70A,Mérignac - Lindbergh
+TBC6343LIN70R,Mérignac - Lindbergh
+TBC6344TEM29R,Bruges - Les Templiers
+TBC6345GDA35R,Bruges - Grand Darnal
+TBC6346GDA35A,Bruges - Grand Darnal
+TBC6347STD73R,Bruges - Stade Daugère
+TBC6348STD73A,Bruges - Stade Daugère
+TBC6349BAU29A,Eysines - Baudon
+TBC634PAST9A,Bordeaux - Pasteur
+TBC6351MVI46R,Le Bouscat - R.P.A Mieux Vivre
+TBC6352MVI46A,Le Bouscat - R.P.A Mieux Vivre
+TBC6353RIG46A,Le Bouscat - Rigal
+TBC6354BOU46A,Le Bouscat - Boutaut
+TBC635JJA27A,Bruges - Jean Jaurès
+TBC6363LAN56A,Blanquefort - Landille
+TBC6364LAN56R,Blanquefort - Landille
+TBC6365TUJ57R,Blanquefort - Tujean
+TBC6366TUJ57A,Blanquefort - Tujean
+TBC636MUR16A,Bordeaux - Murat
+TBC6375AIA28R,Bordeaux - AIA
+TBC6376LXB37R,Blanquefort - Luxembourg
+TBC6377LXB37A,Blanquefort - Luxembourg
+TBC6378GIL37R,Blanquefort - Gilamon
+TBC6379GIL37A,Blanquefort - Gilamon
+TBC637GPAR9A,Bordeaux - Grand Parc
+TBC6380TIL72R,Eysines - Tilleuls
+TBC6381SOL33A,Mérignac - Mérignac Soleil
+TBC6382STA10A,Bordeaux - Stalingrad
+TBC6383JBO10A,Bordeaux - Jardin Botanique
+TBC6384TBE10A,Bordeaux - Thiers-Benauge
+TBC6385TBE10R,Bordeaux - Thiers-Benauge
+TBC6386STA10R,Bordeaux - Stalingrad
+TBC638DOM63A,Artigues-pres-Bordeaux - Domaine du Gay
+TBC6393AIA28A,Bordeaux - AIA
+TBC6395REP55R,Saint-Médard-en-Jalles - République
+TBC6396MATH39R,Le Taillan-Médoc - Mathyadeux
+TBC6397FCHAUXA,Le Taillan-Médoc - Four à Chaux
+TBC6398GELESA,Le Taillan-Médoc - Gelès
+TBC6399PJA37A,Blanquefort - Parc des Jalles
+TBC639BON21A,Villenave-d'Ornon - Bonnardel
+TBC6400PJA37R,Blanquefort - Parc des Jalles
+TBC6402GAL10A,Bordeaux - Galin
+TBC6403PFL02R,Eysines - Place Florale Terminus
+TBC6408RCO01R,Mérignac - René Coty
+TBC6411BEC30R,Le Haillan - Bechade
+TBC641JPA09A,Bordeaux - Jeu de Paume
+TBC6421SOU32A,Bordeaux - Sousa Mendès
+TBC6422SOU32R,Bordeaux - Sousa Mendès
+TBC6424DUB32A,Lormont - Du Bellay
+TBC6425HAU32A,Lormont - Hautefort
+TBC6426HAU32R,Lormont - Hautefort
+TBC6427AI28R2,Floirac - AIA
+TBC6428AI28A2,Floirac - AIA
+TBC6429ETA28R,Floirac - Etangs
+TBC6431MTS90R,Bassens - Montsouris
+TBC6432MTS90A,Bassens - Montsouris
+TBC6433BF76TR,Bordeaux - Bassins à Flot (station Tram)
+TBC6434MON76A,Parempuyre - Montoya
+TBC6435FRO16R,Mérignac - Frères Robinson
+TBC6436FRO16A,Mérignac - Frères Robinson
+TBC643AFR21A,Villenave-d'Ornon - Anatole France
+TBC644LOG13A,Bordeaux - Lognac
+TBC645GEN21R,Villenave-d'Ornon - La Générale
+TBC646MEI95A,Carbon-Blanc - Place Meignan
+TBC647XAIN9A,Bordeaux - Xaintrailles
+TBC649LGR42A,Gradignan - Lycée des Graves
+TBC64DUR23R,Bègles - Durcy
+TBC650CHE46R,Cestas - Les Chênes
+TBC651CGA08A,Floirac - Cours Gambetta
+TBC654DOT23A,Bègles - Dotézac
+TBC655REOL9A,Bordeaux - Rue de la Réole
+TBC656FFE48R,Bordeaux - Francisco Ferrer
+TBC657PER16A,Bordeaux - Périnot
+TBC658MOU55A,Eysines - Moussa
+TBC65PER44R,Pessac - Perrin
+TBC660REP55A,Saint-Médard-en-Jalles - République
+TBC661GER91A,Saint-Louis-de-Montferrand - Gereyme
+TBC662THM22R,Bègles - Thomas (côté Chapelle Mussonville)
+TBC663BBE23A,Bordeaux - Barrière de Bègles
+TBC666AUR16R,Bordeaux - Auriac
+TBC667EC982R,Mérignac - Echangeur n°9
+TBC668MON92R,Saint-Vincent-de-Paul - Mondion
+TBC669RUS06A,Floirac - Russel
+TBC66PCA05A,Bordeaux - Petit Cardinal
+TBC670BEA47A,Pessac - Beauséjour
+TBC671DOM63R,Artigues-pres-Bordeaux - Domaine du Gay
+TBC673PRE54R,Bordeaux - Pressensé
+TBC674PAU10A,Bordeaux - Paulin
+TBC675LAF22R,Bordeaux - Lafontaine
+TBC676GUY08A,Cenon - Guyon
+TBC677RPA76A,Le Bouscat - R.P.A La Bérengère
+TBC679LAJ22R,Bordeaux - Lajarte
+TBC680CAM92R,Ambares-et-Lagrave - La Campanie
+TBC681CHR11,Bordeaux - Hôpital Pellegrin (entrée Est)
+TBC682MON16A,Bordeaux - Montesquieu
+TBC684LAL20A,Villenave-d'Ornon - Lalanne
+TBC686VEL54R,Bordeaux - Vélodrome
+TBC687FOR52A,Eysines - La Forêt
+TBC688PWI50A,Mérignac - Président Wilson
+TBC689MON21A,Villenave-d'Ornon - Montherlant
+TBC68NOU08A,Cenon - Nouaux
+TBC690ERA47R,Pessac - Les Erables
+TBC691LEC54R,Bordeaux - Général Leclerc
+TBC692JOU20R,Bègles - Jouhaux
+TBC693VAI83A,Talence - E. Vaillant
+TBC694COM13A,Bordeaux - Square Emile Combes
+TBC695SNC02A,Bordeaux - Cité SNCF
+TBC696LAC16R,Bordeaux - Lachassaigne
+TBC697BER82R,Le Haillan - Berles
+TBC698SAG02R,Bordeaux - Saget
+TBC69POI57A,Le Bouscat - Poincaré
+TBC700PLA58A,Blanquefort - Anita Conti
+TBC702LAJ03A,Bordeaux - Lajaunie
+TBC703GUT80R,Pessac - Gutenberg
+TBC707BEA22R,Bordeaux - Beautiran
+TBC709MOC71R,Saint-Médard-en-Jalles - Moulin de Caupian
+TBC713GAU01A,Bordeaux - Gaussen
+TBC714FRO92A,Ambares-et-Lagrave - Le Fronton
+TBC715BGOT9A,Bordeaux - Bertrand de Goth
+TBC716FLE36R,Bruges - Fleuranceau
+TBC717CRE58A,Parempuyre - Crébadin
+TBC71VER64A,Artigues-pres-Bordeaux - Verdot
+TBC720CBL72A,Mérignac - Chardons Bleus
+TBC721FEL22R,Bègles - Fellonneau
+TBC722VER13R,Bordeaux - Verte
+TBC723LJM06A,Blanquefort - Lycée Jean Monnet
+TBC725PWI50R,Mérignac - Président Wilson
+TBC726MON92A,Saint-Vincent-de-Paul - Mondion
+TBC729VOL02A,Bordeaux - Voltaire
+TBC72VIO52A,Eysines - Violettes
+TBC730MON50R,Mérignac - Mondésir Poste
+TBC731PLA75R,Mérignac - Plaisance
+TBC732MON80R,Gradignan - Montfort
+TBC733PAU22A,Bègles - Saint-Paulin
+TBC734SAE22A,Bègles - Gare de Bègles
+TBC735PJU13A,Bordeaux - Piscine Judaïque
+TBC737CAM62R,Cenon - Camparian
+TBC739BEC52R,Le Haillan - Bechade
+TBC741GLU63A,Artigues-pres-Bordeaux - Gay Lussac
+TBC742BEA22A,Bordeaux - Beautiran
+TBC744CGR37R,Le Taillan-Médoc - Cante-Gric
+TBC748BER06A,Floirac - Béraldi
+TBC749FLE36A,Bruges - Fleuranceau
+TBC74RIG21R,Villenave-d'Ornon - Rigaillou
+TBC752MAN27A,Bordeaux - Mandron
+TBC753TLO20A,Villenave-d'Ornon - Tillon
+TBC754NOU22R,Bègles - Nouzarède
+TBC755FRA51A,Bordeaux - Fragonard
+TBC756BIB02R,Bègles - Bibliothèque
+TBC758TRI55A,Saint-Médard-en-Jalles - Tristan
+TBC759CFA80A,Pessac - AFPA Pessac
+TBC75SQP90A,Bassens - Square Prévert
+TBC760LAR31R,Bordeaux - Laroque
+TBC763RGA73R,Mérignac - Roland Garros
+TBC767AUS57A,Le Bouscat - Avenue Ausone
+TBC769DEV16R,Bordeaux - Deveaux
+TBC76JAC07R,Floirac - La Jacquotte
+TBC771EPA20R,Bègles - Epargne
+TBC772HLI46A,Pessac - Haut Livrac
+TBC773LAR13A,Bordeaux - Lartigue
+TBC77514J45A,Bordeaux - 14 Juillet
+TBC776BOB41A,Gradignan - Bobet
+TBC778MDO50A,Mérignac - Marx Dormoy
+TBC779LAM20A,Cadaujac - Lamothe
+TBC77TUR10R,Bordeaux - Turenne
+TBC781SOL42A,Gradignan - Solarium
+TBC782BEL92R,Ambares-et-Lagrave - Belloc
+TBC785REP48A,Bordeaux - République
+TBC786BRU03R,Lormont - Brutails
+TBC788TOU90A,Bassens - Toutaud
+TBC78ORI53A,Saint-Médard-en-Jalles - Orion
+TBC790DEL91R,Ambes - Delacroix
+TBC791GOI50R,Mérignac - Goillot
+TBC794BEL53R,Saint-Médard-en-Jalles - Belfort
+TBC795BBE22R,Bègles - Barrière de Bègles
+TBC798LAK76A,Le Bouscat - Lakanal
+TBC799KIE10R,Bordeaux - Kieser
+TBC79CAP53A,Le Haillan - Capella
+TBC7BER23R,Bordeaux - Bertin
+TBC801NIE03R,Bordeaux - Maréchal Niel
+TBC804LAN80R,Pessac - Langevin
+TBC805ALL38R,Lormont - Allende
+TBC806PCO31A,Bordeaux - Palais des Congrès
+TBC807AGR37A,Le Taillan-Médoc - Agrières
+TBC808SOC47A,Pessac - Socrate
+TBC809DEM75A,Mérignac - Demosthène
+TBC80CUR21A,Villenave-d'Ornon - Pierre Curie
+TBC810DOT23R,Bègles - Dotézac
+TBC811HAM58A,Parempuyre - Hameau du Château
+TBC813REN76A,Le Bouscat - Renaudel
+TBC814VAL48R,Mérignac - Vallon
+TBC815FAU47A,Pessac - Fauré
+TBC816MAG47R,Pessac - Magonty
+TBC817PAI21R,Villenave-d'Ornon - Rue de la Paix
+TBC819HUT36A,Bruges - La Hutte
+TBC820FON63R,Artigues-pres-Bordeaux - Fontaudin
+TBC821BLE51R,Bordeaux - Bleuets
+TBC823BOU16R,Bordeaux - Bourse du Travail
+TBC8244SA67A,Artigues-pres-Bordeaux - Les 4 Saisons
+TBC827RME36A,Bruges - Route du Médoc
+TBC828MAD91R,Saint-Louis-de-Montferrand - Madran
+TBC830LYC30R,Mérignac - Lycées de Mérignac
+TBC833GLO36R,Mérignac - Le Grand Louis
+TBC835BOU76A,Le Bouscat - Boutaut
+TBC836CHU72R,Mérignac - Avenue du Chut
+TBC837LON10R,Bordeaux - Longchamps
+TBC841EMA42R,Talence - Ecole de Management
+TBC843DIA67A,Artigues-pres-Bordeaux - Diane
+TBC846LAN42R,Gradignan - Lange
+TBC847PNIV27,Bruges - Passage à niveau
+TBC848PAR55A,Le Taillan-Médoc - La Pargaud
+TBC849FOR51R,Mérignac - La Forêt
+TBC850NANS9A,Bordeaux - Nansouty
+TBC852COM06A,Floirac - Combes
+TBC855CCO02R,Bègles - Rives d`Arcins
+TBC856DUT10R,Bordeaux - Dutertre
+TBC857TLO20R,Villenave-d'Ornon - Tillon
+TBC859VIL06A,Cenon - Villon
+TBC860CHA20A,Cadaujac - Chantecric
+TBC861BOU32A,Floirac - Bourbon
+TBC862TAF20R,Bordeaux - Taffanel
+TBC865MAN35A,Mérignac - Pierre Mendès France
+TBC868CGA08R,Cenon - Cours Gambetta
+TBC869SOU21A,Villenave-d'Ornon - Parc Sourreil
+TBC870SOU54A,Le Bouscat - Soubiras
+TBC873CAR52R,Bordeaux - Carton
+TBC874JON63R,Artigues-pres-Bordeaux - Jonquilles
+TBC875RAC54A,Le Bouscat - Racine
+TBC876CAUS5R,Floirac - Caussade
+TBC877MBE23A,Bègles - Mairie de Bègles
+TBC880FEN90R,Bassens - Fénelon
+TBC881JOU20A,Villenave-d'Ornon - Jouhaux
+TBC882EYME27,Bruges - Eyme
+TBC883CAM92A,Ambares-et-Lagrave - La Campanie
+TBC884LAV74A,Bassens - Lavoir
+TBC885RUN62A,Cenon - Rue de l'Union
+TBC886CAP16R,Bordeaux - Capucins
+TBC887LEO21A,Villenave-d'Ornon - Collège Pont de la Maye
+TBC889DOR50A,Mérignac - Dorgelès
+TBC88LIC46A,Pessac - Lou Licot
+TBC892BOE37A,Le Taillan-Médoc - La Boétie
+TBC893OAU49A,Mérignac - Oscar Auriac
+TBC894BET82A,Le Haillan - Betnoms
+TBC896LUZ24A,Bordeaux - Luze
+TBC897JUL53A,Saint-Médard-en-Jalles - Julien
+TBC898PRE54A,Le Bouscat - Pressensé
+TBC899PMAR9A,Bordeaux - Place Maran
+TBC89CAP10R,Bordeaux - Capdeville
+TBC8CLO49R,Mérignac - Chemin Long
+TBC903BOU91A,Saint-Louis-de-Montferrand - Le Bousquet
+TBC904KEN63R,Lormont - Kennedy (vers Buttinière)
+TBC905DEL32R,Floirac - Delacroix
+TBC907GAL20R,Villenave-d'Ornon - Galgon
+TBC909FEN90A,Bassens - Fénelon
+TBC90MRA50A,Bordeaux - Monrabeau
+TBC911ARS44R,Pessac - Arsonval
+TBC912PFR54A,Le Bouscat - Pins-Francs
+TBC913CLE54A,Le Bouscat - Clemenceau
+TBC914GER91R,Saint-Louis-de-Montferrand - Gereyme
+TBC915JUD10A,Bordeaux - Piscine Judaïque
+TBC916ROC42R,Gradignan - Rochefort
+TBC917PCA04A,Bordeaux - Picard
+TBC918CHU72A,Mérignac - Avenue du Chut
+TBC919VEL52A,Bordeaux - Vélodrome
+TBC91MOZ52R,Le Haillan - Mermoz
+TBC920TUL44R,Pessac - Les Tulipes
+TBC921MAR10A,Bordeaux - Martin
+TBC922MAR01R,Bordeaux - Martinique
+TBC923DES64R,Artigues-pres-Bordeaux - Desclaux
+TBC925MER47A,Pessac - Merle
+TBC927SGE56A,Bruges - Ste Germaine
+TBC92811N75R,Mérignac - Place du 11 Novembre
+TBC929VIL58A,Parempuyre - Villa
+TBC92PEY16A,Bordeaux - Peyronnet (côté Pl. Meunier)
+TBC932VER07R,Bouliac - Vergne
+TBC933REN72A,Mérignac - Les Renardeaux
+TBC936BRI57R,Bruges - Brion
+TBC937MCA95R,Carbon-Blanc - Mairie de Carbon Blanc
+TBC938DUH23A,Bègles - Duhamel
+TBC93LAP81R,Pessac - La Paillère
+TBC940GLA42A,Gradignan - Grande Lande
+TBC941SQM08A,Floirac - Square Monrepos
+TBC942PAG75R,Mérignac - Pagnol
+TBC943ZOL95A,Carbon-Blanc - Emile Zola
+TBC947PER50R,Mérignac - Perrin
+TBC948DEV16A,Bordeaux - Deveaux
+TBC949LIB52A,Eysines - Libération
+TBC94GOD57R,Bordeaux - Godard
+TBC950LMA93A,Carbon-Blanc - Lamartine
+TBC951PIC01R,Bordeaux - Picard
+TBC9528MA37A,Blanquefort - 8 Mai
+TBC953BER80R,Gradignan - Bersol
+TBC954BRE46R,Pessac - Bretagne
+TBC955BPD90A,Bassens - Pomme d'Or
+TBC956PSJ19A,Bordeaux - Pont Saint-Jean
+TBC957ROU08A,Floirac - Rousseau
+TBC95RAC40R,Talence - Racine
+TBC960JBO53R,Saint-Aubin-de-Médoc - Joli Bois
+TBC961TRI55R,Saint-Médard-en-Jalles - Tristan
+TBC962VIN05A,Bordeaux - Vincent
+TBC965CAP53R,Le Haillan - Capella
+TBC966CAM21A,Villenave-d'Ornon - Camparian
+TBC968NOU08R,Cenon - Nouaux
+TBC969LGR49A,Mérignac - La Grave
+TBC96INR21R,Villenave-d'Ornon - INRA
+TBC971SAUR27,Bruges - Saura
+TBC972CRE58R,Parempuyre - Crébadin
+TBC973EFA38A,Lormont - Lycée Elie Faure
+TBC974PLA20A,Villenave-d'Ornon - Salle Georges Méliès
+TBC975CHZ71R,Saint-Médard-en-Jalles - Chazeau
+TBC977EME07A,Bouliac - Centre Emetteur
+TBC978COS53A,Saint-Médard-en-Jalles - COSEC
+TBC979BNT92R,Ambares-et-Lagrave - Bernatet
+TBC981GUY52A,Eysines - Guynemer
+TBC982MAZ82R,Saint-Médard-en-Jalles - Mazeau
+TBC983AMP09R,Bordeaux - Ampère
+TBC984BET82R,Le Haillan - Betnoms
+TBC985TRO55A,Le Taillan-Médoc - Terre Rouge
+TBC987GUY08R,Cenon - Guyon
+TBC988STA52A,Bordeaux - Saint-Amand
+TBC989ORI53R,Saint-Médard-en-Jalles - Orion
+TBC991MAN24R,Bordeaux - Mandron
+TBC992RGA73A,Mérignac - Roland Garros
+TBC995GAS52R,Le Haillan - Gasquet
+TBC996RN215,Saint-Aubin-de-Médoc - RN 215
+TBC997CAR51A,Bordeaux - Carton
+TBC998AMP09A,Bordeaux - Ampère
+TBC999MAR57A,Bruges - Maryse Bastié
+TBC9BRU75A,Mérignac - Clos des Bruyères
+TBT3684LAURI,Lormont - Lauriers
+TBT3685BFLEA,Lormont - Bois Fleuri
+TBT3686BFLER,Lormont - Bois Fleuri
+TBT3687GRAVA,Lormont - Gravières
+TBT3688GRAVR,Lormont - Gravières
+TBT3689IRIA,Lormont - Iris
+TBT3690IRIR,Lormont - Iris
+TBT3691BUTTA,Lormont - Buttinière
+TBT3692BUTTR,Lormont - Buttinière
+TBT3693MORLE,Cenon - La Morlette
+TBT3694CPELA,Cenon - Pelletan
+TBT3695CPELR,Cenon - Pelletan
+TBT3696PALMA,Cenon - Palmer
+TBT3697PALMR,Cenon - Palmer
+TBT3698CARNA,Cenon - Carnot - Mairie de Cenon
+TBT3699CARNR,Cenon - Carnot - Mairie de Cenon
+TBT3702JAURA,Cenon - Jean Jaurès
+TBT3703JAURR,Cenon - Jean Jaurès
+TBT3704GALIA,Bordeaux - Galin
+TBT3705GALIR,Bordeaux - Galin
+TBT3706TBENA,Bordeaux - Thiers-Benauge
+TBT3707TBENR,Bordeaux - Thiers-Benauge
+TBT3708JARDA,Bordeaux - Jardin Botanique
+TBT3709JARDR,Bordeaux - Jardin Botanique
+TBT3710STALA,Bordeaux - Stalingrad
+TBT3711STALR,Bordeaux - Stalingrad
+TBT3712BRGAA,Bordeaux - Porte de Bourgogne
+TBT3713BRGAR,Bordeaux - Porte de Bourgogne
+TBT3714PALAA,Bordeaux - Place du Palais
+TBT3715PALAR,Bordeaux - Place du Palais
+TBT3716CATHA,Bordeaux - Sainte-Catherine
+TBT3717CATHR,Bordeaux - Sainte-Catherine
+TBT3718HDVAA,Bordeaux - Hôtel de Ville
+TBT3719HDVAR,Bordeaux - Hôtel de Ville
+TBT3720PJUSA,Bordeaux - Palais de Justice
+TBT3721PJUSR,Bordeaux - Palais de Justice
+TBT3722MERIA,Bordeaux - Mériadeck
+TBT3723MERIR,Bordeaux - Mériadeck
+TBT3724BOUGN,Pessac - Bougnard
+TBT3725SAIGA,Pessac - Saige
+TBT3726SAIGR,Pessac - Saige
+TBT3727UNITA,Pessac - Unitec
+TBT3728UNITR,Pessac - Unitec
+TBT3729MONTA,Pessac - Montaigne-Montesquieu
+TBT3730MONTR,Pessac - Montaigne-Montesquieu
+TBT3733DOYEA,Pessac - Doyen Brus
+TBT3734DOYER,Pessac - Doyen Brus
+TBT3735BORDA,Pessac - François Bordes
+TBT3736BORDR,Pessac - François Bordes
+TBT3737ARTMA,Talence - Arts & Métiers
+TBT3738ARTMR,Talence - Arts & Métiers
+TBT3739BETHA,Talence - Béthanie
+TBT3740BETHR,Talence - Béthanie
+TBT3741PEXOA,Talence - Peixotto
+TBT3742PEXOR,Talence - Peixotto
+TBT3743FORUA,Talence - Forum
+TBT3744FORUR,Talence - Forum
+TBT3745ROUSA,Talence - Roustaing
+TBT3746ROUSR,Talence - Roustaing
+TBT3747BGENA,Bordeaux - Barrière Saint-Genès
+TBT3748BGENR,Bordeaux - Barrière Saint-Genès
+TBT3749BERGA,Bordeaux - Bergonié
+TBT3750BERGR,Bordeaux - Bergonié
+TBT3751NICOA,Bordeaux - Saint-Nicolas
+TBT3752NICOR,Bordeaux - Saint-Nicolas
+TBT3753VICTR,Bordeaux - Victoire
+TBT3754VICTA,Bordeaux - Victoire
+TBT3755MUSEA,Bordeaux - Musée d'Aquitaine
+TBT3756MUSER,Bordeaux - Musée d'Aquitaine
+TBT3757HDVBA,Bordeaux - Hôtel de Ville
+TBT3758HDVBR,Bordeaux - Hôtel de Ville
+TBT3759GAMBA,Bordeaux - Gambetta
+TBT3760GAMBR,Bordeaux - Gambetta
+TBT3761THEAA,Bordeaux - Grand Théâtre
+TBT3762THEAR,Bordeaux - Grand Théâtre
+TBT3763QU1B,Bordeaux - Quinconces
+TBT3764QU2B,Bordeaux - Quinconces
+TBT3765SJEAN,Bordeaux - Gare Saint-Jean
+TBT3766TAUZA,Bordeaux - Tauzia
+TBT3767TAUZR,Bordeaux - Tauzia
+TBT3768CRO0IA,Bordeaux - Sainte-Croix
+TBT3769CRO0IB,Bordeaux - Sainte-Croix
+TBT3770SMICA,Bordeaux - Saint-Michel
+TBT3771SMICR,Bordeaux - Saint-Michel
+TBT3772BRGCA,Bordeaux - Porte de Bourgogne
+TBT3773BRGCR,Bordeaux - Porte de Bourgogne
+TBT3774BOURA,Bordeaux - Place de la Bourse
+TBT3775BOURR,Bordeaux - Place de la Bourse
+TBT3776QU1C,Bordeaux - Quinconces
+TBT4579BRUNA,Bordeaux - St-Bruno Hôtel de Région
+TBT4580BRUNR,Bordeaux - St-Bruno Hôtel de Région
+TBT4581POLIA,Bordeaux - Hôtel de Police
+TBT4582POLIR,Bordeaux - Hôtel de Police
+TBT4583GAVIA,Bordeaux - Gaviniès
+TBT4584GAVIR,Bordeaux - Gaviniès
+TBT4585CDELA,Bordeaux - Stade Chaban Delmas
+TBT4586CDELR,Bordeaux - Stade Chaban Delmas
+TBT4587HOPIA,Bordeaux - Hôpital Pellegrin
+TBT4588HOPIR,Bordeaux - Hôpital Pellegrin
+TBT4589AUG1A,Bordeaux - Saint-Augustin
+TBT4590AUG2A,Bordeaux - Saint-Augustin
+TBT5130CENOA,Cenon - Cenon Gare
+TBT5131CENOR,Cenon - Cenon Gare
+TBT5212MORLA,Cenon - La Morlette
+TBT5213JZAYR,Cenon - Jean Zay
+TBT5214JZAYA,Cenon - Jean Zay
+TBT5215MAREA,Cenon - La Marègue
+TBT5216MARER,Cenon - La Marègue
+TBT5217DRAVE,Floirac - Floirac Dravemont
+TBT5228FMITA,Mérignac - François Mitterrand
+TBT5229FMITR,Mérignac - François Mitterrand
+TBT5230PEYCA,Mérignac - Peychotte
+TBT5231PEYCR,Mérignac - Peychotte
+TBT5232ARLAA,Mérignac - Fontaine d'Arlac
+TBT5233ARLAR,Mérignac - Fontaine d'Arlac
+TBT5234VIGNA,Mérignac - Alfred De Vigny
+TBT5235VIGNR,Mérignac - Alfred De Vigny
+TBT5236MENDA,Mérignac - Pierre Mendès France
+TBT5237MENDR,Mérignac - Pierre Mendès France
+TBT52384CHEA,Mérignac - Quatre Chemins
+TBT52394CHER,Mérignac - Quatre Chemins
+TBT5240LYCEA,Mérignac - Lycées de Mérignac
+TBT5241LYCER,Mérignac - Lycées de Mérignac
+TBT5242TMERI,Mérignac - Mérignac Centre
+TBT5244BOUGA,Pessac - Bougnard
+TBT5245MONTEA,Pessac - Camponac Médiathèque
+TBT5246MONTER,Pessac - Camponac Médiathèque
+TBT5247PESSA,Pessac - Pessac Centre
+TBT5252CAPCR,Bordeaux - CAPC Musée d'Art Contemporain
+TBT5253CAPCA,Bordeaux - CAPC Musée d'Art Contemporain
+TBT5254CHARR,Bordeaux - Chartrons
+TBT5255CHARA,Bordeaux - Chartrons
+TBT5256MEDOR,Bordeaux - Cours du Médoc
+TBT5257MEDOA,Bordeaux - Cours du Médoc
+TBT5258HANGR,Bordeaux - Les Hangars
+TBT5259HANGA,Bordeaux - Les Hangars
+TBT5260FLO2B,Bordeaux - Bassins à Flot
+TBT5261FLO1B,Bordeaux - Bassins à Flot
+TBT5394JPUBA,Bordeaux - Jardin Public
+TBT5395JPUBR,Bordeaux - Jardin Public
+TBT5396PDOUA,Bordeaux - Place Paul Doumer
+TBT5397PDOUR,Bordeaux - Place Paul Doumer
+TBT5398GODAA,Bordeaux - Camille Godard
+TBT5399GODAR,Bordeaux - Camille Godard
+TBT5400ECOUA,Bordeaux - Emile Counord
+TBT5401ECOUR,Bordeaux - Emile Counord
+TBT5402GPARA,Bordeaux - Grand Parc
+TBT5403GPARR,Bordeaux - Grand Parc
+TBT5404QU2C,Bordeaux - Quinconces
+TBT5412RAVEA,Bordeaux - Place Ravezies - le Bouscat
+TBT5413RAVER,Bordeaux - Place Ravezies - le Bouscat
+TBT5414AUBI1C,Bordeaux - Les Aubiers
+TBT5415AUBI2C,Bordeaux - Les Aubiers
+TBT5433SJEAR,Bordeaux - Gare Saint-Jean
+TBT5434BELCA,Bordeaux - Belcier
+TBT5435BELCR,Bordeaux - Belcier
+TBT5436VERNR,Bordeaux - Carle Vernet
+TBT5437VERNA,Bordeaux - Carle Vernet
+TBT5438NEUVE,Bègles - Terres Neuves
+TBT5441HVILR,Lormont - Mairie de Lormont
+TBT5442HVILA,Lormont - Mairie de Lormont
+TBT5443CARRA,Lormont - Carriet
+TBT5444CARRR,Lormont - Carriet
+TBT5445LGARDE,Lormont - La Gardette - Bassens - Carbon-Blanc
+TBT5488LAURA,Lormont - Lauriers
+TBT5528ACHAA,Bordeaux - Rue Achard
+TBT5529ACHAR,Bordeaux - Rue Achard
+TBT5530NYORKA,Bordeaux - New York
+TBT5531NYORKR,Bordeaux - New York
+TBT5532BRANA,Bordeaux - Brandenburg
+TBT5533BRANR,Bordeaux - Brandenburg
+TBT5534CLA1B,Bordeaux - Claveau
+TBT5535CLA2B,Bordeaux - Claveau
