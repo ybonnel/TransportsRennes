@@ -5,11 +5,13 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import fr.ybo.transportsbordeauxhelper.modeletcb.sax.GetArretsHandler;
 import fr.ybo.transportsbordeauxhelper.modeletcb.sax.GetDirectionsHandler;
 import fr.ybo.transportsbordeauxhelper.modeletcb.sax.GetLignesHandler;
 
@@ -21,10 +23,14 @@ public class Ligne {
 	public String directionForward;
 	public String directionBackward;
 	
+	public List<Arret> arretsForward = new ArrayList<Arret>();
+	public List<Arret> arretsBackward = new ArrayList<Arret>();
+
 	protected void remplirDirections() {
 
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(TcbConstantes.TCB_DIRECTION.replaceAll("\\{stop_id\\}", identifiant)).openConnection();
+			HttpURLConnection connection = (HttpURLConnection) new URL(TcbConstantes.TCB_DIRECTION.replaceAll(
+					"\\{ligne_id\\}", identifiant)).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
 			connection.connect();
@@ -48,6 +54,35 @@ public class Ligne {
 		}
 	}
 	
+	private List<Arret> getArrets(String url) {
+		try {
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(true);
+			connection.connect();
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			StringBuilder stringBuilder = new StringBuilder();
+			String ligne = bufReader.readLine();
+			while (ligne != null) {
+				stringBuilder.append(ligne.replaceAll("id=\"\"", ""));
+				ligne = bufReader.readLine();
+			}
+
+			GetArretsHandler handler = new GetArretsHandler();
+			SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser parser = factory.newSAXParser();
+			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
+			return handler.getArrets();
+		} catch (Exception exception) {
+			throw new TcbException(exception);
+		}
+	}
+	
+	public void remplirArrets() {
+		arretsBackward.addAll(getArrets(TcbConstantes.TCB_ARRET_BACKWARD.replaceAll("\\{ligne_id\\}", identifiant)));
+		arretsForward.addAll(getArrets(TcbConstantes.TCB_ARRET_FORWARD.replaceAll("\\{ligne_id\\}", identifiant)));
+
+	}
 	
 	public static List<Ligne> getLignes() {
 		try {
@@ -65,9 +100,16 @@ public class Ligne {
 						SAXParserFactory factory = SAXParserFactory.newInstance();
 						SAXParser parser = factory.newSAXParser();
 						parser.parse(new ByteArrayInputStream(chaine.getBytes()), handler);
+						Ligne premiereLigne = handler.getLignes().get(0);
+						handler.getLignes().clear();
+						handler.getLignes().add(premiereLigne);
 						for (Ligne ligne : handler.getLignes()) {
 							System.out.println("Ajout des directions de " + ligne.nom);
 							ligne.remplirDirections();
+							System.out.println("Ajout des arrêts de " + ligne.nom);
+							ligne.remplirArrets();
+							System.out.println("Forward : " + ligne.arretsForward.size());
+							System.out.println("Backword : " + ligne.arretsBackward.size());
 						}
 						return handler.getLignes();
 					}
@@ -82,16 +124,11 @@ public class Ligne {
 		}
 	}
 
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Ligne [identifiant=" + this.identifiant + ", type=" + this.type
-				+ ", nom=" + this.nom + ", directionForward="
-				+ this.directionForward + ", directionBackward="
-				+ this.directionBackward + "]";
+		return "Ligne [identifiant=" + identifiant + ", type=" + type + ", nom=" + nom + ", directionForward="
+				+ directionForward + ", directionBackward=" + directionBackward + ", arretsForward=" + arretsForward
+				+ ", arretsBackward=" + arretsBackward + "]";
 	}	
 	
 	
