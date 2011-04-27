@@ -22,6 +22,11 @@ public class GetHorairesHandler extends DefaultHandler {
 	private ArretLigne arretLigne;
 	private boolean forward;
 	private int calendierId;
+	private boolean erreur = false;
+
+	public boolean isErreur() {
+		return erreur;
+	}
 
 	public GetHorairesHandler(ArretLigne arretLigne, boolean forward, int calendrierId) {
 		super();
@@ -49,7 +54,9 @@ public class GetHorairesHandler extends DefaultHandler {
 			throws SAXException {
 		super.endElement(pUri, pLocalName, pQName);
 		if (horaireCourante != null && pQName.equals(BALISE_A)) {
-			horaires.add(horaireCourante);
+			if (horaireCourante.horaire != null) {
+				horaires.add(horaireCourante);
+			}
 			horaireCourante = null;
 		}
 	}
@@ -71,7 +78,12 @@ public class GetHorairesHandler extends DefaultHandler {
 				&& attributes.getValue(ATTRIBUT_CLASS) == null) {
 			String horaireChaine = attributes.getValue(ATTRIBUT_TITLE);
 			String[] horaireChaineSplit = horaireChaine.split("h");
-			horaireCourante.horaire = (Integer.parseInt(horaireChaineSplit[0]) * 60) + Integer.parseInt(horaireChaineSplit[1]);
+			if (horaireChaineSplit.length == 2) {
+				horaireCourante.horaire = (Integer.parseInt(horaireChaineSplit[0]) * 60)
+						+ Integer.parseInt(horaireChaineSplit[1]);
+			} else {
+				erreur = true;
+			}
 		}
 
 	}
