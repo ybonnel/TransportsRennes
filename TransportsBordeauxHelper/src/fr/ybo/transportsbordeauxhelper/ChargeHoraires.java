@@ -1,8 +1,10 @@
 package fr.ybo.transportsbordeauxhelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.ybo.transportsbordeauxhelper.modeletcb.ArretLigne;
+import fr.ybo.transportsbordeauxhelper.modeletcb.Horaire;
 
 public class ChargeHoraires {
 
@@ -17,8 +19,9 @@ public class ChargeHoraires {
 	public static void main(String[] args) {
 		GestionnaireLigne gestionnaireLigne = new GestionnaireLigne();
 		List<ArretLigne> arretsLignes = gestionnaireLigne.getArretsLignes();
+		List<Horaire> horaires = new ArrayList<Horaire>();
 		for (ArretLigne arretLigne : arretsLignes) {
-
+			
 		}
 		
 	}
