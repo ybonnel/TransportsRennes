@@ -84,22 +84,19 @@ public class ChargeHoraires {
 				Thread.sleep(200);
 				compteurLocal = compteurThread.incrementAndGet();
 			}
-			if ((System.currentTimeMillis() - startLocalTime) > 60000) {
-				System.out.println("Détection d'un temps d'attente > 60s -> Attente de 20 minutes");
-				Thread.sleep(1200000);
-			} else if ((System.currentTimeMillis() - startLocalTime) > 30000) {
-				System.out.println("Détection d'un temps d'attente > 30s -> Attente de 10 minutes");
-				Thread.sleep(600000);
+			if ((System.currentTimeMillis() - startLocalTime) > 30000) {
+				System.out.println("Détection d'un temps d'attente > 30s -> Attente de 60 minutes");
+				Thread.sleep(3600000);
 			} else if ((System.currentTimeMillis() - startLocalTime) > 10000) {
-				System.out.println("Détection d'un temps d'attente > 10s -> Attente de 5 minute");
-				Thread.sleep(300000);
+				System.out.println("Détection d'un temps d'attente > 10s -> Attente de 15 minute");
+				Thread.sleep(900000);
 			}
 			new MyThread(arretLigne).start();
 			count++;
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			if (count > maxThread) {
 				long tempsTraitment = System.currentTimeMillis() - startTime;
-				long tempsMoyen = ((tempsTraitment - (maxThread * 500)) / (count - maxThread));
+				long tempsMoyen = ((tempsTraitment - (maxThread * 1000)) / (count - maxThread));
 				int tempsRestantSecondes = (int) (((nbArretLigne - (count - maxThread)) * tempsMoyen) / 1000);
 				int tempsRestantMinutes = tempsRestantSecondes / 60;
 				tempsRestantSecondes -= (tempsRestantMinutes * 60);
