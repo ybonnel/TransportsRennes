@@ -11,20 +11,31 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeauxhelper.modeletcb.sax.GetHorairesHandler;
 
 @FichierCsv("horaires.txt")
 public class Horaire {
 
+	@BaliseCsv( value = "arret_id", ordre = 1 )
 	public String arretId;
+	@BaliseCsv( value = "ligne_id", ordre = 2 )
 	public String ligneId;
+	@BaliseCsv( value = "horaire", ordre = 3, adapter = AdapterInteger.class )
 	public Integer horaire;
+	@BaliseCsv( value = "forward", ordre = 4, adapter = AdapterBoolean.class )
 	public Boolean forward;
+	@BaliseCsv( value = "backward", ordre = 5, adapter = AdapterBoolean.class )
 	public Boolean backward;
+	@BaliseCsv( value = "url", ordre = 6 )
 	public String url;
+	@BaliseCsv( value = "calendrier_id", ordre = 7, adapter = AdapterInteger.class )
+	public Integer calendrierId;
 	
-	private static List<Horaire> getHoraires(String date, ArretLigne arretLigne, boolean forward) {
+	private static List<Horaire> getHoraires(String date, ArretLigne arretLigne, boolean forward, Calendrier calendrier) {
 		try {
 			// Récupération sur la page internet du table d'horaire.
 			HttpURLConnection connection = (HttpURLConnection) new URL(
@@ -45,7 +56,7 @@ public class Horaire {
 					}
 					if (tableEnCours) {
 						stringBuilder.append(ligne);
-						if (ligne.contains("<\\/table>")) {
+						if (ligne.contains("</table>")) {
 							break;
 						}
 					}
@@ -56,7 +67,7 @@ public class Horaire {
 			}
 			
 			// Parsing SAX du tableau d'horaires.
-			GetHorairesHandler handler = new GetHorairesHandler(arretLigne, forward);
+			GetHorairesHandler handler = new GetHorairesHandler(arretLigne, forward, calendrier.id);
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
@@ -66,15 +77,15 @@ public class Horaire {
 		}
 	}
 
-	public static List<Horaire> getHoraires(String date, ArretLigne arretLigne) {
+	public static List<Horaire> getHoraires(String date, ArretLigne arretLigne, Calendrier calendrier) {
 		List<Horaire> horaires = new ArrayList<Horaire>();
 		if (arretLigne.forward) {
-			horaires.addAll(getHoraires(date, arretLigne, true));
+			horaires.addAll(getHoraires(date, arretLigne, true, calendrier));
 		}
 		if (arretLigne.backward) {
-			horaires.addAll(getHoraires(date, arretLigne, false));
+			horaires.addAll(getHoraires(date, arretLigne, false, calendrier));
 		}
-		return new ArrayList<Horaire>();
+		return horaires;
 	}
 
 }

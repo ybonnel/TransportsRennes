@@ -21,11 +21,13 @@ public class GetHorairesHandler extends DefaultHandler {
 	
 	private ArretLigne arretLigne;
 	private boolean forward;
+	private int calendierId;
 
-	public GetHorairesHandler(ArretLigne arretLigne, boolean forward) {
+	public GetHorairesHandler(ArretLigne arretLigne, boolean forward, int calendrierId) {
 		super();
 		this.arretLigne = arretLigne;
 		this.forward = forward;
+		this.calendierId = calendrierId;
 	}
 
 	private Horaire horaireCourante;
@@ -62,6 +64,7 @@ public class GetHorairesHandler extends DefaultHandler {
 			horaireCourante.ligneId = arretLigne.ligneId;
 			horaireCourante.backward = !forward;
 			horaireCourante.forward = forward;
+			horaireCourante.calendrierId = calendierId;
 			horaireCourante.url = attributes.getValue(ATTRIBUT_HREF);
 		}
 		if (horaireCourante != null && qName.equals(BALISE_ABBR)
