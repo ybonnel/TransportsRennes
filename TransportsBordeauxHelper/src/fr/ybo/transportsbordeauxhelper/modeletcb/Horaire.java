@@ -34,6 +34,68 @@ public class Horaire {
 	public String url;
 	@BaliseCsv(value = "calendrier_id", ordre = 7, adapter = AdapterInteger.class)
 	public Integer calendrierId;
+	
+	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.arretId == null) ? 0 : this.arretId.hashCode());
+		result = prime * result
+				+ ((this.backward == null) ? 0 : this.backward.hashCode());
+		result = prime * result
+				+ ((this.forward == null) ? 0 : this.forward.hashCode());
+		result = prime * result
+				+ ((this.horaire == null) ? 0 : this.horaire.hashCode());
+		result = prime * result
+				+ ((this.ligneId == null) ? 0 : this.ligneId.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Horaire other = (Horaire) obj;
+		if (this.arretId == null) {
+			if (other.arretId != null)
+				return false;
+		} else if (!this.arretId.equals(other.arretId))
+			return false;
+		if (this.backward == null) {
+			if (other.backward != null)
+				return false;
+		} else if (!this.backward.equals(other.backward))
+			return false;
+		if (this.forward == null) {
+			if (other.forward != null)
+				return false;
+		} else if (!this.forward.equals(other.forward))
+			return false;
+		if (this.horaire == null) {
+			if (other.horaire != null)
+				return false;
+		} else if (!this.horaire.equals(other.horaire))
+			return false;
+		if (this.ligneId == null) {
+			if (other.ligneId != null)
+				return false;
+		} else if (!this.ligneId.equals(other.ligneId))
+			return false;
+		return true;
+	}
 
 	private static List<Horaire> getHoraires(String date, ArretLigne arretLigne, boolean forward,
 			Calendrier calendrier, List<String> urlsEnErreur) {

@@ -28,23 +28,35 @@ import fr.ybo.moteurcsv.annotation.FichierCsv;
 @FichierCsv("calendriers.txt")
 public class Calendrier {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class, ordre = 0)
-	public int id;
+	public Integer id;
 	@BaliseCsv(value = "lundi", adapter = AdapterBoolean.class, ordre = 1)
-	public boolean lundi;
+	public Boolean lundi;
 	@BaliseCsv(value = "mardi", adapter = AdapterBoolean.class, ordre = 2)
-	public boolean mardi;
+	public Boolean mardi;
 	@BaliseCsv(value = "mercredi", adapter = AdapterBoolean.class, ordre = 3)
-	public boolean mercredi;
+	public Boolean mercredi;
 	@BaliseCsv(value = "jeudi", adapter = AdapterBoolean.class, ordre = 4)
-	public boolean jeudi;
+	public Boolean jeudi;
 	@BaliseCsv(value = "vendredi", adapter = AdapterBoolean.class, ordre = 5)
-	public boolean vendredi;
+	public Boolean vendredi;
 	@BaliseCsv(value = "samedi", adapter = AdapterBoolean.class, ordre = 6)
-	public boolean samedi;
+	public Boolean samedi;
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class, ordre = 7)
-	public boolean dimanche;
+	public Boolean dimanche;
 	
+	public Calendrier clone(int id) {
+		return new Calendrier(id, lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche);
+	}
 	
+	public void merge(Calendrier autreCalendrier) {
+		lundi = lundi || autreCalendrier.lundi;
+		mardi = mardi || autreCalendrier.mardi;
+		mercredi = mercredi || autreCalendrier.mercredi;
+		jeudi = jeudi || autreCalendrier.jeudi;
+		vendredi = vendredi || autreCalendrier.vendredi;
+		samedi = samedi || autreCalendrier.samedi;
+		dimanche = dimanche || autreCalendrier.dimanche;
+	}
 	
 	public Calendrier(int pId, boolean pLundi, boolean pMardi,
 			boolean pMercredi, boolean pJeudi, boolean pVendredi,
@@ -59,6 +71,58 @@ public class Calendrier {
 		this.samedi = pSamedi;
 		this.dimanche = pDimanche;
 	}
+	
+	
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (this.dimanche ? 1231 : 1237);
+		result = prime * result + (this.jeudi ? 1231 : 1237);
+		result = prime * result + (this.lundi ? 1231 : 1237);
+		result = prime * result + (this.mardi ? 1231 : 1237);
+		result = prime * result + (this.mercredi ? 1231 : 1237);
+		result = prime * result + (this.samedi ? 1231 : 1237);
+		result = prime * result + (this.vendredi ? 1231 : 1237);
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Calendrier other = (Calendrier) obj;
+		if (this.dimanche != other.dimanche)
+			return false;
+		if (this.jeudi != other.jeudi)
+			return false;
+		if (this.lundi != other.lundi)
+			return false;
+		if (this.mardi != other.mardi)
+			return false;
+		if (this.mercredi != other.mercredi)
+			return false;
+		if (this.samedi != other.samedi)
+			return false;
+		if (this.vendredi != other.vendredi)
+			return false;
+		return true;
+	}
+
+
 
 
 
