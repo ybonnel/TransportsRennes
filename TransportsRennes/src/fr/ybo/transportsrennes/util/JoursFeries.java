@@ -39,7 +39,7 @@ public class JoursFeries {
 	}
 
 	public static boolean is1erMai(Date date) {
-		return "0101".equals(SIMPLE_DATE_FORMAT_1ER_MAI.format(date));
+		return "0105".equals(SIMPLE_DATE_FORMAT_1ER_MAI.format(date));
 	}
 
 	private static Collection<String> getJoursFeries() {

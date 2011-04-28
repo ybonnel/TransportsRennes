@@ -80,7 +80,7 @@ public class Horaire {
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Trajet.macroDirection = :macroDirection");
 
-		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendar.getTime())) {
+		if (!JoursFeries.is1erMai(calendar.getTime())) {
 			requete.append(" and Horaire.terminus = 0");
 		} else {
 			requete.append(" and Horaire.terminus = 2");
@@ -105,7 +105,7 @@ public class Horaire {
 		// Réquète.
 		List<String> selectionArgs = new ArrayList<String>(7);
 		StringBuilder requete = new StringBuilder();
-		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendarLaVeille.getTime())) {
+		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
 			requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
 			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
 			requete.append("from Calendrier,  Horaire_");
@@ -127,7 +127,7 @@ public class Horaire {
 			selectionArgs.add(Integer.toString(macroDirection));
 			selectionArgs.add(Integer.toString(now + uneJournee));
 		}
-		if ("a".equals(ligneId) || !JoursFeries.is1erMai(calendar.getTime())) {
+		if (!JoursFeries.is1erMai(calendar.getTime())) {
 			if (requete.length() > 0) {
 				requete.append("UNION ");
 			}
