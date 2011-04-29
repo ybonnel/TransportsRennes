@@ -109,6 +109,7 @@ public class Horaire {
 					HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 					connection.setRequestMethod("GET");
 					connection.setDoOutput(true);
+					connection.setConnectTimeout(60000);
 					connection.connect();
 					BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 					stringBuilder = new StringBuilder();
