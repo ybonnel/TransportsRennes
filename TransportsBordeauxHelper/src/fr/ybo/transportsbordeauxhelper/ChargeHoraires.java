@@ -214,7 +214,8 @@ public class ChargeHoraires {
 		long tempsAttente = 500;
 		long startTime = System.currentTimeMillis();
 		for (ArretLigne arretLigne : arretsLignes) {
-			System.out.println("Avancement : " + count + " / " + nbArretLigne);
+			System.out
+					.println("Avancement : " + count + " / " + nbArretLigne + "(" + compteurThread.get() + "threads)");
 			// Get amount of free memory within the heap in bytes. This size
 			// will increase
 			// after garbage collection and decrease as new objects are created.
@@ -328,7 +329,7 @@ public class ChargeHoraires {
 			.asList(LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE);
 
 	public static void main(String[] args) throws InterruptedException {
-		new ChargeHoraires(5).traitement();
+		new ChargeHoraires(10).traitement();
 	}
 
 }
