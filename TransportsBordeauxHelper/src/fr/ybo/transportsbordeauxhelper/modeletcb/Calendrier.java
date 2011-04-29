@@ -44,6 +44,9 @@ public class Calendrier {
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class, ordre = 7)
 	public Boolean dimanche;
 	
+	public Calendrier() {
+	}
+
 	public Calendrier clone(int id) {
 		return new Calendrier(id, lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche);
 	}
