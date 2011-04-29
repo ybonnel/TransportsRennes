@@ -42,9 +42,12 @@ public class ChargeHoraires {
 	public ChargeHoraires(int maxThread) {
 		super();
 		this.maxThread = maxThread;
+		this.threadCibles = maxThread / 2;
 	}
 
 	private int maxThread;
+
+	private int threadCibles;
 
 	private AtomicInteger compteurThread = new AtomicInteger(0);
 
@@ -59,41 +62,39 @@ public class ChargeHoraires {
 	protected synchronized void addHoraires(Collection<Horaire> horairesToAdd) {
 		horaires.addAll(horairesToAdd);
 	}
-	
-	private Boolean lock = new Boolean(true);
-	private long temps = 0;
-	private long size = 0;
-	
+
+	private List<Long> temps = new ArrayList<Long>();
+
 	private void addTime(long time) {
-		synchronized (lock) {
-			temps += time;
-			size++;
+		synchronized (temps) {
+			temps.add(time);
 		}
 	}
-	
-	private long getNouveauTempsAttente(long tempsAttenteActuel) {
-		synchronized (lock) {
-			if (size > 20) {
-				long nouveauTempsAttente = ((temps / size) / maxThread);
-				size = 0;
-				temps = 0;
-				System.err.println("Nouveau temps d'attente : " + nouveauTempsAttente);
-				return nouveauTempsAttente;
-			} else {
-				return tempsAttenteActuel;
+
+	private long getNouveauTempsAttente() {
+		synchronized (temps) {
+			if (temps.isEmpty()) {
+				return 500;
 			}
+			while (temps.size() > 40) {
+				temps.remove(0);
+			}
+			long tempsTotale = 0;
+			for (Long unTemps : temps) {
+				tempsTotale = tempsTotale + unTemps;
+			}
+			long nouveauTempsAttente = ((tempsTotale / temps.size()) / threadCibles);
+			System.out.println("Nouveau temps d'attente : " + nouveauTempsAttente);
+			return nouveauTempsAttente;
 		}
 	}
-	
-	
 
 	private class MyThread extends Thread {
 
 		private ArretLigne arretLigne;
 		private List<Pair<String, Calendrier>> calendriers;
 
-		public MyThread(ArretLigne arretLigne,
-				List<Pair<String, Calendrier>> calendriers) {
+		public MyThread(ArretLigne arretLigne, List<Pair<String, Calendrier>> calendriers) {
 			this.arretLigne = arretLigne;
 			this.calendriers = calendriers;
 		}
@@ -104,8 +105,7 @@ public class ChargeHoraires {
 			long startTime = System.currentTimeMillis();
 			List<String> urls = new ArrayList<String>();
 			for (Pair<String, Calendrier> calenrier : calendriers) {
-				addHoraires(Horaire.getHoraires(calenrier.getGauche(),
-						arretLigne, calenrier.getDroite(), urls));
+				addHoraires(Horaire.getHoraires(calenrier.getGauche(), arretLigne, calenrier.getDroite(), urls));
 			}
 			addUrlsEnErreur(urls);
 			compteurThread.decrementAndGet();
@@ -115,8 +115,7 @@ public class ChargeHoraires {
 
 	private Map<String, List<Pair<String, Calendrier>>> calendriersParLigne = new HashMap<String, List<Pair<String, Calendrier>>>();
 
-	private boolean memesHoraires(List<Horaire> horaires1,
-			List<Horaire> horaires2) {
+	private boolean memesHoraires(List<Horaire> horaires1, List<Horaire> horaires2) {
 
 		if (horaires1.size() != horaires2.size()) {
 			return false;
@@ -156,11 +155,12 @@ public class ChargeHoraires {
 			Map<String, Calendrier> mapCalendriers = new HashMap<String, Calendrier>();
 			List<String> urlsEnErreurs = new ArrayList<String>();
 			Map<String, List<Horaire>> mapHoraires = new HashMap<String, List<Horaire>>();
-			
+
 			int calendarId = 0;
-			
+
 			for (Pair<String, Calendrier> calendrier : ALL_CALENDRIER) {
-				List<Horaire> horaires = Horaire.getHoraires(calendrier.getGauche(), arretLigne, calendrier.getDroite(), urlsEnErreurs);
+				List<Horaire> horaires = Horaire.getHoraires(calendrier.getGauche(), arretLigne,
+						calendrier.getDroite(), urlsEnErreurs);
 				if (!urlsEnErreurs.isEmpty()) {
 					mapCalendriers.put(calendrier.getGauche(), calendrier.getDroite().clone(++calendarId));
 					urlsEnErreurs.clear();
@@ -175,25 +175,25 @@ public class ChargeHoraires {
 						break;
 					}
 				}
-				
+
 				if (!calendrierMerge) {
 					mapCalendriers.put(calendrier.getGauche(), calendrier.getDroite());
 					mapHoraires.put(calendrier.getGauche(), horaires);
 				}
 			}
-			
+
 			// Réutilisation des calendrier existants.
-			List<Pair<String, Calendrier>> pairCalendriers = new ArrayList<ChargeHoraires.Pair<String,Calendrier>>();
+			List<Pair<String, Calendrier>> pairCalendriers = new ArrayList<ChargeHoraires.Pair<String, Calendrier>>();
 			for (Entry<String, Calendrier> calendrier : mapCalendriers.entrySet()) {
-				pairCalendriers.add(new Pair<String, Calendrier>(calendrier.getKey(), getCalendrierCommun(calendrier.getValue())));
+				pairCalendriers.add(new Pair<String, Calendrier>(calendrier.getKey(), getCalendrierCommun(calendrier
+						.getValue())));
 			}
-			
-			
+
 			if (!hasErreurs) {
 				System.out.println("Ajout du calendrier pour la ligne " + arretLigne.ligneId);
 				calendriersParLigne.put(arretLigne.ligneId, pairCalendriers);
 			}
-			
+
 		}
 		return calendriersParLigne.get(arretLigne.ligneId);
 	}
@@ -220,8 +220,7 @@ public class ChargeHoraires {
 			// will increase
 			// after garbage collection and decrease as new objects are created.
 			long heapFreeSize = Runtime.getRuntime().freeMemory();
-			System.out.println("Mémoire libre : "
-					+ (heapFreeSize / 1024 / 1024) + "Mo");
+			System.out.println("Mémoire libre : " + (heapFreeSize / 1024 / 1024) + "Mo");
 			int compteurLocal = compteurThread.incrementAndGet();
 			while (compteurLocal > maxThread) {
 				compteurThread.decrementAndGet();
@@ -230,7 +229,7 @@ public class ChargeHoraires {
 			}
 			new MyThread(arretLigne, getListCalendrier(arretLigne)).start();
 			count++;
-			tempsAttente = getNouveauTempsAttente(tempsAttente);
+			tempsAttente = getNouveauTempsAttente();
 			Thread.sleep(tempsAttente);
 			if (count > maxThread) {
 				int tempsRestantSecondes = (int) (((nbArretLigne - (count)) * tempsAttente) / 1000);
@@ -238,17 +237,16 @@ public class ChargeHoraires {
 				tempsRestantSecondes -= (tempsRestantMinutes * 60);
 				int tempsRestantHeures = tempsRestantMinutes / 60;
 				tempsRestantMinutes -= (tempsRestantHeures * 60);
-				System.out.println("Temps restant approximatif : "
-						+ tempsRestantHeures + ":" + tempsRestantMinutes + ":"
-						+ tempsRestantSecondes);
+				System.out.println("Temps restant approximatif : " + tempsRestantHeures + ":" + tempsRestantMinutes
+						+ ":" + tempsRestantSecondes);
 			}
 		}
 
 		while (compteurThread.get() > 0) {
 			Thread.sleep(200);
 		}
-		System.out.println("Temps de traitement avec " + maxThread
-				+ " thread : " + (System.currentTimeMillis() - startTime));
+		System.out.println("Temps de traitement avec " + maxThread + " thread : "
+				+ (System.currentTimeMillis() - startTime));
 		System.out.println("Ecriture du fichier resultat");
 		Collections.sort(horaires, new Comparator<Horaire>() {
 
@@ -269,7 +267,7 @@ public class ChargeHoraires {
 				}
 			}
 		});
-		Collections.sort(calendriers, new Comparator<Calendrier>(){
+		Collections.sort(calendriers, new Comparator<Calendrier>() {
 			@Override
 			public int compare(Calendrier o1, Calendrier o2) {
 				if (o1.lundi.equals(o2.lundi)) {
@@ -281,7 +279,7 @@ public class ChargeHoraires {
 										return o1.dimanche.compareTo(o2.dimanche);
 									} else {
 										return o1.samedi.compareTo(o2.samedi);
-									}	
+									}
 								} else {
 									return o1.vendredi.compareTo(o2.vendredi);
 								}
@@ -310,26 +308,22 @@ public class ChargeHoraires {
 
 	}
 
-	private final static Pair<String, Calendrier> LUNDI = new Pair<String, Calendrier>(
-			"2011/05/02", Calendrier.LUNDI);
-	private final static Pair<String, Calendrier> MARDI = new Pair<String, Calendrier>(
-			"2011/05/03", Calendrier.MARDI);
-	private final static Pair<String, Calendrier> MERCREDI = new Pair<String, Calendrier>(
-			"2011/05/04", Calendrier.MERCREDI);
-	private final static Pair<String, Calendrier> JEUDI = new Pair<String, Calendrier>(
-			"2011/05/05", Calendrier.JEUDI);
-	private final static Pair<String, Calendrier> VENDREDI = new Pair<String, Calendrier>(
-			"2011/05/06", Calendrier.VENDREDI);
-	private final static Pair<String, Calendrier> SAMEDI = new Pair<String, Calendrier>(
-			"2011/05/07", Calendrier.SAMEDI);
-	private final static Pair<String, Calendrier> DIMANCHE = new Pair<String, Calendrier>(
-			"2011/05/08", Calendrier.DIMANCHE);
+	private final static Pair<String, Calendrier> LUNDI = new Pair<String, Calendrier>("2011/05/02", Calendrier.LUNDI);
+	private final static Pair<String, Calendrier> MARDI = new Pair<String, Calendrier>("2011/05/03", Calendrier.MARDI);
+	private final static Pair<String, Calendrier> MERCREDI = new Pair<String, Calendrier>("2011/05/04",
+			Calendrier.MERCREDI);
+	private final static Pair<String, Calendrier> JEUDI = new Pair<String, Calendrier>("2011/05/05", Calendrier.JEUDI);
+	private final static Pair<String, Calendrier> VENDREDI = new Pair<String, Calendrier>("2011/05/06",
+			Calendrier.VENDREDI);
+	private final static Pair<String, Calendrier> SAMEDI = new Pair<String, Calendrier>("2011/05/07", Calendrier.SAMEDI);
+	private final static Pair<String, Calendrier> DIMANCHE = new Pair<String, Calendrier>("2011/05/08",
+			Calendrier.DIMANCHE);
 	@SuppressWarnings("unchecked")
-	private final static List<Pair<String, Calendrier>> ALL_CALENDRIER = Arrays
-			.asList(LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE);
+	private final static List<Pair<String, Calendrier>> ALL_CALENDRIER = Arrays.asList(LUNDI, MARDI, MERCREDI, JEUDI,
+			VENDREDI, SAMEDI, DIMANCHE);
 
 	public static void main(String[] args) throws InterruptedException {
-		new ChargeHoraires(10).traitement();
+		new ChargeHoraires(20).traitement();
 	}
 
 }
