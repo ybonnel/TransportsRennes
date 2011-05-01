@@ -82,6 +82,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
+				intent.putExtra("macroDirection", trajet.macroDirection);
 				intent.putExtra("ligne", ligne);
 				startActivity(intent);
 			}
