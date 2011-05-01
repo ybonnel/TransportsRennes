@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="fr.ybo.transportsbordeaux"
+      android:versionCode="90"
+      android:versionName="0.9.0">
+
+
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+    android:debuggable="false" android:name="TransportsBordeauxApplication"
+    android:theme="@android:style/Theme.NoTitleBar">
+
+
+        <uses-library android:name="com.google.android.maps"/>
+
+    </application>
+    
+
+    <uses-sdk android:minSdkVersion="3"
+              android:targetSdkVersion="8"
+              android:maxSdkVersion="11"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+</manifest>
