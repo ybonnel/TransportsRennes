@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ListeBus" android:configChanges="orientation|keyboardHidden"/>
 
 
         <uses-library android:name="com.google.android.maps"/>

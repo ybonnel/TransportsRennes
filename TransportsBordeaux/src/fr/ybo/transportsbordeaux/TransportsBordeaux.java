@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
@@ -142,10 +143,8 @@ public class TransportsBordeaux extends Activity {
 	}
 
 	public void onBusClick() {
-		/*
-		 * Intent intent = new Intent(this, BusBordeaux.class);
-		 * startActivity(intent);
-		 */
+		Intent intent = new Intent(this, ListeBus.class);
+		startActivity(intent);
 	}
 
 
