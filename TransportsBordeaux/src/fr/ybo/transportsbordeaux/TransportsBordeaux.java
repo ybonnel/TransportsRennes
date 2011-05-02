@@ -43,11 +43,11 @@ import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.util.LogYbo;
 
 
-public class TransportsRennes extends Activity {
+public class TransportsBordeaux extends Activity {
 
 	private ProgressDialog myProgressDialog;
 
-	private static final LogYbo LOG_YBO = new LogYbo(TransportsRennes.class);
+	private static final LogYbo LOG_YBO = new LogYbo(TransportsBordeaux.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,7 @@ public class TransportsRennes extends Activity {
 
 			@Override
 			protected void onPreExecute() {
-				myProgressDialog = ProgressDialog.show(TransportsRennes.this, "",
+				myProgressDialog = ProgressDialog.show(TransportsBordeaux.this, "",
 						getString(R.string.verificationUpdate), true);
 			}
 
@@ -82,7 +82,7 @@ public class TransportsRennes extends Activity {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG)
+					Toast.makeText(TransportsBordeaux.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG)
 							.show();
 					if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
 						LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
@@ -123,7 +123,7 @@ public class TransportsRennes extends Activity {
 		builder.setView(view);
 		builder.setTitle(R.string.titleTransportsBordeaux);
 		builder.setCancelable(false);
-		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
+		builder.setNeutralButton(getString(R.string.Terminer), new TransportsBordeaux.TerminerClickListener());
 		builder.create().show();
 	}
 
@@ -172,7 +172,7 @@ public class TransportsRennes extends Activity {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
 				if (erreur) {
-					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_chargementTbc), Toast.LENGTH_LONG)
+					Toast.makeText(TransportsBordeaux.this, getString(R.string.erreur_chargementTbc), Toast.LENGTH_LONG)
 							.show();
 					finish();
 				}
