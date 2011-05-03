@@ -14,8 +14,10 @@
 
 package fr.ybo.transportsbordeaux;
 
+import java.io.Serializable;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,12 +40,10 @@ public class ListeBus extends MenuAccueil.ListActivity {
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				/*
-				 * Serializable ligne = (Serializable)
-				 * adapterView.getItemAtPosition(position); Intent intent = new
-				 * Intent(BusRennes.this, ListArret.class);
-				 * intent.putExtra("ligne", ligne); startActivity(intent);
-				 */
+				Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
+				Intent intent = new Intent(ListeBus.this, ListArret.class);
+				intent.putExtra("ligne", ligne);
+				startActivity(intent);
 			}
 
 		});

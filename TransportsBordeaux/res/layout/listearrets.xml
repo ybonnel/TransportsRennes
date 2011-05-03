@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <ImageView android:id="@+id/iconeLigne"
+                  android:layout_width="44dip"
+                  android:paddingBottom="5dip"
+                  android:paddingTop="5dip"
+                  android:paddingLeft="2dip"
+                  android:paddingRight="2dip"
+                  android:layout_height="50dip"
+                  android:gravity="center_vertical|center_horizontal"/>
+    <HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="50dip"
+            android:layout_toRightOf="@id/iconeLigne">
+        <TextView android:id="@+id/nomLong"
+                  android:padding="5dip"
+                  android:layout_width="fill_parent"
+                  android:layout_height="50dip"
+                  android:textSize="20dip"
+                  android:gravity="center_vertical|left"/>
+    </HorizontalScrollView>
+
+    <ImageView android:id="@+id/alerte"
+              android:paddingLeft="2dip"
+              android:paddingTop="2dip"
+              android:paddingBottom="1dip"
+              android:layout_width="wrap_content"
+              android:layout_height="30dip"
+              android:src="@android:drawable/ic_dialog_alert"
+              android:layout_below="@id/iconeLigne"
+              android:layout_alignParentLeft="true" />
+
+
+    <TextView android:id="@+id/directionEntete"
+              android:paddingLeft="5dip"
+              android:paddingTop="5dip"
+              android:paddingBottom="3dip"
+              android:paddingRight="6dip"
+              android:layout_width="wrap_content"
+              android:layout_height="35dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|left"
+              android:text="@string/directionEntete"
+              android:layout_below="@id/iconeLigne"
+              android:layout_toRightOf="@id/alerte"/>
+
+    <HorizontalScrollView
+            android:id="@+id/directionArretCouranteScroll"
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:layout_below="@id/iconeLigne"
+            android:layout_toRightOf="@id/directionEntete">
+        <TextView android:id="@+id/directionArretCourante"
+                  android:paddingRight="5dip"
+                  android:paddingTop="5dip"
+                  android:paddingBottom="3dip"
+                  android:layout_width="wrap_content"
+                  android:layout_height="35dip"
+                  android:textSize="20dip"
+                  android:text="@string/Toutes"
+                  android:gravity="center_vertical|left"
+                  android:drawablePadding="2dip"
+                  android:drawableRight="@android:drawable/arrow_down_float"/>
+    </HorizontalScrollView>
+
+    <ImageView android:layout_width="fill_parent"
+               android:layout_height="10dip"
+               android:layout_below="@id/directionEntete"
+               android:paddingTop="4dip"
+               android:paddingBottom="0dip"
+               android:src="@android:drawable/divider_horizontal_dim_dark"
+               android:id="@+id/listearrets_separateur"/>
+
+    <ListView android:id="@id/android:list"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_below="@id/listearrets_separateur"
+              android:layout_alignParentLeft="true"
+              android:divider="@android:drawable/divider_horizontal_dim_dark"
+            />
+</RelativeLayout>

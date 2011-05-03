@@ -13,6 +13,10 @@
     <string name="erreur_chargementTbc">Une erreur est survenue lors de la récupération des données du TBC.</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_accueil">Accueil</string>
+    <string name="chooseDirection">Choisissez une direction</string>
+    <string name="directionEntete">Direction :</string>
+    <string name="Toutes">Toutes</string>
+    <string name="vers">vers</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
     <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer
