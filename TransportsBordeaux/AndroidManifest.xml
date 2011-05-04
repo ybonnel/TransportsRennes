@@ -19,6 +19,7 @@
         <activity android:name=".ListeBus" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
 
         <uses-library android:name="com.google.android.maps"/>
 

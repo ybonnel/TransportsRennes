@@ -102,6 +102,12 @@ public class TransportsBordeaux extends Activity {
 				onBusClick();
 			}
 		});
+		Button btnBusFavoris = (Button) findViewById(R.id.home_btn_bus_favori);
+		btnBusFavoris.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onBusFavorisClick();
+			}
+		});
 	}
 
 	private void afficheMessage() {
@@ -147,6 +153,10 @@ public class TransportsBordeaux extends Activity {
 		startActivity(intent);
 	}
 
+	public void onBusFavorisClick() {
+		Intent intent = new Intent(this, ListFavoris.class);
+		startActivity(intent);
+	}
 
 	private void upgradeDatabase() {
 		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.infoChargementGtfs), true);

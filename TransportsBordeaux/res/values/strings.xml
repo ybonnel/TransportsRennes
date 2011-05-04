@@ -29,9 +29,11 @@
     </string>
     <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?</string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
+    <string name="listfavori_empty">Aucun favoris trouvé.</string>
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
+    <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="recuperationHoraires">Récupération des horaires en cours...</string>
     <string name="erreur_recuperationHoraires">Erreur lors de la récupération des horaires sûrement due à un problème réseau, réessayez plus tard.</string>
 </resources>
