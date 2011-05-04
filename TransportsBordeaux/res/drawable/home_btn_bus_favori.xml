@@ -13,16 +13,12 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<resources>
-    <style name="HomeButton">
-        <item name="android:layout_width">fill_parent</item>
-        <item name="android:layout_height">fill_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#e9e9e9</item>
-        <item name="android:background">@null</item>
-        <item name="android:padding">2dip</item>
-        <item name="android:gravity">center</item>
-    </style>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true" android:state_pressed="true"
+          android:drawable="@drawable/btn_bus_favori_white_pressed"/>
+    <item android:state_focused="false" android:state_pressed="true"
+          android:drawable="@drawable/btn_bus_favori_white_pressed"/>
+    <item android:state_focused="true" android:drawable="@drawable/btn_bus_favori_white_selected"/>
+    <item android:state_focused="false" android:state_pressed="false"
+          android:drawable="@drawable/btn_bus_favori_white_default"/>
+</selector>

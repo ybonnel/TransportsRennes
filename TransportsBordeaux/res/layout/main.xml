@@ -19,16 +19,16 @@
 
     <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1">
         <Button android:id="@+id/home_btn_bus"
                 style="@style/HomeButton"
                 android:text="@string/btn_bus"
                 android:drawableTop="@drawable/home_btn_bus"/>
-        <!-- <Button android:id="@+id/home_btn_bus_favori"
+        <Button android:id="@+id/home_btn_bus_favori"
                 style="@style/HomeButton"
                 android:text="@string/btn_bus_favori"
-                android:drawableTop="@drawable/home_btn_bus_favori"/>-->
+                android:drawableTop="@drawable/home_btn_bus_favori"/>
     </TableRow>
 
     <!-- <TableRow

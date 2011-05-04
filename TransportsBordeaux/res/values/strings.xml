@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Transports Bordeaux</string>
     <string name="btn_bus">Bus &amp; Tram</string>
+    <string name="btn_bus_favori">Arrêts Favoris</string>
     <string name="verificationUpdate">Recherche de mise à jour.</string>
     <string name="erreur_verifUpdate">Erreur lors de la vérification de mise à jour sûrement due à un problème réseau, réessayez plus tard.</string>
     <string name="dialogAPropos">Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas en m\'envoyer

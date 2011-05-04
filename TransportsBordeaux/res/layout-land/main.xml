@@ -19,7 +19,7 @@
 
     <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1">
         <Button android:id="@+id/home_btn_bus"
                 style="@style/HomeButton"
@@ -41,15 +41,15 @@
 
     </TableRow>
 
-    <!--<TableRow
+    <TableRow
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_weight="1">
         <Button android:id="@+id/home_btn_bus_favori"
                 style="@style/HomeButton"
                 android:text="@string/btn_bus_favori"
                 android:drawableTop="@drawable/home_btn_bus_favori"/>
-        <Button android:id="@+id/home_btn_alert"
+        <!-- <Button android:id="@+id/home_btn_alert"
                 style="@style/HomeButton"
                 android:text="@string/btn_alert"
                 android:drawableTop="@drawable/home_btn_alert"/>
@@ -60,6 +60,6 @@
         <Button android:id="@+id/home_btn_itineraires"
                 style="@style/HomeButton"
                 android:text="@string/btn_itineraires"
-                android:drawableTop="@drawable/home_btn_itineraire"/>
-    </TableRow>-->
+                android:drawableTop="@drawable/home_btn_itineraire"/>-->
+    </TableRow>
 </TableLayout>
