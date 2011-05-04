@@ -14,7 +14,10 @@
 
 package fr.ybo.transportsbordeaux;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.app.DatePickerDialog;
@@ -80,17 +83,36 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		}
 		return construireAdapterAllDeparts();
 	}
+	
+	private List<Horaire> getHorairesTriees() {
+		List<Horaire> horaires = Horaire.getHoraires(calendar.getTime(), favori);
+		Collections.sort(horaires, new Comparator<Horaire>(){
+			@Override
+			public int compare(Horaire pObject1, Horaire pObject2) {
+				if (pObject1.horaire < 90) {
+					pObject1.horaire += 24*60;
+				}
+				if (pObject2.horaire < 90) {
+					pObject2.horaire += 24*60;
+				}
+				return pObject1.horaire.compareTo(pObject2.horaire);
+			}});
+		return horaires;
+	}
 
 	private ListAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		List<Horaire> horaires = Horaire.getHoraires(calendar.getTime(), favori);
-		// FIXME filtrer les horaires supérieures à maintenant.
-		return new DetailArretAdapter(getApplicationContext(), horaires, now, R.layout.detailarretliste);
+		return new DetailArretAdapter(getApplicationContext(), getHorairesTriees(), now, R.layout.detailarretliste);
 	}
 
 	private ListAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		List<Horaire> horaires = Horaire.getHoraires(calendar.getTime(), favori);
+		List<Horaire> horaires = new ArrayList<Horaire>();
+		for (Horaire horaire : getHorairesTriees()) {
+			if (horaire.horaire > now) {
+				horaires.add(horaire);
+			}
+		}
 		return new DetailArretAdapter(getApplicationContext(), horaires, now, R.layout.detailarretliste);
 	}
 
