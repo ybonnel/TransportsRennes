@@ -102,7 +102,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private ListAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		return new DetailArretAdapter(getApplicationContext(), getHorairesTriees(), now, R.layout.detailarretliste);
+		return new DetailArretAdapter(getApplicationContext(), getHorairesTriees(), now);
 	}
 
 	private ListAdapter construireAdapterProchainsDeparts() {
@@ -113,7 +113,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				horaires.add(horaire);
 			}
 		}
-		return new DetailArretAdapter(getApplicationContext(), horaires, now, R.layout.detailarretliste);
+		return new DetailArretAdapter(getApplicationContext(), horaires, now);
 	}
 
 	private Ligne myLigne;
@@ -122,8 +122,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		calendar = Calendar.getInstance();
-		calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.roll(Calendar.DATE, false);
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		if (favori.ligneId == null) {

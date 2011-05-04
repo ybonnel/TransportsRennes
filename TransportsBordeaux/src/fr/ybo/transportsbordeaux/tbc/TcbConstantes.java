@@ -7,7 +7,7 @@ public class TcbConstantes {
 
 	private static final String TCB_HORAIRES = "http://www.infotbc.com/timetable/{ligne_id}/stoppoint/{stop_id}/{direction}/{date}";
 	
-	private static final SimpleDateFormat SDF_DATE_HORAIRE = new SimpleDateFormat("yyyy/DD/mm");
+	private static final SimpleDateFormat SDF_DATE_HORAIRE = new SimpleDateFormat("yyyy/MM/dd");
 
 	public static String getUrlHoraire(String ligneId, String stopId, boolean forward, Date date) {
 		return TCB_HORAIRES.replaceAll("\\{ligne_id\\}", ligneId.split("_")[1]).replaceAll("\\{stop_id\\}", stopId)

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="fr.ybo.transportsbordeaux"
+          android:installLocation="auto"
       android:versionCode="90"
       android:versionName="0.9.0">
 
@@ -17,7 +18,7 @@
         </activity>
         <activity android:name=".ListeBus" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden"/>
-
+        <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
 
         <uses-library android:name="com.google.android.maps"/>
 

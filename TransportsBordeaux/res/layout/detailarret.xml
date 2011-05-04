@@ -46,7 +46,8 @@
                android:layout_height="38dip"
                android:src="@android:drawable/ic_dialog_alert"
                android:layout_below="@id/iconeLigne"
-               android:layout_alignParentLeft="true"/>
+               android:layout_alignParentLeft="true"
+               android:visibility="gone"/>
 
     <HorizontalScrollView android:layout_width="fill_parent"
                           android:layout_height="wrap_content"

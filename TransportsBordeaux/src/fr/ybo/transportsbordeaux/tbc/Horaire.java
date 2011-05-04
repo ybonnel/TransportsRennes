@@ -15,6 +15,7 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.util.LogYbo;
 
 @FichierCsv("horaires.txt")
 public class Horaire {
@@ -28,44 +29,39 @@ public class Horaire {
 	@BaliseCsv(value = "url", ordre = 6)
 	public String url;
 
+	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
+
 	public static List<Horaire> getHoraires(Date date, ArretFavori favori) {
 		try {
 			// Récupération sur la page internet du table d'horaire.
-			boolean hasErreur = true;
 			StringBuilder stringBuilder = new StringBuilder();
-			String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId, favori.macroDirection.intValue() == 0, date);
-			while (hasErreur) {
-				try {
-					HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-					connection.setRequestMethod("GET");
-					connection.setDoOutput(true);
-					connection.setConnectTimeout(60000);
-					connection.connect();
-					BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					stringBuilder = new StringBuilder();
-					boolean tableEnCours = false;
-					try {
-						String ligne = bufReader.readLine();
-						while (ligne != null) {
-							if (ligne.contains("navitia-timetable-detail")) {
-								tableEnCours = true;
-							}
-							if (tableEnCours) {
-								stringBuilder.append(ligne);
-								if (ligne.contains("</table>")) {
-									break;
-								}
-							}
-							ligne = bufReader.readLine();
-						}
-					} finally {
-						bufReader.close();
+			String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
+					favori.macroDirection.intValue() == 0, date);
+			LOG_YBO.debug(url);
+			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("GET");
+			connection.setDoOutput(true);
+			connection.setConnectTimeout(60000);
+			connection.connect();
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			stringBuilder = new StringBuilder();
+			boolean tableEnCours = false;
+			try {
+				String ligne = bufReader.readLine();
+				while (ligne != null) {
+					if (ligne.contains("navitia-timetable-detail")) {
+						tableEnCours = true;
 					}
-					hasErreur = false;
-				} catch (Exception exception) {
-					exception.printStackTrace();
-					Thread.sleep(10000);
+					if (tableEnCours) {
+						stringBuilder.append(ligne);
+						if (ligne.contains("</table>")) {
+							break;
+						}
+					}
+					ligne = bufReader.readLine();
 				}
+			} finally {
+				bufReader.close();
 			}
 
 			// Parsing SAX du tableau d'horaires.

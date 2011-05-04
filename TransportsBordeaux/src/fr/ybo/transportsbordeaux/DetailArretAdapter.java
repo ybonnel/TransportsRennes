@@ -18,12 +18,13 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 
 /**
- * FIXME : A CODER.
  * @author ybonnel
  *
  */
@@ -35,8 +36,8 @@ public class DetailArretAdapter extends ArrayAdapter<Horaire> {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(Context context, List<Horaire> horaires, int now, int resource) {
-		super(context, resource, horaires);
+	public DetailArretAdapter(Context context, List<Horaire> horaires, int now) {
+		super(context, R.layout.detailarretliste, horaires);
 		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
@@ -47,6 +48,25 @@ public class DetailArretAdapter extends ArrayAdapter<Horaire> {
 		TextView tempsRestant;
 	}
 	
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View convertView1 = convertView;
+		Horaire horaire = getItem(position);
+		DetailArretAdapter.ViewHolder holder;
+		if (convertView1 == null) {
+			convertView1 = inflater.inflate(R.layout.detailarretliste, null);
+			holder = new DetailArretAdapter.ViewHolder();
+			holder.heureProchain = (TextView) convertView1.findViewById(R.id.detailArret_heureProchain);
+			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.detailArret_tempsRestant);
+			convertView1.setTag(holder);
+		} else {
+			holder = (DetailArretAdapter.ViewHolder) convertView1.getTag();
+		}
+		holder.heureProchain.setText(formatterCalendarHeure(horaire.horaire));
+		holder.tempsRestant.setText(formatterCalendar(horaire.horaire, now));
+		return convertView1;
+	}
 
 	private CharSequence formatterCalendar(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
