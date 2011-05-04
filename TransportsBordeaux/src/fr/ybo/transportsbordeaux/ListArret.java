@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +39,7 @@ import fr.ybo.transportsbordeaux.util.LogYbo;
 
 /**
  * Liste des arrêts d'une ligne de bus.
- *
+ * 
  * @author ybonnel
  */
 public class ListArret extends MenuAccueil.ListActivity {
@@ -64,8 +65,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 		requete.append("WHERE Direction.id = ArretRoute.directionId");
 		requete.append(" AND ArretRoute.ligneId = :ligneId ");
 		requete.append("GROUP BY Direction.id, Direction.direction");
-		Cursor cursor = TransportsBordeauxApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
-				Collections.singletonList(myLigne.id));
+		Cursor cursor = TransportsBordeauxApplication.getDataBaseHelper()
+				.executeSelectQuery(requete.toString(),
+						Collections.singletonList(myLigne.id));
 		int directionIndex = cursor.getColumnIndex("direction");
 		final List<String> items = new ArrayList<String>(5);
 		while (cursor.moveToNext()) {
@@ -87,16 +89,21 @@ public class ListArret extends MenuAccueil.ListActivity {
 				return o1.compareToIgnoreCase(o2);
 			}
 		});
-		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int item) {
-				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
-				construireListe();
-				((TextView) findViewById(R.id.directionArretCourante)).setText(items.get(item));
-				findViewById(R.id.directionArretCouranteScroll).invalidate();
-				getListView().invalidate();
-				dialogInterface.dismiss();
-			}
-		});
+		builder.setItems(items.toArray(new String[items.size()]),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface,
+							int item) {
+						currentDirection = items.get(item).equals(toutes) ? null
+								: items.get(item);
+						construireListe();
+						((TextView) findViewById(R.id.directionArretCourante))
+								.setText(items.get(item));
+						findViewById(R.id.directionArretCouranteScroll)
+								.invalidate();
+						getListView().invalidate();
+						dialogInterface.dismiss();
+					}
+				});
 		builder.create().show();
 	}
 
@@ -120,9 +127,10 @@ public class ListArret extends MenuAccueil.ListActivity {
 		requete.append("Arret.nom");
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
-		currentCursor = TransportsBordeauxApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
-				selectionArgs);
-		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : " + currentCursor.getCount());
+		currentCursor = TransportsBordeauxApplication.getDataBaseHelper()
+				.executeSelectQuery(requete.toString(), selectionArgs);
+		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts terminée : "
+				+ currentCursor.getCount());
 	}
 
 	private void construireListe() {
@@ -130,22 +138,24 @@ public class ListArret extends MenuAccueil.ListActivity {
 		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"unchecked"})
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+			@SuppressWarnings({ "unchecked" })
+			public void onItemClick(AdapterView<?> adapterView, View view,
+					int position, long id) {
+				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView)
+						.getAdapter();
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				/*
-				 * Intent intent = new Intent(ListArret.this,
-				 * DetailArret.class); intent.putExtra("idArret",
-				 * cursor.getString(cursor.getColumnIndex("_id")));
-				 * intent.putExtra("nomArret",
-				 * cursor.getString(cursor.getColumnIndex("arretName")));
-				 * intent.putExtra("direction",
-				 * cursor.getString(cursor.getColumnIndex("direction")));
-				 * intent.putExtra("macroDirection",
-				 * cursor.getInt(cursor.getColumnIndex("macroDirection")));
-				 * intent.putExtra("ligne", myLigne); startActivity(intent);
-				 */
+				Intent intent = new Intent(ListArret.this, DetailArret.class);
+				intent.putExtra("idArret",
+						cursor.getString(cursor.getColumnIndex("_id")));
+				intent.putExtra("nomArret",
+						cursor.getString(cursor.getColumnIndex("arretName")));
+				intent.putExtra("direction",
+						cursor.getString(cursor.getColumnIndex("direction")));
+				intent.putExtra("macroDirection",
+						cursor.getInt(cursor.getColumnIndex("macroDirection")));
+				intent.putExtra("ligne", myLigne);
+				startActivity(intent);
+
 			}
 		});
 		lv.setTextFilterEnabled(true);
@@ -157,13 +167,15 @@ public class ListArret extends MenuAccueil.ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listearrets);
 		myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
-		findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				onDirectionClick();
-			}
-		});
+		findViewById(R.id.directionArretCourante).setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View view) {
+						onDirectionClick();
+					}
+				});
 		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
-		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(myLigne.nomCourt));
+		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne
+				.getIconeResource(myLigne.nomCourt));
 		/*
 		 * if (TransportsBordeauxApplication.hasAlert(myLigne.nomCourt)) {
 		 * findViewById(R.id.alerte).setVisibility(View.VISIBLE);
@@ -173,7 +185,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		 * intent.putExtra("ligne", myLigne); startActivity(intent); } }); }
 		 * else {
 		 */
-			findViewById(R.id.alerte).setVisibility(View.GONE);
+		findViewById(R.id.alerte).setVisibility(View.GONE);
 		// }
 		construireListe();
 	}
