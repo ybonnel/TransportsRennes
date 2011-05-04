@@ -12,7 +12,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsbordeaux;
+package fr.ybo.transportsbordeaux.adapters;
 
 import java.util.List;
 
@@ -22,6 +22,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportsbordeaux.R.id;
+import fr.ybo.transportsbordeaux.R.layout;
+import fr.ybo.transportsbordeaux.R.string;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 
 /**
