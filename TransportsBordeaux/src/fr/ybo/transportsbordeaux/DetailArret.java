@@ -22,21 +22,25 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
+import fr.ybo.transportsbordeaux.util.LogYbo;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -45,12 +49,17 @@ import fr.ybo.transportsbordeaux.util.IconeLigne;
  */
 public class DetailArret extends MenuAccueil.ListActivity {
 
+	private final static LogYbo LOG_YBO = new LogYbo(DetailArret.class);
+
 	private boolean prochainArrets = true;
 
 	private Calendar calendar = Calendar.getInstance();
-	private Calendar calendarLaVeille = Calendar.getInstance();
+	private int now = 0;
 
 	private ArretFavori favori;
+
+	private List<Horaire> horaires = new ArrayList<Horaire>();
+	private List<Horaire> horairesJournee = new ArrayList<Horaire>();
 
 	private void recuperationDonneesIntent() {
 		favori = (ArretFavori) getIntent().getExtras().getSerializable("favori");
@@ -77,43 +86,78 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + ' ' + getString(R.string.vers) + ' ' + favori.direction);
 	}
 
-	private ListAdapter construireAdapter() {
-		if (prochainArrets) {
-			return construireAdapterProchainsDeparts();
-		}
-		return construireAdapterAllDeparts();
+	private void recupererHoraires(final boolean changementJournee) {
+		new AsyncTask<Void, Void, Void>() {
+
+			private boolean erreur;
+
+			private ProgressDialog myProgressDialog;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog = ProgressDialog.show(DetailArret.this, "", getString(R.string.recuperationHoraires),
+						true);
+			}
+
+			@Override
+			protected Void doInBackground(Void... pParams) {
+				try {
+					if (changementJournee) {
+						horairesJournee.clear();
+						horairesJournee.addAll(getHorairesTriees());
+					}
+					if (prochainArrets) {
+						recupererProchainsDeparts();
+					} else {
+						recupererHorairesAllDeparts();
+					}
+				} catch (Exception exception) {
+					LOG_YBO.erreur("Erreur dans la récupération des horaires", exception);
+					erreur = true;
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				myProgressDialog.dismiss();
+				if (erreur) {
+					Toast toast = Toast.makeText(getApplicationContext(),
+							getString(R.string.erreur_recuperationHoraires),
+							Toast.LENGTH_LONG);
+					toast.show();
+					finish();
+				}
+				super.onPostExecute(result);
+			}
+		}.execute();
 	}
 	
 	private List<Horaire> getHorairesTriees() {
-		List<Horaire> horaires = Horaire.getHoraires(calendar.getTime(), favori);
-		Collections.sort(horaires, new Comparator<Horaire>(){
+		List<Horaire> horairesTbc = Horaire.getHoraires(calendar.getTime(), favori);
+		Collections.sort(horairesTbc, new Comparator<Horaire>() {
 			@Override
 			public int compare(Horaire pObject1, Horaire pObject2) {
-				if (pObject1.horaire < 90) {
-					pObject1.horaire += 24*60;
-				}
-				if (pObject2.horaire < 90) {
-					pObject2.horaire += 24*60;
-				}
 				return pObject1.horaire.compareTo(pObject2.horaire);
 			}});
-		return horaires;
+		return horairesTbc;
 	}
 
-	private ListAdapter construireAdapterAllDeparts() {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		return new DetailArretAdapter(getApplicationContext(), getHorairesTriees(), now);
+	private void recupererHorairesAllDeparts() {
+		horaires.clear();
+		horaires.addAll(horairesJournee);
 	}
 
-	private ListAdapter construireAdapterProchainsDeparts() {
+	private void recupererProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		List<Horaire> horaires = new ArrayList<Horaire>();
-		for (Horaire horaire : getHorairesTriees()) {
+		horaires.clear();
+		for (Horaire horaire : horairesJournee) {
 			if (horaire.horaire > now) {
 				horaires.add(horaire);
 			}
 		}
-		return new DetailArretAdapter(getApplicationContext(), horaires, now);
 	}
 
 	private Ligne myLigne;
@@ -122,6 +166,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		calendar = Calendar.getInstance();
+		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		if (favori.ligneId == null) {
@@ -131,7 +176,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		myLigne = new Ligne();
 		myLigne.id = favori.ligneId;
 		myLigne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myLigne);
-		setListAdapter(construireAdapter());
+		setListAdapter(new DetailArretAdapter(getApplicationContext(), horaires, now));
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -144,6 +189,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			}
 		});
 		lv.setTextFilterEnabled(true);
+		recupererHoraires(true);
 	}
 
 	private static final int GROUP_ID = 0;
@@ -172,8 +218,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		switch (item.getItemId()) {
 			case MENU_ALL_STOPS:
 				prochainArrets = !prochainArrets;
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
+				recupererHoraires(false);
 				return true;
 			case MENU_SELECT_DAY:
 				showDialog(DATE_DIALOG_ID);
@@ -190,12 +235,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, monthOfYear);
 			calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-			calendarLaVeille.set(Calendar.YEAR, year);
-			calendarLaVeille.set(Calendar.MONTH, monthOfYear);
-			calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-			calendarLaVeille.roll(Calendar.DATE, false);
-			setListAdapter(construireAdapter());
-			getListView().invalidate();
+			recupererHoraires(true);
 		}
 	};
 

@@ -31,6 +31,7 @@ public class GetHorairesHandler extends DefaultHandler {
 	}
 
 	private Horaire horaireCourante;
+	private int lastHoraire = 0;
 	
 	private List<Horaire> horaires;
 
@@ -73,6 +74,10 @@ public class GetHorairesHandler extends DefaultHandler {
 			if (horaireChaineSplit.length == 2) {
 				horaireCourante.horaire = (Integer.parseInt(horaireChaineSplit[0]) * 60)
 						+ Integer.parseInt(horaireChaineSplit[1]);
+				if (horaireCourante.horaire < lastHoraire && horaireCourante.horaire < (24 * 60)) {
+					horaireCourante.horaire += 24 * 60;
+				}
+				lastHoraire = horaireCourante.horaire;
 			} else {
 				erreur = true;
 			}

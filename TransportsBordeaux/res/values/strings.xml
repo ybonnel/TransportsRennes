@@ -31,4 +31,6 @@
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
+    <string name="recuperationHoraires">Récupération des horaires en cours...</string>
+    <string name="erreur_recuperationHoraires">Erreur lors de la récupération des horaires sûrement due à un problème réseau, réessayez plus tard.</string>
 </resources>
