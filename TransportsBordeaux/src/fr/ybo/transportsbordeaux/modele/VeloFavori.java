@@ -15,12 +15,13 @@
 package fr.ybo.transportsbordeaux.modele;
 
 import fr.ybo.transportsbordeaux.database.annotation.Colonne;
+import fr.ybo.transportsbordeaux.database.annotation.Colonne.TypeColonne;
 import fr.ybo.transportsbordeaux.database.annotation.PrimaryKey;
 import fr.ybo.transportsbordeaux.database.annotation.Table;
 
 @Table
 public class VeloFavori {
-	@Colonne
+	@Colonne(type = TypeColonne.INTEGER)
 	@PrimaryKey
 	public Integer id;
 }
