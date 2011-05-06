@@ -22,5 +22,5 @@ import fr.ybo.transportsbordeaux.database.annotation.Table;
 public class VeloFavori {
 	@Colonne
 	@PrimaryKey
-	public String number;
+	public Integer id;
 }

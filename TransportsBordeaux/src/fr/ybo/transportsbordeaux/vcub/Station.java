@@ -10,8 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fr.ybo.transportsbordeaux.tbc.TcbException;
+import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
 
-public class Station {
+public class Station extends ObjetWithDistance {
 	public int id;
 	public String name;
 	public String address;
@@ -21,6 +22,16 @@ public class Station {
 	public int freeSlots;
 	public boolean isOpen;
 	public boolean isPayment;
+
+	@Override
+	public double getLatitude() {
+		return latitude;
+	}
+
+	@Override
+	public double getLongitude() {
+		return longitude;
+	}
 
 	private static final String URL_PLAN = "http://www.vcub.fr/stations/plan";
 
@@ -37,8 +48,6 @@ public class Station {
 			URL url = new URL(URL_PLAN);
 			String line;
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.41 Safari/534.7");
 			conn.setConnectTimeout(30000);
 			conn.setReadTimeout(30000);
 			if (200 != conn.getResponseCode()) {
