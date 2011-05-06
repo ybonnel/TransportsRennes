@@ -35,6 +35,7 @@
     <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?</string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
+    <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
