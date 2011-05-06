@@ -76,18 +76,21 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 			holder = (VeloAdapter.ViewHolder) convertView1.getTag();
 		}
 		Station station = stations.get(position);
-		int placesTotales = station.availableBikes + station.freeSlots;
-		double poucentageDispo = (double) station.availableBikes / (double) placesTotales;
-
-		if (poucentageDispo < SEUIL_ROUGE) {
-			holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
-		} else if (poucentageDispo < SEUIL_ORANGE) {
-			holder.icone.setImageResource(R.drawable.dispo_velo_orange);
+		if (station.isOpen) {
+			int placesTotales = station.availableBikes + station.freeSlots;
+			double poucentageDispo = (double) station.availableBikes / (double) placesTotales;
+			if (poucentageDispo < SEUIL_ROUGE) {
+				holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
+			} else if (poucentageDispo < SEUIL_ORANGE) {
+				holder.icone.setImageResource(R.drawable.dispo_velo_orange);
+			} else {
+				holder.icone.setImageResource(R.drawable.dispo_velo_bleue);
+			}
+			holder.dispoVeloText.setText(station.availableBikes + " / " + placesTotales);
 		} else {
-			holder.icone.setImageResource(R.drawable.dispo_velo_bleue);
+			holder.icone.setImageResource(R.drawable.dispo_velo_gris);
+			holder.dispoVeloText.setText("Fermée");
 		}
-
-		holder.dispoVeloText.setText(station.availableBikes + " / " + placesTotales);
 		holder.dispoVeloStation.setText(Formatteur.formatterChaine(station.name));
 		holder.dispoVeloDistance.setText(station.formatDistance());
 		if (station.isPayment) {
