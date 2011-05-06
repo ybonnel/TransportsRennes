@@ -43,7 +43,7 @@
                 style="@style/HomeButton"
                 android:text="@string/btn_alert"
                 android:drawableTop="@drawable/home_btn_alert"/>
-    </TableRow>
+    </TableRow>-->
 
     <TableRow
             android:layout_width="fill_parent"
@@ -58,7 +58,7 @@
                 android:text="@string/btn_velo_favori"
                 android:drawableTop="@drawable/home_btn_velo_favori"/>
     </TableRow>
-    <TableRow
+    <!--<TableRow
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
