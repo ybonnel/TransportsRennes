@@ -17,18 +17,6 @@
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent">
-    <TextView android:id="@+id/fonctionBeta"
-              android:layout_height="wrap_content"
-              android:layout_width="wrap_content"
-              android:textSize="16dip"
-              android:text="@string/fonctionBeta"/>
-    <ImageView android:id="@+id/separateur"
-               android:layout_width="fill_parent"
-               android:layout_height="10dip"
-               android:paddingTop="4dip"
-               android:paddingBottom="0dip"
-               android:src="@android:drawable/divider_horizontal_dim_dark"
-               android:layout_below="@id/fonctionBeta"/>
     <TextView android:id="@+id/dateItineraire"
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
@@ -38,7 +26,6 @@
               android:paddingLeft="5dip"
               android:paddingTop="10dip"
               android:gravity="center_vertical"
-              android:layout_below="@id/separateur"
               android:drawableRight="@android:drawable/ic_menu_more"/>
     <TextView android:id="@+id/heureItineraire"
               android:layout_height="wrap_content"
@@ -50,7 +37,6 @@
               android:paddingTop="10dip"
               android:gravity="center_vertical"
               android:drawableRight="@android:drawable/ic_menu_more"
-              android:layout_below="@id/separateur"
               android:layout_alignParentRight="true"/>
     <TextView android:id="@+id/textAdresseDepart"
               android:layout_height="wrap_content"

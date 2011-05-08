@@ -20,6 +20,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -75,14 +76,20 @@ public class TrajetOnMap extends MapActivity {
 		ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
 		for (Leg leg : trajet.legs.leg) {
 			// icône
+			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+			TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
 			int iconeMarkee;
 			int icone;
 			if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
 				iconeMarkee = R.drawable.mpieton;
 				icone = R.drawable.ipieton;
+				directionTrajet.setVisibility(View.GONE);
 			} else {
 				iconeMarkee = IconeLigne.getMarkeeResource(leg.route);
 				icone = IconeLigne.getIconeResource(leg.route);
+
+				directionTrajet.setVisibility(View.VISIBLE);
+				directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
 			}
 			
 			
@@ -111,7 +118,6 @@ public class TrajetOnMap extends MapActivity {
 			}
 
 			// Détail du trajet.
-			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
 			((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
 			((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
 			((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);

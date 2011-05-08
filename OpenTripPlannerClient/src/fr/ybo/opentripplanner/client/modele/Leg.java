@@ -104,4 +104,16 @@ public class Leg implements Serializable {
     public long getDuration() {
         return endTime.getTime() - startTime.getTime();
     }
+
+	public String getDirection() {
+		String[] split = headsign.split("\\|");
+		if (split.length < 2) {
+			return headsign;
+		}
+		String direction = split[1];
+		while (direction.charAt(0) == ' ') {
+			direction = direction.substring(1);
+		}
+		return direction;
+	}
 }

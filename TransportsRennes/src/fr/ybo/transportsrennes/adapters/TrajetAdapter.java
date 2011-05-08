@@ -74,10 +74,14 @@ public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 		for (Leg leg : trajet.legs.leg) {
 			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
 			int icone;
+			TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
 			if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
 				icone = R.drawable.ipieton;
+				directionTrajet.setVisibility(View.GONE);
 			} else {
+				directionTrajet.setVisibility(View.VISIBLE);
 				icone = IconeLigne.getIconeResource(leg.route);
+				directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + leg.getDirection());
 			}
 			((ImageView)portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
 			((TextView)portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));

@@ -58,7 +58,6 @@
 <string name="calculItineraire">Cálculo de rutas posibles en curso.</string>
 <string name="depart">Comienza a las %1$s</string>
 <string name="arrivee">Llegó a %1$s</string>
-<string name="fonctionBeta">Tenga en cuenta que esta función está en versión beta, que va a cambiar de manera significativa en las emisiones futuras, por favor, vuelva a sus sugerencias.</string>
 <!-- Libellés des boutons de la pages d'accueil -->
 <string name="btn_velo">LE vélo STAR</string>
 <string name="btn_velo_favori">Estaciones favoritas</string>
