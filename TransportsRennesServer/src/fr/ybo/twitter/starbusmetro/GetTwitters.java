@@ -38,7 +38,16 @@ class GetTwitters {
 
 	private static final Logger LOGGER = Logger.getLogger(GetTwitters.class.getName());
 
-	private static final String QUERY = "select from " + MessageTwitter.class.getName() + " order by dateCreation desc range 0,20";
+	private static final String QUERY = "select from " + MessageTwitter.class.getName()
+			+ " where compte == '@COMPTE@' order by dateCreation desc range 0,20";
+
+	private String requete;
+	private String compte;
+
+	public GetTwitters(String compte) {
+		this.compte = compte;
+		requete = QUERY.replace("@COMPTE@", compte);
+	}
 
 
 	private static TwitterFactory twitterFactory;
@@ -55,29 +64,31 @@ class GetTwitters {
 		PersistenceManager persistenceManager = PersistenceFactory.getPersistenceManagerFactory().getPersistenceManager();
 		List<MessageTwitter> messages = new ArrayList<MessageTwitter>(20);
 		try {
-			if (LastUpdate.getInstance().isUpdate()) {
+			if (LastUpdate.getInstance(compte).isUpdate()) {
 				LOGGER.fine("Les messages twitter sont à jour, envoie du contenu de la base de donnée");
-				messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
+				messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(requete).execute());
 			} else {
 				LOGGER.fine("Les messages twitter ne sont pas à jour, récupération du contenu de twiter");
 				Twitter twitter = getFactory().getInstance();
 				ResponseList<Status> listeStatus;
 				try {
-					listeStatus = twitter.getUserTimeline("@starbusmetro");
+					listeStatus = twitter.getUserTimeline("@" + compte);
 				} catch (TwitterException e) {
 					LOGGER.log(Level.SEVERE, "Erreur lors de l'accès à twitter", e);
-					messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(QUERY).execute());
+					messages.addAll((Collection<? extends MessageTwitter>) persistenceManager.newQuery(requete)
+							.execute());
 					return messages;
 				}
 				for (Status status : listeStatus) {
-					messages.add(new MessageTwitter(status.getCreatedAt(), status.getText()));
+					messages.add(new MessageTwitter(status.getCreatedAt(), status.getText(), compte));
 				}
 				Collections.sort(messages, new Comparator<MessageTwitter>() {
 					public int compare(MessageTwitter o1, MessageTwitter o2) {
 						return o2.getDateCreation().compareTo(o1.getDateCreation());
 					}
 				});
-				Collection<MessageTwitter> messagesBdd = (Collection<MessageTwitter>) persistenceManager.newQuery(QUERY).execute();
+				Collection<MessageTwitter> messagesBdd = (Collection<MessageTwitter>) persistenceManager.newQuery(
+						requete).execute();
 				Date dateDernierMessage = null;
 				if (messagesBdd != null && !messagesBdd.isEmpty()) {
 					dateDernierMessage = messagesBdd.iterator().next().getDateCreation();

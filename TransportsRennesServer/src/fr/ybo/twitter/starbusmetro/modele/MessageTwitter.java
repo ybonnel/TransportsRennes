@@ -36,9 +36,13 @@ public class MessageTwitter {
 	@Persistent
 	public String texte;
 
-	public MessageTwitter(Date dateCreation, String texte) {
+	@Persistent
+	public String compte;
+
+	public MessageTwitter(Date dateCreation, String texte, String compte) {
 		this.dateCreation = dateCreation;
 		this.texte = texte;
+		this.compte = compte;
 	}
 
 	public MessageTwitter() {

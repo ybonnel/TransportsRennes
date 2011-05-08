@@ -15,16 +15,18 @@
 package fr.ybo.twitter.starbusmetro.modele;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LastUpdate {
 
-	private static LastUpdate instance;
+	private static Map<String, LastUpdate> instances = new HashMap<String, LastUpdate>();
 
-	public static synchronized LastUpdate getInstance() {
-		if (instance == null) {
-			instance = new LastUpdate();
+	public static synchronized LastUpdate getInstance(String compte) {
+		if (!instances.containsKey(compte)) {
+			instances.put(compte, new LastUpdate());
 		}
-		return instance;
+		return instances.get(compte);
 	}
 
 	private LastUpdate() {

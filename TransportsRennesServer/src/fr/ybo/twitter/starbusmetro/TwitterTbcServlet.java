@@ -23,9 +23,9 @@ import javax.servlet.http.HttpServletResponse;
 import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
 
 @SuppressWarnings("serial")
-public class TwitterStarBusMetroServlet extends HttpServlet {
+public class TwitterTbcServlet extends HttpServlet {
 
-	private static final GetTwitters GET_TWITTERS = new GetTwitters("starbusmetro");
+	private static final GetTwitters GET_TWITTERS = new GetTwitters("tbc");
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
