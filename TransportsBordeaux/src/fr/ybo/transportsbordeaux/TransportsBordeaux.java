@@ -120,6 +120,12 @@ public class TransportsBordeaux extends Activity {
 				onVeloFavoriClick();
 			}
 		});
+		Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
+		btnAlert.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onAlertClick();
+			}
+		});
 	}
 
 	private void afficheMessage() {
@@ -177,6 +183,11 @@ public class TransportsBordeaux extends Activity {
 
 	public void onVeloFavoriClick() {
 		Intent intent = new Intent(this, ListStationsFavoris.class);
+		startActivity(intent);
+	}
+
+	public void onAlertClick() {
+		Intent intent = new Intent(this, TabAlertes.class);
 		startActivity(intent);
 	}
 

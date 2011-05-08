@@ -47,4 +47,14 @@
     <string name="erreur_interrogationVcub">Une erreur est survenu lors de l\'interrogation du site VCUB sûrement due à un problème
         réseau, réessayez plus tard.
     </string>
+    <string name="erreur_interrogationTbc">Une erreur est survenu lors de l\'interrogation du TBC sûrement due à un problème réseau, réessayez plus
+        tard.
+    </string>
+    <string name="alertes">Alertes</string>
+    <string name="twitter">Twitter</string>
+    <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
+    <string name="dialogRequeteAlerts">Interrogation du TBC.</string>
+    <string name="erreur_twitter">Erreur lors de la récupération des messages twitter.</string>
+    <string name="btn_alert">Alertes</string>
+    <string name="btn_parking">Parcs relais</string>
 </resources>

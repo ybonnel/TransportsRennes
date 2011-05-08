@@ -22,6 +22,9 @@
         <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListStationsByPosition" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListStationsFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".TabAlertes" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListAlerts" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListTwitter" android:configChanges="orientation|keyboardHidden"/>
         
         <uses-library android:name="com.google.android.maps"/>
 
