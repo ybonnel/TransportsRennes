@@ -121,5 +121,8 @@
     <string name="erreur_outOfBounds">Il percorso ha richiesto gli indirizzi al di fuori dell\'area coperta.</string>
     <string name="erreur_noTransitTimes">Nessun bus scoperto per il tempo richiesto.</string>
     <string name="erreur_pathNotFound">Nessun percorso trovato.</string>
+    
+    <string name="nouvelleVersion">Nuova versione disponibile</string>
+    <string name="versionDisponible">La versione %1$s è disponibile!</string>
 </resources>
 

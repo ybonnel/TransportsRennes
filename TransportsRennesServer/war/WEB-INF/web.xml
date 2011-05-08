@@ -18,20 +18,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 		  http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
-    <context-param>
-        <param-name>org.restlet.application</param-name>
-        <param-value>fr.ybo.itineraires.bean.ItineraireBean</param-value>
-    </context-param>
-    <!-- Restlet adapter -->
-    <servlet>
-        <servlet-name>RestletServlet</servlet-name>
-        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
-    </servlet>
-    <!-- Catch all requests -->
-    <servlet-mapping>
-        <servlet-name>RestletServlet</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
-    </servlet-mapping>
     <servlet>
         <servlet-name>TwitterStarBusMetro</servlet-name>
         <servlet-class>fr.ybo.twitter.starbusmetro.TwitterStarBusMetroServlet</servlet-class>
@@ -40,15 +26,6 @@
         <servlet-name>TwitterStarBusMetro</servlet-name>
         <url-pattern>/twitterstarbusmetro</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>KeepSinglettonAlive</servlet-name>
-        <servlet-class>fr.ybo.itineraires.KeepSinglettonAlive</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>KeepSinglettonAlive</servlet-name>
-        <url-pattern>/KeepSinglettonAlive</url-pattern>
-    </servlet-mapping>
-
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

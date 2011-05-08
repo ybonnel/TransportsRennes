@@ -139,4 +139,7 @@
     <string name="erreur_outOfBounds">The route requested has addresses outside the area covered.</string>
     <string name="erreur_noTransitTimes">No bus found for the requested time.</string>
     <string name="erreur_pathNotFound">No route found.</string>
+    
+    <string name="nouvelleVersion">New version available</string>
+    <string name="versionDisponible">Version %1$s is available!</string>
 </resources>

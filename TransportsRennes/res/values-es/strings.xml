@@ -121,5 +121,8 @@
     <string name="erreur_outOfBounds">La ruta ha solicitado direcciones fuera de la zona.</string>
     <string name="erreur_noTransitTimes">No hay autobús que se encuentran por el momento solicitado.</string>
     <string name="erreur_pathNotFound">No hay ninguna vía que se encuentran.</string>
+    
+    <string name="nouvelleVersion">Nueva versión disponible</string>
+    <string name="versionDisponible">La versión %1$s está disponible!</string>
 </resources>
 
