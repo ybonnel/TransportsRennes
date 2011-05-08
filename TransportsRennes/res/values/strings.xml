@@ -78,6 +78,7 @@
     <string name="geocodageAdresseArrivee">Geo-codage de l\'adresse de destination</string>
     <string name="calculItineraire">Calcul des itinéraires possibles en cours.</string>
     <string name="depart">Départ à %1$s</string>
+    <string name="arrivee">Arrivée à %1$s</string>
     <!-- Libellés des boutons de la pages d'accueil -->
     <string name="btn_velo">LE vélo STAR</string>
     <string name="btn_velo_favori">Stations favorites</string>
