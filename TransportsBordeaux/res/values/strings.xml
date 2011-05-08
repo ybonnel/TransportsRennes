@@ -57,4 +57,5 @@
     <string name="erreur_twitter">Erreur lors de la récupération des messages twitter.</string>
     <string name="btn_alert">Alertes</string>
     <string name="btn_parking">Parcs relais</string>
+    <string name="go_googlemap">Visualiser sur GoogleMap</string>
 </resources>

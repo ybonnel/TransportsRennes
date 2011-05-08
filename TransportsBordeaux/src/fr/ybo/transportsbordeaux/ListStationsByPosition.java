@@ -242,6 +242,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
                     toast.show();
                     finish();
                 } else {
+					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+						public void onClick(View view) {
+							Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+							ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
+							stationsSerializable.addAll(stationsFiltrees);
+							intent.putExtra("stations", stationsSerializable);
+							startActivity(intent);
+						}
+					});
                     activeGps();
                     ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 }
