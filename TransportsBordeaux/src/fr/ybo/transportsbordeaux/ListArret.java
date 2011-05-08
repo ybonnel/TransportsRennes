@@ -176,17 +176,18 @@ public class ListArret extends MenuAccueil.ListActivity {
 		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne
 				.getIconeResource(myLigne.nomCourt));
-		/*
-		 * if (TransportsBordeauxApplication.hasAlert(myLigne.nomCourt)) {
-		 * findViewById(R.id.alerte).setVisibility(View.VISIBLE);
-		 * findViewById(R.id.alerte).setOnClickListener(new
-		 * View.OnClickListener(){ public void onClick(View view) { Intent
-		 * intent = new Intent(ListArret.this, ListAlerts.class);
-		 * intent.putExtra("ligne", myLigne); startActivity(intent); } }); }
-		 * else {
-		 */
-		findViewById(R.id.alerte).setVisibility(View.GONE);
-		// }
+		if (TransportsBordeauxApplication.hasAlert(myLigne.nomLong)) {
+			findViewById(R.id.alerte).setVisibility(View.VISIBLE);
+			findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					Intent intent = new Intent(ListArret.this, ListAlerts.class);
+					intent.putExtra("ligne", myLigne);
+					startActivity(intent);
+				}
+			});
+		} else {
+			findViewById(R.id.alerte).setVisibility(View.GONE);
+		}
 		construireListe();
 	}
 

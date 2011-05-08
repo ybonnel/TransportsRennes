@@ -23,12 +23,12 @@ import java.util.List;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -179,18 +179,20 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		myLigne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myLigne);
 		setListAdapter(new DetailArretAdapter(getApplicationContext(), horaires, now));
 		ListView lv = getListView();
-		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				/*Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
-				intent.putExtra("trajetId", cursor.getInt(cursor.getColumnIndex("trajetId")));
-				intent.putExtra("sequence", cursor.getInt(cursor.getColumnIndex("sequence")));
-				startActivity(intent);*/
-			}
-		});
 		lv.setTextFilterEnabled(true);
 		recupererHoraires(true);
+		if (TransportsBordeauxApplication.hasAlert(myLigne.nomLong)) {
+			findViewById(R.id.alerte).setVisibility(View.VISIBLE);
+			findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					Intent intent = new Intent(DetailArret.this, ListAlerts.class);
+					intent.putExtra("ligne", myLigne);
+					startActivity(intent);
+				}
+			});
+		} else {
+			findViewById(R.id.alerte).setVisibility(View.GONE);
+		}
 	}
 
 	private static final int GROUP_ID = 0;
