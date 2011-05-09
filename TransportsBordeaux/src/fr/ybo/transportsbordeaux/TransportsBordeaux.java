@@ -19,12 +19,10 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -36,6 +34,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.donnees.GestionZipTbc;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
@@ -43,34 +42,19 @@ import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 
 public class TransportsBordeaux extends Activity {
 
-	private ProgressDialog myProgressDialog;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		afficheMessage();
 		assignerBoutons();
-		new AsyncTask<Void, Void, Void>() {
-
-			@Override
-			protected void onPreExecute() {
-				myProgressDialog = ProgressDialog.show(TransportsBordeaux.this, "",
-						getString(R.string.verificationUpdate), true);
-			}
-
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.verificationUpdate)) {
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				verifierUpgrade();
 				return null;
 			}
-
-			@Override
-			protected void onPostExecute(Void result) {
-				super.onPostExecute(result);
-				myProgressDialog.dismiss();
-			}
-		}.execute((Void[]) null);
+		}.execute();
 	}
 
 	private void assignerBoutons() {
@@ -169,22 +153,13 @@ public class TransportsBordeaux extends Activity {
 	}
 
 	private void upgradeDatabase() {
-		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.infoChargementGtfs), true);
-
-		new AsyncTask<Void, Void, Void>() {
-
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.infoChargementGtfs)) {
 			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void doInBackground(Void... params) {
 				UpdateDataBase.updateIfNecessaryDatabase(getResources());
 				return null;
 			}
-
-			@Override
-			protected void onPostExecute(Void result) {
-				super.onPostExecute(result);
-				myProgressDialog.dismiss();
-			}
-		}.execute((Void[]) null);
+		}.execute();
 	}
 
 	private void verifierUpgrade() {

@@ -22,9 +22,7 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
@@ -43,7 +42,7 @@ import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
- *
+ * 
  * @author ybonnel
  */
 public class DetailArret extends MenuAccueil.ListActivity {
@@ -80,51 +79,42 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void gestionViewsTitle() {
 		((TextView) findViewById(R.id.nomLong)).setText(favori.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
-		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + ' ' + getString(R.string.vers) + ' ' + favori.direction);
+		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + ' ' + getString(R.string.vers)
+				+ ' ' + favori.direction);
 	}
 
 	private void recupererHoraires(final boolean changementJournee) {
-		new AsyncTask<Void, Void, Void>() {
-
-			private ProgressDialog myProgressDialog;
-
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(DetailArret.this, "", getString(R.string.recuperationHoraires),
-						true);
-			}
-
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.recuperationHoraires)) {
 			@Override
 			protected Void doInBackground(Void... pParams) {
-					if (changementJournee) {
-						horairesJournee.clear();
-						horairesJournee.addAll(getHorairesTriees());
-					}
-					if (prochainArrets) {
-						recupererProchainsDeparts();
-					} else {
-						recupererHorairesAllDeparts();
-					}
+				if (changementJournee) {
+					horairesJournee.clear();
+					horairesJournee.addAll(getHorairesTriees());
+				}
+				if (prochainArrets) {
+					recupererProchainsDeparts();
+				} else {
+					recupererHorairesAllDeparts();
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				myProgressDialog.dismiss();
 				super.onPostExecute(result);
 			}
 		}.execute();
 	}
-	
+
 	private List<Horaire> getHorairesTriees() {
 		List<Horaire> horairesTbc = Horaire.getHoraires(calendar.getTime(), favori);
 		Collections.sort(horairesTbc, new Comparator<Horaire>() {
 			@Override
 			public int compare(Horaire pObject1, Horaire pObject2) {
 				return pObject1.horaire.compareTo(pObject2.horaire);
-			}});
+			}
+		});
 		return horairesTbc;
 	}
 
@@ -184,8 +174,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(android.R.drawable.ic_menu_view);
-		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(android.R.drawable.ic_menu_month);
+		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(
+				android.R.drawable.ic_menu_view);
+		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(
+				android.R.drawable.ic_menu_month);
 		return true;
 	}
 
@@ -227,8 +219,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		if (id == DATE_DIALOG_ID) {
-			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DAY_OF_MONTH));
+			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		}
 		return null;
 	}

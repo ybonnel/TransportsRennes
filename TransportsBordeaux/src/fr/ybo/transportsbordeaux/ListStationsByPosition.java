@@ -15,12 +15,10 @@
 package fr.ybo.transportsbordeaux;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -28,7 +26,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,6 +41,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.util.Formatteur;
@@ -144,8 +142,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		super.onPause();
 	}
 
-	private ProgressDialog myProgressDialog;
-
 	private void metterAJourListeStations() {
 		String query = editText.getText().toString().toUpperCase();
 		stationsFiltrees.clear();
@@ -197,49 +193,53 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
 
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "",
-						getString(R.string.dialogRequeteVcub), true);
+		findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+				ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
+				stationsSerializable.addAll(stationsFiltrees);
+				intent.putExtra("stations", stationsSerializable);
+				startActivity(intent);
 			}
+		});
 
-			@Override
-			protected Void doInBackground(Void... pParams) {
-				List<Station> stationsTmp = Station.recupererStations();
-				synchronized (stations) {
-					stations.clear();
-					stations.addAll(stationsTmp);
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
-					stationsFiltrees.clear();
-					stationsFiltrees.addAll(stations);
-				}
-				return null;
-			}
-
+		new GetStations() {
 			@Override
 			protected void onPostExecute(Void result) {
-				myProgressDialog.dismiss();
-				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-						ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-						stationsSerializable.addAll(stationsFiltrees);
-						intent.putExtra("stations", stationsSerializable);
-						startActivity(intent);
-					}
-				});
-				activeGps();
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
+				activeGps();
 			}
 		}.execute();
+	}
+
+	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
+		public GetStations() {
+			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub));
+		}
+
+		@Override
+		protected Void doInBackground(Void... pParams) {
+			List<Station> stationsTmp = Station.recupererStations();
+			synchronized (stations) {
+				stations.clear();
+				stations.addAll(stationsTmp);
+				Collections.sort(stations, new Comparator<Station>() {
+					public int compare(Station o1, Station o2) {
+						return o1.name.compareToIgnoreCase(o2.name);
+					}
+				});
+				stationsFiltrees.clear();
+				stationsFiltrees.addAll(stations);
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+		}
 	}
 
 	private static final int GROUP_ID = 0;
@@ -258,41 +258,13 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == MENU_REFRESH) {
-			new AsyncTask<Void, Void, Void>() {
 
-				@Override
-				protected void onPreExecute() {
-					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "",
-							getString(R.string.dialogRequeteVcub), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
-					Collection<Station> stationsTmp;
-					stationsTmp = Station.recupererStations();
-					synchronized (stations) {
-						stations.clear();
-						stations.addAll(stationsTmp);
-						Collections.sort(stations, new Comparator<Station>() {
-							public int compare(Station o1, Station o2) {
-								return o1.name.compareToIgnoreCase(o2.name);
-							}
-						});
-						stationsFiltrees.clear();
-						stationsFiltrees.addAll(stations);
-					}
-
-					return null;
-				}
-
+			new GetStations() {
 				@Override
 				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
-					myProgressDialog.dismiss();
 					metterAJourListeStations();
 					mettreAjoutLoc(lastLocation);
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 			}.execute();
 			return true;

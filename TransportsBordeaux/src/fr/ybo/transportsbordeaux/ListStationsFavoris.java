@@ -20,10 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -34,6 +32,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.util.Formatteur;
@@ -50,8 +49,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 	 * Liste des stations.
 	 */
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
-
-	private ProgressDialog myProgressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,48 +70,43 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
+		new GetStations().execute();
+	}
 
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
-						getString(R.string.dialogRequeteVcub), true);
+	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
+		public GetStations() {
+			super(ListStationsFavoris.this, getString(R.string.dialogRequeteVcub));
+		}
+
+		@Override
+		protected Void doInBackground(Void... pParams) {
+			List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(new VeloFavori());
+			Collection<Integer> ids = new ArrayList<Integer>(10);
+			for (VeloFavori favori : velosFavoris) {
+				ids.add(favori.id);
 			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
-				List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(
-						new VeloFavori());
-				Collection<Integer> ids = new ArrayList<Integer>(10);
-				for (VeloFavori favori : velosFavoris) {
-					ids.add(favori.id);
-				}
-				Collection<Station> stationsTmp = Station.recupererStations();
-				synchronized (stations) {
-					stations.clear();
-					for (Station station : stationsTmp) {
-						if (ids.contains(station.id)) {
-							stations.add(station);
-						}
+			Collection<Station> stationsTmp = Station.recupererStations();
+			synchronized (stations) {
+				stations.clear();
+				for (Station station : stationsTmp) {
+					if (ids.contains(station.id)) {
+						stations.add(station);
 					}
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
 				}
-
-				return null;
+				Collections.sort(stations, new Comparator<Station>() {
+					public int compare(Station o1, Station o2) {
+						return o1.name.compareToIgnoreCase(o2.name);
+					}
+				});
 			}
+			return null;
+		}
 
-			@Override
-			protected void onPostExecute(Void result) {
-				myProgressDialog.dismiss();
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				super.onPostExecute(result);
-			}
-		}.execute();
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+		}
 	}
 
 	private static final int GROUP_ID = 0;
@@ -133,46 +125,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == MENU_REFRESH) {
-			new AsyncTask<Void, Void, Void>() {
-
-				@Override
-				protected void onPreExecute() {
-					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
-							getString(R.string.dialogRequeteVcub), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
-					List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(
-							new VeloFavori());
-					Collection<Integer> ids = new ArrayList<Integer>(10);
-					for (VeloFavori favori : velosFavoris) {
-						ids.add(favori.id);
-					}
-					Collection<Station> stationsTmp = Station.recupererStations();
-					synchronized (stations) {
-						stations.clear();
-						for (Station station : stationsTmp) {
-							stations.add(station);
-						}
-						Collections.sort(stations, new Comparator<Station>() {
-							public int compare(Station o1, Station o2) {
-								return o1.name.compareToIgnoreCase(o2.name);
-							}
-						});
-					}
-
-					return null;
-				}
-
-				@Override
-				protected void onPostExecute(Void result) {
-					myProgressDialog.dismiss();
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-					super.onPostExecute(result);
-				}
-			}.execute();
+			new GetStations().execute();
 			return true;
 		}
 		return false;

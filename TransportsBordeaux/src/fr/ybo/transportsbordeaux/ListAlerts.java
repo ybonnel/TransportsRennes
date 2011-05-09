@@ -18,24 +18,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.AlertAdapter;
 import fr.ybo.transportsbordeaux.modele.Alert;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbc.TcbConstantes;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
-
-	private ProgressDialog myProgressDialog;
 
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>());
 
@@ -58,14 +55,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 		});
 
-		new AsyncTask<Void, Void, Void>() {
-
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListAlerts.this, "", getString(R.string.dialogRequeteAlerts),
-						true);
-			}
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteAlerts)) {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
@@ -84,7 +74,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				myProgressDialog.dismiss();
 				super.onPostExecute(result);
 			}
 		}.execute();
