@@ -36,19 +36,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.ybo.transportsbordeaux.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.donnees.GestionZipTbc;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
 
 public class TransportsBordeaux extends Activity {
 
 	private ProgressDialog myProgressDialog;
-
-	private static final LogYbo LOG_YBO = new LogYbo(TransportsBordeaux.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +53,6 @@ public class TransportsBordeaux extends Activity {
 		assignerBoutons();
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				myProgressDialog = ProgressDialog.show(TransportsBordeaux.this, "",
@@ -68,13 +61,7 @@ public class TransportsBordeaux extends Activity {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-
-				try {
-					verifierUpgrade();
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-					erreur = true;
-				}
+				verifierUpgrade();
 				return null;
 			}
 
@@ -82,14 +69,6 @@ public class TransportsBordeaux extends Activity {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(TransportsBordeaux.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG)
-							.show();
-					if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-						LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
-						finish();
-					}
-				}
 			}
 		}.execute((Void[]) null);
 	}
@@ -152,13 +131,11 @@ public class TransportsBordeaux extends Activity {
 		builder.create().show();
 	}
 
-
 	private static class TerminerClickListener implements DialogInterface.OnClickListener {
 		public void onClick(DialogInterface dialogInterface, int i) {
 			dialogInterface.cancel();
 		}
 	}
-
 
 	private void saveAfficheMessage() {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
@@ -196,16 +173,9 @@ public class TransportsBordeaux extends Activity {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					UpdateDataBase.updateIfNecessaryDatabase(getResources());
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsBordeaux.doInBackGround", exception);
-					erreur = true;
-				}
+				UpdateDataBase.updateIfNecessaryDatabase(getResources());
 				return null;
 			}
 
@@ -213,11 +183,6 @@ public class TransportsBordeaux extends Activity {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(TransportsBordeaux.this, getString(R.string.erreur_chargementTbc), Toast.LENGTH_LONG)
-							.show();
-					finish();
-				}
 			}
 		}.execute((Void[]) null);
 	}
@@ -226,8 +191,8 @@ public class TransportsBordeaux extends Activity {
 		DataBaseHelper dataBaseHelper = TransportsBordeauxApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipTbc.getLastUpdate(getResources());
-		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||
-				dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
+		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
+				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
 			builder.setCancelable(false);
@@ -269,7 +234,6 @@ public class TransportsBordeaux extends Activity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

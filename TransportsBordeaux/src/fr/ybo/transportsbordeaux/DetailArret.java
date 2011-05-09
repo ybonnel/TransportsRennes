@@ -34,14 +34,12 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-import fr.ybo.transportsbordeaux.util.LogYbo;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -49,8 +47,6 @@ import fr.ybo.transportsbordeaux.util.LogYbo;
  * @author ybonnel
  */
 public class DetailArret extends MenuAccueil.ListActivity {
-
-	private final static LogYbo LOG_YBO = new LogYbo(DetailArret.class);
 
 	private boolean prochainArrets = true;
 
@@ -90,8 +86,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void recupererHoraires(final boolean changementJournee) {
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			private ProgressDialog myProgressDialog;
 
 			@Override
@@ -103,7 +97,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
 					if (changementJournee) {
 						horairesJournee.clear();
 						horairesJournee.addAll(getHorairesTriees());
@@ -113,10 +106,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 					} else {
 						recupererHorairesAllDeparts();
 					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur dans la récupération des horaires", exception);
-					erreur = true;
-				}
 				return null;
 			}
 
@@ -124,13 +113,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(),
-							getString(R.string.erreur_recuperationHoraires),
-							Toast.LENGTH_LONG);
-					toast.show();
-					finish();
-				}
 				super.onPostExecute(result);
 			}
 		}.execute();

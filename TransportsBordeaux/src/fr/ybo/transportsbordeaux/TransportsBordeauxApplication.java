@@ -18,6 +18,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+
 import android.app.Application;
 import android.os.AsyncTask;
 import fr.ybo.transportsbordeaux.database.DataBaseHelper;
@@ -33,6 +37,8 @@ import fr.ybo.transportsbordeaux.modele.VeloFavori;
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
  */
+@ReportsCrashes(formKey = "dE5mNl9RV3NOc25XdnI1RWpNQnZGYlE6MQ", mode = ReportingInteractionMode.TOAST,
+		resToastText = R.string.erreurNonPrevue)
 public class TransportsBordeauxApplication extends Application {
 
 	private static DataBaseHelper databaseHelper;
@@ -45,6 +51,7 @@ public class TransportsBordeauxApplication extends Application {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate() {
+		ACRA.init(this);
 		super.onCreate();
 		databaseHelper = new DataBaseHelper(this, Arrays.asList(Arret.class, ArretFavori.class, ArretRoute.class,
 				DernierMiseAJour.class, Direction.class, Ligne.class, VeloFavori.class));
