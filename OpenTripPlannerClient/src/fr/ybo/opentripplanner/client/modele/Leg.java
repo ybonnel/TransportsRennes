@@ -47,27 +47,27 @@ public class Leg implements Serializable {
     /**
      * The mode (e.g., <code>Walk</code>) used when traversing this leg.
      */
-	@SerializedName(value = "@mode", validate = false)
+	@SerializedName(value = "@mode")
     public String mode = TraverseMode.WALK.toString();
 
     /**
      * For transit legs, the route of the bus or train being used. For non-transit legs, the name of
      * the street being traversed.
      */
-	@SerializedName(value = "@route", validate = false)
+	@SerializedName(value = "@route")
     public String route = "";
 
     /**
      * For transit legs, the headsign of the bus or train being used. For non-transit legs, null.
      */
-	@SerializedName(value = "@headsign", validate = false)
+	@SerializedName(value = "@headsign")
     public String headsign = null;
 
     /**
      * For transit legs, the ID of the transit agency that operates the service used for this leg.
      * For non-transit legs, null.
      */
-	@SerializedName(value = "@agencyId", validate = false)
+	@SerializedName(value = "@agencyId")
     public String agencyId = null;
     
     /**
