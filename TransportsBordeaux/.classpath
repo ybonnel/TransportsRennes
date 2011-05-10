@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MoteurCsv"/>
 	<classpathentry kind="lib" path="libs/acra-3.1.2.jar"/>
+	<classpathentry kind="lib" path="libs/moteurcsv-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
