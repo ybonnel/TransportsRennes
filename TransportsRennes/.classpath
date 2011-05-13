@@ -6,7 +6,7 @@
 	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="libs/moteurcsv-1.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/gson-1.7.2-OTP-SNAPSHOT.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/GeoCoder"/>
+	<classpathentry kind="lib" path="libs/geocoder-1.0.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/OpenTripPlannerClient"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
