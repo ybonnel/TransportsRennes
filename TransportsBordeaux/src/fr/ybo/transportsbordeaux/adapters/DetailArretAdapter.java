@@ -23,9 +23,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.R.id;
-import fr.ybo.transportsbordeaux.R.layout;
-import fr.ybo.transportsbordeaux.R.string;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 
 /**
