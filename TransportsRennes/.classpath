@@ -7,6 +7,6 @@
 	<classpathentry kind="lib" path="libs/moteurcsv-1.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/gson-1.7.2-OTP-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="libs/geocoder-1.0.0.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OpenTripPlannerClient"/>
+	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
