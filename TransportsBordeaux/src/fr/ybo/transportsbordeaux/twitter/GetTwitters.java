@@ -1,11 +1,15 @@
 package fr.ybo.transportsbordeaux.twitter;
 
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Collection;
+import java.util.List;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 
@@ -25,9 +29,6 @@ public class GetTwitters {
 
 	public Collection<MessageTwitter> getMessages() {
 		try {
-			GetTwittersHandler handler = new GetTwittersHandler();
-			SAXParserFactory factory = SAXParserFactory.newInstance();
-			SAXParser parser = factory.newSAXParser();
 			HttpURLConnection connection = (HttpURLConnection) new URL(
 					"http://transports-rennes.appspot.com/twittertbc").openConnection();
 			connection.setRequestMethod("GET");
@@ -35,8 +36,10 @@ public class GetTwitters {
             connection.setConnectTimeout(20000);
             connection.setReadTimeout(20000);
 			connection.connect();
-			parser.parse(connection.getInputStream(), handler);
-			return handler.getMessages();
+			Gson gson = new GsonBuilder().create();
+			Type listType = new TypeToken<List<MessageTwitter>>() {
+			}.getType();
+			return gson.fromJson(new InputStreamReader(connection.getInputStream()), listType);
 		} catch (Exception e) {
 			throw new TcbException("Erreur lors de l'interrogation de twitter", e);
 		}
