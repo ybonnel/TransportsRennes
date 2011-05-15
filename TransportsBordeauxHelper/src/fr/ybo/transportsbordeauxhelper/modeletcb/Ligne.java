@@ -63,16 +63,26 @@ public class Ligne {
 
 	private List<Arret> getArrets(String url) {
 		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-			connection.connect();
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			StringBuilder stringBuilder = new StringBuilder();
-			String ligne = bufReader.readLine();
-			while (ligne != null) {
-				stringBuilder.append(ligne.replaceAll("id=\"\"", ""));
-				ligne = bufReader.readLine();
+			StringBuilder stringBuilder = null;
+			boolean erreur = true;
+			while (erreur) {
+				try {
+					HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+					connection.setRequestMethod("GET");
+					connection.setDoOutput(true);
+					connection.connect();
+					BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+					stringBuilder = new StringBuilder();
+					String ligne = bufReader.readLine();
+					while (ligne != null) {
+						stringBuilder.append(ligne.replaceAll("id=\"\"", ""));
+						ligne = bufReader.readLine();
+					}
+					erreur = false;
+				} catch (Exception exception) {
+					exception.printStackTrace();
+					erreur = true;
+				}
 			}
 
 			GetArretsHandler handler = new GetArretsHandler();
