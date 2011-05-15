@@ -24,14 +24,14 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:clickable="true"
-            android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A"
+        	android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
             />
 
     <!-- Debug
         android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A"
         -->
     <!-- Release
-        android:apiKey=""
+        android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
         -->
 
 </RelativeLayout>
