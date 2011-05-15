@@ -13,6 +13,8 @@ public class TcbConstantes {
 
 	public static final String URL_MOBILE_TBC = "http://www.mobilinfotbc.com";
 
+	public static final String URL_INFOS_TBC = "http://www.infotbc.com";
+
 	public static String getUrlHoraire(String ligneId, String stopId, boolean forward, Date date) {
 		return TCB_HORAIRES.replaceAll("\\{ligne_id\\}", ligneId.split("_")[1]).replaceAll("\\{stop_id\\}", stopId)
 				.replaceAll("\\{direction\\}", forward ? "forward" : "backward").replaceAll("\\{date\\}", SDF_DATE_HORAIRE.format(date));

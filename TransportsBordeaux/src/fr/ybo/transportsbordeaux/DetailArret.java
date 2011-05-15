@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -165,6 +166,17 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} else {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
+		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
+				intent.putExtra("horaire", (Horaire) adapterView.getAdapter().getItem(position));
+				intent.putExtra("ligne", myLigne);
+				intent.putExtra("direction", favori.direction);
+				startActivity(intent);
+			}
+		});
 	}
 
 	private static final int GROUP_ID = 0;

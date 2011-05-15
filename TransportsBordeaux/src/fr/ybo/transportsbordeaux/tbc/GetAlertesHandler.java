@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import fr.ybo.transportsbordeaux.modele.Alert;
+import fr.ybo.transportsbordeaux.util.StringUtils;
 
 public class GetAlertesHandler extends DefaultHandler {
 
@@ -61,13 +62,7 @@ public class GetAlertesHandler extends DefaultHandler {
 			alertCourante = null;
 		}
 		if (ligneEncours && qName.equals(BALISE_TD)) {
-			String ligne = contenu.toString();
-			while (ligne.charAt(0) == ' ') {
-				ligne = ligne.substring(1);
-			}
-			while (ligne.charAt(ligne.length() - 1) == ' ') {
-				ligne = ligne.substring(0, ligne.length() - 2);
-			}
+			String ligne = StringUtils.doubleTrim(contenu.toString());
 			alertCourante.ligne = ligne;
 			ligneEncours = false;
 		}
