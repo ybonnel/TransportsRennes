@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.ybo.twitter.starbusmetro.modele.MessageTwitter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @SuppressWarnings("serial")
 public class TwitterTbcServlet extends HttpServlet {
@@ -31,11 +32,7 @@ public class TwitterTbcServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.setContentType("text/xml");
 		resp.setCharacterEncoding("utf-8");
-		resp.getWriter().println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		resp.getWriter().println("<messages>");
-		for (MessageTwitter message : GET_TWITTERS.getMessages()) {
-			resp.getWriter().println(message.toXml());
-		}
-		resp.getWriter().println("</messages>");
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		resp.getWriter().print(gson.toJson(GET_TWITTERS.getMessages()));
 	}
 }
