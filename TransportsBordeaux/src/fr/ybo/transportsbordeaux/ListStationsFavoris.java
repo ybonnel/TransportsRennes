@@ -31,6 +31,10 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
@@ -71,6 +75,9 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
 		new GetStations().execute();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {

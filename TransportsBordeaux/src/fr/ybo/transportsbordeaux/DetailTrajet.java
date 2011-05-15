@@ -22,6 +22,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.DetailTrajetAdapter;
@@ -77,5 +81,8 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 			}
 		}.execute();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

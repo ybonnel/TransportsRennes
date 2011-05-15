@@ -28,6 +28,9 @@
         <activity android:name=".StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         
+    <activity android:name="com.google.ads.AdActivity"
+              android:configChanges="keyboard|keyboardHidden|orientation"/>
+        
         <uses-library android:name="com.google.android.maps"/>
 
     </application>

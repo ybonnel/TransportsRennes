@@ -34,6 +34,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.donnees.GestionZipTbc;
@@ -55,6 +59,9 @@ public class TransportsBordeaux extends Activity {
 				return null;
 			}
 		}.execute();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private void assignerBoutons() {
@@ -205,6 +212,8 @@ public class TransportsBordeaux extends Activity {
 		super.onConfigurationChanged(newConfig);
 		setContentView(R.layout.main);
 		assignerBoutons();
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private static final int GROUP_ID = 0;

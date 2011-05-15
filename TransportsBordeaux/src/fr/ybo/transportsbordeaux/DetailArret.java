@@ -33,6 +33,10 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
@@ -177,6 +181,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				startActivity(intent);
 			}
 		});
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private static final int GROUP_ID = 0;

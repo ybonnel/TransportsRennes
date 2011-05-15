@@ -22,6 +22,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.LigneAdapter;
 import fr.ybo.transportsbordeaux.modele.Ligne;
@@ -54,5 +58,8 @@ public class ListeBus extends MenuAccueil.ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bus);
 		constructionListe();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

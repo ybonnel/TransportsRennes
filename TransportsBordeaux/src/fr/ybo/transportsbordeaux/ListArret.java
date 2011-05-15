@@ -31,6 +31,10 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.ArretAdapter;
 import fr.ybo.transportsbordeaux.modele.Ligne;
@@ -189,6 +193,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
 		construireListe();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	@Override

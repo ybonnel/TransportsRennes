@@ -40,6 +40,10 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
@@ -211,6 +215,9 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				activeGps();
 			}
 		}.execute();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {

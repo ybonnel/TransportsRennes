@@ -25,6 +25,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.FavoriAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
@@ -54,6 +58,9 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
 		construireListe();
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	@Override

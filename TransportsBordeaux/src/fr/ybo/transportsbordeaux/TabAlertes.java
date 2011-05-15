@@ -21,6 +21,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 public class TabAlertes extends TabActivity {
 
 	@Override
@@ -48,5 +51,8 @@ public class TabAlertes extends TabActivity {
 		tabHost.addTab(twitterSpec);
 
 		tabHost.setCurrentTab(0);
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }
