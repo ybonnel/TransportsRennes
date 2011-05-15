@@ -23,12 +23,20 @@
         <servlet-class>fr.ybo.twitter.starbusmetro.TwitterStarBusMetroServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>TwitterStarBusMetroGson</servlet-name>
+        <servlet-class>fr.ybo.twitter.starbusmetro.TwitterStarBusMetroGsonServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>TwitterTbc</servlet-name>
         <servlet-class>fr.ybo.twitter.starbusmetro.TwitterTbcServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>TwitterStarBusMetro</servlet-name>
         <url-pattern>/twitterstarbusmetro</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>TwitterStarBusMetroGson</servlet-name>
+        <url-pattern>/twitterstarbusmetrogson</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>TwitterTbc</servlet-name>

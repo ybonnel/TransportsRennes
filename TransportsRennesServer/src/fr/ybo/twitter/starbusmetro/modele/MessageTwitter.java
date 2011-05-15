@@ -23,6 +23,7 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.gson.annotations.Expose;
 
 @PersistenceCapable
 public class MessageTwitter {
@@ -31,9 +32,11 @@ public class MessageTwitter {
 	private Key key;
 
 	@Persistent
+	@Expose
 	public Date dateCreation;
 
 	@Persistent
+	@Expose
 	public String texte;
 
 	@Persistent
@@ -66,7 +69,7 @@ public class MessageTwitter {
 		stringBuilder.append(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(dateCreation));
 		stringBuilder.append("</dateCreation>");
 		stringBuilder.append("<contenu>");
-		stringBuilder.append(texte);
+		stringBuilder.append(texte.replace('&', ' '));
 		stringBuilder.append("</contenu>");
 		stringBuilder.append("</message>");
 		return stringBuilder.toString();

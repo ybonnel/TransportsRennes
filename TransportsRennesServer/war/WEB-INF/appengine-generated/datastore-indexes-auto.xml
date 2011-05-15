@@ -1,0 +1,11 @@
+<!-- Indices written at Sun, 15 May 2011 18:26:22 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="MessageTwitter" ancestor="false" source="auto">
+        <property name="compte" direction="asc"/>
+        <property name="dateCreation" direction="desc"/>
+    </datastore-index>
+
+</datastore-indexes>
