@@ -57,7 +57,7 @@ TBC71_71,Bus,Ligne 71,ST AUBIN DE MEDOC Lycée Sud Médoc,MERIGNAC Centre
 TBC72_72,Bus,Ligne 72,EYSINES Centre,BORDEAUX Martinique
 TBC73_73,Bus,Ligne 73,BRUGES Zone de Fret / BRUGES Villabois / BRUGES Zone de Fret(Milan),BORDEAUX Les Aubiers
 TBC74_74,Bus,Spécifique 74,BORDEAUX Gabriel Fauré,BORDEAUX Roger Allo
-TBC76_76,Bus,Ligne 76,Bassins à Flot Terminus - Lisière du Vignoble,Lisière du Vignoble - Bassins à Flot Terminus
+TBC76_76,Bus,Ligne 76,PAREMPUYRE Lisière du Vignoble  ,BORDEAUX Claveau 
 TBC77_77,Bus,Ligne 77,PAREMPUYRE Lisière du Vignoble,BLANQUEFORT Lycée du Bâtiment
 TBC78_78,Bus,Spécifique 78,BLNQUEFORT Lycée Jean Monnet,EYSINES Centre
 TBC79_79,Bus,Spécifique 79,LE TAILLAN  Lycée Sud Médoc,EYSINES Le Vigean

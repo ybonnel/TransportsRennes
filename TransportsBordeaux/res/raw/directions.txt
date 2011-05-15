@@ -93,8 +93,8 @@ id,direction
 91,BRUGES Zone de Fret / BRUGES Villabois / BRUGES Zone de Fret(Milan)
 92,BORDEAUX Roger Allo
 93,BORDEAUX Gabriel Fauré
-94,Bassins à Flot Terminus - Lisière du Vignoble
-95,Lisière du Vignoble - Bassins à Flot Terminus
+94,PAREMPUYRE Lisière du Vignoble  
+95,BORDEAUX Claveau 
 96,BLANQUEFORT Lycée du Bâtiment
 97,BLNQUEFORT Lycée Jean Monnet
 98,LE TAILLAN  Lycée Sud Médoc

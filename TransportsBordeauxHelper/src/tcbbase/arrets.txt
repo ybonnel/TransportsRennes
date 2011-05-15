@@ -1,5 +1,252 @@
 identifiant,nom
+OCE71116000, - gare de irun
+OCE87111849,Chessy - gare de Marne-la-Vallée-Chessy.
+OCE87142109,Louvigny - gare de Lorraine TGV
+OCE87147322,Les Trois-Domaines - gare de Meuse TGV
+OCE87171926,Bezannes - gare de Champagne Ardenne TGV
+OCE87212027,Strasbourg - gare de Strasbourg
+OCE87223263,Lille - gare de Lille Europe
+OCE87235317,Le Bouscat - gare de gare de Ravezies
+OCE87271494,Tremblay-en-France - gare de Aéropt-C-de-Gaulle-TGV
+OCE87286005,Lille - gare de Lille Flandres
+OCE87313882,Estrées-Deniécourt - gare de TGV Haute-Picardie
+OCE87324061,Lacanau - lacanau ocean
+OCE87324095,Chasseneuil-du-Poitou - gare de Futuroscope
+OCE87342014,Arras - gare de Arras
+OCE87345009,Douai - gare de Douai
+OCE87391003,Paris - gare de Paris-Montparnasse
+OCE87393702,Massy - gare de Massy-TGV
+OCE87420596,Cenon - gare de Cenon
+OCE87471003,Rennes - gare de Rennes
+OCE87471300,Redon - gare de Redon
+OCE87474098,Quimper - gare de Quimper
+OCE87476002,Lorient - gare de Lorient
+OCE87476200,Auray - gare de Auray
+OCE87476606,Vannes - gare de Vannes
+OCE87481002,Nantes - gare de Nantes
+OCE87481838,Savenay - gare de Savenay
+OCE87481846,Pontchâteau - gare de Pontchâteau
+OCE87485003,La Rochelle - gare de La Rochelle-Ville
+OCE87485110,Châtelaillon-Plage - gare de Chatelaillon
+OCE87485144,Rochefort - gare de Rochefort
+OCE87485151,Tonnay-Charente - gare de Tonnay-Charente
+OCE87486019,La Roche-sur-Yon - gare de La Roche-sur-Yon
+OCE87486258,Luçon - gare de Luçon
+OCE87491001,Saintes - gare de Saintes
+OCE87491019,Bords - gare de Bords
+OCE87491035,Saint-Savinien - gare de St-Savinien/Charente
+OCE87491043,Taillebourg - gare de Taillebourg
+OCE87491100,Pons - gare de Pons
+OCE87491134,Clion - gare de Clion-sur-Seugne
+OCE87491142,Jonzac - gare de Jonzac
+OCE87491159,Fontaines-d'Ozillac - gare de Fontaines-Ozillac
+OCE87491183,Montendre - gare de Montendre
+OCE87491191,Bussac-Foret - gare de Bussac
+OCE87491209,Saint-Yzan-de-Soudiac - gare de St-Mariens-St-Yzan
+OCE87491217,Cavignac - gare de Cavignac
+OCE87491225,Gauriaguet - gare de Gauriaguet
+OCE87491233,Aubie-et-Espessas - gare de Aubie-St-Antoine
+OCE87491241,Saint-André-de-Cubzac - gare de St-André-de-Cubzac
+OCE87491266,Cubzac-les-Ponts - gare de Cubzac-les-Ponts
+OCE87491274,Ambares-et-Lagrave - gare de La Grave-d'Ambarès-G-i
+OCE87491282,Sainte-Eulalie - gare de Ste-Eulalie-Carbon-Blan
+OCE87543017,Fleury-les-Aubrais - gare des Aubrais-Orléans
+OCE87547000,Paris - gare de Paris-Austerlitz
+OCE87571216,Villiers-sur-Loir - gare de Vendôme-Villiers-s-Loir
+OCE87571240,Saint-Pierre-des-Corps - gare de St-Pierre-des-Corps
+OCE87574004,Blois - gare de Blois
+OCE87575001,Poitiers - gare de Poitiers
+OCE87575142,Châtellerault - gare de Châtellerault
+OCE87575290,Vivonne - gare de Vivonne
+OCE87575332,Anché - gare de Anché-Voulon
+OCE87575365,Saint-Saviol - gare de St-Saviol
+OCE87581009,Bordeaux - gare de Bordeaux-Saint-Jean
+OCE87581181,Ludon-Médoc - gare de Ludon
+OCE87581199,Macau - gare de Macau
+OCE87581215,Margaux - gare de Margaux
+OCE87581231,Moulis-en-Médoc - gare de Moulis-Listrac
+OCE87581256,Pauillac - gare de Pauillac
+OCE87581314,Lesparre-Médoc - gare de Lesparre
+OCE87581371,Soulac-sur-Mer - gare de Soulac-sur-Mer-SNCF
+OCE87581389,Le Verdon-sur-Mer - gare de Le Verdon-Sncf
+OCE87581538,Bordeaux - gare de Caudéran-Mérignac
+OCE87581710,Parempuyre - gare de Parempuyre
+OCE87581728,Blanquefort - gare de Blanquefort
+OCE87581736,Bruges - gare de Bruges
+OCE87581751,Pessac - gare de Pessac
+OCE87581793,Pessac - gare de Alouette-France
+OCE87581801,Bègles - gare de Bègles
+OCE87581835,Villenave-d'Ornon - gare de Villenave-d'Ornon
+OCE87581850,Bassens - gare de Bassens
+OCE87582403,Cestas - gare de Gazinet-Cestas
+OCE87582437,Marcheprime - gare de Croix-d'Hins
+OCE87582445,Marcheprime - gare de Marcheprime
+OCE87582478,Biganos - gare de Facture-Biganos
+OCE87582536,Ychoux - gare de Ychoux
+OCE87582551,Labouheyre - gare de Labouheyre
+OCE87582601,Le Teich - gare de Le Teich
+OCE87582619,Gujan-Mestras - gare de Gujan-Mestras
+OCE87582635,Gujan-Mestras - gare de La Hume
+OCE87582643,La Teste-de-Buch - gare de La Teste
+OCE87582668,Arcachon - gare de Arcachon
+OCE87582684,Cadaujac - gare de Cadaujac
+OCE87582692,Saint-Médard-d'Eyrans - gare de St-Médard-d'Eyrans
+OCE87582700,Beautiran - gare de Beautiran
+OCE87582718,Portets - gare de Portets
+OCE87582726,Arbanats - gare de Arbanats
+OCE87582734,Podensac - gare de Podensac
+OCE87582742,Cérons - gare de Cérons
+OCE87582759,Barsac - gare de Barsac
+OCE87582767,Preignac - gare de Preignac
+OCE87582775,Langon - gare de Langon
+OCE87582825,Saint-Macaire - gare de St-Macaire
+OCE87582833,Saint-Pierre-d'Aurillac - gare de St-Pierre-d'Aurillac
+OCE87582841,Caudrot - gare de Caudrot
+OCE87582858,Gironde-sur-Dropt - gare de Gironde
+OCE87582866,La Réole - gare de La Réole
+OCE87582882,Lamothe-Landerron - gare de Lamothe-Landerron
+OCE87583005,Angouleme - gare de Angoulême
+OCE87583674,Saint-Amant - gare de Montmoreau
+OCE87583690,Chalais - gare de Chalais
+OCE87583823,Luxé - gare de Luxé
+OCE87583849,Ruffec - gare de Ruffec (Charente)
+OCE87584052,Libourne - gare de Libourne
+OCE87584102,Saint-Emilion - gare de St-Emilion
+OCE87584136,Castillon-la-Bataille - gare de Castillon
+OCE87584151,Lamothe-Montravel - gare de Lamothe-Montravel
+OCE87584177,Vélines - gare de Velines
+OCE87584193,Sainte-Foy-la-Grande - gare de Ste-Foy-la-Grande
+OCE87584201,Saint-Antoine-de-Breuilh - gare de St-Antoine-de-Breuilh
+OCE87584235,Gardonne - gare de Gardonne
+OCE87584243,Lamonzie-Saint-Martin - gare de Lamonzie-St-Martin
+OCE87584268,Bergerac - gare de Bergerac
+OCE87584425,Lalinde - gare de Couze
+OCE87584441,Lalinde - gare de Lalinde
+OCE87584466,Mauzac-et-Grand-Castang - gare de Mauzac
+OCE87584474,Trémolat - gare de Trémolat
+OCE87584508,Saint-Denis-de-Pile - gare de St-Denis-de-Pile
+OCE87584516,Coutras - gare de Coutras
+OCE87584532,Les Eglisottes-et-Chalaures - gare de Les Eglisottes
+OCE87584540,Saint-Aigulin - gare de St-Aigulin-la-Roche-Cha
+OCE87584607,Saint-Médard-de-Guizieres - gare de St-Médard-de-Guizières
+OCE87584615,Saint-Seurin-sur-l'Isle - gare de St-Seurin-sur-l'Isle
+OCE87584714,Vayres - gare de Vayres
+OCE87584722,Saint-Sulpice-et-Cameyrac - gare de St-Sulpice-Izon
+OCE87584730,Saint-Loubes - gare de St-Loubès
+OCE87584755,Ambares-et-Lagrave - gare de La Gorp
+OCE87586008,Agen - gare d'Agen
+OCE87586107,Port-Sainte-Marie - gare de Port-Ste-Marie
+OCE87586479,Sainte-Bazeille - gare de Ste-Bazeille
+OCE87586545,Marmande - gare de Marmande
+OCE87586651,Tonneins - gare de Tonneins
+OCE87586693,Aiguillon - gare de Aiguillon (Lot et Gar)
+OCE87592006,Limoges - gare de Limoges-Bénédictins
+OCE87592345,Saint-Sulpice-Lauriere - gare de St-Sulpice-Laurière
+OCE87592501,La Coquille - gare de La Coquille
+OCE87592725,Nexon - gare de Nexon
+OCE87592733,Saint-Hilaire-les-Places - gare de Lafarge
+OCE87592741,Bussiere-Galant - gare de Bussière-Galant
+OCE87594002,Brive-la-Gaillarde - gare de Brive-la-Gaillarde
+OCE87594093,Ussel - gare de Ussel
+OCE87594119,Saint-Priest-de-Gimel - gare de Corrèze
+OCE87594168,Egletons - gare de Egletons
+OCE87594275,Meymac - gare de Meymac
+OCE87594382,Le Lardin-Saint-Lazare - gare de Condat-le-Lardin
+OCE87594408,Terrasson-Lavilledieu - gare de Terrasson
+OCE87594499,Tulle - gare de Tulle
+OCE87595009,Périgueux - gare de Périgueux
+OCE87595124,Thiviers - gare de Thiviers
+OCE87595132,Négrondes - gare de Négrondes
+OCE87595157,Agonac - gare de Agonac
+OCE87595165,Château-l'Eveque - gare de Château-l'Evêque
+OCE87595207,Marsac-sur-l'Isle - gare de Marsac (Dordogne)
+OCE87595215,Marsac-sur-l'Isle - gare de La Cave
+OCE87595223,Razac-sur-l'Isle - gare de Razac
+OCE87595249,Saint-Astier - gare de St-Astier
+OCE87595264,Saint-Léon-sur-l'Isle - gare de St-Léon-sur-l'Isle
+OCE87595272,Neuvic - gare de Neuvic (Dordogne)
+OCE87595280,Douzillac - gare de Douzillac
+OCE87595298,Mussidan - gare de Mussidan
+OCE87595322,Montpon-Ménestérol - gare de Montpon-Ménestérol
+OCE87595512,Saint-Laurent-sur-Manoire - gare de Niversac
+OCE87595579,Thenon - gare de Thenon
+OCE87595751,Le Buisson-de-Cadouin - gare de Le Buisson
+OCE87595769,Siorac-en-Périgord - gare de Siorac-en-Périgord
+OCE87595777,Saint-Cyprien - gare de St-Cyprien (24)
+OCE87595827,Sarlat-la-Canéda - gare de Sarlat
+OCE87597609,Guéret - gare de Guéret
+OCE87611004,Toulouse - gare de Toulouse-Matabiau
+OCE87611244,Montauban - gare de Montauban-Villebourbon
+OCE87611657,Saint-Jory - gare de Saint-Jory
+OCE87611665,Castelnau-d'Estrétefonds - gare de Castelnau-d' Estrétefonds
+OCE87611673,Grisolles - gare de Grisolles
+OCE87611681,Dieupentale - gare de Dieupentale
+OCE87611863,Valence - gare de Valence-d' Agen
+OCE87611889,Moissac - gare de Moissac
+OCE87611897,Castelsarrasin - gare de Castelsarrasin
+OCE87615039,Castelnaudary - gare de Castelnaudary
+OCE87615286,Carcassonne - gare de Carcassonne
+OCE87641001,Montluçon - gare de Montluçon-Ville
+OCE87641241,Merlines - gare de Eygurande-Merlines
+OCE87641274,Saint-Sauves-d'Auvergne - gare de Laqueuille
+OCE87641415,Commentry - gare de Commentry
+OCE87671008,Tarbes - gare de Tarbes
+OCE87671016,Mont-de-Marsan - gare de Mont-de-Marsan
+OCE87671339,Lourdes - gare de Lourdes
+OCE87671487,Ygos-Saint-Saturnin - gare de Ygos
+OCE87671495,Saint-Martin-d'Oney - gare de St-Martin-d'Oney
+OCE87672006,Pau - gare de Pau
+OCE87672139,Coarraze - gare de Coarraze - Nay
+OCE87672212,Artix - gare d' Artix
+OCE87672253,Orthez - gare d'Orthez
+OCE87672279,Puyoô - gare de Puyoo
+OCE87673004,Bayonne - gare de Bayonne
+OCE87673103,Morcenx - gare de Morcenx
+OCE87673202,Dax - gare de Dax
+OCE87673277,Saint-Vincent-de-Tyrosse - gare de St-Vincent-de-Tyrosse
+OCE87673293,Labenne - gare de Labenne
+OCE87673400,Biarritz - gare de Biarritz
+OCE87673459,Guéthary - gare de Guéthary
+OCE87677005,Hendaye - gare d'Hendaye
+OCE87677104,Hendaye - gare de Les Deux-Jumeaux (64)
+OCE87677120,Saint-Jean-de-Luz - gare de St-Jean-de-Luz-Ciboure
+OCE87713040,Dijon - gare de Dijon-Ville
+OCE87722025,Lyon - gare de Lyon-Perrache
+OCE87723197,Lyon - gare de Lyon-Part-Dieu
+OCE87725002,Chalon-sur-Saône - gare de Chalon-sur-Saône
+OCE87725689,Mâcon - gare de Mâcon-Ville
+OCE87726802,Roanne - gare de Roanne
+OCE87732404,Gannat - gare de Gannat
+OCE87734004,Clermont-Ferrand - gare de Clermont-Ferrand
+OCE87734038,Chamalieres - gare de Royat-Chamalières
+OCE87751008,Marseille - gare de Marseille-Saint-Charles
+OCE87751081,Marseille - gare de Marseille-Blancarde
+OCE87753657,Arles - gare d' Arles
+OCE87755009,Toulon - gare de Toulon
+OCE87755447,Les Arcs - gare de Les Arcs-Draguignan
+OCE87756056,Nice - gare de Nice
+OCE87757518,Fréjus - gare de Fréjus-St-Raphaël
+OCE87757526,Saint-Raphaël - gare de Saint-Raphael-Valescure
+OCE87757625,Cannes - gare de Cannes
+OCE87757674,Antibes - gare d'Antibes
+OCE87763029,Alixan - gare TGV de Valence
+OCE87773002,Montpellier - gare de Montpellier
+OCE87773200,Sete - gare de Sète
+OCE87775007,Nîmes - gare de Nîmes
+OCE87781005,Béziers - gare de Béziers
+OCE87781104,Narbonne - gare de Narbonne
+OCE88140010, - gare de bruxelles midi brussel
+TBC10000DEPLE,Bordeaux - Dépôt Lescure
+TBC10001CEL,Bordeaux - DEPOT DU LAC
+TBC10003DEPAP,Bordeaux - Dépôt Allée des Pins
+TBC10004GQUINC,Bordeaux - Stationnement Quinconces
+TBC10005GBENAU,Bordeaux - Garage Benauge
+TBC10006GSTAL,Bordeaux - Garage à Stalingrad
 TBC1000MAL53A,Saint-Médard-en-Jalles - Malterre
+TBC10013GUNITE,Pessac - Garage Unitec
+TBC10015GFARLA,Mérignac - Garage Arlac
+TBC10018GACHA,Bordeaux - Garage Allées de Chartres
+TBC10019GBUTTI,Lormont - Garage Buttinière
 TBC1002PGA46A,Pessac - Petit Gazinet
 TBC1005LIB23R,Bègles - Liberté
 TBC1006BEA46R,Pessac - Beauséjour
@@ -68,7 +315,7 @@ TBC1090MON91A,Ambes - Montaigne
 TBC1091PCI36R,Mérignac - Plein Ciel
 TBC1092MOU37A,Blanquefort - Jean Moulin
 TBC1093PLA58R,Blanquefort - Anita Conti
-TBC1094PECH9R,Bordeaux - Pêcheurs
+TBC1094PECH9R,Bordeaux - Barrière St Augustin
 TBC1095QFR91R,Bassens - Quai Français
 TBC1099MAL23A,Bordeaux - Malbec
 TBC109FRA46R,Pessac - France
@@ -148,7 +395,7 @@ TBC1190RUG58R,Parempuyre - Rue de la Gare
 TBC1191CAS32A,Floirac - Castés
 TBC1192ARI03R,Bordeaux - André Ricard
 TBC1193SAI02A,Bordeaux - Saïgon
-TBC1194HLE24R,Pessac - Hôpital Haut-Lévêque
+TBC1194HLE24R,Pessac - Avenue du Haut Lévêque
 TBC1195FER08R,Cenon - Jules Ferry
 TBC1196CHA20R,Cadaujac - Chantecric
 TBC1197MEY46A,Pessac - Meyraud
@@ -165,7 +412,7 @@ TBC1211JAM91R,Ambes - Jamois
 TBC1212LBA49A,Mérignac - Labatut
 TBC1215HIP54A,Eysines - Hippodrome
 TBC1216DES84R,Pessac - Desbats
-TBC1219ASS31R,Bordeaux - Pôle emploi - Crama
+TBC1219ASS31R,Bordeaux - Pôle emploi Carsat
 TBC121LMA92A,Ambes - Le Mayne
 TBC1220MON40R,Talence - Montherlant
 TBC1222BEL48A,Bordeaux - Belleville
@@ -235,7 +482,7 @@ TBC130MCO07A,Lormont - Maison de Convalescence
 TBC1310LEP12A,Mérignac - Le Pont
 TBC1312FON55R,Eysines - La Fontaine
 TBC1313BOI46A,Pessac - Boiron
-TBC1316SHU46A,Pessac - Saint-Hubert
+TBC1316SHU46A,Pessac - St Hubert
 TBC1317FOR52R,Mérignac - La Forêt
 TBC1318MOU42A,Gradignan - Stade de Moulerens
 TBC1319TAB66A,Lormont - Abel Gance
@@ -292,7 +539,6 @@ TBC1404SAB03R,Bordeaux - Sabarots
 TBC1406VHU93A,Carbon-Blanc - Victor Hugo
 TBC1407ALO55A,Le Taillan-Médoc - Aloha
 TBC1408IMH31A,Bordeaux - Imhotep
-TBC1409BRU75R,Mérignac - Clos des Bruyères
 TBC140DEL32A,Floirac - Delacroix
 TBC1410MAR13A,Bordeaux - Marionneau
 TBC1411CET71R,Saint-Médard-en-Jalles - C.E.T.E
@@ -363,7 +609,6 @@ TBC1504NANS9R,Bordeaux - Nansouty
 TBC1505SAU63R,Artigues-pres-Bordeaux - Sauternes
 TBC1506MMQ10R,Pessac - Montaigne - Montesquieu
 TBC1508SBR10A,Bordeaux - St-Bruno - Hôtel de Région
-TBC1509BAR30R,Mérignac - M.A.S Barail
 TBC150GAR91R,Bordeaux - Gare d'Orléans
 TBC1511SYB90R,Bassens - Sybille
 TBC1512SEN03R,Lormont - Quai Numa Sensine
@@ -541,7 +786,7 @@ TBC1754RME76A,Le Bouscat - Libération
 TBC1755AND58R,Blanquefort - Andrian
 TBC1756BSM09A,Bordeaux - Barrière Saint-Médard
 TBC1757BPE09A,Bordeaux - Barrière de Pessac
-TBC1758PECH9A,Bordeaux - Pêcheurs
+TBC1758PECH9A,Bordeaux - Barrière St Augustin
 TBC175RME52A,Le Haillan - Rue du Médoc
 TBC1760STE52R,Bordeaux - Stade Stéhélin
 TBC1761VIO52R,Bordeaux - Violettes
@@ -848,7 +1093,7 @@ TBC2195DUP03A,Lormont - Quai Dupeyron
 TBC2196BRI03R,Lormont - Lormont Bas (A. Briand)
 TBC2198DOR05R,Bordeaux - Dorgelès
 TBC2199FOU07R,Bouliac - Fourney
-TBC219HLE24A,Pessac - Hôpital Haut-Lévêque
+TBC219HLE24A,Pessac - Avenue du Haut Lévêque
 TBC21CHU12A,Bordeaux - Churchill
 TBC2201TEM94R,Ambares-et-Lagrave - Templiers
 TBC2205PGA57A,Bruges - Pont du Gail
@@ -963,7 +1208,6 @@ TBC2383EGL32R,Floirac - Eglise de Floirac
 TBC2385E2M05R,Cenon - Entre-Deux-Mers
 TBC2386AFR05R,Cenon - Anatole France
 TBC2387PCA05R,Bordeaux - Petit Cardinal
-TBC238PGN75R,Mérignac - Pagneau
 TBC2397SNI20A,Bordeaux - Saint-Nicolas
 TBC2398KER20A,Bordeaux - Kergomard
 TBC2399NAN22A,Bordeaux - Nansouty
@@ -1058,7 +1302,7 @@ TBC2521DOR34A,Bègles - Le Dorat
 TBC2522MON91R,Ambes - Montaigne
 TBC2524JAC35R,Pessac - Colonel Jacqui
 TBC2528V134R,Talence - Village 1
-TBC252AHL44A,Pessac - Avenue du Haut-Lévêque
+TBC252AHL44A,Pessac - Hôpital Haut Lévêque
 TBC2532MIM03R,Lormont - Mimosas
 TBC2533PBR62R,Cenon - Brossolette
 TBC2535CPA53A,Saint-Aubin-de-Médoc - Les Campanules
@@ -1146,7 +1390,7 @@ TBC2668TRE15A,Bordeaux - Trébod
 TBC266BRI21R,Villenave-d'Ornon - Brignon
 TBC2670PFR46A,Pessac - France
 TBC2671BOI46R,Pessac - Boiron
-TBC2672EGB23R,Bègles - Eglise de Bègles
+TBC2672EGB23R,Bègles - Eglise de Bègles (av. Jeanne d'Arc)
 TBC2674ALL36A,Bruges - Allard
 TBC2678DOU27R,Bruges - Douanes Françaises
 TBC2679MIL27R,Bruges - Zone de Fret (Milan)
@@ -1245,7 +1489,7 @@ TBC2777FOU46R,Cestas - Fougnet
 TBC2778PGA46R,Cestas - Petit Gazinet
 TBC2779VCB46R,Pessac - Village Cap de Bos
 TBC2780MAR46R,Pessac - Marne
-TBC2781SHU46R,Pessac - Saint-Hubert
+TBC2781SHU46R,Pessac - St Hubert
 TBC2782CAS46R,Pessac - Castaing
 TBC2783ALO46R,Pessac - Alouette
 TBC2784XAR46R,Pessac - Xavier Arnozan
@@ -1287,7 +1531,7 @@ TBC2824HLV46A,Pessac - Boulevard du Haut Livrac
 TBC2825FOR45A,Pessac - La Forge
 TBC2826ARA45A,Pessac - Arago (Médiathèque)
 TBC2827MAC23R,Pessac - Macédo
-TBC2829ASS31A,Bordeaux - Pôle emploi - Crama
+TBC2829ASS31A,Bordeaux - Pôle emploi Carsat
 TBC2830JEA45R,Bordeaux - Jeanne d'Arc
 TBC2833CCO31A,Bordeaux - Centre Commercial
 TBC2836CEN38R,Lormont - Centre Commercial (4 Pavillons)
@@ -1590,7 +1834,7 @@ TBC3194DO323A,Bègles - Le Dorat 1-3
 TBC3196MRE23R,Bègles - Martyrs de la Résistance
 TBC3197LIB23A,Bègles - Liberté
 TBC3198CRO23R,Bègles - Croizat
-TBC3199EGB23A,Bègles - Eglise de Bègles
+TBC3199EGB23A,Bègles - Eglise de Bègles (av. Jeanne d'Arc)
 TBC319CAP16A,Bordeaux - Capucins
 TBC31GRO53R,Saint-Médard-en-Jalles - Gare Routière (av. du Gal de Gaulle)
 TBC3200MBE23R,Bègles - Mairie de Bègles
@@ -1723,7 +1967,7 @@ TBC3359ANP23R,Bègles - Pôle emploi Bègles
 TBC335TOU10A,Bordeaux - Tourny
 TBC3369GBE22A,Bègles - Gare de Bègles
 TBC3370ALL22R,Bègles - Allende
-TBC337BLA27R,Le Bouscat - Blanqui
+TBC337BLA27R,Le Bouscat - Chanzy
 TBC3397LAG78A,Blanquefort - Salle de Breillan
 TBC3398LAG78R,Blanquefort - Salle de Breillan
 TBC339ZIC46R,Cestas - Z.I de Cestas
@@ -1779,8 +2023,8 @@ TBC3529GAL41A,Bordeaux - Maréchal Gallieni
 TBC3530AND23A,Bordeaux - Hôpital Saint-André
 TBC353POU47R,Pessac - Le Poujeau
 TBC3540SAL23R,Bordeaux - Salinières
-TBC3541CAT23A,Bordeaux - Sainte-Catherine
-TBC3542CAT23R,Bordeaux - Sainte-Catherine
+TBC3541CAT23A,Bordeaux - Ste Catherine
+TBC3542CAT23R,Bordeaux - Ste Catherine
 TBC3545STALI3,Bordeaux - Stalingrad (Arrêt de descente)
 TBC3546VIC20A,Bordeaux - Victoire (Somme)
 TBC3547REP16A,Bordeaux - République
@@ -2125,7 +2369,7 @@ TBC4335RGR52R,Eysines - Rue des Graves
 TBC436SEV40R,Talence - Sévène
 TBC4396PEU15R,Bordeaux - Place de l'Europe
 TBC43BAL27R,Bruges - Balguerie
-TBC440BLA27A,Le Bouscat - Blanqui
+TBC440BLA27A,Le Bouscat - Chanzy
 TBC4429BRA01A,Bordeaux - Blanqui
 TBC4430PIS01A,Bordeaux - Piscine Tissot
 TBC444SAT06R,Floirac - Satie
@@ -2228,7 +2472,7 @@ TBC507VIG56R,Eysines - Le Vigean
 TBC508MET71R,Saint-Médard-en-Jalles - Métairie
 TBC5090RPA08R,Cenon - RPA Gambetta
 TBC5091RPA08A,Floirac - RPA Gambetta
-TBC50AHL44R,Pessac - Avenue du Haut-Lévêque
+TBC50AHL44R,Pessac - Hôpital Haut Lévêque
 TBC510PTP91A,Saint-Louis-de-Montferrand - Petit Peyronnet
 TBC511ALE89R,Cadaujac - Avenue de Léognan
 TBC512BRU57R,Bruges - Bruges Hôtel de Ville
@@ -2328,7 +2572,6 @@ TBC5330DAR71A,Saint-Médard-en-Jalles - Darwin
 TBC5331SIE71R,Saint-Médard-en-Jalles - Sieyès
 TBC5332SIE71A,Saint-Médard-en-Jalles - Sieyès
 TBC5334RPB37R,Saint-Médard-en-Jalles - République (Boétie)
-TBC533PRO75R,Mérignac - Procession
 TBC5344CHB34A,Pessac - Chiquet Brion
 TBC5345CHB34R,Pessac - Chiquet Brion
 TBC5346LAM34A,Pessac - Lamartine
@@ -2894,6 +3137,8 @@ TBC6434MON76A,Parempuyre - Montoya
 TBC6435FRO16R,Mérignac - Frères Robinson
 TBC6436FRO16A,Mérignac - Frères Robinson
 TBC643AFR21A,Villenave-d'Ornon - Anatole France
+TBC6440PAG30R,Mérignac - Pagneau
+TBC6441MBA30R,Mérignac - M.A.S Barail
 TBC644LOG13A,Bordeaux - Lognac
 TBC645GEN21R,Villenave-d'Ornon - La Générale
 TBC646MEI95A,Carbon-Blanc - Place Meignan
@@ -2964,7 +3209,6 @@ TBC726MON92A,Saint-Vincent-de-Paul - Mondion
 TBC729VOL02A,Bordeaux - Voltaire
 TBC72VIO52A,Eysines - Violettes
 TBC730MON50R,Mérignac - Mondésir Poste
-TBC731PLA75R,Mérignac - Plaisance
 TBC732MON80R,Gradignan - Montfort
 TBC733PAU22A,Bègles - Saint-Paulin
 TBC734SAE22A,Bègles - Gare de Bègles
@@ -3115,7 +3359,6 @@ TBC938DUH23A,Bègles - Duhamel
 TBC93LAP81R,Pessac - La Paillère
 TBC940GLA42A,Gradignan - Grande Lande
 TBC941SQM08A,Floirac - Square Monrepos
-TBC942PAG75R,Mérignac - Pagnol
 TBC943ZOL95A,Carbon-Blanc - Emile Zola
 TBC947PER50R,Mérignac - Perrin
 TBC948DEV16A,Bordeaux - Deveaux
@@ -3162,6 +3405,8 @@ TBC997CAR51A,Bordeaux - Carton
 TBC998AMP09A,Bordeaux - Ampère
 TBC999MAR57A,Bruges - Maryse Bastié
 TBC9BRU75A,Mérignac - Clos des Bruyères
+TBT11000DEPTR,Bordeaux - Dépôt Tramway
+TBT11001DEPAC,Bordeaux - Dépôt Tram Bacalan
 TBT3684LAURI,Lormont - Lauriers
 TBT3685BFLEA,Lormont - Bois Fleuri
 TBT3686BFLER,Lormont - Bois Fleuri
