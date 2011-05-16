@@ -2,10 +2,12 @@ package fr.ybo.transportsbordeaux.tbc;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class Horaire implements Serializable {
 
 	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-	public static List<Horaire> getHoraires(Date date, ArretFavori favori) {
+	public static List<Horaire> getHoraires(Date date, ArretFavori favori) throws TbcErreurReseaux {
 		String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
 				favori.macroDirection.intValue() == 0, date);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -64,6 +66,10 @@ public class Horaire implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
+		} catch (FileNotFoundException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
+		} catch (UnknownHostException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
 		}

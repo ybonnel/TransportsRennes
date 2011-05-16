@@ -33,6 +33,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -43,6 +44,7 @@ import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 /**
@@ -90,16 +92,23 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private void recupererHoraires(final boolean changementJournee) {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.recuperationHoraires)) {
+			
+			private boolean erreurReseau = false;
+			
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				if (changementJournee) {
-					horairesJournee.clear();
-					horairesJournee.addAll(getHorairesTriees());
-				}
-				if (prochainArrets) {
-					recupererProchainsDeparts();
-				} else {
-					recupererHorairesAllDeparts();
+				try {
+					if (changementJournee) {
+						horairesJournee.clear();
+						horairesJournee.addAll(getHorairesTriees());
+					}
+					if (prochainArrets) {
+						recupererProchainsDeparts();
+					} else {
+						recupererHorairesAllDeparts();
+					}
+				} catch (TbcErreurReseaux exception) {
+					erreurReseau = true;
 				}
 				return null;
 			}
@@ -107,12 +116,15 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (erreurReseau) {
+					Toast.makeText(DetailArret.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute();
 	}
 
-	private List<Horaire> getHorairesTriees() {
+	private List<Horaire> getHorairesTriees() throws TbcErreurReseaux {
 		List<Horaire> horairesTbc = Horaire.getHoraires(calendar.getTime(), favori);
 		Collections.sort(horairesTbc, new Comparator<Horaire>() {
 			@Override

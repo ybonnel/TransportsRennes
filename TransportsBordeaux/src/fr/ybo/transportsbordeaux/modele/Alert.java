@@ -16,16 +16,19 @@ package fr.ybo.transportsbordeaux.modele;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import fr.ybo.transportsbordeaux.tbc.GetAlertesHandler;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbc.TcbConstantes;
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 
@@ -66,7 +69,7 @@ public class Alert implements Serializable {
 	 */
 	public String url;
 
-	public static List<Alert> getAlertes() {
+	public static List<Alert> getAlertes() throws TbcErreurReseaux {
 		// Récupération sur la page internet du table d'horaire.
 		StringBuilder stringBuilder = new StringBuilder();
 		String url = TcbConstantes.URL_ALERTES;
@@ -103,6 +106,10 @@ public class Alert implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getAlertes();
+		} catch (FileNotFoundException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
+		} catch (UnknownHostException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
 		}

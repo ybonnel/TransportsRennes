@@ -50,4 +50,5 @@
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur</string>
     <string name="recuperationTrajet">Récupération du trajet en cours...</string>
+    <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
 </resources>

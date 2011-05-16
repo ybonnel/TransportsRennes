@@ -25,11 +25,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.AlertAdapter;
 import fr.ybo.transportsbordeaux.modele.Alert;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbc.TcbConstantes;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
@@ -56,9 +58,12 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 		});
 
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteAlerts)) {
+			
+			private boolean erreurReseau = false;
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
+				try {
 				for (Alert alerte : Alert.getAlertes()) {
 					if (ligne != null) {
 						if (ligne.nomLong.equals(alerte.ligne)) {
@@ -68,12 +73,18 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 						alerts.add(alerte);
 					}
 				}
+				} catch (TbcErreurReseaux exceptionReseau) {
+					erreurReseau = true;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (erreurReseau) {
+					Toast.makeText(ListAlerts.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute();
