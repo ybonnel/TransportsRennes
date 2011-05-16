@@ -67,10 +67,10 @@ public class Alert implements Serializable {
 	public String url;
 
 	public static List<Alert> getAlertes() {
+		// Récupération sur la page internet du table d'horaire.
+		StringBuilder stringBuilder = new StringBuilder();
+		String url = TcbConstantes.URL_ALERTES;
 		try {
-			// Récupération sur la page internet du table d'horaire.
-			StringBuilder stringBuilder = new StringBuilder();
-			String url = TcbConstantes.URL_ALERTES;
 			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
@@ -104,7 +104,7 @@ public class Alert implements Serializable {
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getAlertes();
 		} catch (Exception exception) {
-			throw new TcbException(exception);
+			throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
 		}
 	}
 

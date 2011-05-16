@@ -28,9 +28,9 @@ public class Horaire implements Serializable {
 	public static List<Horaire> getHoraires(Date date, ArretFavori favori) {
 		String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
 				favori.macroDirection.intValue() == 0, date);
+		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			// Récupération sur la page internet du table d'horaire.
-			StringBuilder stringBuilder = new StringBuilder();
 			LOG_YBO.debug(url);
 			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setRequestMethod("GET");
@@ -65,7 +65,7 @@ public class Horaire implements Serializable {
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
 		} catch (Exception exception) {
-			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url, exception);
+			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
 		}
 	}
 
