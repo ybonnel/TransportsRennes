@@ -62,12 +62,18 @@ public class Horaire implements Serializable {
 				bufReader.close();
 			}
 
+			if (contenuPage.length() == 0) {
+				throw new TbcErreurReseaux();
+			}
+
 			// Parsing SAX du tableau d'horaires.
 			GetHorairesHandler handler = new GetHorairesHandler(favori);
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
+		} catch (TbcErreurReseaux tbcErreurReseaux) {
+			throw tbcErreurReseaux;
 		} catch (FileNotFoundException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {

@@ -102,12 +102,18 @@ public class Alert implements Serializable {
 				bufReader.close();
 			}
 
+			if (contenuPage.length() == 0) {
+				throw new TbcErreurReseaux();
+			}
+
 			// Parsing SAX du tableau d'horaires.
 			GetAlertesHandler handler = new GetAlertesHandler();
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getAlertes();
+		} catch (TbcErreurReseaux tbcErreurReseaux) {
+			throw tbcErreurReseaux;
 		} catch (FileNotFoundException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
