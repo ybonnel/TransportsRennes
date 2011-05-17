@@ -83,8 +83,8 @@ public class ArretAdapter extends CursorAdapter {
 		holder.isFavori
 				.setImageResource(TransportsBordeauxApplication.getDataBaseHelper().selectSingle(favori) == null ? android.R.drawable.btn_star_big_off
 						: android.R.drawable.btn_star_big_on);
-		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction,
-				favori.macroDirection));
+		holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(context, ligne, favori.arretId, name,
+				direction, favori.macroDirection));
 	}
 
 }

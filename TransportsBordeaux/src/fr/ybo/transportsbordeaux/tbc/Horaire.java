@@ -15,6 +15,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.util.GestionnaireHoraires.CleHoraires;
 import fr.ybo.transportsbordeaux.util.LogYbo;
 
 @SuppressWarnings("serial")
@@ -27,9 +28,18 @@ public class Horaire implements Serializable {
 
 	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
+	public static List<Horaire> getHoraires(CleHoraires cleHoraires) throws TbcErreurReseaux {
+		return getHoraires(cleHoraires.date, TcbConstantes.getUrlHoraire(cleHoraires.ligneId, cleHoraires.arretId,
+				cleHoraires.macroDirection == 0, cleHoraires.date), new GetHorairesHandler(cleHoraires.ligneId,
+				cleHoraires.arretId));
+	}
+
 	public static List<Horaire> getHoraires(Date date, ArretFavori favori) throws TbcErreurReseaux {
-		String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
-				favori.macroDirection.intValue() == 0, date);
+		return getHoraires(date, TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
+				favori.macroDirection.intValue() == 0, date), new GetHorairesHandler(favori.ligneId, favori.arretId));
+	}
+
+	private static List<Horaire> getHoraires(Date date, String url, GetHorairesHandler handler) throws TbcErreurReseaux {
 		StringBuilder stringBuilder = new StringBuilder();
 		StringBuilder contenuPage = new StringBuilder();
 		try {
@@ -67,7 +77,6 @@ public class Horaire implements Serializable {
 			}
 
 			// Parsing SAX du tableau d'horaires.
-			GetHorairesHandler handler = new GetHorairesHandler(favori);
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
@@ -79,7 +88,8 @@ public class Horaire implements Serializable {
 		} catch (UnknownHostException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
-			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url + ", html récupéré : " + contenuPage.toString(), exception);
+			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url
+					+ ", html récupéré : " + contenuPage.toString(), exception);
 		}
 	}
 

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -80,11 +81,18 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
 				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
-				TransportsBordeauxApplication.getDataBaseHelper().delete(favori);
-				((FavoriAdapter) getListAdapter()).getFavoris().clear();
-				((FavoriAdapter) getListAdapter()).getFavoris().addAll(
-						TransportsBordeauxApplication.getDataBaseHelper().select(new ArretFavori()));
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+
+				if (TransportsWidget11Configure.isNotUsed(this, favori)
+						&& TransportsWidget21Configure.isNotUsed(this, favori)) {
+					TransportsBordeauxApplication.getDataBaseHelper().delete(favori);
+					((FavoriAdapter) getListAdapter()).getFavoris().clear();
+					((FavoriAdapter) getListAdapter()).getFavoris().addAll(
+							TransportsBordeauxApplication.getDataBaseHelper().select(new ArretFavori()));
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				} else {
+					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+				}
+
 				return true;
 			default:
 				return super.onContextItemSelected(item);

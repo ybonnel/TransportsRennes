@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Transports Bordeaux</string>
+    <string name="widget11_name">Transports Bordeaux 1x1</string>
+    <string name="widget21_name">Transports Bordeaux 2x1</string>
     <string name="btn_bus">Bus &amp; Tram</string>
     <string name="btn_bus_favori">Arrêts Favoris</string>
     <string name="btn_velo">VCUB</string>
@@ -48,7 +50,18 @@
     <string name="btn_alert">Alertes</string>
     <string name="btn_parking">Parcs relais</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
+    <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur</string>
     <string name="recuperationTrajet">Récupération du trajet en cours...</string>
     <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
+    <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant d\'essayer d\'ajouter des
+        widgets.
+    </string>
+    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
+    <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>
+    <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
+    <string name="miniHeures">h</string>
+    <string name="miniMinutes">min</string>
+    <string name="prochain">Prochain : </string>
+    <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
 </resources>

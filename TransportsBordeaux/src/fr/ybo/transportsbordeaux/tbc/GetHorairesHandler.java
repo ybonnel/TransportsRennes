@@ -8,8 +8,6 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import fr.ybo.transportsbordeaux.modele.ArretFavori;
-
 public class GetHorairesHandler extends DefaultHandler {
 
 	private static final String BALISE_A = "a";
@@ -18,16 +16,18 @@ public class GetHorairesHandler extends DefaultHandler {
 	private static final String ATTRIBUT_TITLE = "title";
 	private static final String ATTRIBUT_CLASS = "class";
 	
-	private ArretFavori favori;
+	private String ligneId;
+	private String arretId;
 	private boolean erreur = false;
 
 	public boolean isErreur() {
 		return erreur;
 	}
 
-	public GetHorairesHandler(ArretFavori favori) {
+	public GetHorairesHandler(String ligneId, String arretId) {
 		super();
-		this.favori = favori;
+		this.ligneId = ligneId;
+		this.arretId = arretId;
 	}
 
 	private Horaire horaireCourante;
@@ -63,8 +63,8 @@ public class GetHorairesHandler extends DefaultHandler {
 		super.startElement(uri, localName, qName, attributes);
 		if (qName.equals(BALISE_A)) {
 			horaireCourante = new Horaire();
-			horaireCourante.arretId = favori.arretId;
-			horaireCourante.ligneId = favori.ligneId;
+			horaireCourante.arretId = arretId;
+			horaireCourante.ligneId = ligneId;
 			horaireCourante.url = attributes.getValue(ATTRIBUT_HREF);
 		}
 		if (horaireCourante != null && qName.equals(BALISE_ABBR)
