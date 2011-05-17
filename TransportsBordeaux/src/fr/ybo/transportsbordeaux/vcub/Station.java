@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
 
@@ -44,7 +46,7 @@ public class Station extends ObjetWithDistance implements Serializable {
 					+ "(<div class='gmap-velos'>.*?<strong>(\\d+)</strong>.*?<strong>(\\d+)</strong>([^<]*</td>"
 					+ "<td><acronym title='Carte Bancaire'>CB</acronym></td>)?)?");
 
-	public static List<Station> recupererStations() {
+	public static List<Station> recupererStations() throws TbcErreurReseaux {
 		try {
 			StringBuilder result = new StringBuilder();
 			URL url = new URL(URL_PLAN);
@@ -90,6 +92,8 @@ public class Station extends ObjetWithDistance implements Serializable {
 				stations.add(s);
 			}
 			return stations;
+		} catch (SocketException exceptionReseaux) {
+			throw new TbcErreurReseaux(exceptionReseaux);
 		} catch (Exception e) {
 			throw new TcbException(e);
 		}

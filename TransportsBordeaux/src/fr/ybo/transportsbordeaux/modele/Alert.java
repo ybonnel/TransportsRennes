@@ -72,6 +72,7 @@ public class Alert implements Serializable {
 	public static List<Alert> getAlertes() throws TbcErreurReseaux {
 		// Récupération sur la page internet du table d'horaire.
 		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder contenuPage = new StringBuilder();
 		String url = TcbConstantes.URL_ALERTES;
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
@@ -85,6 +86,7 @@ public class Alert implements Serializable {
 			try {
 				String ligne = bufReader.readLine();
 				while (ligne != null) {
+					contenuPage.append(ligne);
 					if (ligne.contains("<tbody")) {
 						tableEnCours = true;
 					}
@@ -111,7 +113,7 @@ public class Alert implements Serializable {
 		} catch (UnknownHostException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
-			throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
+			throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url + ", html récupéré : " + contenuPage.toString(), exception);
 		}
 	}
 

@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -39,6 +40,7 @@ import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.vcub.Station;
 
@@ -82,29 +84,37 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
 		public GetStations() {
-			super(ListStationsFavoris.this, getString(R.string.dialogRequeteVcub));
+			super(ListStationsFavoris.this,
+					getString(R.string.dialogRequeteVcub));
 		}
+
+		private boolean erreurReseaux = false;
 
 		@Override
 		protected Void doInBackground(Void... pParams) {
-			List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(new VeloFavori());
-			Collection<Integer> ids = new ArrayList<Integer>(10);
-			for (VeloFavori favori : velosFavoris) {
-				ids.add(favori.id);
-			}
-			Collection<Station> stationsTmp = Station.recupererStations();
-			synchronized (stations) {
-				stations.clear();
-				for (Station station : stationsTmp) {
-					if (ids.contains(station.id)) {
-						stations.add(station);
-					}
+			try {
+				List<VeloFavori> velosFavoris = TransportsBordeauxApplication
+						.getDataBaseHelper().select(new VeloFavori());
+				Collection<Integer> ids = new ArrayList<Integer>(10);
+				for (VeloFavori favori : velosFavoris) {
+					ids.add(favori.id);
 				}
-				Collections.sort(stations, new Comparator<Station>() {
-					public int compare(Station o1, Station o2) {
-						return o1.name.compareToIgnoreCase(o2.name);
+				Collection<Station> stationsTmp = Station.recupererStations();
+				synchronized (stations) {
+					stations.clear();
+					for (Station station : stationsTmp) {
+						if (ids.contains(station.id)) {
+							stations.add(station);
+						}
 					}
-				});
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
+				}
+			} catch (TbcErreurReseaux exceptionReseau) {
+				erreurReseaux = true;
 			}
 			return null;
 		}
@@ -112,6 +122,11 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			if (erreurReseaux) {
+				Toast.makeText(ListStationsFavoris.this,
+						getString(R.string.erreurReseau), Toast.LENGTH_LONG)
+						.show();
+			}
 			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}

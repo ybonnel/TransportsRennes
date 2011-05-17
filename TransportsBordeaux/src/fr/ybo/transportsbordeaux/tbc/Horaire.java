@@ -31,6 +31,7 @@ public class Horaire implements Serializable {
 		String url = TcbConstantes.getUrlHoraire(favori.ligneId, favori.arretId,
 				favori.macroDirection.intValue() == 0, date);
 		StringBuilder stringBuilder = new StringBuilder();
+		StringBuilder contenuPage = new StringBuilder();
 		try {
 			// Récupération sur la page internet du table d'horaire.
 			LOG_YBO.debug(url);
@@ -45,6 +46,7 @@ public class Horaire implements Serializable {
 			try {
 				String ligne = bufReader.readLine();
 				while (ligne != null) {
+					contenuPage.append(ligne);
 					if (ligne.contains("navitia-timetable-detail")) {
 						tableEnCours = true;
 					}
@@ -71,7 +73,7 @@ public class Horaire implements Serializable {
 		} catch (UnknownHostException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
-			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url + ", html récupéré : " + stringBuilder.toString(), exception);
+			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url + ", html récupéré : " + contenuPage.toString(), exception);
 		}
 	}
 

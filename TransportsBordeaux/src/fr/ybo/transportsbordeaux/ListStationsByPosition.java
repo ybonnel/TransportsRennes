@@ -48,6 +48,7 @@ import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.vcub.Station;
 
@@ -224,20 +225,26 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		public GetStations() {
 			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub));
 		}
+		
+		private boolean erreurReseaux = false;
 
 		@Override
 		protected Void doInBackground(Void... pParams) {
-			List<Station> stationsTmp = Station.recupererStations();
-			synchronized (stations) {
-				stations.clear();
-				stations.addAll(stationsTmp);
-				Collections.sort(stations, new Comparator<Station>() {
-					public int compare(Station o1, Station o2) {
-						return o1.name.compareToIgnoreCase(o2.name);
-					}
-				});
-				stationsFiltrees.clear();
-				stationsFiltrees.addAll(stations);
+			try {
+				List<Station> stationsTmp = Station.recupererStations();
+				synchronized (stations) {
+					stations.clear();
+					stations.addAll(stationsTmp);
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
+					stationsFiltrees.clear();
+					stationsFiltrees.addAll(stations);
+				}
+			} catch (TbcErreurReseaux exceptionReseaux) {
+				erreurReseaux = true;
 			}
 			return null;
 		}
@@ -245,6 +252,9 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
+			if (erreurReseaux) {
+				Toast.makeText(ListStationsByPosition.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+			}
 			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}
