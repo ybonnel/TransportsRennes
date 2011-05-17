@@ -102,7 +102,7 @@
     <string name="btn_itineraires">Calcul d\'itinéraires</string>
     <!-- Widget -->
     <string name="widget_choix">Choisissez de un à trois arrêts favoris.</string>
-    <string name="widget11_choix">Choisissez de un arrêt favori.</string>
+    <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
     <string name="Toutes">Toutes</string>
