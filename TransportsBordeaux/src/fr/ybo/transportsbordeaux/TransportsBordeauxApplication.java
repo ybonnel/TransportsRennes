@@ -23,6 +23,12 @@ import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import fr.ybo.transportsbordeaux.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.modele.Alert;
@@ -33,6 +39,7 @@ import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Direction;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
+import fr.ybo.transportsbordeaux.util.Version;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
@@ -70,12 +77,53 @@ public class TransportsBordeauxApplication extends Application {
 				return null;
 			}
 		}.execute();
+
+		checkVersion.execute();
 	}
 
 	private static Set<String> lignesWithAlerts = new HashSet<String>();
 
 	public static boolean hasAlert(String ligneNomLong) {
 		return lignesWithAlerts.contains(ligneNomLong);
+	}
+	
+
+
+	private AsyncTask<Void, Void, String> checkVersion = new AsyncTask<Void, Void, String>() {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			return Version.getVersionMarket();
+		}
+
+		protected void onPostExecute(String result) {
+			if (result != null && !result.equals(Version.getVersionCourante(TransportsBordeauxApplication.this))) {
+				createNotification(result);
+			}
+		};
+	};
+
+	private final int NOTIFICATION_VERSION_ID = 1;
+
+	private void createNotification(String nouvelleVersion) {
+		int icon = R.drawable.icon;
+		CharSequence tickerText = getString(R.string.nouvelleVersion);
+		long when = System.currentTimeMillis();
+		Context context = getApplicationContext();
+		CharSequence contentTitle = getString(R.string.nouvelleVersion);
+		CharSequence contentText = getString(R.string.versionDisponible, nouvelleVersion);
+
+		Uri uri = Uri.parse("market://details?id=fr.ybo.transportsbordeaux");
+		Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+
+		// the next two lines initialize the Notification, using the
+		// configurations above
+		Notification notification = new Notification(icon, tickerText, when);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+
+		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.notify(NOTIFICATION_VERSION_ID, notification);
 	}
 
 }
