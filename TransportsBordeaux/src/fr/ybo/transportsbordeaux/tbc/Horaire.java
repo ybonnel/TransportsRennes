@@ -14,6 +14,8 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.xml.sax.SAXException;
+
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.util.GestionnaireHoraires.CleHoraires;
 import fr.ybo.transportsbordeaux.util.LogYbo;
@@ -72,17 +74,13 @@ public class Horaire implements Serializable {
 				bufReader.close();
 			}
 
-			if (contenuPage.length() == 0) {
-				throw new TbcErreurReseaux();
-			}
-
 			// Parsing SAX du tableau d'horaires.
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
-		} catch (TbcErreurReseaux tbcErreurReseaux) {
-			throw tbcErreurReseaux;
+		} catch (SAXException saxException) {
+			throw new TbcErreurReseaux(saxException);
 		} catch (FileNotFoundException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
