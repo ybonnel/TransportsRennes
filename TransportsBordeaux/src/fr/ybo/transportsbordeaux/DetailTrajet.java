@@ -22,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -32,6 +33,7 @@ import fr.ybo.transportsbordeaux.adapters.DetailTrajetAdapter;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbc.Horaire;
 import fr.ybo.transportsbordeaux.tbc.PortionTrajet;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 /**
@@ -68,16 +70,25 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.recuperationTrajet)) {
+			
+			private boolean erreurReseau = false;
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				trajet.addAll(horaire.getTrajet());
+				try {
+					trajet.addAll(horaire.getTrajet());
+				} catch (TbcErreurReseaux tbcErreurReseaux) {
+					erreurReseau = true;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
+				if (erreurReseau) {
+					Toast.makeText(DetailTrajet.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				}
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 			}
 		}.execute();

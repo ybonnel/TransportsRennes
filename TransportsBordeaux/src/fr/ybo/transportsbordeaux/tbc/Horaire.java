@@ -91,11 +91,12 @@ public class Horaire implements Serializable {
 		}
 	}
 
-	public List<PortionTrajet> getTrajet() {
+	public List<PortionTrajet> getTrajet() throws TbcErreurReseaux {
+		StringBuilder contenuPage = new StringBuilder();
+		String urlTbc = TcbConstantes.URL_INFOS_TBC + url;
 		try {
 			// Récupération sur la page internet du table d'horaire.
 			StringBuilder stringBuilder = new StringBuilder();
-			String urlTbc = TcbConstantes.URL_INFOS_TBC + url;
 			LOG_YBO.debug(urlTbc);
 			HttpURLConnection connection = (HttpURLConnection) new URL(urlTbc).openConnection();
 			connection.setRequestMethod("GET");
@@ -108,6 +109,8 @@ public class Horaire implements Serializable {
 			try {
 				String ligne = bufReader.readLine();
 				while (ligne != null) {
+					contenuPage.append(ligne);
+					contenuPage.append('\n');
 					LOG_YBO.debug(ligne);
 					if (ligne.contains("tbody")) {
 						tbodyEnCours = true;
@@ -130,8 +133,15 @@ public class Horaire implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getTrajet();
+		} catch (SAXException saxException) {
+			throw new TbcErreurReseaux(saxException);
+		} catch (FileNotFoundException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
+		} catch (UnknownHostException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
-			throw new TcbException(exception);
+			throw new TcbException("Erreur lors de la récupération des trajets pour l'url " + url
+					+ ", html récupéré : " + contenuPage.toString(), exception);
 		}
 	}
 
