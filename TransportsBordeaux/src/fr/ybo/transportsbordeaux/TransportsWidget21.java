@@ -104,7 +104,6 @@ public class TransportsWidget21 extends AppWidgetProvider {
 		if (favoriBdd.direction.length() > 13) {
 			favoriBdd.direction = favoriBdd.direction.substring(0, 11) + "...";
 		}
-		Widget21UpdateUtil.updateAppWidget(context, views, favoriBdd, Calendar.getInstance());
 
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 		Timer timer = new Timer();
