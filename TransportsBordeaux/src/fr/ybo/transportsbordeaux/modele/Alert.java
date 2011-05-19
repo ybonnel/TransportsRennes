@@ -27,6 +27,8 @@ import java.util.List;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.xml.sax.SAXParseException;
+
 import fr.ybo.transportsbordeaux.tbc.GetAlertesHandler;
 import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbc.TcbConstantes;
@@ -112,6 +114,8 @@ public class Alert implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getAlertes();
+		} catch (SAXParseException saxParseException) {
+			throw new TbcErreurReseaux(saxParseException);
 		} catch (TbcErreurReseaux tbcErreurReseaux) {
 			throw tbcErreurReseaux;
 		} catch (FileNotFoundException erreurReseau) {
