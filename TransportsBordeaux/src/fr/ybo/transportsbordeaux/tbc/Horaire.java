@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -79,6 +80,8 @@ public class Horaire implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
+		} catch (SocketException socketException) {
+			throw new TbcErreurReseaux(socketException);
 		} catch (SAXException saxException) {
 			throw new TbcErreurReseaux(saxException);
 		} catch (FileNotFoundException erreurReseau) {
@@ -133,8 +136,6 @@ public class Horaire implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getTrajet();
-		} catch (SAXException saxException) {
-			throw new TbcErreurReseaux(saxException);
 		} catch (FileNotFoundException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
