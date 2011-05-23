@@ -66,4 +66,6 @@
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
     <string name="nouvelleVersion">Nouvelle version disponible</string>
     <string name="versionDisponible">La version %1$s est disponible!</string>
+    <string name="menu_orderByName">Ordre alphabétique</string>
+    <string name="menu_orderBySequence">Ordre de la ligne</string>
 </resources>

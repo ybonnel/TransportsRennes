@@ -24,6 +24,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -128,6 +130,9 @@ public class ListArret extends MenuAccueil.ListActivity {
 			selectionArgs.add(currentDirection);
 		}
 		requete.append(" order by Direction.direction, ");
+		if (orderDirection) {
+			requete.append("ArretRoute.ordre, ");
+		}
 		requete.append("Arret.nom");
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
 		LOG_YBO.debug(requete.toString());
@@ -202,5 +207,40 @@ public class ListArret extends MenuAccueil.ListActivity {
 	protected void onDestroy() {
 		closeCurrentCursor();
 		super.onDestroy();
+	}
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_ORDER = Menu.FIRST;
+
+	private boolean orderDirection = true;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, R.string.menu_orderByName);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		super.onPrepareOptionsMenu(menu);
+		menu.findItem(MENU_ORDER).setTitle(orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
+		menu.findItem(MENU_ORDER).setIcon(
+				orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
+						: android.R.drawable.ic_menu_sort_by_size);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		if (item.getItemId() == MENU_ORDER) {
+			orderDirection = !orderDirection;
+			construireListe();
+			getListView().invalidate();
+			return true;
+		}
+		return false;
 	}
 }
