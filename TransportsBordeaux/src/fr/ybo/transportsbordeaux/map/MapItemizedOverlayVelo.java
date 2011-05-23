@@ -46,6 +46,7 @@ public class MapItemizedOverlayVelo extends ItemizedOverlay<OverlayItem> {
 	public MapItemizedOverlayVelo(Drawable defaultMarker, Context context) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
+		populate();
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
