@@ -44,7 +44,6 @@ public class Horaire implements Serializable {
 
 	private static List<Horaire> getHoraires(Date date, String url, GetHorairesHandler handler) throws TbcErreurReseaux {
 		StringBuilder stringBuilder = new StringBuilder();
-		StringBuilder contenuPage = new StringBuilder();
 		try {
 			// Récupération sur la page internet du table d'horaire.
 			LOG_YBO.debug(url);
@@ -59,12 +58,11 @@ public class Horaire implements Serializable {
 			try {
 				String ligne = bufReader.readLine();
 				while (ligne != null) {
-					contenuPage.append(ligne);
 					if (ligne.contains("navitia-timetable-detail")) {
 						tableEnCours = true;
 					}
 					if (tableEnCours) {
-						stringBuilder.append(ligne);
+						stringBuilder.append(ligne.replaceAll("&", "&#38;"));
 						if (ligne.contains("</table>")) {
 							break;
 						}
@@ -90,16 +88,15 @@ public class Horaire implements Serializable {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url
-					+ ", html récupéré : " + contenuPage.toString(), exception);
+					+ ", html récupéré : " + stringBuilder.toString(), exception);
 		}
 	}
 
 	public List<PortionTrajet> getTrajet() throws TbcErreurReseaux {
-		StringBuilder contenuPage = new StringBuilder();
 		String urlTbc = TcbConstantes.URL_INFOS_TBC + url;
+		StringBuilder stringBuilder = new StringBuilder();
 		try {
 			// Récupération sur la page internet du table d'horaire.
-			StringBuilder stringBuilder = new StringBuilder();
 			LOG_YBO.debug(urlTbc);
 			HttpURLConnection connection = (HttpURLConnection) new URL(urlTbc).openConnection();
 			connection.setRequestMethod("GET");
@@ -112,14 +109,12 @@ public class Horaire implements Serializable {
 			try {
 				String ligne = bufReader.readLine();
 				while (ligne != null) {
-					contenuPage.append(ligne);
-					contenuPage.append('\n');
 					LOG_YBO.debug(ligne);
 					if (ligne.contains("tbody")) {
 						tbodyEnCours = true;
 					}
 					if (tbodyEnCours) {
-						stringBuilder.append(ligne);
+						stringBuilder.append(ligne.replaceAll("&", "&#38;"));
 						if (ligne.contains("</tbody>")) {
 							break;
 						}
@@ -142,7 +137,7 @@ public class Horaire implements Serializable {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des trajets pour l'url " + url
-					+ ", html récupéré : " + contenuPage.toString(), exception);
+					+ ", html récupéré : " + stringBuilder.toString(), exception);
 		}
 	}
 
