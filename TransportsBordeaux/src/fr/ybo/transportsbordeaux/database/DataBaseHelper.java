@@ -24,13 +24,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import fr.ybo.transportsbordeaux.database.modele.Base;
+import fr.ybo.transportsbordeaux.modele.Arret;
+import fr.ybo.transportsbordeaux.modele.ArretRoute;
+import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
+import fr.ybo.transportsbordeaux.modele.Direction;
+import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.LogYbo;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 	private static final LogYbo LOG_YBO = new LogYbo(DataBaseHelper.class);
 	private static final String DATABASE_NAME = "transportsbordeaux.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	private final Base base;
 
@@ -93,6 +98,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 	private Map<Integer, DataBaseHelper.UpgradeDatabase> getUpgrades() {
 		if (mapUpgrades == null) {
 			mapUpgrades = new HashMap<Integer, DataBaseHelper.UpgradeDatabase>(10);
+			mapUpgrades.put(2, new UpgradeDatabase() {
+
+				@Override
+				public void upagrade(SQLiteDatabase db, Context context) {
+					base.getTable(Arret.class).dropTable(db);
+					base.getTable(ArretRoute.class).dropTable(db);
+					base.getTable(DernierMiseAJour.class).dropTable(db);
+					base.getTable(Direction.class).dropTable(db);
+					base.getTable(Ligne.class).dropTable(db);
+					base.getTable(Arret.class).createTable(db);
+					base.getTable(ArretRoute.class).createTable(db);
+					base.getTable(DernierMiseAJour.class).createTable(db);
+					base.getTable(Direction.class).createTable(db);
+					base.getTable(Ligne.class).createTable(db);
+				}
+			});
 		}
 		return mapUpgrades;
 	}

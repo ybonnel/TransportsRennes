@@ -43,5 +43,8 @@ public class ArretRoute {
 	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
 	@Colonne(type = Colonne.TypeColonne.INTEGER)
 	public Integer sequence;
+	@BaliseCsv(value = "ordre", adapter = AdapterInteger.class)
+	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	public Integer ordre;
 
 }
