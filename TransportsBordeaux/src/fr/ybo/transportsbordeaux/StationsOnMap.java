@@ -28,6 +28,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayVelo;
+import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.vcub.Station;
 
@@ -86,7 +87,7 @@ public class StationsOnMap extends MapActivity {
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
-		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
