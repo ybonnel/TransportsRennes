@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -116,6 +117,8 @@ public class Alert implements Serializable {
 			throw new TbcErreurReseaux(saxParseException);
 		} catch (TbcErreurReseaux tbcErreurReseaux) {
 			throw tbcErreurReseaux;
+		} catch (SocketException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (FileNotFoundException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
