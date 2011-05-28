@@ -14,33 +14,33 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import java.io.Serializable;
+
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
-import java.io.Serializable;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
-@Table
+@Entity
 public class Arret extends ObjetWithDistance implements Serializable {
 	@BaliseCsv("id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String id;
 	@BaliseCsv("nom")
-	@Colonne
+	@Column
 	public String nom;
 	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
-	@Colonne(type = Colonne.TypeColonne.NUMERIC)
+	@Column(type = Column.TypeColumn.NUMERIC)
 	public Double latitude;
 	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
-	@Colonne(type = Colonne.TypeColonne.NUMERIC)
+	@Column(type = Column.TypeColumn.NUMERIC)
 	public Double longitude;
 
 	public ArretFavori favori;

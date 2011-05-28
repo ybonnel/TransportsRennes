@@ -29,7 +29,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 
 /**
@@ -37,7 +36,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
  */
 public class ListFavoris extends MenuAccueil.ListActivity {
 
-	private void construireListe() throws DataBaseException {
+	private void construireListe() {
 		setListAdapter(
 				new FavoriAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre")));
 		ListView lv = getListView();

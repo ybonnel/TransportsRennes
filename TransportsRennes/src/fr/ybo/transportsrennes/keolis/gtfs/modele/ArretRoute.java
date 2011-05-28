@@ -15,37 +15,37 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 @FichierCsv("arrets_routes.txt")
-@Table
+@Entity
 public class ArretRoute {
 	@BaliseCsv("arret_id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String arretId;
 	@BaliseCsv("ligne_id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String ligneId;
 	@BaliseCsv( value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer macroDirection;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer directionId;
 	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer sequence;
 	@BaliseCsv(value = "accessible", adapter = AdapterBoolean.class)
-	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean accessible;
 
 }

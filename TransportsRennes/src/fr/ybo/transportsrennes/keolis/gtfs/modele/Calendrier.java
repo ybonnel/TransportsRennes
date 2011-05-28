@@ -15,40 +15,40 @@
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 @FichierCsv("calendriers.txt")
-@Table
+@Entity
 public class Calendrier {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
-	@Colonne( type = Colonne.TypeColonne.INTEGER )
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer id;
 	@BaliseCsv(value = "lundi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean lundi;
 	@BaliseCsv(value = "mardi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean mardi;
 	@BaliseCsv(value = "mercredi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean mercredi;
 	@BaliseCsv(value = "jeudi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean jeudi;
 	@BaliseCsv(value = "vendredi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean vendredi;
 	@BaliseCsv(value = "samedi", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean samedi;
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class)
-	@Colonne( type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean dimanche;
 }

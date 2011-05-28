@@ -14,24 +14,24 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.files;
 
-import android.content.res.Resources;
-import android.database.sqlite.SQLiteDatabase;
-import fr.ybo.moteurcsv.MoteurCsv;
-import fr.ybo.moteurcsv.exception.MoteurCsvException;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.KeolisException;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseException;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
-import fr.ybo.transportsrennes.keolis.gtfs.database.modele.Table;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
-import fr.ybo.transportsrennes.util.LogYbo;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.content.res.Resources;
+import android.database.sqlite.SQLiteDatabase;
+import fr.ybo.database.DataBaseException;
+import fr.ybo.database.modele.Table;
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
+import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
+import fr.ybo.transportsrennes.keolis.KeolisException;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 public final class GestionZipKeolis {
 
@@ -51,7 +51,8 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, DataBaseHelper dataBaseHelper, Resources resources) {
+	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, TransportsRennesDatabase dataBaseHelper,
+			Resources resources) {
 		try {
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
 			try {

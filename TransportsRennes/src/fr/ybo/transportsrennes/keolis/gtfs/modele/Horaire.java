@@ -20,36 +20,36 @@ import java.util.List;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 @FichierCsv("horaires.txt")
-@Table
+@Entity
 public class Horaire {
 	@BaliseCsv("arret_id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String arretId;
 	@BaliseCsv(value = "trajet_id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer trajetId;
 	@BaliseCsv(value = "heure_depart", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer heureDepart;
 	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer stopSequence;
 	@BaliseCsv(value = "terminus", adapter = AdapterBoolean.class)
-	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean terminus;
 
 	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);

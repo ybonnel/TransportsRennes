@@ -39,8 +39,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
@@ -305,7 +305,7 @@ public class TransportsRennes extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+		TransportsRennesDatabase dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources());
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null ||

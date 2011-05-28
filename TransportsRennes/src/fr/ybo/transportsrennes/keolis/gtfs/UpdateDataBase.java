@@ -17,7 +17,6 @@ package fr.ybo.transportsrennes.keolis.gtfs;
 import java.util.Date;
 import java.util.List;
 
-import android.content.ContentValues;
 import android.content.res.Resources;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
@@ -97,11 +96,7 @@ public final class UpdateDataBase {
 			TransportsRennesApplication.getDataBaseHelper().beginTransaction();
 			ligne.chargerHeuresArrets(TransportsRennesApplication.getDataBaseHelper(), resources);
 			ligne.chargee = Boolean.TRUE;
-			ContentValues values = new ContentValues();
-			values.put("chargee", 1);
-			String[] whereArgs = new String[1];
-			whereArgs[0] = ligne.id;
-			TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().update("Ligne", values, "id = :id", whereArgs);
+			TransportsRennesApplication.getDataBaseHelper().update(ligne);
 		} finally {
 			TransportsRennesApplication.getDataBaseHelper().endTransaction();
 		}

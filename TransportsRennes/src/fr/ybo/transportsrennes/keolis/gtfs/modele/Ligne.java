@@ -14,47 +14,47 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.res.Resources;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
+import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
-@Table
+@Entity
 public class Ligne implements Serializable {
 
 	private static final LogYbo LOG_YBO = new LogYbo(Ligne.class);
 
 	@BaliseCsv("id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String id;
 	@BaliseCsv("nom_court")
-	@Colonne
+	@Column
 	public String nomCourt;
 	@BaliseCsv("nom_long")
-	@Colonne
+	@Column
 	public String nomLong;
 	@BaliseCsv(value = "ordre", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
-	@Colonne(type = Colonne.TypeColonne.BOOLEAN)
+	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(DataBaseHelper dataBaseHelper, Resources resources) {
+	public void chargerHeuresArrets(TransportsRennesDatabase dataBaseHelper, Resources resources) {
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
 		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);

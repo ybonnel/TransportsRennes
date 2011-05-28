@@ -14,14 +14,14 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
-
 import java.util.Date;
 
-@Table
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+
+@Entity
 public class DernierMiseAJour {
 
-	@Colonne(type = Colonne.TypeColonne.DATE)
+	@Column(type = Column.TypeColumn.DATE)
 	public Date derniereMiseAJour;
 }

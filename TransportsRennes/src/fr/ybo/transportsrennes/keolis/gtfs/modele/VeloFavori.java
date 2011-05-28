@@ -14,13 +14,13 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 
-@Table
+@Entity
 public class VeloFavori {
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String number;
 }

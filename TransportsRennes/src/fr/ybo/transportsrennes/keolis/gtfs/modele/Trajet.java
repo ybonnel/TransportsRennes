@@ -14,30 +14,30 @@
 
 package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Colonne;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.PrimaryKey;
-import fr.ybo.transportsrennes.keolis.gtfs.annotation.Table;
 
 @FichierCsv("trajets.txt")
-@Table
+@Entity
 public class Trajet {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer id;
 	@BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer calendrierId;
 	@BaliseCsv("ligne_id")
-	@Colonne
+	@Column
 	public String ligneId;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer directionId;
 	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer macroDirection;
 }

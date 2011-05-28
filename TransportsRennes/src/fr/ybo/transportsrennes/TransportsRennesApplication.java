@@ -35,30 +35,29 @@ import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
-import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
+import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.Keolis;
-import fr.ybo.transportsrennes.keolis.gtfs.database.DataBaseHelper;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.Constantes;
 import fr.ybo.transportsrennes.util.Version;
 
 /**
- * Classe de l'application permettant de stocker les attributs globaux à l'application.
+ * Classe de l'application permettant de stocker les attributs globaux à
+ * l'application.
  */
 public class TransportsRennesApplication extends Application {
 
-	private static DataBaseHelper databaseHelper;
+	private static TransportsRennesDatabase databaseHelper;
 
-	public static DataBaseHelper getDataBaseHelper() {
+	public static TransportsRennesDatabase getDataBaseHelper() {
 		return databaseHelper;
 	}
-
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		databaseHelper = new DataBaseHelper(this, ConstantesKeolis.LIST_CLASSES_DATABASE);
+		databaseHelper = new TransportsRennesDatabase(this);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
 		TransportsWidget11.verifKiller(getApplicationContext(), appWidgetManager);
@@ -71,7 +70,7 @@ public class TransportsRennesApplication extends Application {
 		myTraker.trackPageView("/TransportsRennesApplication/Version/" + Version.getVersionCourante(this));
 
 		// Récupération des alertes
-		new AsyncTask<Void, Void, Void>(){
+		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... voids) {
 				try {
@@ -95,7 +94,6 @@ public class TransportsRennesApplication extends Application {
 	private static Handler handler;
 
 	private static TransportsRennesApplication.MyTraker myTraker;
-
 
 	public static class MyTraker {
 
