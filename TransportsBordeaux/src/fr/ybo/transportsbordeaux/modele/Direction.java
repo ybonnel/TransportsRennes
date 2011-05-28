@@ -14,23 +14,23 @@
 
 package fr.ybo.transportsbordeaux.modele;
 
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.annotation.Colonne;
-import fr.ybo.transportsbordeaux.database.annotation.PrimaryKey;
-import fr.ybo.transportsbordeaux.database.annotation.Table;
 
 @FichierCsv("directions.txt")
-@Table
+@Entity
 public class Direction {
 	@BaliseCsv(value = "id", adapter = AdapterInteger.class)
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer id;
 	@BaliseCsv("direction")
-	@Colonne
+	@Column
 	public String direction;
 
 

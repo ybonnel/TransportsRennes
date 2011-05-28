@@ -25,7 +25,6 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.DataBaseException;
 import fr.ybo.transportsbordeaux.util.LogYbo;
 
 public final class GestionZipTbc {
@@ -48,7 +47,8 @@ public final class GestionZipTbc {
 		}
 	}
 
-	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException, MoteurCsvException, DataBaseException {
+	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException,
+			MoteurCsvException {
 		try {
 			for (CoupleResourceFichier resource : RESOURCES_PRINCIPALE) {
 				LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);

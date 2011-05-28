@@ -16,30 +16,30 @@ package fr.ybo.transportsbordeaux.modele;
 
 import java.io.Serializable;
 
-import fr.ybo.transportsbordeaux.database.annotation.Colonne;
-import fr.ybo.transportsbordeaux.database.annotation.PrimaryKey;
-import fr.ybo.transportsbordeaux.database.annotation.Table;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 
 @SuppressWarnings("serial")
-@Table
+@Entity
 public class ArretFavori implements Serializable {
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String arretId;
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String ligneId;
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer macroDirection;
-	@Colonne
+	@Column
 	public String nomArret;
-	@Colonne
+	@Column
 	public String direction;
-	@Colonne
+	@Column
 	public String nomCourt;
-	@Colonne
+	@Column
 	public String nomLong;
-	@Colonne(type = Colonne.TypeColonne.INTEGER)
+	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
 }

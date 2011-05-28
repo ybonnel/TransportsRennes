@@ -39,7 +39,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
-import fr.ybo.transportsbordeaux.database.DataBaseHelper;
+import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.donnees.GestionZipTbc;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
@@ -170,7 +170,7 @@ public class TransportsBordeaux extends Activity {
 	}
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = TransportsBordeauxApplication.getDataBaseHelper();
+		TransportsBordeauxDatabase dataBaseHelper = TransportsBordeauxApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipTbc.getLastUpdate(getResources());
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null

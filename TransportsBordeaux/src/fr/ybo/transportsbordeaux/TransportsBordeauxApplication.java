@@ -30,7 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import fr.ybo.transportsbordeaux.database.DataBaseHelper;
+import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.modele.Alert;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
@@ -48,9 +48,9 @@ import fr.ybo.transportsbordeaux.util.Version;
 		resToastText = R.string.erreurNonPrevue)
 public class TransportsBordeauxApplication extends Application {
 
-	private static DataBaseHelper databaseHelper;
+	private static TransportsBordeauxDatabase databaseHelper;
 
-	public static DataBaseHelper getDataBaseHelper() {
+	public static TransportsBordeauxDatabase getDataBaseHelper() {
 		return databaseHelper;
 	}
 
@@ -60,7 +60,7 @@ public class TransportsBordeauxApplication extends Application {
 	public void onCreate() {
 		ACRA.init(this);
 		super.onCreate();
-		databaseHelper = new DataBaseHelper(this, Arrays.asList(Arret.class, ArretFavori.class, ArretRoute.class,
+		databaseHelper = new TransportsBordeauxDatabase(this, Arrays.asList(Arret.class, ArretFavori.class, ArretRoute.class,
 				DernierMiseAJour.class, Direction.class, Ligne.class, VeloFavori.class));
 
 		// Récupération des alertes

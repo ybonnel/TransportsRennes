@@ -16,23 +16,23 @@ package fr.ybo.transportsbordeaux.modele;
 
 import java.io.Serializable;
 
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.annotation.Colonne;
-import fr.ybo.transportsbordeaux.database.annotation.PrimaryKey;
-import fr.ybo.transportsbordeaux.database.annotation.Table;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
-@Table
+@Entity
 public class Arret implements Serializable {
 	@BaliseCsv("id")
-	@Colonne
+	@Column
 	@PrimaryKey
 	public String id;
 	@BaliseCsv("nom")
-	@Colonne
+	@Column
 	public String nom;
 
 	public ArretFavori favori;

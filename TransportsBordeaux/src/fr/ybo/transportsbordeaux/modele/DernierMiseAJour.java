@@ -16,12 +16,12 @@ package fr.ybo.transportsbordeaux.modele;
 
 import java.util.Date;
 
-import fr.ybo.transportsbordeaux.database.annotation.Colonne;
-import fr.ybo.transportsbordeaux.database.annotation.Table;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Entity;
 
-@Table
+@Entity
 public class DernierMiseAJour {
 
-	@Colonne(type = Colonne.TypeColonne.DATE)
+	@Column(type = Column.TypeColumn.DATE)
 	public Date derniereMiseAJour;
 }

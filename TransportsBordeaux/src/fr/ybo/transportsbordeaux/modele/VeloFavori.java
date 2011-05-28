@@ -14,14 +14,14 @@
 
 package fr.ybo.transportsbordeaux.modele;
 
-import fr.ybo.transportsbordeaux.database.annotation.Colonne;
-import fr.ybo.transportsbordeaux.database.annotation.Colonne.TypeColonne;
-import fr.ybo.transportsbordeaux.database.annotation.PrimaryKey;
-import fr.ybo.transportsbordeaux.database.annotation.Table;
+import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Column.TypeColumn;
+import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 
-@Table
+@Entity
 public class VeloFavori {
-	@Colonne(type = TypeColonne.INTEGER)
+	@Column(type = TypeColumn.INTEGER)
 	@PrimaryKey
 	public Integer id;
 }
