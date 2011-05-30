@@ -135,6 +135,8 @@ public class Horaire implements Serializable {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
+		} catch (SocketException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des trajets pour l'url " + url
 					+ ", html récupéré : " + stringBuilder.toString(), exception);

@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -93,6 +95,10 @@ public class Station extends ObjetWithDistance implements Serializable {
 			}
 			return stations;
 		} catch (SocketException exceptionReseaux) {
+			throw new TbcErreurReseaux(exceptionReseaux);
+		} catch (SocketTimeoutException exceptionReseaux) {
+			throw new TbcErreurReseaux(exceptionReseaux);
+		} catch (UnknownHostException exceptionReseaux) {
 			throw new TbcErreurReseaux(exceptionReseaux);
 		} catch (Exception e) {
 			throw new TcbException(e);
