@@ -9,7 +9,7 @@
 	program. If not, see <http://www.gnu.org/licenses/>. -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="horizontal" android:layout_width="match_parent"
+	android:orientation="horizontal" android:layout_width="fill_parent"
 	android:layout_height="wrap_content">
 	<TextView android:id="@+id/directionTrajet"
 		android:paddingLeft="4dip" android:paddingTop="5dip"
