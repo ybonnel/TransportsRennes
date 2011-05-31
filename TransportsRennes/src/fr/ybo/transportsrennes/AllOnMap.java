@@ -42,7 +42,6 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
 import fr.ybo.transportsrennes.keolis.Keolis;
-import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
@@ -51,11 +50,9 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MyGeoClusterer;
 import fr.ybo.transportsrennes.map.MyGeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
-import fr.ybo.transportsrennes.util.LogYbo;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 
 public class AllOnMap extends MapActivity {
-
-	private static final LogYbo LOG_YBO = new LogYbo(AllOnMap.class);
 
 	private MapView mapView;
 	private MyGeoClusterer<Arret> clustererForArret;
@@ -76,7 +73,8 @@ public class AllOnMap extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.map);
-		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("AllOnMap_dialog", true);
+		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this)
+				.getBoolean("AllOnMap_dialog", true);
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mapView.displayZoomControls(true);
@@ -95,7 +93,6 @@ public class AllOnMap extends MapActivity {
 
 		Bitmap bitmapPos = BitmapFactory.decodeResource(getResources(), R.drawable.icone_pos);
 		markerIconBmpsForPos.add(new MarkerBitmap(bitmapPos, bitmapPos, new Point(25, 35), 20, 1000));
-
 
 		screenDensity = getResources().getDisplayMetrics().density;
 
@@ -119,7 +116,6 @@ public class AllOnMap extends MapActivity {
 		builder.create().show();
 	}
 
-
 	private void saveAfficheMessage() {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 		editor.putBoolean("AllOnMap_dialog", false);
@@ -139,18 +135,20 @@ public class AllOnMap extends MapActivity {
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 		if (arretVisible) {
-			clustererForArret = new MyGeoClusterer<Arret>(this, mapView, markerIconBmpsForArrets, screenDensity, "arrets", ListArretByPosition.class);
+			clustererForArret = new MyGeoClusterer<Arret>(this, mapView, markerIconBmpsForArrets, screenDensity,
+					"arrets", ListArretByPosition.class);
 		}
 		if (veloVisible) {
-			clustererForVelo =
-					new MyGeoClusterer<Station>(this, mapView, markerIconBmpsForVelo, screenDensity, "stations", ListStationsByPosition.class);
+			clustererForVelo = new MyGeoClusterer<Station>(this, mapView, markerIconBmpsForVelo, screenDensity,
+					"stations", ListStationsByPosition.class);
 		}
 		if (parcVisible) {
-			clustererForParc = new MyGeoClusterer<ParkRelai>(this, mapView, markerIconBmpsForParc, screenDensity, "parcRelais", ListParkRelais.class);
+			clustererForParc = new MyGeoClusterer<ParkRelai>(this, mapView, markerIconBmpsForParc, screenDensity,
+					"parcRelais", ListParkRelais.class);
 		}
 		if (posVisible) {
-			clustererForPos =
-					new MyGeoClusterer<PointDeVente>(this, mapView, markerIconBmpsForPos, screenDensity, "pointsDeVente", ListPointsDeVente.class);
+			clustererForPos = new MyGeoClusterer<PointDeVente>(this, mapView, markerIconBmpsForPos, screenDensity,
+					"pointsDeVente", ListPointsDeVente.class);
 		}
 		new AllOnMap.BackgroundTasks().execute();
 	}
@@ -189,7 +187,8 @@ public class AllOnMap extends MapActivity {
 				requete.append(" and ArretRoute.directionId = Direction.id");
 				requete.append(" and Ligne.id = ArretRoute.ligneId");
 				requete.append(" order by ArretRoute.sequence");
-				Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), null);
+				Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+						null);
 
 				int arretIdIndex = cursor.getColumnIndex("arretId");
 				int arretNomIndex = cursor.getColumnIndex("arretNom");
@@ -230,7 +229,7 @@ public class AllOnMap extends MapActivity {
 			}
 		}
 
-		private void ajouterVelos() {
+		private void ajouterVelos() throws ErreurReseau {
 			if (veloVisible) {
 				if (stations == null) {
 					stations = Keolis.getInstance().getStations();
@@ -243,7 +242,7 @@ public class AllOnMap extends MapActivity {
 			}
 		}
 
-		private void ajouterParcs() {
+		private void ajouterParcs() throws ErreurReseau {
 			if (parcVisible) {
 				if (parcRelais == null) {
 					parcRelais = Keolis.getInstance().getParkRelais();
@@ -256,7 +255,7 @@ public class AllOnMap extends MapActivity {
 			}
 		}
 
-		private void ajouterPos() {
+		private void ajouterPos() throws ErreurReseau {
 			if (posVisible) {
 				if (pointsDeVente == null) {
 					pointsDeVente = Keolis.getInstance().getPointDeVente();
@@ -278,9 +277,8 @@ public class AllOnMap extends MapActivity {
 				ajouterVelos();
 				ajouterParcs();
 				ajouterPos();
-			} catch (KeolisException keolisException) {
+			} catch (ErreurReseau erreurReseau) {
 				erreurKeolis = true;
-				LOG_YBO.erreur("Erreur lors de la récupération des données Keolis", keolisException);
 			}
 			return null;
 		}
@@ -304,7 +302,7 @@ public class AllOnMap extends MapActivity {
 				gestionCheckBoxFaite = true;
 			}
 			if (erreurKeolis) {
-				Toast.makeText(AllOnMap.this, getString(R.string.erreur_interrogationStar), Toast.LENGTH_SHORT).show();
+				Toast.makeText(AllOnMap.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 			}
 			if (arretVisible) {
 				clustererForArret.resetViewport();
@@ -371,7 +369,6 @@ public class AllOnMap extends MapActivity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

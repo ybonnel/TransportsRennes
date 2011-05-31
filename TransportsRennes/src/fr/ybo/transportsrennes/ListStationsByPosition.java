@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -28,7 +27,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,7 +46,9 @@ import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les stations pas distances de la
@@ -151,8 +151,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		super.onPause();
 	}
 
-	private ProgressDialog myProgressDialog;
-
 	private void metterAJourListeStations() {
 		String query = editText.getText().toString().toUpperCase();
 		stationsFiltrees.clear();
@@ -206,17 +204,10 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "",
-						getString(R.string.dialogRequeteVeloStar), true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				List<Station> stationsTmp = (stationIntent == null ? keolis.getStations() : stationIntent);
 				synchronized (stations) {
 					stations.clear();
@@ -235,7 +226,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
 			@Override
 			protected void onPostExecute(Void result) {
-				myProgressDialog.dismiss();
 				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
 						Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
@@ -268,17 +258,10 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == MENU_REFRESH) {
-			new AsyncTask<Void, Void, Void>() {
+			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 				@Override
-				protected void onPreExecute() {
-					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListStationsByPosition.this, "",
-							getString(R.string.dialogRequeteVeloStar), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
+				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 					Collection<Station> stationsTmp;
 					if (stationIntent == null) {
 						stationsTmp = keolis.getStations();
@@ -306,7 +289,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				@Override
 				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
-					myProgressDialog.dismiss();
 					metterAJourListeStations();
 					mettreAjoutLoc(lastLocation);
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();

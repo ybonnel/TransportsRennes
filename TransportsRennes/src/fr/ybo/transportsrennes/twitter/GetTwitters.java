@@ -1,5 +1,6 @@
 package fr.ybo.transportsrennes.twitter;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
@@ -11,7 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import fr.ybo.transportsrennes.keolis.KeolisException;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 
 public class GetTwitters {
 
@@ -27,7 +28,7 @@ public class GetTwitters {
 		return instance;
 	}
 
-	public Collection<MessageTwitter> getMessages() {
+	public Collection<MessageTwitter> getMessages() throws ErreurReseau {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(
 					"http://transports-rennes.appspot.com/twitterstarbusmetrogson").openConnection();
@@ -40,8 +41,8 @@ public class GetTwitters {
 			Type listType = new TypeToken<List<MessageTwitter>>() {
 			}.getType();
 			return gson.fromJson(new InputStreamReader(connection.getInputStream()), listType);
-		} catch (Exception e) {
-			throw new KeolisException("Erreur lors de l'interrogation de twitter", e);
+		} catch (IOException exception) {
+			throw new ErreurReseau(exception);
 		}
 	}
 }

@@ -45,6 +45,7 @@ import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.Constantes;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.Version;
 
 /**
@@ -81,8 +82,11 @@ public class TransportsRennesApplication extends Application {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... voids) {
-				for (Alert alert : Keolis.getInstance().getAlerts()) {
-					lignesWithAlerts.addAll(alert.lines);
+				try {
+					for (Alert alert : Keolis.getInstance().getAlerts()) {
+						lignesWithAlerts.addAll(alert.lines);
+					}
+				} catch (ErreurReseau ignore) {
 				}
 				try {
 					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();

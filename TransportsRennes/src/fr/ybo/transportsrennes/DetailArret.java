@@ -21,12 +21,10 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +47,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -293,19 +292,11 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		}
 	}
 
-	private ProgressDialog myProgressDialog;
-
 	private void chargerLigne() {
-		new AsyncTask<Void, Void, Void>() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne)) {
 
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(DetailArret.this, "", getString(R.string.premierAccesLigne, myLigne.nomCourt), true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) {
 				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				return null;
 			}
@@ -315,7 +306,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				super.onPostExecute(result);
 				setListAdapter(construireAdapter());
 				getListView().invalidate();
-				myProgressDialog.dismiss();
 			}
 
 		}.execute();

@@ -20,10 +20,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -38,7 +36,9 @@ import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.
@@ -56,8 +56,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 	 * Liste des stations.
 	 */
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(10));
-
-	private ProgressDialog myProgressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,17 +77,9 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
-
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
-						getString(R.string.dialogRequeteVeloStar), true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
 						.select(new VeloFavori());
 				Collection<String> numbers = new ArrayList<String>(10);
@@ -112,7 +102,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 			@Override
 			protected void onPostExecute(Void result) {
-				myProgressDialog.dismiss();
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
@@ -135,17 +124,9 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == MENU_REFRESH) {
-			new AsyncTask<Void, Void, Void>() {
-
+			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 				@Override
-				protected void onPreExecute() {
-					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
-							getString(R.string.dialogRequeteVeloStar), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
+				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(
 							new VeloFavori());
 					Collection<String> numbers = new ArrayList<String>(10);
@@ -168,7 +149,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 
 				@Override
 				protected void onPostExecute(Void result) {
-					myProgressDialog.dismiss();
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					super.onPostExecute(result);
 				}

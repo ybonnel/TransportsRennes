@@ -16,12 +16,14 @@ package fr.ybo.transportsrennes.keolis;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -29,6 +31,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.xml.sax.SAXException;
 
 import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
@@ -41,6 +44,7 @@ import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
+import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.HttpUtils;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -108,14 +112,21 @@ public final class Keolis {
 	}
 
 	/**
-	 * @param <ObjetKeolis> type d'objet Keolis.
-	 * @param url           url.
-	 * @param handler       handler.
+	 * @param <ObjetKeolis>
+	 *            type d'objet Keolis.
+	 * @param url
+	 *            url.
+	 * @param handler
+	 *            handler.
 	 * @return liste d'objets Keolis.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
+	 *             en cas d'erreur réseau.
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
 	 */
 	@SuppressWarnings("unchecked")
-	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler) {
+	private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler)
+			throws ErreurReseau {
 		LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
 		long startTime = System.nanoTime() / 1000;
 		HttpClient httpClient = HttpUtils.getHttpClient();
@@ -129,8 +140,12 @@ public final class Keolis {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(ostream.toByteArray()), handler);
 			answer = handler.getAnswer();
-		} catch (Exception e) {
-			throw new KeolisException("Erreur lors de l'appel à getDistricts", e);
+		} catch (IOException socketException) {
+			throw new ErreurReseau(socketException);
+		} catch (SAXException saxException) {
+			throw new ErreurReseau(saxException);
+		} catch (ParserConfigurationException exception) {
+			throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
 		}
 		if (!"0".equals(answer.getStatus().getCode())) {
 			throw new KeolisException(answer.getStatus().getMessage());
@@ -142,32 +157,39 @@ public final class Keolis {
 
 	/**
 	 * Appel les API Keolis pour récupérer les alertes.
-	 *
+	 * 
 	 * @return les alertes.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	public Iterable<Alert> getAlerts() {
+	public Iterable<Alert> getAlerts() throws ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_ALERTS), new GetAlertsHandler());
 	}
 
 	/**
 	 * Appel aux API Keolis pour récupérer les stations.
-	 *
-	 * @param url url à appeler.
+	 * 
+	 * @param url
+	 *            url à appeler.
 	 * @return la liste des stations.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	private List<Station> getStation(String url) {
+	private List<Station> getStation(String url) throws ErreurReseau {
 		return appelKeolis(url, new GetStationHandler());
 	}
 
 	/**
 	 * Appel aux API Keolis pour récupérer une station à partir de son number.
-	 *
-	 * @param number numéro de la station.
+	 * 
+	 * @param number
+	 *            numéro de la station.
 	 * @return la station.
+	 * @throws ErreurReseau
 	 */
-	private Station getStationByNumber(String number) {
+	private Station getStationByNumber(String number) throws ErreurReseau {
 		ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
 		List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
 		if (stations.isEmpty()) {
@@ -177,12 +199,15 @@ public final class Keolis {
 	}
 
 	/**
-	 * Appel aux API Keolis pour récupérer les stations à partir de leurs numéros.
-	 *
-	 * @param numbers numéros des stations.
+	 * Appel aux API Keolis pour récupérer les stations à partir de leurs
+	 * numéros.
+	 * 
+	 * @param numbers
+	 *            numéros des stations.
 	 * @return la station.
+	 * @throws ErreurReseau
 	 */
-	public Collection<Station> getStationByNumbers(Collection<String> numbers) {
+	public Collection<Station> getStationByNumbers(Collection<String> numbers) throws ErreurReseau {
 		Collection<Station> stations = new ArrayList<Station>(5);
 		if (numbers.size() <= 2) {
 			for (String number : numbers) {
@@ -200,27 +225,33 @@ public final class Keolis {
 
 	/**
 	 * Appel aux API Keolis pour récupérer les stations.
-	 *
+	 * 
 	 * @return la listes des stations.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
 	 */
-	public List<Station> getStations() {
+	public List<Station> getStations() throws ErreurReseau {
 		return getStation(getUrl(COMMANDE_STATIONS));
 	}
 
 	/**
 	 * @return les parks relais.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
 	 */
-	public List<ParkRelai> getParkRelais() throws KeolisException {
+	public List<ParkRelai> getParkRelais() throws KeolisException, ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
 	}
 
 	/**
 	 * @return les points de ventes.
-	 * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws KeolisException
+	 *             en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau
 	 */
-	public List<PointDeVente> getPointDeVente() throws KeolisException {
+	public List<PointDeVente> getPointDeVente() throws KeolisException, ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
 	}
 

@@ -19,7 +19,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -27,7 +26,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,6 +41,8 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
+import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les points de vente par distances
@@ -145,8 +145,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		super.onPause();
 	}
 
-	private ProgressDialog myProgressDialog;
-
 	private void metterAJourListe() {
 		String query = editText.getText().toString().toUpperCase();
 		pointsDeVenteFiltres.clear();
@@ -200,17 +198,10 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequetePointsDeVente)) {
 
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListPointsDeVente.this, "",
-						getString(R.string.dialogRequetePointsDeVente), true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
 						: pointsDeVenteIntent);
 				synchronized (pointsDeVente) {
@@ -243,7 +234,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				});
 				activeGps();
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				myProgressDialog.dismiss();
 			}
 		}.execute();
 	}

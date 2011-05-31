@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -27,10 +25,10 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
+import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 public class ListTwitter extends MenuAccueil.ListActivity {
-
-	private ProgressDialog myProgressDialog;
 
 	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>(20));
 
@@ -41,17 +39,9 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		setListAdapter(new TwitterAdapter(this, messages));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
-		new AsyncTask<Void, Void, Void>() {
-
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteTwitter)) {
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListTwitter.this, "", getString(R.string.dialogRequeteTwitter),
-						true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				messages.addAll(GetTwitters.getInstance().getMessages());
 				return null;
 			}
@@ -59,7 +49,6 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				myProgressDialog.dismiss();
 				super.onPostExecute(result);
 			}
 		}.execute();

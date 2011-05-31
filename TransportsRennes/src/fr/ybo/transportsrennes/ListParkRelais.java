@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -28,7 +27,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,6 +44,8 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
+import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de
@@ -148,8 +148,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 		super.onPause();
 	}
 
-	private ProgressDialog myProgressDialog;
-
 	private void metterAJourListeParkRelais() {
 		String query = editText.getText().toString().toUpperCase();
 		synchronized (parkRelais) {
@@ -202,17 +200,10 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new AsyncTask<Void, Void, Void>() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteParkRelais)) {
 
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListParkRelais.this, "",
-						getString(R.string.dialogRequeteParkRelais), true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				List<ParkRelai> parkRelaisTmp = (parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
 				synchronized (parkRelais) {
 					parkRelais.clear();
@@ -231,7 +222,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 			@Override
 			protected void onPostExecute(Void result) {
-				myProgressDialog.dismiss();
 				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
 						Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
@@ -264,17 +254,10 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == MENU_REFRESH) {
-			new AsyncTask<Void, Void, Void>() {
+			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 				@Override
-				protected void onPreExecute() {
-					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListParkRelais.this, "",
-							getString(R.string.dialogRequeteVeloStar), true);
-				}
-
-				@Override
-				protected Void doInBackground(Void... pParams) {
+				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 					List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
 					synchronized (parkRelais) {
 						majParkRelais(parkRelaisTmp);
@@ -309,7 +292,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 
 				@Override
 				protected void onPostExecute(Void result) {
-					myProgressDialog.dismiss();
 					metterAJourListeParkRelais();
 					mettreAjoutLoc(lastLocation);
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();

@@ -19,9 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +30,8 @@ import fr.ybo.transportsrennes.adapters.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
 
@@ -39,8 +39,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 	 * Permet d'accéder aux apis keolis.
 	 */
 	private final Keolis keolis = Keolis.getInstance();
-
-	private ProgressDialog myProgressDialog;
 
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
@@ -64,17 +62,10 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 		});
 
-		new AsyncTask<Void, Void, Void>() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteAlerts)) {
 
 			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListAlerts.this, "", getString(R.string.dialogRequeteAlerts),
-						true);
-			}
-
-			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
 				for (Alert alerte : keolis.getAlerts()) {
 					while (alerte.lines.size() > 1) {
 						Alert newAlerte = new Alert(alerte);
@@ -101,7 +92,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				myProgressDialog.dismiss();
 				super.onPostExecute(result);
 			}
 		}.execute();
