@@ -28,13 +28,8 @@ import fr.ybo.transportsrennes.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.util.LogYbo;
-
 
 public class OnClickFavoriGestionnaire implements View.OnClickListener {
-
-
-	private static final LogYbo LOG_YBO = new LogYbo(OnClickFavoriGestionnaire.class);
 
 	private Ligne ligne;
 	private final String nomArret;
@@ -57,20 +52,14 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 	private void chargerLigne() {
 
-		myProgressDialog = ProgressDialog.show(activity, "", activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
+		myProgressDialog = ProgressDialog.show(activity, "",
+				activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
 
-			boolean erreur;
-
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
-					erreur = true;
-				}
+				UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
 				return null;
 			}
 
@@ -78,16 +67,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(activity, activity.getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-					activity.finish();
-				}
 			}
 
 		}.execute();
 
 	}
-
 
 	public void onClick(View view) {
 		ImageView imageView = (ImageView) view;

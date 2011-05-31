@@ -33,23 +33,19 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.VeloAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.
- *
+ * 
  * @author ybonnel
  */
 public class ListStationsFavoris extends MenuAccueil.ListActivity {
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListStationsFavoris.class);
 
 	/**
 	 * Permet d'accéder aux apis keolis.
@@ -70,7 +66,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		setListAdapter(new VeloAdapter(getApplicationContext(), stations));
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"unchecked"})
+			@SuppressWarnings({ "unchecked" })
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				Station station = veloAdapter.getItem(position);
@@ -85,35 +81,30 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		registerForContextMenu(listView);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "", getString(R.string.dialogRequeteVeloStar), true);
+				myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
+						getString(R.string.dialogRequeteVeloStar), true);
 			}
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
-					Collection<String> numbers = new ArrayList<String>(10);
-					for (VeloFavori favori : velosFavoris) {
-						numbers.add(favori.number);
-					}
-                    Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
-					synchronized (stations) {
-						stations.clear();
-						stations.addAll(stationsTmp);
-						Collections.sort(stations, new Comparator<Station>() {
-							public int compare(Station o1, Station o2) {
-								return o1.name.compareToIgnoreCase(o2.name);
-							}
-						});
-					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
-					erreur = true;
+				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
+						.select(new VeloFavori());
+				Collection<String> numbers = new ArrayList<String>(10);
+				for (VeloFavori favori : velosFavoris) {
+					numbers.add(favori.number);
+				}
+				Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+				synchronized (stations) {
+					stations.clear();
+					stations.addAll(stationsTmp);
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
 				}
 
 				return null;
@@ -122,18 +113,11 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
-					toast.show();
-					finish();
-				} else {
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				}
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
 		}.execute();
 	}
-
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_REFRESH = Menu.FIRST;
@@ -153,35 +137,30 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		if (item.getItemId() == MENU_REFRESH) {
 			new AsyncTask<Void, Void, Void>() {
 
-				private boolean erreur;
-
 				@Override
 				protected void onPreExecute() {
 					super.onPreExecute();
-					myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "", getString(R.string.dialogRequeteVeloStar), true);
+					myProgressDialog = ProgressDialog.show(ListStationsFavoris.this, "",
+							getString(R.string.dialogRequeteVeloStar), true);
 				}
 
 				@Override
 				protected Void doInBackground(Void... pParams) {
-					try {
-						List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(new VeloFavori());
-						Collection<String> numbers = new ArrayList<String>(10);
-						for (VeloFavori favori : velosFavoris) {
-							numbers.add(favori.number);
-						}
-                        Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
-						synchronized (stations) {
-							stations.clear();
-							stations.addAll(stationsTmp);
-							Collections.sort(stations, new Comparator<Station>() {
-								public int compare(Station o1, Station o2) {
-									return o1.name.compareToIgnoreCase(o2.name);
-								}
-							});
-						}
-					} catch (Exception exception) {
-						LOG_YBO.erreur("Erreur dans ListStationsByPosition.doInBackGround", exception);
-						erreur = true;
+					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(
+							new VeloFavori());
+					Collection<String> numbers = new ArrayList<String>(10);
+					for (VeloFavori favori : velosFavoris) {
+						numbers.add(favori.number);
+					}
+					Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+					synchronized (stations) {
+						stations.clear();
+						stations.addAll(stationsTmp);
+						Collections.sort(stations, new Comparator<Station>() {
+							public int compare(Station o1, Station o2) {
+								return o1.name.compareToIgnoreCase(o2.name);
+							}
+						});
 					}
 
 					return null;
@@ -190,13 +169,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				@Override
 				protected void onPostExecute(Void result) {
 					myProgressDialog.dismiss();
-					if (erreur) {
-						Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationVeloStar), Toast.LENGTH_LONG);
-						toast.show();
-						finish();
-					} else {
-						((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-					}
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					super.onPostExecute(result);
 				}
 			}.execute();
@@ -204,7 +177,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		}
 		return false;
 	}
-
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

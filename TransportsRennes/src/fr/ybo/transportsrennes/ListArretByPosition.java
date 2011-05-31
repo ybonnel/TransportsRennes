@@ -47,17 +47,14 @@ import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 /**
- * Activité de type liste permettant de lister les arrêts de bus par distances de la
- * position actuelle.
- *
+ * Activité de type liste permettant de lister les arrêts de bus par distances
+ * de la position actuelle.
+ * 
  * @author ybonnel
  */
 public class ListArretByPosition extends MenuAccueil.ListActivity implements LocationListener {
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListArretByPosition.class);
 
 	/**
 	 * Le locationManager permet d'accéder au GPS du téléphone.
@@ -77,8 +74,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	/**
 	 * Permet de mettre à jour les distances des arrêts par rapport à une
 	 * nouvelle position.
-	 *
-	 * @param location position courante.
+	 * 
+	 * @param location
+	 *            position courante.
 	 */
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
@@ -167,7 +165,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
-		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("arrets"));
+		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable(
+				"arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
@@ -200,7 +199,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListArretByPosition.this, "", getString(R.string.rechercheArrets), true);
+				myProgressDialog = ProgressDialog.show(ListArretByPosition.this, "",
+						getString(R.string.rechercheArrets), true);
 			}
 
 			@Override
@@ -338,16 +338,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 		new AsyncTask<Void, Void, Void>() {
 
-			boolean erreur;
-
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur lors du chargement du détail de la ligne", exception);
-					erreur = true;
-				}
+				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				return null;
 			}
 
@@ -355,15 +348,10 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(ListArretByPosition.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-					finish();
-				}
 			}
 
 		}.execute();
 
 	}
-
 
 }

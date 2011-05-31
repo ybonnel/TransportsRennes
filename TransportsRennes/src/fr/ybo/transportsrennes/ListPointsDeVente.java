@@ -43,17 +43,14 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 /**
- * Activité de type liste permettant de lister les points de vente par distances de la
- * position actuelle.
- *
+ * Activité de type liste permettant de lister les points de vente par distances
+ * de la position actuelle.
+ * 
  * @author ybonnel
  */
 public class ListPointsDeVente extends MenuAccueil.ListActivity implements LocationListener {
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListPointsDeVente.class);
 
 	/**
 	 * Permet d'accéder aux apis keolis.
@@ -70,15 +67,17 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	 */
 	private List<PointDeVente> pointsDeVenteIntent;
 	private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>(150));
-	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>(150));
+	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>(
+			150));
 
 	private Location lastLocation;
 
 	/**
-	 * Permet de mettre à jour les distances des points de vente par rapport à une
-	 * nouvelle position.
-	 *
-	 * @param location position courante.
+	 * Permet de mettre à jour les distances des points de vente par rapport à
+	 * une nouvelle position.
+	 * 
+	 * @param location
+	 *            position courante.
 	 */
 	private void mettreAjoutLoc(Location location) {
 		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
@@ -169,8 +168,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listpointsdevente);
-		pointsDeVenteIntent =
-				(List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable("pointsDeVente"));
+		pointsDeVenteIntent = (List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
+				.getSerializable("pointsDeVente"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
@@ -189,7 +188,8 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		});
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
+						.getAdapter();
 				PointDeVente pointDeVente = adapter.getItem(position);
 				String lat = Double.toString(pointDeVente.getLatitude());
 				String lon = Double.toString(pointDeVente.getLongitude());
@@ -202,32 +202,27 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		registerForContextMenu(listView);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListPointsDeVente.this, "", getString(R.string.dialogRequetePointsDeVente), true);
+				myProgressDialog = ProgressDialog.show(ListPointsDeVente.this, "",
+						getString(R.string.dialogRequetePointsDeVente), true);
 			}
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-                    List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente() : pointsDeVenteIntent);
-					synchronized (pointsDeVente) {
-						pointsDeVente.clear();
-						pointsDeVente.addAll(listPdvTmp);
-						Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
-							public int compare(PointDeVente o1, PointDeVente o2) {
-								return o1.name.compareToIgnoreCase(o2.name);
-							}
-						});
-						pointsDeVenteFiltres.clear();
-						pointsDeVenteFiltres.addAll(pointsDeVente);
-					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur dans ListPointsDeVente.doInBackGround", exception);
-					erreur = true;
+				List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
+						: pointsDeVenteIntent);
+				synchronized (pointsDeVente) {
+					pointsDeVente.clear();
+					pointsDeVente.addAll(listPdvTmp);
+					Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
+						public int compare(PointDeVente o1, PointDeVente o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
+					pointsDeVenteFiltres.clear();
+					pointsDeVenteFiltres.addAll(pointsDeVente);
 				}
 
 				return null;
@@ -236,23 +231,18 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
-					toast.show();
-					finish();
-				} else {
-					findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-						public void onClick(View view) {
-							Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
-							ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(pointsDeVenteFiltres.size());
-							pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
-							intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
-							startActivity(intent);
-						}
-					});
-					activeGps();
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				}
+				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
+					public void onClick(View view) {
+						Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
+						ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(
+								pointsDeVenteFiltres.size());
+						pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
+						intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
+						startActivity(intent);
+					}
+				});
+				activeGps();
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 			}
 		}.execute();

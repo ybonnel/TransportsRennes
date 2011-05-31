@@ -41,7 +41,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -50,7 +49,6 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -59,7 +57,6 @@ import fr.ybo.transportsrennes.util.LogYbo;
  */
 public class DetailArret extends MenuAccueil.ListActivity {
 
-	private static final LogYbo LOG_YBO = new LogYbo(DetailArret.class);
 	private static final double DISTANCE_RECHERCHE_METRE = 1000.0;
 	private static final double DEGREE_LATITUDE_EN_METRES = 111192.62;
 	private static final double DISTANCE_LAT_IN_DEGREE = DISTANCE_RECHERCHE_METRE / DEGREE_LATITUDE_EN_METRES;
@@ -301,8 +298,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void chargerLigne() {
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -311,25 +306,15 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-					erreur = true;
-				}
+				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				if (erreur) {
-					Toast.makeText(DetailArret.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-					finish();
-				} else {
-					setListAdapter(construireAdapter());
-					getListView().invalidate();
-				}
+				setListAdapter(construireAdapter());
+				getListView().invalidate();
 				myProgressDialog.dismiss();
 			}
 

@@ -124,5 +124,8 @@
     
     <string name="nouvelleVersion">Nueva versión disponible</string>
     <string name="versionDisponible">La versión %1$s está disponible!</string>
+    
+    <string name="erreurNonPrevue">Un error no se espera su llegada, un informe de error fue enviado a los desarrolladores</string>
+    <string name="erreurReseau">Un error de conexión se ha detectado, por favor, inténtelo de nuevo más tarde.</string>
 </resources>
 

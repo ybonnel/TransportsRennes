@@ -38,21 +38,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 
 public class TransportsRennes extends Activity {
 
 	private ProgressDialog myProgressDialog;
-
-	private static final LogYbo LOG_YBO = new LogYbo(TransportsRennes.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +59,6 @@ public class TransportsRennes extends Activity {
 		assignerBoutons();
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				myProgressDialog = ProgressDialog.show(TransportsRennes.this, "",
@@ -73,13 +67,7 @@ public class TransportsRennes extends Activity {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-
-				try {
-					verifierUpgrade();
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-					erreur = true;
-				}
+				verifierUpgrade();
 				return null;
 			}
 
@@ -87,14 +75,6 @@ public class TransportsRennes extends Activity {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_verifUpdate), Toast.LENGTH_LONG)
-							.show();
-					if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-						LOG_YBO.warn("La vérification de mise à jour n'a pas fonctionné alors qu'il n'y a pas encore de données, fermeture de l'application");
-						finish();
-					}
-				}
 			}
 		}.execute((Void[]) null);
 	}
@@ -260,34 +240,27 @@ public class TransportsRennes extends Activity {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					UpdateDataBase.updateIfNecessaryDatabase(getResources());
-					Collection<String> ligneIds = new HashSet<String>(10);
-					for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
-						if (!ligneIds.contains(favori.ligneId)) {
-							ligneIds.add(favori.ligneId);
+				UpdateDataBase.updateIfNecessaryDatabase(getResources());
+				Collection<String> ligneIds = new HashSet<String>(10);
+				for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
+					if (!ligneIds.contains(favori.ligneId)) {
+						ligneIds.add(favori.ligneId);
+					}
+				}
+				Ligne ligneSelect = new Ligne();
+				for (String ligneId : ligneIds) {
+					ligneSelect.id = ligneId;
+					Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
+					final String nomLigne = ligne.nomCourt;
+					runOnUiThread(new Runnable() {
+						public void run() {
+							myProgressDialog.setMessage(getString(R.string.infoChargementGtfs)
+									+ getString(R.string.chargementLigneFavori, nomLigne));
 						}
-					}
-					Ligne ligneSelect = new Ligne();
-					for (String ligneId : ligneIds) {
-						ligneSelect.id = ligneId;
-						Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
-						final String nomLigne = ligne.nomCourt;
-						runOnUiThread(new Runnable() {
-							public void run() {
-								myProgressDialog
-										.setMessage(getString(R.string.infoChargementGtfs) + getString(R.string.chargementLigneFavori, nomLigne));
-							}
-						});
-						UpdateDataBase.chargeDetailLigne(ligne, getResources());
-					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.doInBackGround", exception);
-					erreur = true;
+					});
+					UpdateDataBase.chargeDetailLigne(ligne, getResources());
 				}
 				return null;
 			}
@@ -296,10 +269,6 @@ public class TransportsRennes extends Activity {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-					finish();
-				}
 			}
 		}.execute((Void[]) null);
 	}
@@ -411,26 +380,19 @@ public class TransportsRennes extends Activity {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
-						if (ligne.chargee == null || !ligne.chargee) {
-							final String nomLigne = ligne.nomCourt;
-							runOnUiThread(new Runnable() {
-								public void run() {
-									myProgressDialog.setMessage(
-											getString(R.string.infoChargementGtfs) + '\n' + getString(R.string.premierAccesLigne, nomLigne));
-								}
-							});
-							UpdateDataBase.chargeDetailLigne(ligne, getResources());
-						}
+				for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
+					if (ligne.chargee == null || !ligne.chargee) {
+						final String nomLigne = ligne.nomCourt;
+						runOnUiThread(new Runnable() {
+							public void run() {
+								myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + '\n'
+										+ getString(R.string.premierAccesLigne, nomLigne));
+							}
+						});
+						UpdateDataBase.chargeDetailLigne(ligne, getResources());
 					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Une erreur est survenue dans TransportsRennes.loadAllLines", exception);
-					erreur = true;
 				}
 				return null;
 			}
@@ -439,9 +401,6 @@ public class TransportsRennes extends Activity {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast.makeText(TransportsRennes.this, getString(R.string.erreur_chargementStar), Toast.LENGTH_LONG).show();
-				}
 			}
 		}.execute((Void[]) null);
 	}

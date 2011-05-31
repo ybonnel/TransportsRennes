@@ -27,13 +27,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
 
@@ -41,8 +39,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 	 * Permet d'accéder aux apis keolis.
 	 */
 	private final Keolis keolis = Keolis.getInstance();
-
-	private static final LogYbo LOG_YBO = new LogYbo(ListAlerts.class);
 
 	private ProgressDialog myProgressDialog;
 
@@ -70,40 +66,34 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreur;
-
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
-				myProgressDialog = ProgressDialog.show(ListAlerts.this, "", getString(R.string.dialogRequeteAlerts), true);
+				myProgressDialog = ProgressDialog.show(ListAlerts.this, "", getString(R.string.dialogRequeteAlerts),
+						true);
 			}
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				try {
-					for (Alert alerte : keolis.getAlerts()) {
-						while (alerte.lines.size() > 1) {
-							Alert newAlerte = new Alert(alerte);
-							newAlerte.lines.add(alerte.lines.remove(0));
-							if (ligne != null) {
-								if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
-									alerts.add(newAlerte);
-								}
-							} else {
+				for (Alert alerte : keolis.getAlerts()) {
+					while (alerte.lines.size() > 1) {
+						Alert newAlerte = new Alert(alerte);
+						newAlerte.lines.add(alerte.lines.remove(0));
+						if (ligne != null) {
+							if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
 								alerts.add(newAlerte);
 							}
-						}
-						if (ligne != null) {
-							if (ligne.nomCourt.equals(alerte.lines.get(0))) {
-								alerts.add(alerte);
-							}
 						} else {
-							alerts.add(alerte);
+							alerts.add(newAlerte);
 						}
 					}
-				} catch (Exception exception) {
-					LOG_YBO.erreur("Erreur dans ListAlerts.doInBackGround", exception);
-					erreur = true;
+					if (ligne != null) {
+						if (ligne.nomCourt.equals(alerte.lines.get(0))) {
+							alerts.add(alerte);
+						}
+					} else {
+						alerts.add(alerte);
+					}
 				}
 				return null;
 			}
@@ -112,11 +102,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 			protected void onPostExecute(Void result) {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
-				if (erreur) {
-					Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.erreur_interrogationStar), Toast.LENGTH_LONG);
-					toast.show();
-					finish();
-				}
 				super.onPostExecute(result);
 			}
 		}.execute();

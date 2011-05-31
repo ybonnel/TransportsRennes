@@ -24,8 +24,7 @@ public class Version {
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			versionMarket = bufReader.readLine();
 			bufReader.close();
-		} catch (Exception exception) {
-
+		} catch (Exception ignore) {
 		}
 		return versionMarket;
 	}
@@ -38,7 +37,8 @@ public class Version {
 			try {
 				PackageInfo info = manager.getPackageInfo(application.getPackageName(), 0);
 				version = info.versionName;
-			} catch (PackageManager.NameNotFoundException ignore) {
+			} catch (PackageManager.NameNotFoundException exception) {
+				throw new TransportsRennesException(exception);
 			}
 		}
 		return version;

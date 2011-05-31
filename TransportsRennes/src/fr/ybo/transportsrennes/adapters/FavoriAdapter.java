@@ -33,11 +33,8 @@ import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 public class FavoriAdapter extends BaseAdapter {
-
-	private static final LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
 
 	private final LayoutInflater mInflater;
 
@@ -188,9 +185,7 @@ public class FavoriAdapter extends BaseAdapter {
 			if (!prochainsDepart.isEmpty()) {
 				holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0), now));
 			}
-		} catch (SQLiteException sqlException) {
-			LOG_YBO.erreur("Erreur SQL reçue lors de la récupération du prochain départ, ça doit pas arriver, mais on ignore l'erreur au cas où",
-					sqlException);
+		} catch (SQLiteException ignore) {
 		}
 
 

@@ -146,4 +146,7 @@ These amendments relate the lines 2, 7, 8 and 11. Feel free to send messages to 
     
     <string name="nouvelleVersion">New version available</string>
     <string name="versionDisponible">Version %1$s is available!</string>
+    
+    <string name="erreurNonPrevue">Unexpected error, a crash report was sent to the developer</string>
+    <string name="erreurReseau">A connection error has been detected, please try again later.</string>
 </resources>

@@ -18,6 +18,10 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.acra.ACRA;
+import org.acra.ReportingInteractionMode;
+import org.acra.annotation.ReportsCrashes;
+
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -34,6 +38,7 @@ import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 
+import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -46,6 +51,8 @@ import fr.ybo.transportsrennes.util.Version;
  * Classe de l'application permettant de stocker les attributs globaux à
  * l'application.
  */
+@ReportsCrashes(formKey = "dE5mNl9RV3NOc25XdnI1RWpNQnZGYlE6MQ", mode = ReportingInteractionMode.TOAST,
+		resToastText = R.string.erreurNonPrevue)
 public class TransportsRennesApplication extends Application {
 
 	private static TransportsRennesDatabase databaseHelper;
@@ -56,6 +63,7 @@ public class TransportsRennesApplication extends Application {
 
 	@Override
 	public void onCreate() {
+		ACRA.init(this);
 		super.onCreate();
 		databaseHelper = new TransportsRennesDatabase(this);
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
@@ -73,16 +81,16 @@ public class TransportsRennesApplication extends Application {
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... voids) {
+				for (Alert alert : Keolis.getInstance().getAlerts()) {
+					lignesWithAlerts.addAll(alert.lines);
+				}
 				try {
-					for (Alert alert : Keolis.getInstance().getAlerts()) {
-						lignesWithAlerts.addAll(alert.lines);
-					}
 					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+
 					bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
 							metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
 							new BigDecimal(metadata.getMinLongitude())));
-				} catch (Exception ignored) {
-
+				} catch (OpenTripPlannerException ignore) {
 				}
 				return null;
 			}

@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.acra.ErrorReporter;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -51,27 +53,41 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 
 	private Map<Integer, UpgradeDatabase> mapUpgrades;
 
+	private static abstract class UpgradeDatabaseWithError implements UpgradeDatabase {
+
+		final public void upgrade(SQLiteDatabase arg0) {
+			try {
+				myUpgrade(arg0);
+			} catch (Exception exception) {
+				ErrorReporter.getInstance().handleException(exception);
+			}
+		}
+
+		abstract void myUpgrade(SQLiteDatabase db);
+
+	}
+
 	protected Map<Integer, UpgradeDatabase> getUpgrades() {
 		if (mapUpgrades == null) {
 			mapUpgrades = new HashMap<Integer, UpgradeDatabase>(10);
-			mapUpgrades.put(2, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(2, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					getBase().getTable(VeloFavori.class).createTable(db);
 				}
 			});
-			mapUpgrades.put(3, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(3, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					getBase().dropDataBase(db);
 					getBase().createDataBase(db);
 				}
 			});
-			mapUpgrades.put(4, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(4, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
 				}
 			});
-			mapUpgrades.put(5, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(5, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
@@ -124,8 +140,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 					db.execSQL("DROP TABLE ArretFavori_tmp");
 				}
 			});
-			mapUpgrades.put(6, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(6, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					Cursor cursor =
 							db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
 									null);
@@ -145,13 +161,13 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 					getBase().getTable(Trajet.class).createTable(db);
 				}
 			});
-			mapUpgrades.put(7, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(7, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					db.execSQL("DELETE FROM DernierMiseAJour");
 				}
 			});
-			mapUpgrades.put(9, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(9, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					// Gestion des favoris.
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
 					getBase().getTable(ArretFavori.class).createTable(db);
@@ -190,8 +206,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 					}
 				}
 			});
-			mapUpgrades.put(10, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+			mapUpgrades.put(10, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
 					Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
 							" type = 'table'", null, null, null, null);
 					while (cursor.moveToNext()) {

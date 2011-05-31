@@ -61,6 +61,7 @@ import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.LogYbo;
+import fr.ybo.transportsrennes.util.TransportsRennesException;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements LocationListener {
 
@@ -354,7 +355,6 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		new AsyncTask<Void, Void, Void>() {
 			private ProgressDialog progressDialog;
 			private Response reponse;
-			private boolean erreurGrave = false;
 
 			@Override
 			protected void onPreExecute() {
@@ -367,10 +367,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			protected Void doInBackground(Void... voids) {
 				try {
 					reponse = CalculItineraires.getInstance().getItineraries(request);
-				} catch (OpenTripPlannerException openTripPlannerException) {
-					LOG_YBO.erreur("Erreur lors du calcul d'itinéraire", openTripPlannerException);
-					LOG_YBO.erreur("Request : " + openTripPlannerException.getRequest().toString());
-					erreurGrave = true;
+				} catch (OpenTripPlannerException e) {
+					throw new TransportsRennesException(e);
 				}
 				return null;
 			}
@@ -379,9 +377,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				progressDialog.dismiss();
-				if (erreurGrave) {
-					Toast.makeText(ItineraireRequete.this, R.string.erreur_calculItineraires, Toast.LENGTH_LONG).show();
-				} else if (reponse.getError() != null) {
+				if (reponse.getError() != null) {
 					LOG_YBO.erreur(reponse.getError().getMsg());
 					int message = R.string.erreur_calculItineraires;
 					switch (Message.findEnumById(reponse.getError().getId())) {

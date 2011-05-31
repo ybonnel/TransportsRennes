@@ -70,10 +70,7 @@ public class LigneAdapter extends BaseAdapter {
 		}
 		Ligne ligne = lignes.get(position);
 		holder.nomLong.setText(ligne.nomLong);
-		try {
-			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
-		} catch (Exception ignore) {
-		}
+		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
 		return convertView1;
 	}
 }
