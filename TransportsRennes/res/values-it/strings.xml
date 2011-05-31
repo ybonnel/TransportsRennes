@@ -126,6 +126,6 @@
     <string name="versionDisponible">La versione %1$s è disponibile!</string>
     
     <string name="erreurNonPrevue">Un errore non è previsto l\'arrivo, un rapporto di errore è stata inviata agli sviluppatori</string>
-    <string name="erreurReseau">Un error de conexión se ha detectado, por favor, inténtelo de nuevo más tarde.</string>
+    <string name="erreurReseau">Un errore di connessione è stato rilevato, si prega di riprovare più tardi.</string>
 </resources>
 
