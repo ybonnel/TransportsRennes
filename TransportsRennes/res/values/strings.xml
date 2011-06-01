@@ -162,4 +162,7 @@ Ces modifications concernent à ma connaissance les lignes 2, 7, 8 et 11. N\'hé
     
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur</string>
     <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
+    
+    <string name="menu_share">Partager</string>
+    <string name="shareText">Transports Rennes, l\'application Android pour vous faciliter les Transports Rennais : http://goo.gl/ALKs0</string>
 </resources>

@@ -149,4 +149,7 @@ These amendments relate the lines 2, 7, 8 and 11. Feel free to send messages to 
     
     <string name="erreurNonPrevue">Unexpected error, a crash report was sent to the developer</string>
     <string name="erreurReseau">A connection error has been detected, please try again later.</string>
+    
+    <string name="menu_share">Share</string>
+    <string name="shareText">Transport Rennes, Android application to help you in transit of Rennes: http://goo.gl/ALKs0</string>
 </resources>

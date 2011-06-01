@@ -323,6 +323,7 @@ public class TransportsRennes extends Activity {
 	private static final int MENU_MAP_ID = 2;
 	private static final int MENU_TICKETS = 3;
 	private static final int MENU_LOAD_LINES = 4;
+	private static final int MENU_SHARE = 5;
 
 
 	@Override
@@ -336,6 +337,8 @@ public class TransportsRennes extends Activity {
 		itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
+		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
+		itemShare.setIcon(android.R.drawable.ic_menu_share);
 		return true;
 	}
 
@@ -370,6 +373,13 @@ public class TransportsRennes extends Activity {
 					}
 				});
 				alertBuilder.show();
+				return true;
+			case MENU_SHARE:
+				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+				shareIntent.setType("text/plain");
+				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
 				return true;
 		}
 		return false;
