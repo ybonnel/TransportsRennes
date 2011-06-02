@@ -90,10 +90,11 @@ public class TransportsRennesApplication extends Application {
 				}
 				try {
 					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
-
-					bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
-							metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
-							new BigDecimal(metadata.getMinLongitude())));
+					if (metadata != null) {
+						bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
+								metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
+								new BigDecimal(metadata.getMinLongitude())));
+					}
 				} catch (OpenTripPlannerException ignore) {
 				}
 				return null;
