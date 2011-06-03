@@ -147,7 +147,7 @@ public final class Keolis {
 		} catch (ParserConfigurationException exception) {
 			throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
 		}
-		if (!"0".equals(answer.getStatus().getCode())) {
+		if (answer == null || answer.getStatus() == null || !"0".equals(answer.getStatus().getCode())) {
 			throw new KeolisException(answer.getStatus().getMessage());
 		}
 		long elapsedTime = System.nanoTime() / 1000 - startTime;
