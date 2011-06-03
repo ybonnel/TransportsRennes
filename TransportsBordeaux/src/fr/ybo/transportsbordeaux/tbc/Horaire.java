@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Date;
@@ -78,6 +79,8 @@ public class Horaire implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getHoraires();
+		} catch (SocketTimeoutException socketException) {
+			throw new TbcErreurReseaux(socketException);
 		} catch (SocketException socketException) {
 			throw new TbcErreurReseaux(socketException);
 		} catch (SAXException saxException) {
