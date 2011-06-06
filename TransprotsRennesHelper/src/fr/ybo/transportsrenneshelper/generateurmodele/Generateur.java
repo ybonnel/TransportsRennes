@@ -14,12 +14,9 @@
 
 package fr.ybo.transportsrenneshelper.generateurmodele;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.zip.ZipOutputStream;
 
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
@@ -53,7 +49,6 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.util.CalculDistance;
-import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
 /**
  * Générateur.
@@ -212,34 +207,30 @@ public class Generateur {
 
 		System.out.println("Création du zip principal");
 		try {
-			FileOutputStream dest = new FileOutputStream(new File(repertoire, "GTFSRennesPrincipal.zip"));
-			ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-			try {
-				GetAndContructZip.addFileToZip(new File(repertoire, "arrets.txt"), out);
-				GetAndContructZip.addFileToZip(new File(repertoire, "arrets_routes.txt"), out);
-				GetAndContructZip.addFileToZip(new File(repertoire, "calendriers.txt"), out);
-				GetAndContructZip.addFileToZip(new File(repertoire, "directions.txt"), out);
-				GetAndContructZip.addFileToZip(new File(repertoire, "lignes.txt"), out);
-				GetAndContructZip.addFileToZip(new File(repertoire, "trajets.txt"), out);
-			} finally {
-				out.close();
-			}
-
-			for (File fileStopTime : repertoire.listFiles(new FilenameFilter() {
-				public boolean accept(File dir, String name) {
-					return name.startsWith("horaires_");
-				}
-			})) {
-				String name = fileStopTime.getName();
-				String newName = name.split("\\.")[0] + ".zip";
-				dest = new FileOutputStream(new File(repertoire, newName));
-				out = new ZipOutputStream(new BufferedOutputStream(dest));
-				try {
-					GetAndContructZip.addFileToZip(fileStopTime, out);
-				} finally {
-					out.close();
-				}
-			}
+			/*
+			 * FileOutputStream dest = new FileOutputStream(new File(repertoire,
+			 * "GTFSRennesPrincipal.zip")); ZipOutputStream out = new
+			 * ZipOutputStream(new BufferedOutputStream(dest)); try {
+			 * GetAndContructZip.addFileToZip(new File(repertoire,
+			 * "arrets.txt"), out); GetAndContructZip.addFileToZip(new
+			 * File(repertoire, "arrets_routes.txt"), out);
+			 * GetAndContructZip.addFileToZip(new File(repertoire,
+			 * "calendriers.txt"), out); GetAndContructZip.addFileToZip(new
+			 * File(repertoire, "directions.txt"), out);
+			 * GetAndContructZip.addFileToZip(new File(repertoire,
+			 * "lignes.txt"), out); GetAndContructZip.addFileToZip(new
+			 * File(repertoire, "trajets.txt"), out); } finally { out.close(); }
+			 * 
+			 * for (File fileStopTime : repertoire.listFiles(new
+			 * FilenameFilter() { public boolean accept(File dir, String name) {
+			 * return name.startsWith("horaires_"); } })) { String name =
+			 * fileStopTime.getName(); String newName = name.split("\\.")[0] +
+			 * ".zip"; dest = new FileOutputStream(new File(repertoire,
+			 * newName)); out = new ZipOutputStream(new
+			 * BufferedOutputStream(dest)); try {
+			 * GetAndContructZip.addFileToZip(fileStopTime, out); } finally {
+			 * out.close(); } }
+			 */
 
 			System.out.println("Création du fichier last_update.txt");
 			BufferedWriter bufWriter = new BufferedWriter(new FileWriter(new File(repertoire, "last_update.txt")));

@@ -101,12 +101,12 @@ landstd2,Lande Saint Denis,48.2032048,-1.595061
 maronn2,Marronniers,48.1768667,-1.6370554
 pasteur2,Pasteur,48.0236763,-1.7361949
 maronn1,Marronniers,48.1761543,-1.6373587
-REP1,République,48.10969,-1.67918
+REP1,République,48.10972,-1.67918
 pasteur1,Pasteur,48.0238143,-1.7360558
 chevahs,Chevaigné Gare,48.207648,-1.6308039
-REP2,République,48.10969,-1.67918
-GAR1,Gares,48.10383,-1.67222
-GAR2,Gares,48.10383,-1.67222
+REP2,République,48.10972,-1.67918
+GAR1,Gares,48.10379,-1.67219
+GAR2,Gares,48.10379,-1.67219
 steannaa,Sainte Anne,48.114632,-1.6801668
 rossel1,Rossel,48.0630632,-1.7204919
 perelle1,Perelle,47.9945013,-1.6315247
@@ -353,7 +353,7 @@ palissy1,Sacrés Coeurs,48.0969578,-1.6785069
 patton1,Patton Gast,48.1314131,-1.6622911
 foyerre2,Foyer Rennais,48.0997895,-1.6870879
 foyerre1,Foyer Rennais,48.0997059,-1.6862461
-7fours1,7 Fours,47.9595613,-1.6369791
+7fours1,Sept Fours,47.9595613,-1.6369791
 plsevig1,Place Sévigné,48.1146812,-1.6096632
 ptpastm1,Musée Beaux Arts,48.1098832,-1.6751292
 ptpastm2,Musée Beaux Arts,48.1098533,-1.6745209
@@ -400,9 +400,9 @@ insa2,Beaulieu INSA,48.1194765,-1.63539
 insa1,Beaulieu INSA,48.1190173,-1.6351478
 prous,Pâtis Roussel,48.1604652,-1.7679822
 cenbett2,Betton Rue de Rennes,48.1759017,-1.6395394
-JCA1,Jacques Cartier,48.09759,-1.67546
+JCA1,Jacques Cartier,48.09766,-1.67556
 cenbett1,Betton Rue de Rennes,48.1759989,-1.6396187
-JCA2,Jacques Cartier,48.09759,-1.67546
+JCA2,Jacques Cartier,48.09766,-1.67556
 hopices1,Cesson Hôpital Privé,48.1302326,-1.6275284
 hopices2,Cesson Hôpital Privé,48.1301138,-1.6280296
 kervill1,Kerviler,48.1088133,-1.7056152
@@ -415,9 +415,9 @@ mansevi1,Servigné,48.101167,-1.7317563
 mansevi2,Servigné,48.1012236,-1.7316941
 musscha2,Alfred de Musset,48.055097,-1.79
 musscha1,Alfred de Musset,48.0547385,-1.7901692
-BLO1,Le Blosne,48.08773,-1.65437
+BLO1,Le Blosne,48.08774,-1.65427
 hugo2,Victor Hugo,48.0234609,-1.7433344
-BLO2,Le Blosne,48.08773,-1.65437
+BLO2,Le Blosne,48.08774,-1.65427
 plelo2,Plélo Colombier,48.1060475,-1.6816
 hugo1,Victor Hugo,48.0234105,-1.743109
 plelo1,Plélo Colombier,48.1061392,-1.6808813
@@ -515,8 +515,8 @@ lanbrei1,Lande du Breil,48.1322948,-1.7097011
 ecoagro2,Agrocampus,48.1132289,-1.7044742
 ecoagro1,Agrocampus,48.1139277,-1.7054783
 sevigne2,Sévigné,48.1164027,-1.6732563
-VU1,Villejean-Université,48.12124,-1.70388
-VU2,Villejean-Université,48.12124,-1.70388
+VU1,Villejean-Université,48.12125,-1.70395
+VU2,Villejean-Université,48.12125,-1.70395
 troncha1,Tronchay,48.2116914,-1.5907573
 bourgue2,Bourgueil,48.0894316,-1.6354184
 troncha2,Tronchay,48.211797,-1.5905912
@@ -529,7 +529,7 @@ piletie2,Piletière,48.1139588,-1.6444104
 condate2,Condate,48.1349165,-1.6728348
 fouilla1,Fouillard,48.1604123,-1.5860213
 piletie1,Piletière,48.11392,-1.6427245
-7fours,7 Fours,47.9595412,-1.637031
+7fours,Sept Fours,47.9595412,-1.637031
 fouilla2,Fouillard,48.1606178,-1.5854605
 ledante1,Le Dantec,48.0992631,-1.6526311
 egchap,Eglise,48.1246333,-1.8658293
@@ -641,8 +641,8 @@ blosne1,Blosne,48.0832427,-1.7100494
 ourmais1,L'Ourmais,48.0289902,-1.5514399
 magenta1,Champs Libres,48.1060687,-1.6740585
 magenta2,Champs Libres,48.105335,-1.6738923
-ITA1,Italie,48.08656,-1.66769
-ITA2,Italie,48.08656,-1.66769
+ITA1,Italie,48.08656,-1.66792
+ITA2,Italie,48.08656,-1.66792
 belfont1,Belle Fontaine,48.1273075,-1.6242023
 bordage2,Bordage,48.1143045,-1.6004841
 touche1,La Touche,48.1161775,-1.6911673
@@ -747,9 +747,9 @@ iufm2,IUFM,48.1220215,-1.683622
 machant2,Chantepie Mairie,48.0883514,-1.6190914
 machant1,Chantepie Mairie,48.0888518,-1.6205349
 capvert2,Vert Buisson Place,48.0293767,-1.758008
-CDG2,Charles de Gaulle,48.10551,-1.67706
+CDG2,Charles de Gaulle,48.1055,-1.67699
 capvert1,Vert Buisson Place,48.0294126,-1.7580112
-CDG1,Charles de Gaulle,48.10551,-1.67706
+CDG1,Charles de Gaulle,48.1055,-1.67699
 crotigne,Crotigné,48.0310308,-1.559262
 aubjeun1,Auberge de Jeunesse,48.1203715,-1.6815909
 bospho1,Bosphore,48.0827051,-1.6823842
@@ -869,8 +869,8 @@ closco,Clos Courtel,48.1269588,-1.6291803
 marbeuf1,Marbeuf,48.1114079,-1.701364
 ptehubl1,Petite Hublais,48.1822431,-1.6159852
 ptehubl2,Petite Hublais,48.1820989,-1.6162152
-clemenc2,Clémenceau,48.0931734,-1.6746061
-clemenc1,Clémenceau,48.0937063,-1.6738997
+clemenc2,Clemenceau,48.0931734,-1.6746061
+clemenc1,Clemenceau,48.0937063,-1.6738997
 garigli1,Garigliano,48.0963474,-1.6816152
 garigli2,Garigliano,48.0960298,-1.6816678
 garecn,Corps Nuds Gare,47.9852879,-1.5760953
@@ -1084,10 +1084,10 @@ egchan1,Chantepie Eglise,48.0882931,-1.6169803
 chqpost1,Chèques Postaux,48.1081424,-1.6948684
 martisj2,Airlande,48.0750709,-1.7159954
 launay1,Launay,48.1373752,-1.6878661
-TRI2,Triangle,48.08644,-1.66059
+TRI2,Triangle,48.08649,-1.66047
 argaun2,Argonautes,48.0903939,-1.6749118
 chantep,Portes de Cucé,48.0935701,-1.6076061
-TRI1,Triangle,48.08644,-1.66059
+TRI1,Triangle,48.08649,-1.66047
 martisj1,Airlande,48.074856,-1.7157341
 argaun1,Argonautes,48.0893108,-1.6742644
 stlaure2,Saint Laurent,48.1388425,-1.6583684
@@ -1103,9 +1103,9 @@ berger1,Berger,48.1167346,-1.7047729
 landthf,Landelles,48.1551878,-1.5731067
 berger2,Berger,48.1167399,-1.7046388
 helias1,Hélias,48.1364872,-1.6625372
-STA1,Sainte-Anne,48.11448,-1.68044
+STA1,Sainte-Anne,48.11443,-1.6804
 ptbeauv1,Le Petit Beauvais,48.0119527,-1.5458774
-STA2,Sainte-Anne,48.11448,-1.68044
+STA2,Sainte-Anne,48.11443,-1.6804
 helias2,Hélias,48.1364205,-1.6633123
 jdarclj2,Jeanne d'Arc,48.1168275,-1.6563862
 jdarclj1,Jeanne d'Arc,48.116984,-1.655848
@@ -1113,20 +1113,20 @@ stlaure1,Saint Laurent,48.1379717,-1.6587359
 centnov2,Menault,48.0414163,-1.5452508
 centnov1,Menault,48.0412778,-1.5446341
 rdptbra1,Rond Point de Bray,48.1077916,-1.6146655
-PON1,Pontchaillou,48.12156,-1.69341
-PON2,Pontchaillou,48.12156,-1.69341
+PON1,Pontchaillou,48.12154,-1.69338
+PON2,Pontchaillou,48.12154,-1.69338
 longgau2,Gaudinais,48.1320287,-1.6350378
 mardou1,Mare Doux,48.0632565,-1.7723118
 longgau1,Gaudinais,48.1318596,-1.6358982
 mardou2,Mare Doux,48.0633949,-1.7723803
-ANF2,Anatole France,48.11808,-1.68749
+ANF2,Anatole France,48.11812,-1.68754
 bray,Erbonière,48.1061693,-1.6258986
-ANF1,Anatole France,48.11808,-1.68749
+ANF1,Anatole France,48.11812,-1.68754
 cucille1,Cucillé,48.1285861,-1.6987329
 cucille2,Cucillé,48.1285084,-1.6988741
-HFR1,Henri Fréville,48.08763,-1.67482
+HFR1,Henri Fréville,48.0877,-1.67483
 molene1,Molène,48.0384177,-1.6707121
-HFR2,Henri Fréville,48.08763,-1.67482
+HFR2,Henri Fréville,48.0877,-1.67483
 tihouit2,Tihouït,48.1641637,-1.6249127
 belepmo2,Belle Epine,48.1555879,-1.7108224
 tihouit1,Tihouït,48.1638145,-1.6250842
@@ -1260,16 +1260,16 @@ chevahs2,Chevaigné Gare,48.2078704,-1.6306482
 lysevig1,Lycée Sévigné,48.1190054,-1.5981944
 ptcham2,Petit Champeaux,48.1165819,-1.7239023
 ptcham1,Petit Champeaux,48.1164085,-1.723281
-GCL1,Clémenceau,48.09361,-1.67444
+GCL1,Clemenceau,48.0935,-1.67439
 noebru2,Noë,48.0215667,-1.7522797
 noebru1,Noë,48.0214159,-1.7523127
 boullac1,Boulais,48.1235324,-1.6112839
 villj1,Villejean-Université,48.1210241,-1.703001
-GCL2,Clémenceau,48.09361,-1.67444
+GCL2,Clemenceau,48.0935,-1.67439
 villj2,Villejean-Université,48.1210965,-1.702994
 villj3,Villejean-Université,48.1211958,-1.7029893
 villj4,Villejean-Université,48.1212654,-1.7032783
-villj6,Villejean Université,48.121344,-1.7024371
+villj6,Villejean-Université,48.121344,-1.7024371
 langloi1,Langlois,48.0409077,-1.5497771
 langloi2,Langlois,48.0406586,-1.5501589
 maillan1,Mail Lancé,48.0636666,-1.6637668
@@ -1338,9 +1338,9 @@ prega2,Pré Garel,48.1035598,-1.6346528
 chataig2,Métairie,48.1794216,-1.7290583
 chataig1,Métairie,48.1794944,-1.729267
 pigeonb1,Pigeon Blanc,48.0897679,-1.6929847
-JFK1,J.F. Kennedy,48.1213,-1.71094
+JFK1,J.F. Kennedy,48.12132,-1.71146
 pigeonb2,Pigeon Blanc,48.0897969,-1.6931459
-JFK2,J.F. Kennedy,48.1213,-1.71094
+JFK2,J.F. Kennedy,48.12132,-1.71146
 leho2,Le Hô,48.1063075,-1.7238449
 leho1,Le Hô,48.1062024,-1.7237682
 buhoti1,Buhotière,48.078105,-1.732261

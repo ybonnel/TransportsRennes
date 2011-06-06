@@ -170,7 +170,7 @@ public class GetAndContructZip {
 	/**
 	 * Répertoire des datas par défaut.
 	 */
-	private static final String YBO_DEV_DATA_DEFAULT = "/home/ybonnel/dev/data";
+	private static final String YBO_DEV_DATA_DEFAULT = "/Users/ybonnel/dev/data";
 
 	/**
 	 * Répertoire de travail.
