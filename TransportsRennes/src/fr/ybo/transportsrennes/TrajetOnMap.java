@@ -40,6 +40,7 @@ import fr.ybo.opentripplanner.client.modele.TraverseMode;
 import fr.ybo.transportsrennes.map.LineItemizedOverlay;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsrennes.util.Coordinate;
+import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
@@ -153,7 +154,7 @@ public class TrajetOnMap extends MapActivity {
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
-		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 

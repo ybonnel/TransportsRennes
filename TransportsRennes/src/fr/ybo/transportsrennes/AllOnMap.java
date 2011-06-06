@@ -51,6 +51,7 @@ import fr.ybo.transportsrennes.map.MyGeoClusterer;
 import fr.ybo.transportsrennes.map.MyGeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 
 public class AllOnMap extends MapActivity {
 
@@ -130,7 +131,7 @@ public class AllOnMap extends MapActivity {
 	private void updateOverlays() {
 		mapView.getOverlays().clear();
 		if (myLocationOverlay == null) {
-			myLocationOverlay = new MyLocationOverlay(this, mapView);
+			myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		}
 		mapView.getOverlays().add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();

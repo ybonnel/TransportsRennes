@@ -32,6 +32,7 @@ import com.google.android.maps.OverlayItem;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
+import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
 public class ArretsOnMap extends MapActivity {
@@ -116,7 +117,7 @@ public class ArretsOnMap extends MapActivity {
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
-		myLocationOverlay = new MyLocationOverlay(this, mapView);
+		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
