@@ -46,10 +46,6 @@
         développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas en m\'envoyer
         toute suggestion ou problème.
     </string>
-    <string name="titreAvertissementHoraires">Attention horaires erronés</string>
-    <string name="avertissementHoraires">Comme certains d\'entres vous l\'ont constaté la mise à jour des horaires du 9 mai n\'a toujours pas été prise en compte...&lt;br/&gt;
-Je tiens à m\'en excuser, malheuresement, je ne suis pas maître des données. Le STAR n\'a toujours pas publié les données concernant ces nouveaux horaires.&lt;br/&gt;
-Ces modifications concernent à ma connaissance les lignes 2, 7, 8 et 11. N\'hésitez pas à envoyer des messages pour leurs mettre un peu pression (compte twitter @starbusmetro).</string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le
         menu.
     </string>

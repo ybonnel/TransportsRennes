@@ -41,10 +41,6 @@
         developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free to send me any suggestions or
         problem.
     </string>
-    <string name="titreAvertissementHoraires">Warning, errors in shedules</string>
-    <string name="avertissementHoraires">As some of you have seen the updated schedule of May 9th has not been taken...&lt;br/&gt;
-I want to apologize, unfortunately, I\'m not data\'s master. The STAR has still not published the data for these new shedules.&lt;br/&gt;
-These amendments relate the lines 2, 7, 8 and 11. Feel free to send messages to put a little pressure (twitter account @starbusmetro).</string>
     <string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular date using the menu.</string>
     <string name="itineraires_empty">No itinerary has been found for these addresses.</string>
     <string name="hint_rechercherarret">Bus stop search.</string>

@@ -137,12 +137,6 @@ public class TransportsRennes extends Activity {
 			showDialog();
 			saveAfficheMessage();
 		}
-		boolean afficheAvertissementHoraires = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				"TransportsRennes_erreurHoraires", true);
-		if (afficheAvertissementHoraires) {
-			showAvertissementHoraires();
-			saveAfficheAvertissementHoraires();
-		}
 
 	}
 
@@ -160,21 +154,6 @@ public class TransportsRennes extends Activity {
 		builder.create().show();
 	}
 
-
-	private void showAvertissementHoraires() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
-		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
-		Spanned spanned = Html.fromHtml(getString(R.string.avertissementHoraires));
-		textView.setText(spanned, TextView.BufferType.SPANNABLE);
-		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		builder.setView(view);
-		builder.setTitle(R.string.titreAvertissementHoraires);
-		builder.setCancelable(false);
-		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
-		builder.create().show();
-	}
-
 	private static class TerminerClickListener implements DialogInterface.OnClickListener {
 		public void onClick(DialogInterface dialogInterface, int i) {
 			dialogInterface.cancel();
@@ -185,12 +164,6 @@ public class TransportsRennes extends Activity {
 	private void saveAfficheMessage() {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 		editor.putBoolean("TransportsRennes141_dialog", false);
-		editor.commit();
-	}
-
-	private void saveAfficheAvertissementHoraires() {
-		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		editor.putBoolean("TransportsRennes_erreurHoraires", false);
 		editor.commit();
 	}
 
