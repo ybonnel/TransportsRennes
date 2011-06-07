@@ -73,6 +73,10 @@ public class Horaire implements Serializable {
 			} finally {
 				bufReader.close();
 			}
+			
+			if (stringBuilder.length() == 0) {
+				throw new TbcErreurReseaux("Aucun contenu trouvé...");
+			}
 
 			// Parsing SAX du tableau d'horaires.
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -89,6 +93,8 @@ public class Horaire implements Serializable {
 			throw new TbcErreurReseaux(erreurReseau);
 		} catch (UnknownHostException erreurReseau) {
 			throw new TbcErreurReseaux(erreurReseau);
+		} catch (TbcErreurReseaux erreurReseau) {
+			throw erreurReseau;
 		} catch (Exception exception) {
 			throw new TcbException("Erreur lors de la récupération des horaires pour l'url " + url
 					+ ", html récupéré : " + stringBuilder.toString(), exception);
