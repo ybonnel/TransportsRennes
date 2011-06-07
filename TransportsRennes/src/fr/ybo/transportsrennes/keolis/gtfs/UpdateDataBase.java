@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteException;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
@@ -44,7 +45,9 @@ public final class UpdateDataBase {
 			LOG_YBO.debug("Suppression des lignes chargées");
 			for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
 				if (ligne.chargee != null && ligne.chargee) {
-					TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
+					try {
+						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
+					} catch (SQLiteException ignored) {}
 				}
 			}
 			LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
