@@ -158,13 +158,30 @@ public class ArretAdapter extends CursorAdapter {
 		holder.correspondance.setImageResource(R.drawable.arrow_down_float);
 	}
 
-	private final Map<String, ArrayList<RelativeLayout>> mapDetailCorrespondances = new HashMap<String, ArrayList<RelativeLayout>>(20);
+	private final Map<String, List<Arret>> mapDetailCorrespondances = new HashMap<String, List<Arret>>();
+	
+	private void construireRelativeLayouts(List<Arret> arrets, LinearLayout detailCorrespondance) {
+		for (final Arret arret : arrets) {
+			RelativeLayout relativeLayout = getRelativeLayout();
+			ArretAdapter.RelativeLayoutHolder holder = (ArretAdapter.RelativeLayoutHolder) relativeLayout.getTag();
+			holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
+			holder.arretDirection.setText(arret.favori.direction);
+			holder.nomArret.setText(arret.nom);
+			holder.distance.setText(arret.formatDistance());
+			relativeLayout.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View view) {
+					Intent intent = new Intent(activity, DetailArret.class);
+					intent.putExtra("favori", arret.favori);
+					activity.startActivity(intent);
+				}
+			});
+			detailCorrespondance.addView(relativeLayout);
+		}
+	}
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance, String arretId) {
 		if (mapDetailCorrespondances.containsKey(arretId)) {
-			for (RelativeLayout relativeLayout : mapDetailCorrespondances.get(arretId)) {
-				detailCorrespondance.addView(relativeLayout);
-			}
+			construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);
 		} else {
 			/* Recuperation de l'arretCourant */
 			Arret arretCourant = new Arret();
@@ -208,7 +225,7 @@ public class ArretAdapter extends CursorAdapter {
 			int nomLongIndex = cursor.getColumnIndex("nomLong");
 			int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 
-			List<Arret> arrets = new ArrayList<Arret>(20);
+			List<Arret> arrets = new ArrayList<Arret>(cursor.getCount());
 
 			while (cursor.moveToNext()) {
 				Arret arret = new Arret();
@@ -233,24 +250,7 @@ public class ArretAdapter extends CursorAdapter {
 			}
 			cursor.close();
 			Collections.sort(arrets, new Arret.ComparatorDistance());
-			mapDetailCorrespondances.put(arretId, new ArrayList<RelativeLayout>(arrets.size()));
-			for (final Arret arret : arrets) {
-				RelativeLayout relativeLayout = getRelativeLayout();
-				ArretAdapter.RelativeLayoutHolder holder = (ArretAdapter.RelativeLayoutHolder) relativeLayout.getTag();
-				holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
-				holder.arretDirection.setText(arret.favori.direction);
-				holder.nomArret.setText(arret.nom);
-				holder.distance.setText(arret.formatDistance());
-				relativeLayout.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View view) {
-						Intent intent = new Intent(activity, DetailArret.class);
-						intent.putExtra("favori", arret.favori);
-						activity.startActivity(intent);
-					}
-				});
-				mapDetailCorrespondances.get(arretId).add(relativeLayout);
-				detailCorrespondance.addView(relativeLayout);
-			}
+			construireRelativeLayouts(arrets, detailCorrespondance);
 		}
 	}
 
