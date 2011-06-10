@@ -15,14 +15,20 @@
 package fr.ybo.transportsbordeaux.modele;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import android.content.res.Resources;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
+import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
+import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
+import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
@@ -42,6 +48,15 @@ public class Ligne implements Serializable {
 	@BaliseCsv(value = "ordre", adapter = AdapterInteger.class)
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
+	@Column(type = Column.TypeColumn.BOOLEAN)
+	public Boolean chargee;
+
+	public void chargerHeuresArrets(TransportsBordeauxDatabase dataBaseHelper, Resources resources) {
+		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
+		classes.add(Horaire.class);
+		MoteurCsv moteur = new MoteurCsv(classes);
+		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper, resources);
+	}
 
     public static Ligne getLigne(String ligneId) {
         Ligne ligne = new Ligne();

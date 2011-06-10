@@ -119,7 +119,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction, ArretRoute.macroDirection as macroDirection ");
+		requete.append(" Direction.direction as direction ");
 		requete.append("from ArretRoute, Arret, Direction ");
 		requete.append("where");
 		requete.append(" ArretRoute.ligneId = :ligneId");
@@ -131,7 +131,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		}
 		requete.append(" order by Direction.direction, ");
 		if (orderDirection) {
-			requete.append("ArretRoute.ordre, ");
+			requete.append("ArretRoute.sequence, ");
 		}
 		requete.append("Arret.nom");
 		LOG_YBO.debug("Exécution de la requete permettant de récupérer les arrêts avec le temps avant le prochain");
@@ -160,8 +160,6 @@ public class ListArret extends MenuAccueil.ListActivity {
 						cursor.getString(cursor.getColumnIndex("arretName")));
 				intent.putExtra("direction",
 						cursor.getString(cursor.getColumnIndex("direction")));
-				intent.putExtra("macroDirection",
-						cursor.getInt(cursor.getColumnIndex("macroDirection")));
 				intent.putExtra("ligne", myLigne);
 				startActivity(intent);
 
@@ -182,6 +180,16 @@ public class ListArret extends MenuAccueil.ListActivity {
 						onDirectionClick();
 					}
 				});
+		findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
+				intent.putExtra("ligne", myLigne);
+				if (currentDirection != null) {
+					intent.putExtra("direction", currentDirection);
+				}
+				startActivity(intent);
+			}
+		});
 		((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne
 				.getIconeResource(myLigne.nomCourt));

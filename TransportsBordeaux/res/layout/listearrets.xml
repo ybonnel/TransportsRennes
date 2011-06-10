@@ -14,18 +14,25 @@
 	android:orientation="vertical">
 	<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_marginBottom="50dip">
+		android:layout_height="fill_parent">
 		<ImageView android:id="@+id/iconeLigne"
 			android:layout_width="44dip" android:paddingBottom="5dip"
 			android:paddingTop="5dip" android:paddingLeft="2dip"
 			android:paddingRight="2dip" android:layout_height="50dip"
 			android:gravity="center_vertical|center_horizontal" />
 		<HorizontalScrollView android:layout_width="fill_parent"
-			android:layout_height="50dip" android:layout_toRightOf="@id/iconeLigne">
+			android:layout_height="50dip" android:layout_toRightOf="@id/iconeLigne"
+			android:layout_toLeftOf="@id/googlemap">
 			<TextView android:id="@+id/nomLong" android:padding="5dip"
 				android:layout_width="fill_parent" android:layout_height="50dip"
 				android:textSize="20dip" android:gravity="center_vertical|left" />
 		</HorizontalScrollView>
+
+		<ImageView android:id="@+id/googlemap" android:layout_width="44dip"
+			android:paddingBottom="5dip" android:paddingTop="5dip"
+			android:paddingLeft="2dip" android:paddingRight="4dip"
+			android:layout_height="50dip" android:src="@android:drawable/ic_dialog_map"
+			android:layout_alignParentRight="true" />
 
 		<ImageView android:id="@+id/alerte" android:paddingLeft="2dip"
 			android:paddingTop="2dip" android:paddingBottom="1dip"
@@ -37,18 +44,18 @@
 		<TextView android:id="@+id/directionEntete"
 			android:paddingLeft="5dip" android:paddingTop="5dip"
 			android:paddingBottom="3dip" android:paddingRight="6dip"
-			android:layout_width="wrap_content" android:layout_height="35dip"
+			android:layout_width="wrap_content" android:layout_height="30dip"
 			android:textSize="20dip" android:gravity="center_vertical|left"
 			android:text="@string/directionEntete" android:layout_below="@id/iconeLigne"
 			android:layout_toRightOf="@id/alerte" />
 
 		<HorizontalScrollView android:id="@+id/directionArretCouranteScroll"
-			android:layout_width="fill_parent" android:layout_height="35dip"
+			android:layout_width="fill_parent" android:layout_height="30dip"
 			android:layout_below="@id/iconeLigne" android:layout_toRightOf="@id/directionEntete">
 			<TextView android:id="@+id/directionArretCourante"
 				android:paddingRight="5dip" android:paddingTop="5dip"
 				android:paddingBottom="3dip" android:layout_width="wrap_content"
-				android:layout_height="35dip" android:textSize="20dip" android:text="@string/Toutes"
+				android:layout_height="30dip" android:textSize="20dip" android:text="@string/Toutes"
 				android:gravity="center_vertical|left" android:drawablePadding="2dip"
 				android:drawableRight="@android:drawable/arrow_down_float" />
 		</HorizontalScrollView>

@@ -5,6 +5,7 @@
     <string name="widget21_name">Transports Bordeaux 2x1</string>
     <string name="btn_bus">Bus &amp; Tram</string>
     <string name="btn_bus_favori">Arrêts Favoris</string>
+    <string name="btn_bus_gps">Arrêts à proximité</string>
     <string name="btn_velo">VCUB</string>
     <string name="btn_velo_favori">Stations favorites</string>
     <string name="verificationUpdate">Recherche de mise à jour.</string>
@@ -32,6 +33,8 @@
     </string>
     <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
     <string name="hint_rechercheStation">Recherche de stations</string>
+    <string name="hint_rechercherarret">Recherche d\'arrêts</string>
+    <string name="rechercheArrets">Recherche des arrêts de bus.</string>
     <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?</string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
@@ -69,4 +72,5 @@
     <string name="menu_orderByName">Ordre alphabétique</string>
     <string name="menu_orderBySequence">Ordre de la ligne</string>
     <string name="noGoogleMap">Vous n\'avez pas googleMap d\'installer</string>
+    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
 </resources>

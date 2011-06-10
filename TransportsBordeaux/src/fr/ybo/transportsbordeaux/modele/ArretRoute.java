@@ -33,18 +33,11 @@ public class ArretRoute {
 	@Column
 	@PrimaryKey
 	public String ligneId;
-	@BaliseCsv( value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
-	@Column(type = Column.TypeColumn.INTEGER)
-	@PrimaryKey
-	public Integer macroDirection;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer directionId;
 	@BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer sequence;
-	@BaliseCsv(value = "ordre", adapter = AdapterInteger.class)
-	@Column(type = Column.TypeColumn.INTEGER)
-	public Integer ordre;
 
 }

@@ -20,9 +20,13 @@ import java.util.List;
 
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretRoute;
+import fr.ybo.transportsbordeaux.modele.Calendrier;
+import fr.ybo.transportsbordeaux.modele.CalendrierException;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Direction;
+import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.modele.Trajet;
 
 public final class ConstantesTbc {
 
@@ -33,7 +37,10 @@ public final class ConstantesTbc {
 		CLASSES_DB_TO_DELETE_ON_UPDATE.add(DernierMiseAJour.class);
 		CLASSES_DB_TO_DELETE_ON_UPDATE.add(Ligne.class);
 		CLASSES_DB_TO_DELETE_ON_UPDATE.add(ArretRoute.class);
+		CLASSES_DB_TO_DELETE_ON_UPDATE.add(Calendrier.class);
+		CLASSES_DB_TO_DELETE_ON_UPDATE.add(CalendrierException.class);
 		CLASSES_DB_TO_DELETE_ON_UPDATE.add(Direction.class);
+		CLASSES_DB_TO_DELETE_ON_UPDATE.add(Trajet.class);
 	}
 
 	public static final List<Class<?>> LIST_CLASSES_GTFS = new ArrayList<Class<?>>(7);
@@ -41,7 +48,11 @@ public final class ConstantesTbc {
 	static {
 		LIST_CLASSES_GTFS.add(Arret.class);
 		LIST_CLASSES_GTFS.add(ArretRoute.class);
+		LIST_CLASSES_GTFS.add(Calendrier.class);
+		LIST_CLASSES_GTFS.add(CalendrierException.class);
+		LIST_CLASSES_GTFS.add(Horaire.class);
 		LIST_CLASSES_GTFS.add(Ligne.class);
+		LIST_CLASSES_GTFS.add(Trajet.class);
 		LIST_CLASSES_GTFS.add(Direction.class);
 	}
 

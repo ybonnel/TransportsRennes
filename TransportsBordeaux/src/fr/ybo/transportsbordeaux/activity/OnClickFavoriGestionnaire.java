@@ -14,7 +14,9 @@
 
 package fr.ybo.transportsbordeaux.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.TransportsWidget21Configure;
+import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 
@@ -33,21 +36,53 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 	private final ArretFavori myFavori = new ArretFavori();
 	private final Context context;
 
-	public OnClickFavoriGestionnaire(Context context, Ligne ligne, String arretId, String nomArret, String direction,
-			int macroDirection) {
+	public OnClickFavoriGestionnaire(Context context, Ligne ligne, String arretId, String nomArret, String direction) {
 		this.ligne = ligne;
 		this.nomArret = nomArret;
 		this.direction = direction;
 		myFavori.arretId = arretId;
 		myFavori.ligneId = ligne.id;
-		myFavori.macroDirection = macroDirection;
 		this.context = context;
+	}
+
+
+	private ProgressDialog myProgressDialog;
+
+	private void chargerLigne() {
+
+		myProgressDialog = ProgressDialog.show(context, "",
+				context.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
+
+		new AsyncTask<Void, Void, Void>() {
+			
+			@Override
+			protected void onPreExecute() {
+				myProgressDialog.show();
+			};
+
+			@Override
+			protected Void doInBackground(Void... pParams) {
+				UpdateDataBase.chargeDetailLigne(ligne, context.getResources());
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				myProgressDialog.dismiss();
+			}
+
+		}.execute();
+
 	}
 
 	public void onClick(View view) {
 		ImageView imageView = (ImageView) view;
 		if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
 			ligne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligne);
+			if (ligne.chargee == null || !ligne.chargee) {
+				chargerLigne();
+			}
 			// Ajout d'un favori.
 			myFavori.nomCourt = ligne.nomCourt;
 			myFavori.nomLong = ligne.nomLong;

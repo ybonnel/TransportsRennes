@@ -14,22 +14,20 @@
 
 package fr.ybo.transportsbordeaux.adapters;
 
-import java.util.List;
-
 import android.content.Context;
+import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.tbc.Horaire;
 
 /**
  * @author ybonnel
  *
  */
-public class DetailArretAdapter extends ArrayAdapter<Horaire> {
+public class DetailArretAdapter extends CursorAdapter {
 
 	private final int now;
 
@@ -37,36 +35,36 @@ public class DetailArretAdapter extends ArrayAdapter<Horaire> {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(Context context, List<Horaire> horaires, int now) {
-		super(context, R.layout.detailarretliste, horaires);
+	public DetailArretAdapter(Context context, Cursor cursor, int now) {
+		super(context, cursor);
 		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
+		prochainDepartCol = cursor.getColumnIndex("_id");
 	}
 
 	private static class ViewHolder {
 		TextView heureProchain;
 		TextView tempsRestant;
 	}
-	
+
+	private final int prochainDepartCol;
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View convertView1 = convertView;
-		Horaire horaire = getItem(position);
-		DetailArretAdapter.ViewHolder holder;
-		if (convertView1 == null) {
-			convertView1 = inflater.inflate(R.layout.detailarretliste, null);
-			holder = new DetailArretAdapter.ViewHolder();
-			holder.heureProchain = (TextView) convertView1.findViewById(R.id.detailArret_heureProchain);
-			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.detailArret_tempsRestant);
-			convertView1.setTag(holder);
-		} else {
-			holder = (DetailArretAdapter.ViewHolder) convertView1.getTag();
-		}
-		holder.heureProchain.setText(formatterCalendarHeure(horaire.horaire));
-		holder.tempsRestant.setText(formatterCalendar(horaire.horaire, now));
-		return convertView1;
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		View view = inflater.inflate(R.layout.detailarretliste, parent, false);
+		DetailArretAdapter.ViewHolder holder = new DetailArretAdapter.ViewHolder();
+		holder.heureProchain = (TextView) view.findViewById(R.id.detailArret_heureProchain);
+		holder.tempsRestant = (TextView) view.findViewById(R.id.detailArret_tempsRestant);
+		view.setTag(holder);
+		return view;
+	}
+
+	@Override
+	public void bindView(View view, Context context, Cursor cursor) {
+		int prochainDepart = cursor.getInt(prochainDepartCol);
+		((DetailArretAdapter.ViewHolder) view.getTag()).heureProchain.setText(formatterCalendarHeure(prochainDepart));
+		((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText(formatterCalendar(prochainDepart, now));
 	}
 
 	private CharSequence formatterCalendar(int prochainDepart, int now) {

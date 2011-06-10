@@ -26,16 +26,14 @@
 
 		<TableRow android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:layout_weight="1">
-			<Button android:id="@+id/home_btn_velo" style="@style/HomeButton"
-				android:text="@string/btn_velo" android:drawableTop="@drawable/home_btn_velo" />
-			<Button android:id="@+id/home_btn_velo_favori" style="@style/HomeButton"
-				android:text="@string/btn_velo_favori" android:drawableTop="@drawable/home_btn_velo_favori" />
+			<Button android:drawableTop="@drawable/home_btn_bus_gps" style="@style/HomeButton" android:id="@+id/home_btn_bus_gps" android:text="@string/btn_bus_gps"></Button>
+			<Button android:drawableTop="@drawable/home_btn_alert" style="@style/HomeButton" android:id="@+id/home_btn_alert" android:text="@string/btn_alert"></Button>
 		</TableRow>
 
 		<TableRow android:layout_width="fill_parent"
 			android:layout_height="wrap_content" android:layout_weight="1">
-			<Button android:id="@+id/home_btn_alert" style="@style/HomeButton"
-				android:text="@string/btn_alert" android:drawableTop="@drawable/home_btn_alert" />
+			<Button android:drawableTop="@drawable/home_btn_velo" style="@style/HomeButton" android:id="@+id/home_btn_velo" android:text="@string/btn_velo"></Button>
+			<Button android:drawableTop="@drawable/home_btn_velo_favori" style="@style/HomeButton" android:id="@+id/home_btn_velo_favori" android:text="@string/btn_velo_favori"></Button>
 		</TableRow>
 
 	</TableLayout>

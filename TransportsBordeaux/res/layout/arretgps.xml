@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="76dip">
+
+    <ImageView android:id="@+id/iconeLigne"
+                  android:layout_width="44dip"
+                  android:paddingBottom="2dip"
+                  android:paddingTop="4dip"
+                  android:paddingLeft="2dip"
+                  android:paddingRight="2dip"
+                  android:layout_height="46dip"
+                  android:gravity="center_vertical|center_horizontal"/>
+
+    <TextView android:id="@+id/arretgps_nomArret"
+              android:paddingRight="5dip"
+              android:paddingLeft="5dip"
+              android:paddingTop="5dip"
+              android:layout_width="wrap_content"
+              android:layout_height="38dip"
+              android:textSize="20dip"
+              android:gravity="center_vertical|left"
+              android:layout_toRightOf="@id/iconeLigne"/>
+
+    <TextView android:id="@+id/arretgps_tempsRestant"
+              android:paddingRight="5dip"
+              android:paddingLeft="5dip"
+              android:paddingTop="5dip"
+              android:layout_width="wrap_content"
+              android:layout_height="38dip"
+              android:textSize="18dip"
+              android:gravity="center_vertical|left"
+              android:layout_alignParentRight="true"
+              android:layout_toLeftOf="@id/arretgps_nomArret"/>
+
+
+    <TextView android:id="@+id/arretgps_distance"
+              android:paddingRight="5dip"
+              android:paddingBottom="8dip"
+              android:layout_width="wrap_content"
+              android:layout_height="38dip"
+              android:textSize="18dip"
+              android:gravity="center_vertical|right"
+              android:layout_below="@id/arretgps_nomArret"
+              android:layout_alignParentRight="true"/>
+    <TextView android:id="@+id/arretgps_direction"
+              android:paddingRight="5dip"
+              android:paddingLeft="2dip"
+              android:paddingTop="2dip"
+              android:paddingBottom="4dip"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:minHeight="30dip"
+              android:textSize="14dip"
+              android:gravity="center_vertical|left"
+              android:layout_alignParentLeft="true"
+              android:layout_below="@id/iconeLigne"
+              android:layout_toLeftOf="@id/arretgps_distance"/>
+</RelativeLayout>

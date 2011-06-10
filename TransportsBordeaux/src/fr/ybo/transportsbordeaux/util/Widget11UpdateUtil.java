@@ -25,6 +25,7 @@ import android.widget.RemoteViews;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsWidget11;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.Horaire;
 
 public class Widget11UpdateUtil {
 
@@ -45,9 +46,7 @@ public class Widget11UpdateUtil {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		calendar.roll(Calendar.MINUTE, -3);
 		try {
-			List<Integer> prochainsDeparts = GestionnaireHoraires.getProchainHorairesAsList(favori.ligneId,
-					favori.arretId,
-					favori.macroDirection, 2, calendar);
+			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 2, calendar);
 			LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 			if (prochainsDeparts.size() > 0) {
 				int heureProchain = prochainsDeparts.get(0);

@@ -25,19 +25,34 @@ import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.ArretRoute;
+import fr.ybo.transportsbordeaux.modele.Calendrier;
+import fr.ybo.transportsbordeaux.modele.CalendrierException;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Direction;
+import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.modele.Trajet;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
 
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
 	private static final String DATABASE_NAME = "transportsbordeaux.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	@SuppressWarnings("unchecked")
-	private static final List<Class<?>> DATABASE_ENTITITES = Arrays.asList(Arret.class, ArretFavori.class,
-			ArretRoute.class, DernierMiseAJour.class, Direction.class, Ligne.class, VeloFavori.class);
+	private static final List<Class<?>> DATABASE_ENTITITES =
+		Arrays.asList(
+				Arret.class,
+				ArretFavori.class,
+				ArretRoute.class,
+				Calendrier.class,
+				CalendrierException.class,
+				DernierMiseAJour.class,
+				Direction.class,
+				Horaire.class,
+				Ligne.class,
+				Trajet.class,
+				VeloFavori.class);
 
 	public TransportsBordeauxDatabase(Context context, List<Class<?>> classes) {
 		super(context, DATABASE_ENTITITES, DATABASE_NAME, DATABASE_VERSION);
@@ -48,20 +63,12 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 	protected Map<Integer, UpgradeDatabase> getUpgrades() {
 		if (mapUpgrades == null) {
 			mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
-			mapUpgrades.put(2, new UpgradeDatabase() {
+			mapUpgrades.put(3, new UpgradeDatabase() {
 
 				@Override
 				public void upgrade(SQLiteDatabase db) {
-					getBase().getTable(Arret.class).dropTable(db);
-					getBase().getTable(ArretRoute.class).dropTable(db);
-					getBase().getTable(DernierMiseAJour.class).dropTable(db);
-					getBase().getTable(Direction.class).dropTable(db);
-					getBase().getTable(Ligne.class).dropTable(db);
-					getBase().getTable(Arret.class).createTable(db);
-					getBase().getTable(ArretRoute.class).createTable(db);
-					getBase().getTable(DernierMiseAJour.class).createTable(db);
-					getBase().getTable(Direction.class).createTable(db);
-					getBase().getTable(Ligne.class).createTable(db);
+					getBase().dropDataBase(db);
+					getBase().createDataBase(db);
 				}
 			});
 		}

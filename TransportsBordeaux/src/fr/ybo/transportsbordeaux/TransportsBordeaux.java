@@ -40,7 +40,7 @@ import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
-import fr.ybo.transportsbordeaux.donnees.GestionZipTbc;
+import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 
@@ -94,6 +94,12 @@ public class TransportsBordeaux extends Activity {
 		btnAlert.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				onAlertClick();
+			}
+		});
+		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
+		btnBusGps.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				onBusGpsClick();
 			}
 		});
 	}
@@ -159,6 +165,11 @@ public class TransportsBordeaux extends Activity {
 		startActivity(intent);
 	}
 
+	public void onBusGpsClick() {
+		Intent intent = new Intent(this, ListArretByPosition.class);
+		startActivity(intent);
+	}
+
 	private void upgradeDatabase() {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.infoChargementGtfs)) {
 			@Override
@@ -172,7 +183,7 @@ public class TransportsBordeaux extends Activity {
 	private void verifierUpgrade() {
 		TransportsBordeauxDatabase dataBaseHelper = TransportsBordeauxApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		Date dateDernierFichierKeolis = GestionZipTbc.getLastUpdate(getResources());
+		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources());
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);

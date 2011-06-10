@@ -15,11 +15,13 @@
 package fr.ybo.transportsbordeaux.adapters;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 public class FavoriAdapter extends BaseAdapter {
@@ -37,10 +40,25 @@ public class FavoriAdapter extends BaseAdapter {
 
 	private final List<ArretFavori> favoris;
 
+	private int now;
+	private Calendar calendar;
+	private Calendar calendarLaVeille;
+	private final Context myContext;
+
 	public FavoriAdapter(Context context, List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
 		mInflater = LayoutInflater.from(context);
 		this.favoris = favoris;
+		myContext = context;
+		majCalendar();
+	}
+
+	public void majCalendar() {
+		calendar = Calendar.getInstance();
+		calendarLaVeille = Calendar.getInstance();
+		calendarLaVeille.roll(Calendar.DATE, false);
+		now = calendar.get(Calendar.HOUR_OF_DAY) * 60
+				+ calendar.get(Calendar.MINUTE);
 	}
 
 	public Collection<ArretFavori> getFavoris() {
@@ -63,6 +81,7 @@ public class FavoriAdapter extends BaseAdapter {
 		ImageView iconeLigne;
 		TextView arret;
 		TextView direction;
+		TextView tempsRestant;
 		ImageView moveUp;
 		ImageView moveDown;
 	}
@@ -73,11 +92,16 @@ public class FavoriAdapter extends BaseAdapter {
 		if (convertView1 == null) {
 			convertView1 = mInflater.inflate(R.layout.favori, null);
 			holder = new FavoriAdapter.ViewHolder();
-			holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
+			holder.iconeLigne = (ImageView) convertView1
+					.findViewById(R.id.iconeLigne);
 			holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
-			holder.direction = (TextView) convertView1.findViewById(R.id.directionArret);
+			holder.direction = (TextView) convertView1
+					.findViewById(R.id.directionArret);
+			holder.tempsRestant = (TextView) convertView1
+					.findViewById(R.id.tempsRestant);
 			holder.moveUp = (ImageView) convertView1.findViewById(R.id.moveUp);
-			holder.moveDown = (ImageView) convertView1.findViewById(R.id.moveDown);
+			holder.moveDown = (ImageView) convertView1
+					.findViewById(R.id.moveDown);
 
 			convertView1.setTag(holder);
 		} else {
@@ -102,18 +126,24 @@ public class FavoriAdapter extends BaseAdapter {
 						List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
-						whereArgs.add(Integer.toString(favoris.get(position).macroDirection));
-						String whereClause = "arretId = :arretId and ligneId = :ligneId and macroDirection = :macroDirection";
-						TransportsBordeauxApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
+						String whereClause = "arretId = :arretId and ligneId = :ligneId ";
+						TransportsBordeauxApplication
+								.getDataBaseHelper()
+								.getWritableDatabase()
+								.update("ArretFavori", contentValues,
+										whereClause,
+										whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
 						contentValues.put("ordre", autrePosition);
 						whereArgs.clear();
 						whereArgs.add(favoris.get(autrePosition).arretId);
 						whereArgs.add(favoris.get(autrePosition).ligneId);
-						whereArgs.add(Integer.toString(favoris.get(autrePosition).macroDirection));
-						TransportsBordeauxApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
+						TransportsBordeauxApplication
+								.getDataBaseHelper()
+								.getWritableDatabase()
+								.update("ArretFavori", contentValues,
+										whereClause,
+										whereArgs.toArray(new String[3]));
 						notifyDataSetChanged();
 					}
 				}
@@ -136,18 +166,24 @@ public class FavoriAdapter extends BaseAdapter {
 						List<String> whereArgs = new ArrayList<String>(2);
 						whereArgs.add(favoris.get(position).arretId);
 						whereArgs.add(favoris.get(position).ligneId);
-						whereArgs.add(Integer.toString(favoris.get(position).macroDirection));
-						String whereClause = "arretId = :arretId and ligneId = :ligneId and macroDirection = :macroDirection";
-						TransportsBordeauxApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
+						String whereClause = "arretId = :arretId and ligneId = :ligneId";
+						TransportsBordeauxApplication
+								.getDataBaseHelper()
+								.getWritableDatabase()
+								.update("ArretFavori", contentValues,
+										whereClause,
+										whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
 						contentValues.put("ordre", autrePosition);
 						whereArgs.clear();
 						whereArgs.add(favoris.get(autrePosition).arretId);
 						whereArgs.add(favoris.get(autrePosition).ligneId);
-						whereArgs.add(Integer.toString(favoris.get(autrePosition).macroDirection));
-						TransportsBordeauxApplication.getDataBaseHelper().getWritableDatabase()
-								.update("ArretFavori", contentValues, whereClause, whereArgs.toArray(new String[3]));
+						TransportsBordeauxApplication
+								.getDataBaseHelper()
+								.getWritableDatabase()
+								.update("ArretFavori", contentValues,
+										whereClause,
+										whereArgs.toArray(new String[3]));
 						notifyDataSetChanged();
 					}
 				}
@@ -156,9 +192,59 @@ public class FavoriAdapter extends BaseAdapter {
 
 		holder.arret.setText(favori.nomArret);
 		holder.direction.setText(favori.direction);
-		holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
+		holder.iconeLigne.setImageResource(IconeLigne
+				.getIconeResource(favori.nomCourt));
+
+		try {
+			List<Integer> prochainsDepart = Horaire.getProchainHorairesAsList(
+					favori.ligneId, favori.arretId, 1, calendar);
+
+			if (!prochainsDepart.isEmpty()) {
+				holder.tempsRestant.setText(formatterCalendar(
+						prochainsDepart.get(0), now));
+			}
+		} catch (SQLiteException ignore) {
+		}
 
 		return convertView1;
+	}
+
+	private CharSequence formatterCalendar(int prochainDepart, int now) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int tempsEnMinutes = prochainDepart - now;
+		if (tempsEnMinutes < 0) {
+			stringBuilder.append(myContext.getString(R.string.tropTard));
+		} else {
+			int heures = tempsEnMinutes / 60;
+			int minutes = tempsEnMinutes - heures * 60;
+			boolean tempsAjoute = false;
+			if (heures > 0) {
+				stringBuilder.append(heures);
+				stringBuilder.append(' ');
+				stringBuilder.append(myContext.getString(R.string.miniHeures));
+				stringBuilder.append(' ');
+				tempsAjoute = true;
+			}
+			if (minutes > 0) {
+				if (heures <= 0) {
+					stringBuilder.append(minutes);
+					stringBuilder.append(' ');
+					stringBuilder.append(myContext
+							.getString(R.string.miniMinutes));
+				} else {
+					if (minutes < 10) {
+						stringBuilder.append('0');
+					}
+					stringBuilder.append(minutes);
+				}
+				tempsAjoute = true;
+			}
+			if (!tempsAjoute) {
+				stringBuilder.append("0 ");
+				stringBuilder.append(myContext.getString(R.string.miniMinutes));
+			}
+		}
+		return stringBuilder.toString();
 	}
 
 }
