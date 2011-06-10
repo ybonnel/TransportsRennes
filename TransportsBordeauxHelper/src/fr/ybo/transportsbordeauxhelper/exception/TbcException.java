@@ -9,17 +9,14 @@ public class TbcException extends RuntimeException {
 
 	public TbcException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TbcException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	public TbcException(Throwable cause) {
 		super(cause);
-		// TODO Auto-generated constructor stub
 	}
 
 }

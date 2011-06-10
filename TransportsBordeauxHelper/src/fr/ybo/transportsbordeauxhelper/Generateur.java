@@ -346,6 +346,12 @@ public class Generateur {
 				direction = new Direction();
 				direction.id = headSign.getValue();
 				direction.direction = headSign.getKey();
+				if (direction.direction.charAt(0) == '"') {
+					direction.direction = direction.direction.substring(1);
+				}
+				if (direction.direction.charAt(direction.direction.length() - 1) == '"') {
+					direction.direction = direction.direction.substring(0, direction.direction.length() - 1);
+				}
 				directions.put(direction.id, direction);
 			}
 		}
@@ -376,6 +382,10 @@ public class Generateur {
 			calendriersException.add(calendrierException);
 		}
 	}
+	
+	private boolean isTram(Route route) {
+		return route.nomCourt.equals("A") || route.nomCourt.equals("B") || route.nomCourt.equals("C");
+	}
 
 	public void remplirLignes() {
 		Ligne ligne;
@@ -384,6 +394,12 @@ public class Generateur {
 		int maxLength = 0;
 		// Recherche de la route avec le nom le plus long.
 		for (Route route : routes) {
+			if (route.nomLong.charAt(0) == '"') {
+				route.nomLong = route.nomLong.substring(1);
+			}
+			if (route.nomLong.charAt(route.nomLong.length() - 1) == '"') {
+				route.nomLong = route.nomLong.substring(0, route.nomLong.length() - 1);
+			}
 			if (route.nomCourt.length() > maxLength) {
 				maxLength = route.nomCourt.length();
 			}
@@ -391,6 +407,12 @@ public class Generateur {
 		// Tri.
 		Collections.sort(routes, new Comparator<Route>() {
 			public int compare(Route o1, Route o2) {
+				if (isTram(o1) && !isTram(o2)) {
+					return -1;
+				}
+				if (!isTram(o1) && isTram(o2)) {
+					return 1;
+				}
 				return o1.nomCourt.compareTo(o2.nomCourt);
 			}
 		});
