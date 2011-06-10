@@ -14,12 +14,10 @@
 
 package fr.ybo.transportsbordeaux.adapters;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
@@ -121,29 +119,9 @@ public class FavoriAdapter extends BaseAdapter {
 						favoris.set(position, favoris.get(autrePosition));
 						favoris.set(autrePosition, favori);
 						favoris.get(position).ordre = position;
-						ContentValues contentValues = new ContentValues();
-						contentValues.put("ordre", position);
-						List<String> whereArgs = new ArrayList<String>(2);
-						whereArgs.add(favoris.get(position).arretId);
-						whereArgs.add(favoris.get(position).ligneId);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId ";
-						TransportsBordeauxApplication
-								.getDataBaseHelper()
-								.getWritableDatabase()
-								.update("ArretFavori", contentValues,
-										whereClause,
-										whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
-						contentValues.put("ordre", autrePosition);
-						whereArgs.clear();
-						whereArgs.add(favoris.get(autrePosition).arretId);
-						whereArgs.add(favoris.get(autrePosition).ligneId);
-						TransportsBordeauxApplication
-								.getDataBaseHelper()
-								.getWritableDatabase()
-								.update("ArretFavori", contentValues,
-										whereClause,
-										whereArgs.toArray(new String[3]));
+						TransportsBordeauxApplication.getDataBaseHelper().update(favoris.get(position));
+						TransportsBordeauxApplication.getDataBaseHelper().update(favoris.get(autrePosition));
 						notifyDataSetChanged();
 					}
 				}
@@ -161,29 +139,9 @@ public class FavoriAdapter extends BaseAdapter {
 						favoris.set(position, favoris.get(autrePosition));
 						favoris.set(autrePosition, favori);
 						favoris.get(position).ordre = position;
-						ContentValues contentValues = new ContentValues();
-						contentValues.put("ordre", position);
-						List<String> whereArgs = new ArrayList<String>(2);
-						whereArgs.add(favoris.get(position).arretId);
-						whereArgs.add(favoris.get(position).ligneId);
-						String whereClause = "arretId = :arretId and ligneId = :ligneId";
-						TransportsBordeauxApplication
-								.getDataBaseHelper()
-								.getWritableDatabase()
-								.update("ArretFavori", contentValues,
-										whereClause,
-										whereArgs.toArray(new String[3]));
 						favoris.get(autrePosition).ordre = autrePosition;
-						contentValues.put("ordre", autrePosition);
-						whereArgs.clear();
-						whereArgs.add(favoris.get(autrePosition).arretId);
-						whereArgs.add(favoris.get(autrePosition).ligneId);
-						TransportsBordeauxApplication
-								.getDataBaseHelper()
-								.getWritableDatabase()
-								.update("ArretFavori", contentValues,
-										whereClause,
-										whereArgs.toArray(new String[3]));
+						TransportsBordeauxApplication.getDataBaseHelper().update(favoris.get(position));
+						TransportsBordeauxApplication.getDataBaseHelper().update(favoris.get(autrePosition));
 						notifyDataSetChanged();
 					}
 				}
