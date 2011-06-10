@@ -293,7 +293,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	}
 
 	private void chargerLigne() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
 			@Override
 			protected Void myDoBackground(Void... pParams) {

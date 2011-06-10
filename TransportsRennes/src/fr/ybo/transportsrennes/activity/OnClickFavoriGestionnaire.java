@@ -56,6 +56,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
+			
+			@Override
+			protected void onPreExecute() {
+				myProgressDialog.show();
+			};
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
