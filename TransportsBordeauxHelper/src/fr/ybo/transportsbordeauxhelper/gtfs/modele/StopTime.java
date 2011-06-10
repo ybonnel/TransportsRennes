@@ -43,8 +43,38 @@ public class StopTime {
 	public String dropOffType;
 
 	public String getKey() {
+		String tripId = this.tripId;
+		while (tripId.length() < 8) {
+			tripId = "0" + tripId;
+		}
 		return tripId + stopId;
 	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		StopTime other = (StopTime) obj;
+		if (this.stopId == null) {
+			if (other.stopId != null)
+				return false;
+		} else if (!this.stopId.equals(other.stopId))
+			return false;
+		if (this.tripId == null) {
+			if (other.tripId != null)
+				return false;
+		} else if (!this.tripId.equals(other.tripId))
+			return false;
+		return true;
+	}
+
+
 
 	@Override
 	public String toString() {

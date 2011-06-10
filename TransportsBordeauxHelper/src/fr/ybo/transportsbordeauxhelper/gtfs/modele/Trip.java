@@ -16,6 +16,7 @@ package fr.ybo.transportsbordeauxhelper.gtfs.modele;
 
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.transportsbordeauxhelper.gtfs.GestionnaireGtfs;
 
 /**
  * Un Trip GTFS.
@@ -35,6 +36,14 @@ public class Trip {
 	public String headSign;
 	@BaliseCsv(value = "block_id", ordre = 5)
 	public String blockId;
+
+	public Calendar getCalendar() {
+		return GestionnaireGtfs.getInstance().getCalendars().get(serviceId);
+	}
+
+	public Route getRoute() {
+		return GestionnaireGtfs.getInstance().getRoutes().get(routeId);
+	}
 
 	@Override
 	public String toString() {

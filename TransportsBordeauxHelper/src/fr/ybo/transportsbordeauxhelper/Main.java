@@ -67,7 +67,12 @@ public final class Main {
 	private static void genereGtfs(boolean toGtfs) throws IOException {
 		long startTime = System.currentTimeMillis();
 		GestionnaireGtfs.getInstance().optimizeIds();
-		System.out.println("Volume : ");
+		System.out.println("Avant compression : ");
+		afficheCompteurs();
+		CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
+		compressionTripAndCalendar.compressTripsAndCalendars();
+		compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+		System.out.println("Après compression : ");
 		afficheCompteurs();
 		if (toGtfs) {
 			genereGtfsOptimises();

@@ -232,6 +232,36 @@ public final class GestionnaireGtfs {
 		return mapObjets;
 	}
 
+	/**
+	 * Map des stopTimes par tripId.
+	 */
+	private Map<String, List<StopTime>> mapStopTimesByTripId;
+
+	/**
+	 * @param tripId un tripId;
+	 * @return les stopsTimes associés au tripId.
+	 */
+	public List<StopTime> getStopTimesForOnTrip(String tripId) {
+		if (mapStopTimesByTripId == null) {
+			mapStopTimesByTripId = new HashMap<String, List<StopTime>>();
+			for (StopTime stopTime : getStopTimes().values()) {
+				if (!mapStopTimesByTripId.containsKey(stopTime.tripId)) {
+					mapStopTimesByTripId.put(stopTime.tripId, new ArrayList<StopTime>());
+				}
+				mapStopTimesByTripId.get(stopTime.tripId).add(stopTime);
+			}
+		}
+
+		return mapStopTimesByTripId.get(tripId);
+	}
+
+	/**
+	 * Reset de la map des stopsTimes par tripId.
+	 */
+	public void resetMapStopTimesByTripId() {
+		mapStopTimesByTripId = null;
+	}
+
 	public List<Agency> getAgencies() {
 		return agencies;
 	}

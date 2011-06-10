@@ -47,4 +47,70 @@ public class Calendar {
 	public String startDate;
 	@BaliseCsv(value = "end_date", ordre = 9)
 	public String endDate;
+
+	public Calendar() {
+
+	}
+
+	/**
+	 * Constructeur par copie.
+	 * @param calendar
+	 */
+	public Calendar(Calendar calendar) {
+		lundi = calendar.lundi;
+		mardi = calendar.mardi;
+		mercredi = calendar.mercredi;
+		jeudi = calendar.jeudi;
+		vendredi = calendar.vendredi;
+		samedi = calendar.samedi;
+		dimanche = calendar.dimanche;
+		startDate = calendar.startDate;
+		endDate = calendar.endDate;
+	}
+
+	/**
+	 * Merge de deux calendar.
+	 * @param calendar
+	 */
+	public void merge(Calendar calendar) {
+		lundi = lundi || calendar.lundi;
+		mardi = mardi || calendar.mardi;
+		mercredi = mercredi || calendar.mercredi;
+		jeudi = jeudi || calendar.jeudi;
+		vendredi = vendredi || calendar.vendredi;
+		samedi = samedi || calendar.samedi;
+		dimanche = dimanche || calendar.dimanche;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		Calendar calendar = (Calendar) obj;
+
+		return dimanche == calendar.dimanche && jeudi == calendar.jeudi && lundi == calendar.lundi
+				&& mardi == calendar.mardi && mercredi == calendar.mercredi && samedi == calendar.samedi
+				&& vendredi == calendar.vendredi;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = lundi ? 1 : 0;
+		result = 31 * result + (mardi ? 1 : 0);
+		result = 31 * result + (mercredi ? 1 : 0);
+		result = 31 * result + (jeudi ? 1 : 0);
+		result = 31 * result + (vendredi ? 1 : 0);
+		result = 31 * result + (samedi ? 1 : 0);
+		result = 31 * result + (dimanche ? 1 : 0);
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Calendar{" + "id='" + id + '\'' + ", lundi=" + lundi + ", mardi=" + mardi + ", mercredi=" + mercredi
+				+ ", jeudi=" + jeudi + ", vendredi=" + vendredi + ", samedi=" + samedi + ", dimanche=" + dimanche + '}';
+	}
 }
