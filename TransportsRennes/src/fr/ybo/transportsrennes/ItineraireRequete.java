@@ -14,6 +14,7 @@
 
 package fr.ybo.transportsrennes;
 
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -161,7 +162,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		AdresseAdapter adapterArrivee = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
 		adresseArrivee.setAdapter(adapterArrivee);
 		adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			
+
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					terminer();
@@ -356,6 +357,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			private ProgressDialog progressDialog;
 			private Response reponse;
 
+			private boolean erreurReseaux = false;
+
 			@Override
 			protected void onPreExecute() {
 				super.onPreExecute();
@@ -368,7 +371,11 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 				try {
 					reponse = CalculItineraires.getInstance().getItineraries(request);
 				} catch (OpenTripPlannerException e) {
-					throw new TransportsRennesException(e);
+					if (e.getCause() != null && e.getCause() instanceof SocketException) {
+						erreurReseaux = true;
+					} else {
+						throw new TransportsRennesException(e);
+					}
 				}
 				return null;
 			}
@@ -377,7 +384,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				progressDialog.dismiss();
-				if (reponse.getError() != null) {
+				if (erreurReseaux) {
+					Toast.makeText(ItineraireRequete.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				} else if (reponse.getError() != null) {
 					LOG_YBO.erreur(reponse.getError().getMsg());
 					int message = R.string.erreur_calculItineraires;
 					switch (Message.findEnumById(reponse.getError().getId())) {
