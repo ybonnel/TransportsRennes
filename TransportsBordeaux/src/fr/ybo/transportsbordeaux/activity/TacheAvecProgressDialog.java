@@ -8,7 +8,7 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 
 	private String message;
 
-	private ProgressDialog myProgressDialog;
+	protected ProgressDialog myProgressDialog;
 	private Context context;
 
 	public TacheAvecProgressDialog(Context context, String message) {

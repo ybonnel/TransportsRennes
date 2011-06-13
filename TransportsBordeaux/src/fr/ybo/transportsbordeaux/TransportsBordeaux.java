@@ -43,6 +43,7 @@ import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
+import fr.ybo.transportsbordeaux.modele.Ligne;
 
 public class TransportsBordeaux extends Activity {
 
@@ -231,12 +232,18 @@ public class TransportsBordeaux extends Activity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
+	private static final int MENU_LOAD_LINES = 2;
+	private static final int MENU_SHARE = 3;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
+		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
+		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
+		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
+		itemShare.setIcon(android.R.drawable.ic_menu_share);
 		return true;
 	}
 
@@ -247,7 +254,56 @@ public class TransportsBordeaux extends Activity {
 			case MENU_ID:
 				showDialog();
 				return true;
+			case MENU_LOAD_LINES:
+				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
+				alertBuilder.setCancelable(false);
+				alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+						loadAllLines();
+					}
+				});
+				alertBuilder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+					}
+				});
+				alertBuilder.show();
+				return true;
+			case MENU_SHARE:
+				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+				shareIntent.setType("text/plain");
+				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
+				return true;
 		}
 		return false;
+	}
+
+
+	private void loadAllLines() {
+
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.infoChargementGtfs)) {
+
+			@Override
+			protected Void doInBackground(Void... params) {
+
+				for (Ligne ligne : TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne())) {
+					if (ligne.chargee == null || !ligne.chargee) {
+						final String nomLigne = ligne.nomCourt;
+						runOnUiThread(new Runnable() {
+							public void run() {
+								myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + '\n'
+										+ getString(R.string.premierAccesLigne, nomLigne));
+							}
+						});
+						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+					}
+				}
+				return null;
+			}
+		}.execute();
 	}
 }

@@ -23,7 +23,7 @@ public class LogYbo {
 
 	private static final String PREFIX_TAG = "YBO_";
 	private final String tag;
-	private static final boolean IS_DEBUG = false;
+	private static final boolean IS_DEBUG = true;
 
 	public LogYbo(Class<?> clazz) {
 		tag = PREFIX_TAG + clazz.getSimpleName();
