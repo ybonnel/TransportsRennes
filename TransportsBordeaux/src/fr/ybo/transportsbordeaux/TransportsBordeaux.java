@@ -211,8 +211,10 @@ public class TransportsBordeaux extends Activity {
 			}
 			runOnUiThread(new Runnable() {
 				public void run() {
-					AlertDialog alert = builder.create();
-					alert.show();
+					if (!isFinishing()) {
+						AlertDialog alert = builder.create();
+						alert.show();
+					}
 				}
 			});
 		}
