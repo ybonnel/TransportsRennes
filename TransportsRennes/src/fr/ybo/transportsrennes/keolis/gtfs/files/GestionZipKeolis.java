@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.res.Resources;
+import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.modele.Table;
@@ -62,9 +63,29 @@ public final class GestionZipKeolis {
 				final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
 				table.dropTable(db);
 				table.createTable(db);
+				final InsertHelper ih = new InsertHelper(db, table.getName());
+		 
+		        // Get the numeric indexes for each of the columns that we're updating
+				final int arretIdCol = ih.getColumnIndex("arretId");
+				final int trajetIdCol = ih.getColumnIndex("trajetId");
+				final int heureDepartCol = ih.getColumnIndex("heureDepart");
+				final int stopSequenceCol = ih.getColumnIndex("stopSequence");
+				final int terminusCol = ih.getColumnIndex("terminus");
+				
 				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
 					public void insertObject(Horaire objet) {
-						table.insert(db, objet);
+						// Get the InsertHelper ready to insert a single row
+						ih.prepareForInsert();
+
+						// Add the data for each column
+						ih.bind(arretIdCol, objet.arretId);
+						ih.bind(trajetIdCol, objet.trajetId);
+						ih.bind(heureDepartCol, objet.heureDepart);
+						ih.bind(stopSequenceCol, objet.stopSequence);
+						ih.bind(terminusCol, objet.terminus);
+
+						// Insert the row into the database.
+						ih.execute();
 					};
 						
 				});
