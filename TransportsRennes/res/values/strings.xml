@@ -70,9 +70,8 @@
     <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
     <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
-    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (5 minutes sur un Nexus One),
-        et occupera environ 8,5Mo de données, mais vous permettra d\'accéder à tous les horaires en mode offline. Êtes-vous sûr de vouloir les charger
-        (wifi fortement conseillé)?
+    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (2 minutes sur un Nexus One),
+        et occupera environ 8,5Mo de données, mais vous permettra d\'accéder à tous les horaires de manière instantanée. Êtes-vous sûr de vouloir les charger?
     </string>
     <string name="geocodageAdresseDepart">Geo-codage de l\'adresse de départ</string>
     <string name="geocodageAdresseArrivee">Geo-codage de l\'adresse de destination</string>
