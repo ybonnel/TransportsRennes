@@ -144,7 +144,10 @@ public class TransportsWidget extends AppWidgetProvider {
 				now = newNow;
 				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
 				WidgetUpdateUtil.updateAppWidget(context, remoteViews, favoris, calendar);
-				appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+				try {
+					appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+				} catch (SecurityException ignore) {
+				}
 			}
 		}
 	}
