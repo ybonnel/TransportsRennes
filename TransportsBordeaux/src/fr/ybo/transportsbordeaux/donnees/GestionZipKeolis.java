@@ -18,7 +18,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.content.res.Resources;
 import android.database.DatabaseUtils.InsertHelper;
@@ -40,58 +45,89 @@ public final class GestionZipKeolis {
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
 	private static final String URL_STOP_TIMES = "horaires_";
+	
+	private static final Map<String, Integer> mapExceptionsStopTimes = new HashMap<String, Integer>();
+	static {
+		mapExceptionsStopTimes.put("15", 2);
+	}
 
-	private static CoupleResourceFichier getResourceForStopTime(String ligneId) throws GestionFilesException {
-
+	private static List<CoupleResourceFichier> getResourceForStopTime(String ligneId) throws GestionFilesException {
 		try {
+			if (mapExceptionsStopTimes.containsKey(ligneId)) {
+				List<CoupleResourceFichier> retour = new ArrayList<GestionZipKeolis.CoupleResourceFichier>();
+				String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
+				for (int count = 1; count <= mapExceptionsStopTimes
+						.get(ligneId); count++) {
+					String nomResourceTmp = nomResource + "_" + count;
+					int resourceId = R.raw.class.getDeclaredField(
+							nomResourceTmp).getInt(null);
+					retour.add(new CoupleResourceFichier(resourceId,
+							nomResourceTmp + ".txt"));
+				}
+				return retour;
+			}
 			String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
-			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(null);
-			return new CoupleResourceFichier(resourceId, nomResource + ".txt");
+			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(
+					null);
+			return Collections.singletonList(new CoupleResourceFichier(
+					resourceId, nomResource + ".txt"));
 		} catch (Exception exception) {
-			throw new TcbException(exception);
+			throw new TcbException("Erreur sur la ligne " + ligneId, exception);
 		}
 	}
 
 	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, TransportsBordeauxDatabase dataBaseHelper,
 			Resources resources) {
 		try {
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
-			try {
+			for (CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(ligneId)) {
+				BufferedReader bufReader = new BufferedReader(
+						new InputStreamReader(
+								resources
+										.openRawResource(coupleResourceFichier.resourceId)),
+						8 << 10);
+				try {
 
-				final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
-				table.addSuffixeToTableName(ligneId);
-				final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
-				table.dropTable(db);
-				table.createTable(db);
-				final InsertHelper ih = new InsertHelper(db, table.getName());
-		 
-		        // Get the numeric indexes for each of the columns that we're updating
-				final int arretIdCol = ih.getColumnIndex("arretId");
-				final int trajetIdCol = ih.getColumnIndex("trajetId");
-				final int heureDepartCol = ih.getColumnIndex("heureDepart");
-				final int stopSequenceCol = ih.getColumnIndex("stopSequence");
-				final int terminusCol = ih.getColumnIndex("terminus");
-		 
-				
-				moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
-					public void insertObject(Horaire objet) {
-						// Get the InsertHelper ready to insert a single row
-						ih.prepareForInsert();
+					final Table table = dataBaseHelper.getBase().getTable(
+							Horaire.class);
+					table.addSuffixeToTableName(ligneId);
+					final SQLiteDatabase db = dataBaseHelper
+							.getWritableDatabase();
+					table.dropTable(db);
+					table.createTable(db);
+					final InsertHelper ih = new InsertHelper(db,
+							table.getName());
 
-						// Add the data for each column
-						ih.bind(arretIdCol, objet.arretId);
-						ih.bind(trajetIdCol, objet.trajetId);
-						ih.bind(heureDepartCol, objet.heureDepart);
-						ih.bind(stopSequenceCol, objet.stopSequence);
-						ih.bind(terminusCol, objet.terminus);
+					// Get the numeric indexes for each of the columns that
+					// we're updating
+					final int arretIdCol = ih.getColumnIndex("arretId");
+					final int trajetIdCol = ih.getColumnIndex("trajetId");
+					final int heureDepartCol = ih.getColumnIndex("heureDepart");
+					final int stopSequenceCol = ih
+							.getColumnIndex("stopSequence");
+					final int terminusCol = ih.getColumnIndex("terminus");
 
-						// Insert the row into the database.
-						ih.execute();
-					};
-						
-				});
-			} finally {
-				bufReader.close();
+					moteurCsv.parseFileAndInsert(bufReader, Horaire.class,
+							new MoteurCsv.InsertObject<Horaire>() {
+								public void insertObject(Horaire objet) {
+									// Get the InsertHelper ready to insert a
+									// single row
+									ih.prepareForInsert();
+
+									// Add the data for each column
+									ih.bind(arretIdCol, objet.arretId);
+									ih.bind(trajetIdCol, objet.trajetId);
+									ih.bind(heureDepartCol, objet.heureDepart);
+									ih.bind(stopSequenceCol, objet.stopSequence);
+									ih.bind(terminusCol, objet.terminus);
+
+									// Insert the row into the database.
+									ih.execute();
+								};
+
+							});
+				} finally {
+					bufReader.close();
+				}
 			}
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
