@@ -148,7 +148,7 @@ public final class Keolis {
 			throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
 		}
 		if (answer == null || answer.getStatus() == null || !"0".equals(answer.getStatus().getCode())) {
-			throw new KeolisException(answer.getStatus().getMessage());
+			throw new ErreurReseau("Erreur dans la réponse données par Keolis.");
 		}
 		long elapsedTime = System.nanoTime() / 1000 - startTime;
 		LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
