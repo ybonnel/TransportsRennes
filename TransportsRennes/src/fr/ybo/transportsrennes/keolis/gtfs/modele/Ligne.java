@@ -82,6 +82,8 @@ public class Ligne implements Serializable {
     	Cursor cursor =
     		TransportsRennesApplication.getDataBaseHelper().getReadableDatabase().query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table' and name=:tableName", Collections.singleton(table.getName()).toArray(new String[1]), null, null,
 					null);
-    	return cursor.getCount() > 0;
+    	boolean retour = cursor.getCount() > 0;
+    	cursor.close();
+    	return retour;
     }
 }
