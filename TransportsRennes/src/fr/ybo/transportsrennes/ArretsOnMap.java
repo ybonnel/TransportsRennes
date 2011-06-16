@@ -56,7 +56,7 @@ public class ArretsOnMap extends MapActivity {
 		// Creation du geo point
 		List<Overlay> mapOverlays = mapView.getOverlays();
 		Drawable drawable = getResources().getDrawable(IconeLigne.getMarkeeResource(myLigne.nomCourt));
-		MapItemizedOverlayArret itemizedoverlay = new MapItemizedOverlayArret(drawable, this);
+		MapItemizedOverlayArret itemizedoverlay = new MapItemizedOverlayArret(drawable, this, myLigne.id, currentDirection);
 		List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
 		StringBuilder requete = new StringBuilder();

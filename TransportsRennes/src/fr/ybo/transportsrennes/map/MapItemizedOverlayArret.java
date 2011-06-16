@@ -31,6 +31,7 @@ import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsrennes.DetailArret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.TransportsRennesException;
 
 public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
@@ -38,15 +39,19 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 	private final ArrayList<OverlayItem> mOverlays = new ArrayList<OverlayItem>();
 	private final Context mContext;
 	private final List<ArretFavori> arretFavoris = new ArrayList<ArretFavori>();
+	private final String ligneId;
+	private final String direction;
 
 	private static Drawable leftBottom(Drawable drawable) {
 		drawable.setBounds(0, 0 - drawable.getIntrinsicHeight(), drawable.getIntrinsicWidth(), 0);
 		return drawable;
 	}
 
-	public MapItemizedOverlayArret(Drawable defaultMarker, Context context) {
+	public MapItemizedOverlayArret(Drawable defaultMarker, Context context, String ligneId, String direction) {
 		super(leftBottom(defaultMarker));
 		mContext = context;
+		this.ligneId = ligneId;
+		this.direction = direction;
 	}
 
 	//Appeler quand on rajoute un nouvel marqueur a la liste des marqueurs
@@ -98,6 +103,10 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent pEvent, MapView pMapView) {
-		return super.onTouchEvent(pEvent, pMapView);
+		try {
+			return super.onTouchEvent(pEvent, pMapView);
+		} catch (NullPointerException nullPointerException) {
+			throw new TransportsRennesException("NullPointer détecté, context : ligneId=" + ligneId + ", direction='" + direction + "'" , nullPointerException);
+		}
 	}
 }
