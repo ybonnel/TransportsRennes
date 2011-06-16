@@ -58,7 +58,7 @@ public class Station extends ObjetWithDistance implements Serializable {
 			conn.setReadTimeout(30000);
 			if (200 != conn.getResponseCode()) {
 				conn.disconnect();
-				throw new TcbException("Erreur lors du contact de la page des vcub, code = " + conn.getResponseCode());
+				throw new TbcErreurReseaux("Erreur lors du contact de la page des vcub, code = " + conn.getResponseCode());
 			}
 			// Get response
 			BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF8"));
