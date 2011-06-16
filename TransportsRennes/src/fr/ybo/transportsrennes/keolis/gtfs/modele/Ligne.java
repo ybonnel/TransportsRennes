@@ -16,12 +16,15 @@ package fr.ybo.transportsrennes.keolis.gtfs.modele;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.res.Resources;
+import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
+import fr.ybo.database.modele.Table;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
@@ -67,5 +70,18 @@ public class Ligne implements Serializable {
         Ligne ligne = new Ligne();
         ligne.id = ligneId;
         return TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
+    }
+    
+    public boolean isChargee() {
+    	if (chargee == null || !chargee) {
+    		return false;
+    	}
+    	// On regarde si la table existe.
+    	Table table = TransportsRennesApplication.getDataBaseHelper().getBase().getTable(Ligne.class);
+    	table.addSuffixeToTableName(id);
+    	Cursor cursor =
+    		TransportsRennesApplication.getDataBaseHelper().getReadableDatabase().query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table' and name=:tableName", Collections.singleton(table.getName()).toArray(new String[1]), null, null,
+					null);
+    	return cursor.getCount() > 0;
     }
 }

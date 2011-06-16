@@ -149,7 +149,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		myLigne = new Ligne();
 		myLigne.id = favori.ligneId;
 		myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
-		if (myLigne.chargee == null || !myLigne.chargee) {
+		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {
 			setListAdapter(construireAdapter());

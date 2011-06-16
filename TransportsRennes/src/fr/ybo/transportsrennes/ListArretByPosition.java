@@ -306,7 +306,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 				Ligne myLigne = new Ligne();
 				myLigne.id = arret.favori.ligneId;
 				myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
-				if (myLigne.chargee == null || !myLigne.chargee) {
+				if (!myLigne.isChargee()) {
 					chargerLigne(myLigne);
 				}
 				TransportsRennesApplication.getDataBaseHelper().insert(arret.favori);

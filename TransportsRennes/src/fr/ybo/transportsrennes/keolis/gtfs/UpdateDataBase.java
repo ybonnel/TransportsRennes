@@ -44,7 +44,7 @@ public final class UpdateDataBase {
 			LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 			LOG_YBO.debug("Suppression des lignes chargées");
 			for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
-				if (ligne.chargee != null && ligne.chargee) {
+				if (ligne.isChargee()) {
 					try {
 						TransportsRennesApplication.getDataBaseHelper().getWritableDatabase().execSQL("DROP TABLE Horaire_" + ligne.id);
 					} catch (SQLiteException ignored) {}

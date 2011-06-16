@@ -368,7 +368,7 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected Void doInBackground(Void... pParams) {
 				for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
-					if (ligne.chargee == null || !ligne.chargee) {
+					if (!ligne.isChargee()) {
 						final String nomLigne = ligne.nomCourt;
 						runOnUiThread(new Runnable() {
 							public void run() {
