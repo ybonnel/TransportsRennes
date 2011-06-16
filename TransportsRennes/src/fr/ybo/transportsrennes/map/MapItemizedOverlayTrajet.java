@@ -18,8 +18,10 @@ package fr.ybo.transportsrennes.map;
 import java.util.ArrayList;
 
 import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
 
 import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 public class MapItemizedOverlayTrajet extends ItemizedOverlay<OverlayItem> {
@@ -50,5 +52,10 @@ public class MapItemizedOverlayTrajet extends ItemizedOverlay<OverlayItem> {
 	@Override
 	public int size() {
 		return mOverlays.size();
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent pEvent, MapView pMapView) {
+		return super.onTouchEvent(pEvent, pMapView);
 	}
 }

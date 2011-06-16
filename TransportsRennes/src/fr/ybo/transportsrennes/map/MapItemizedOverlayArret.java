@@ -23,8 +23,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
 
 import com.google.android.maps.ItemizedOverlay;
+import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsrennes.DetailArret;
@@ -92,5 +94,10 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
 
 		return true;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent pEvent, MapView pMapView) {
+		return super.onTouchEvent(pEvent, pMapView);
 	}
 }
