@@ -77,12 +77,16 @@ public class Ligne implements Serializable {
     		return false;
     	}
     	// On regarde si la table existe.
-    	Table table = TransportsRennesApplication.getDataBaseHelper().getBase().getTable(Ligne.class);
+    	Table table = TransportsRennesApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
     	table.addSuffixeToTableName(id);
-    	Cursor cursor =
-    		TransportsRennesApplication.getDataBaseHelper().getReadableDatabase().query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table' and name=:tableName", Collections.singleton(table.getName()).toArray(new String[1]), null, null,
-					null);
-    	boolean retour = cursor.getCount() > 0;
+    	Cursor cursor = TransportsRennesApplication
+				.getDataBaseHelper()
+				.getReadableDatabase()
+				.query("sqlite_master",
+						Collections.singleton("name").toArray(new String[1]),
+						" type = 'table' and name='" + table.getName() + "'",
+						null, null, null, null);
+		boolean retour = cursor.getCount() > 0;
     	cursor.close();
     	return retour;
     }
