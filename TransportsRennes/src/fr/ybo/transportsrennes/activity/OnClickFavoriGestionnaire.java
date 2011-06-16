@@ -25,6 +25,7 @@ import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.TransportsWidgetConfigure;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
@@ -57,6 +58,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 		new AsyncTask<Void, Void, Void>() {
 			
+			private boolean erreurLigneNonTrouvee = false;
+			
 			@Override
 			protected void onPreExecute() {
 				myProgressDialog.show();
@@ -64,7 +67,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
+				} catch (LigneInexistanteException e) {
+					erreurLigneNonTrouvee = true;
+				}
 				return null;
 			}
 
@@ -72,6 +79,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
+				if (erreurLigneNonTrouvee) {
+					Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
+							Toast.LENGTH_LONG).show();
+					activity.finish();
+				}
 			}
 
 		}.execute();

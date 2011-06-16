@@ -31,6 +31,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.KeolisException;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -41,19 +42,21 @@ public final class GestionZipKeolis {
 
 	private static final String URL_STOP_TIMES = "horaires_";
 
-	private static CoupleResourceFichier getResourceForStopTime(String ligneId) throws GestionFilesException {
+	private static CoupleResourceFichier getResourceForStopTime(String ligneId) throws LigneInexistanteException {
 
 		try {
 			String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
 			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(null);
 			return new CoupleResourceFichier(resourceId, nomResource + ".txt");
+		} catch (NoSuchFieldException noSuchFieldException) {
+			throw new LigneInexistanteException();
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}
 	}
 
 	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, TransportsRennesDatabase dataBaseHelper,
-			Resources resources) {
+			Resources resources) throws LigneInexistanteException {
 		try {
 			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
 			try {
@@ -92,6 +95,8 @@ public final class GestionZipKeolis {
 			} finally {
 				bufReader.close();
 			}
+		} catch (LigneInexistanteException ligneInexistanteException) {
+			throw ligneInexistanteException;
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}

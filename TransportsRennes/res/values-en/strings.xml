@@ -148,4 +148,5 @@
     
     <string name="menu_share">Share</string>
     <string name="shareText">Transport Rennes, Android application to help you in transit of Rennes: http://goo.gl/ALKs0</string>
+    <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.</string>
 </resources>

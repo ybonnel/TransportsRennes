@@ -43,6 +43,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.ArretGpsAdapter;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -337,10 +338,16 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		myProgressDialog = ProgressDialog.show(this, "", getString(R.string.premierAccesLigne, myLigne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
+			
+			private boolean erreurLigneNonTrouvee = false;
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				} catch (LigneInexistanteException e) {
+					erreurLigneNonTrouvee = true;
+				}
 				return null;
 			}
 
@@ -348,6 +355,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
+				if (erreurLigneNonTrouvee) {
+					Toast.makeText(ListArretByPosition.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
+							Toast.LENGTH_LONG).show();
+					finish();
+				}
 			}
 
 		}.execute();

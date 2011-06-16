@@ -22,6 +22,7 @@ import android.database.sqlite.SQLiteException;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -93,7 +94,7 @@ public final class UpdateDataBase {
 		TransportsRennesApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(Ligne ligne, Resources resources) {
+	public static void chargeDetailLigne(Ligne ligne, Resources resources) throws LigneInexistanteException {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {
 			TransportsRennesApplication.getDataBaseHelper().beginTransaction();

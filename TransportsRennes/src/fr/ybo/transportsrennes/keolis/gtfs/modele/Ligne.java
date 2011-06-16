@@ -31,6 +31,7 @@ import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.LogYbo;
 
@@ -57,7 +58,8 @@ public class Ligne implements Serializable {
 	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(TransportsRennesDatabase dataBaseHelper, Resources resources) {
+	public void chargerHeuresArrets(TransportsRennesDatabase dataBaseHelper, Resources resources)
+			throws LigneInexistanteException {
 		LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
 		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);

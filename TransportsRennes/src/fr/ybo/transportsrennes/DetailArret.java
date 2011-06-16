@@ -39,8 +39,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.DetailArretAdapter;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -295,9 +297,15 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void chargerLigne() {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
+			private boolean erreurLigneNonTrouvee = false;
+
 			@Override
 			protected Void myDoBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				} catch (LigneInexistanteException e) {
+					erreurLigneNonTrouvee = true;
+				}
 				return null;
 			}
 
@@ -306,6 +314,11 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				super.onPostExecute(result);
 				setListAdapter(construireAdapter());
 				getListView().invalidate();
+				if (erreurLigneNonTrouvee) {
+					Toast.makeText(DetailArret.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
+							Toast.LENGTH_LONG).show();
+					finish();
+				}
 			}
 
 		}.execute();

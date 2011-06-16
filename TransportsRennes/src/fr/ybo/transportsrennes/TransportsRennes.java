@@ -39,6 +39,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
+import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -233,7 +234,10 @@ public class TransportsRennes extends Activity {
 									+ getString(R.string.chargementLigneFavori, nomLigne));
 						}
 					});
-					UpdateDataBase.chargeDetailLigne(ligne, getResources());
+					try {
+						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+					} catch (LigneInexistanteException ignore) {
+					}
 				}
 				return null;
 			}
@@ -376,7 +380,10 @@ public class TransportsRennes extends Activity {
 										+ getString(R.string.premierAccesLigne, nomLigne));
 							}
 						});
-						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						try {
+							UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						} catch (LigneInexistanteException ignore) {
+						}
 					}
 				}
 				return null;
