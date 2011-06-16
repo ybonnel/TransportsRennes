@@ -21,9 +21,11 @@ import java.util.List;
 import android.os.Bundle;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.TwitterAdapter;
+import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.twitter.GetTwitters;
 import fr.ybo.transportsbordeaux.twitter.MessageTwitter;
 
@@ -39,15 +41,24 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteTwitter)) {
+			
+			private boolean erreurReseaux = false;
 
 			@Override
 			protected Void doInBackground(Void... params) {
-				messages.addAll(GetTwitters.getInstance().getMessages());
+				try {
+					messages.addAll(GetTwitters.getInstance().getMessages());
+				} catch (TbcErreurReseaux tbcErreurReseaux) {
+					erreurReseaux = true;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
+				if (erreurReseaux) {
+					Toast.makeText(ListTwitter.this, R.string.erreurReseau, Toast.LENGTH_LONG).show();
+				}
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
