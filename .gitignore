@@ -11,3 +11,6 @@ TransportsRennes/gen
 **/.settings/*findbugs*
 **/bin
 target
+
+/TransportsBordeaux/gen/
+/TransportsRennesServer/war/WEB-INF/classes/
