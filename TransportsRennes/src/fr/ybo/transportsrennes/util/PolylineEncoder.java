@@ -1,16 +1,19 @@
-/* This program is free software: you can redistribute it and/or
- modify it under the terms of the GNU Lesser General Public License
- as published by the Free Software Foundation, either version 3 of
- the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>. */
-
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Contributors:
+ *     ybonnel - initial API and implementation
+ */
 package fr.ybo.transportsrennes.util;
 
 import java.util.ArrayList;
@@ -20,96 +23,91 @@ import fr.ybo.opentripplanner.client.modele.EncodedPolylineBean;
 
 public class PolylineEncoder {
 
-    public static List<Coordinate> decode(EncodedPolylineBean polyline) {
+	public static List<Coordinate> decode(EncodedPolylineBean polyline) {
 
-        String pointString = polyline.getPoints();
+		String pointString = polyline.getPoints();
 
-        double lat = 0;
-        double lon = 0;
+		double lat = 0;
+		double lon = 0;
 
-        int strIndex = 0;
-        List<Coordinate> points = new ArrayList<Coordinate>();
+		int strIndex = 0;
+		List<Coordinate> points = new ArrayList<Coordinate>();
 
-        while (strIndex < pointString.length()) {
+		while (strIndex < pointString.length()) {
 
-            int[] rLat = decodeSignedNumberWithIndex(pointString, strIndex);
-            lat = lat + rLat[0] * 1e-5;
-            strIndex = rLat[1];
+			int[] rLat = decodeSignedNumberWithIndex(pointString, strIndex);
+			lat = lat + rLat[0] * 1e-5;
+			strIndex = rLat[1];
 
-            int[] rLon = decodeSignedNumberWithIndex(pointString, strIndex);
-            lon = lon + rLon[0] * 1e-5;
-            strIndex = rLon[1];
+			int[] rLon = decodeSignedNumberWithIndex(pointString, strIndex);
+			lon = lon + rLon[0] * 1e-5;
+			strIndex = rLon[1];
 
-            points.add(new Coordinate(lat, lon));
-        }
+			points.add(new Coordinate(lat, lon));
+		}
 
-        return points;
-    }
+		return points;
+	}
 
-    /*****************************************************************************
-     * Private Methods
-     ****************************************************************************/
+	public static String encodeSignedNumber(int num) {
+		int sgn_num = num << 1;
+		if (num < 0) {
+			sgn_num = ~(sgn_num);
+		}
+		return (encodeNumber(sgn_num));
+	}
 
+	public static int decodeSignedNumber(String value) {
+		int[] r = decodeSignedNumberWithIndex(value, 0);
+		return r[0];
+	}
 
-    public static String encodeSignedNumber(int num) {
-        int sgn_num = num << 1;
-        if (num < 0) {
-            sgn_num = ~(sgn_num);
-        }
-        return (encodeNumber(sgn_num));
-    }
+	public static int[] decodeSignedNumberWithIndex(String value, int index) {
+		int[] r = decodeNumberWithIndex(value, index);
+		int sgn_num = r[0];
+		if ((sgn_num & 0x01) > 0) {
+			sgn_num = ~(sgn_num);
+		}
+		r[0] = sgn_num >> 1;
+		return r;
+	}
 
-    public static int decodeSignedNumber(String value) {
-        int[] r = decodeSignedNumberWithIndex(value, 0);
-        return r[0];
-    }
+	public static String encodeNumber(int num) {
 
-    public static int[] decodeSignedNumberWithIndex(String value, int index) {
-        int[] r = decodeNumberWithIndex(value, index);
-        int sgn_num = r[0];
-        if ((sgn_num & 0x01) > 0) {
-            sgn_num = ~(sgn_num);
-        }
-        r[0] = sgn_num >> 1;
-        return r;
-    }
+		StringBuffer encodeString = new StringBuffer();
 
-    public static String encodeNumber(int num) {
+		while (num >= 0x20) {
+			int nextValue = (0x20 | (num & 0x1f)) + 63;
+			encodeString.append((char) (nextValue));
+			num >>= 5;
+		}
 
-        StringBuffer encodeString = new StringBuffer();
+		num += 63;
+		encodeString.append((char) (num));
 
-        while (num >= 0x20) {
-            int nextValue = (0x20 | (num & 0x1f)) + 63;
-            encodeString.append((char) (nextValue));
-            num >>= 5;
-        }
+		return encodeString.toString();
+	}
 
-        num += 63;
-        encodeString.append((char) (num));
+	public static int decodeNumber(String value) {
+		int[] r = decodeNumberWithIndex(value, 0);
+		return r[0];
+	}
 
-        return encodeString.toString();
-    }
+	public static int[] decodeNumberWithIndex(String value, int index) {
 
-    public static int decodeNumber(String value) {
-        int[] r = decodeNumberWithIndex(value, 0);
-        return r[0];
-    }
+		if (value.length() == 0)
+			throw new IllegalArgumentException("string is empty");
 
-    public static int[] decodeNumberWithIndex(String value, int index) {
+		int num = 0;
+		int v = 0;
+		int shift = 0;
 
-        if (value.length() == 0)
-            throw new IllegalArgumentException("string is empty");
+		do {
+			v = value.charAt(index++) - 63;
+			num |= (v & 0x1f) << shift;
+			shift += 5;
+		} while (v >= 0x20);
 
-        int num = 0;
-        int v = 0;
-        int shift = 0;
-
-        do {
-            v = value.charAt(index++) - 63;
-            num |= (v & 0x1f) << shift;
-            shift += 5;
-        } while (v >= 0x20);
-
-        return new int[] { num, index };
-    }
+		return new int[] { num, index };
+	}
 }
