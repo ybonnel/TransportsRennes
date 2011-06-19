@@ -224,11 +224,14 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 			protected void onPostExecute(Void result) {
 				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
-						Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
-						ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>(parkRelaisFiltres.size());
-						parkRelaisSerializable.addAll(parkRelaisFiltres);
-						intent.putExtra("parkRelais", parkRelaisSerializable);
-						startActivity(intent);
+						if (!parkRelaisFiltres.isEmpty()) {
+							Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
+							ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>(parkRelaisFiltres
+									.size());
+							parkRelaisSerializable.addAll(parkRelaisFiltres);
+							intent.putExtra("parkRelais", parkRelaisSerializable);
+							startActivity(intent);
+						}
 					}
 				});
 				activeGps();

@@ -228,11 +228,13 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			protected void onPostExecute(Void result) {
 				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
-						Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-						ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-						stationsSerializable.addAll(stationsFiltrees);
-						intent.putExtra("stations", stationsSerializable);
-						startActivity(intent);
+						if (!stationsFiltrees.isEmpty()) {
+							Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+							ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
+							stationsSerializable.addAll(stationsFiltrees);
+							intent.putExtra("stations", stationsSerializable);
+							startActivity(intent);
+						}
 					}
 				});
 				activeGps();
