@@ -47,14 +47,13 @@ public class Widget21UpdateUtil {
 
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		calendar.roll(Calendar.MINUTE, -4);
-		List<Integer> prochainsDeparts = null;
-		do {
-			calendar.roll(Calendar.MINUTE, 1);
-			prochainsDeparts = Horaire.getProchainHorairesAsList(
-					favori.ligneId, favori.arretId, 3, calendar);
-		} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1) < now);
 		try {
-			
+
+			List<Integer> prochainsDeparts = null;
+			do {
+				calendar.roll(Calendar.MINUTE, 1);
+				prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 3, calendar);
+			} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1) < now);
 			LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 
 			Integer prochainDepart = null;
