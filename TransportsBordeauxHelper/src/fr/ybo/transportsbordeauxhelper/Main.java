@@ -18,13 +18,23 @@ package fr.ybo.transportsbordeauxhelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
+import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsbordeauxhelper.gtfs.GestionnaireGtfs;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.Agency;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.Calendar;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.CalendarDates;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.Route;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.Stop;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.StopTime;
+import fr.ybo.transportsbordeauxhelper.gtfs.modele.Trip;
 
 /**
  * Classe réalisant l'enchènement des traitements.
+ * 
  * @author ybonnel
- *
+ * 
  */
 public final class Main {
 
@@ -55,30 +65,38 @@ public final class Main {
 
 	/**
 	 * Main.
-	 * @param args innutile.
-	 * @throws IOException problème d'entrée/sortie.
+	 * 
+	 * @param args
+	 *            innutile.
+	 * @throws IOException
+	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException {
-		genereGtfs(false);
+		genereGtfs(true);
 	}
+
 	/**
 	 * Traitement principale.
-	 * @param toGtfs si true, on génère du GTFS, sinon on génère dans l'autre format.
-	 * @throws IOException problème d'entrée/sortie.
+	 * 
+	 * @param toGtfs
+	 *            si true, on génère du GTFS, sinon on génère dans l'autre
+	 *            format.
+	 * @throws IOException
+	 *             problème d'entrée/sortie.
 	 */
 	private static void genereGtfs(boolean toGtfs) throws IOException {
 		long startTime = System.currentTimeMillis();
 		GestionnaireGtfs.getInstance().optimizeIds();
 		System.out.println("Avant compression : ");
 		afficheCompteurs();
-		CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
-		compressionTripAndCalendar.compressTripsAndCalendars();
-		compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
-		System.out.println("Après compression : ");
-		afficheCompteurs();
 		if (toGtfs) {
 			genereGtfsOptimises();
 		} else {
+			CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
+			compressionTripAndCalendar.compressTripsAndCalendars();
+			compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+			System.out.println("Après compression : ");
+			afficheCompteurs();
 			Generateur generateur = new Generateur();
 			generateur.remplirArrets();
 			generateur.remplirCalendrier();
@@ -93,7 +111,7 @@ public final class Main {
 		}
 		long timeElapsed = System.currentTimeMillis() - startTime;
 		System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
-		
+
 	}
 
 	/**
@@ -109,10 +127,37 @@ public final class Main {
 
 	/**
 	 * Génère un GTFS optimisé.
-	 * @throws IOException problème d'entrée/sortie.
+	 * 
+	 * @throws IOException
+	 *             problème d'entrée/sortie.
 	 */
+	@SuppressWarnings("unchecked")
 	private static void genereGtfsOptimises() throws IOException {
 
-	}
+		File repertoireOut = new File(REPERTOIRE_OUT);
+		MoteurCsv moteurCsv = new MoteurCsv(Arrays.asList(Agency.class, Calendar.class, CalendarDates.class,
+				Route.class, Stop.class, Trip.class, StopTime.class));
+		System.out.println("Génération de agency.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "agency.txt"), GestionnaireGtfs.getInstance().getAgencies(),
+				Agency.class);
+		System.out.println("Génération de calendar_dates.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "calendar_dates.txt"), GestionnaireGtfs.getInstance()
+				.getCalendarsDates(), CalendarDates.class);
+		System.out.println("Génération de calendar.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "calendar.txt"), GestionnaireGtfs.getInstance().getCalendars()
+				.values(), Calendar.class);
+		System.out.println("Génération de routes.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "routes.txt"), GestionnaireGtfs.getInstance().getRoutes().values(),
+				Route.class);
+		System.out.println("Génération de stops.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "stops.txt"), GestionnaireGtfs.getInstance().getStops().values(),
+				Stop.class);
+		System.out.println("Génération de trips.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "trips.txt"), GestionnaireGtfs.getInstance().getTrips().values(),
+				Trip.class);
+		System.out.println("Génération de stop_times.txt");
+		moteurCsv.writeFile(new File(repertoireOut, "stop_times.txt"), GestionnaireGtfs.getInstance().getStopTimes()
+				.values(), StopTime.class);
 
+	}
 }

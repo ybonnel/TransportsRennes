@@ -28,15 +28,15 @@ import fr.ybo.transportsbordeauxhelper.gtfs.GestionnaireGtfs;
 @FichierCsv("trips.txt")
 public class Trip {
 	// CHECKSTYLE:OFF
-	@BaliseCsv(value = "route_id", ordre = 2)
+	@BaliseCsv(value = "route_id", ordre = 0)
 	public String routeId;
 	@BaliseCsv(value = "service_id", ordre = 1)
 	public String serviceId;
-	@BaliseCsv(value = "trip_id", ordre = 0)
+	@BaliseCsv(value = "trip_id", ordre = 2)
 	public String id;
 	@BaliseCsv(value = "trip_headsign", ordre = 3)
 	public String headSign;
-	@BaliseCsv(value = "block_id", ordre = 5)
+	@BaliseCsv(value = "block_id", ordre = 4)
 	public String blockId;
 
 	public Calendar getCalendar() {

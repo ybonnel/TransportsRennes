@@ -31,17 +31,17 @@ public class StopTime {
 	// CHECKSTYLE:OFF
 	@BaliseCsv(value = "trip_id", ordre = 0)
 	public String tripId;
-	@BaliseCsv(value = "arrival_time", adapter = AdapterTime.class, ordre = 3)
+	@BaliseCsv(value = "arrival_time", adapter = AdapterTime.class, ordre = 1)
 	public int heureArrivee;
-	@BaliseCsv(value = "departure_time", adapter = AdapterTime.class, ordre = 4)
+	@BaliseCsv(value = "departure_time", adapter = AdapterTime.class, ordre = 2)
 	public int heureDepart;
-	@BaliseCsv(value = "stop_id", ordre = 1)
+	@BaliseCsv(value = "stop_id", ordre = 3)
 	public String stopId;
-	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class, ordre = 2)
+	@BaliseCsv(value = "stop_sequence", adapter = AdapterInteger.class, ordre = 4)
 	public int stopSequence;
-	@BaliseCsv(value = "pickup_type", ordre = 6)
+	@BaliseCsv(value = "pickup_type", ordre = 5)
 	public String pickupType;
-	@BaliseCsv(value = "drop_off_type", ordre = 7)
+	@BaliseCsv(value = "drop_off_type", ordre = 6)
 	public String dropOffType;
 
 	public String getKey() {

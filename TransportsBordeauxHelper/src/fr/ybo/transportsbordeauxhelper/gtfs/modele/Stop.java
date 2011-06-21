@@ -27,14 +27,23 @@ import fr.ybo.moteurcsv.annotation.FichierCsv;
  */
 @FichierCsv("stops.txt")
 public class Stop {
+	// stop_id,stop_name,stop_lat,stop_lon,stop_desc,zone_id,stop_url,stop_code
 	@BaliseCsv(value = "stop_id", ordre = 0)
 	public String id;
 	@BaliseCsv(value = "stop_name", ordre = 1)
 	public String nom;
-	@BaliseCsv(value = "stop_lat", adapter = AdapterDouble.class, ordre = 4)
+	@BaliseCsv(value = "stop_lat", adapter = AdapterDouble.class, ordre = 2)
 	public double latitude;
-	@BaliseCsv(value = "stop_lon", adapter = AdapterDouble.class, ordre = 5)
+	@BaliseCsv(value = "stop_lon", adapter = AdapterDouble.class, ordre = 3)
 	public double longitude;
+	@BaliseCsv(value = "stop_desc", ordre = 4)
+	public String stopDesc;
+	@BaliseCsv(value = "zone_id", ordre = 5)
+	public String zoneId;
+	@BaliseCsv(value = "stop_url", ordre = 6)
+	public String stopUrl;
+	@BaliseCsv(value = "stop_code", ordre = 7)
+	public String stopCode;
 
 	@Override
 	public int hashCode() {
