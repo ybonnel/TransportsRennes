@@ -62,12 +62,9 @@
     <string name="ajouterFavori">Ajouter aux favoris</string>
     <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="recuperationHoraires">Récupération des horaires en cours...</string>
-    <string name="alertes">Alertes</string>
     <string name="twitter">Twitter</string>
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
     <string name="dialogRequeteAlerts">Interrogation du TBC.</string>
-    <string name="btn_alert">Alertes</string>
-    <string name="btn_parking">Parcs relais</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
     <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur</string>
@@ -95,4 +92,27 @@
     <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (4 minutes sur un Nexus One),
         et occupera environ 25Mo de données, mais vous permettra d\'accéder à tous les horaires de manière instantanée. Êtes-vous sûr de vouloir les charger?
     </string>
+    
+    <string name="textAdresseDepart">Départ</string>
+    <string name="textAdresseArrivee">Destination</string>
+    <string name="exempleAdresse">Ex : place de la victoire, Bordeaux</string>
+    <string name="hint_positionCourante">Position courante</string>
+    <string name="erreur_geocodage">Une erreur est survenue lors du géo-codage de l\'adresse, veuillez réessayer plus tard.</string>
+    <string name="erreur_pasAdresseDepart">Aucune correspondance n\'a été trouvé pour l\'adresse de départ</string>
+    <string name="erreur_pasAdresseArrivee">Aucune correspondance n\'a été trouvé pour l\'adresse de destination</string>
+    <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
+    <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
+    <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>    
+    <string name="erreur_outOfBounds">L\'itinéraire demandé possède des adresses en déhors de la zone couverte.</string>
+    <string name="erreur_noTransitTimes">Aucun bus trouvé pour l\'heure demandée.</string>
+    <string name="erreur_pathNotFound">Aucun itinéraire trouvé.</string>
+    <string name="geocodageAdresseDepart">Geo-codage de l\'adresse de départ</string>
+    <string name="geocodageAdresseArrivee">Geo-codage de l\'adresse de destination</string>
+    <string name="calculItineraire">Calcul des itinéraires possibles en cours.</string>
+    <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>
+    <string name="depart">Départ à %1$s</string>
+    <string name="arrivee">Arrivée à %1$s</string>
+    <string name="btn_itineraires">Calcul d\'itinéraires</string>
+    <string name="menu_alerts">Alertes</string>
+    <string name="alertes">Alertes</string>
 </resources>

@@ -67,4 +67,25 @@ public class MenuAccueil {
 			return MenuAccueil.onOptionsItemSelected(this, item);
 		}
 	}
+
+	public abstract static class Activity extends android.app.Activity {
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			super.onCreateOptionsMenu(menu);
+			addMenu(menu);
+			return true;
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			super.onOptionsItemSelected(item);
+			return MenuAccueil.onOptionsItemSelected(this, item);
+		}
+	}
 }

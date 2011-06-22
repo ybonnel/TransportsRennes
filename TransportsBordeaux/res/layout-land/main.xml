@@ -37,7 +37,7 @@
 			android:layout_height="fill_parent" android:layout_weight="1">
 			<Button android:id="@+id/home_btn_bus_favori" style="@style/HomeButton"
 				android:text="@string/btn_bus_favori" android:drawableTop="@drawable/home_btn_bus_favori" />
-			<Button android:drawableTop="@drawable/home_btn_alert" style="@style/HomeButton" android:id="@+id/home_btn_alert" android:text="@string/btn_alert"></Button>
+			<Button android:drawableTop="@drawable/home_btn_itineraire" style="@style/HomeButton" android:id="@+id/home_btn_itineraire" android:text="@string/btn_itineraires"></Button>
 			<Button android:id="@+id/home_btn_velo_favori" style="@style/HomeButton"
 				android:text="@string/btn_velo_favori" android:drawableTop="@drawable/home_btn_velo_favori" />
 		</TableRow>

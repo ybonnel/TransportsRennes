@@ -93,10 +93,10 @@ public class TransportsBordeaux extends Activity {
 				onVeloFavoriClick();
 			}
 		});
-		Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
-		btnAlert.setOnClickListener(new View.OnClickListener() {
+		Button btnItineraire = (Button) findViewById(R.id.home_btn_itineraire);
+		btnItineraire.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				onAlertClick();
+				onItineraireClick();
 			}
 		});
 		Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
@@ -163,8 +163,8 @@ public class TransportsBordeaux extends Activity {
 		startActivity(intent);
 	}
 
-	public void onAlertClick() {
-		Intent intent = new Intent(this, TabAlertes.class);
+	public void onItineraireClick() {
+		Intent intent = new Intent(this, ItineraireRequete.class);
 		startActivity(intent);
 	}
 
@@ -234,14 +234,17 @@ public class TransportsBordeaux extends Activity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
-	private static final int MENU_LOAD_LINES = 2;
-	private static final int MENU_SHARE = 3;
+	private static final int MENU_ALERTS = 2;
+	private static final int MENU_LOAD_LINES = 3;
+	private static final int MENU_SHARE = 4;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
+		MenuItem itemAlerts = menu.add(GROUP_ID, MENU_ALERTS, Menu.NONE, R.string.menu_alerts);
+		itemAlerts.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
@@ -256,6 +259,10 @@ public class TransportsBordeaux extends Activity {
 			case MENU_ID:
 				showDialog();
 				return true;
+			case MENU_ALERTS:
+				Intent intent = new Intent(this, TabAlertes.class);
+				startActivity(intent);
+				break;
 			case MENU_LOAD_LINES:
 				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));

@@ -48,6 +48,11 @@
 		<activity android:name=".ArretsOnMap"
 			android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".DetailTrajet" android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".ItineraireRequete" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
+                  android:theme="@android:style/Theme"/>
+        <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
+                  android:theme="@android:style/Theme"/>
+        <activity android:name=".TrajetOnMap" android:configChanges="orientation|keyboardHidden"/>
 
 		<receiver android:name=".TransportsWidget11" android:label="@string/widget11_name">
 			<intent-filter>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
+  Contributors:
+      ybonnel - initial API and implementation
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/mainlayout" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+	<ScrollView android:layout_width="fill_parent"
+		android:layout_height="150dip"
+		android:layout_alignParentBottom="true"
+		android:id="@+id/scrollTrajets">
+		<LinearLayout android:orientation="vertical" android:id="@+id/trajetDetail"
+			android:layout_width="fill_parent" android:layout_height="fill_parent"
+			android:background="#000000">
+		</LinearLayout>
+	</ScrollView>
+
+	<com.google.android.maps.MapView
+		android:id="@+id/mapview" android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:clickable="true"
+		android:layout_above="@id/scrollTrajets"
+		android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" />
+
+	<!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
+	<!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->
+
+</RelativeLayout>

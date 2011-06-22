@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportsbordeaux;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,6 +33,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+
+import com.google.code.geocoder.model.LatLng;
+import com.google.code.geocoder.model.LatLngBounds;
+
+import fr.ybo.opentripplanner.client.OpenTripPlannerException;
+import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.modele.Alert;
 import fr.ybo.transportsbordeaux.modele.Arret;
@@ -41,6 +48,7 @@ import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Direction;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
+import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportsbordeaux.util.Version;
 
 /**
@@ -76,11 +84,26 @@ public class TransportsBordeauxApplication extends Application {
 				} catch (Exception ignored) {
 
 				}
+				try {
+					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+					if (metadata != null) {
+						bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
+								metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
+								new BigDecimal(metadata.getMinLongitude())));
+					}
+				} catch (OpenTripPlannerException ignore) {
+				}
 				return null;
 			}
 		}.execute();
 
 		checkVersion.execute();
+	}
+
+	private static LatLngBounds bounds;
+
+	public static LatLngBounds getBounds() {
+		return bounds;
 	}
 
 	private static Set<String> lignesWithAlerts = new HashSet<String>();
