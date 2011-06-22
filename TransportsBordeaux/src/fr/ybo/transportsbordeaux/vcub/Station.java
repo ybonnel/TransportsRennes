@@ -110,6 +110,8 @@ public class Station extends ObjetWithDistance implements Serializable {
 				stations.add(s);
 			}
 			return stations;
+		} catch (TbcErreurReseaux erreurReseau) {
+			throw erreurReseau;
 		} catch (SocketException exceptionReseaux) {
 			throw new TbcErreurReseaux(exceptionReseaux);
 		} catch (SocketTimeoutException exceptionReseaux) {
