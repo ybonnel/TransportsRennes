@@ -29,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -39,6 +38,7 @@ import com.google.android.maps.OverlayItem;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
 import fr.ybo.opentripplanner.client.modele.TraverseMode;
+import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.map.LineItemizedOverlay;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsbordeaux.util.Coordinate;
@@ -46,7 +46,7 @@ import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportsbordeaux.util.PolylineEncoder;
 
-public class TrajetOnMap extends MapActivity {
+public class TrajetOnMap extends MenuAccueil.MapActivity {
 
 	private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 

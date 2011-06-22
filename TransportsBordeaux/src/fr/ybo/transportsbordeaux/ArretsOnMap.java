@@ -24,20 +24,20 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayArret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
-public class ArretsOnMap extends MapActivity {
+public class ArretsOnMap extends MenuAccueil.MapActivity {
 
 	/**
 	 * Called when the activity is first created.

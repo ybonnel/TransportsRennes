@@ -33,7 +33,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 
+import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 
@@ -58,6 +60,8 @@ import fr.ybo.transportsbordeaux.util.Version;
 		resToastText = R.string.erreurNonPrevue)
 public class TransportsBordeauxApplication extends Application {
 
+	private static final String UA_ACCOUNT = "UA-20831542-3";
+
 	private static TransportsBordeauxDatabase databaseHelper;
 
 	public static TransportsBordeauxDatabase getDataBaseHelper() {
@@ -72,6 +76,12 @@ public class TransportsBordeauxApplication extends Application {
 		super.onCreate();
 		databaseHelper = new TransportsBordeauxDatabase(this, Arrays.asList(Arret.class, ArretFavori.class, ArretRoute.class,
 				DernierMiseAJour.class, Direction.class, Ligne.class, VeloFavori.class));
+
+		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
+		traker.start(UA_ACCOUNT, this);
+		handler = new Handler();
+		myTraker = new TransportsBordeauxApplication.MyTraker(traker);
+		myTraker.trackPageView("/TransportsBordeauxApplication/Version/" + Version.getVersionCourante(this));
 
 		// Récupération des alertes
 		new AsyncTask<Void, Void, Void>() {
@@ -98,6 +108,32 @@ public class TransportsBordeauxApplication extends Application {
 		}.execute();
 
 		checkVersion.execute();
+	}
+
+	private static Handler handler;
+
+	private static MyTraker myTraker;
+
+	public static class MyTraker {
+
+		public MyTraker(GoogleAnalyticsTracker traker) {
+			this.traker = traker;
+		}
+
+		private final GoogleAnalyticsTracker traker;
+
+		public void trackPageView(final String url) {
+			handler.post(new Runnable() {
+				public void run() {
+					traker.trackPageView(url);
+					traker.dispatch();
+				}
+			});
+		}
+	}
+
+	public static MyTraker getTraker() {
+		return myTraker;
 	}
 
 	private static LatLngBounds bounds;
