@@ -69,10 +69,15 @@ public class TransportsRennesApplication extends Application {
 		ACRA.init(this);
 		super.onCreate();
 		databaseHelper = new TransportsRennesDatabase(this);
+		try {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
 		TransportsWidget11.verifKiller(getApplicationContext(), appWidgetManager);
 		TransportsWidget21.verifKiller(getApplicationContext(), appWidgetManager);
+		} catch (NullPointerException ignore) {
+			// Arrive si l'appli est démarrée alors que les widgets sont en
+			// train d'être mis à jour.
+		}
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
