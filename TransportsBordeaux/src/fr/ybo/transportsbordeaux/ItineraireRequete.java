@@ -357,6 +357,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		}
 		final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
 				calendar.getTime());
+		request.setMaxWalkDistance(1500.0);
 		new AsyncTask<Void, Void, Void>() {
 			private ProgressDialog progressDialog;
 			private Response reponse;
