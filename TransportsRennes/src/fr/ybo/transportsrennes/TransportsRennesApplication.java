@@ -33,7 +33,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Handler;
 
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
@@ -82,7 +81,6 @@ public class TransportsRennesApplication extends Application {
 		traker.start(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
 		myTraker = new TransportsRennesApplication.MyTraker(traker);
-		myTraker.trackPageView("/TransportsRennesApplication/Model/" + Build.MODEL);
 		myTraker.trackPageView("/TransportsRennesApplication/Version/" + Version.getVersionCourante(this));
 
 		// Récupération des alertes
