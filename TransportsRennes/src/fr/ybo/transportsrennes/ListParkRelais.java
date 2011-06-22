@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Criteria;
@@ -196,7 +197,11 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements Location
 				String lat = Double.toString(parkRelai.getLatitude());
 				String lon = Double.toString(parkRelai.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + lat + ',' + lon);
-				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException activityNotFound) {
+					Toast.makeText(ListParkRelais.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 
