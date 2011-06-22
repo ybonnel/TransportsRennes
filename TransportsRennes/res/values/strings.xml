@@ -165,4 +165,5 @@
     <string name="shareText">Transports Rennes, l\'application Android pour vous faciliter les Transports Rennais : http://goo.gl/ALKs0</string>
     
     <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.</string>
+    <string name="noGoogleMap">GoogleMap non trouvé</string>
 </resources>

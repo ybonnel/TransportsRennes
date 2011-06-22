@@ -133,5 +133,7 @@
     
     <string name="menu_share">Compartir</string>
     <string name="shareText">Transports Rennes, aplicación Android para ayudarle a transportar Rennes: http://goo.gl/ALKs0</string>
+    
+    <string name="noGoogleMap">GoogleMap not found</string>
 </resources>
 

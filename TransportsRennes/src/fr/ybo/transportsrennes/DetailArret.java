@@ -23,6 +23,7 @@ import java.util.List;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
@@ -147,7 +148,11 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				String lat = Double.toString(arret.getLatitude());
 				String lon = Double.toString(arret.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + lat + ',' + lon);
-				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException activityNotFound) {
+					Toast.makeText(DetailArret.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		myLigne = new Ligne();
