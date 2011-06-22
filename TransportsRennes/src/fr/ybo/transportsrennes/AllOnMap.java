@@ -38,11 +38,11 @@ import android.widget.Checkable;
 import android.widget.Toast;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
@@ -55,7 +55,7 @@ import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 
-public class AllOnMap extends MapActivity {
+public class AllOnMap extends MenuAccueil.MapActivity {
 
 	private MapView mapView;
 	private MyGeoClusterer<Arret> clustererForArret;

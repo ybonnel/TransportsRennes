@@ -48,6 +48,28 @@ public class MenuAccueil {
 		return false;
 	}
 
+	public abstract static class MapActivity extends com.google.android.maps.MapActivity {
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			super.onCreateOptionsMenu(menu);
+			addMenu(menu);
+			return true;
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			super.onOptionsItemSelected(item);
+			return MenuAccueil.onOptionsItemSelected(this, item);
+		}
+	}
+
 	public abstract static class ListActivity extends android.app.ListActivity {
 
 		@Override

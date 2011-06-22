@@ -24,19 +24,19 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.Formatteur;
 
-public class ParkRelaisOnMap extends MapActivity {
+public class ParkRelaisOnMap extends MenuAccueil.MapActivity {
 
 	private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
