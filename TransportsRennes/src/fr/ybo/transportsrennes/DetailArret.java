@@ -158,6 +158,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		myLigne = new Ligne();
 		myLigne.id = favori.ligneId;
 		myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
+		if (myLigne == null) {
+			Toast.makeText(DetailArret.this, R.string.erreurLigneInconue, Toast.LENGTH_LONG).show();
+			finish();
+		}
 		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {
