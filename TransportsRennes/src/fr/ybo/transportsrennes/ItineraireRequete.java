@@ -356,11 +356,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
 				calendar.getTime());
 		request.setMaxWalkDistance(1500.0);
-		new AsyncTask<Void, Void, Void>() {
+		new AsyncTask<Void, Void, Response>() {
 			private ProgressDialog progressDialog;
-			private Response reponse;
-
-			private boolean erreurReseaux = false;
 
 			@Override
 			protected void onPreExecute() {
@@ -370,24 +367,23 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			}
 
 			@Override
-			protected Void doInBackground(Void... voids) {
+			protected Response doInBackground(Void... voids) {
 				try {
-					reponse = CalculItineraires.getInstance().getItineraries(request);
+					return CalculItineraires.getInstance().getItineraries(request);
 				} catch (OpenTripPlannerException e) {
 					if (e.getCause() != null && e.getCause() instanceof SocketException) {
-						erreurReseaux = true;
+						return null;
 					} else {
 						throw new TransportsRennesException(e);
 					}
 				}
-				return null;
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
-				super.onPostExecute(result);
+			protected void onPostExecute(Response reponse) {
+				super.onPostExecute(reponse);
 				progressDialog.dismiss();
-				if (erreurReseaux) {
+				if (reponse == null) {
 					Toast.makeText(ItineraireRequete.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 				} else if (reponse.getError() != null) {
 					LOG_YBO.erreur(reponse.getError().getMsg());
