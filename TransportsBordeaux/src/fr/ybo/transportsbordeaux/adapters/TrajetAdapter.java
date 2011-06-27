@@ -73,24 +73,26 @@ public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 		holder.departPieton.setText(context.getString(R.string.depart, formatHeure(heureDepart)));
 		holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.endTime)));
 		holder.layoutTrajets.removeAllViews();
-		for (Leg leg : trajet.legs.leg) {
-			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
-			int icone;
-			TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
-			if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
-				icone = R.drawable.ipieton;
-				directionTrajet.setVisibility(View.GONE);
-			} else {
-				directionTrajet.setVisibility(View.VISIBLE);
-				icone = IconeLigne.getIconeResource(leg.route);
-				directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + leg.getDirection());
+		if (trajet.legs != null) {
+			for (Leg leg : trajet.legs.leg) {
+				RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+				int icone;
+				TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
+				if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
+					icone = R.drawable.ipieton;
+					directionTrajet.setVisibility(View.GONE);
+				} else {
+					directionTrajet.setVisibility(View.VISIBLE);
+					icone = IconeLigne.getIconeResource(leg.route);
+					directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + leg.getDirection());
+				}
+				((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
+				((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
+				((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
+				((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
+				((TextView) portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
+				holder.layoutTrajets.addView(portionLayout);
 			}
-			((ImageView)portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
-			((TextView)portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
-			((TextView)portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
-			((TextView)portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
-			((TextView)portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
-			holder.layoutTrajets.addView(portionLayout);
 		}
 		return convertViewLocal;
 	}
