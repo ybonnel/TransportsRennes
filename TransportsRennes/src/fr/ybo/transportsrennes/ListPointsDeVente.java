@@ -226,12 +226,14 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 				super.onPostExecute(result);
 				findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
 					public void onClick(View view) {
-						Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
-						ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(
-								pointsDeVenteFiltres.size());
-						pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
-						intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
-						startActivity(intent);
+						if (!pointsDeVenteFiltres.isEmpty()) {
+							Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
+							ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(
+									pointsDeVenteFiltres.size());
+							pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
+							intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
+							startActivity(intent);
+						}
 					}
 				});
 				activeGps();
