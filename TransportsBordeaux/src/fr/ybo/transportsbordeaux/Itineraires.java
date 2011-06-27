@@ -16,13 +16,14 @@
  */
 package fr.ybo.transportsbordeaux;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
-import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.TrajetAdapter;
 
@@ -31,13 +32,14 @@ public class Itineraires extends MenuAccueil.ListActivity {
 	/**
 	 * Called when the activity is first created.
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.itineraires);
-		Response itineraireReponse = (Response) getIntent().getExtras().getSerializable("itinerairesReponse");
+		List<Itinerary> itineraries = (List<Itinerary>) getIntent().getExtras().getSerializable("itineraires");
 		int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-		setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
+		setListAdapter(new TrajetAdapter(this, itineraries, heureDepart));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

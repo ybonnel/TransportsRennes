@@ -57,6 +57,7 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
+import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
@@ -408,7 +409,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 					Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
 				} else {
 					Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-					intent.putExtra("itinerairesReponse", reponse);
+					intent.putExtra("itineraires", new ArrayList<Itinerary>(reponse.getPlan().itineraries.itinerary));
 					int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					intent.putExtra("heureDepart", heureDepart);
 					startActivity(intent);

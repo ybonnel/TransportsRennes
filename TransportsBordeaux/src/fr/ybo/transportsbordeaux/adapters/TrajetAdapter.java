@@ -17,6 +17,7 @@
 package fr.ybo.transportsbordeaux.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -30,21 +31,20 @@ import android.widget.TextView;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Leg;
 import fr.ybo.opentripplanner.client.modele.TraverseMode;
-import fr.ybo.opentripplanner.client.modele.TripPlan;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 
-	private TripPlan tripPlan;
+	private List<Itinerary> itineraries;
 	private final LayoutInflater inflater;
 	private int heureDepart;
 	private Context context;
 
-	public TrajetAdapter(Context context, TripPlan tripPlan, int heureDepart) {
-		super(context, R.layout.trajet, tripPlan.itineraries.itinerary);
+	public TrajetAdapter(Context context, List<Itinerary> itineraries, int heureDepart) {
+		super(context, R.layout.trajet, itineraries);
 		this.heureDepart = heureDepart;
-		this.tripPlan = tripPlan;
+		this.itineraries = itineraries;
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 	}
@@ -69,7 +69,7 @@ public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 		} else {
 			holder = (TrajetAdapter.ViewHolder) convertViewLocal.getTag();
 		}
-		Itinerary trajet = tripPlan.itineraries.itinerary.get(position);
+		Itinerary trajet = itineraries.get(position);
 		holder.departPieton.setText(context.getString(R.string.depart, formatHeure(heureDepart)));
 		holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.endTime)));
 		holder.layoutTrajets.removeAllViews();
