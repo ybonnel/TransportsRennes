@@ -45,8 +45,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
@@ -135,8 +133,6 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 		if (!locationUtil.activeGps()) {
 			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
-		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private void terminer() {
