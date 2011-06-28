@@ -41,6 +41,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
@@ -202,6 +206,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} else {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance) {

@@ -22,13 +22,9 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -43,11 +39,17 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.util.LocationUtil;
+import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances
@@ -55,12 +57,9 @@ import fr.ybo.transportsbordeaux.modele.Ligne;
  * 
  * @author ybonnel
  */
-public class ListArretByPosition extends MenuAccueil.ListActivity implements LocationListener {
+public class ListArretByPosition extends MenuAccueil.ListActivity implements UpdateLocationListenner {
 
-	/**
-	 * Le locationManager permet d'accéder au GPS du téléphone.
-	 */
-	private LocationManager locationManager;
+	private LocationUtil locationUtil;
 
 	/**
 	 * Liste des stations.
@@ -70,79 +69,16 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 	private List<Arret> arretsIntent;
 
-	private Location lastLocation;
-
-	/**
-	 * Permet de mettre à jour les distances des arrêts par rapport à une
-	 * nouvelle position.
-	 * 
-	 * @param location
-	 *            position courante.
-	 */
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
-			lastLocation = location;
-			synchronized (arrets) {
-				for (Arret arret : arrets) {
-					arret.calculDistance(location);
-				}
-				Collections.sort(arrets, new Arret.ComparatorDistance());
-			}
-			metterAJourListeArrets();
-		}
-	}
-
-	public void onLocationChanged(Location arg0) {
-		mettreAjoutLoc(arg0);
-	}
-
-	public void onProviderDisabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onProviderEnabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-	}
-
-	/**
-	 * Active le GPS.
-	 */
-	private void activeGps() {
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
-		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
-			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
-				gpsTrouve = true;
-			}
-		}
-		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void desactiveGps() {
-		locationManager.removeUpdates(this);
-	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
-		activeGps();
+		locationUtil.activeGps();
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		desactiveGps();
+		locationUtil.desactiveGps();
 	}
 
 	private void metterAJourListeArrets() {
@@ -169,7 +105,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable(
 				"arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listarretgps_input);
@@ -220,12 +156,17 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 			@Override
 			protected void onPostExecute(Void result) {
 				metterAJourListeArrets();
-				activeGps();
+				updateLocation(locationUtil.getCurrentLocation());
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
 				super.onPostExecute(result);
 			}
 		}.execute();
+		if (!locationUtil.activeGps()) {
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+		}
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 
 	}
 
@@ -347,6 +288,20 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Loc
 
 		}.execute();
 
+	}
+
+	@Override
+	public void updateLocation(Location location) {
+		if (location == null) {
+			return;
+		}
+		synchronized (arrets) {
+			for (Arret arret : arrets) {
+				arret.calculDistance(location);
+			}
+			Collections.sort(arrets, new Arret.ComparatorDistance());
+		}
+		metterAJourListeArrets();
 	}
 
 }

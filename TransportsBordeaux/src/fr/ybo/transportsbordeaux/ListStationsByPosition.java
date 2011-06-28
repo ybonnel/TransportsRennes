@@ -22,12 +22,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -53,6 +49,8 @@ import fr.ybo.transportsbordeaux.adapters.VeloAdapter;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.tbc.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.Formatteur;
+import fr.ybo.transportsbordeaux.util.LocationUtil;
+import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsbordeaux.vcub.Station;
 
 /**
@@ -61,12 +59,9 @@ import fr.ybo.transportsbordeaux.vcub.Station;
  * 
  * @author ybonnel
  */
-public class ListStationsByPosition extends MenuAccueil.ListActivity implements LocationListener {
+public class ListStationsByPosition extends MenuAccueil.ListActivity implements UpdateLocationListenner {
 
-	/**
-	 * Le locationManager permet d'accéder au GPS du téléphone.
-	 */
-	private LocationManager locationManager;
+	private LocationUtil locationUtil;
 
 	/**
 	 * Liste des stations.
@@ -74,79 +69,15 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
 	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
 
-	private Location lastLocation;
-
-	/**
-	 * Permet de mettre à jour les distances des stations par rapport à une
-	 * nouvelle position.
-	 * 
-	 * @param location
-	 *            position courante.
-	 */
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
-			lastLocation = location;
-			synchronized (stations) {
-				for (Station station : stations) {
-					station.calculDistance(location);
-				}
-				Collections.sort(stations, new Station.ComparatorDistance());
-			}
-			metterAJourListeStations();
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-		}
-	}
-
-	public void onLocationChanged(Location arg0) {
-		mettreAjoutLoc(arg0);
-	}
-
-	public void onProviderDisabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onProviderEnabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-	}
-
-	/**
-	 * Active le GPS.
-	 */
-	private void activeGps() {
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
-		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
-			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
-				gpsTrouve = true;
-			}
-		}
-		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void desactiveGps() {
-		locationManager.removeUpdates(this);
-	}
-
 	@Override
 	protected void onResume() {
 		super.onResume();
-		activeGps();
+		locationUtil.activeGps();
 	}
 
 	@Override
 	protected void onPause() {
-		desactiveGps();
+		locationUtil.desactiveGps();
 		super.onPause();
 	}
 
@@ -172,7 +103,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liststations);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.liststations_input);
@@ -221,9 +152,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				activeGps();
+				updateLocation(locationUtil.getCurrentLocation());
 			}
 		}.execute();
+		if (!locationUtil.activeGps()) {
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+		}
 
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
@@ -289,7 +223,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				protected void onPostExecute(Void result) {
 					super.onPostExecute(result);
 					metterAJourListeStations();
-					mettreAjoutLoc(lastLocation);
+					updateLocation(locationUtil.getCurrentLocation());
 				}
 			}.execute();
 			return true;
@@ -333,5 +267,20 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void updateLocation(Location location) {
+		if (location == null) {
+			return;
+		}
+		synchronized (stations) {
+			for (Station station : stations) {
+				station.calculDistance(location);
+			}
+			Collections.sort(stations, new Station.ComparatorDistance());
+		}
+		metterAJourListeStations();
+
 	}
 }

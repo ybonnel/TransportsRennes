@@ -21,12 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -44,6 +40,8 @@ import fr.ybo.transportsrennes.adapters.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.LocationUtil;
+import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
@@ -52,7 +50,9 @@ import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
  * 
  * @author ybonnel
  */
-public class ListPointsDeVente extends MenuAccueil.ListActivity implements LocationListener {
+public class ListPointsDeVente extends MenuAccueil.ListActivity implements UpdateLocationListenner {
+
+	private LocationUtil locationUtil;
 
 	/**
 	 * Permet d'accéder aux apis keolis.
@@ -60,90 +60,21 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 	private final Keolis keolis = Keolis.getInstance();
 
 	/**
-	 * Le locationManager permet d'accéder au GPS du téléphone.
-	 */
-	private LocationManager locationManager;
-
-	/**
 	 * Liste des points de vente.
 	 */
 	private List<PointDeVente> pointsDeVenteIntent;
-	private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>(150));
-	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>(
-			150));
-
-	private Location lastLocation;
-
-	/**
-	 * Permet de mettre à jour les distances des points de vente par rapport à
-	 * une nouvelle position.
-	 * 
-	 * @param location
-	 *            position courante.
-	 */
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
-			lastLocation = location;
-			synchronized (pointsDeVente) {
-				for (PointDeVente pointDeVente : pointsDeVente) {
-					pointDeVente.calculDistance(location);
-				}
-				Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
-			}
-			metterAJourListe();
-		}
-	}
-
-	public void onLocationChanged(Location arg0) {
-		mettreAjoutLoc(arg0);
-	}
-
-	public void onProviderDisabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onProviderEnabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-	}
-
-	/**
-	 * Active le GPS.
-	 */
-	private void activeGps() {
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
-		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
-			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
-				gpsTrouve = true;
-			}
-		}
-		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void desactiveGps() {
-		locationManager.removeUpdates(this);
-	}
+	private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>());
+	private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>());
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		activeGps();
+		locationUtil.activeGps();
 	}
 
 	@Override
 	protected void onPause() {
-		desactiveGps();
+		locationUtil.desactiveGps();
 		super.onPause();
 	}
 
@@ -171,7 +102,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 		pointsDeVenteIntent = (List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
 				.getSerializable("pointsDeVente"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
 		listView = getListView();
 		editText = (EditText) findViewById(R.id.listpointsdevente_input);
@@ -236,9 +167,25 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Locat
 						}
 					}
 				});
-				activeGps();
+				updateLocation(locationUtil.getCurrentLocation());
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 			}
 		}.execute();
+		if (!locationUtil.activeGps()) {
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	public void updateLocation(Location location) {
+		if (location == null) {
+			return;
+		}
+		synchronized (pointsDeVente) {
+			for (PointDeVente pointDeVente : pointsDeVente) {
+				pointDeVente.calculDistance(location);
+			}
+			Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
+		}
+		metterAJourListe();
 	}
 }

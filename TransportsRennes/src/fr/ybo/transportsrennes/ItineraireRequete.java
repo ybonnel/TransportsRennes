@@ -27,13 +27,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -63,83 +59,30 @@ import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
+import fr.ybo.transportsrennes.util.LocationUtil;
+import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.LogYbo;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 
-public class ItineraireRequete extends MenuAccueil.Activity implements LocationListener {
+public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLocationListenner {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);
 
-	/**
-	 * Le locationManager permet d'accéder au GPS du téléphone.
-	 */
-	private LocationManager locationManager;
-
-	private Location lastLocation;
-
-	/**
-	 * Permet de mettre à jour les distances des stations par rapport à une
-	 * nouvelle position.
-	 * 
-	 * @param location
-	 *            position courante.
-	 */
-	private void mettreAjoutLoc(Location location) {
-		if (location != null && (lastLocation == null || location.getAccuracy() <= lastLocation.getAccuracy() + 50.0)) {
-			lastLocation = location;
-		}
-	}
-
-	public void onLocationChanged(Location arg0) {
-		mettreAjoutLoc(arg0);
-	}
-
-	public void onProviderDisabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onProviderEnabled(String arg0) {
-		desactiveGps();
-		activeGps();
-	}
-
-	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-	}
+	private LocationUtil locationUtil;
 
 	/**
 	 * Active le GPS.
 	 */
-	private void activeGps() {
-		Criteria criteria = new Criteria();
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);
-		mettreAjoutLoc(locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER));
-		List<String> providers = locationManager.getProviders(criteria, true);
-		boolean gpsTrouve = false;
-		for (String providerName : providers) {
-			locationManager.requestLocationUpdates(providerName, 10000L, 20L, this);
-			if (providerName.equals(LocationManager.GPS_PROVIDER)) {
-				gpsTrouve = true;
-			}
-		}
-		if (!gpsTrouve) {
-			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-		}
-	}
-
-	private void desactiveGps() {
-		locationManager.removeUpdates(this);
-	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		activeGps();
+		locationUtil.activeGps();
 	}
 
 	@Override
 	protected void onPause() {
-		desactiveGps();
+		locationUtil.desactiveGps();
 		super.onPause();
 	}
 
@@ -153,7 +96,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.itinerairerequete);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationUtil = new LocationUtil(this, this);
 		calendar = Calendar.getInstance();
 		dateItineraire = (TextView) findViewById(R.id.dateItineraire);
 		heureItineraire = (TextView) findViewById(R.id.heureItineraire);
@@ -190,6 +133,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 				terminer();
 			}
 		});
+		if (!locationUtil.activeGps()) {
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void terminer() {
@@ -204,7 +150,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			adresseArrivee = textArrivee.toString();
 		}
 		if ((adresseDepart == null || adresseArrivee == null)
-				&& (lastLocation == null || lastLocation.getAccuracy() > 50)) {
+				&& (locationUtil.getCurrentLocation() == null || locationUtil.getCurrentLocation().getAccuracy() > 50)) {
 			Toast.makeText(this, R.string.erreur_gpsPasPret, Toast.LENGTH_LONG).show();
 		} else {
 			geoCoderAdresse(adresseDepart, adresseArrivee);
@@ -343,15 +289,15 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 			latitudeDepart = resultDepart.getGeometry().getLocation().getLat().doubleValue();
 			longitudeDepart = resultDepart.getGeometry().getLocation().getLng().doubleValue();
 		} else {
-			latitudeDepart = lastLocation.getLatitude();
-			longitudeDepart = lastLocation.getLongitude();
+			latitudeDepart = locationUtil.getCurrentLocation().getLatitude();
+			longitudeDepart = locationUtil.getCurrentLocation().getLongitude();
 		}
 		if (resultArrivee != null) {
 			latitudeArrivee = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
 			longitudeArrivee = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
 		} else {
-			latitudeArrivee = lastLocation.getLatitude();
-			longitudeArrivee = lastLocation.getLongitude();
+			latitudeArrivee = locationUtil.getCurrentLocation().getLatitude();
+			longitudeArrivee = locationUtil.getCurrentLocation().getLongitude();
 		}
 		final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
 				calendar.getTime());
@@ -451,6 +397,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements LocationL
 					calendar.get(Calendar.MINUTE), true);
 		}
 		return null;
+	}
+
+	public void updateLocation(Location location) {
 	}
 
 }

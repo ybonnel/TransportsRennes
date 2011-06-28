@@ -28,6 +28,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.DetailTrajetAdapter;
 import fr.ybo.transportsbordeaux.modele.Direction;
@@ -89,6 +93,8 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
 			}
 		});
 		lv.setTextFilterEnabled(true);
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
 	private void construireListe() {
