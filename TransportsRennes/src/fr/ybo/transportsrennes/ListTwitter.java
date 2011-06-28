@@ -40,6 +40,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		setContentView(R.layout.liste);
 		setListAdapter(new TwitterAdapter(this, messages));
 		ListView lv = getListView();
+		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteTwitter)) {
 			@Override

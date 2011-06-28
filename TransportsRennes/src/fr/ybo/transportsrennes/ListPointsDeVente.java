@@ -105,6 +105,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
 		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
 		listView = getListView();
+		listView.setFastScrollEnabled(true);
 		editText = (EditText) findViewById(R.id.listpointsdevente_input);
 		editText.addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

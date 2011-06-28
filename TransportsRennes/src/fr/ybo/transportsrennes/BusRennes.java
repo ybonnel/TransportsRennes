@@ -39,6 +39,7 @@ public class BusRennes extends MenuAccueil.ListActivity {
 		List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
 		setListAdapter(new LigneAdapter(this, lignes));
 		ListView lv = getListView();
+		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

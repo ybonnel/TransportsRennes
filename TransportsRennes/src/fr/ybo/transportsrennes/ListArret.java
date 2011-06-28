@@ -136,6 +136,7 @@ public class ListArret extends MenuAccueil.ListActivity {
 		construireCursor();
 		setListAdapter(new ArretAdapter(this, currentCursor, myLigne));
 		ListView lv = getListView();
+		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@SuppressWarnings({"unchecked"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

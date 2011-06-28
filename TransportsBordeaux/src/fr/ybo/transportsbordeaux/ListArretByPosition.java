@@ -108,6 +108,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
 		listView = getListView();
+		listView.setFastScrollEnabled(true);
 		editText = (EditText) findViewById(R.id.listarretgps_input);
 		editText.addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

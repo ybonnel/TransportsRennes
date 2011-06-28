@@ -106,6 +106,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
 		listView = getListView();
+		listView.setFastScrollEnabled(true);
 		editText = (EditText) findViewById(R.id.liststations_input);
 		editText.addTextChangedListener(new TextWatcher() {
 			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

@@ -49,6 +49,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 		setContentView(R.layout.liste);
 		setListAdapter(new AlertAdapter(this, alerts));
 		ListView lv = getListView();
+		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
