@@ -25,8 +25,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsbordeauxhelper.exception.TbcException;
@@ -194,28 +198,32 @@ public class Generateur {
 			Map<String, List<Trajet>> mapTrajetChaine = new HashMap<String, List<Trajet>>();
 			Map<String, Arret> arretOfLigne = new HashMap<String, Arret>();
 			// Parcours des trajets.
-			for (Trajet trajet : trajets.get(ligne.id)) {
-				StringBuilder chaineBuilder = new StringBuilder();
-				Horaire terminus = null;
-				for (Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
-					horairesByLigneId.get(ligne.id).add(horaire);
-					if (!arretOfLigne.containsKey(horaire.arretId)) {
-						if (!arrets.containsKey(horaire.arretId)) {
-							System.err.println("Arret inconnu : " + horaire.arretId);
+			if (!trajets.containsKey(ligne.id)) {
+				System.err.println("Pas de trajet pour la ligne " + ligne.id);
+			} else {
+				for (Trajet trajet : trajets.get(ligne.id)) {
+					StringBuilder chaineBuilder = new StringBuilder();
+					Horaire terminus = null;
+					for (Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
+						horairesByLigneId.get(ligne.id).add(horaire);
+						if (!arretOfLigne.containsKey(horaire.arretId)) {
+							if (!arrets.containsKey(horaire.arretId)) {
+								System.err.println("Arret inconnu : " + horaire.arretId);
+							}
+							arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
 						}
-						arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
+						chaineBuilder.append(horaire.arretId);
+						chaineBuilder.append(',');
+						terminus = horaire;
 					}
-					chaineBuilder.append(horaire.arretId);
-					chaineBuilder.append(',');
-					terminus = horaire;
+					terminus.terminus = true;
+					if (!countByChaine.containsKey(chaineBuilder.toString())) {
+						countByChaine.put(chaineBuilder.toString(), 0);
+						mapTrajetChaine.put(chaineBuilder.toString(), new ArrayList<Trajet>());
+					}
+					countByChaine.put(chaineBuilder.toString(), countByChaine.get(chaineBuilder.toString()) + 1);
+					mapTrajetChaine.get(chaineBuilder.toString()).add(trajet);
 				}
-				terminus.terminus = true;
-				if (!countByChaine.containsKey(chaineBuilder.toString())) {
-					countByChaine.put(chaineBuilder.toString(), 0);
-					mapTrajetChaine.put(chaineBuilder.toString(), new ArrayList<Trajet>());
-				}
-				countByChaine.put(chaineBuilder.toString(), countByChaine.get(chaineBuilder.toString()) + 1);
-				mapTrajetChaine.get(chaineBuilder.toString()).add(trajet);
 			}
 			// parcours des arrêts
 			for (Arret arret : arretOfLigne.values()) {
@@ -371,6 +379,8 @@ public class Generateur {
 			calendrier.vendredi = calendar.vendredi;
 			calendrier.samedi = calendar.samedi;
 			calendrier.dimanche = calendar.dimanche;
+			calendrier.dateDebut = calendar.startDate;
+			calendrier.dateFin = calendar.endDate;
 			calendriers.add(calendrier);
 		}
 	}
@@ -427,6 +437,112 @@ public class Generateur {
 			ligne.nomLong = route.nomLong;
 			ligne.ordre = ordre++;
 			lignes.add(ligne);
+		}
+	}
+
+	public void priseEnCompteDatePublication(String datePublication, String dateNextPublication) {
+		// Suppression des calendriers innutiles.
+		Iterator<Calendrier> itCalendriers = calendriers.iterator();
+		Set<Integer> calendrierIds = new HashSet<Integer>();
+		while (itCalendriers.hasNext()) {
+			Calendrier calendrier = itCalendriers.next();
+			if (datePublication.compareTo(calendrier.dateFin) > 0) {
+				// calendrier anterieur à la date de publication.
+				itCalendriers.remove();
+			} else if (calendrier.dateDebut.compareTo(dateNextPublication) > 0) {
+				// calendrier futur à la date de prochaine publication.
+				itCalendriers.remove();
+			} else {
+				// calendrier valide, on ajoute l'id à la liste des ids.
+				calendrierIds.add(calendrier.id);
+			}
+		}
+		// netoyage des calendriersException.
+		Iterator<CalendrierException> itCalendrierException = calendriersException.iterator();
+		while (itCalendrierException.hasNext()) {
+			if (!calendrierIds.contains(itCalendrierException.next().calendrierId)) {
+				itCalendrierException.remove();
+			}
+		}
+		// nettoyage des trajets.
+		Set<Integer> trajetIds = new HashSet<Integer>();
+		Set<Integer> directionIds = new HashSet<Integer>();
+		for (List<Trajet> trajetByLigne : trajets.values()) {
+			Iterator<Trajet> itTrajet = trajetByLigne.iterator();
+			while (itTrajet.hasNext()) {
+				Trajet trajet = itTrajet.next();
+				if (!calendrierIds.contains(trajet.calendrierId)) {
+					itTrajet.remove();
+				} else {
+					trajetIds.add(trajet.id);
+					directionIds.add(trajet.directionId);
+				}
+			}
+		}
+
+		// nettoyage des directions
+		Set<Integer> directionToDelete = new HashSet<Integer>();
+		for (Integer directionId : directions.keySet()) {
+			if (!directionIds.contains(directionId)) {
+				directionToDelete.add(directionId);
+			}
+		}
+		for (Integer idToDelete : directionToDelete) {
+			directions.remove(idToDelete);
+		}
+
+		// nettoyage des horaires par lignes
+		Set<String> arretsUtilises = new HashSet<String>();
+		for (List<Horaire> horairesByLigne : horairesByLigneId.values()) {
+			Iterator<Horaire> itHoraires = horairesByLigne.iterator();
+			while (itHoraires.hasNext()) {
+				Horaire horaire = itHoraires.next();
+				if (!trajetIds.contains(horaire.trajetId)) {
+					itHoraires.remove();
+				} else {
+					arretsUtilises.add(horaire.arretId);
+				}
+			}
+		}
+		Set<String> lignesToDelete = new HashSet<String>();
+		for (Entry<String, List<Horaire>> entry : horairesByLigneId.entrySet()) {
+			if (entry.getValue().isEmpty()) {
+				lignesToDelete.add(entry.getKey());
+			}
+		}
+		// nettoyage des horaires
+		Iterator<Horaire> itHoraires = horaires.iterator();
+		while (itHoraires.hasNext()) {
+			if (!trajetIds.contains(itHoraires.next().trajetId)) {
+				itHoraires.remove();
+			}
+		}
+
+		// nettoyage des arrêts
+		Set<String> arretsIds = new HashSet<String>(arrets.keySet());
+		for (String arretId : arretsIds) {
+			if (!arretsUtilises.contains(arretId)) {
+				arrets.remove(arretId);
+			}
+		}
+
+		// nettoyage des lignes
+		Iterator<Ligne> itLignes = lignes.iterator();
+		while (itLignes.hasNext()) {
+			if (lignesToDelete.contains(itLignes.next().id)) {
+				itLignes.remove();
+			}
+		}
+
+		// nettoyage des arretsRoutes
+		Iterator<ArretRoute> itArretRoute = arretsRoutes.iterator();
+		while (itArretRoute.hasNext()) {
+			ArretRoute arretRoute = itArretRoute.next();
+			if (!arretsUtilises.contains(arretRoute.arretId)) {
+				itArretRoute.remove();
+			} else if (lignesToDelete.contains(arretRoute.ligneId)) {
+				itArretRoute.remove();
+			}
 		}
 	}
 }

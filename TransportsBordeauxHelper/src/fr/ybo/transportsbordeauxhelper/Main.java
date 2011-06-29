@@ -18,7 +18,10 @@ package fr.ybo.transportsbordeauxhelper;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsbordeauxhelper.gtfs.GestionnaireGtfs;
@@ -57,6 +60,8 @@ public final class Main {
 	 */
 	public static final String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
 
+	private static final int NB_JOURS_PREV = 14;
+
 	/**
 	 * Constructeur privé pour empécher l'instanciation.
 	 */
@@ -70,9 +75,10 @@ public final class Main {
 	 *            innutile.
 	 * @throws IOException
 	 *             problème d'entrée/sortie.
+	 * @throws ParseException
 	 */
-	public static void main(String[] args) throws IOException {
-		genereGtfs(true);
+	public static void main(String[] args) throws IOException, ParseException {
+		genereGtfs(false, "20110630");
 	}
 
 	/**
@@ -83,29 +89,44 @@ public final class Main {
 	 *            format.
 	 * @throws IOException
 	 *             problème d'entrée/sortie.
+	 * @throws ParseException
 	 */
-	private static void genereGtfs(boolean toGtfs) throws IOException {
+	private static void genereGtfs(boolean toGtfs, String datePublication) throws IOException, ParseException {
 		long startTime = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date dateDebut = sdf.parse(datePublication);
+		java.util.Calendar calendar = java.util.Calendar.getInstance();
+		calendar.setTime(dateDebut);
+		calendar.roll(java.util.Calendar.DAY_OF_YEAR, NB_JOURS_PREV);
+		Date dateDebutMax = calendar.getTime();
+		String dateNextPublication = sdf.format(dateDebutMax);
+		System.out.println("Date publication : " + dateDebut);
+		System.out.println("Date next publication : " + dateDebutMax);
 		GestionnaireGtfs.getInstance().optimizeIds();
 		System.out.println("Avant compression : ");
 		afficheCompteurs();
 		if (toGtfs) {
 			genereGtfsOptimises();
 		} else {
-			CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
-			compressionTripAndCalendar.compressTripsAndCalendars();
-			compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+			/*
+			 * CompressionTripAndCalendar compressionTripAndCalendar = new
+			 * CompressionTripAndCalendar();
+			 * compressionTripAndCalendar.compressTripsAndCalendars();
+			 * compressionTripAndCalendar
+			 * .replaceTripGenereCalendarAndCompressStopTimes();
+			 */
 			System.out.println("Après compression : ");
 			afficheCompteurs();
 			Generateur generateur = new Generateur();
-			generateur.remplirArrets();
-			generateur.remplirCalendrier();
-			generateur.remplirCalendrierException();
-			generateur.remplirDirections();
-			generateur.remplirHoraires();
-			generateur.remplirLignes();
-			generateur.remplirTrajets();
-			generateur.remplirArretRoutes();
+			generateur.remplirArrets(); //
+			generateur.remplirCalendrier(); //
+			generateur.remplirCalendrierException(); //
+			generateur.remplirDirections(); //
+			generateur.remplirHoraires(); //
+			generateur.remplirLignes(); //
+			generateur.remplirTrajets(); //
+			generateur.remplirArretRoutes(); //
+			generateur.priseEnCompteDatePublication(datePublication, dateNextPublication);
 			generateur.genererFichiers(new File(REPERTOIRE_OUT));
 			generateur.rechercherPointsInterets();
 		}
