@@ -151,10 +151,22 @@ public class Generateur {
 		}
 		moteurCsv.writeFile(new File(repertoire, "trajets.txt"), trajets, Trajet.class);
 		for (Ligne ligne : lignes) {
-			moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horairesByLigneId.get(ligne.id),
-					Horaire.class);
-			System.out.println("Nombre d'horaire pour la ligne " + ligne.nomCourt + " : "
-					+ horairesByLigneId.get(ligne.id).size());
+			List<Horaire> horaires = horairesByLigneId.get(ligne.id);
+			long tailleOctets = 0;
+			for (Horaire horaire : horaires) {
+				tailleOctets += horaire.nbOctets();
+			}
+			if (tailleOctets < (1024 * 1024)) {
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horaires, Horaire.class);
+			} else {
+				// Découpage de la liste en deux liste
+				int pivot = horaires.size() / 2;
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horaires.subList(0, pivot),
+						Horaire.class);
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt.suite"),
+						horaires.subList(pivot, horaires.size()), Horaire.class);
+			}
+			System.out.println("Nombre d'horaire pour la ligne " + ligne.nomCourt + " : " + horaires.size());
 		}
 		genereZips(repertoire);
 	}
