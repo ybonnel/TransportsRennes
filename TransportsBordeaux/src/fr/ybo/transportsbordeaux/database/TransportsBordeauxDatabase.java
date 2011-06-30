@@ -17,11 +17,13 @@
 package fr.ybo.transportsbordeaux.database;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportsbordeaux.modele.Arret;
@@ -39,7 +41,7 @@ import fr.ybo.transportsbordeaux.modele.VeloFavori;
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
 	private static final String DATABASE_NAME = "transportsbordeaux.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	@SuppressWarnings("unchecked")
 	private static final List<Class<?>> DATABASE_ENTITITES =
@@ -71,6 +73,31 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 				public void upgrade(SQLiteDatabase db) {
 					getBase().dropDataBase(db);
 					getBase().createDataBase(db);
+				}
+			});
+			mapUpgrades.put(4, new UpgradeDatabase() {
+
+				@Override
+				public void upgrade(SQLiteDatabase db) {
+
+					Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+							" type = 'table'", null, null, null, null);
+					while (cursor.moveToNext()) {
+						String tableName = cursor.getString(0);
+						if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName)
+								&& !"ArretFavori".equals(tableName)) {
+							db.execSQL("DROP TABLE " + tableName);
+						}
+					}
+					cursor.close();
+					getBase().getTable(Arret.class).createTable(db);
+					getBase().getTable(ArretRoute.class).createTable(db);
+					getBase().getTable(Calendrier.class).createTable(db);
+					getBase().getTable(CalendrierException.class).createTable(db);
+					getBase().getTable(DernierMiseAJour.class).createTable(db);
+					getBase().getTable(Direction.class).createTable(db);
+					getBase().getTable(Ligne.class).createTable(db);
+					getBase().getTable(Trajet.class).createTable(db);
 				}
 			});
 		}

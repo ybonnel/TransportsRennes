@@ -18,9 +18,9 @@ package fr.ybo.transportsbordeaux.modele;
 
 
 import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
-import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
@@ -59,4 +59,10 @@ public class Calendrier {
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class)
 	@Column(type = TypeColumn.BOOLEAN)
 	public Boolean dimanche;
+	@BaliseCsv(value = "dateDebut")
+	@Column
+	public String dateDebut;
+	@BaliseCsv(value = "dateFin")
+	@Column
+	public String dateFin;
 }
