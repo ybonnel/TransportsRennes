@@ -163,7 +163,7 @@ public class Generateur {
 				int pivot = horaires.size() / 2;
 				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horaires.subList(0, pivot),
 						Horaire.class);
-				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt.suite"),
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + "_suite.txt"),
 						horaires.subList(pivot, horaires.size()), Horaire.class);
 			}
 			System.out.println("Nombre d'horaire pour la ligne " + ligne.nomCourt + " : " + horaires.size());
