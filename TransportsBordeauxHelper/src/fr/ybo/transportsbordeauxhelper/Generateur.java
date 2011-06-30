@@ -415,7 +415,6 @@ public class Generateur {
 		Ligne ligne;
 		List<Route> routes = new ArrayList<Route>();
 		routes.addAll(GestionnaireGtfs.getInstance().getRoutes().values());
-		int maxLength = 0;
 		// Recherche de la route avec le nom le plus long.
 		for (Route route : routes) {
 			if (route.nomLong.charAt(0) == '"') {
@@ -424,8 +423,8 @@ public class Generateur {
 			if (route.nomLong.charAt(route.nomLong.length() - 1) == '"') {
 				route.nomLong = route.nomLong.substring(0, route.nomLong.length() - 1);
 			}
-			if (route.nomCourt.length() > maxLength) {
-				maxLength = route.nomCourt.length();
+			if (route.nomCourt.length() == 1 && route.nomCourt.charAt(0) >= '1' && route.nomCourt.charAt(0) <= '9') {
+				route.nomCourt = "0" + route.nomCourt;
 			}
 		}
 		// Tri.
