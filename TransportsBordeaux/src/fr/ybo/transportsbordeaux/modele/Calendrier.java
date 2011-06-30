@@ -17,14 +17,25 @@
 package fr.ybo.transportsbordeaux.modele;
 
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
-import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
+import fr.ybo.transportsbordeaux.util.JoursFeries;
 
 /**
  * Un calendrier.
@@ -59,4 +70,93 @@ public class Calendrier {
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class)
 	@Column(type = TypeColumn.BOOLEAN)
 	public Boolean dimanche;
+	@BaliseCsv(value = "dateDebut")
+	@Column
+	public String dateDebut;
+	@BaliseCsv(value = "dateFin")
+	@Column
+	public String dateFin;
+
+	private static List<Calendrier> calendriers = null;
+
+	private synchronized static List<Calendrier> getCalendriers() {
+		if (calendriers == null) {
+			calendriers = TransportsBordeauxApplication.getDataBaseHelper().selectAll(Calendrier.class);
+		}
+		return calendriers;
+	}
+
+	private static Map<String, List<CalendrierException>> exceptionsByDates;
+
+	private synchronized static Map<String, List<CalendrierException>> getExceptionsByDates() {
+		if (exceptionsByDates == null) {
+			exceptionsByDates = new HashMap<String, List<CalendrierException>>();
+			for (CalendrierException exception : TransportsBordeauxApplication.getDataBaseHelper().selectAll(
+					CalendrierException.class)) {
+				if (!exceptionsByDates.containsKey(exception.date)) {
+					exceptionsByDates.put(exception.date, new ArrayList<CalendrierException>());
+				}
+				exceptionsByDates.get(exception.date).add(exception);
+			}
+		}
+		return exceptionsByDates;
+	}
+
+	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
+
+	private static Map<String, List<Integer>> calendriersIdByDate = new HashMap<String, List<Integer>>();
+
+	public synchronized static List<Integer> getCalendriersIdForDate(Calendar calendar) {
+		String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
+		if (calendriersIdByDate.containsKey(today)) {
+			return calendriersIdByDate.get(today);
+		}
+		Set<Integer> exceptionsAjout = new HashSet<Integer>();
+		Set<Integer> exceptionsSuppr = new HashSet<Integer>();
+		if (getExceptionsByDates().containsKey(today)) {
+			for (CalendrierException exception : getExceptionsByDates().get(today)) {
+				if (exception.ajout) {
+					exceptionsAjout.add(exception.calendrierId);
+				} else {
+					exceptionsSuppr.add(exception.calendrierId);
+				}
+			}
+		}
+		List<Integer> calendriers = new ArrayList<Integer>();
+		for (Calendrier calendrier : getCalendriers()) {
+			if (calendrier.isOkForCalendar(calendar, today) && !exceptionsSuppr.contains(calendrier.id)) {
+				calendriers.add(calendrier.id);
+			} else if (exceptionsAjout.contains(calendrier.id)) {
+				calendriers.add(calendrier.id);
+			}
+		}
+		calendriersIdByDate.put(today, calendriers);
+		return calendriers;
+	}
+
+	private boolean isOkForCalendar(Calendar calendar, String today) {
+		if (today.compareTo(dateDebut) < 0 || today.compareTo(dateFin) > 0) {
+			return false;
+		}
+		if (JoursFeries.isJourFerie(calendar.getTime())) {
+			return dimanche;
+		}
+		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+			case Calendar.MONDAY:
+				return lundi;
+			case Calendar.TUESDAY:
+				return mardi;
+			case Calendar.WEDNESDAY:
+				return mercredi;
+			case Calendar.THURSDAY:
+				return jeudi;
+			case Calendar.FRIDAY:
+				return vendredi;
+			case Calendar.SATURDAY:
+				return samedi;
+			case Calendar.SUNDAY:
+				return dimanche;
+		}
+		return false;
+	}
 }

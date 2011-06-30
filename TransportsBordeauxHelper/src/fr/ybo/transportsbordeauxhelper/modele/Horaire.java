@@ -42,4 +42,9 @@ public class Horaire {
 	public boolean terminus;
 
 	public Trajet trajet;
+
+	public int nbOctets() {
+		return arretId.length() + 1 + Integer.toString(trajetId).length() + 1 + Integer.toString(heureDepart).length()
+				+ Integer.toString(stopSequence).length() + 3;
+	}
 }

@@ -21,11 +21,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.res.Resources;
 import android.database.DatabaseUtils.InsertHelper;
@@ -47,32 +44,23 @@ public final class GestionZipKeolis {
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
 	private static final String URL_STOP_TIMES = "horaires_";
-	
-	private static final Map<String, Integer> mapExceptionsStopTimes = new HashMap<String, Integer>();
-	static {
-		mapExceptionsStopTimes.put("15", 2);
-	}
 
 	private static List<CoupleResourceFichier> getResourceForStopTime(String ligneId) throws GestionFilesException {
 		try {
-			if (mapExceptionsStopTimes.containsKey(ligneId)) {
-				List<CoupleResourceFichier> retour = new ArrayList<GestionZipKeolis.CoupleResourceFichier>();
-				String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
-				for (int count = 1; count <= mapExceptionsStopTimes
-						.get(ligneId); count++) {
-					String nomResourceTmp = nomResource + "_" + count;
-					int resourceId = R.raw.class.getDeclaredField(
-							nomResourceTmp).getInt(null);
-					retour.add(new CoupleResourceFichier(resourceId,
-							nomResourceTmp + ".txt"));
-				}
-				return retour;
-			}
+			List<CoupleResourceFichier> retour = new ArrayList<GestionZipKeolis.CoupleResourceFichier>();
 			String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
+			String nomResourceAlternatif = nomResource + "_suite";
 			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(
 					null);
-			return Collections.singletonList(new CoupleResourceFichier(
+			retour.add(new CoupleResourceFichier(
 					resourceId, nomResource + ".txt"));
+			try {
+				int resourceAlternatifId = R.raw.class.getDeclaredField(nomResourceAlternatif).getInt(null);
+				retour.add(new CoupleResourceFichier(resourceAlternatifId, nomResourceAlternatif + ".txt"));
+			} catch (NoSuchFieldException noSuchField) {
+
+			}
+			return retour;
 		} catch (Exception exception) {
 			throw new TcbException("Erreur sur la ligne " + ligneId, exception);
 		}
