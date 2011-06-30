@@ -165,26 +165,12 @@ public class Horaire {
 	}
 
 	private static String clauseWhereForTodayCalendrier(Calendar calendar) {
-		if (JoursFeries.isJourFerie(calendar.getTime())) {
-			return "Dimanche = 1";
+		StringBuilder clause = new StringBuilder(" Calendrier.id IN ( -1");
+		for (Integer id : Calendrier.getCalendriersIdForDate(calendar)) {
+			clause.append(", ");
+			clause.append(id);
 		}
-		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
-			case Calendar.MONDAY:
-				return "Lundi = 1";
-			case Calendar.TUESDAY:
-				return "Mardi = 1";
-			case Calendar.WEDNESDAY:
-				return "Mercredi = 1";
-			case Calendar.THURSDAY:
-				return "Jeudi = 1";
-			case Calendar.FRIDAY:
-				return "Vendredi = 1";
-			case Calendar.SATURDAY:
-				return "Samedi = 1";
-			case Calendar.SUNDAY:
-				return "Dimanche = 1";
-			default:
-				return null;
-		}
+		clause.append(')');
+		return clause.toString();
 	}
 }
