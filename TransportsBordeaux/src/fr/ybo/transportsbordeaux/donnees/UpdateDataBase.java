@@ -95,14 +95,9 @@ public final class UpdateDataBase {
 
 	public static void chargeDetailLigne(Ligne ligne, Resources resources) {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
-		try {
-			TransportsBordeauxApplication.getDataBaseHelper().beginTransaction();
-			ligne.chargerHeuresArrets(TransportsBordeauxApplication.getDataBaseHelper(), resources);
-			ligne.chargee = Boolean.TRUE;
-			TransportsBordeauxApplication.getDataBaseHelper().update(ligne);
-		} finally {
-			TransportsBordeauxApplication.getDataBaseHelper().endTransaction();
-		}
+		ligne.chargerHeuresArrets(TransportsBordeauxApplication.getDataBaseHelper(), resources);
+		ligne.chargee = Boolean.TRUE;
+		TransportsBordeauxApplication.getDataBaseHelper().update(ligne);
 		LOG_YBO.debug("Chargement en base de la ligne terminée");
 	}
 

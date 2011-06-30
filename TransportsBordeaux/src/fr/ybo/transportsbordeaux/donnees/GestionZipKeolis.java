@@ -66,7 +66,8 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, TransportsBordeauxDatabase dataBaseHelper,
+	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId,
+			final TransportsBordeauxDatabase dataBaseHelper,
 			Resources resources) {
 		try {
 			for (CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(ligneId)) {
@@ -84,6 +85,7 @@ public final class GestionZipKeolis {
 							.getWritableDatabase();
 					table.dropTable(db);
 					table.createTable(db);
+					dataBaseHelper.beginTransaction();
 					final InsertHelper ih = new InsertHelper(db,
 							table.getName());
 
@@ -96,27 +98,37 @@ public final class GestionZipKeolis {
 							.getColumnIndex("stopSequence");
 					final int terminusCol = ih.getColumnIndex("terminus");
 
-					moteurCsv.parseFileAndInsert(bufReader, Horaire.class,
-							new MoteurCsv.InsertObject<Horaire>() {
-								public void insertObject(Horaire objet) {
-									// Get the InsertHelper ready to insert a
-									// single row
-									ih.prepareForInsert();
 
-									// Add the data for each column
-									ih.bind(arretIdCol, objet.arretId);
-									ih.bind(trajetIdCol, objet.trajetId);
-									ih.bind(heureDepartCol, objet.heureDepart);
-									ih.bind(stopSequenceCol, objet.stopSequence);
-									ih.bind(terminusCol, objet.terminus);
+					moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
 
-									// Insert the row into the database.
-									ih.execute();
-								};
+						private int countLigne = 0;
 
-							});
+						public void insertObject(Horaire objet) {
+							countLigne++;
+							// Get the InsertHelper ready to insert a
+							// single row
+							ih.prepareForInsert();
+
+							// Add the data for each column
+							ih.bind(arretIdCol, objet.arretId);
+							ih.bind(trajetIdCol, objet.trajetId);
+							ih.bind(heureDepartCol, objet.heureDepart);
+							ih.bind(stopSequenceCol, objet.stopSequence);
+							ih.bind(terminusCol, objet.terminus);
+
+							// Insert the row into the database.
+							ih.execute();
+							if (countLigne > 10000) {
+								countLigne = 0;
+								dataBaseHelper.endTransaction();
+								dataBaseHelper.beginTransaction();
+							}
+						};
+
+					});
 				} finally {
 					bufReader.close();
+					dataBaseHelper.endTransaction();
 				}
 			}
 		} catch (Exception exception) {
