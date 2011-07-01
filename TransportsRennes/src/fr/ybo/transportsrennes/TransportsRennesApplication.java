@@ -105,8 +105,8 @@ public class TransportsRennesApplication extends Application {
 					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
 					if (metadata != null) {
 						bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
-								metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMinLatitude()),
-								new BigDecimal(metadata.getMinLongitude())));
+								metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMaxLatitude()),
+								new BigDecimal(metadata.getMaxLongitude())));
 					}
 				} catch (OpenTripPlannerException ignore) {
 				}

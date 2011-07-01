@@ -39,6 +39,7 @@ public class GeocodeUtil {
 				adresses = geocoderAndroid.getFromLocationName(request.getAddress(), MAX_RESULTS);
 			}
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		if (adresses == null || adresses.isEmpty()) {
 			return Geocoder.geocode(request);
