@@ -22,7 +22,6 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
-import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -55,7 +54,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
 						.setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
 				GeocodeResponse reponseResult = null;
 				try {
-					reponseResult = Geocoder.geocode(geocoderRequest);
+					reponseResult = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
 				} catch (Exception ignore) {
 				}
 

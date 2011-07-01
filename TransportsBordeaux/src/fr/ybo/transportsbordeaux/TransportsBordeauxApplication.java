@@ -51,6 +51,7 @@ import fr.ybo.transportsbordeaux.modele.Direction;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
+import fr.ybo.transportsbordeaux.util.GeocodeUtil;
 import fr.ybo.transportsbordeaux.util.Version;
 
 /**
@@ -68,6 +69,11 @@ public class TransportsBordeauxApplication extends Application {
 		return databaseHelper;
 	}
 
+	private static GeocodeUtil geocodeUtil;
+
+	public static GeocodeUtil getGeocodeUtil() {
+		return geocodeUtil;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -79,6 +85,7 @@ public class TransportsBordeauxApplication extends Application {
 
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.start(UA_ACCOUNT, this);
+		geocodeUtil = new GeocodeUtil(this);
 		handler = new Handler();
 		myTraker = new TransportsBordeauxApplication.MyTraker(traker);
 		myTraker.trackPageView("/TransportsBordeauxApplication/Version/" + Version.getVersionCourante(this));

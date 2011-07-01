@@ -45,7 +45,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -174,7 +173,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseDepart)
 							.setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds())
 							.getGeocoderRequest();
-					reponseDepart = Geocoder.geocode(geocoderRequest);
+					reponseDepart = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
 					if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
 						return null;
@@ -189,7 +188,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseArrivee)
 							.setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds())
 							.getGeocoderRequest();
-					reponseArrivee = Geocoder.geocode(geocoderRequest);
+					reponseArrivee = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
 					if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
 						return null;
