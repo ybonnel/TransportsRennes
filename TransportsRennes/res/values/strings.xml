@@ -145,6 +145,7 @@
     <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
     <string name="erreur_geocodage">Une erreur est survenue lors du géo-codage de l\'adresse, veuillez réessayer plus tard.</string>
+    <string name="erreur_geocodage_quota">Une erreur est survenue lors du géo-codage de l\'adresse, le quota est dépassé (2500 par jours).</string>
     <string name="erreur_pasAdresseDepart">Aucune correspondance n\'a été trouvé pour l\'adresse de départ</string>
     <string name="erreur_pasAdresseArrivee">Aucune correspondance n\'a été trouvé pour l\'adresse de destination</string>
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>

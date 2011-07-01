@@ -47,6 +47,7 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.Constantes;
 import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportsrennes.util.GeocodeUtil;
 import fr.ybo.transportsrennes.util.Version;
 
 /**
@@ -56,6 +57,12 @@ import fr.ybo.transportsrennes.util.Version;
 @ReportsCrashes(formKey = "dE5mNl9RV3NOc25XdnI1RWpNQnZGYlE6MQ", mode = ReportingInteractionMode.TOAST,
 		resToastText = R.string.erreurNonPrevue)
 public class TransportsRennesApplication extends Application {
+
+	private static GeocodeUtil geocodeUtil;
+
+	public static GeocodeUtil getGeocodeUtil() {
+		return geocodeUtil;
+	}
 
 	private static TransportsRennesDatabase databaseHelper;
 
@@ -68,6 +75,7 @@ public class TransportsRennesApplication extends Application {
 		ACRA.init(this);
 		super.onCreate();
 		databaseHelper = new TransportsRennesDatabase(this);
+		geocodeUtil = new GeocodeUtil(this);
 		try {
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
 		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);

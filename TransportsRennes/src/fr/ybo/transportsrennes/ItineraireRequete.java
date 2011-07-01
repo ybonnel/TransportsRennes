@@ -45,7 +45,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -160,7 +159,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 	private void geoCoderAdresse(final String adresseDepart, final String adresseArrivee) {
 		new AsyncTask<Void, Void, Void>() {
 			private ProgressDialog progressDialog;
-			private boolean erreur;
+			private boolean erreur = false;
+			private boolean erreurQuota = false;
 			private GeocodeResponse reponseDepart;
 			private GeocodeResponse reponseArrivee;
 
@@ -176,8 +176,11 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				if (adresseDepart != null) {
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseDepart)
 							.setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
-					reponseDepart = Geocoder.geocode(geocoderRequest);
-					if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
+					reponseDepart = TransportsRennesApplication.getGeocodeUtil().geocode(geocoderRequest);
+					if (reponseDepart != null && reponseDepart.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
+						erreurQuota = true;
+					} else if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
+
 						erreur = true;
 						return null;
 					}
@@ -190,8 +193,10 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					});
 					GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseArrivee)
 							.setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
-					reponseArrivee = Geocoder.geocode(geocoderRequest);
-					if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
+					reponseArrivee = TransportsRennesApplication.getGeocodeUtil().geocode(geocoderRequest);
+					if (reponseArrivee != null && reponseArrivee.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
+						erreurQuota = true;
+					} else if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 						erreur = true;
 						return null;
 					}
@@ -205,6 +210,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				progressDialog.dismiss();
 				if (erreur) {
 					Toast.makeText(ItineraireRequete.this, R.string.erreur_geocodage, Toast.LENGTH_LONG).show();
+				} else if (erreurQuota) {
+					Toast.makeText(ItineraireRequete.this, R.string.erreur_geocodage_quota, Toast.LENGTH_LONG).show();
 				} else {
 					traiterReponseGeoCodage(reponseDepart, reponseArrivee);
 				}
