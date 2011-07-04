@@ -41,6 +41,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -156,6 +157,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		myLigne = new Ligne();
 		myLigne.id = favori.ligneId;
 		myLigne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myLigne);
+		if (myLigne == null) {
+			Toast.makeText(DetailArret.this, R.string.erreurLigneInconue, Toast.LENGTH_LONG).show();
+			finish();
+		}
 		if (myLigne.chargee == null || !myLigne.chargee) {
 			chargerLigne();
 		} else {
