@@ -1,0 +1,42 @@
+ordre,id,nom_court,nom_long
+1,01,1,Cesson-Sévigné (Chêne Germain) <> Saint-Jacques-de-la-Lande (Morinais)
+2,02,2,Grand Quartier <> La Poterie / Haut Sancé
+3,03,3,Saint Laurent <> Alma
+4,04,4,Beauregard <> Beaulieu Atalante
+5,05,5,Patton <> Lycée Bréquigny
+6,06,6,Cesson-Sévigné (Base de Loisirs) <> Rennes (République)
+7,07,7,Chantepie (Rosa Parks) <> Rennes (République)
+8,08,8,Saint-Grégoire <> Rennes (La Poterie)
+9,09,9,Saint Laurent <> Cleunay Centre Commercial
+10,11,11,Z.I. Ouest / Stade Rennais <> Saint Saëns / Z.I. Sud-Est
+11,30,30,Stade Rennais <> Cesson-Sévigné (La Rigourdière)
+12,33,33,Saint-Jacques-de-la-Lande / Bréquigny <> La Poterie / Chantepie (Cucé)
+13,34,34,Z.I. Sud-Est / La Poterie <> Cesson-Sévigné (Saint Etienne)
+14,41,41,Gares <> Longs Champs / Gaudinais
+15,50,50,Rennes (République) <> Thorigné-Fouillard
+16,51,51,Rennes (Sainte Anne) <> Betton
+17,52,52,Saint-Gilles / Pacé <> Rennes (Villejean-Université) <> Montgermont / La Chapelle-des-Fougeretz
+18,53,53,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault
+19,54,54,Rennes (Charles de Gaulle) <> Le Rheu / Cintré
+20,55,55,Rennes (Charles de Gaulle) <> Mordelles / Le Verger
+21,56,56,Rennes (Charles de Gaulle) <> Chavagne
+22,57,57,Rennes (République) <> Saint-Jacques-de-la-Lande / Bruz
+23,59,59,Vern-sur-Seiche <> Rennes (La Poterie) / Rennes (Henri Fréville) <> Bruz
+24,61,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon
+25,64,64,Rennes (République) <> Acigné
+26,65,65,Rennes (Villejean-Université) <> Pacé / Parthenay / Clayes
+27,67,67,Rennes (République) <> Cesson-Sévigné / Brécé
+28,68,68,Rennes (Villejean-Université) <> Gévezé
+29,70,70,Rennes (Sainte Anne) <> Saint-Sulpice-la-Forêt
+30,71,71,Rennes (Sainte Anne) <> Betton / Chevaigné
+31,72,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan
+32,73,73,Rennes (La Poterie) <> Vern-sur-Seiche / Saint-Armel / Corps-Nuds
+33,74,74,Rennes (Henri Fréville) <> Orgères / Bourgbarré
+34,75,75,Rennes (La Poterie) <> Nouvoitou
+35,77,77,Rennes (Villejean-Université) <> Pacé
+36,78,78,Rennes (Villejean-Université) <> Betton / Saint-Grégoire
+37,94,94,Saint-Sulpice-la-Forêt / Chevaigné <> Betton
+38,100,100,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande
+39,88,API,Rennes (République) <> Les Etangs d'Apigné
+40,TTZ,TTZ,Rennes <> Touche Tizon
+41,a,a,La Poterie <> J.F. Kennedy
