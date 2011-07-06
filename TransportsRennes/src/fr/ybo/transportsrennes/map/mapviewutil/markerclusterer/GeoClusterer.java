@@ -137,7 +137,9 @@ public class GeoClusterer {
 	public void addItem(GeoItem item) {
 		// if not in viewport, add to leftItems
 		if (isItemNotInViewport(item)) {
-			leftItems.add(item);
+			synchronized (leftItems) {
+				leftItems.add(item);
+			}
 			return;
 		}
 		// else add to itemsOfCluster;
@@ -235,12 +237,14 @@ public class GeoClusterer {
 	 * add itemsOfCluster that were not clustered in last clustering.
 	 */
 	private void addLeftItems() {
-		if (leftItems.isEmpty()) {
-			return;
-		}
 		Collection<GeoItem> currentLeftItems = new ArrayList<GeoItem>(100);
-		currentLeftItems.addAll(leftItems);
-		leftItems.clear();
+		synchronized (leftItems) {
+			if (leftItems.isEmpty()) {
+				return;
+			}
+			currentLeftItems.addAll(leftItems);
+			leftItems.clear();
+		}
 		for (GeoItem currentLeftItem : currentLeftItems) {
 			addItem(currentLeftItem);
 		}
