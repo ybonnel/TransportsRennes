@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportsbordeaux;
 
+import java.io.FileNotFoundException;
 import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -318,7 +319,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				try {
 					reponse = CalculItineraires.getInstance().getItineraries(request);
 				} catch (OpenTripPlannerException e) {
-					if (e.getCause() != null && e.getCause() instanceof SocketException) {
+					if (e.getCause() != null
+							&& (e.getCause() instanceof SocketException || e.getCause() instanceof FileNotFoundException)) {
 						erreurReseaux = true;
 					} else {
 						throw new TcbException(e);
