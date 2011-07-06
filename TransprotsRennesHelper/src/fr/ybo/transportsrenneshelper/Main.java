@@ -56,16 +56,16 @@ public final class Main {
 	 * @throws IOException problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException {
-		genereGtfs(false);
+		genereGtfs(false, "20110711");
 	}
 	/**
 	 * Traitement principale.
 	 * @param toGtfs si true, on génère du GTFS, sinon on génère dans l'autre format.
 	 * @throws IOException problème d'entrée/sortie.
 	 */
-	private static void genereGtfs(boolean toGtfs) throws IOException {
+	private static void genereGtfs(boolean toGtfs, String date) throws IOException {
 		long startTime = System.currentTimeMillis();
-		GetAndContructZip getAndContructZip = new GetAndContructZip();
+		GetAndContructZip getAndContructZip = new GetAndContructZip(date);
 		getAndContructZip.getZipKeolis();
 		GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
 		System.out.println("Avant compression : ");
