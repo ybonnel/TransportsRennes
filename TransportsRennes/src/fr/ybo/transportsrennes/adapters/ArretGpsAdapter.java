@@ -64,6 +64,9 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View convertView1 = convertView;
+		if (position >= arrets.size()) {
+			return convertView;
+		}
 		Arret arret = arrets.get(position);
 		ArretGpsAdapter.ViewHolder holder;
 		if (convertView1 == null) {
