@@ -44,6 +44,13 @@ import fr.ybo.moteurcsv.exception.MoteurCsvException;
  *
  */
 public class GetAndContructZip {
+
+	private String dateDemandee;
+
+	public GetAndContructZip(String dateDemandee) {
+		this.dateDemandee = dateDemandee;
+	}
+
 	/**
 	 * Format de la date dans le nom du fichier.
 	 */
@@ -194,7 +201,7 @@ public class GetAndContructZip {
 	 */
 	public void getZipKeolis() {
 		try {
-			Date lastUpdate = getLastUpdate();
+			Date lastUpdate = dateDemandee == null ? getLastUpdate() : SDF.parse(dateDemandee);
 			System.out.println("Date du fichier : " + SDF.format(lastUpdate));
 			HttpURLConnection connection = openHttpConnection(lastUpdate);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
