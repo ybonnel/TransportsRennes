@@ -90,6 +90,12 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 			} else {
 				iconeMarkee = IconeLigne.getMarkeeResource(leg.route);
 				icone = IconeLigne.getIconeResource(leg.route);
+				if (iconeMarkee == -1) {
+					iconeMarkee = R.drawable.icone_bus;
+				}
+				if (icone == -1) {
+					icone = R.drawable.icone_bus;
+				}
 
 				directionTrajet.setVisibility(View.VISIBLE);
 				directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
