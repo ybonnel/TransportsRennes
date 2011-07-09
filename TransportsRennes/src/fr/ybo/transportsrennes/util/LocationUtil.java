@@ -88,7 +88,7 @@ public class LocationUtil implements LocationListener {
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 	}
 
-	private static final int TWO_MINUTES = 1000 * 60 * 2;
+	private static final long FIVE_MINUTES = 1000 * 60 * 5;
 
 	/**
 	 * Determines whether one Location reading is better than the current
@@ -114,8 +114,8 @@ public class LocationUtil implements LocationListener {
 
 		// Check whether the new location fix is newer or older
 		long timeDelta = location.getTime() - currentBestLocation.getTime();
-		boolean isSignificantlyNewer = timeDelta > TWO_MINUTES;
-		boolean isSignificantlyOlder = timeDelta < -TWO_MINUTES;
+		boolean isSignificantlyNewer = timeDelta > FIVE_MINUTES;
+		boolean isSignificantlyOlder = timeDelta < -FIVE_MINUTES;
 		boolean isNewer = timeDelta > 0;
 
 		// If it's been more than two minutes since the current location, use
