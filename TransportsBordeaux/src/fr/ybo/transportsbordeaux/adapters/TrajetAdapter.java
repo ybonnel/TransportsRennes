@@ -83,7 +83,11 @@ public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 					directionTrajet.setVisibility(View.GONE);
 				} else {
 					directionTrajet.setVisibility(View.VISIBLE);
-					icone = IconeLigne.getIconeResource(leg.route);
+					String route = leg.route;
+					if (route.length() == 1 && route.charAt(0) >= '1' && route.charAt(0) <= '9') {
+						route = "0" + route;
+					}
+					icone = IconeLigne.getIconeResource(route);
 					directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + leg.getDirection());
 				}
 				((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
