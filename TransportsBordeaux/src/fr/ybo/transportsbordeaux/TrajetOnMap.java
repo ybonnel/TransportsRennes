@@ -88,8 +88,12 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 				icone = R.drawable.ipieton;
 				directionTrajet.setVisibility(View.GONE);
 			} else {
-				iconeMarkee = IconeLigne.getMarkeeResource(leg.route);
-				icone = IconeLigne.getIconeResource(leg.route);
+				String route = leg.route;
+				if (route.length() == 1 && route.charAt(0) >= '1' && route.charAt(0) <= '9') {
+					route = "0" + route;
+				}
+				iconeMarkee = IconeLigne.getMarkeeResource(route);
+				icone = IconeLigne.getIconeResource(route);
 
 				directionTrajet.setVisibility(View.VISIBLE);
 				directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
