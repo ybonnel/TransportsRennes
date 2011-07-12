@@ -161,7 +161,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			Toast.makeText(DetailArret.this, R.string.erreurLigneInconue, Toast.LENGTH_LONG).show();
 			finish();
 		}
-		if (myLigne.chargee == null || !myLigne.chargee) {
+		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {
 			setListAdapter(construireAdapter());

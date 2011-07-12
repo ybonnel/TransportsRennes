@@ -18,12 +18,15 @@ package fr.ybo.transportsbordeaux.modele;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.content.res.Resources;
+import android.database.Cursor;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
+import fr.ybo.database.modele.Table;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
@@ -65,4 +68,21 @@ public class Ligne implements Serializable {
         ligne.id = ligneId;
 		return TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligne);
     }
+
+	public boolean isChargee() {
+		if (chargee == null || !chargee) {
+			return false;
+		}
+		// On regarde si la table existe.
+		Table table = TransportsBordeauxApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
+		table.addSuffixeToTableName(id);
+		Cursor cursor = TransportsBordeauxApplication
+				.getDataBaseHelper()
+				.getReadableDatabase()
+				.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+						" type = 'table' and name='" + table.getName() + "'", null, null, null, null);
+		boolean retour = cursor.getCount() > 0;
+		cursor.close();
+		return retour;
+	}
 }

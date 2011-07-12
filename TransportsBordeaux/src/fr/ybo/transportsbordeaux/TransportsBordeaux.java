@@ -234,15 +234,18 @@ public class TransportsBordeaux extends Activity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
-	private static final int MENU_ALERTS = 2;
-	private static final int MENU_LOAD_LINES = 3;
-	private static final int MENU_SHARE = 4;
+	private static final int MENU_MAP_ID = 2;
+	private static final int MENU_ALERTS = 3;
+	private static final int MENU_LOAD_LINES = 4;
+	private static final int MENU_SHARE = 5;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
+		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
+		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
 		MenuItem itemAlerts = menu.add(GROUP_ID, MENU_ALERTS, Menu.NONE, R.string.menu_alerts);
 		itemAlerts.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
@@ -258,6 +261,10 @@ public class TransportsBordeaux extends Activity {
 		switch (item.getItemId()) {
 			case MENU_ID:
 				showDialog();
+				return true;
+			case MENU_MAP_ID:
+				Intent intentMap = new Intent(this, AllOnMap.class);
+				startActivity(intentMap);
 				return true;
 			case MENU_ALERTS:
 				Intent intent = new Intent(this, TabAlertes.class);
@@ -300,7 +307,7 @@ public class TransportsBordeaux extends Activity {
 			protected Void doInBackground(Void... params) {
 
 				for (Ligne ligne : TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne())) {
-					if (ligne.chargee == null || !ligne.chargee) {
+					if (!ligne.isChargee()) {
 						final String nomLigne = ligne.nomCourt;
 						runOnUiThread(new Runnable() {
 							public void run() {

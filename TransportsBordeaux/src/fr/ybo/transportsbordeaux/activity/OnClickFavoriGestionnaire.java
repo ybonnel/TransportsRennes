@@ -82,7 +82,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 		ImageView imageView = (ImageView) view;
 		if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
 			ligne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligne);
-			if (ligne.chargee == null || !ligne.chargee) {
+			if (!ligne.isChargee()) {
 				chargerLigne();
 			}
 			// Ajout d'un favori.

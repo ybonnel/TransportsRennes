@@ -245,7 +245,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 				Ligne myLigne = new Ligne();
 				myLigne.id = arret.favori.ligneId;
 				myLigne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myLigne);
-				if (myLigne.chargee == null || !myLigne.chargee) {
+				if (!myLigne.isChargee()) {
 					chargerLigne(myLigne);
 				}
 				TransportsBordeauxApplication.getDataBaseHelper().insert(arret.favori);
