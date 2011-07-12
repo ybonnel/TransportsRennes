@@ -15,6 +15,9 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/mainlayout"
                 android:orientation="vertical"
@@ -37,3 +40,15 @@
         -->
 
 </RelativeLayout>
+                
+                
+		<ImageButton
+	        android:id="@+id/layers_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_gravity="bottom|right"
+	        android:src="@android:drawable/ic_menu_preferences"
+	        />
+</FrameLayout>

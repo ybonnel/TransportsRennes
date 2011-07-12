@@ -28,14 +28,28 @@
 		</LinearLayout>
 	</ScrollView>
 
-	<com.google.android.maps.MapView
-		android:id="@+id/mapview" android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:clickable="true"
-		android:layout_above="@id/scrollTrajets"
-		android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" />
 
-	<!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
-	<!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->
+	<FrameLayout android:layout_above="@id/scrollTrajets"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<com.google.android.maps.MapView
+			android:id="@+id/mapview" android:layout_width="fill_parent"
+			android:layout_height="wrap_content" android:clickable="true"
+			android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" />
+		
+                
+		<ImageButton
+	        android:id="@+id/layers_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginBottom="5dp"
+	        android:layout_marginRight="5dp"
+	        android:layout_gravity="bottom|right"
+	        android:src="@android:drawable/ic_menu_preferences"
+	        />
+
+		<!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
+		<!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->
+
+	</FrameLayout>
 
 </RelativeLayout>
