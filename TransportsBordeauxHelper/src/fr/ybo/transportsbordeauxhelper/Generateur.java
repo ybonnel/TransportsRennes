@@ -553,6 +553,8 @@ public class Generateur {
 				itArretRoute.remove();
 			} else if (lignesToDelete.contains(arretRoute.ligneId)) {
 				itArretRoute.remove();
+			} else if (directionToDelete.contains(arretRoute.directionId)) {
+				itArretRoute.remove();
 			}
 		}
 	}
