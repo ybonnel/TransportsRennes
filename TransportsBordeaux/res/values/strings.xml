@@ -119,4 +119,5 @@
     <string name="tram">Tramway</string>
     
     <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.</string>
+    <string name="menu_carte">Carte</string>
 </resources>
