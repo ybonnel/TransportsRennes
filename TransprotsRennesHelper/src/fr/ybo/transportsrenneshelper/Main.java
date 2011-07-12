@@ -56,7 +56,7 @@ public final class Main {
 	 * @throws IOException problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException {
-		genereGtfs(false, "20110711");
+		genereGtfs(true, "20110711");
 	}
 	/**
 	 * Traitement principale.
@@ -70,9 +70,12 @@ public final class Main {
 		GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
 		System.out.println("Avant compression : ");
 		afficheCompteurs();
-		CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
-		compressionTripAndCalendar.compressTripsAndCalendars();
-		compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+		if (!toGtfs) {
+			CompressionTripAndCalendar compressionTripAndCalendar = new CompressionTripAndCalendar();
+			compressionTripAndCalendar.compressTripsAndCalendars();
+			compressionTripAndCalendar.replaceTripGenereCalendarAndCompressStopTimes();
+		}
+
 		System.out.println("Après compression : ");
 		afficheCompteurs();
 		long timeElapsed = System.currentTimeMillis() - startTime;
@@ -188,6 +191,7 @@ public final class Main {
 			calendrier.startDate = calendars.get(0).startDate;
 			calendrier.endDate = calendars.get(0).endDate;
 			calendars.add(calendrier);
+			semaineId = Integer.parseInt(calendrier.id);
 		}
 		if (dimancheId == 0) {
 			Calendar calendrier = new Calendar();
@@ -202,6 +206,7 @@ public final class Main {
 			calendrier.startDate = calendars.get(0).startDate;
 			calendrier.endDate = calendars.get(0).endDate;
 			calendars.add(calendrier);
+			dimancheId = Integer.parseInt(calendrier.id);
 		}
 		// Ajout de la Route
 
