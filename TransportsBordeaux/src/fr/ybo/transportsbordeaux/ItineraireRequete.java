@@ -40,6 +40,9 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -57,6 +60,8 @@ import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
+import fr.ybo.opentripplanner.client.modele.TraverseMode;
+import fr.ybo.opentripplanner.client.modele.TraverseModeSet;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 import fr.ybo.transportsbordeaux.util.AdresseAdapter;
@@ -87,6 +92,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 
 	private TextView dateItineraire;
 	private TextView heureItineraire;
+
+	private boolean bus = true;
+	private boolean tram = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -133,6 +141,30 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 		if (!locationUtil.activeGps()) {
 			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
 		}
+		CheckBox busCheckBox = (CheckBox) findViewById(R.id.busCheckBox);
+		busCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (!tram && !isChecked) {
+					buttonView.setChecked(true);
+				} else {
+					bus = isChecked;
+				}
+			}
+		});
+		CheckBox tramCheckBox = (CheckBox) findViewById(R.id.tramCheckBox);
+		tramCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (!bus && !isChecked) {
+					buttonView.setChecked(true);
+				} else {
+					tram = isChecked;
+				}
+			}
+		});
 	}
 
 	private void terminer() {
@@ -301,11 +333,20 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 		final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
 				calendar.getTime());
 		request.setMaxWalkDistance(1500.0);
+		List<TraverseMode> modes = new ArrayList<TraverseMode>();
+		modes.add(TraverseMode.WALK);
+		if (bus && tram) {
+			modes.add(TraverseMode.TRANSIT);
+		} else if (bus) {
+			modes.add(TraverseMode.BUS);
+		} else if (tram) {
+			modes.add(TraverseMode.TRAM);
+		}
+		request.setModes(new TraverseModeSet(modes));
+		LOG_YBO.debug(request.constructUrl("http://transports-rennes.ic-s.org/bordeaux-api-webapp"));
 		new AsyncTask<Void, Void, Void>() {
 			private ProgressDialog progressDialog;
-			private Response reponse;
-
-			private boolean erreurReseaux = false;
+			private Response reponse = null;
 
 			@Override
 			protected void onPreExecute() {
@@ -321,7 +362,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				} catch (OpenTripPlannerException e) {
 					if (e.getCause() != null
 							&& (e.getCause() instanceof SocketException || e.getCause() instanceof FileNotFoundException)) {
-						erreurReseaux = true;
+						return null;
 					} else {
 						throw new TcbException(e);
 					}
@@ -333,7 +374,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				progressDialog.dismiss();
-				if (erreurReseaux) {
+				if (reponse == null) {
 					Toast.makeText(ItineraireRequete.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 				} else if (reponse.getError() != null) {
 					LOG_YBO.erreur(reponse.getError().getMsg());

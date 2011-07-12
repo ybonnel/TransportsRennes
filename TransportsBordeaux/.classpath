@@ -9,7 +9,7 @@
 	<classpathentry kind="lib" path="libs/GoogleAdMobAdsSdk-4.1.0.jar"/>
 	<classpathentry kind="lib" path="libs/android-ybo-db-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libs/geocoder-1.0.0.jar"/>
-	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
+	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

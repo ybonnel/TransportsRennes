@@ -115,6 +115,8 @@
     <string name="btn_itineraires">Calcul d\'itinéraires</string>
     <string name="menu_alerts">Alertes</string>
     <string name="alertes">Alertes</string>
+    <string name="bus">Bus</string>
+    <string name="tram">Tramway</string>
     
     <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.</string>
 </resources>

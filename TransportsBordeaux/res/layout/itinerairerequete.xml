@@ -86,13 +86,7 @@
               android:textSize="12dip"
               android:text="@string/exempleAdresse"
               android:layout_below="@id/adresseArrivee"/>
-    <Button android:id="@+id/itineraireTermine"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/Terminer"
-            android:gravity="center"
-            android:textSize="18dip"
-            android:layout_marginTop="20dip"
-            android:layout_marginLeft="30dip"
-            android:layout_below="@id/exempleAdresseArrivee"/>
+    <CheckBox android:id="@+id/busCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/bus" android:layout_below="@+id/exempleAdresseArrivee" android:layout_alignParentLeft="true" android:layout_marginLeft="32dp" android:layout_marginTop="16dp" android:checked="true"></CheckBox>
+    <CheckBox android:id="@+id/tramCheckBox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/tram" android:layout_alignTop="@+id/busCheckBox" android:layout_alignParentRight="true" android:layout_marginRight="29dp" android:checked="true"></CheckBox>
+    <Button android:text="@string/Terminer" android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center" android:id="@+id/itineraireTermine" android:textSize="18dip" android:layout_alignParentBottom="true" android:layout_alignParentRight="true" android:layout_marginRight="15dp" android:layout_marginBottom="16dp"></Button>
 </RelativeLayout>
