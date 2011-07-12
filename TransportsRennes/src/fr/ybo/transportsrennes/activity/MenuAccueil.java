@@ -17,11 +17,20 @@
 package fr.ybo.transportsrennes.activity;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+
+import com.google.android.maps.MapView;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennes;
 import fr.ybo.transportsrennes.TransportsRennesApplication;
@@ -67,6 +76,31 @@ public class MenuAccueil {
 		public boolean onOptionsItemSelected(MenuItem item) {
 			super.onOptionsItemSelected(item);
 			return MenuAccueil.onOptionsItemSelected(this, item);
+		}
+
+		private MapView mapView;
+
+		private boolean satelite = false;
+
+		protected void gestionButtonLayout() {
+			mapView = (MapView) findViewById(R.id.mapview);
+			mapView.setSatellite(false);
+			ImageButton layoutButton = (ImageButton) findViewById(R.id.layers_button);
+			layoutButton.setOnClickListener(new OnClickListener() {
+				public void onClick(View v) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(MapActivity.this);
+					String[] items = { "Satellite" };
+					boolean[] checkeds = { satelite };
+					builder.setMultiChoiceItems(items, checkeds, new OnMultiChoiceClickListener() {
+						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+							satelite = !satelite;
+							mapView.setSatellite(satelite);
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
+			});
 		}
 	}
 

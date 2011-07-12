@@ -63,7 +63,6 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 		mapView.setBuiltInZoomControls(true);
 
 		MapController mc = mapView.getController();
-		mapView.setSatellite(true);
 
 		// Creation du geo point
 		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -165,6 +164,8 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
+
+		gestionButtonLayout();
 
 	}
 

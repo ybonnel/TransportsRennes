@@ -53,7 +53,6 @@ public class ArretsOnMap extends MenuAccueil.MapActivity {
 		mapView.setBuiltInZoomControls(true);
 
 		MapController mc = mapView.getController();
-		mapView.setSatellite(true);
 
 		// Creation du geo point
 		List<Overlay> mapOverlays = mapView.getOverlays();
@@ -123,6 +122,7 @@ public class ArretsOnMap extends MenuAccueil.MapActivity {
 		mapOverlays.add(myLocationOverlay);
 		myLocationOverlay.enableMyLocation();
 
+		gestionButtonLayout();
 	}
 
 	private MyLocationOverlay myLocationOverlay;

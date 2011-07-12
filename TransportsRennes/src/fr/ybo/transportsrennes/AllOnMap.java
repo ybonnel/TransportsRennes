@@ -81,7 +81,6 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 		mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
 		mapView.displayZoomControls(true);
-		mapView.setSatellite(true);
 		MapController mapCtrl = mapView.getController();
 
 		Bitmap bitmapBus = BitmapFactory.decodeResource(getResources(), R.drawable.icone_bus);
@@ -108,6 +107,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 		}
 
 		updateOverlays();
+		gestionButtonLayout();
 	}
 
 	private void showDialog() {
