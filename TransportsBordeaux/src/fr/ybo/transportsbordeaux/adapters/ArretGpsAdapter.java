@@ -14,7 +14,7 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsbordeaux;
+package fr.ybo.transportsbordeaux.adapters;
 
 import java.util.Calendar;
 import java.util.List;
@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;

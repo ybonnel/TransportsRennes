@@ -44,6 +44,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.adapters.ArretGpsAdapter;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
