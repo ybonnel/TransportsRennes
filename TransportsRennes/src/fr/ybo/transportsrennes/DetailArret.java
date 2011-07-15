@@ -222,7 +222,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			public void update(Calendar calendar) {
-				calendar = Calendar.getInstance();
+				DetailArret.this.calendar = Calendar.getInstance();
 				calendarLaVeille = Calendar.getInstance();
 				calendarLaVeille.roll(Calendar.DATE, false);
 				setListAdapter(construireAdapter());
