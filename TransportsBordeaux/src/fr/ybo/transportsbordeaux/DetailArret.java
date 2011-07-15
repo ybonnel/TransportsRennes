@@ -55,6 +55,8 @@ import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -127,6 +129,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private Ligne myLigne;
 	private LayoutInflater mInflater;
+
+	private UpdateTimeUtil updateTimeUtil;
 
 
 	@Override
@@ -212,8 +216,34 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} else {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
+
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				DetailArret.this.calendar = calendar;
+				calendarLaVeille = Calendar.getInstance();
+				calendarLaVeille.roll(Calendar.DATE, false);
+				setListAdapter(construireAdapter());
+				getListView().invalidate();
+			}
+		}, this);
+		updateTimeUtil.start();
+
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+	}
+
+	@Override
+	protected void onResume() {
+		updateTimeUtil.start();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		updateTimeUtil.stop();
+		super.onPause();
 	}
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance) {

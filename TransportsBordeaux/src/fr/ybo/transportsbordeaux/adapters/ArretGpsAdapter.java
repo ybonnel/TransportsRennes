@@ -39,17 +39,22 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
 	private final List<Arret> arrets;
 	private final LayoutInflater inflater;
-	private final Calendar calendar;
-	private final int now;
+	private Calendar calendar;
+	private int now;
 	private final Context myContext;
 
-	public ArretGpsAdapter(Context context, List<Arret> objects) {
+	public ArretGpsAdapter(Context context, List<Arret> objects, Calendar calendar) {
 		super(context, R.layout.arretgps, objects);
-		calendar = Calendar.getInstance();
+		this.calendar = calendar;
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		arrets = objects;
 		inflater = LayoutInflater.from(getContext());
 		myContext = context;
+	}
+
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
+		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 
 	private static class ViewHolder {

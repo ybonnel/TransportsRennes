@@ -17,6 +17,7 @@
 package fr.ybo.transportsbordeaux;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,8 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.FavoriAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * @author ybonnel
@@ -56,6 +59,8 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		registerForContextMenu(lv);
 	}
 
+	private UpdateTimeUtil updateTimeUtil;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,6 +69,27 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				((FavoriAdapter) getListAdapter()).majCalendar();
+				((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+		}, this);
+		updateTimeUtil.start();
+	}
+
+	@Override
+	protected void onResume() {
+		updateTimeUtil.start();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		updateTimeUtil.stop();
+		super.onPause();
 	}
 
 	@Override

@@ -17,6 +17,7 @@
 package fr.ybo.transportsbordeaux;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -51,6 +52,8 @@ import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
+import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances
@@ -70,16 +73,24 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 
 	private List<Arret> arretsIntent;
 
+	private boolean startUpdateTime = false;
+
+	private UpdateTimeUtil updateTimeUtil = null;
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		locationUtil.activeGps();
+		if (startUpdateTime) {
+			updateTimeUtil.start();
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		locationUtil.desactiveGps();
+		updateTimeUtil.stop();
 	}
 
 	private void metterAJourListeArrets() {
@@ -107,7 +118,18 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 				"arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationUtil = new LocationUtil(this, this);
-		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
+		Calendar calendar = Calendar.getInstance();
+		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees, calendar));
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				((ArretGpsAdapter) getListAdapter()).setCalendar(calendar);
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+
+			}
+		}, this, now);
 		listView = getListView();
 		listView.setFastScrollEnabled(true);
 		editText = (EditText) findViewById(R.id.listarretgps_input);
@@ -161,6 +183,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 				updateLocation(locationUtil.getCurrentLocation());
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
+				updateTimeUtil.start();
+				startUpdateTime = true;
 				super.onPostExecute(result);
 			}
 		}.execute();
