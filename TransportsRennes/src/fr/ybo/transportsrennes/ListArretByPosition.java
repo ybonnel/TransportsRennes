@@ -17,6 +17,7 @@
 package fr.ybo.transportsrennes;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -48,6 +49,8 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.LocationUtil;
 import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances
@@ -67,16 +70,24 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 
 	private List<Arret> arretsIntent;
 
+	private boolean startUpdateTime = false;
+
+	private UpdateTimeUtil updateTimeUtil = null;
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		locationUtil.activeGps();
+		if (startUpdateTime) {
+			updateTimeUtil.start();
+		}
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
 		locationUtil.desactiveGps();
+		updateTimeUtil.stop();
 	}
 
 	private void metterAJourListeArrets() {
@@ -105,6 +116,14 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		locationUtil = new LocationUtil(this, this);
 		setListAdapter(new ArretGpsAdapter(getApplicationContext(), arretsFiltrees));
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				((ArretGpsAdapter) getListAdapter()).setCalendar(calendar);
+				((ArretGpsAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+		}, this);
 		listView = getListView();
 		listView.setFastScrollEnabled(true);
 		editText = (EditText) findViewById(R.id.listarretgps_input);
@@ -158,6 +177,8 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 				updateLocation(locationUtil.getCurrentLocation());
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				myProgressDialog.dismiss();
+				updateTimeUtil.start();
+				startUpdateTime = true;
 				super.onPostExecute(result);
 			}
 		}.execute();

@@ -53,6 +53,8 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -125,6 +127,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private Ligne myLigne;
 	private LayoutInflater mInflater;
+
+	private UpdateTimeUtil updateTimeUtil;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -213,6 +217,31 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		} else {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
+
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				calendar = Calendar.getInstance();
+				calendarLaVeille = Calendar.getInstance();
+				calendarLaVeille.roll(Calendar.DATE, false);
+				setListAdapter(construireAdapter());
+				getListView().invalidate();
+			}
+		}, this);
+		updateTimeUtil.start();
+	}
+
+	@Override
+	protected void onResume() {
+		updateTimeUtil.start();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		updateTimeUtil.stop();
+		super.onPause();
 	}
 
 	private void construireCorrespondance(LinearLayout detailCorrespondance) {

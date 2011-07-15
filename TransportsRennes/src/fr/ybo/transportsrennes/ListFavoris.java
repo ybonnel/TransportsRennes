@@ -17,7 +17,7 @@
 package fr.ybo.transportsrennes;
 
 import java.io.Serializable;
-import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +32,8 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil;
+import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * @author ybonnel
@@ -53,59 +55,34 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		registerForContextMenu(lv);
 	}
 
-	private final Runnable runnableMajToRunOnUiThread = new Runnable() {
-		public void run() {
-			((FavoriAdapter) getListAdapter()).majCalendar();
-			((FavoriAdapter) getListAdapter()).getFavoris().clear();
-			((FavoriAdapter) getListAdapter()).getFavoris()
-					.addAll(TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre"));
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-		}
-	};
-
-	private final Runnable runnableMajHoraires = new Runnable() {
-		public void run() {
-			while (true) {
-				try {
-					TimeUnit.SECONDS.sleep(20);
-					runOnUiThread(runnableMajToRunOnUiThread);
-				} catch (InterruptedException ignore) {
-					break;
-				}
-			}
-		}
-	};
-
-	private Thread threadCourant;
-
-	@Override
-	protected void onPause() {
-		if (threadCourant != null) {
-			threadCourant.interrupt();
-			threadCourant = null;
-		}
-		super.onPause();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		if (threadCourant == null) {
-			runnableMajToRunOnUiThread.run();
-			threadCourant = new Thread(runnableMajHoraires);
-			threadCourant.start();
-		}
-	}
+	private UpdateTimeUtil updateTimeUtil;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
 		construireListe();
-		if (threadCourant == null) {
-			threadCourant = new Thread(runnableMajHoraires);
-			threadCourant.start();
-		}
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				((FavoriAdapter) getListAdapter()).majCalendar();
+				((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+		}, this);
+		updateTimeUtil.start();
+	}
+
+	@Override
+	protected void onResume() {
+		updateTimeUtil.start();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		updateTimeUtil.stop();
+		super.onPause();
 	}
 
 	@Override
