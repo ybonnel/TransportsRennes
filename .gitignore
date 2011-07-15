@@ -14,3 +14,5 @@ target
 
 /TransportsBordeaux/gen/
 /TransportsRennesServer/war/WEB-INF/classes/
+
+**/.DS_Store
