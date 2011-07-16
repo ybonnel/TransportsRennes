@@ -132,6 +132,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private UpdateTimeUtil updateTimeUtil;
 
+	private boolean firstUpdate = false;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -165,10 +167,24 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			Toast.makeText(DetailArret.this, R.string.erreurLigneInconue, Toast.LENGTH_LONG).show();
 			finish();
 		}
+
+		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+
+			@Override
+			public void update(Calendar calendar) {
+				DetailArret.this.calendar = calendar;
+				calendarLaVeille = Calendar.getInstance();
+				calendarLaVeille.roll(Calendar.DATE, false);
+				setListAdapter(construireAdapter());
+				getListView().invalidate();
+			}
+		}, this);
 		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {
 			setListAdapter(construireAdapter());
+			updateTimeUtil.start();
+			firstUpdate = true;
 		}
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
@@ -217,18 +233,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
 
-		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
-
-			@Override
-			public void update(Calendar calendar) {
-				DetailArret.this.calendar = calendar;
-				calendarLaVeille = Calendar.getInstance();
-				calendarLaVeille.roll(Calendar.DATE, false);
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
-			}
-		}, this);
-		updateTimeUtil.start();
 
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
@@ -236,7 +240,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	@Override
 	protected void onResume() {
-		updateTimeUtil.start();
+		if (firstUpdate) {
+			updateTimeUtil.start();
+		}
 		super.onResume();
 	}
 
@@ -349,6 +355,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				super.onPostExecute(result);
 				setListAdapter(construireAdapter());
 				getListView().invalidate();
+				updateTimeUtil.start();
+				firstUpdate = true;
 			}
 
 		}.execute();
