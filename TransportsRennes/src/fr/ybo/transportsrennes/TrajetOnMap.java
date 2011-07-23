@@ -69,42 +69,78 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 		LinearLayout layoutTrajet = (LinearLayout) findViewById(R.id.trajetDetail);
 		layoutTrajet.removeAllViews();
 		LayoutInflater inflater = LayoutInflater.from(this);
-		int minLatitude = Integer.MAX_VALUE;
-		int maxLatitude = Integer.MIN_VALUE;
-		int minLongitude = Integer.MAX_VALUE;
-		int maxLongitude = Integer.MIN_VALUE;
-		int latitude;
-		int longitude;
-		ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
-		for (Leg leg : trajet.legs.leg) {
-			// icône
-			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
-			TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
-			int iconeMarkee;
-			int icone;
-			if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
-				iconeMarkee = R.drawable.mpieton;
-				icone = R.drawable.ipieton;
-				directionTrajet.setVisibility(View.GONE);
-			} else {
-				iconeMarkee = IconeLigne.getMarkeeResource(leg.route);
-				icone = IconeLigne.getIconeResource(leg.route);
-				if (iconeMarkee == -1) {
-					iconeMarkee = R.drawable.icone_bus;
-				}
-				if (icone == -1) {
-					icone = R.drawable.icone_bus;
+		if (trajet.legs != null) {
+			int minLatitude = Integer.MAX_VALUE;
+			int maxLatitude = Integer.MIN_VALUE;
+			int minLongitude = Integer.MAX_VALUE;
+			int maxLongitude = Integer.MIN_VALUE;
+			int latitude;
+			int longitude;
+			ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+			for (Leg leg : trajet.legs.leg) {
+				// icône
+				RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+				TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
+				int iconeMarkee;
+				int icone;
+				if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
+					iconeMarkee = R.drawable.mpieton;
+					icone = R.drawable.ipieton;
+					directionTrajet.setVisibility(View.GONE);
+				} else {
+					iconeMarkee = IconeLigne.getMarkeeResource(leg.route);
+					icone = IconeLigne.getIconeResource(leg.route);
+					if (iconeMarkee == -1) {
+						iconeMarkee = R.drawable.icone_bus;
+					}
+					if (icone == -1) {
+						icone = R.drawable.icone_bus;
+					}
+
+					directionTrajet.setVisibility(View.VISIBLE);
+					directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
 				}
 
-				directionTrajet.setVisibility(View.VISIBLE);
-				directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
+				// icône du départ.
+				MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(
+						iconeMarkee));
+				latitude = (int) (leg.from.lat * 1.0E6);
+				longitude = (int) (leg.from.lon * 1.0E6);
+				if (latitude > maxLatitude) {
+					maxLatitude = latitude;
+				}
+				if (latitude < minLatitude) {
+					minLatitude = latitude;
+				}
+				if (longitude > maxLongitude) {
+					maxLongitude = longitude;
+				}
+				if (longitude < minLongitude) {
+					minLongitude = longitude;
+				}
+				OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.from.name, null);
+				itemizedOverlay.addOverlay(item);
+				mapOverlays.add(itemizedOverlay);
+
+				for (Coordinate coordinate : PolylineEncoder.decode(leg.legGeometry)) {
+					geoPoints.add(coordinate.toGeoPoint());
+				}
+
+				// Détail du trajet.
+				((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
+				((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
+				((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
+				((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
+				((TextView) portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
+				layoutTrajet.addView(portionLayout);
 			}
-			
-			
-			// icône du départ.
-			MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(iconeMarkee));
-			latitude = (int) (leg.from.lat * 1.0E6);
-			longitude = (int) (leg.from.lon * 1.0E6);
+			// icone de l'arrivee.
+			Leg leg = trajet.legs.leg.get(trajet.legs.leg.size() - 1);
+
+			MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(
+					R.drawable.mpieton));
+			latitude = (int) (leg.to.lat * 1.0E6);
+			longitude = (int) (leg.to.lon * 1.0E6);
 			if (latitude > maxLatitude) {
 				maxLatitude = latitude;
 			}
@@ -117,48 +153,15 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 			if (longitude < minLongitude) {
 				minLongitude = longitude;
 			}
-			OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.from.name, null);
+			OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.to.name, null);
 			itemizedOverlay.addOverlay(item);
 			mapOverlays.add(itemizedOverlay);
 			
-			for (Coordinate coordinate : PolylineEncoder.decode(leg.legGeometry)) {
-				geoPoints.add(coordinate.toGeoPoint());
-			}
+			LineItemizedOverlay lineItemizedOverlay = new LineItemizedOverlay(geoPoints);
+			mapOverlays.add(lineItemizedOverlay);
 
-			// Détail du trajet.
-			((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
-			((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
-			((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
-			((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
-			((TextView) portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
-			layoutTrajet.addView(portionLayout);
+			mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		}
-		// icone de l'arrivee.
-		Leg leg = trajet.legs.leg.get(trajet.legs.leg.size() - 1);
-		MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(
-				R.drawable.mpieton));
-		latitude = (int) (leg.to.lat * 1.0E6);
-		longitude = (int) (leg.to.lon * 1.0E6);
-		if (latitude > maxLatitude) {
-			maxLatitude = latitude;
-		}
-		if (latitude < minLatitude) {
-			minLatitude = latitude;
-		}
-		if (longitude > maxLongitude) {
-			maxLongitude = longitude;
-		}
-		if (longitude < minLongitude) {
-			minLongitude = longitude;
-		}
-		OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.to.name, null);
-		itemizedOverlay.addOverlay(item);
-		mapOverlays.add(itemizedOverlay);
-		
-		LineItemizedOverlay lineItemizedOverlay = new LineItemizedOverlay(geoPoints);
-		mapOverlays.add(lineItemizedOverlay);
-
-		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
 		mc.setZoom(14);
 
 		myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
