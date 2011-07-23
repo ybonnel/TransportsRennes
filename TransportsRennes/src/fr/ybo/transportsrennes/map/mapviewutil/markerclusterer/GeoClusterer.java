@@ -144,23 +144,25 @@ public class GeoClusterer {
 		}
 		// else add to itemsOfCluster;
 		items.add(item);
-		int length = clusters.size();
-		Projection proj = mapView.getProjection();
-		Point pos = proj.toPixels(item.getLocation(), null);
-		// check existing cluster
-		for (int i = length - 1; i >= 0; i--) {
-			GeoClusterer.GeoCluster cluster = clusters.get(i);
-			GeoPoint gpCenter = cluster.getLocation();
-			if (gpCenter == null) {
-				continue;
-			}
-			Point ptCenter = proj.toPixels(gpCenter, null);
-			// find a cluster which contains the marker.
-			int gridSizePx = (int) (gridSize * screenDensity + 0.5f);
-			if (pos.x >= ptCenter.x - gridSizePx && pos.x <= ptCenter.x + gridSizePx
-					&& pos.y >= ptCenter.y - gridSizePx && pos.y <= ptCenter.y + gridSizePx) {
-				cluster.addItem(item);
-				return;
+		synchronized (clusters) {
+			int length = clusters.size();
+			Projection proj = mapView.getProjection();
+			Point pos = proj.toPixels(item.getLocation(), null);
+			// check existing cluster
+			for (int i = length - 1; i >= 0; i--) {
+				GeoClusterer.GeoCluster cluster = clusters.get(i);
+				GeoPoint gpCenter = cluster.getLocation();
+				if (gpCenter == null) {
+					continue;
+				}
+				Point ptCenter = proj.toPixels(gpCenter, null);
+				// find a cluster which contains the marker.
+				int gridSizePx = (int) (gridSize * screenDensity + 0.5f);
+				if (pos.x >= ptCenter.x - gridSizePx && pos.x <= ptCenter.x + gridSizePx
+						&& pos.y >= ptCenter.y - gridSizePx && pos.y <= ptCenter.y + gridSizePx) {
+					cluster.addItem(item);
+					return;
+				}
 			}
 		}
 		// No cluster contain the marker, create a new cluster.
