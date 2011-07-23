@@ -358,13 +358,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
 				if (erreurLigneNonTrouvee) {
 					Toast.makeText(DetailArret.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
 							Toast.LENGTH_LONG).show();
 					finish();
 				} else {
+					setListAdapter(construireAdapter());
+					getListView().invalidate();
 					updateTimeUtil.start();
 					firstUpdate = true;
 				}
