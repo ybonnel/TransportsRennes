@@ -143,8 +143,8 @@ public class GeoClusterer {
 			return;
 		}
 		// else add to itemsOfCluster;
-		items.add(item);
 		synchronized (clusters) {
+			items.add(item);
 			int length = clusters.size();
 			Projection proj = mapView.getProjection();
 			Point pos = proj.toPixels(item.getLocation(), null);
@@ -300,9 +300,9 @@ public class GeoClusterer {
 						return;
 					}
 				}
-			}
-			for (GeoItem anItems : items) {
-				anItems.setSelect(false);
+				for (GeoItem anItems : items) {
+					anItems.setSelect(false);
+				}
 			}
 		}
 	}
