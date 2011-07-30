@@ -166,6 +166,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		if (myLigne == null) {
 			Toast.makeText(DetailArret.this, R.string.erreurLigneInconue, Toast.LENGTH_LONG).show();
 			finish();
+			return;
 		}
 
 		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
