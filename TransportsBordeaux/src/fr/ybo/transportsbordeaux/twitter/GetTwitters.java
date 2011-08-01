@@ -16,11 +16,13 @@
  */
 package fr.ybo.transportsbordeaux.twitter;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
 
@@ -60,6 +62,10 @@ public class GetTwitters {
 			return gson.fromJson(new InputStreamReader(connection.getInputStream()), listType);
 		} catch (SocketTimeoutException timeoutException) {
 			throw new TbcErreurReseaux(timeoutException);
+		} catch (UnknownHostException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
+		} catch (IOException exception) {
+			throw new TbcErreurReseaux(exception);
 		} catch (Exception e) {
 			throw new TcbException("Erreur lors de l'interrogation de twitter", e);
 		}
