@@ -118,6 +118,8 @@ public class Station extends ObjetWithDistance implements Serializable {
 			throw new TbcErreurReseaux(exceptionReseaux);
 		} catch (UnknownHostException exceptionReseaux) {
 			throw new TbcErreurReseaux(exceptionReseaux);
+		} catch (IllegalStateException exceptionReseaux) {
+			throw new TbcErreurReseaux(exceptionReseaux);
 		} catch (Exception e) {
 			throw new TcbException(e);
 		}
