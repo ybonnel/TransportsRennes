@@ -554,6 +554,8 @@ public class Generateur {
 			} else if (lignesToDelete.contains(arretRoute.ligneId)) {
 				itArretRoute.remove();
 			} else if (directionToDelete.contains(arretRoute.directionId)) {
+				System.out.println("Direction " + arretRoute.directionId + " supprimé : Suppression de l'arrêt "
+						+ arretRoute.arretId + "pour la ligne " + arretRoute.ligneId);
 				itArretRoute.remove();
 			}
 		}
