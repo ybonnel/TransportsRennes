@@ -55,6 +55,7 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.gson.JsonIOException;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Itinerary;
@@ -363,7 +364,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				} catch (OpenTripPlannerException e) {
 					if (e.getCause() != null
 							&& (e.getCause() instanceof SocketException
-									|| e.getCause() instanceof FileNotFoundException || e.getCause() instanceof UnknownHostException)) {
+									|| e.getCause() instanceof FileNotFoundException
+									|| e.getCause() instanceof UnknownHostException || e.getCause() instanceof JsonIOException)) {
 						return null;
 					} else {
 						throw new TcbException(e);
