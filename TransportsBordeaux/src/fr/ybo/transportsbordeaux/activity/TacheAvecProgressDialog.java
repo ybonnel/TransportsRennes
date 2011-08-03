@@ -40,7 +40,10 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 
 	@Override
 	protected void onPostExecute(Result result) {
-		myProgressDialog.dismiss();
+		try {
+			myProgressDialog.dismiss();
+		} catch (IllegalArgumentException ignore) {
+		}
 		super.onPostExecute(result);
 	};
 }

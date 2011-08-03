@@ -55,7 +55,10 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 
 	@Override
 	protected void onPostExecute(Result result) {
-		myProgressDialog.dismiss();
+		try {
+			myProgressDialog.dismiss();
+		} catch (IllegalArgumentException ignore) {
+		}
 		if (erreur) {
 			Toast.makeText(context, context.getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 		}
