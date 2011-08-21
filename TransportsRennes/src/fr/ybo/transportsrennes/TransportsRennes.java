@@ -181,7 +181,7 @@ public class TransportsRennes extends Activity {
 	}
 
 	public void onBusFavoriClick() {
-		Intent intent = new Intent(this, ListFavoris.class);
+		Intent intent = new Intent(this, TabFavoris.class);
 		startActivity(intent);
 	}
 

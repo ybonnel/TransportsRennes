@@ -36,6 +36,7 @@
         <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".TabFavoris" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListStationsByPosition" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListStationsFavoris" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>

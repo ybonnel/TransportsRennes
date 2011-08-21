@@ -294,7 +294,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 			});
 			mapUpgrades.put(11, new UpgradeDatabaseWithError() {
 				public void myUpgrade(SQLiteDatabase db) {
-					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupeId INTEGER");
+					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
 					getBase().getTable(GroupeFavori.class).createTable(db);
 				}
 			});

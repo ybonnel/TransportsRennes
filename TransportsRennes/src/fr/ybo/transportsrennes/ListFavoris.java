@@ -18,6 +18,7 @@ package fr.ybo.transportsrennes;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,8 +42,13 @@ import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private void construireListe() {
-		setListAdapter(
-				new FavoriAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre")));
+		ArretFavori favoriExemple = new ArretFavori();
+		if (groupe != null) {
+			favoriExemple.groupe = groupe;
+		}
+		List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre");
+
+		setListAdapter(new FavoriAdapter(getApplicationContext(), favoris));
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -57,10 +63,15 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private UpdateTimeUtil updateTimeUtil;
 
+	private String groupe = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
+		if (getIntent().getExtras() != null) {
+			groupe = getIntent().getExtras().getString("groupe");
+		}
 		construireListe();
 		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
 
