@@ -154,4 +154,10 @@
     <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.</string>
     <string name="noGoogleMap">GoogleMap not found</string>
     <string name="all">All</string>
+    <string name="ajouterGroupe">Add a new group</string>
+    <string name="suprimerGroupe">Delete the group</string>
+    <string name="ajouter">Add</string>
+    <string name="annuler">Cancel</string>
+    <string name="groupeObligatoire">The group name is mandatory</string>
+    <string name="groupeExistant">There is already a group with that name</string>
 </resources>

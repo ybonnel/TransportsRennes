@@ -20,6 +20,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -28,11 +31,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.FavoriAdapter;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.GroupeFavori;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
@@ -46,7 +51,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 		if (groupe != null) {
 			favoriExemple.groupe = groupe;
 		}
-		List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori(), "ordre");
+		List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(favoriExemple, "ordre");
 
 		setListAdapter(new FavoriAdapter(getApplicationContext(), favoris));
 		ListView lv = getListView();
@@ -129,5 +134,85 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			default:
 				return super.onContextItemSelected(item);
 		}
+	}
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_AJOUTER = 1;
+	private static final int MENU_SUPPRIMER = 2;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
+		item.setIcon(android.R.drawable.ic_menu_add);
+		if (groupe != null) {
+			MenuItem itemMap = menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe);
+			itemMap.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+			case MENU_SUPPRIMER:
+				ArretFavori arretFavori = new ArretFavori();
+				arretFavori.groupe = groupe;
+				for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(arretFavori)) {
+					favori.groupe = null;
+					TransportsRennesApplication.getDataBaseHelper().update(favori);
+				}
+				GroupeFavori groupeFavori = new GroupeFavori();
+				groupeFavori.name = groupe;
+				TransportsRennesApplication.getDataBaseHelper().delete(groupeFavori);
+				startActivity(new Intent(this, TabFavoris.class));
+				finish();
+				return true;
+			case MENU_AJOUTER:
+				showDialog(AJOUTER_GROUPE_DIALOG_ID);
+				return true;
+		}
+		return false;
+	}
+	
+
+	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		if (id == AJOUTER_GROUPE_DIALOG_ID) {
+			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			final EditText input = new EditText(this);
+			alert.setView(input);
+			alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					String value = input.getText().toString().trim();
+					if (value == null || value.length() == 0) {
+						Toast.makeText(ListFavoris.this, getString(R.string.groupeObligatoire), Toast.LENGTH_LONG)
+								.show();
+						return;
+					}
+					GroupeFavori groupeFavori = new GroupeFavori();
+					groupeFavori.name = value;
+					if (!TransportsRennesApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
+							|| value.equals(getString(R.string.all))) {
+						Toast.makeText(ListFavoris.this, getString(R.string.groupeExistant), Toast.LENGTH_LONG).show();
+						return;
+					}
+					TransportsRennesApplication.getDataBaseHelper().insert(groupeFavori);
+					startActivity(new Intent(ListFavoris.this, TabFavoris.class));
+					ListFavoris.this.finish();
+				}
+			});
+
+			alert.setNegativeButton(getString(R.string.annuler), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			return alert.create();
+		}
+		return super.onCreateDialog(id);
 	}
 }

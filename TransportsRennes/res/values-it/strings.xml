@@ -135,6 +135,12 @@
     <string name="shareText">Transports Rennes, l\'applicazione Android per aiutarti a trasporto Rennes: http://goo.gl/ALKs0</string>
     <string name="noGoogleMap">GoogleMap not found</string>
     
-    <string name="all">tutti</string>
+    <string name="all">Tutti</string>
+    <string name="ajouterGroupe">Aggiungi nuovo gruppo</string>
+    <string name="suprimerGroupe">Elimina gruppo</string>
+    <string name="ajouter">Aggiungere</string>
+    <string name="annuler">Annullare</string>
+    <string name="groupeObligatoire">Il nome del gruppo è obbligatoria</string>
+    <string name="groupeExistant">C\'è già un gruppo con quel nome</string>
 </resources>
 

@@ -137,5 +137,11 @@
     <string name="noGoogleMap">GoogleMap not found</string>
     
     <string name="all">Todos</string>
+    <string name="ajouterGroupe">Agregar nuevo grupo</string>
+    <string name="suprimerGroupe">Eliminar grupo</string>
+    <string name="ajouter">Añadir</string>
+    <string name="annuler">Cancelar</string>
+    <string name="groupeObligatoire">El nombre del grupo es obligatoria</string>
+    <string name="groupeExistant">Ya existe un grupo con ese nombre</string>
 </resources>
 

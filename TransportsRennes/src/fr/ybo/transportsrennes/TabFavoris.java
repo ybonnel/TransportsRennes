@@ -38,7 +38,7 @@ public class TabFavoris extends TabActivity {
 		// Do the same for the other tabs
 		for (GroupeFavori groupe : TransportsRennesApplication.getDataBaseHelper().selectAll(GroupeFavori.class)) {
 			Intent intent = new Intent().setClass(this, ListFavoris.class);
-			intent.getExtras().putString("groupe", groupe.name);
+			intent.putExtra("groupe", groupe.name);
 			tabHost.addTab(tabHost.newTabSpec(groupe.name).setIndicator(groupe.name).setContent(intent));
 		}
 
