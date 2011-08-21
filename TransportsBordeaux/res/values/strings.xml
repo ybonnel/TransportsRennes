@@ -120,4 +120,14 @@
     
     <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.</string>
     <string name="menu_carte">Carte</string>
+    
+    <string name="all">Tous</string>
+    <string name="ajouterGroupe">Ajouter un groupe</string>
+    <string name="suprimerGroupe">Supprimer le groupe</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="annuler">Annuler</string>
+    <string name="groupeObligatoire">Le nom du groupe est obligatoire</string>
+    <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
+    <string name="deplacerGroupe">Déplacer dans un groupe</string>
+    <string name="chooseGroupe">Choisissez un groupe</string>
 </resources>

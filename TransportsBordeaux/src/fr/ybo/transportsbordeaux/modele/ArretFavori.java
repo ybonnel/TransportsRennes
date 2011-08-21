@@ -41,4 +41,6 @@ public class ArretFavori implements Serializable {
 	public String nomLong;
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
+	@Column
+	public String groupe;
 }

@@ -17,8 +17,13 @@
 package fr.ybo.transportsbordeaux;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -27,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +42,7 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.FavoriAdapter;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.GroupeFavori;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
@@ -45,8 +52,13 @@ import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private void construireListe() {
-		setListAdapter(new FavoriAdapter(getApplicationContext(), TransportsBordeauxApplication.getDataBaseHelper()
-				.select(new ArretFavori(), "ordre")));
+		ArretFavori favoriExemple = new ArretFavori();
+		if (groupe != null) {
+			favoriExemple.groupe = groupe;
+		}
+		List<ArretFavori> favoris = TransportsBordeauxApplication.getDataBaseHelper().select(favoriExemple, "ordre");
+
+		setListAdapter(new FavoriAdapter(getApplicationContext(), favoris));
 		ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -61,10 +73,15 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 
 	private UpdateTimeUtil updateTimeUtil;
 
+	private String groupe = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listfavoris);
+		if (getIntent().getExtras() != null) {
+			groupe = getIntent().getExtras().getString("groupe");
+		}
 		construireListe();
 
 		// Look up the AdView as a resource and load a request.
@@ -100,15 +117,17 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
+			menu.add(Menu.NONE, R.id.deplacerGroupe, 0, getString(R.string.deplacerGroupe));
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final ArretFavori favori;
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
-				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+				favori = (ArretFavori) getListAdapter().getItem(info.position);
 
 				if (TransportsWidget11Configure.isNotUsed(this, favori)
 						&& TransportsWidget21Configure.isNotUsed(this, favori)) {
@@ -122,8 +141,110 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 				}
 
 				return true;
+			case R.id.deplacerGroupe:
+				favori = (ArretFavori) getListAdapter().getItem(info.position);
+				final List<String> groupes = new ArrayList<String>();
+				groupes.add(getString(R.string.all));
+				for (GroupeFavori groupe : TransportsBordeauxApplication.getDataBaseHelper().selectAll(
+						GroupeFavori.class)) {
+					groupes.add(groupe.name);
+				}
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(getString(R.string.chooseGroupe));
+				builder.setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int item) {
+						String currentGroupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes
+								.get(item);
+						favori.groupe = currentGroupe;
+						TransportsBordeauxApplication.getDataBaseHelper().update(favori);
+						dialogInterface.dismiss();
+						startActivity(new Intent(ListFavoris.this, TabFavoris.class));
+						ListFavoris.this.finish();
+					}
+				});
+				builder.create().show();
+				return true;
 			default:
 				return super.onContextItemSelected(item);
 		}
+	}
+
+	private static final int GROUP_ID = 0;
+	private static final int MENU_AJOUTER = 1;
+	private static final int MENU_SUPPRIMER = 2;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
+		item.setIcon(android.R.drawable.ic_menu_add);
+		if (groupe != null) {
+			MenuItem itemMap = menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe);
+			itemMap.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		}
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+			case MENU_SUPPRIMER:
+				ArretFavori arretFavori = new ArretFavori();
+				arretFavori.groupe = groupe;
+				for (ArretFavori favori : TransportsBordeauxApplication.getDataBaseHelper().select(arretFavori)) {
+					favori.groupe = "";
+					TransportsBordeauxApplication.getDataBaseHelper().update(favori);
+				}
+				GroupeFavori groupeFavori = new GroupeFavori();
+				groupeFavori.name = groupe;
+				TransportsBordeauxApplication.getDataBaseHelper().delete(groupeFavori);
+				startActivity(new Intent(this, TabFavoris.class));
+				finish();
+				return true;
+			case MENU_AJOUTER:
+				showDialog(AJOUTER_GROUPE_DIALOG_ID);
+				return true;
+		}
+		return false;
+	}
+
+	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		if (id == AJOUTER_GROUPE_DIALOG_ID) {
+			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			final EditText input = new EditText(this);
+			alert.setView(input);
+			alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					String value = input.getText().toString().trim();
+					if (value == null || value.length() == 0) {
+						Toast.makeText(ListFavoris.this, getString(R.string.groupeObligatoire), Toast.LENGTH_LONG)
+								.show();
+						return;
+					}
+					GroupeFavori groupeFavori = new GroupeFavori();
+					groupeFavori.name = value;
+					if (!TransportsBordeauxApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
+							|| value.equals(getString(R.string.all))) {
+						Toast.makeText(ListFavoris.this, getString(R.string.groupeExistant), Toast.LENGTH_LONG).show();
+						return;
+					}
+					TransportsBordeauxApplication.getDataBaseHelper().insert(groupeFavori);
+					startActivity(new Intent(ListFavoris.this, TabFavoris.class));
+					ListFavoris.this.finish();
+				}
+			});
+
+			alert.setNegativeButton(getString(R.string.annuler), new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int whichButton) {
+					dialog.cancel();
+				}
+			});
+			return alert.create();
+		}
+		return super.onCreateDialog(id);
 	}
 }

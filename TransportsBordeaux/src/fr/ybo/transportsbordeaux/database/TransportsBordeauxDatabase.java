@@ -33,6 +33,7 @@ import fr.ybo.transportsbordeaux.modele.Calendrier;
 import fr.ybo.transportsbordeaux.modele.CalendrierException;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Direction;
+import fr.ybo.transportsbordeaux.modele.GroupeFavori;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.modele.Trajet;
@@ -41,7 +42,7 @@ import fr.ybo.transportsbordeaux.modele.VeloFavori;
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
 	private static final String DATABASE_NAME = "transportsbordeaux.db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 
 	@SuppressWarnings("unchecked")
 	private static final List<Class<?>> DATABASE_ENTITITES =
@@ -53,6 +54,7 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 				CalendrierException.class,
 				DernierMiseAJour.class,
 				Direction.class,
+				GroupeFavori.class,
 				Horaire.class,
 				Ligne.class,
 				Trajet.class,
@@ -98,6 +100,12 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 					getBase().getTable(Direction.class).createTable(db);
 					getBase().getTable(Ligne.class).createTable(db);
 					getBase().getTable(Trajet.class).createTable(db);
+				}
+			});
+			mapUpgrades.put(5, new UpgradeDatabase() {
+				public void upgrade(SQLiteDatabase db) {
+					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
+					getBase().getTable(GroupeFavori.class).createTable(db);
 				}
 			});
 		}
