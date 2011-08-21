@@ -19,6 +19,7 @@ package fr.ybo.transportsrennes.keolis.gtfs.modele;
 import java.io.Serializable;
 
 import fr.ybo.database.annotation.Column;
+import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
 
@@ -44,4 +45,6 @@ public class ArretFavori implements Serializable {
 	public String nomLong;
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
+	@Column(type = TypeColumn.INTEGER)
+	public Integer groupeId;
 }

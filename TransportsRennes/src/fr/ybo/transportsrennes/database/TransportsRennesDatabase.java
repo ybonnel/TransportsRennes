@@ -37,6 +37,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Calendrier;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.GroupeFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
@@ -44,7 +45,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 10;
+	private static final int DATABASE_VERSION = 11;
 
 	private Context context;
 
@@ -289,6 +290,12 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 						}
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
+				}
+			});
+			mapUpgrades.put(11, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
+					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupeId INTEGER");
+					getBase().getTable(GroupeFavori.class).createTable(db);
 				}
 			});
 		}

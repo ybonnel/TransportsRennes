@@ -16,20 +16,21 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Arret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretRoute;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Calendrier;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Direction;
+import fr.ybo.transportsrennes.keolis.gtfs.modele.GroupeFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Trajet;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public final class ConstantesKeolis {
 
@@ -46,6 +47,7 @@ public final class ConstantesKeolis {
 		LIST_CLASSES_DATABASE.add(VeloFavori.class);
 		LIST_CLASSES_DATABASE.add(Trajet.class);
 		LIST_CLASSES_DATABASE.add(Direction.class);
+		LIST_CLASSES_DATABASE.add(GroupeFavori.class);
 	}
 
 	public static final Collection<Class<?>> CLASSES_DB_TO_DELETE_ON_UPDATE = new ArrayList<Class<?>>(7);
