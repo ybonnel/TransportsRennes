@@ -149,7 +149,7 @@ public class TransportsBordeaux extends Activity {
 	}
 
 	public void onBusFavorisClick() {
-		Intent intent = new Intent(this, ListFavoris.class);
+		Intent intent = new Intent(this, TabFavoris.class);
 		startActivity(intent);
 	}
 
