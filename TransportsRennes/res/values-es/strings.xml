@@ -143,5 +143,7 @@
     <string name="annuler">Cancelar</string>
     <string name="groupeObligatoire">El nombre del grupo es obligatoria</string>
     <string name="groupeExistant">Ya existe un grupo con ese nombre</string>
+    <string name="deplacerGroupe">Se mueven en un grupo</string>
+    <string name="chooseGroupe">Elija un grupo</string>
 </resources>
 

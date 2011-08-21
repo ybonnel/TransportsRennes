@@ -18,4 +18,5 @@
 <resources>
     <item type="id" name="ajoutFavori"/>
     <item type="id" name="supprimerFavori"/>
+    <item type="id" name="deplacerGroupe"/>
 </resources>

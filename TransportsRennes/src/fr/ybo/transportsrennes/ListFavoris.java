@@ -17,6 +17,7 @@
 package fr.ybo.transportsrennes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -109,6 +110,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
 			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
+			menu.add(Menu.NONE, R.id.deplacerGroupe, 0, getString(R.string.deplacerGroupe));
 		}
 	}
 
@@ -116,9 +118,10 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final ArretFavori favori;
 		switch (item.getItemId()) {
 			case R.id.supprimerFavori:
-				ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
+				favori = (ArretFavori) getListAdapter().getItem(info.position);
 
 				if (TransportsWidgetConfigure.isNotUsed(this, favori)
 						&& TransportsWidget11Configure.isNotUsed(this, favori)
@@ -130,6 +133,29 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 				} else {
 					Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
 				}
+				return true;
+			case R.id.deplacerGroupe:
+				favori = (ArretFavori) getListAdapter().getItem(info.position);
+				final List<String> groupes = new ArrayList<String>();
+				groupes.add(getString(R.string.all));
+				for (GroupeFavori groupe : TransportsRennesApplication.getDataBaseHelper()
+						.selectAll(GroupeFavori.class)) {
+					groupes.add(groupe.name);
+				}
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseGroupe));
+				builder.setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int item) {
+						String currentGroupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes
+								.get(item);
+						favori.groupe = currentGroupe;
+						TransportsRennesApplication.getDataBaseHelper().update(favori);
+						dialogInterface.dismiss();
+						startActivity(new Intent(ListFavoris.this, TabFavoris.class));
+						ListFavoris.this.finish();
+					}
+				});
+				builder.create().show();
 				return true;
 			default:
 				return super.onContextItemSelected(item);
@@ -160,7 +186,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.groupe = groupe;
 				for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(arretFavori)) {
-					favori.groupe = null;
+					favori.groupe = "";
 					TransportsRennesApplication.getDataBaseHelper().update(favori);
 				}
 				GroupeFavori groupeFavori = new GroupeFavori();
