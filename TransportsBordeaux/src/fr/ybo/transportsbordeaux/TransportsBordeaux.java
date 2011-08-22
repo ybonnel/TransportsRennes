@@ -114,12 +114,6 @@ public class TransportsBordeaux extends Activity {
 			showDialog();
 			saveAfficheMessage();
 		}
-		boolean afficheMsgDonneesObsoletes = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				"TransportsBordeaux_donnees2208", true);
-		if (afficheMsgDonneesObsoletes) {
-			showDialogDonneesObsoletes();
-			saveAfficheMsgDonneesObsoletes();
-		}
 	}
 
 	private void showDialog() {
@@ -136,20 +130,6 @@ public class TransportsBordeaux extends Activity {
 		builder.create().show();
 	}
 
-	private void showDialogDonneesObsoletes() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
-		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
-		Spanned spanned = Html.fromHtml(getString(R.string.donnesObsoletes));
-		textView.setText(spanned, TextView.BufferType.SPANNABLE);
-		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		builder.setView(view);
-		builder.setTitle(R.string.titreDonnesObsoletes);
-		builder.setCancelable(false);
-		builder.setNeutralButton(getString(R.string.Terminer), new TransportsBordeaux.TerminerClickListener());
-		builder.create().show();
-	}
-
 	private static class TerminerClickListener implements DialogInterface.OnClickListener {
 		public void onClick(DialogInterface dialogInterface, int i) {
 			dialogInterface.cancel();
@@ -159,12 +139,6 @@ public class TransportsBordeaux extends Activity {
 	private void saveAfficheMessage() {
 		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
 		editor.putBoolean("TransportsBordeaux_dialog", false);
-		editor.commit();
-	}
-
-	private void saveAfficheMsgDonneesObsoletes() {
-		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		editor.putBoolean("TransportsBordeaux_donnees2208", false);
 		editor.commit();
 	}
 
