@@ -130,7 +130,4 @@
     <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
     <string name="deplacerGroupe">Déplacer dans un groupe</string>
     <string name="chooseGroupe">Choisissez un groupe</string>
-    
-    <string name="donnesObsoletes">Depuis le 22/08 les données sont obsolètes et non disponibles pour la plupart des Transports. La CUB n\'a toujours pas publié les nouvelles données, dès qu\'elles seront disponibles, je publierai la mise à jour (je leur ai envoyé un mail, sans réponse pour l\'instant).</string>
-    <string name="titreDonnesObsoletes">ATTENTION : données obsolètes</string>
 </resources>
