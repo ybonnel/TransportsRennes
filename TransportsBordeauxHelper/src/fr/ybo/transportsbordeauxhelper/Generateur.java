@@ -156,15 +156,17 @@ public class Generateur {
 			for (Horaire horaire : horaires) {
 				tailleOctets += horaire.nbOctets();
 			}
-			if (tailleOctets < (1024 * 1024)) {
+			if (tailleOctets < (900 * 1024)) {
 				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horaires, Horaire.class);
 			} else {
 				// Découpage de la liste en deux liste
-				int pivot = horaires.size() / 2;
+				int pivot = horaires.size() / 3;
 				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + ".txt"), horaires.subList(0, pivot),
 						Horaire.class);
-				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + "_suite.txt"),
-						horaires.subList(pivot, horaires.size()), Horaire.class);
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + "_1.txt"),
+						horaires.subList(pivot, pivot * 2), Horaire.class);
+				moteurCsv.writeFile(new File(repertoire, "horaires_" + ligne.id + "_2.txt"),
+						horaires.subList(pivot * 2, horaires.size()), Horaire.class);
 			}
 			System.out.println("Nombre d'horaire pour la ligne " + ligne.nomCourt + " : " + horaires.size());
 		}

@@ -49,16 +49,21 @@ public final class GestionZipKeolis {
 		try {
 			List<CoupleResourceFichier> retour = new ArrayList<GestionZipKeolis.CoupleResourceFichier>();
 			String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
-			String nomResourceAlternatif = nomResource + "_suite";
 			int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(
 					null);
 			retour.add(new CoupleResourceFichier(
 					resourceId, nomResource + ".txt"));
-			try {
-				int resourceAlternatifId = R.raw.class.getDeclaredField(nomResourceAlternatif).getInt(null);
-				retour.add(new CoupleResourceFichier(resourceAlternatifId, nomResourceAlternatif + ".txt"));
-			} catch (NoSuchFieldException noSuchField) {
-
+			int count = 1;
+			boolean continu = true;
+			while (continu) {
+				String nomResourceAlternatif = new StringBuilder(nomResource).append('_').append(count).toString();
+				try {
+					int resourceAlternatifId = R.raw.class.getDeclaredField(nomResourceAlternatif).getInt(null);
+					retour.add(new CoupleResourceFichier(resourceAlternatifId, nomResourceAlternatif + ".txt"));
+				} catch (NoSuchFieldException noSuchField) {
+					continu = false;
+				}
+				count++;
 			}
 			return retour;
 		} catch (Exception exception) {
