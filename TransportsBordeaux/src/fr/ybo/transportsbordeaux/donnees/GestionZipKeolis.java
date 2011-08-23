@@ -70,6 +70,12 @@ public final class GestionZipKeolis {
 			final TransportsBordeauxDatabase dataBaseHelper,
 			Resources resources) {
 		try {
+
+			final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
+			table.addSuffixeToTableName(ligneId);
+			final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+			table.dropTable(db);
+			table.createTable(db);
 			for (CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(ligneId)) {
 				BufferedReader bufReader = new BufferedReader(
 						new InputStreamReader(
@@ -77,14 +83,6 @@ public final class GestionZipKeolis {
 										.openRawResource(coupleResourceFichier.resourceId)),
 						8 << 10);
 				try {
-
-					final Table table = dataBaseHelper.getBase().getTable(
-							Horaire.class);
-					table.addSuffixeToTableName(ligneId);
-					final SQLiteDatabase db = dataBaseHelper
-							.getWritableDatabase();
-					table.dropTable(db);
-					table.createTable(db);
 					dataBaseHelper.beginTransaction();
 					final InsertHelper ih = new InsertHelper(db,
 							table.getName());
