@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
@@ -48,11 +48,11 @@ public class Version {
 
 	private static String version = null;
 
-	public static String getVersionCourante(Application application) {
+	public static String getVersionCourante(Context context) {
 		if (version == null) {
-			PackageManager manager = application.getPackageManager();
+			PackageManager manager = context.getPackageManager();
 			try {
-				PackageInfo info = manager.getPackageInfo(application.getPackageName(), 0);
+				PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
 				version = info.versionName;
 			} catch (PackageManager.NameNotFoundException ignore) {
 			}
