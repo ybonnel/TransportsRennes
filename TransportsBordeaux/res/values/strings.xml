@@ -130,4 +130,10 @@
     <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
     <string name="deplacerGroupe">Déplacer dans un groupe</string>
     <string name="chooseGroupe">Choisissez un groupe</string>
+    
+    <string name="erreurDBOnSdCard">La SdCard est inaccessible, merci de réessayer plus tard, si le problème persiste, vous pouvez supprimer les données, et elle seront alors stockés sur le téléphone.</string>
+    <string name="dbOnSdCard">Données sur la SDCard</string>
+    <string name="changeDbOnSdCard">ATTENTION, toutes les données seront perdues, de plus en mettant les données sur la SDCard, celà peut affecter les performances de l\'application, il faut donc utiliser cette fonction seulement si votre place sur le téléphone est limitée. Êtes vous sûr de vouloir déplacer les données?</string>
+    <string name="suppressionDB">Suppression des anciennes données en cours...</string>
+    <string name="preferences">Préférences</string>
 </resources>

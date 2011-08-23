@@ -41,7 +41,7 @@ import fr.ybo.transportsbordeaux.modele.VeloFavori;
 
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
-	private static final String DATABASE_NAME = "transportsbordeaux.db";
+	public static final String DATABASE_NAME = "transportsbordeaux.db";
 	private static final int DATABASE_VERSION = 6;
 
 	@SuppressWarnings("unchecked")
@@ -60,7 +60,7 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 				Trajet.class,
 				VeloFavori.class);
 
-	public TransportsBordeauxDatabase(Context context, List<Class<?>> classes) {
+	public TransportsBordeauxDatabase(Context context) {
 		super(context, DATABASE_ENTITITES, DATABASE_NAME, DATABASE_VERSION);
 	}
 
