@@ -258,8 +258,10 @@ public class ContextWithDatabasePath extends Context {
 	}
 
 	public SQLiteDatabase openOrCreateDatabase(String name, int mode, CursorFactory factory) {
-		// FIXME à refaire.
-		return context.openOrCreateDatabase(name, mode, factory);
+		File dbFile = getDatabasePath(name);
+		dbFile.getParentFile().mkdirs();
+		SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, factory);
+		return db;
 	}
 
 	public Drawable peekWallpaper() {

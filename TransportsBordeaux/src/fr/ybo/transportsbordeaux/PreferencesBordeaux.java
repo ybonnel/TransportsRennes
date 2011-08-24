@@ -80,6 +80,7 @@ public class PreferencesBordeaux extends MenuAccueil.Activity {
 									editor.commit();
 									TransportsBordeauxApplication.constuctDatabase(PreferencesBordeaux.this
 											.getApplicationContext());
+									TransportsBordeauxApplication.setBaseNeuve(true);
 									PreferencesBordeaux.this.finish();
 								}
 							}.execute();

@@ -67,6 +67,15 @@ public class TransportsBordeaux extends Activity {
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (TransportsBordeauxApplication.isBaseNeuve()) {
+			TransportsBordeauxApplication.setBaseNeuve(false);
+			verifierUpgrade();
+		}
+	}
+
 	private void assignerBoutons() {
 
 		Button btnBus = (Button) findViewById(R.id.home_btn_bus);
@@ -303,7 +312,6 @@ public class TransportsBordeaux extends Activity {
 		}
 		return false;
 	}
-
 
 	private void loadAllLines() {
 

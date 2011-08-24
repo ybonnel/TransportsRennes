@@ -62,6 +62,16 @@ public class TransportsBordeauxApplication extends Application {
 
 	private static TransportsBordeauxDatabase databaseHelper;
 
+	private static boolean baseNeuve = false;
+
+	public static boolean isBaseNeuve() {
+		return baseNeuve;
+	}
+
+	public static void setBaseNeuve(boolean baseNeuve) {
+		TransportsBordeauxApplication.baseNeuve = baseNeuve;
+	}
+
 	public static TransportsBordeauxDatabase getDataBaseHelper() {
 		return databaseHelper;
 	}
