@@ -186,12 +186,17 @@ public class TransportsBordeauxApplication extends Application {
 
 	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
 
-	private void setRecurringAlarm(Context context) {
-		Intent alarm = new Intent(context, AlarmReceiver.class);
-		PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
-		AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	private static final boolean activeUpdates = false;
 
-		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
+	private void setRecurringAlarm(Context context) {
+		if (activeUpdates) {
+			Intent alarm = new Intent(context, AlarmReceiver.class);
+			PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm,
+					PendingIntent.FLAG_CANCEL_CURRENT);
+			AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+			alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
+		}
 	}
 
 }
