@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
@@ -47,6 +49,11 @@ public class PreferencesBordeaux extends MenuAccueil.Activity {
 				boolean oldDbOnSdCard = PreferenceManager.getDefaultSharedPreferences(PreferencesBordeaux.this)
 						.getBoolean("TransportsBordeaux_sdCard", false);
 				if (oldDbOnSdCard != dbOnSdCard) {
+					if (dbOnSdCard && !Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+						Toast.makeText(PreferencesBordeaux.this, R.string.sdCardInaccessbile, Toast.LENGTH_LONG).show();
+						finish();
+						return;
+					}
 					AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesBordeaux.this);
 					View alertView = LayoutInflater.from(PreferencesBordeaux.this).inflate(R.layout.infoapropos, null);
 					TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
