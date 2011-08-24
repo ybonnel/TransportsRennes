@@ -23,30 +23,30 @@ import android.util.Log;
 
 public class LogYbo {
 
-	private static final String PREFIX_TAG = "YBO_";
+	private static final String PREFIX_TAG = "YBO";
 	private final String tag;
 	private static final boolean IS_DEBUG = true;
 
 	public LogYbo(Class<?> clazz) {
-		tag = PREFIX_TAG + clazz.getSimpleName();
+		tag = clazz.getSimpleName();
 	}
 
 	public void debug(String message) {
 		if (IS_DEBUG) {
-			Log.d(tag, message);
+			Log.d(PREFIX_TAG, tag + " : " + message);
 		}
 	}
 
 	public void erreur(String message, Throwable throwable) {
-		Log.e(tag, message, throwable);
+		Log.e(PREFIX_TAG, tag + " : " + message, throwable);
 	}
 
 	public void erreur(String message) {
-		Log.e(tag, message);
+		Log.e(PREFIX_TAG, tag + " : " + message);
 	}
 
 	public void warn(String message) {
-		Log.w(tag, message);
+		Log.w(PREFIX_TAG, tag + " : " + message);
 	}
 
 	private Map<String, Long> mapStartTimes;
@@ -67,7 +67,8 @@ public class LogYbo {
 	public void stopChrono(String message) {
 		if (IS_DEBUG) {
 			long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
-			Log.d(tag, new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());
+			Log.d(PREFIX_TAG, tag + " : "
+					+ new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());
 		}
 	}
 
