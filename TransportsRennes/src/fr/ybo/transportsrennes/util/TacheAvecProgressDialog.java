@@ -39,7 +39,11 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		myProgressDialog = ProgressDialog.show(context, "", message, true);
+		try {
+			myProgressDialog = ProgressDialog.show(context, "", message, true);
+		} catch (Exception ignore) {
+
+		}
 	}
 
 	protected abstract Result myDoBackground(Params... params) throws ErreurReseau;
