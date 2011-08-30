@@ -18,6 +18,7 @@ package fr.ybo.transportsbordeaux;
 
 import java.io.FileNotFoundException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -365,7 +366,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					if (e.getCause() != null
 							&& (e.getCause() instanceof SocketException
 									|| e.getCause() instanceof FileNotFoundException
-									|| e.getCause() instanceof UnknownHostException || e.getCause() instanceof JsonIOException)) {
+									|| e.getCause() instanceof UnknownHostException
+									|| e.getCause() instanceof JsonIOException || e.getCause() instanceof SocketTimeoutException)) {
 						return null;
 					} else {
 						throw new TcbException(e);
