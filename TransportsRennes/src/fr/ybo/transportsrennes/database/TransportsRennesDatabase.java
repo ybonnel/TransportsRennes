@@ -294,7 +294,11 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 			});
 			mapUpgrades.put(11, new UpgradeDatabaseWithError() {
 				public void myUpgrade(SQLiteDatabase db) {
-					db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
+					try {
+						db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
+					} catch (Exception ignore) {
+
+					}
 					getBase().getTable(GroupeFavori.class).createTable(db);
 				}
 			});
