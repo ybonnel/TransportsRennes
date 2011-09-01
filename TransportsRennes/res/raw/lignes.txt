@@ -1,42 +1,69 @@
 ordre,id,nom_court,nom_long
-1,01,1,Cesson-Sévigné (Chêne Germain) <> Saint-Jacques-de-la-Lande (Morinais)
-2,02,2,Grand Quartier <> La Poterie / Haut Sancé
-3,03,3,Saint Laurent <> Alma
-4,04,4,Beauregard <> Beaulieu Atalante
-5,05,5,Patton <> Lycée Bréquigny
-6,06,6,Cesson-Sévigné (Base de Loisirs) <> Rennes (République)
-7,07,7,Chantepie (Rosa Parks) <> Rennes (République)
-8,08,8,Saint-Grégoire <> Rennes (La Poterie)
-9,09,9,Saint Laurent <> Cleunay Centre Commercial
-10,11,11,Z.I. Ouest / Stade Rennais <> Saint Saëns / Z.I. Sud-Est
-11,30,30,Stade Rennais <> Cesson-Sévigné (La Rigourdière)
-12,33,33,Saint-Jacques-de-la-Lande / Bréquigny <> La Poterie / Chantepie (Cucé)
-13,34,34,Z.I. Sud-Est / La Poterie <> Cesson-Sévigné (Saint Etienne)
-14,41,41,Gares <> Longs Champs / Gaudinais
-15,50,50,Rennes (République) <> Thorigné-Fouillard
-16,51,51,Rennes (Sainte Anne) <> Betton
-17,52,52,Saint-Gilles / Pacé <> Rennes (Villejean-Université) <> Montgermont / La Chapelle-des-Fougeretz
-18,53,53,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault
-19,54,54,Rennes (Charles de Gaulle) <> Le Rheu / Cintré
-20,55,55,Rennes (Charles de Gaulle) <> Mordelles / Le Verger
-21,56,56,Rennes (Charles de Gaulle) <> Chavagne
-22,57,57,Rennes (République) <> Saint-Jacques-de-la-Lande / Bruz
-23,59,59,Vern-sur-Seiche <> Rennes (La Poterie) / Rennes (Henri Fréville) <> Bruz
-24,61,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon
-25,64,64,Rennes (République) <> Acigné
-26,65,65,Rennes (Villejean-Université) <> Pacé / Parthenay / Clayes
-27,67,67,Rennes (République) <> Cesson-Sévigné / Brécé
-28,68,68,Rennes (Villejean-Université) <> Gévezé
-29,70,70,Rennes (Sainte Anne) <> Saint-Sulpice-la-Forêt
-30,71,71,Rennes (Sainte Anne) <> Betton / Chevaigné
-31,72,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan
-32,73,73,Rennes (La Poterie) <> Vern-sur-Seiche / Saint-Armel / Corps-Nuds
-33,74,74,Rennes (Henri Fréville) <> Orgères / Bourgbarré
-34,75,75,Rennes (La Poterie) <> Nouvoitou
-35,77,77,Rennes (Villejean-Université) <> Pacé
-36,78,78,Rennes (Villejean-Université) <> Betton / Saint-Grégoire
-37,94,94,Saint-Sulpice-la-Forêt / Chevaigné <> Betton
-38,100,100,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande
-39,88,API,Rennes (République) <> Les Etangs d'Apigné
-40,TTZ,TTZ,Rennes <> Touche Tizon
-41,a,a,La Poterie <> J.F. Kennedy
+1,0001,1,Cesson-Sévigné (Chêne Germain) <> Chantepie (Rosa Parks)
+2,0002,2,Grand Quartier <> La Poterie / Haut Sancé
+3,0003,3,Saint Laurent <> Alma
+4,0004,4,Beauregard <> Beaulieu Atalante
+5,0005,5,Patton <> Lycée Bréquigny
+6,0006,6,Cesson-Sévigné (Base de Loisirs) <> Saint-Jacques-de-la-Lande (Morinais)
+7,0008,8,Saint-Grégoire <> Rennes (La Poterie)
+8,0009,9,Saint Laurent <> Cleunay
+9,0011,11,Z.I. Ouest / Stade Rennais <> Saint Saëns / Z.I. Sud-Est
+10,0030,30,Stade Rennais <> Cesson-Sévigné (Rigourdière)
+11,0031,31,Bourgogne <> Beaulieu Ecole de Chimie
+12,0032,32,Triangle <> Beaulieu Atalante
+13,0033,33,Saint-Jacques-de-la-Lande / Bréquigny <> La Poterie / Chantepie (Cucé)
+14,0034,34,Z.I. Sud-Est / La Poterie <> Cesson-Sévigné (Lycée Saint-Etienne)
+15,0035,35,Cesson-Sévigné (Chêne Germain) <> Cesson-Sévigné (Gare)
+16,0040,40,République <> Beaulieu Atalante
+17,0041,41,Gares <> ZAC Saint-Sulpice
+18,0042,42,Gares <> Z.I. Sud-Est
+19,0044,44,République <> Lycée Joliot-Curie
+20,0050,50,Rennes (République) <> Thorigné-Fouillard
+21,0051,51,Rennes (Sainte Anne) <> Betton
+22,0052,52,Saint-Gilles / Pacé <> Rennes (Villejean-Université) <> Montgermont / La Chapelle-des-Fougeretz
+23,0053,53,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault
+24,0054,54,Rennes (Charles de Gaulle) <> Le Rheu / Cintré
+25,0055,55,Rennes (Charles de Gaulle) <> Mordelles / Le Verger
+26,0056,56,Rennes (Charles de Gaulle) <> Chavagne
+27,0057,57,Rennes (République) <> Saint-Jacques-de-la-Lande / Bruz
+28,0059,59,Vern-sur-Seiche <> Rennes (La Poterie) / Rennes (Henri Fréville) <> Bruz
+29,0061,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon
+30,0064,64,Rennes (République) <> Acigné
+31,0065,65,Rennes (Villejean-Université) <> Pacé / Parthenay / Clayes
+32,0067,67,Rennes (République) <> Cesson-Sévigné / Brécé
+33,0068,68,Rennes (Villejean-Université) <> Gévezé
+34,0070,70,Rennes (Sainte Anne) <> Saint-Sulpice-la-Forêt
+35,0071,71,Rennes (Sainte Anne) <> Betton / Chevaigné
+36,0072,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan
+37,0073,73,Rennes (La Poterie) <> Vern-sur-Seiche / Saint-Armel / Corps-Nuds
+38,0074,74,Rennes (Henri Fréville) <> Orgères / Bourgbarré
+39,0075,75,Rennes (La Poterie) <> Nouvoitou
+40,0076,76,Rennes (Villejean-Université) <> Vezin-le-Coquet / Le Rheu
+41,0077,77,Rennes (Villejean-Université) <> Pacé
+42,0078,78,Rennes (Villejean-Université) <> Betton / Saint-Grégoire
+43,0090,90,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande
+44,0091,91,Bruz / Chartres <> Noyal-Châtillon-sur-Seiche
+45,0093,93,Cintré <> L'Hermitage (Gare)
+46,0094,94,Saint-Sulpice-la-Forêt / Chevaigné <> Betton
+47,0158,KL,Rennes (République) <> Campus de Ker-Lann
+48,0150,150,Rennes (République) <> Thorigné-Fouillard
+49,0151,151,Rennes (Sainte Anne) <> Betton
+50,0152,152,Rennes (Lycée V. H. Basch) <> Clayes / Saint-Gilles
+51,0153,153,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault
+52,0154,154,Rennes (République) <> Le Rheu
+53,0155,155,Rennes (République) <> Mordelles
+54,0156,156,Rennes (République) <> Chavagne
+55,0157,157,Rennes (République) <> Bruz
+56,0159,159,Rennes (Henri Fréville) <> Bruz
+57,0161,161,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon / Bourgbarré
+58,0164,164,Rennes (République) <> Acigné
+59,0172,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan
+60,0173,173,Rennes (La Poterie) <> Saint-Armel / Corps-Nuds
+61,0203,203,Gares <> Lycée Joliot-Curie
+62,0205,205,Villejean-Université <> La Lande du Breil
+63,0207,207,Gares <> Cesson-Sévigné (Lycée Saint-Etienne)
+64,0208,208,Saint-Grégoire (Uttenreuth) <> Saint-Grégoire (MFR Rabinardières)
+65,0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne)
+66,0089,STN,Beaulieu Atalante <> J.F. Kennedy
+67,0101,TTZ,Rennes <> Touche Tizon
+68,a,a,La Poterie <> J.F. Kennedy
