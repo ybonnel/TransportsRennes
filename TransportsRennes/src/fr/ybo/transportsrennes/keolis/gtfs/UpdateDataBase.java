@@ -67,17 +67,14 @@ public final class UpdateDataBase {
 			List<ArretFavori> favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
 			TransportsRennesApplication.getDataBaseHelper().deleteAll(ArretFavori.class);
 			for (ArretFavori favori : favoris) {
-				ligneSelect.nomCourt = favori.nomCourt;
+				ligneSelect.id = favori.ligneId;
 				Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
 				arretSelect.id = favori.arretId;
 				Arret arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretSelect);
-				ArretRoute arretRoute = null;
-				if (ligne != null) {
-					arretRouteSelect.ligneId = ligne.id;
-					arretRouteSelect.arretId = favori.arretId;
-					arretRouteSelect.macroDirection = favori.macroDirection;
-					arretRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
-				}
+				arretRouteSelect.ligneId = favori.ligneId;
+				arretRouteSelect.arretId = favori.arretId;
+				arretRouteSelect.macroDirection = favori.macroDirection;
+				ArretRoute arretRoute = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
 				if (ligne == null || arret == null || arretRoute == null) {
 					LOG_YBO.debug("Le favori avec arretId = " + favori.arretId + ", ligneId = " + favori.ligneId +
 							" n'a plus de correspondances dans la base -> suppression");
@@ -86,7 +83,7 @@ public final class UpdateDataBase {
 					directionSelect.id = arretRoute.directionId;
 					favori.direction = TransportsRennesApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
 					favori.nomArret = arret.nom;
-					favori.ligneId = ligne.id;
+					favori.nomCourt = ligne.nomCourt;
 					favori.nomLong = ligne.nomLong;
 					TransportsRennesApplication.getDataBaseHelper().insert(favori);
 				}
