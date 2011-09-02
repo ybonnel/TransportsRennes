@@ -75,13 +75,16 @@ public final class GestionZipKeolis {
 			final TransportsBordeauxDatabase dataBaseHelper,
 			Resources resources) {
 		try {
-
+			LOG_YBO.debug("Début chargeLigne");
 			final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
 			table.addSuffixeToTableName(ligneId);
 			final SQLiteDatabase db = dataBaseHelper.getWritableDatabase();
+			LOG_YBO.debug("Suppression de la table");
 			table.dropTable(db);
+			LOG_YBO.debug("Création de la table");
 			table.createTable(db);
 			for (CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(ligneId)) {
+				LOG_YBO.debug("Mise en base du fichier " + coupleResourceFichier.resourceId);
 				BufferedReader bufReader = new BufferedReader(
 						new InputStreamReader(
 								resources
@@ -101,7 +104,7 @@ public final class GestionZipKeolis {
 							.getColumnIndex("stopSequence");
 					final int terminusCol = ih.getColumnIndex("terminus");
 
-
+					LOG_YBO.debug("Début du parse du fichier");
 					moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
 
 						private int countLigne = 0;
@@ -122,6 +125,7 @@ public final class GestionZipKeolis {
 							// Insert the row into the database.
 							ih.execute();
 							if (countLigne > 10000) {
+								LOG_YBO.debug("Commit");
 								countLigne = 0;
 								dataBaseHelper.endTransaction();
 								dataBaseHelper.beginTransaction();
@@ -129,11 +133,13 @@ public final class GestionZipKeolis {
 						};
 
 					});
+					LOG_YBO.debug("Fin de parse du fichier");
 				} finally {
 					bufReader.close();
 					dataBaseHelper.endTransaction();
 				}
 			}
+			LOG_YBO.debug("Fin chargeLigne");
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}

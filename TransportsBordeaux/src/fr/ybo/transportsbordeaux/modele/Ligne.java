@@ -34,11 +34,14 @@ import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
+import fr.ybo.transportsbordeaux.util.LogYbo;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
 @Entity
 public class Ligne implements Serializable {
+
+	private static LogYbo LOG_YBO = new LogYbo(Ligne.class);
 
 	@BaliseCsv("id")
 	@Column
@@ -57,10 +60,12 @@ public class Ligne implements Serializable {
 	public Boolean chargee;
 
 	public void chargerHeuresArrets(TransportsBordeauxDatabase dataBaseHelper, Resources resources) {
+		LOG_YBO.debug("Début de chargerHeuresArrets");
 		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);
 		MoteurCsv moteur = new MoteurCsv(classes);
 		GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper, resources);
+		LOG_YBO.debug("Fin de chargerHeuresArrets");
 	}
 
     public static Ligne getLigne(String ligneId) {
