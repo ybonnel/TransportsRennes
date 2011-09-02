@@ -190,7 +190,7 @@ public class TransportsBordeauxApplication extends Application {
 
 	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
 
-	private static final boolean activeUpdates = false;
+	private static final boolean activeUpdates = true;
 
 	private void setRecurringAlarm(Context context) {
 		if (activeUpdates) {
