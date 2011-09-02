@@ -17,6 +17,7 @@
 package fr.ybo.transportsbordeaux.modele;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -74,6 +75,8 @@ public class Horaire {
 		return prochainsDeparts;
 	}
 
+	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
+
 	public static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Horaire.heureDepart as _id,");
@@ -82,7 +85,10 @@ public class Horaire {
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
 		requete.append("where ");
-		requete.append(clauseWhereForTodayCalendrier(calendar));
+		requete.append(" Calendrier.dateDebut <= :today1");
+		requete.append(" and Calendrier.dateFin >= :today2");
+		requete.append(" and ");
+		requete.append(clauseWhereForCalendrier(calendar));
 		requete.append(" and Trajet.calendrierId = Calendrier.id");
 		requete.append(" and Trajet.id = Horaire.trajetId");
 		requete.append(" and Trajet.ligneId = :ligneId");
@@ -95,6 +101,9 @@ public class Horaire {
 		}
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>(2);
+		String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
+		selectionArgs.add(today);
+		selectionArgs.add(today);
 		selectionArgs.add(ligneId);
 		selectionArgs.add(arretId);
 		LOG_YBO.debug("Requete : " + requete.toString());
@@ -115,11 +124,20 @@ public class Horaire {
 		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
 			requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
 			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
-			requete.append("from Calendrier,  Horaire_");
+			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId, Horaire_");
+			requete.append("from Calendrier, Horaire_");
 			requete.append(ligneId);
 			requete.append(" as Horaire, Trajet ");
 			requete.append("where ");
-			requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
+			// requete.append(clauseWhereForTodayCalendrier(calendarLaVeille));
+			requete.append(" Calendrier.dateDebut <= :veille1");
+			requete.append(" and Calendrier.dateFin >= :veille2");
+			// requete.append(" and ( (");
+			requete.append(" and ");
+			requete.append(clauseWhereForCalendrier(calendarLaVeille));
+			// requete.append(" and CalendrierException.calendrierId IS NULL )");
+			// requete.append(" OR ( CalendrierException.date = :veille3 AND CalendrierException.ajout = 1 ) )");
+
 			requete.append(" and Trajet.id = Horaire.trajetId");
 			requete.append(" and Trajet.calendrierId = Calendrier.id");
 			requete.append(" and Trajet.ligneId = :routeId1");
@@ -127,7 +145,11 @@ public class Horaire {
 			requete.append(" and Horaire.terminus = 0");
 			requete.append(" and Horaire.heureDepart >= :maintenantHier ");
 
+			String veille = FORMAT_DATE_CALENDRIER.format(calendarLaVeille.getTime());
 			selectionArgs.add(Integer.toString(uneJournee));
+			selectionArgs.add(veille);
+			selectionArgs.add(veille);
+			// selectionArgs.add(veille);
 			selectionArgs.add(ligneId);
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now + uneJournee));
@@ -138,11 +160,19 @@ public class Horaire {
 			}
 			requete.append("select Horaire.heureDepart as _id,");
 			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId,  Horaire_");
 			requete.append("from Calendrier,  Horaire_");
 			requete.append(ligneId);
 			requete.append(" as Horaire, Trajet ");
 			requete.append("where ");
-			requete.append(clauseWhereForTodayCalendrier(calendar));
+
+			requete.append(" Calendrier.dateDebut <= :today1");
+			requete.append(" and Calendrier.dateFin >= :today2");
+			// requete.append(" and ( (");
+			requete.append(" and ");
+			requete.append(clauseWhereForCalendrier(calendar));
+			// requete.append(" and CalendrierException.calendrierId IS NULL )");
+			// requete.append(" OR ( CalendrierException.date = :today3 AND CalendrierException.ajout = 1 ) )");
 			requete.append(" and Trajet.id = Horaire.trajetId");
 			requete.append(" and Trajet.calendrierId = Calendrier.id");
 			requete.append(" and Trajet.ligneId = :routeId2");
@@ -150,6 +180,10 @@ public class Horaire {
 			requete.append(" and Horaire.terminus = 0");
 			requete.append(" and Horaire.heureDepart >= :maintenant");
 
+			String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
+			selectionArgs.add(today);
+			selectionArgs.add(today);
+			// selectionArgs.add(today);
 			selectionArgs.add(ligneId);
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now));
@@ -172,5 +206,25 @@ public class Horaire {
 		}
 		clause.append(')');
 		return clause.toString();
+	}
+
+	private static String clauseWhereForCalendrier(Calendar calendar) {
+		switch (calendar.get(Calendar.DAY_OF_WEEK)) {
+			case Calendar.MONDAY:
+				return "Calendrier.lundi = 1";
+			case Calendar.TUESDAY:
+				return "Calendrier.mardi = 1";
+			case Calendar.WEDNESDAY:
+				return "Calendrier.mercredi = 1";
+			case Calendar.THURSDAY:
+				return "Calendrier.jeudi = 1";
+			case Calendar.FRIDAY:
+				return "Calendrier.vendredi = 1";
+			case Calendar.SATURDAY:
+				return "Calendrier.samedi = 1";
+			case Calendar.SUNDAY:
+				return "Calendrier.dimanche = 1";
+		}
+		return null;
 	}
 }

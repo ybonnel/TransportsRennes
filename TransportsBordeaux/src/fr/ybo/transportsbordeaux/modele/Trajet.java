@@ -17,9 +17,9 @@
 package fr.ybo.transportsbordeaux.modele;
 
 import fr.ybo.database.annotation.Column;
-import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.database.annotation.Column.TypeColumn;
 import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;

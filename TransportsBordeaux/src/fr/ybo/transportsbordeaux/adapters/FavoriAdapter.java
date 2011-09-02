@@ -33,8 +33,11 @@ import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
+import fr.ybo.transportsbordeaux.util.LogYbo;
 
 public class FavoriAdapter extends BaseAdapter {
+
+	private static final LogYbo LOG_YBO = new LogYbo(FavoriAdapter.class);
 
 	private final LayoutInflater mInflater;
 
@@ -164,6 +167,7 @@ public class FavoriAdapter extends BaseAdapter {
 						prochainsDepart.get(0), now));
 			}
 		} catch (SQLiteException ignore) {
+			LOG_YBO.erreur("Erreur SQL", ignore);
 		}
 
 		return convertView1;
