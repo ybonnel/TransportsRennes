@@ -45,7 +45,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.VeloFavori;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
 	private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 12;
 
 	private Context context;
 
@@ -63,6 +63,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 				myUpgrade(arg0);
 			} catch (Exception exception) {
 				ErrorReporter.getInstance().handleException(exception);
+				throw new RuntimeException(exception);
 			}
 		}
 
@@ -300,6 +301,23 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 
 					}
 					getBase().getTable(GroupeFavori.class).createTable(db);
+				}
+			});
+			mapUpgrades.put(12, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
+					boolean tableTrouve = false;
+					Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+							" type = 'table'", null, null, null, null);
+					while (cursor.moveToNext()) {
+						String tableName = cursor.getString(0);
+						if ("GroupeFavori".equals(tableName)) {
+							tableTrouve = true;
+						}
+					}
+					cursor.close();
+					if (!tableTrouve) {
+						getBase().getTable(GroupeFavori.class).createTable(db);
+					}
 				}
 			});
 		}
