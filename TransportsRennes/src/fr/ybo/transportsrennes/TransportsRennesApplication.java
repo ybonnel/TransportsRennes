@@ -131,8 +131,12 @@ public class TransportsRennesApplication extends Application {
 		public void trackPageView(final String url) {
 			handler.post(new Runnable() {
 				public void run() {
-					traker.trackPageView(url);
-					traker.dispatch();
+					try {
+						traker.trackPageView(url);
+						traker.dispatch();
+					} catch (Exception ignore) {
+
+					}
 				}
 			});
 		}
