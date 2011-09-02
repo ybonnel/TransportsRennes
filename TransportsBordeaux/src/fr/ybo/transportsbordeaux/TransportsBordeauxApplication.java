@@ -113,7 +113,7 @@ public class TransportsBordeauxApplication extends Application {
 
 
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
-		traker.start(UA_ACCOUNT, this);
+		traker.startNewSession(UA_ACCOUNT, this);
 		geocodeUtil = new GeocodeUtil(this);
 		handler = new Handler();
 		myTraker = new TransportsBordeauxApplication.MyTraker(traker);
