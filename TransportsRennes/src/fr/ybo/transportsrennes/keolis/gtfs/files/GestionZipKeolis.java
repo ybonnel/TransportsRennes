@@ -94,6 +94,7 @@ public final class GestionZipKeolis {
 					};
 						
 				});
+				ih.close();
 			} finally {
 				bufReader.close();
 			}
