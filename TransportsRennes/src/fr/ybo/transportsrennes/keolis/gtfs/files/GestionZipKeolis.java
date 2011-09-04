@@ -89,8 +89,10 @@ public final class GestionZipKeolis {
 						ih.bind(stopSequenceCol, objet.stopSequence);
 						ih.bind(terminusCol, objet.terminus);
 
-						// Insert the row into the database.
-						ih.execute();
+						if (objet.arretId != null && objet.trajetId != null) {
+							// Insert the row into the database.
+							ih.execute();
+						}
 					};
 						
 				});
