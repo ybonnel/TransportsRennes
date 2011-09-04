@@ -90,10 +90,9 @@ public final class GestionZipKeolis {
 								resources
 										.openRawResource(coupleResourceFichier.resourceId)),
 						8 << 10);
+				dataBaseHelper.beginTransaction();
+				final InsertHelper ih = new InsertHelper(db, table.getName());
 				try {
-					dataBaseHelper.beginTransaction();
-					final InsertHelper ih = new InsertHelper(db,
-							table.getName());
 
 					// Get the numeric indexes for each of the columns that
 					// we're updating
@@ -137,6 +136,7 @@ public final class GestionZipKeolis {
 				} finally {
 					bufReader.close();
 					dataBaseHelper.endTransaction();
+					ih.close();
 				}
 			}
 			LOG_YBO.debug("Fin chargeLigne");
