@@ -89,7 +89,7 @@
     <string name="menu_loadLines">Charger toutes les lignes</string>
     <string name="menu_share">Partager</string>
     <string name="shareText">Transports Bordeaux, l\'application Android pour vous faciliter les Transports Bordelais : http://goo.gl/x1Z9o</string>
-    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (4 minutes sur un Nexus One),
+    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (5 minutes sur un Galaxy S II),
         et occupera environ 45Mo de données, mais vous permettra d\'accéder à tous les horaires de manière instantanée. Êtes-vous sûr de vouloir les charger?
     </string>
     
