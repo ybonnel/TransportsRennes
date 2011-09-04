@@ -52,7 +52,6 @@ ordre,id,nom_court,nom_long
 51,57,57,Flexo 57
 52,58,58,Ligne 58
 53,62,62,Ligne 62
-54,63,63,Special Bègles Dimanche
 55,64,64,Ligne 64
 56,67,67,Ligne 67
 57,68,68,Flexo 68
@@ -69,7 +68,6 @@ ordre,id,nom_court,nom_long
 68,83,83,Ligne 83
 69,86,86,Spécifique 86
 70,87,87,Ligne 87
-71,88,88,Ligne 88
 72,89,89,Ligne 89
 73,90,90,Ligne 90
 74,91,91,Ligne 91

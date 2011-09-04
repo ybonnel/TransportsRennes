@@ -51,7 +51,6 @@ id,nom,latitude,longitude
 5885b,Avenue d'Eysines,44.86007,-0.61266
 2738b,Cimetière,44.81082,-0.62524
 821b,Bleuets,44.85692,-0.63605
-5282b,Haut Livrac,44.80072,-0.67575
 605b,Gelès,44.88999,-0.74283
 758b,Tristan,44.89843,-0.71037
 532b,Labatut,44.83527,-0.6327
@@ -92,7 +91,6 @@ id,nom,latitude,longitude
 53b,Breteil,44.88001,-0.64795
 4034b,Pont Saint-Jean,44.83439,-0.54925
 211b,Turenne,44.87989,-0.67932
-6381b,Mérignac Soleil,44.83263,-0.65618
 755b,Fragonard,44.85731,-0.63419
 1095b,Quai Français,44.89002,-0.52977
 1002b,Petit Gazinet,44.77974,-0.69469
@@ -166,7 +164,6 @@ id,nom,latitude,longitude
 1354b,Berlioz,44.83815,-0.50951
 974b,Salle Georges Méliès,44.7873,-0.5666
 2255b,Martyrs de la Libération,44.83552,-0.68081
-2102b,Frères Robinson,44.84795,-0.65741
 1983b,Tarrey,44.95091,-0.49077
 3202b,Kosma,44.79116,-0.56248
 6384b,Thiers Benauge,44.84536,-0.55133
@@ -307,7 +304,6 @@ id,nom,latitude,longitude
 2474b,Nungesser et Coli,44.84144,-0.65592
 3298b,Professeur Vincent,44.88584,-0.52132
 1846b,Mairie d'Artigues,44.86001,-0.49202
-1762b,Mérignac Soleil,44.83038,-0.65714
 464b,Bègles Plage,44.80596,-0.5394
 1845b,Rue de la Vieille Eglise,44.94591,-0.59558
 819b,La Hutte,44.8848,-0.60601
@@ -373,7 +369,6 @@ id,nom,latitude,longitude
 1012b,Bernède,44.87832,-0.67788
 5091b,RPA Gambetta,44.84231,-0.53864
 753b,Tillon,44.77674,-0.54395
-3349b,Alexis Labro,44.78899,-0.56571
 2614b,Collège G.Rayet,44.84211,-0.51545
 1606b,Bourse du Travail,44.8322,-0.5785
 2731b,Les Menhirs,44.81117,-0.65038
@@ -435,7 +430,6 @@ id,nom,latitude,longitude
 5898b,Peydavant,44.80198,-0.58549
 5233,FONTAINE D'ARLAC,44.82661,-0.62558
 5232,FONTAINE D'ARLAC,44.82666,-0.62566
-2725b,Médiathèque,44.76448,-0.58474
 5231,PEYCHOTTE,44.82657,-0.61988
 5230,PEYCHOTTE,44.82659,-0.61995
 284b,Pérès,44.85982,-0.60857
@@ -526,12 +520,10 @@ id,nom,latitude,longitude
 4734b,La Cascade,44.87039,-0.50194
 41b,Les Cares,44.88836,-0.66073
 288b,Vergne,44.89564,-0.56219
-4022b,Clemenceau,44.86502,-0.62062
 2628b,Thouars,44.79169,-0.59147
 5894b,Bibliothèque,44.80544,-0.54267
 2051b,Les Garouilles,44.91776,-0.72668
 1452b,Clos de Hilde,44.7995,-0.53066
-6442b,Bègles Plage,44.80184,-0.53814
 679b,Lajarte,44.82549,-0.56976
 3970b,Gestform,44.85931,-0.68457
 4733b,Domaine du Manoir (vers Lormont Bas),44.88081,-0.49794
@@ -558,7 +550,6 @@ id,nom,latitude,longitude
 4736b,Butttinière,44.86422,-0.52403
 5212,LA MORLETTE,44.85503,-0.51822
 5213,JEAN ZAY,44.85409,-0.51311
-5896b,Lycée Daguin,44.83698,-0.64917
 5802b,Stalingrad,44.83941,-0.55895
 1081b,Mairie de Bruges,44.88183,-0.61286
 1450b,Caussade,44.84652,-0.5161
@@ -573,7 +564,6 @@ id,nom,latitude,longitude
 3974b,Gare de Blanquefort,44.9188,-0.62486
 2942b,Avenue de la Boétie,44.90964,-0.67165
 5895b,Bibliothèque,44.80546,-0.54278
-6443b,Bègles Plage,44.80217,-0.53832
 2050b,Rue de l'Amitié,44.86333,-0.50981
 744b,Cante-Gric,44.91066,-0.68716
 335b,Tourny,44.84556,-0.57851
@@ -602,7 +592,6 @@ id,nom,latitude,longitude
 5801b,Stalingrad,44.83954,-0.55884
 962b,Vincent,44.84518,-0.54394
 1193b,Saïgon,44.82682,-0.55054
-2458b,Avenue Château d'Eau,44.85368,-0.65504
 3976b,Bois de Mont,44.89864,-0.70664
 3215b,Aristide Briand,44.82427,-0.62449
 2839b,Parc des Expositions,44.8943,-0.56597
@@ -667,7 +656,6 @@ id,nom,latitude,longitude
 1102b,Kyrié,44.82345,-0.57071
 1103b,Rue de l'Union,44.85033,-0.52002
 174b,Route de Canéjan,44.78055,-0.61513
-4134b,Mégevie,44.77601,-0.63926
 1347b,Place Jean Moulin,44.81257,-0.54897
 3280b,Marché de Brienne,44.82581,-0.54777
 6379b,Gilamon,44.91134,-0.64515
@@ -691,12 +679,10 @@ id,nom,latitude,longitude
 5916b,Pins Francs,44.85734,-0.6241
 2455b,Bourranville,44.8394,-0.63018
 2241b,Mairie de Floirac,44.83092,-0.52742
-2058b,Gustave Eiffel,44.8532,-0.67041
 1195b,Jules Ferry,44.84493,-0.53228
 670b,Beauséjour,44.79967,-0.68643
 2456b,Mérignac Centre (Médiathèque),44.84177,-0.6482
 1105b,Madran,44.96794,-0.53397
-5671b,Alsace-Lorraine,44.76263,-0.58414
 5784b,Jeunesse,44.8501,-0.63775
 3579b,F. Buisson (vers Courréjean),44.82423,-0.55088
 450b,Rives d'Arcins,44.7948,-0.53512
@@ -708,7 +694,6 @@ id,nom,latitude,longitude
 2461b,Marronniers,44.84396,-0.67993
 2b,Brignon,44.77549,-0.57508
 5785b,Douanes,44.89456,-0.52776
-5672b,Médiathèque,44.76411,-0.58467
 2830b,Jeanne d'Arc,44.82382,-0.59196
 2511b,Place Florale,44.8689,-0.63626
 2510b,Hauts de Guitres,44.83076,-0.52104
@@ -721,7 +706,6 @@ id,nom,latitude,longitude
 5786b,Capeyron,44.85288,-0.64662
 2514b,Collège F. Mitterrand,44.79333,-0.64738
 1779b,Village de Magudas,44.86407,-0.72874
-2463b,Avenue Château d'Eau,44.85362,-0.65517
 3072b,Route de Picot,44.91688,-0.73541
 1837b,Jean Prat,44.93231,-0.50311
 3283b,Collège G.Rayet,44.84222,-0.51549
@@ -732,7 +716,6 @@ id,nom,latitude,longitude
 3863b,Trianon,44.85205,-0.638
 3071b,Route de Picot,44.91842,-0.73457
 5919b,Ravel,44.8519,-0.63415
-2464b,Parc de Capeyron,44.85027,-0.65575
 2121b,Dandicolle,44.83164,-0.58749
 2516b,La Moune,44.86454,-0.47657
 1772b,Pablo Neruda,44.9478,-0.59621
@@ -820,7 +803,6 @@ id,nom,latitude,longitude
 4586,STADE CHABAN DELMAS,44.83123,-0.5991
 1567b,Centre Emetteur,44.81805,-0.50327
 4580,ST-BRUNO - HOTEL DE REGION,44.83744,-0.58918
-8b,Chemin Long,44.82908,-0.66363
 4581,HOTEL DE POLICE,44.83488,-0.58886
 4582,HOTEL DE POLICE,44.83492,-0.58883
 1770b,Charles Perrens,44.82385,-0.5998
@@ -866,8 +848,6 @@ id,nom,latitude,longitude
 3869b,Barrière du Médoc,44.85326,-0.59444
 2623b,Courréjean,44.77394,-0.52821
 5782b,Gare Saint-Jean,44.82425,-0.55725
-2724b,Alsace-Lorraine,44.7623,-0.58397
-5677b,Mérignac Soleil,44.83014,-0.65838
 5679b,Quatre chemins,44.83313,-0.64869
 459b,Martinique,44.85441,-0.57243
 2573b,René Coty (Pasteur),44.9276,-0.49187
@@ -968,7 +948,6 @@ id,nom,latitude,longitude
 3330b,Bourdieu,44.89568,-0.51428
 2385b,Entre-Deux-Mers,44.84548,-0.53285
 2418b,Place Moscou,44.84431,-0.60971
-5862b,Gounod,44.80085,-0.5651
 2713b,Mallet,44.78528,-0.56628
 629b,Le Dorat 2,44.7989,-0.54663
 3331b,Corbiac,44.87401,-0.70318
@@ -1233,7 +1212,6 @@ id,nom,latitude,longitude
 1492b,Lestage,44.87433,-0.69507
 5703b,Candau,44.80939,-0.60919
 3326b,L'Archevêque,44.87986,-0.50554
-5790b,Jardin Botanique,44.84299,-0.55625
 2639b,Avenue du Taillan,44.87224,-0.63364
 2934b,Toulouse Lautrec,44.87964,-0.63673
 5645b,Pontet,44.93553,-0.48446
@@ -1245,7 +1223,6 @@ id,nom,latitude,longitude
 1896b,Les Prés de Jourdanne,44.94472,-0.53442
 3325b,Libération,44.85678,-0.64376
 5558b,Brascassat,44.81377,-0.55483
-5791b,Jardin Botanique,44.84317,-0.55631
 2933b,Toulouse Lautrec,44.87951,-0.63622
 1404b,Sabarots,44.84611,-0.56017
 3196b,Martyrs de la Résistance,44.80773,-0.55943
@@ -1289,7 +1266,6 @@ id,nom,latitude,longitude
 3347b,Lycées de Mérignac,44.83499,-0.64735
 2426b,Montesquieu,44.8462,-0.63298
 2788b,Pessac Centre,44.80608,-0.63096
-5870b,Bègles Poste,44.8075,-0.56114
 2705b,Lamothe,44.75183,-0.54896
 5648b,Sauvin,44.94446,-0.48787
 1298b,Parc d'Espagne,44.79741,-0.6839
@@ -1311,7 +1287,6 @@ id,nom,latitude,longitude
 358b,Lamartine,44.90405,-0.51318
 4940b,Pépinières,44.91094,-0.62355
 2707b,Pont de Langon,44.76022,-0.55648
-5872b,Michelet,44.81003,-0.57016
 2786b,Le Monteil,44.80236,-0.64658
 2784b,Xavier Arnozan,44.80048,-0.65782
 5932b,Golf de Bordeaux,44.90629,-0.57998
@@ -1323,7 +1298,6 @@ id,nom,latitude,longitude
 4941b,Pépinières,44.91087,-0.62305
 2378b,Calmette,44.85152,-0.51737
 2708b,Pyrénées,44.76277,-0.55938
-5871b,Jules Verne,44.80987,-0.57336
 5931b,Golf de Bordeaux,44.90706,-0.58014
 3454b,Mallarmé,44.85609,-0.52398
 3342b,Malartic,44.77142,-0.59859
@@ -1335,7 +1309,6 @@ id,nom,latitude,longitude
 618b,Desclaux,44.85786,-0.495
 3108b,Résidence Beausite,44.83064,-0.64818
 2701b,Château Bouscaut,44.74833,-0.54589
-5874b,Ecole La Ferrade,44.81009,-0.56556
 590b,Village 4,44.79173,-0.62258
 4002b,Le Lagunet,44.88346,-0.65906
 3230b,Collège A. Mauguin,44.77316,-0.59674
@@ -1346,7 +1319,6 @@ id,nom,latitude,longitude
 6469b,Migron,44.86447,-0.63159
 2782b,Castaing,44.79579,-0.66751
 617b,Avenue Ausone,44.87005,-0.59248
-5873b,Lauriol,44.80986,-0.56755
 4084b,Pont de la Maye,44.78068,-0.5659
 3107b,Résidence Beausite,44.83048,-0.64803
 591b,Roger Allo,44.84431,-0.58935
@@ -1375,7 +1347,6 @@ id,nom,latitude,longitude
 2704b,Pexotto,44.90109,-0.66907
 1325b,Vélodrome,44.85833,-0.60551
 1478b,Aloha,44.91571,-0.68039
-5875b,Victor Hugo,44.81126,-0.56399
 2589b,Moulin du Gua,44.93375,-0.50738
 4003b,Le Lagunet,44.88349,-0.65901
 695b,Cité SNCF,44.81947,-0.54417
@@ -1598,7 +1569,6 @@ id,nom,latitude,longitude
 583b,Mansencal,44.78195,-0.57651
 2645b,Avenue Ausone,44.8724,-0.59965
 2924b,Anatole France,44.87007,-0.61161
-5865b,Route de Toulouse,44.80069,-0.56796
 1613b,Nungesser et Coli,44.84154,-0.6559
 1549b,Virecourt,44.85437,-0.49977
 5651b,Les Iris,44.75921,-0.5827
@@ -1613,7 +1583,6 @@ id,nom,latitude,longitude
 500b,Courbet,44.85564,-0.59623
 2594b,Strélitzias,44.85634,-0.65161
 582b,Libre Service de Gros,44.89062,-0.54796
-5652b,Hippodrome,44.77392,-0.6396
 2923b,Mairie du Bouscat,44.86477,-0.59979
 3116b,Avenue de l'Europe,44.87746,-0.61488
 5867b,Buffon,44.80534,-0.56901
@@ -1680,7 +1649,6 @@ id,nom,latitude,longitude
 24b,Thomas,44.79467,-0.55923
 1619b,Stade Ornon,44.77331,-0.63938
 585b,Jude,44.8663,-0.63767
-25b,Frères Robinson,44.84761,-0.65783
 2592b,Mairie de Bègles,44.80893,-0.54225
 5455b,Montalieu,44.87996,-0.66009
 1700b,Bourranville,44.83931,-0.63022
@@ -1757,7 +1725,6 @@ id,nom,latitude,longitude
 2802b,Fanning Lafontaine,44.80831,-0.61333
 5721b,Bigeau,44.9556,-0.61076
 2151b,La Grave d'Ambarès,44.93033,-0.47388
-5310b,Volta,44.85376,-0.67669
 3244b,Gaz de Bordeaux,44.88359,-0.55027
 1723b,La Morlette,44.85538,-0.51877
 3665b,Futaies,44.90912,-0.49647
@@ -1817,7 +1784,6 @@ id,nom,latitude,longitude
 1313b,Boiron,44.78726,-0.67872
 1647b,Hôpital Robert Picqué,44.79988,-0.56992
 5618b,Gare Saint-Jean,44.82421,-0.55727
-1264b,Bertheau,44.84846,-0.64086
 932b,Vergne,44.82312,-0.48152
 1954b,Vignau Anglade (Clos Favol),44.89537,-0.50725
 428b,Strasbourg,44.82856,-0.58373
@@ -1954,7 +1920,6 @@ id,nom,latitude,longitude
 1872b,Monnet,44.77272,-0.58284
 242b,Domion,44.85587,-0.62599
 572b,Castés,44.84012,-0.51683
-5622b,Vigneau,44.83027,-0.6626
 3712,PORTE DE BOURGOGNE,44.83724,-0.56631
 3711,STALINGRAD,44.84032,-0.55972
 3714,PLACE DU PALAIS,44.83793,-0.56934
@@ -2017,7 +1982,6 @@ id,nom,latitude,longitude
 243b,Turenne,44.88006,-0.6797
 372b,Tilleuls,44.86348,-0.65826
 3527b,Bordeaux 2,44.82647,-0.60065
-5309b,Volta,44.85381,-0.6769
 246b,Domion,44.85582,-0.62629
 423b,Esplanade F. Mitterand,44.87538,-0.51522
 2299b,Mitterrand,44.83407,-0.52028
@@ -2100,7 +2064,6 @@ id,nom,latitude,longitude
 2205b,Pont du Gail,44.8802,-0.60803
 2547b,La Route Bleue,44.82101,-0.50135
 791b,Goillot,44.84191,-0.66293
-5100b,Eglise de Bègles (rue des 4 Castéra),44.80212,-0.54468
 6411b,Bechade,44.86765,-0.6705
 1366b,Campana,44.81893,-0.62531
 6345b,Grand Darnal,44.88426,-0.60143
@@ -2112,7 +2075,6 @@ id,nom,latitude,longitude
 2548b,Clos du Prieuré,44.92155,-0.48317
 790b,Delacroix,45.00903,-0.53079
 5840b,Brienne Vernet,44.82358,-0.54369
-5101b,Eglise de Bègles (rue des 4 Castéra),44.80208,-0.54444
 6344b,Les Templiers,44.88156,-0.62858
 2099b,La Gorp,44.92946,-0.49605
 3671b,Triviaux,44.89197,-0.50771
@@ -2191,7 +2153,6 @@ id,nom,latitude,longitude
 2870b,Hôpital Xavier Arnozan,44.79643,-0.6611
 4335b,rue des Graves,44.88194,-0.65954
 3031b,Rue du Médoc,44.87726,-0.68031
-5959b,Trinité,44.8604,-0.57971
 1949b,Delattre,44.89003,-0.60711
 5736b,Cité Chantecrit,44.86415,-0.56434
 1520b,Gaz de Bordeaux,44.88369,-0.55033
@@ -2222,7 +2183,6 @@ id,nom,latitude,longitude
 5321b,Corbiac,44.87352,-0.70355
 10b,Mairie du Taillan Médoc,44.90488,-0.66896
 3318b,Foncastel,44.83612,-0.64182
-1413b,Bertheau,44.84881,-0.64105
 1523b,La Galliasse,44.99173,-0.48601
 3036b,Château Gajac,44.88721,-0.69887
 639b,Bonnardel,44.76975,-0.57876
@@ -2313,7 +2273,6 @@ id,nom,latitude,longitude
 2988b,Coubertin,44.86199,-0.64468
 5623b,Vigneau,44.8311,-0.66527
 3187b,Collège Pablo Neruda,44.7942,-0.56244
-5958b,Frères Portmann,44.86058,-0.57623
 5624b,Lycée Daguin,44.83714,-0.64889
 3775,Place de la Bourse,44.84152,-0.56969
 2762b,Jaubert,44.80743,-0.62701
@@ -2331,9 +2290,7 @@ id,nom,latitude,longitude
 2764b,Le Monteil,44.80241,-0.64657
 2987b,Coubertin,44.86234,-0.64532
 5625b,Saint-Aubin Cimetière,44.91278,-0.73292
-3186b,César Franck,44.80031,-0.56113
 2763b,Pessac Centre,44.80605,-0.6318
-5957b,Frères Portmann,44.86049,-0.57664
 1943b,Eglise Saint-Seurin,44.84362,-0.58676
 927b,Ste Germaine,44.8727,-0.61609
 374b,La Glacière,44.83431,-0.62212
@@ -2438,16 +2395,13 @@ id,nom,latitude,longitude
 5474b,Nungesser,44.92509,-0.61973
 236b,Parc de Majolan,44.89941,-0.63989
 1042b,Lièges,44.84693,-0.62898
-2668b,Trébod,44.85881,-0.58485
 381b,Goujon,44.87125,-0.70795
-5960b,Trinité,44.86018,-0.57879
 414b,Eglise de Bruges,44.88352,-0.6119
 5473b,Nungesser,44.92513,-0.61969
 1041b,Maison Neuve,44.77338,-0.63447
 235b,Dumont,44.88379,-0.64794
 782b,Belloc,44.9178,-0.50664
 380b,Abel Gance,44.87862,-0.50027
-5961b,Place de l'Europe,44.85972,-0.58123
 1637b,Forum,44.81139,-0.59104
 1889b,Fort Lajard,45.01736,-0.57717
 411b,Berlincan,44.8826,-0.68844
@@ -2521,7 +2475,6 @@ id,nom,latitude,longitude
 1205b,Vincent,44.84519,-0.54401
 2009b,Liberté,44.93971,-0.49217
 5740b,Docteur Vincent,44.87604,-0.55942
-6336b,Grange Noire (Ateliers Municipaux),44.8496,-0.67881
 2282b,Caserne Nansouty,44.8187,-0.56619
 5196b,Machadey,44.92269,-0.6708
 567b,Sabarots,44.84597,-0.55972
@@ -2557,7 +2510,6 @@ id,nom,latitude,longitude
 1514b,Europe,44.92467,-0.49709
 72b,Violettes,44.86071,-0.63782
 4124b,Jardin Botanique,44.84299,-0.55625
-1747b,Mérignac Soleil,44.83157,-0.65587
 3048b,Le Club des Pins,44.90191,-0.73728
 71b,Verdot,44.86307,-0.48413
 2824b,Boulevard du Haut Livrac,44.79804,-0.67327
@@ -2571,7 +2523,6 @@ id,nom,latitude,longitude
 2823b,Yvan Bric,44.94784,-0.60008
 1448b,Lakanal,44.86476,-0.61492
 2759b,Les Bois de l'Alouette,44.79744,-0.68884
-1745b,Chemin Long,44.82914,-0.66372
 2024b,Lauba,44.89565,-0.73089
 801b,Maréchal Niel,44.85011,-0.56079
 1399b,Célibatorium,45.01189,-0.52747
@@ -2596,7 +2547,6 @@ id,nom,latitude,longitude
 2752b,Barrière de Pessac,44.82576,-0.58861
 5747b,Douanes,44.89468,-0.52738
 3044b,République,44.89505,-0.71424
-5264b,Ouley,44.84587,-0.65904
 2682b,Foncastel,44.83635,-0.64204
 3989b,Ecole d'horticulture,44.87208,-0.6637
 3647b,Quinconces Munich (arrêt de Descente),44.84463,-0.5739
@@ -2633,14 +2583,12 @@ id,nom,latitude,longitude
 3370b,Allende,44.80055,-0.55757
 5812b,Forestier,44.80608,-0.63628
 3041b,Route de Corbiac,44.89192,-0.70941
-5265b,Ouley,44.84547,-0.65937
 806b,Palais des Congrès,44.88922,-0.56703
 2342b,Jeu de Paume (Cité Administrative),44.84162,-0.5996
 5968b,Lafont,44.86975,-0.59894
 3260b,Saint-Sever,44.93694,-0.4935
 5815b,Peychotte,44.82644,-0.61885
 912b,Pins-Francs,44.86687,-0.62376
-3153b,Trébod,44.85887,-0.58501
 1667b,Maison Neuve,44.77327,-0.63421
 5698b,Mairie de Gradignan,44.77087,-0.60865
 2978b,Pins-Francs,44.85807,-0.62289
@@ -2655,7 +2603,6 @@ id,nom,latitude,longitude
 5814b,Aristide Briand,44.82486,-0.62373
 5480b,Reinson,44.87655,-0.56936
 5967b,Lafont,44.86969,-0.59902
-3152b,Boulevard Godard,44.86118,-0.58545
 4429b,Blanqui,44.87641,-0.54821
 1666b,Collège G.Rayet,44.84183,-0.51545
 2977b,Saint-Amand,44.85538,-0.61465
@@ -2670,8 +2617,6 @@ id,nom,latitude,longitude
 1391b,Béchade,45.02309,-0.54522
 2340b,Barrière Saint-Médard,44.84905,-0.5971
 914b,Gereyme,44.98257,-0.53748
-3151b,Boulevard Godard,44.86146,-0.5856
-5817b,Galliéni,44.8368,-0.6167
 2976b,Grand-Lebrun,44.85011,-0.60512
 1665b,Ecole d'Architecture,44.79328,-0.60505
 1026b,La Boyauderie,44.89418,-0.66895
@@ -2685,8 +2630,6 @@ id,nom,latitude,longitude
 2341b,Barrière Judaïque,44.83956,-0.59936
 915b,Piscine Judaïque,44.84077,-0.59025
 5374b,Mouline,44.91335,-0.49283
-5969b,Ravezies (Gare St Louis),44.86666,-0.57592
-5816b,La Grappe d'Or,44.83388,-0.61717
 1663b,Mérignac Centre,44.84145,-0.64699
 1440b,CAF,44.89049,-0.55759
 1859b,Mairie de Bassens,44.89943,-0.51565
@@ -2700,7 +2643,6 @@ id,nom,latitude,longitude
 2137b,Virecourt,44.85443,-0.49981
 3157b,Poste de Caudéran,44.85131,-0.60901
 1240b,Caserne Nansouty,44.82026,-0.56907
-5819b,Bourranville,44.84001,-0.6298
 4742b,Z.A Artigues,44.86846,-0.49493
 4129b,Antennes Sportives,44.8978,-0.5712
 2131b,Cailleau,44.90361,-0.51811
@@ -2713,11 +2655,9 @@ id,nom,latitude,longitude
 2974b,14-juil,44.84778,-0.60215
 4218b,Verdelet,44.90984,-0.72413
 981b,Guynemer,44.86406,-0.66081
-5963b,Parc d'Ormoy,44.86338,-0.61104
 5694b,François Xavier,44.77542,-0.58945
 1442b,Pont du Guit,44.82379,-0.55842
 2972b,Rue de Caudéran,44.84649,-0.59756
-5818b,Bourranville,44.83983,-0.62976
 2130b,Caychac Eglise,44.93026,-0.63684
 1977b,Rue de la Gare,44.94628,-0.60979
 3980b,Marcel Dassault,44.88314,-0.57179
@@ -2755,10 +2695,8 @@ id,nom,latitude,longitude
 3902b,Cité Bel Air,44.92275,-0.5016
 5691b,Blanquefort Cimetière,44.91327,-0.63197
 1668b,Stade de Moulerens,44.7803,-0.63072
-5964b,Parc d'Ormoy,44.86342,-0.6111
 4217b,Zola,44.90565,-0.72495
 6438b,Avenue Château d'Eau,44.85421,-0.65619
-5970b,Place Ravezies,44.86731,-0.57566
 391b,Costedoat,44.83074,-0.57812
 660b,République,44.89489,-0.71404
 4800b,Richaud,44.88922,-0.56378
@@ -2948,7 +2886,6 @@ id,nom,latitude,longitude
 4110b,Forum,44.81137,-0.59119
 1436b,Jacquet,44.82438,-0.6105
 4040b,Lauriers (station Tram),44.87949,-0.5176
-5820b,Gare de Caudéran,44.84192,-0.63115
 2811b,Fauvettes,44.79158,-0.70098
 5274b,Kennedy,44.8346,-0.6722
 3058b,Malterre,44.89621,-0.77792
@@ -2997,7 +2934,6 @@ id,nom,latitude,longitude
 5278b,Labarde,44.94396,-0.56065
 3054b,Village de Cerillan,44.89433,-0.75881
 5757b,Racine,44.90486,-0.501
-5825b,Collège Capeyron,44.85063,-0.64635
 2895b,Maréchal Gallieni,44.81824,-0.60197
 2744b,Costedoat,44.83131,-0.57816
 2897b,Auriol,44.76226,-0.58183
@@ -3012,7 +2948,6 @@ id,nom,latitude,longitude
 5277b,Labarde,44.94402,-0.56062
 3053b,Village de Cerillan,44.89455,-0.75778
 5758b,Dassault,44.84842,-0.69208
-5824b,Collège Capeyron,44.85066,-0.64642
 3919b,Saint-Sever,44.93668,-0.49336
 880b,Fénelon,44.90943,-0.51579
 4042b,Cimetière Intercommunal,44.86753,-0.49056
@@ -3024,7 +2959,6 @@ id,nom,latitude,longitude
 5276b,Les Chênes,44.94486,-0.61705
 5513b,11-nov,44.89486,-0.50114
 2740b,Barrière de Pessac,44.82561,-0.5886
-5823b,Montesquieu,44.84604,-0.63382
 1650b,Paulin,44.85002,-0.58577
 5759b,Dassault,44.8468,-0.69128
 3056b,Village d'Issac,44.89561,-0.77267
@@ -3032,18 +2966,15 @@ id,nom,latitude,longitude
 1439b,Bourbon,44.84005,-0.52059
 4041b,Parc du Peyrou,44.86645,-0.48454
 2742b,Strasbourg,44.82883,-0.58304
-5821b,Gare de Caudéran,44.84256,-0.63151
 2038b,Durandeau,44.9578,-0.5129
 2601b,Bruges Centre,44.88284,-0.61079
 2816b,La Forge,44.80184,-0.64533
 5275b,Les Chênes,44.9451,-0.61696
 2693b,Mallet,44.78481,-0.56635
 2741b,Caserne Boudet,44.82771,-0.58543
-5822b,Montesquieu,44.84584,-0.63377
 2894b,Croix de Monjous,44.77679,-0.59388
 3163b,Henri Barbusse,44.85627,-0.64228
 1652b,Parc Bordelais,44.85226,-0.59901
-5829b,Tassigny,44.84354,-0.64973
 3274b,La Route Bleue,44.82121,-0.50129
 5304b,Campus de Bissy,44.81923,-0.64916
 1013b,Ramond,44.89285,-0.74392
@@ -3075,7 +3006,6 @@ id,nom,latitude,longitude
 5600b,Collège Chambéry,44.75635,-0.58469
 5491b,Calmette,44.89319,-0.51357
 3272b,Rousseau,44.89572,-0.72286
-5827b,Truc,44.84602,-0.64943
 5385b,Bassins à Flot,44.86144,-0.55482
 2330b,Barrière du Médoc,44.85461,-0.59277
 2147b,Domaine d'Hostein,44.9275,-0.47889
@@ -3093,7 +3023,6 @@ id,nom,latitude,longitude
 5492b,Calmette,44.89278,-0.51364
 5384b,Bassins à Flot Terminus,44.8622,-0.55456
 1969b,La Fontaine,44.81152,-0.66416
-5826b,Truc,44.84662,-0.64885
 3164b,Strélitzias,44.85645,-0.6518
 769b,Deveaux,44.84718,-0.62235
 2146b,Ambarès Centre,44.92656,-0.48701
@@ -3249,7 +3178,6 @@ id,nom,latitude,longitude
 2480b,Schweitzer,44.774,-0.53241
 1227b,Colette,44.83487,-0.63616
 2268b,Floirac Libération,44.83901,-0.53092
-3790b,Hôpital Suburbain,44.86737,-0.61758
 3161b,Martin,44.85633,-0.6392
 1023b,Rives,44.83577,-0.55408
 108b,Combelongue,44.77681,-0.70124
@@ -3280,7 +3208,6 @@ id,nom,latitude,longitude
 1508b,St-Bruno - Hôtel de Région,44.83825,-0.58892
 430b,Le Marquis,45.00041,-0.55406
 5504b,La Gardette (Bassens - Carbon Blanc),44.888,-0.51755
-5764b,Grange Noire,44.84865,-0.67919
 1589b,Place Florale,44.86889,-0.63588
 5414,LES AUBIERS,44.87399,-0.57419
 5415,LES AUBIERS,44.87402,-0.57432
@@ -3323,7 +3250,6 @@ id,nom,latitude,longitude
 650b,Les Chênes,44.77855,-0.69719
 2485b,Epargne,44.79414,-0.56767
 547b,Cours d'Ornano,44.83275,-0.61351
-1753b,Parc de Capeyron,44.85033,-0.65561
 4651b,Malartic,44.77106,-0.59954
 6424b,Du Bellay,44.87328,-0.51354
 1504b,Nansouty,44.81953,-0.57175
@@ -3339,7 +3265,6 @@ id,nom,latitude,longitude
 6421b,Sousa Mendès,44.86505,-0.57163
 1505b,Sauternes,44.85636,-0.48875
 2609b,Centre d'Activités Fluviales,44.79745,-0.53025
-5763b,Grange Noire,44.84854,-0.67932
 194b,Seguineau,44.83502,-0.6099
 2489b,Place de l'Europe,44.8592,-0.58245
 5509b,Mouline,44.91326,-0.49278
