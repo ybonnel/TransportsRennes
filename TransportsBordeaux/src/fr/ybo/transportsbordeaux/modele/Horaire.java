@@ -75,12 +75,22 @@ public class Horaire {
 		return prochainsDeparts;
 	}
 
+	public static List<Integer> getAllHorairesAsList(String ligneId, String arretId, Calendar calendar)
+			throws SQLiteException {
+		List<Integer> prochainsDeparts = new ArrayList<Integer>();
+		Cursor cursor = getAllHorairesAsCursor(ligneId, arretId, calendar);
+		while (cursor.moveToNext()) {
+			prochainsDeparts.add(cursor.getInt(0));
+		}
+		cursor.close();
+		return prochainsDeparts;
+	}
+
 	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
 
-	public static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
+	private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id,");
-		requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+		requete.append("select Horaire.heureDepart as _id ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -111,7 +121,7 @@ public class Horaire {
 		return TransportsBordeauxApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 	}
 
-	public static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, Integer limit,
+	private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, Integer limit,
 			Calendar calendar) throws SQLiteException {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Calendar calendarLaVeille = Calendar.getInstance();
@@ -122,8 +132,7 @@ public class Horaire {
 		List<String> selectionArgs = new ArrayList<String>(7);
 		StringBuilder requete = new StringBuilder();
 		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
-			requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
-			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+			requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId, Horaire_");
 			requete.append("from Calendrier, Horaire_");
 			requete.append(ligneId);
@@ -158,8 +167,7 @@ public class Horaire {
 			if (requete.length() > 0) {
 				requete.append("UNION ");
 			}
-			requete.append("select Horaire.heureDepart as _id,");
-			requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
+			requete.append("select Horaire.heureDepart as _id ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId,  Horaire_");
 			requete.append("from Calendrier,  Horaire_");
 			requete.append(ligneId);
@@ -196,16 +204,6 @@ public class Horaire {
 		LOG_YBO.debug("Requete : " + requete.toString());
 		LOG_YBO.debug("SelectionArgs : " + selectionArgs);
 		return TransportsBordeauxApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-	}
-
-	private static String clauseWhereForTodayCalendrier(Calendar calendar) {
-		StringBuilder clause = new StringBuilder(" Calendrier.id IN ( -1");
-		for (Integer id : Calendrier.getCalendriersIdForDate(calendar)) {
-			clause.append(", ");
-			clause.append(id);
-		}
-		clause.append(')');
-		return clause.toString();
 	}
 
 	private static String clauseWhereForCalendrier(Calendar calendar) {
