@@ -80,7 +80,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				myProgressDialog.dismiss();
+				try {
+					myProgressDialog.dismiss();
+				} catch (IllegalArgumentException ignore) {
+
+				}
 				if (erreurLigneNonTrouvee) {
 					Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
 							Toast.LENGTH_LONG).show();
