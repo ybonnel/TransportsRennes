@@ -20,7 +20,11 @@ package fr.ybo.transportsbordeaux.modele;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -69,7 +73,9 @@ public class Horaire {
 		List<Integer> prochainsDeparts = new ArrayList<Integer>();
 		Cursor cursor = getProchainHorairesAsCursor(ligneId, arretId, limit, calendar);
 		while (cursor.moveToNext()) {
-			prochainsDeparts.add(cursor.getInt(0));
+			if (!getExceptionsSuppr(cursor.getString(1)).contains(cursor.getInt(2))) {
+				prochainsDeparts.add(cursor.getInt(0));
+			}
 		}
 		cursor.close();
 		return prochainsDeparts;
@@ -80,7 +86,9 @@ public class Horaire {
 		List<Integer> prochainsDeparts = new ArrayList<Integer>();
 		Cursor cursor = getAllHorairesAsCursor(ligneId, arretId, calendar);
 		while (cursor.moveToNext()) {
-			prochainsDeparts.add(cursor.getInt(0));
+			if (!getExceptionsSuppr(cursor.getString(1)).contains(cursor.getInt(2))) {
+				prochainsDeparts.add(cursor.getInt(0));
+			}
 		}
 		cursor.close();
 		return prochainsDeparts;
@@ -90,7 +98,7 @@ public class Horaire {
 
 	private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id ");
+		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -114,6 +122,7 @@ public class Horaire {
 		String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
 		selectionArgs.add(today);
 		selectionArgs.add(today);
+		selectionArgs.add(today);
 		selectionArgs.add(ligneId);
 		selectionArgs.add(arretId);
 		LOG_YBO.debug("Requete : " + requete.toString());
@@ -132,7 +141,7 @@ public class Horaire {
 		List<String> selectionArgs = new ArrayList<String>(7);
 		StringBuilder requete = new StringBuilder();
 		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
-			requete.append("select (Horaire.heureDepart - :uneJournee) as _id ");
+			requete.append("select (Horaire.heureDepart - :uneJournee) as _id, :veille0 as today, Calendrier.id as calendrierId ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId, Horaire_");
 			requete.append("from Calendrier, Horaire_");
 			requete.append(ligneId);
@@ -158,7 +167,7 @@ public class Horaire {
 			selectionArgs.add(Integer.toString(uneJournee));
 			selectionArgs.add(veille);
 			selectionArgs.add(veille);
-			// selectionArgs.add(veille);
+			selectionArgs.add(veille);
 			selectionArgs.add(ligneId);
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now + uneJournee));
@@ -167,7 +176,7 @@ public class Horaire {
 			if (requete.length() > 0) {
 				requete.append("UNION ");
 			}
-			requete.append("select Horaire.heureDepart as _id ");
+			requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId,  Horaire_");
 			requete.append("from Calendrier,  Horaire_");
 			requete.append(ligneId);
@@ -191,7 +200,7 @@ public class Horaire {
 			String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
 			selectionArgs.add(today);
 			selectionArgs.add(today);
-			// selectionArgs.add(today);
+			selectionArgs.add(today);
 			selectionArgs.add(ligneId);
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now));
@@ -204,6 +213,24 @@ public class Horaire {
 		LOG_YBO.debug("Requete : " + requete.toString());
 		LOG_YBO.debug("SelectionArgs : " + selectionArgs);
 		return TransportsBordeauxApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+	}
+
+	private static Map<String, Set<Integer>> mapCalendriersExceptionSuppr = new HashMap<String, Set<Integer>>();
+
+	private static Set<Integer> getExceptionsSuppr(String date) {
+		if (!mapCalendriersExceptionSuppr.containsKey(date)) {
+			Set<Integer> setExceptions = new HashSet<Integer>();
+			CalendrierException calendrierException = new CalendrierException();
+			calendrierException.date = date;
+			for (CalendrierException exception : TransportsBordeauxApplication.getDataBaseHelper().select(
+					calendrierException)) {
+				if (!exception.ajout) {
+					setExceptions.add(exception.calendrierId);
+				}
+			}
+			mapCalendriersExceptionSuppr.put(date, setExceptions);
+		}
+		return mapCalendriersExceptionSuppr.get(date);
 	}
 
 	private static String clauseWhereForCalendrier(Calendar calendar) {
