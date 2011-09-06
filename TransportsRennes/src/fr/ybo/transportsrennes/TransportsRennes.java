@@ -77,7 +77,11 @@ public class TransportsRennes extends Activity {
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				myProgressDialog.dismiss();
+				try {
+					myProgressDialog.dismiss();
+				} catch (IllegalArgumentException ignore) {
+
+				}
 			}
 		}.execute((Void[]) null);
 	}
