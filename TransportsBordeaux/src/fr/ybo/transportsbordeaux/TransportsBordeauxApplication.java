@@ -18,7 +18,6 @@ package fr.ybo.transportsbordeaux;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.acra.ACRA;
@@ -29,7 +28,6 @@ import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -95,9 +93,7 @@ public class TransportsBordeauxApplication extends Application {
 			} catch (Exception exception) {
 				Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
 				ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
-				List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-				ComponentName componentInfo = taskInfo.get(0).topActivity;
-				am.restartPackage(componentInfo.getPackageName());
+				am.restartPackage(pContext.getPackageName());
 				return;
 			}
 		}
