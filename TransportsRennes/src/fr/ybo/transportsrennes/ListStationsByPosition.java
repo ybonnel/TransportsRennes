@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -133,7 +134,11 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 				String lat = Double.toString(station.getLatitude());
 				String lon = Double.toString(station.getLongitude());
 				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
-				startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException activityNotFound) {
+					Toast.makeText(ListStationsByPosition.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 
