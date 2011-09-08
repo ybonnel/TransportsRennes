@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsWidget11;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 
 public class Widget11UpdateUtil {
@@ -48,14 +49,14 @@ public class Widget11UpdateUtil {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		calendar.roll(Calendar.MINUTE, -4);
 		try {
-			List<Integer> prochainsDeparts = null;
+			List<DetailArretConteneur> prochainsDeparts = null;
 			do {
 				calendar.roll(Calendar.MINUTE, 1);
 				prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 2, calendar);
-			} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1) < now);
+			} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1).getHoraire() < now);
 			LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 			if (prochainsDeparts.size() > 0) {
-				int heureProchain = prochainsDeparts.get(0);
+				int heureProchain = prochainsDeparts.get(0).getHoraire();
 				if (heureProchain >= 24 * 60) {
 					heureProchain -= 24 * 60;
 				}
@@ -67,14 +68,15 @@ public class Widget11UpdateUtil {
 				} else {
 					views.setTextColor(R.id.tempsRestant, context.getResources().getColor(R.color.blanc));
 				}
-				views.setTextViewText(R.id.tempsRestant, formatterCalendar(context, prochainsDeparts.get(0)));
+				views.setTextViewText(R.id.tempsRestant,
+						formatterCalendar(context, prochainsDeparts.get(0).getHoraire()));
 
 			} else {
 				views.setTextViewText(R.id.tempsRestant, "");
 			}
 			views.setTextViewText(
 					R.id.tempsRestantFutur,
-					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1)));
+					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1).getHoraire()));
 		} catch (SQLiteException ignore) {
 
 		}

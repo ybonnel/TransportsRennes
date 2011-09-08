@@ -68,26 +68,38 @@ public class Horaire {
 	
 	private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-	public static List<Integer> getProchainHorairesAsList(String ligneId, String arretId,
+	public static List<DetailArretConteneur> getProchainHorairesAsList(String ligneId, String arretId,
 			Integer limit, Calendar calendar) throws SQLiteException {
-		List<Integer> prochainsDeparts = new ArrayList<Integer>();
+		List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
 		Cursor cursor = getProchainHorairesAsCursor(ligneId, arretId, limit, calendar);
+		int heureDepartCol = cursor.getColumnIndex("_id");
+		int todayCol = cursor.getColumnIndex("today");
+		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
+		int trajetIdCol = cursor.getColumnIndex("trajetId");
+		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
 		while (cursor.moveToNext()) {
-			if (!getExceptionsSuppr(cursor.getString(1)).contains(cursor.getInt(2))) {
-				prochainsDeparts.add(cursor.getInt(0));
+			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
+				prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol),
+						cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
 			}
 		}
 		cursor.close();
 		return prochainsDeparts;
 	}
 
-	public static List<Integer> getAllHorairesAsList(String ligneId, String arretId, Calendar calendar)
+	public static List<DetailArretConteneur> getAllHorairesAsList(String ligneId, String arretId, Calendar calendar)
 			throws SQLiteException {
-		List<Integer> prochainsDeparts = new ArrayList<Integer>();
+		List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
 		Cursor cursor = getAllHorairesAsCursor(ligneId, arretId, calendar);
+		int heureDepartCol = cursor.getColumnIndex("_id");
+		int todayCol = cursor.getColumnIndex("today");
+		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
+		int trajetIdCol = cursor.getColumnIndex("trajetId");
+		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
 		while (cursor.moveToNext()) {
-			if (!getExceptionsSuppr(cursor.getString(1)).contains(cursor.getInt(2))) {
-				prochainsDeparts.add(cursor.getInt(0));
+			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
+				prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol),
+						cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
 			}
 		}
 		cursor.close();
@@ -98,7 +110,7 @@ public class Horaire {
 
 	private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
 		StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId ");
+		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence ");
 		requete.append("from Calendrier,  Horaire_");
 		requete.append(ligneId);
 		requete.append(" as Horaire, Trajet ");
@@ -141,7 +153,7 @@ public class Horaire {
 		List<String> selectionArgs = new ArrayList<String>(7);
 		StringBuilder requete = new StringBuilder();
 		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
-			requete.append("select (Horaire.heureDepart - :uneJournee) as _id, :veille0 as today, Calendrier.id as calendrierId ");
+			requete.append("select (Horaire.heureDepart - :uneJournee) as _id, :veille0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId, Horaire_");
 			requete.append("from Calendrier, Horaire_");
 			requete.append(ligneId);
@@ -176,7 +188,7 @@ public class Horaire {
 			if (requete.length() > 0) {
 				requete.append("UNION ");
 			}
-			requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId ");
+			requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence ");
 			// requete.append("from Calendrier LEFT OUTER JOIN CalendrierException ON Calendrier.id = CalendrierException.calendrierId,  Horaire_");
 			requete.append("from Calendrier,  Horaire_");
 			requete.append(ligneId);

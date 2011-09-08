@@ -25,12 +25,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 
 /**
  * @author ybonnel
  *
  */
-public class DetailArretAdapter extends ArrayAdapter<Integer> {
+public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
 
 	private final int now;
 
@@ -38,7 +39,7 @@ public class DetailArretAdapter extends ArrayAdapter<Integer> {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(Context context, List<Integer> prochainsDeparts, int now) {
+	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now) {
 		super(context, R.layout.detailarretliste, prochainsDeparts);
 		myContext = context;
 		this.now = now;
@@ -63,7 +64,7 @@ public class DetailArretAdapter extends ArrayAdapter<Integer> {
 		} else {
 			holder = (DetailArretAdapter.ViewHolder) convertView1.getTag();
 		}
-		int prochainDepart = getItem(position);
+		int prochainDepart = getItem(position).getHoraire();
 		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
 		holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
 		return convertView1;

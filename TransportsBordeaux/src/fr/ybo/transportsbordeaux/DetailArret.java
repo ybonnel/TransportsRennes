@@ -32,7 +32,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
@@ -52,6 +51,7 @@ import fr.ybo.transportsbordeaux.adapters.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
@@ -189,13 +189,12 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"unchecked"})
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				DetailArretAdapter arretAdapter = (DetailArretAdapter) adapterView.getAdapter();
+				DetailArretConteneur horaire = arretAdapter.getItem(position);
 				Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
-				intent.putExtra("trajetId", cursor.getInt(cursor.getColumnIndex("trajetId")));
-				intent.putExtra("sequence", cursor.getInt(cursor.getColumnIndex("sequence")));
+				intent.putExtra("trajetId", horaire.getTrajetId());
+				intent.putExtra("sequence", horaire.getSequence());
 				startActivity(intent);
 			}
 		});

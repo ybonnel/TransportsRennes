@@ -31,6 +31,7 @@ import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportsbordeaux.util.LogYbo;
@@ -159,12 +160,11 @@ public class FavoriAdapter extends BaseAdapter {
 				.getIconeResource(favori.nomCourt));
 
 		try {
-			List<Integer> prochainsDepart = Horaire.getProchainHorairesAsList(
-					favori.ligneId, favori.arretId, 1, calendar);
+			List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId,
+					favori.arretId, 1, calendar);
 
 			if (!prochainsDepart.isEmpty()) {
-				holder.tempsRestant.setText(formatterCalendar(
-						prochainsDepart.get(0), now));
+				holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0).getHoraire(), now));
 			}
 		} catch (SQLiteException ignore) {
 			LOG_YBO.erreur("Erreur SQL", ignore);

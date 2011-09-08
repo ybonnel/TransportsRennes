@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.modele.Arret;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
@@ -95,9 +96,9 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
 	private CharSequence getTempsRestant(Arret arret) {
 		try {
-			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
+			List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
 					arret.favori.arretId, 1, calendar);
-			return prochainsDeparts.isEmpty() ? "" : formatterCalendar(prochainsDeparts.get(0), now);
+			return prochainsDeparts.isEmpty() ? "" : formatterCalendar(prochainsDeparts.get(0).getHoraire(), now);
 		} catch (SQLiteException ignore) {
 			return "";
 		}

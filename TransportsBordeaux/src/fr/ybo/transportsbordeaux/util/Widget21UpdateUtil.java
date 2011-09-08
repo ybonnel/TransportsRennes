@@ -27,6 +27,7 @@ import android.widget.RemoteViews;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.TransportsWidget21;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 
 public class Widget21UpdateUtil {
@@ -49,16 +50,16 @@ public class Widget21UpdateUtil {
 		calendar.roll(Calendar.MINUTE, -4);
 		try {
 
-			List<Integer> prochainsDeparts = null;
+			List<DetailArretConteneur> prochainsDeparts = null;
 			do {
 				calendar.roll(Calendar.MINUTE, 1);
 				prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 3, calendar);
-			} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1) < now);
+			} while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1).getHoraire() < now);
 			LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 
 			Integer prochainDepart = null;
 			if (prochainsDeparts.size() > 0) {
-				int heureProchain = prochainsDeparts.get(0);
+				int heureProchain = prochainsDeparts.get(0).getHoraire();
 				if (heureProchain >= 24 * 60) {
 					heureProchain -= 24 * 60;
 				}
@@ -68,27 +69,29 @@ public class Widget21UpdateUtil {
 				if ((now - heureProchain) >= 0 && (now - heureProchain) < 30) {
 					views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.red));
 				} else {
-					prochainDepart = prochainsDeparts.get(0);
+					prochainDepart = prochainsDeparts.get(0).getHoraire();
 					views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.blanc));
 				}
-				views.setTextViewText(R.id.tempsRestantPasse, formatterCalendar(context, prochainsDeparts.get(0)));
+				views.setTextViewText(R.id.tempsRestantPasse,
+						formatterCalendar(context, prochainsDeparts.get(0).getHoraire()));
 
 			} else {
 				views.setTextViewText(R.id.tempsRestantPasse, "");
 			}
 			if (prochainsDeparts.size() > 1) {
-				views.setTextViewText(R.id.tempsRestant, formatterCalendar(context, prochainsDeparts.get(1)));
+				views.setTextViewText(R.id.tempsRestant,
+						formatterCalendar(context, prochainsDeparts.get(1).getHoraire()));
 				if (prochainDepart == null) {
-					prochainDepart = prochainsDeparts.get(1);
+					prochainDepart = prochainsDeparts.get(1).getHoraire();
 				}
 			} else {
 				views.setTextViewText(R.id.tempsRestant, "");
 			}
 
 			views.setTextViewText(R.id.tempsRestant,
-					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1)));
+					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1).getHoraire()));
 			views.setTextViewText(R.id.tempsRestantFutur,
-					prochainsDeparts.size() < 3 ? "" : formatterCalendar(context, prochainsDeparts.get(2)));
+					prochainsDeparts.size() < 3 ? "" : formatterCalendar(context, prochainsDeparts.get(2).getHoraire()));
 
 			views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : (context.getString(R.string.prochain)
 					+ " " + formatterTempsRestant(context, prochainDepart, now)));
