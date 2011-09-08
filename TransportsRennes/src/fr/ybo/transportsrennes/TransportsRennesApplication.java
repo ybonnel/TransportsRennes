@@ -85,7 +85,7 @@ public class TransportsRennesApplication extends Application {
 			// train d'être mis à jour.
 		}
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
-		traker.start(Constantes.UA_ACCOUNT, this);
+		traker.startNewSession(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
 		myTraker = new TransportsRennesApplication.MyTraker(traker);
 		myTraker.trackPageView("/TransportsRennesApplication/Version/" + Version.getVersionCourante(this));
