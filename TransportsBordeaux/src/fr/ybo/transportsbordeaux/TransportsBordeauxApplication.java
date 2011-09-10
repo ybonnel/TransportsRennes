@@ -92,8 +92,12 @@ public class TransportsBordeauxApplication extends Application {
 				context = contextWithDatabasePath;
 			} catch (Exception exception) {
 				Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
-				ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
-				am.restartPackage(pContext.getPackageName());
+				try {
+					ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
+					am.restartPackage(pContext.getPackageName());
+				} catch (Exception ignore) {
+
+				}
 				return;
 			}
 		}
