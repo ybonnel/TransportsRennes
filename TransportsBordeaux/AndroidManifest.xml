@@ -56,6 +56,16 @@
         <activity android:name=".TrajetOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".PreferencesBordeaux" android:configChanges="orientation|keyboardHidden"/>
+        
+        <service
+            android:name=".UpdateTimeService"
+            android:label="UpdateTimeService" >
+
+            <intent-filter>
+                <action android:name="fr.ybo.transportsbordeaux.action.UPDATE" />
+            </intent-filter>
+        </service>
+        
         <receiver android:process=":remote" android:name=".util.AlarmReceiver"></receiver>
 
 		<receiver android:name=".TransportsWidget11" android:label="@string/widget11_name">

@@ -18,11 +18,7 @@ package fr.ybo.transportsrennes;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -37,37 +33,17 @@ public class TransportsWidget extends AppWidgetProvider {
 
 	private static final LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
 
-	private static final Map<Integer, Timer> MAP_TIMERS_BY_WIDGET_ID = new HashMap<Integer, Timer>(5);
-
-	public static void verifKiller(Context context, AppWidgetManager appWidgetManager) {
-		if (MAP_TIMERS_BY_WIDGET_ID.isEmpty()) {
-			for (int widgetId : TransportsWidgetConfigure.getWidgetIds(context)) {
-				LOG_YBO.debug("Le widget " + widgetId + " a du être killer, on le relance");
-				updateAppWidget(context, appWidgetManager, widgetId);
-			}
-		}
-	}
-
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		LOG_YBO.debug("onUpdate");
-		for (int appWidgetId : appWidgetIds) {
-			updateAppWidget(context, appWidgetManager, appWidgetId);
-		}
+		context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
 	@Override
 	public void onDeleted(Context context, int[] appWidgetIds) {
-		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
-			for (int appWidgetId : appWidgetIds) {
-				// Arrêt du timer.
-				if (MAP_TIMERS_BY_WIDGET_ID.containsKey(appWidgetId)) {
-					MAP_TIMERS_BY_WIDGET_ID.get(appWidgetId).cancel();
-					MAP_TIMERS_BY_WIDGET_ID.remove(appWidgetId);
-				}
-				TransportsWidgetConfigure.deleteSettings(context, appWidgetId);
-			}
+		for (int appWidgetId : appWidgetIds) {
+			TransportsWidgetConfigure.deleteSettings(context, appWidgetId);
 		}
 		super.onDeleted(context, appWidgetIds);
 	}
@@ -87,9 +63,6 @@ public class TransportsWidget extends AppWidgetProvider {
 
 	static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 		LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
-		if (MAP_TIMERS_BY_WIDGET_ID.containsKey(appWidgetId)) {
-			return;
-		}
 		List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
 		if (favorisSelects.isEmpty()) {
 			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
@@ -112,59 +85,20 @@ public class TransportsWidget extends AppWidgetProvider {
 			favorisBdd.add(favoriBdd);
 		}
 		WidgetUpdateUtil.updateAppWidget(context, views, favorisBdd, Calendar.getInstance());
-
 		appWidgetManager.updateAppWidget(appWidgetId, views);
-		Timer timer = new Timer();
-		synchronized (MAP_TIMERS_BY_WIDGET_ID) {
-			MAP_TIMERS_BY_WIDGET_ID.put(appWidgetId, timer);
-		}
-		timer.scheduleAtFixedRate(new TransportsWidget.MyTime(context, appWidgetManager, favorisBdd, appWidgetId),
-				2000, 1000);
 	}
-
-	private static class MyTime extends TimerTask {
-		final AppWidgetManager appWidgetManager;
-		final Context context;
-
-		private final ArrayList<ArretFavori> favoris;
-		private final int appWidgetId;
-		private int now;
-
-		MyTime(Context context, AppWidgetManager appWidgetManager, ArrayList<ArretFavori> favoris, int appWidgetId) {
-			this.context = context;
-			this.appWidgetManager = appWidgetManager;
-			this.favoris = favoris;
-			this.appWidgetId = appWidgetId;
-			now = -1;
-		}
-
-		@Override
-		public void run() {
-			Calendar calendar = Calendar.getInstance();
-			int newNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-			if (newNow != now) {
-				now = newNow;
-				RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-				WidgetUpdateUtil.updateAppWidget(context, remoteViews, favoris, calendar);
-				try {
-					appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
-				} catch (SecurityException ignore) {
-				}
-			}
-		}
-	}
-
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		// v1.5 fix that doesn't call onDelete Action
 		String action = intent.getAction();
 		if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-			int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+			int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.INVALID_APPWIDGET_ID);
 			if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
 				super.onReceive(context, intent);
 			} else {
-				onDeleted(context, new int[]{appWidgetId});
+				onDeleted(context, new int[] { appWidgetId });
 			}
 		} else if (action.startsWith("YboClick")) {
 			String[] champs = action.split("_");
@@ -187,4 +121,3 @@ public class TransportsWidget extends AppWidgetProvider {
 		super.onReceive(context, intent);
 	}
 }
-

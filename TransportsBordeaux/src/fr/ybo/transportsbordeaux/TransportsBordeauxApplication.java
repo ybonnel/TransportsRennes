@@ -28,8 +28,10 @@ import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -111,6 +113,10 @@ public class TransportsBordeauxApplication extends Application {
 
 		constuctDatabase(this);
 
+		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+		PackageManager pm = getPackageManager();
+		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".UpdateTimeService"),
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.startNewSession(UA_ACCOUNT, this);

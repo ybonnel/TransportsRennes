@@ -27,9 +27,10 @@ import org.acra.annotation.ReportsCrashes;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
-import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Handler;
 
@@ -73,17 +74,13 @@ public class TransportsRennesApplication extends Application {
 	public void onCreate() {
 		ACRA.init(this);
 		super.onCreate();
+
 		databaseHelper = new TransportsRennesDatabase(this);
 		geocodeUtil = new GeocodeUtil(this);
-		try {
-		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-		TransportsWidget.verifKiller(getApplicationContext(), appWidgetManager);
-		TransportsWidget11.verifKiller(getApplicationContext(), appWidgetManager);
-		TransportsWidget21.verifKiller(getApplicationContext(), appWidgetManager);
-		} catch (NullPointerException ignore) {
-			// Arrive si l'appli est démarrée alors que les widgets sont en
-			// train d'être mis à jour.
-		}
+		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+		PackageManager pm = getPackageManager();
+		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".UpdateTimeService"),
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
 		traker.startNewSession(Constantes.UA_ACCOUNT, this);
 		handler = new Handler();
@@ -165,8 +162,7 @@ public class TransportsRennesApplication extends Application {
 		PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
 		AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM,
-				recurringCheck);
+		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
 	}
 
 }
