@@ -16,6 +16,8 @@
  */
 package fr.ybo.transportsrennes;
 
+import java.util.List;
+
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +30,13 @@ public class TabFavoris extends TabActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabfavoris);
+		List<GroupeFavori> groupes = TransportsRennesApplication.getDataBaseHelper().selectAll(GroupeFavori.class);
+		if (groupes.isEmpty()) {
+			Intent intent = new Intent(this, ListFavoris.class);
+			startActivity(intent);
+			finish();
+			return;
+		}
 
 		TabHost tabHost = getTabHost();
 
@@ -36,7 +45,7 @@ public class TabFavoris extends TabActivity {
 		tabHost.addTab(tabHost.newTabSpec("all").setIndicator(getString(R.string.all)).setContent(intentTous));
 
 		// Do the same for the other tabs
-		for (GroupeFavori groupe : TransportsRennesApplication.getDataBaseHelper().selectAll(GroupeFavori.class)) {
+		for (GroupeFavori groupe : groupes) {
 			Intent intent = new Intent().setClass(this, ListFavoris.class);
 			intent.putExtra("groupe", groupe.name);
 			tabHost.addTab(tabHost.newTabSpec(groupe.name).setIndicator(groupe.name).setContent(intent));
