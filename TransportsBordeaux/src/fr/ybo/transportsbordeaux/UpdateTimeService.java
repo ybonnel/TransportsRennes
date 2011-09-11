@@ -55,8 +55,7 @@ public class UpdateTimeService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		LOG_YBO.debug(intent.getAction());
-		if (ACTION_UPDATE.equals(intent.getAction())) {
+		if (intent != null && ACTION_UPDATE.equals(intent.getAction())) {
 			update();
 		}
 	}
