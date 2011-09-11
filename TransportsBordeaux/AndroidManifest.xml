@@ -17,7 +17,7 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="fr.ybo.transportsbordeaux" android:installLocation="auto"
-	android:versionCode="175" android:versionName="1.7.5">
+	android:versionCode="176" android:versionName="1.7.6">
 
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
