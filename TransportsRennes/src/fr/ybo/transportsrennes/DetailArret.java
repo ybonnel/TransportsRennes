@@ -58,7 +58,7 @@ import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
- *
+ * 
  * @author ybonnel
  */
 public class DetailArret extends MenuAccueil.ListActivity {
@@ -101,7 +101,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void gestionViewsTitle() {
 		((TextView) findViewById(R.id.nomLong)).setText(favori.nomLong);
 		((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
-		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + ' ' + getString(R.string.vers) + ' ' + favori.direction);
+		((TextView) findViewById(R.id.detailArret_nomArret)).setText(favori.nomArret + ' ' + getString(R.string.vers)
+				+ ' ' + favori.direction);
 	}
 
 	private ListAdapter construireAdapter() {
@@ -174,11 +175,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			public void update(Calendar calendar) {
-				DetailArret.this.calendar = Calendar.getInstance();
-				calendarLaVeille = Calendar.getInstance();
-				calendarLaVeille.roll(Calendar.DATE, false);
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
+				if (prochainArrets) {
+					DetailArret.this.calendar = Calendar.getInstance();
+					calendarLaVeille = Calendar.getInstance();
+					calendarLaVeille.roll(Calendar.DATE, false);
+					setListAdapter(construireAdapter());
+					getListView().invalidate();
+				}
 			}
 		}, this);
 		if (!myLigne.isChargee()) {
@@ -191,7 +194,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({"unchecked"})
+			@SuppressWarnings({ "unchecked" })
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				Cursor cursor = (Cursor) arretAdapter.getItem(position);
@@ -280,7 +283,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		selectionArgs.add(String.valueOf(minLongitude));
 		selectionArgs.add(String.valueOf(maxLongitude));
 
-		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+				selectionArgs);
 
 		/** Recuperation des index dans le cussor */
 		int arretIdIndex = cursor.getColumnIndex("arretId");
@@ -394,8 +398,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(android.R.drawable.ic_menu_view);
-		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(android.R.drawable.ic_menu_month);
+		menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(
+				android.R.drawable.ic_menu_view);
+		menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(
+				android.R.drawable.ic_menu_month);
 		return true;
 	}
 
@@ -443,8 +449,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		if (id == DATE_DIALOG_ID) {
-			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-					calendar.get(Calendar.DAY_OF_MONTH));
+			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR),
+					calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 		}
 		return null;
 	}

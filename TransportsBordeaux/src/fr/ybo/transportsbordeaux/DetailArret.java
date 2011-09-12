@@ -172,11 +172,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			public void update(Calendar calendar) {
-				DetailArret.this.calendar = calendar;
-				calendarLaVeille = Calendar.getInstance();
-				calendarLaVeille.roll(Calendar.DATE, false);
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
+				if (prochainArrets) {
+					DetailArret.this.calendar = calendar;
+					calendarLaVeille = Calendar.getInstance();
+					calendarLaVeille.roll(Calendar.DATE, false);
+					setListAdapter(construireAdapter());
+					getListView().invalidate();
+				}
 			}
 		}, this);
 		if (!myLigne.isChargee()) {
