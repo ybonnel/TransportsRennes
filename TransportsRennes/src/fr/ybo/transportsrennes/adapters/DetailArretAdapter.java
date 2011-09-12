@@ -33,8 +33,11 @@ public class DetailArretAdapter extends CursorAdapter {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(Context context, Cursor cursor, int now) {
+	private boolean isToday;
+
+	public DetailArretAdapter(Context context, Cursor cursor, int now, boolean isToday) {
 		super(context, cursor);
+		this.isToday = isToday;
 		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
@@ -62,7 +65,13 @@ public class DetailArretAdapter extends CursorAdapter {
 	public void bindView(View view, Context context, Cursor cursor) {
 		int prochainDepart = cursor.getInt(prochainDepartCol);
 		((DetailArretAdapter.ViewHolder) view.getTag()).heureProchain.setText(formatterCalendarHeure(prochainDepart));
-		((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText(formatterCalendar(prochainDepart, now));
+		if (isToday) {
+			((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant
+					.setText(formatterCalendar(prochainDepart, now));
+		} else {
+			((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText("");
+
+		}
 	}
 
 	private CharSequence formatterCalendar(int prochainDepart, int now) {

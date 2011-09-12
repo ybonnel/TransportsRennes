@@ -39,8 +39,11 @@ public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
 
 	private final Context myContext;
 
-	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now) {
+	private boolean isToday;
+
+	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday) {
 		super(context, R.layout.detailarretliste, prochainsDeparts);
+		this.isToday = isToday;
 		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
@@ -66,7 +69,11 @@ public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
 		}
 		int prochainDepart = getItem(position).getHoraire();
 		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
-		holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+		if (isToday) {
+			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+		} else {
+			holder.tempsRestant.setText("");
+		}
 		return convertView1;
 	}
 

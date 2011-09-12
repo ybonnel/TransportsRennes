@@ -117,7 +117,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private ListAdapter construireAdapter() {
 		closeCurrentCursor();
-		if (prochainArrets) {
+		if (prochainArrets && isToday()) {
 			return construireAdapterProchainsDeparts();
 		}
 		return construireAdapterAllDeparts();
@@ -126,14 +126,14 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private ListAdapter construireAdapterAllDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		currentCursor = Horaire.getAllHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection, calendar);
-		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
+		return new DetailArretAdapter(getApplicationContext(), currentCursor, now, isToday());
 	}
 
 	private ListAdapter construireAdapterProchainsDeparts() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		currentCursor = Horaire.getProchainHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection,
 				null, calendar);
-		return new DetailArretAdapter(getApplicationContext(), currentCursor, now);
+		return new DetailArretAdapter(getApplicationContext(), currentCursor, now, isToday());
 	}
 
 	private Ligne myLigne;
