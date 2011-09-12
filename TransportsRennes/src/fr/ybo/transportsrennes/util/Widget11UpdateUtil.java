@@ -46,7 +46,7 @@ public class Widget11UpdateUtil {
 		views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
 
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		calendar.roll(Calendar.MINUTE, -3);
+		calendar.add(Calendar.MINUTE, -3);
 		try {
 			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
 					favori.macroDirection, 2, calendar);

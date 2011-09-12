@@ -150,7 +150,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		calendar = Calendar.getInstance();
 		today = Calendar.getInstance();
 		calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.roll(Calendar.DATE, false);
+		calendarLaVeille.add(Calendar.DATE, -1);
 		setContentView(R.layout.detailarret);
 		recuperationDonneesIntent();
 		if (favori.ligneId == null) {
@@ -190,7 +190,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 					DetailArret.this.calendar = Calendar.getInstance();
 					today = Calendar.getInstance();
 					calendarLaVeille = Calendar.getInstance();
-					calendarLaVeille.roll(Calendar.DATE, false);
+					calendarLaVeille.add(Calendar.DATE, -1);
 					setListAdapter(construireAdapter());
 					getListView().invalidate();
 				}
@@ -452,7 +452,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			calendarLaVeille.set(Calendar.YEAR, year);
 			calendarLaVeille.set(Calendar.MONTH, monthOfYear);
 			calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-			calendarLaVeille.roll(Calendar.DATE, false);
+			calendarLaVeille.add(Calendar.DATE, -1);
 			setListAdapter(construireAdapter());
 			getListView().invalidate();
 		}

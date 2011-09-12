@@ -146,7 +146,7 @@ public class Horaire {
 			Calendar calendar) throws SQLiteException {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Calendar calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.roll(Calendar.DATE, false);
+		calendarLaVeille.add(Calendar.DATE, -1);
 
 		int uneJournee = 24 * 60;
 		// Réquète.

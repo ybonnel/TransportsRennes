@@ -59,7 +59,7 @@ public class FavoriAdapter extends BaseAdapter {
 	public void majCalendar() {
 		calendar = Calendar.getInstance();
 		calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.roll(Calendar.DATE, false);
+		calendarLaVeille.add(Calendar.DATE, -1);
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 
