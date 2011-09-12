@@ -74,6 +74,16 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 	private Cursor currentCursor;
 
+	private boolean isToday() {
+		if (calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)
+				&& calendar.get(Calendar.MONTH) == today.get(Calendar.MONTH)
+				&& calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
+			return true;
+		}
+		return false;
+	}
+
+	private Calendar today = Calendar.getInstance();
 	private Calendar calendar = Calendar.getInstance();
 	private Calendar calendarLaVeille = Calendar.getInstance();
 
@@ -138,6 +148,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 		super.onCreate(savedInstanceState);
 		mInflater = LayoutInflater.from(this);
 		calendar = Calendar.getInstance();
+		today = Calendar.getInstance();
 		calendarLaVeille = Calendar.getInstance();
 		calendarLaVeille.roll(Calendar.DATE, false);
 		setContentView(R.layout.detailarret);
@@ -175,8 +186,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
 			@Override
 			public void update(Calendar calendar) {
-				if (prochainArrets) {
+				if (isToday()) {
 					DetailArret.this.calendar = Calendar.getInstance();
+					today = Calendar.getInstance();
 					calendarLaVeille = Calendar.getInstance();
 					calendarLaVeille.roll(Calendar.DATE, false);
 					setListAdapter(construireAdapter());
