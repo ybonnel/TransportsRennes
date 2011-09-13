@@ -18,6 +18,7 @@ package fr.ybo.transportsrennes;
 
 import java.io.FileNotFoundException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -326,7 +327,8 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					return CalculItineraires.getInstance().getItineraries(request);
 				} catch (OpenTripPlannerException e) {
 					if (e.getCause() != null
-							&& (e.getCause() instanceof SocketException || e.getCause() instanceof FileNotFoundException)) {
+							&& (e.getCause() instanceof SocketException
+									|| e.getCause() instanceof FileNotFoundException || e.getCause() instanceof SocketTimeoutException)) {
 						return null;
 					} else {
 						throw new TransportsRennesException(e);
