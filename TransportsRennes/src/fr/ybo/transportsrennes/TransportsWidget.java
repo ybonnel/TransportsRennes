@@ -68,6 +68,9 @@ public class TransportsWidget extends AppWidgetProvider {
 			LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
 			return;
 		}
+		if (TransportsRennesApplication.getDataBaseHelper() == null) {
+			return;
+		}
 		ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
 		for (ArretFavori favoriSelect : favorisSelects) {

@@ -67,6 +67,9 @@ public class TransportsWidget21 extends AppWidgetProvider {
 			return;
 		}
 		RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets21);
+		if (TransportsRennesApplication.getDataBaseHelper() == null) {
+			return;
+		}
 		ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
 		if (favoriBdd == null) {
 			LOG_YBO.debug("FavoriBdd null");
