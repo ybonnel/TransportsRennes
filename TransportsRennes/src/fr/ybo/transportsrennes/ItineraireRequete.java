@@ -19,6 +19,7 @@ package fr.ybo.transportsrennes;
 import java.io.FileNotFoundException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +53,8 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonParseException;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Message;
@@ -328,7 +331,10 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 				} catch (OpenTripPlannerException e) {
 					if (e.getCause() != null
 							&& (e.getCause() instanceof SocketException
-									|| e.getCause() instanceof FileNotFoundException || e.getCause() instanceof SocketTimeoutException)) {
+									|| e.getCause() instanceof FileNotFoundException
+									|| e.getCause() instanceof UnknownHostException
+									|| e.getCause() instanceof JsonIOException
+									|| e.getCause() instanceof SocketTimeoutException || e.getCause() instanceof JsonParseException)) {
 						return null;
 					} else {
 						throw new TransportsRennesException(e);
