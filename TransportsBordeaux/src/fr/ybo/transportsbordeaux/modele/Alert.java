@@ -23,6 +23,7 @@ import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.List;
@@ -115,6 +116,8 @@ public class Alert implements Serializable {
 			SAXParser parser = factory.newSAXParser();
 			parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
 			return handler.getAlertes();
+		} catch (SocketTimeoutException erreurReseau) {
+			throw new TbcErreurReseaux(erreurReseau);
 		} catch (SAXParseException saxParseException) {
 			throw new TbcErreurReseaux(saxParseException);
 		} catch (TbcErreurReseaux tbcErreurReseaux) {
