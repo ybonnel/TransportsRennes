@@ -185,11 +185,26 @@ public class TransportsBordeaux extends Activity {
 
 	private void upgradeDatabase() {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.infoChargementGtfs)) {
+
+			private boolean erreurNoSpaceLeft = false;
+
 			@Override
 			protected Void doInBackground(Void... params) {
-				UpdateDataBase.updateIfNecessaryDatabase(getResources());
+				try {
+					UpdateDataBase.updateIfNecessaryDatabase(getResources());
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
+				}
 				return null;
 			}
+
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				if (erreurNoSpaceLeft) {
+					Toast.makeText(TransportsBordeaux.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+					finish();
+				}
+			};
 		}.execute();
 	}
 

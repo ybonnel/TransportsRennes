@@ -21,7 +21,9 @@ import java.util.List;
 
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
+import fr.ybo.database.DataBaseException;
 import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
@@ -37,7 +39,8 @@ public final class UpdateDataBase {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	public static void updateIfNecessaryDatabase(Resources resources) {
+	public static void updateIfNecessaryDatabase(Resources resources) throws GestionFilesException, MoteurCsvException,
+			DataBaseException, NoSpaceLeftException {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(resources);

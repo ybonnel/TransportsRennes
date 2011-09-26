@@ -167,7 +167,8 @@ public final class GestionZipKeolis {
 		}
 	}
 
-	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException, MoteurCsvException, DataBaseException {
+	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException,
+			MoteurCsvException, DataBaseException, NoSpaceLeftException {
 		try {
 			for (CoupleResourceFichier resource : RESOURCES_PRINCIPALE) {
 				LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);
@@ -188,6 +189,8 @@ public final class GestionZipKeolis {
 			}
 			TransportsBordeauxApplication.getDataBaseHelper().close();
 			LOG_YBO.debug("Fin getAndParseZipKeolis.");
+		} catch (SQLiteDiskIOException diskException) {
+			throw new NoSpaceLeftException();
 		} catch (IOException e) {
 			throw new GestionFilesException(e);
 		}
