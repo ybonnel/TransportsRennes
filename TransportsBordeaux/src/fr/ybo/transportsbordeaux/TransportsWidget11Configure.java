@@ -58,7 +58,8 @@ public class TransportsWidget11Configure extends ListActivity {
 
 		setContentView(R.layout.configurewidget11);
 
-		if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
+		if (TransportsBordeauxApplication.getDataBaseHelper() == null
+				|| TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
 			Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
 			finish();
 			return;
