@@ -55,6 +55,7 @@ import fr.ybo.transportsbordeaux.modele.DetailArretConteneur;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
@@ -357,19 +358,30 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private void chargerLigne() {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
+			private boolean erreurNoSpaceLeft = false;
+
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
+				}
 				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				setListAdapter(construireAdapter());
-				getListView().invalidate();
-				updateTimeUtil.start();
-				firstUpdate = true;
+				if (erreurNoSpaceLeft) {
+					Toast.makeText(DetailArret.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+					finish();
+				} else {
+					setListAdapter(construireAdapter());
+					getListView().invalidate();
+					updateTimeUtil.start();
+					firstUpdate = true;
+				}
 			}
 
 		}.execute();

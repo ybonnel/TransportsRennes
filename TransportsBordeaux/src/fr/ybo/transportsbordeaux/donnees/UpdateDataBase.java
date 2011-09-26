@@ -31,6 +31,7 @@ import fr.ybo.transportsbordeaux.modele.Direction;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.ConstantesTbc;
 import fr.ybo.transportsbordeaux.util.LogYbo;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
 public final class UpdateDataBase {
 
@@ -93,7 +94,7 @@ public final class UpdateDataBase {
 		TransportsBordeauxApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(Ligne ligne, Resources resources) {
+	public static void chargeDetailLigne(Ligne ligne, Resources resources) throws NoSpaceLeftException {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		ligne.chargerHeuresArrets(TransportsBordeauxApplication.getDataBaseHelper(), resources);
 		ligne.chargee = Boolean.TRUE;

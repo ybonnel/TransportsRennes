@@ -52,6 +52,7 @@ import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
 
@@ -300,9 +301,15 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 
 		new AsyncTask<Void, Void, Void>() {
 
+			private boolean erreurNoSpaceLeft = false;
+
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
+				}
 				return null;
 			}
 
@@ -310,6 +317,9 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
+				if (erreurNoSpaceLeft) {
+					Toast.makeText(ListArretByPosition.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+				}
 			}
 
 		}.execute();

@@ -27,6 +27,7 @@ import java.util.List;
 import android.content.res.Resources;
 import android.database.DatabaseUtils.InsertHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDiskIOException;
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.modele.Table;
 import fr.ybo.moteurcsv.MoteurCsv;
@@ -37,6 +38,7 @@ import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.modele.Horaire;
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 import fr.ybo.transportsbordeaux.util.LogYbo;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
 public final class GestionZipKeolis {
 
@@ -72,8 +74,7 @@ public final class GestionZipKeolis {
 	}
 
 	public static void chargeLigne(MoteurCsv moteurCsv, String ligneId,
-			final TransportsBordeauxDatabase dataBaseHelper,
-			Resources resources) {
+			final TransportsBordeauxDatabase dataBaseHelper, Resources resources) throws NoSpaceLeftException {
 		try {
 			LOG_YBO.debug("Début chargeLigne");
 			final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
@@ -141,6 +142,8 @@ public final class GestionZipKeolis {
 				}
 			}
 			LOG_YBO.debug("Fin chargeLigne");
+		} catch (SQLiteDiskIOException ioException) {
+			throw new NoSpaceLeftException();
 		} catch (Exception exception) {
 			throw new GestionFilesException(exception);
 		}

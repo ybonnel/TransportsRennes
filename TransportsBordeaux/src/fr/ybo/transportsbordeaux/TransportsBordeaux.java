@@ -36,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -46,6 +47,7 @@ import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
 public class TransportsBordeaux extends Activity {
 
@@ -317,23 +319,36 @@ public class TransportsBordeaux extends Activity {
 
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.infoChargementGtfs)) {
 
+			private boolean erreurNoSpaceLeft = false;
+
 			@Override
 			protected Void doInBackground(Void... params) {
 
-				for (Ligne ligne : TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne())) {
-					if (!ligne.isChargee()) {
-						final String nomLigne = ligne.nomCourt;
-						runOnUiThread(new Runnable() {
-							public void run() {
-								myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + '\n'
-										+ getString(R.string.premierAccesLigne, nomLigne));
-							}
-						});
-						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+				try {
+					for (Ligne ligne : TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne())) {
+						if (!ligne.isChargee()) {
+							final String nomLigne = ligne.nomCourt;
+							runOnUiThread(new Runnable() {
+								public void run() {
+									myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + '\n'
+											+ getString(R.string.premierAccesLigne, nomLigne));
+								}
+							});
+							UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						}
 					}
+				} catch (NoSpaceLeftException noSpaceException) {
+					erreurNoSpaceLeft = true;
 				}
 				return null;
 			}
+
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				if (erreurNoSpaceLeft) {
+					Toast.makeText(TransportsBordeaux.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+				}
+			};
 		}.execute();
 	}
 }

@@ -29,6 +29,7 @@ import fr.ybo.transportsbordeaux.TransportsWidget21Configure;
 import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.modele.Ligne;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
 public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
@@ -56,6 +57,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				context.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
 		new AsyncTask<Void, Void, Void>() {
+
+			private boolean erreurNoSpaceLeft = false;
 			
 			@Override
 			protected void onPreExecute() {
@@ -64,7 +67,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.chargeDetailLigne(ligne, context.getResources());
+				try {
+					UpdateDataBase.chargeDetailLigne(ligne, context.getResources());
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
+				}
 				return null;
 			}
 
@@ -72,6 +79,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				myProgressDialog.dismiss();
+				if (erreurNoSpaceLeft) {
+					Toast.makeText(context, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+				}
 			}
 
 		}.execute();

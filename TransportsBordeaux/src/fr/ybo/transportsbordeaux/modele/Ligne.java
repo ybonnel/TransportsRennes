@@ -35,6 +35,7 @@ import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.donnees.GestionZipKeolis;
 import fr.ybo.transportsbordeaux.util.LogYbo;
+import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
@@ -59,7 +60,8 @@ public class Ligne implements Serializable {
 	@Column(type = Column.TypeColumn.BOOLEAN)
 	public Boolean chargee;
 
-	public void chargerHeuresArrets(TransportsBordeauxDatabase dataBaseHelper, Resources resources) {
+	public void chargerHeuresArrets(TransportsBordeauxDatabase dataBaseHelper, Resources resources)
+			throws NoSpaceLeftException {
 		LOG_YBO.debug("Début de chargerHeuresArrets");
 		List<Class<?>> classes = new ArrayList<Class<?>>(1000);
 		classes.add(Horaire.class);
