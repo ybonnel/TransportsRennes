@@ -175,7 +175,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 	private class BackgroundTasks extends AsyncTask<Void, Void, Void> {
 
 		private void ajouterArrets() {
-			if (!arretVisible) {
+			if (!arretVisible || clustererForArret == null) {
 				return;
 			}
 			if (arrets == null) {
@@ -233,7 +233,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 		}
 
 		private void ajouterVelos() throws ErreurReseau {
-			if (veloVisible) {
+			if (veloVisible && clustererForVelo != null) {
 				if (stations == null) {
 					stations = Keolis.getInstance().getStations();
 				}
@@ -246,7 +246,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 		}
 
 		private void ajouterParcs() throws ErreurReseau {
-			if (parcVisible) {
+			if (parcVisible && clustererForParc != null) {
 				if (parcRelais == null) {
 					parcRelais = Keolis.getInstance().getParkRelais();
 				}
@@ -259,7 +259,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 		}
 
 		private void ajouterPos() throws ErreurReseau {
-			if (posVisible) {
+			if (posVisible && clustererForPos != null) {
 				if (pointsDeVente == null) {
 					pointsDeVente = Keolis.getInstance().getPointDeVente();
 				}
@@ -307,16 +307,16 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 			if (erreurKeolis) {
 				Toast.makeText(AllOnMap.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 			}
-			if (arretVisible) {
+			if (arretVisible && clustererForArret != null) {
 				clustererForArret.resetViewport();
 			}
-			if (veloVisible) {
+			if (veloVisible && clustererForVelo != null) {
 				clustererForVelo.resetViewport();
 			}
-			if (parcVisible) {
+			if (parcVisible && clustererForParc != null) {
 				clustererForParc.resetViewport();
 			}
-			if (posVisible) {
+			if (posVisible && clustererForPos != null) {
 				clustererForPos.resetViewport();
 			}
 			mapView.invalidate();
