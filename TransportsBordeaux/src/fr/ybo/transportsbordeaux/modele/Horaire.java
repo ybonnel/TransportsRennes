@@ -77,12 +77,18 @@ public class Horaire {
 		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
 		int trajetIdCol = cursor.getColumnIndex("trajetId");
 		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
+		Set<Integer> horairesDejaAjoutes = new HashSet<Integer>();
 		while (cursor.moveToNext()) {
 			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
-				prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol),
-						cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
+				int heureDepart = cursor.getInt(heureDepartCol);
+				if (!horairesDejaAjoutes.contains(heureDepart)) {
+					prochainsDeparts.add(new DetailArretConteneur(heureDepart, cursor.getInt(trajetIdCol), cursor
+							.getInt(stopSequenceCol)));
+					horairesDejaAjoutes.add(heureDepart);
+				}
 			}
 		}
+		horairesDejaAjoutes = null;
 		cursor.close();
 		return prochainsDeparts;
 	}
@@ -96,12 +102,18 @@ public class Horaire {
 		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
 		int trajetIdCol = cursor.getColumnIndex("trajetId");
 		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
+		Set<Integer> horairesDejaAjoutes = new HashSet<Integer>();
 		while (cursor.moveToNext()) {
 			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
-				prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol),
-						cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
+				int heureDepart = cursor.getInt(heureDepartCol);
+				if (!horairesDejaAjoutes.contains(heureDepart)) {
+					prochainsDeparts.add(new DetailArretConteneur(heureDepart, cursor.getInt(trajetIdCol), cursor
+							.getInt(stopSequenceCol)));
+					horairesDejaAjoutes.add(heureDepart);
+				}
 			}
 		}
+		horairesDejaAjoutes = null;
 		cursor.close();
 		return prochainsDeparts;
 	}
