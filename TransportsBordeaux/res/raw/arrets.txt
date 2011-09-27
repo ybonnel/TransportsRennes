@@ -2802,7 +2802,6 @@ id,nom,latitude,longitude
 2695b,Château Bouscaut,44.74779,-0.54565
 6327b,Mozart,44.7688,-0.62039
 5533,BRANDENBURG,44.87447,-0.54571
-5534,CLAVEAU,44.87787,-0.54379
 6328b,Mozart,44.7687,-0.62022
 5755b,Toussaint Catros,44.85603,-0.69453
 5517b,Lannes (Collège Manon Cormier),44.90015,-0.50651
