@@ -60,13 +60,13 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
-import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.opentripplanner.client.modele.TraverseMode;
 import fr.ybo.opentripplanner.client.modele.TraverseModeSet;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
 import fr.ybo.transportsbordeaux.tbc.TcbException;
 import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
@@ -401,7 +401,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
 				} else {
 					Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-					intent.putExtra("itineraires", new ArrayList<Itinerary>(reponse.getPlan().itineraries.itinerary));
+					intent.putExtra("itineraireReponse", ItineraireReponse.convert(reponse.getPlan()));
 					int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					intent.putExtra("heureDepart", heureDepart);
 					startActivity(intent);

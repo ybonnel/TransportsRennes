@@ -35,10 +35,9 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
-import fr.ybo.opentripplanner.client.modele.Itinerary;
-import fr.ybo.opentripplanner.client.modele.Leg;
-import fr.ybo.opentripplanner.client.modele.TraverseMode;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
+import fr.ybo.transportsbordeaux.itineraires.PortionTrajet;
+import fr.ybo.transportsbordeaux.itineraires.Trajet;
 import fr.ybo.transportsbordeaux.map.LineItemizedOverlay;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsbordeaux.util.Coordinate;
@@ -57,7 +56,7 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trajet_map);
-		Itinerary trajet = (Itinerary) getIntent().getSerializableExtra("trajet");
+		Trajet trajet = (Trajet) getIntent().getSerializableExtra("trajet");
 
 		MapView mapView = (MapView) findViewById(R.id.mapview);
 		mapView.setBuiltInZoomControls(true);
@@ -69,7 +68,7 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 		LinearLayout layoutTrajet = (LinearLayout) findViewById(R.id.trajetDetail);
 		layoutTrajet.removeAllViews();
 		LayoutInflater inflater = LayoutInflater.from(this);
-		if (trajet.legs != null) {
+		if (!trajet.getPortions().isEmpty()) {
 			int minLatitude = Integer.MAX_VALUE;
 			int maxLatitude = Integer.MIN_VALUE;
 			int minLongitude = Integer.MAX_VALUE;
@@ -77,18 +76,18 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 			int latitude;
 			int longitude;
 			ArrayList<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
-			for (Leg leg : trajet.legs.leg) {
+			for (PortionTrajet portion : trajet.getPortions()) {
 				// icône
 				RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
 				TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
 				int iconeMarkee;
 				int icone;
-				if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
+				if (portion.getMode().isOnStreetNonTransit()) {
 					iconeMarkee = R.drawable.mpieton;
 					icone = R.drawable.ipieton;
 					directionTrajet.setVisibility(View.GONE);
 				} else {
-					String route = leg.route;
+					String route = portion.getLigneId();
 					if (route.length() == 1 && route.charAt(0) >= '1' && route.charAt(0) <= '9') {
 						route = "0" + route;
 					}
@@ -96,14 +95,14 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 					icone = IconeLigne.getIconeResource(route);
 
 					directionTrajet.setVisibility(View.VISIBLE);
-					directionTrajet.setText(getString(R.string.directionEntete) + ' ' + leg.getDirection());
+					directionTrajet.setText(getString(R.string.directionEntete) + ' ' + portion.getDirection());
 				}
 
 				// icône du départ.
 				MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(
 						iconeMarkee));
-				latitude = (int) (leg.from.lat * 1.0E6);
-				longitude = (int) (leg.from.lon * 1.0E6);
+				latitude = (int) (portion.getFromLat() * 1.0E6);
+				longitude = (int) (portion.getFromLon() * 1.0E6);
 				if (latitude > maxLatitude) {
 					maxLatitude = latitude;
 				}
@@ -116,28 +115,30 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 				if (longitude < minLongitude) {
 					minLongitude = longitude;
 				}
-				OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.from.name, null);
+				OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), portion.getFromName(), null);
 				itemizedOverlay.addOverlay(item);
 				mapOverlays.add(itemizedOverlay);
 
-				for (Coordinate coordinate : PolylineEncoder.decode(leg.legGeometry)) {
+				for (Coordinate coordinate : PolylineEncoder.decode(portion.getGeometry())) {
 					geoPoints.add(coordinate.toGeoPoint());
 				}
 
 				// Détail du trajet.
 				((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
-				((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
-				((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
-				((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
-				((TextView) portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
+				((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(portion
+						.getStartTime()));
+				((TextView) portionLayout.findViewById(R.id.depart)).setText(portion.getFromName());
+				((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(portion
+						.getEndTime()));
+				((TextView) portionLayout.findViewById(R.id.arrivee)).setText(portion.getToName());
 				layoutTrajet.addView(portionLayout);
 			}
 			// icone de l'arrivee.
-			Leg leg = trajet.legs.leg.get(trajet.legs.leg.size() - 1);
+			PortionTrajet portion = trajet.getPortions().get(trajet.getPortions().size() - 1);
 			MapItemizedOverlayTrajet itemizedOverlay = new MapItemizedOverlayTrajet(getResources().getDrawable(
 					R.drawable.mpieton));
-			latitude = (int) (leg.to.lat * 1.0E6);
-			longitude = (int) (leg.to.lon * 1.0E6);
+			latitude = (int) (portion.getToLat() * 1.0E6);
+			longitude = (int) (portion.getToLon() * 1.0E6);
 			if (latitude > maxLatitude) {
 				maxLatitude = latitude;
 			}
@@ -150,7 +151,7 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 			if (longitude < minLongitude) {
 				minLongitude = longitude;
 			}
-			OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), leg.to.name, null);
+			OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), portion.getToName(), null);
 			itemizedOverlay.addOverlay(item);
 			mapOverlays.add(itemizedOverlay);
 			

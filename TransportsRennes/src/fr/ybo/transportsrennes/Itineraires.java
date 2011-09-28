@@ -21,10 +21,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import fr.ybo.opentripplanner.client.modele.Itinerary;
-import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.TrajetAdapter;
+import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
+import fr.ybo.transportsrennes.itineraires.Trajet;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 
@@ -35,14 +35,15 @@ public class Itineraires extends MenuAccueil.ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.itineraires);
-		Response itineraireReponse = (Response) getIntent().getExtras().getSerializable("itinerairesReponse");
+		ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
+				"itinerairesReponse");
 		int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-		setListAdapter(new TrajetAdapter(this, itineraireReponse.getPlan(), heureDepart));
+		setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Itinerary trajet = (Itinerary) adapterView.getItemAtPosition(position);
+				Trajet trajet = (Trajet) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
 				intent.putExtra("trajet", trajet);
 				startActivity(intent);

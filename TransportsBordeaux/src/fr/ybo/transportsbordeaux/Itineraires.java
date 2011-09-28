@@ -16,8 +16,6 @@
  */
 package fr.ybo.transportsbordeaux;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -27,28 +25,29 @@ import android.widget.ListView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
-import fr.ybo.opentripplanner.client.modele.Itinerary;
 import fr.ybo.transportsbordeaux.activity.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.TrajetAdapter;
+import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
+import fr.ybo.transportsbordeaux.itineraires.Trajet;
 
 public class Itineraires extends MenuAccueil.ListActivity {
 
 	/**
 	 * Called when the activity is first created.
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.itineraires);
-		List<Itinerary> itineraries = (List<Itinerary>) getIntent().getExtras().getSerializable("itineraires");
+		ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
+				"itineraireReponse");
 		int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-		setListAdapter(new TrajetAdapter(this, itineraries, heureDepart));
+		setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
 		ListView lv = getListView();
 		lv.setTextFilterEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Itinerary trajet = (Itinerary) adapterView.getItemAtPosition(position);
+				Trajet trajet = (Trajet) adapterView.getItemAtPosition(position);
 				Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
 				intent.putExtra("trajet", trajet);
 				startActivity(intent);

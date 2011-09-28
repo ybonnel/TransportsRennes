@@ -61,6 +61,7 @@ import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.activity.MenuAccueil;
+import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
 import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.LocationUtil;
@@ -365,7 +366,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
 				} else {
 					Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-					intent.putExtra("itinerairesReponse", reponse);
+					intent.putExtra("itinerairesReponse", ItineraireReponse.convert(reponse.getPlan()));
 					int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					intent.putExtra("heureDepart", heureDepart);
 					startActivity(intent);

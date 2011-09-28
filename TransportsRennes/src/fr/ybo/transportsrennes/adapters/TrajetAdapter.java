@@ -17,6 +17,7 @@
 package fr.ybo.transportsrennes.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -27,24 +28,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import fr.ybo.opentripplanner.client.modele.Itinerary;
-import fr.ybo.opentripplanner.client.modele.Leg;
-import fr.ybo.opentripplanner.client.modele.TraverseMode;
-import fr.ybo.opentripplanner.client.modele.TripPlan;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.itineraires.PortionTrajet;
+import fr.ybo.transportsrennes.itineraires.Trajet;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
-public class TrajetAdapter extends ArrayAdapter<Itinerary> {
+public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
-	private TripPlan tripPlan;
 	private final LayoutInflater inflater;
 	private int heureDepart;
 	private Context context;
 
-	public TrajetAdapter(Context context, TripPlan tripPlan, int heureDepart) {
-		super(context, R.layout.trajet, tripPlan.itineraries.itinerary);
+	public TrajetAdapter(Context context, List<Trajet> trajets, int heureDepart) {
+		super(context, R.layout.trajet, trajets);
 		this.heureDepart = heureDepart;
-		this.tripPlan = tripPlan;
 		this.context = context;
 		inflater = LayoutInflater.from(context);
 	}
@@ -69,30 +66,31 @@ public class TrajetAdapter extends ArrayAdapter<Itinerary> {
 		} else {
 			holder = (TrajetAdapter.ViewHolder) convertViewLocal.getTag();
 		}
-		Itinerary trajet = tripPlan.itineraries.itinerary.get(position);
+		Trajet trajet = getItem(position);
 		holder.departPieton.setText(context.getString(R.string.depart, formatHeure(heureDepart)));
-		holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.endTime)));
+		holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.getEndTime())));
 		holder.layoutTrajets.removeAllViews();
-		if (trajet.legs != null) {
-			for (Leg leg : trajet.legs.leg) {
-				RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
-				int icone;
-				TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
-				if (TraverseMode.valueOf(leg.mode).isOnStreetNonTransit()) {
-					icone = R.drawable.ipieton;
-					directionTrajet.setVisibility(View.GONE);
-				} else {
-					directionTrajet.setVisibility(View.VISIBLE);
-					icone = IconeLigne.getIconeResource(leg.route);
-					directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + leg.getDirection());
-				}
-				((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
-				((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(leg.startTime));
-				((TextView) portionLayout.findViewById(R.id.depart)).setText(leg.from.name);
-				((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(leg.endTime));
-				((TextView) portionLayout.findViewById(R.id.arrivee)).setText(leg.to.name);
-				holder.layoutTrajets.addView(portionLayout);
+		for (PortionTrajet portionTrajet : trajet.getPortions()) {
+			RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+			int icone;
+			TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
+			if (portionTrajet.getMode().isOnStreetNonTransit()) {
+				icone = R.drawable.ipieton;
+				directionTrajet.setVisibility(View.GONE);
+			} else {
+				directionTrajet.setVisibility(View.VISIBLE);
+				icone = IconeLigne.getIconeResource(portionTrajet.getLigneId());
+				directionTrajet.setText(context.getString(R.string.directionEntete) + ' '
+						+ portionTrajet.getDirection());
 			}
+			((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
+			((TextView) portionLayout.findViewById(R.id.departHeure)).setText(SDF_HEURE.format(portionTrajet
+					.getStartTime()));
+			((TextView) portionLayout.findViewById(R.id.depart)).setText(portionTrajet.getFromName());
+			((TextView) portionLayout.findViewById(R.id.arriveeHeure)).setText(SDF_HEURE.format(portionTrajet
+					.getEndTime()));
+			((TextView) portionLayout.findViewById(R.id.arrivee)).setText(portionTrajet.getToName());
+			holder.layoutTrajets.addView(portionLayout);
 		}
 		return convertViewLocal;
 	}
