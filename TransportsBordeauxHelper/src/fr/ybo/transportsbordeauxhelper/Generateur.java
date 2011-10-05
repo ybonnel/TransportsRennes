@@ -470,6 +470,7 @@ public class Generateur {
 				calendrierIds.add(calendrier.id);
 			}
 		}
+		System.out.println("Netoyage des calendrierException " + System.currentTimeMillis());
 		// netoyage des calendriersException.
 		Iterator<CalendrierException> itCalendrierException = calendriersException.iterator();
 		while (itCalendrierException.hasNext()) {
@@ -477,6 +478,7 @@ public class Generateur {
 				itCalendrierException.remove();
 			}
 		}
+		System.out.println("Netoyage des trajets " + System.currentTimeMillis());
 		// nettoyage des trajets.
 		Set<Integer> trajetIds = new HashSet<Integer>();
 		Set<Integer> directionIds = new HashSet<Integer>();
@@ -493,6 +495,7 @@ public class Generateur {
 			}
 		}
 
+		System.out.println("Netoyage des directions " + System.currentTimeMillis());
 		// nettoyage des directions
 		Set<Integer> directionToDelete = new HashSet<Integer>();
 		for (Integer directionId : directions.keySet()) {
@@ -504,6 +507,7 @@ public class Generateur {
 			directions.remove(idToDelete);
 		}
 
+		System.out.println("Netoyage des horaires par lignes " + System.currentTimeMillis());
 		// nettoyage des horaires par lignes
 		Set<String> arretsUtilises = new HashSet<String>();
 		for (List<Horaire> horairesByLigne : horairesByLigneId.values()) {
@@ -523,14 +527,17 @@ public class Generateur {
 				lignesToDelete.add(entry.getKey());
 			}
 		}
+		System.out.println("Netoyage des horaires " + System.currentTimeMillis());
 		// nettoyage des horaires
-		Iterator<Horaire> itHoraires = horaires.iterator();
-		while (itHoraires.hasNext()) {
-			if (!trajetIds.contains(itHoraires.next().trajetId)) {
-				itHoraires.remove();
+		List<Horaire> newHoraires = new ArrayList<Horaire>();
+		for (Horaire horaire : horaires) {
+			if (trajetIds.contains(horaire.trajetId)) {
+				newHoraires.add(horaire);
 			}
 		}
+		horaires = newHoraires;
 
+		System.out.println("Netoyage des arrêts " + System.currentTimeMillis());
 		// nettoyage des arrêts
 		Set<String> arretsIds = new HashSet<String>(arrets.keySet());
 		for (String arretId : arretsIds) {
@@ -539,6 +546,7 @@ public class Generateur {
 			}
 		}
 
+		System.out.println("Netoyage des lignes " + System.currentTimeMillis());
 		// nettoyage des lignes
 		Iterator<Ligne> itLignes = lignes.iterator();
 		while (itLignes.hasNext()) {
@@ -547,6 +555,7 @@ public class Generateur {
 			}
 		}
 
+		System.out.println("Netoyage des arretRoutes " + System.currentTimeMillis());
 		// nettoyage des arretsRoutes
 		Iterator<ArretRoute> itArretRoute = arretsRoutes.iterator();
 		while (itArretRoute.hasNext()) {

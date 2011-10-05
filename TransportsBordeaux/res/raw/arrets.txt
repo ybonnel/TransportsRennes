@@ -1096,6 +1096,7 @@ id,nom,latitude,longitude
 407b,Côte de Caumont,44.84394,-0.52476
 3086b,Le Bichou,44.91816,-0.74316
 1552b,Hameau du Château,44.94268,-0.60263
+6506b,Professeur Arnozan,44.80767,-0.58865
 3609b,Collège L. Lenoir,44.84051,-0.55377
 2863b,Cardinal,44.80418,-0.62621
 3219b,Duplantier,44.81467,-0.58067
@@ -1107,6 +1108,7 @@ id,nom,latitude,longitude
 2224b,Les Garouilles,44.91767,-0.72634
 1553b,Lycée Agricole,44.91915,-0.6346
 408b,Lafontaine,44.82712,-0.56756
+6505b,Lamartine,44.81093,-0.58533
 3608b,Latresne,44.84077,-0.55086
 3548b,République,44.83389,-0.5802
 2225b,Les Hôtels,44.88988,-0.56622
@@ -1458,8 +1460,8 @@ id,nom,latitude,longitude
 3237b,Les Campanules,44.7677,-0.60173
 152b,Rond-Point,44.8055,-0.61556
 3236b,Les Campanules,44.76759,-0.60129
-3560b,Tourny,44.84499,-0.57779
 1124b,L'Aiglon,44.86525,-0.67037
+3560b,Tourny,44.84499,-0.57779
 611b,Cabannes,44.8202,-0.51994
 202b,Blanc,44.88065,-0.6398
 2221b,Lot. de la Vieille Eglise,44.9447,-0.59446
@@ -2053,7 +2055,6 @@ id,nom,latitude,longitude
 1164b,Hortense,44.84936,-0.56208
 1801b,Stade Chaban Delmas,44.82962,-0.59601
 4831b,Mesquita,44.89444,-0.50578
-3520b,Lamartine,44.81043,-0.5852
 3673b,Mitterrand,44.88936,-0.51015
 1051b,Collège Emile Zola,44.86932,-0.67268
 3466b,Cassagne,44.85332,-0.51677
@@ -2148,7 +2149,7 @@ id,nom,latitude,longitude
 3315b,Croustet,44.83714,-0.64581
 1149b,Proust,44.89792,-0.72007
 2013b,Barre,44.93188,-0.48044
-17b,Thiers Benauge,44.84107,-0.5801
+17b,Gambetta,44.84107,-0.5801
 636b,Murat,44.84749,-0.62687
 2870b,Hôpital Xavier Arnozan,44.79643,-0.6611
 4335b,rue des Graves,44.88194,-0.65954
