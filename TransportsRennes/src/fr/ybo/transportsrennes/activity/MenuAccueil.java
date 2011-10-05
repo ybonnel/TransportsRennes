@@ -30,6 +30,9 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 import com.google.android.maps.MapView;
+import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
+import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
+import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
 
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennes;
@@ -57,7 +60,7 @@ public class MenuAccueil {
 		return false;
 	}
 
-	public abstract static class MapActivity extends com.google.android.maps.MapActivity {
+	public abstract static class MapActivity extends CapptainMapActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +107,7 @@ public class MenuAccueil {
 		}
 	}
 
-	public abstract static class ListActivity extends android.app.ListActivity {
+	public abstract static class ListActivity extends CapptainListActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +129,7 @@ public class MenuAccueil {
 		}
 	}
 
-	public abstract static class Activity extends android.app.Activity {
+	public abstract static class Activity extends CapptainActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {

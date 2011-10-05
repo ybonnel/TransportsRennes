@@ -37,6 +37,7 @@ import android.os.Handler;
 import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
+import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
@@ -72,6 +73,8 @@ public class TransportsRennesApplication extends Application {
 
 	@Override
 	public void onCreate() {
+		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
+			return;
 		ACRA.init(this);
 		super.onCreate();
 

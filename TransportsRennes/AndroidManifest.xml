@@ -58,13 +58,13 @@
         
         <service
             android:name=".UpdateTimeService"
-            android:label="UpdateTimeService" >
+            android:label="TransportsRennesUpdateTimeService" >
 
             <intent-filter>
                 <action android:name="fr.ybo.transportsrennes.action.UPDATE" />
             </intent-filter>
         </service>
-        <receiver  android:process=":remote" android:name=".util.AlarmReceiver"></receiver>
+        <receiver  android:process=":remote" android:name=".util.AlarmReceiver" android:label="TransportsRennesAlarmReceiver"></receiver>
         <receiver android:name=".TransportsWidget" android:label="@string/widget22_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -109,6 +109,21 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER"/>
             </intent-filter>
         </receiver>
+        
+        <!-- Cappbrain -->
+        <meta-data android:name="capptain:reportLocation" android:value="true"/>
+
+		<service android:name="com.ubikod.capptain.android.service.CapptainService"
+			android:label="TransportsRennesService" android:process=":Capptain">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="com.ubikod.capptain.ICapptainService" />
+				<data android:scheme="capptain" />
+			</intent-filter>
+			<meta-data android:name="capptain:api:level" android:value="8" />
+			<meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84" />
+		</service>
+        <!-- Cappbrain -->
 
         <uses-library android:name="com.google.android.maps"/>
     </application>

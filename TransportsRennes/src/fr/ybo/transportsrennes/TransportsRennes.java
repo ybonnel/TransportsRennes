@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -40,6 +39,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
+
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
@@ -49,7 +51,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Ligne;
 
 
-public class TransportsRennes extends Activity {
+public class TransportsRennes extends CapptainActivity {
 
 	private ProgressDialog myProgressDialog;
 
