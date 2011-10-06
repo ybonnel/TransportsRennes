@@ -17,7 +17,6 @@
 package fr.ybo.transportsbordeaux;
 
 
-import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -25,8 +24,9 @@ import android.widget.TabHost;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
-public class TabAlertes extends TabActivity {
+public class TabAlertes extends CapptainTabActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -18,7 +18,6 @@ package fr.ybo.transportsbordeaux;
 
 import java.util.Date;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -40,6 +39,7 @@ import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 
 import fr.ybo.transportsbordeaux.activity.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
@@ -49,7 +49,7 @@ import fr.ybo.transportsbordeaux.modele.DernierMiseAJour;
 import fr.ybo.transportsbordeaux.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
-public class TransportsBordeaux extends Activity {
+public class TransportsBordeaux extends CapptainActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

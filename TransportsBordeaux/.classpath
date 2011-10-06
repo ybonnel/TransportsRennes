@@ -11,5 +11,8 @@
 	<classpathentry kind="lib" path="libs/geocoder-1.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/libGoogleAnalytics.jar"/>
 	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.3.jar"/>
+	<classpathentry kind="lib" path="libs/capptain-agent.jar"/>
+	<classpathentry kind="lib" path="libs/capptain-common.jar"/>
+	<classpathentry kind="lib" path="libs/capptain-service.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
