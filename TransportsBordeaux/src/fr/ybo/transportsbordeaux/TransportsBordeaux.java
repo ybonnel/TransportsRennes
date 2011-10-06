@@ -261,9 +261,10 @@ public class TransportsBordeaux extends Activity {
 	private static final int MENU_ID = 1;
 	private static final int MENU_MAP_ID = 2;
 	private static final int MENU_ALERTS = 3;
-	private static final int MENU_LOAD_LINES = 4;
-	private static final int MENU_SHARE = 5;
-	private static final int MENU_PREFS = 6;
+	private static final int MENU_PARKING = 4;
+	private static final int MENU_LOAD_LINES = 5;
+	private static final int MENU_SHARE = 6;
+	private static final int MENU_PREFS = 7;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -273,7 +274,9 @@ public class TransportsBordeaux extends Activity {
 		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
 		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
 		MenuItem itemAlerts = menu.add(GROUP_ID, MENU_ALERTS, Menu.NONE, R.string.menu_alerts);
-		itemAlerts.setIcon(android.R.drawable.ic_menu_info_details);
+		itemAlerts.setIcon(R.drawable.ic_menu_alert);
+		MenuItem itemParkings = menu.add(GROUP_ID, MENU_PARKING, Menu.NONE, R.string.menu_parkings);
+		itemParkings.setIcon(R.drawable.ic_menu_parking);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
@@ -297,6 +300,10 @@ public class TransportsBordeaux extends Activity {
 			case MENU_ALERTS:
 				Intent intent = new Intent(this, TabAlertes.class);
 				startActivity(intent);
+				break;
+			case MENU_PARKING:
+				Intent intentParkings = new Intent(this, ListParkings.class);
+				startActivity(intentParkings);
 				break;
 			case MENU_LOAD_LINES:
 				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);

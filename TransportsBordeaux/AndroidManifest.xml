@@ -56,6 +56,8 @@
         <activity android:name=".TrajetOnMap" android:configChanges="keyboardHidden"/>
         <activity android:name=".AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".PreferencesBordeaux" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListParkings" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ParkingsOnMap" android:configChanges="orientation|keyboardHidden"/>
         
         <service
             android:name=".UpdateTimeService"

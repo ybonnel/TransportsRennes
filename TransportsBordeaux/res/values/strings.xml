@@ -139,4 +139,8 @@
     <string name="preferences">Préférences</string>
     
     <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de la place avec de charger d\'autres données.</string>
+    
+    <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
+    <string name="dialogRequeteParkRelais">Interrogation de la CUB.</string>
+    <string name="menu_parkings">Parkings</string>
 </resources>
