@@ -6,7 +6,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import fr.ybo.transportsrennes.R;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -18,7 +20,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 		LOG_YBO.debug("Debut AlarmReceiver.onReceive");
 		String result = Version.getMarketVersion(context.getApplicationContext());
 		if (result != null && !result.equals(Version.getVersionCourante(context.getApplicationContext()))) {
-			createNotification(context, result);
+			String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
+					"TransportsRennesVersion", null);
+			if (!result.equals(lastVersion)) {
+				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+				editor.putString("TransportsRennesVersion", result);
+				editor.commit();
+				createNotification(context, result);
+			}
 		}
 		LOG_YBO.debug("Fin AlarmReceiver.onReceive");
 	}
