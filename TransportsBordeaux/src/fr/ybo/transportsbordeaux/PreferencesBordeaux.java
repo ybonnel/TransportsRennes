@@ -97,6 +97,8 @@ public class PreferencesBordeaux extends MenuAccueil.Activity {
 						}
 					});
 					builder.create().show();
+				} else {
+					PreferencesBordeaux.this.finish();
 				}
 			}
 		});
