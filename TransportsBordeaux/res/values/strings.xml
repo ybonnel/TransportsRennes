@@ -143,4 +143,6 @@
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="dialogRequeteParkRelais">Interrogation de la CUB.</string>
     <string name="menu_parkings">Parkings</string>
+    
+    <string name="notifUpdateOn">Notification pour les mises à jour</string>
 </resources>

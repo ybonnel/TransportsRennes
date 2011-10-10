@@ -11,13 +11,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<CheckBox android:id="@+id/dbOnSdCard" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/dbOnSdCard"
-		android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"
-		android:layout_marginTop="16dp" android:checked="true"></CheckBox>
 	<CheckBox android:id="@+id/notifUpdateOn" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/notifUpdateOn"
-		android:layout_below="@+id/dbOnSdCard" android:layout_alignLeft="@+id/dbOnSdCard"
 		android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"
 		android:layout_marginTop="16dp" android:checked="true"></CheckBox>
 	<Button android:textSize="18dip" android:gravity="center"

@@ -311,6 +311,7 @@ public class TransportsRennes extends CapptainActivity {
 	private static final int MENU_TICKETS = 3;
 	private static final int MENU_LOAD_LINES = 4;
 	private static final int MENU_SHARE = 5;
+	private static final int MENU_PREFS = 6;
 
 
 	@Override
@@ -326,6 +327,8 @@ public class TransportsRennes extends CapptainActivity {
 		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
 		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
 		itemShare.setIcon(android.R.drawable.ic_menu_share);
+		MenuItem itemPrefs = menu.add(GROUP_ID, MENU_PREFS, Menu.NONE, R.string.preferences);
+		itemPrefs.setIcon(android.R.drawable.ic_menu_manage);
 		return true;
 	}
 
@@ -368,6 +371,10 @@ public class TransportsRennes extends CapptainActivity {
 				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
 				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
 				return true;
+			case MENU_PREFS:
+				Intent intentPrefs = new Intent(this, PreferencesRennes.class);
+				startActivity(intentPrefs);
+				break;
 		}
 		return false;
 	}

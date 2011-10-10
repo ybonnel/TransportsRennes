@@ -162,4 +162,7 @@
     <string name="groupeExistant">There is already a group with that name</string>
     <string name="deplacerGroupe">Move in a group</string>
     <string name="chooseGroupe">Choose a group</string>
+    
+    <string name="notifUpdateOn">Notification for updates</string>
+    <string name="preferences">Preferences</string>
 </resources>

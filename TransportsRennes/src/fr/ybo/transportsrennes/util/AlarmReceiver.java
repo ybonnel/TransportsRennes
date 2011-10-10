@@ -18,6 +18,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		LOG_YBO.debug("Debut AlarmReceiver.onReceive");
+		boolean notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+				"TransportsRennes_notifUpdate", true);
+		if (!notifUpdateOn) {
+			return;
+		}
 		String result = Version.getMarketVersion(context.getApplicationContext());
 		if (result != null && !result.equals(Version.getVersionCourante(context.getApplicationContext()))) {
 			String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(

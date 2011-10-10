@@ -177,4 +177,7 @@
     <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
     <string name="deplacerGroupe">Déplacer dans un groupe</string>
     <string name="chooseGroupe">Choisissez un groupe</string>
+    
+    <string name="notifUpdateOn">Notification pour les mises à jour</string>
+    <string name="preferences">Préférences</string>
 </resources>

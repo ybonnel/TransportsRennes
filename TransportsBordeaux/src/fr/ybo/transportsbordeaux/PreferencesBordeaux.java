@@ -37,11 +37,14 @@ import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 public class PreferencesBordeaux extends MenuAccueil.Activity {
 
 	private boolean dbOnSdCard = false;
+	private boolean notifUpdateOn = true;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsBordeaux_sdCard", false);
+		notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+				"TransportsBordeaux_notifUpdate", true);
 		setContentView(R.layout.preferences);
 		Button boutonTerminer = (Button) findViewById(R.id.preferencesTermine);
 		boutonTerminer.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +107,19 @@ public class PreferencesBordeaux extends MenuAccueil.Activity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				dbOnSdCard = isChecked;
+			}
+		});
+		CheckBox notifUpdateOnCheckBox = (CheckBox) findViewById(R.id.notifUpdateOn);
+		notifUpdateOnCheckBox.setChecked(notifUpdateOn);
+		notifUpdateOnCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				notifUpdateOn = isChecked;
+				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+						PreferencesBordeaux.this).edit();
+				editor.putBoolean("TransportsBordeaux_notifUpdate", notifUpdateOn);
+				editor.commit();
 			}
 		});
 	}
