@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="lib" path="libs/geocoder-1.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/gson-1.7.1-OTP.jar"/>
-	<classpathentry kind="lib" path="libs/acra-3.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/android-ybo-db-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libs/moteurcsv-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.3.jar"/>

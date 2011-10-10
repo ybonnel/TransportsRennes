@@ -20,10 +20,6 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.acra.ACRA;
-import org.acra.ReportingInteractionMode;
-import org.acra.annotation.ReportsCrashes;
-
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -52,8 +48,6 @@ import fr.ybo.transportsbordeaux.util.GeocodeUtil;
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
  */
-@ReportsCrashes(formKey = "dE5mNl9RV3NOc25XdnI1RWpNQnZGYlE6MQ", mode = ReportingInteractionMode.TOAST,
-		resToastText = R.string.erreurNonPrevue)
 public class TransportsBordeauxApplication extends Application {
 
 	private static TransportsBordeauxDatabase databaseHelper;
@@ -106,7 +100,6 @@ public class TransportsBordeauxApplication extends Application {
 	public void onCreate() {
 		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
 			return;
-		ACRA.init(this);
 		super.onCreate();
 
 		constuctDatabase(this);

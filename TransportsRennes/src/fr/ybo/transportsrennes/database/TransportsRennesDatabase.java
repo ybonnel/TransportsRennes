@@ -22,8 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.acra.ErrorReporter;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -62,7 +60,6 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 			try {
 				myUpgrade(arg0);
 			} catch (Exception exception) {
-				ErrorReporter.getInstance().handleException(exception);
 				throw new RuntimeException(exception);
 			}
 		}
