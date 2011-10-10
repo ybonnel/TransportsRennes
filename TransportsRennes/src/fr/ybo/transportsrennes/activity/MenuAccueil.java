@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +35,6 @@ import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
 
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.TransportsRennes;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
 
 public class MenuAccueil {
 
@@ -61,12 +59,6 @@ public class MenuAccueil {
 	}
 
 	public abstract static class MapActivity extends CapptainMapActivity {
-
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
-		}
 
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,12 +102,6 @@ public class MenuAccueil {
 	public abstract static class ListActivity extends CapptainListActivity {
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
-		}
-
-		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {
 			super.onCreateOptionsMenu(menu);
 			addMenu(menu);
@@ -130,12 +116,6 @@ public class MenuAccueil {
 	}
 
 	public abstract static class Activity extends CapptainActivity {
-
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			TransportsRennesApplication.getTraker().trackPageView('/' + getClass().getSimpleName());
-		}
 
 		@Override
 		public boolean onCreateOptionsMenu(Menu menu) {

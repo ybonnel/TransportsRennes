@@ -33,11 +33,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.google.android.apps.analytics.GoogleAnalyticsTracker;
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
@@ -50,7 +48,6 @@ import fr.ybo.transportsbordeaux.util.AlarmReceiver;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportsbordeaux.util.ContextWithDatabasePath;
 import fr.ybo.transportsbordeaux.util.GeocodeUtil;
-import fr.ybo.transportsbordeaux.util.Version;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à l'application.
@@ -58,8 +55,6 @@ import fr.ybo.transportsbordeaux.util.Version;
 @ReportsCrashes(formKey = "dE5mNl9RV3NOc25XdnI1RWpNQnZGYlE6MQ", mode = ReportingInteractionMode.TOAST,
 		resToastText = R.string.erreurNonPrevue)
 public class TransportsBordeauxApplication extends Application {
-
-	private static final String UA_ACCOUNT = "UA-20831542-3";
 
 	private static TransportsBordeauxDatabase databaseHelper;
 
@@ -121,12 +116,7 @@ public class TransportsBordeauxApplication extends Application {
 		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".UpdateTimeService"),
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
-		GoogleAnalyticsTracker traker = GoogleAnalyticsTracker.getInstance();
-		traker.startNewSession(UA_ACCOUNT, this);
 		geocodeUtil = new GeocodeUtil(this);
-		handler = new Handler();
-		myTraker = new TransportsBordeauxApplication.MyTraker(traker);
-		myTraker.trackPageView("/TransportsBordeauxApplication/Version/" + Version.getVersionCourante(this));
 
 		// Récupération des alertes
 		new AsyncTask<Void, Void, Void>() {
@@ -153,36 +143,6 @@ public class TransportsBordeauxApplication extends Application {
 		}.execute();
 
 		setRecurringAlarm(this);
-	}
-
-	private static Handler handler;
-
-	private static MyTraker myTraker;
-
-	public static class MyTraker {
-
-		public MyTraker(GoogleAnalyticsTracker traker) {
-			this.traker = traker;
-		}
-
-		private final GoogleAnalyticsTracker traker;
-
-		public void trackPageView(final String url) {
-			handler.post(new Runnable() {
-				public void run() {
-					try {
-						traker.trackPageView(url);
-						traker.dispatch();
-					} catch (Exception ignore) {
-
-					}
-				}
-			});
-		}
-	}
-
-	public static MyTraker getTraker() {
-		return myTraker;
 	}
 
 	private static LatLngBounds bounds;

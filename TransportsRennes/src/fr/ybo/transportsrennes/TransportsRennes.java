@@ -58,7 +58,6 @@ public class TransportsRennes extends CapptainActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		TransportsRennesApplication.getTraker().trackPageView("/TransportsRennes");
 		setContentView(R.layout.main);
 		afficheMessage();
 		assignerBoutons();

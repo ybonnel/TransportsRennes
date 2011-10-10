@@ -104,12 +104,6 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        <!-- Used for install referrer tracking -->
-        <receiver android:name="com.google.android.apps.analytics.AnalyticsReceiver" android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER"/>
-            </intent-filter>
-        </receiver>
         
         <!-- Cappbrain -->
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
