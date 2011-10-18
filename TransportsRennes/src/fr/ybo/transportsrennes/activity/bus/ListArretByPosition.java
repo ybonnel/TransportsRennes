@@ -326,7 +326,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 				}
 			}
 
-		}.execute();
+		}.execute((Void)null);
 
 	}
 

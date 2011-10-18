@@ -83,7 +83,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		registerForContextMenu(listView);
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
 						.select(new VeloFavori());
 				Collection<String> numbers = new ArrayList<String>(10);
@@ -100,8 +100,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 						}
 					});
 				}
-
-				return null;
 			}
 
 			@Override
@@ -109,7 +107,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
-		}.execute();
+		}.execute((Void)null);
 	}
 
 	private static final int GROUP_ID = 0;
@@ -130,7 +128,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 		if (item.getItemId() == MENU_REFRESH) {
 			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 				@Override
-				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+				protected void myDoBackground() throws ErreurReseau {
 					List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper().select(
 							new VeloFavori());
 					Collection<String> numbers = new ArrayList<String>(10);
@@ -147,8 +145,6 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 							}
 						});
 					}
-
-					return null;
 				}
 
 				@Override
@@ -156,7 +152,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					super.onPostExecute(result);
 				}
-			}.execute();
+			}.execute((Void)null);
 			return true;
 		}
 		return false;

@@ -33,7 +33,7 @@ import com.google.android.maps.Projection;
 public class LineItemizedOverlay extends Overlay {
 
     private ArrayList<GeoPoint> mOverlays = new ArrayList<GeoPoint>();
-    private int colour = Color.BLUE;
+    private static final int colour = Color.BLUE;
     private static final int ALPHA = 120;
     private static final float STROKE = 4.5f;
     private final Path path;

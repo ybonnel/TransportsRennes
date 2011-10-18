@@ -27,8 +27,8 @@ public class ErreurReseau extends Exception {
 		super(detailMessage, throwable);
 	}
 
-	public ErreurReseau(String detailMessage) {
-		super(detailMessage);
+	public ErreurReseau() {
+		super("Erreur réseau détectée");
 	}
 
 	public ErreurReseau(Throwable throwable) {

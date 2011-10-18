@@ -64,20 +64,20 @@ public class Widget11UpdateUtil {
 				} else {
 					views.setTextColor(R.id.tempsRestant, context.getResources().getColor(R.color.blanc));
 				}
-				views.setTextViewText(R.id.tempsRestant, formatterCalendar(context, prochainsDeparts.get(0)));
+				views.setTextViewText(R.id.tempsRestant, formatterCalendar(prochainsDeparts.get(0)));
 
 			} else {
 				views.setTextViewText(R.id.tempsRestant, "");
 			}
 			views.setTextViewText(
 					R.id.tempsRestantFutur,
-					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1)));
+					prochainsDeparts.size() < 2 ? "" : formatterCalendar(prochainsDeparts.get(1)));
 		} catch (SQLiteException ignore) {
 
 		}
 	}
 
-	public static String formatterCalendar(Context context, int prochainDepart) {
+	private static String formatterCalendar(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		int heures = prochainDepart / 60;

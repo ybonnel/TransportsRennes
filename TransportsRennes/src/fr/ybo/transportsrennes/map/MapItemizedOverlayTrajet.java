@@ -55,9 +55,5 @@ public class MapItemizedOverlayTrajet extends ItemizedOverlay<OverlayItem> {
 	public int size() {
 		return mOverlays.size();
 	}
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent pEvent, MapView pMapView) {
-		return super.onTouchEvent(pEvent, pMapView);
-	}
+
 }

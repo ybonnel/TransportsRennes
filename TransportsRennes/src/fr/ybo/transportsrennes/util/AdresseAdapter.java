@@ -32,8 +32,8 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
 
-	public AdresseAdapter(Context context, int textViewResourceId) {
-		super(context, textViewResourceId);
+	public AdresseAdapter(Context context) {
+		super(context, android.R.layout.simple_dropdown_item_1line);
 	}
 
 	private final MyFilter filter = new MyFilter();

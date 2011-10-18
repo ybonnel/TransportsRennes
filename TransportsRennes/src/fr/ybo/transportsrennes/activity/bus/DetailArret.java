@@ -78,13 +78,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
 	private Cursor currentCursor;
 
 	private boolean isToday() {
-		if (calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)
-				&& calendar.get(Calendar.MONTH) == today.get(Calendar.MONTH)
-				&& calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)) {
-			return true;
-		}
-		return false;
-	}
+        return calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)
+                && calendar.get(Calendar.MONTH) == today.get(Calendar.MONTH)
+                && calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR);
+    }
 
 	private Calendar today = Calendar.getInstance();
 	private Calendar calendar = Calendar.getInstance();
@@ -366,13 +363,12 @@ public class DetailArret extends MenuAccueil.ListActivity {
 			private boolean erreurLigneNonTrouvee = false;
 
 			@Override
-			protected Void myDoBackground(Void... pParams) {
+			protected void myDoBackground() {
 				try {
 					UpdateDataBase.chargeDetailLigne(myLigne, getResources());
 				} catch (LigneInexistanteException e) {
 					erreurLigneNonTrouvee = true;
 				}
-				return null;
 			}
 
 			@Override
@@ -390,7 +386,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
 				}
 			}
 
-		}.execute();
+		}.execute((Void)null);
 
 	}
 

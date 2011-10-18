@@ -150,7 +150,7 @@ public final class Keolis {
 			throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
 		}
 		if (answer == null || answer.getStatus() == null || !"0".equals(answer.getStatus().getCode())) {
-			throw new ErreurReseau("Erreur dans la réponse données par Keolis.");
+			throw new ErreurReseau();
 		}
 		long elapsedTime = System.nanoTime() / 1000 - startTime;
 		LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
@@ -161,9 +161,7 @@ public final class Keolis {
 	 * Appel les API Keolis pour récupérer les alertes.
 	 * 
 	 * @return les alertes.
-	 * @throws ErreurReseau
-	 * @throws KeolisException
-	 *             en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
 	public Iterable<Alert> getAlerts() throws ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_ALERTS), new GetAlertsHandler());
@@ -175,9 +173,7 @@ public final class Keolis {
 	 * @param url
 	 *            url à appeler.
 	 * @return la liste des stations.
-	 * @throws ErreurReseau
-	 * @throws KeolisException
-	 *             en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
 	private List<Station> getStation(String url) throws ErreurReseau {
 		return appelKeolis(url, new GetStationHandler());
@@ -189,7 +185,7 @@ public final class Keolis {
 	 * @param number
 	 *            numéro de la station.
 	 * @return la station.
-	 * @throws ErreurReseau
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
 	private Station getStationByNumber(String number) throws ErreurReseau {
 		ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
@@ -207,7 +203,7 @@ public final class Keolis {
 	 * @param numbers
 	 *            numéros des stations.
 	 * @return la station.
-	 * @throws ErreurReseau
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
 	public Collection<Station> getStationByNumbers(Collection<String> numbers) throws ErreurReseau {
 		Collection<Station> stations = new ArrayList<Station>(5);
@@ -229,9 +225,7 @@ public final class Keolis {
 	 * Appel aux API Keolis pour récupérer les stations.
 	 * 
 	 * @return la listes des stations.
-	 * @throws ErreurReseau
-	 * @throws KeolisException
-	 *             en cas d'erreur lors de l'appel aux API Keolis.
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
 	public List<Station> getStations() throws ErreurReseau {
 		return getStation(getUrl(COMMANDE_STATIONS));
@@ -239,21 +233,17 @@ public final class Keolis {
 
 	/**
 	 * @return les parks relais.
-	 * @throws KeolisException
-	 *             en cas d'erreur lors de l'appel aux API Keolis.
-	 * @throws ErreurReseau
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
-	public List<ParkRelai> getParkRelais() throws KeolisException, ErreurReseau {
+	public List<ParkRelai> getParkRelais() throws ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
 	}
 
 	/**
 	 * @return les points de ventes.
-	 * @throws KeolisException
-	 *             en cas d'erreur lors de l'appel aux API Keolis.
-	 * @throws ErreurReseau
+	 * @throws ErreurReseau pour toutes erreurs réseaux.
 	 */
-	public List<PointDeVente> getPointDeVente() throws KeolisException, ErreurReseau {
+	public List<PointDeVente> getPointDeVente() throws ErreurReseau {
 		return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
 	}
 

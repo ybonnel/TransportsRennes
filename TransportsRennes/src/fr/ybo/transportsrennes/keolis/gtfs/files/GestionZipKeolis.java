@@ -93,9 +93,9 @@ public final class GestionZipKeolis {
 							// Insert the row into the database.
 							ih.execute();
 						}
-					};
-						
-				});
+					}
+
+                });
 				ih.close();
 			} finally {
 				bufReader.close();

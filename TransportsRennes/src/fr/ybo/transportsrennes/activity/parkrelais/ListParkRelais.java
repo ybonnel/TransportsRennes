@@ -144,7 +144,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteParkRelais)) {
 
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				List<ParkRelai> parkRelaisTmp = (parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
 				synchronized (parkRelais) {
 					parkRelais.clear();
@@ -157,8 +157,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 					parkRelaisFiltres.clear();
 					parkRelaisFiltres.addAll(parkRelais);
 				}
-
-				return null;
 			}
 
 			@Override
@@ -204,12 +202,11 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 				@Override
-				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+				protected void myDoBackground() throws ErreurReseau {
 					List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
 					synchronized (parkRelais) {
 						majParkRelais(parkRelaisTmp);
 					}
-					return null;
 				}
 
 				private void majParkRelais(List<ParkRelai> parkRelaisTmp) {
@@ -244,7 +241,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 					super.onPostExecute(result);
 				}
-			}.execute();
+			}.execute((Void)null);
 			return true;
 		}
 		return false;

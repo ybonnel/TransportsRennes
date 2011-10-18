@@ -14,10 +14,10 @@
 	<CheckBox android:id="@+id/notifUpdateOn" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/notifUpdateOn"
 		android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"
-		android:layout_marginTop="16dp" android:checked="true"></CheckBox>
+		android:layout_marginTop="16dp" android:checked="true"/>
 	<Button android:textSize="18dip" android:gravity="center"
 		android:id="@+id/preferencesTermine" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/Terminer"
 		android:layout_below="@+id/notifUpdateOn" android:layout_alignLeft="@+id/notifUpdateOn"
-		android:layout_marginTop="18dp"></Button>
+		android:layout_marginTop="18dp"/>
 </RelativeLayout>

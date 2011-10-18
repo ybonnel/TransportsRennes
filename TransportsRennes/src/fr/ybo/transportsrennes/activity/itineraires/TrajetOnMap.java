@@ -90,12 +90,6 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 				} else {
 					iconeMarkee = IconeLigne.getMarkeeResource(portion.getLigneId());
 					icone = IconeLigne.getIconeResource(portion.getLigneId());
-					if (iconeMarkee == -1) {
-						iconeMarkee = R.drawable.icone_bus;
-					}
-					if (icone == -1) {
-						icone = R.drawable.icone_bus;
-					}
 
 					directionTrajet.setVisibility(View.VISIBLE);
 					directionTrajet.setText(getString(R.string.directionEntete) + ' ' + portion.getDirection());
@@ -106,19 +100,11 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 						iconeMarkee));
 				latitude = (int) (portion.getFromLat() * 1.0E6);
 				longitude = (int) (portion.getFromLon() * 1.0E6);
-				if (latitude > maxLatitude) {
-					maxLatitude = latitude;
-				}
-				if (latitude < minLatitude) {
-					minLatitude = latitude;
-				}
-				if (longitude > maxLongitude) {
-					maxLongitude = longitude;
-				}
-				if (longitude < minLongitude) {
-					minLongitude = longitude;
-				}
-				OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), portion.getFromName(), null);
+                maxLatitude = Math.max(latitude, maxLatitude);
+                minLatitude = Math.min(latitude, minLatitude);
+                maxLongitude = Math.max(longitude, maxLongitude);
+                minLongitude = Math.min(longitude, minLongitude);
+                OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), portion.getFromName(), null);
 				itemizedOverlay.addOverlay(item);
 				mapOverlays.add(itemizedOverlay);
 
@@ -143,18 +129,10 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
 					R.drawable.mpieton));
 			latitude = (int) (portion.getToLat() * 1.0E6);
 			longitude = (int) (portion.getToLon() * 1.0E6);
-			if (latitude > maxLatitude) {
-				maxLatitude = latitude;
-			}
-			if (latitude < minLatitude) {
-				minLatitude = latitude;
-			}
-			if (longitude > maxLongitude) {
-				maxLongitude = longitude;
-			}
-			if (longitude < minLongitude) {
-				minLongitude = longitude;
-			}
+            maxLatitude = Math.max(latitude, maxLatitude);
+            minLatitude = Math.min(latitude, minLatitude);
+            maxLongitude = Math.max(longitude, maxLongitude);
+            minLongitude = Math.min(longitude, minLongitude);
 			OverlayItem item = new OverlayItem(new GeoPoint(latitude, longitude), portion.getToName(), null);
 			itemizedOverlay.addOverlay(item);
 			mapOverlays.add(itemizedOverlay);

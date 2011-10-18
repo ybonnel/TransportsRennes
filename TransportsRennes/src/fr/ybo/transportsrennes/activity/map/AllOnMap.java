@@ -159,7 +159,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
 			clustererForPos = new MyGeoClusterer<PointDeVente>(this, mapView, markerIconBmpsForPos, screenDensity,
 					"pointsDeVente", ListPointsDeVente.class);
 		}
-		new AllOnMap.BackgroundTasks().execute();
+		new AllOnMap.BackgroundTasks().execute((Void)null);
 	}
 
 	private List<Arret> arrets;

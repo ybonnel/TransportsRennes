@@ -63,10 +63,10 @@ public class GeoBounds {
 	 * @param pt a GeoPoint to be checked
 	 * @return true if point is in the bound.
 	 */
-	public boolean isInBounds(GeoPoint pt) {
+	public boolean isNotInBounds(GeoPoint pt) {
 		//noinspection OverlyComplexBooleanExpression
-		return pt != null && pt.getLatitudeE6() <= nw.getLatitudeE6() && pt.getLatitudeE6() >= se.getLatitudeE6() &&
-				pt.getLongitudeE6() >= nw.getLongitudeE6() && pt.getLongitudeE6() <= se.getLongitudeE6();
+		return pt == null || pt.getLatitudeE6() > nw.getLatitudeE6() || pt.getLatitudeE6() < se.getLatitudeE6() ||
+                pt.getLongitudeE6() < nw.getLongitudeE6() || pt.getLongitudeE6() > se.getLongitudeE6();
 	}
 
 	/**

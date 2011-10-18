@@ -16,7 +16,7 @@
  */
 package fr.ybo.transportsrennes.util;
 
-public class StringUtils {
+class StringUtils {
 
 	private StringUtils() {
 	}

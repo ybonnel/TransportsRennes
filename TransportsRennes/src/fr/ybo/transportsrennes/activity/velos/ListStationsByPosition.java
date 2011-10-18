@@ -149,7 +149,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				List<Station> stationsTmp = (stationIntent == null ? keolis.getStations() : stationIntent);
 				synchronized (stations) {
 					stations.clear();
@@ -162,8 +162,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				}
-
-				return null;
 			}
 
 			@Override
@@ -208,7 +206,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 			new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 				@Override
-				protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+				protected void myDoBackground() throws ErreurReseau {
 					Collection<Station> stationsTmp;
 					if (stationIntent == null) {
 						stationsTmp = keolis.getStations();
@@ -230,7 +228,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 						stationsFiltrees.clear();
 						stationsFiltrees.addAll(stations);
 					}
-					return null;
 				}
 
 				@Override
@@ -240,7 +237,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 					updateLocation(locationUtil.getCurrentLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
-			}.execute();
+			}.execute((Void)null);
 			return true;
 		}
 		return false;

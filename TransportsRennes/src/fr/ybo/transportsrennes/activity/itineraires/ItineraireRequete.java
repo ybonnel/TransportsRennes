@@ -108,10 +108,10 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 		dateItineraire = (TextView) findViewById(R.id.dateItineraire);
 		heureItineraire = (TextView) findViewById(R.id.heureItineraire);
 		AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
-		AdresseAdapter adapterDepart = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		AdresseAdapter adapterDepart = new AdresseAdapter(this);
 		adresseDepart.setAdapter(adapterDepart);
 		AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
-		AdresseAdapter adapterArrivee = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		AdresseAdapter adapterArrivee = new AdresseAdapter(this);
 		adresseArrivee.setAdapter(adapterArrivee);
 		adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
@@ -224,7 +224,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					traiterReponseGeoCodage(reponseDepart, reponseArrivee);
 				}
 			}
-		}.execute();
+		}.execute((Void)null);
 	}
 
 	private void traiterReponseGeoCodage(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
@@ -374,7 +374,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 					startActivity(intent);
 				}
 			}
-		}.execute();
+		}.execute((Void)null);
 	}
 
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");

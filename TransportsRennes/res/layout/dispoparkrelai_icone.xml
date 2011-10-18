@@ -15,7 +15,7 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="horizontal"
                 android:layout_width="76dip"
                 android:layout_height="76dip">
@@ -35,4 +35,4 @@
               android:gravity="center"
               android:textColor="#ffffff"/>
 
-</AbsoluteLayout>
+</FrameLayout>

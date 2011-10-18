@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		LOG_YBO.debug("Fin AlarmReceiver.onReceive");
 	}
 
-	private final int NOTIFICATION_VERSION_ID = 1;
+	private static final int NOTIFICATION_VERSION_ID = 1;
 
 	private void createNotification(Context context, String nouvelleVersion) {
 		int icon = R.drawable.icon;

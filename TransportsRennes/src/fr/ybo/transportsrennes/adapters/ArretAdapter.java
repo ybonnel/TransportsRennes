@@ -252,6 +252,7 @@ public class ArretAdapter extends CursorAdapter {
 			}
 			cursor.close();
 			Collections.sort(arrets, new Arret.ComparatorDistance());
+            mapDetailCorrespondances.put(arretId, arrets);
 			construireRelativeLayouts(arrets, detailCorrespondance);
 		}
 	}

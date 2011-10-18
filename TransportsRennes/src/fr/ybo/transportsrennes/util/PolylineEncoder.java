@@ -62,7 +62,7 @@ public class PolylineEncoder {
 		return r[0];
 	}
 
-	public static int[] decodeSignedNumberWithIndex(String value, int index) {
+	private static int[] decodeSignedNumberWithIndex(String value, int index) {
 		int[] r = decodeNumberWithIndex(value, index);
 		int sgn_num = r[0];
 		if ((sgn_num & 0x01) > 0) {
@@ -72,9 +72,9 @@ public class PolylineEncoder {
 		return r;
 	}
 
-	public static String encodeNumber(int num) {
+	private static String encodeNumber(int num) {
 
-		StringBuffer encodeString = new StringBuffer();
+        StringBuilder encodeString = new StringBuilder();
 
 		while (num >= 0x20) {
 			int nextValue = (0x20 | (num & 0x1f)) + 63;
@@ -93,13 +93,13 @@ public class PolylineEncoder {
 		return r[0];
 	}
 
-	public static int[] decodeNumberWithIndex(String value, int index) {
+	private static int[] decodeNumberWithIndex(String value, int index) {
 
 		if (value.length() == 0)
 			throw new IllegalArgumentException("string is empty");
 
 		int num = 0;
-		int v = 0;
+		int v;
 		int shift = 0;
 
 		do {

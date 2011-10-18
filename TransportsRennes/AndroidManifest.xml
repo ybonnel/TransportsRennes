@@ -65,7 +65,7 @@
                 <action android:name="fr.ybo.transportsrennes.action.UPDATE" />
             </intent-filter>
         </service>
-        <receiver  android:process=":remote" android:name=".util.AlarmReceiver" android:label="TransportsRennesAlarmReceiver"></receiver>
+        <receiver android:process=":remote" android:name=".util.AlarmReceiver" android:label="TransportsRennesAlarmReceiver"/>
         <receiver android:name=".activity.widgets.TransportsWidget" android:label="@string/widget22_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>

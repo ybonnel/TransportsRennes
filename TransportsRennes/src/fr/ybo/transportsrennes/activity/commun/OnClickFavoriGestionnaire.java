@@ -65,9 +65,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 			@Override
 			protected void onPreExecute() {
 				myProgressDialog.show();
-			};
+			}
 
-			@Override
+            @Override
 			protected Void doInBackground(Void... pParams) {
 				try {
 					UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
@@ -92,7 +92,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 				}
 			}
 
-		}.execute();
+		}.execute((Void)null);
 
 	}
 

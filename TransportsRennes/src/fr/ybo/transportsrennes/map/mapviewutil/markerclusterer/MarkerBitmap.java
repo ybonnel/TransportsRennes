@@ -46,30 +46,30 @@ public class MarkerBitmap {
 	/**
 	 * bitmap object for normal state icon
 	 */
-	protected final Bitmap iconBmpNormal;
+	private final Bitmap iconBmpNormal;
 	/**
 	 * bitmap object for select state icon
 	 */
-	protected final Bitmap iconBmpSelect;
+	private final Bitmap iconBmpSelect;
 	/**
 	 * offset grid of icon in Point.
 	 * if you are using symmetric icon image, it should be half size of width&height.
 	 * adjust this parameter to offset the axis of the image.
 	 */
-	protected Point iconGrid = new Point();
+    private Point iconGrid = new Point();
 	/**
 	 * icon size in Point. x = width, y = height
 	 */
-	protected final Point iconSize = new Point();
+	private final Point iconSize = new Point();
 	/**
 	 * maximum item size for the marker.
 	 * for the last MarkerBitmap element within list, this will be ignored.
 	 */
-	protected final int itemSizeMax;
+	private final int itemSizeMax;
 	/**
 	 * text size for icon
 	 */
-	protected final int textSize;
+	private final int textSize;
 
 	/**
 	 * NOTE: srcNrm & srcSel must be same bitmap size.

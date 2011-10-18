@@ -96,7 +96,7 @@ public class TransportsRennesApplication extends Application {
 				}
 				return null;
 			}
-		}.execute();
+		}.execute((Void)null);
 
 		setRecurringAlarm(this);
 	}

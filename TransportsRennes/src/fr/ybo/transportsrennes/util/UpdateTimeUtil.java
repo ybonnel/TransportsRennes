@@ -44,7 +44,7 @@ public class UpdateTimeUtil {
 		public void update(Calendar calendar);
 	}
 
-	public class UpdateTimeThread extends Thread {
+	private class UpdateTimeThread extends Thread {
 		@Override
 		public void run() {
 			while (true) {

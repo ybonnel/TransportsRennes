@@ -69,7 +69,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteAlerts)) {
 
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				for (Alert alerte : keolis.getAlerts()) {
 					while (alerte.lines.size() > 1) {
 						Alert newAlerte = new Alert(alerte);
@@ -90,7 +90,6 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 						alerts.add(alerte);
 					}
 				}
-				return null;
 			}
 
 			@Override
@@ -98,7 +97,7 @@ public class ListAlerts extends MenuAccueil.ListActivity {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
-		}.execute();
+		}.execute((Void)null);
 	}
 
 }

@@ -136,7 +136,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequetePointsDeVente)) {
 
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
 						: pointsDeVenteIntent);
 				synchronized (pointsDeVente) {
@@ -150,8 +150,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
 					pointsDeVenteFiltres.clear();
 					pointsDeVenteFiltres.addAll(pointsDeVente);
 				}
-
-				return null;
 			}
 
 			@Override

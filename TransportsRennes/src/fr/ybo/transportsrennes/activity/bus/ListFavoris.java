@@ -151,9 +151,7 @@ public class ListFavoris extends MenuAccueil.ListActivity {
 				builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseGroupe));
 				builder.setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialogInterface, int item) {
-						String currentGroupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes
-								.get(item);
-						favori.groupe = currentGroupe;
+						favori.groupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes.get(item);
 						TransportsRennesApplication.getDataBaseHelper().update(favori);
 						dialogInterface.dismiss();
 						startActivity(new Intent(ListFavoris.this, TabFavoris.class));

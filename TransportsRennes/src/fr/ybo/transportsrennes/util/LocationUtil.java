@@ -96,11 +96,9 @@ public class LocationUtil implements LocationListener {
 	 * 
 	 * @param location
 	 *            The new Location that you want to evaluate
-	 * @param currentBestLocation
-	 *            The current Location fix, to which you want to compare the new
-	 *            one
+	 * @return true is location is best than the location receive before.
 	 */
-	protected boolean isBetterLocation(Location location) {
+    private boolean isBetterLocation(Location location) {
 		if (location == null) {
 			return false;
 		}
@@ -159,7 +157,12 @@ public class LocationUtil implements LocationListener {
 		return false;
 	}
 
-	/** Checks whether two providers are the same */
+    /**
+     * Permet de savoir si deux provider sont les mêmes.
+     * @param provider1 permiers provider.
+     * @param provider2 second provider.
+     * @return true si les deux provider sont identiques.
+     */
 	private boolean isSameProvider(String provider1, String provider2) {
 		if (provider1 == null) {
 			return provider2 == null;

@@ -67,13 +67,13 @@ public class Widget21UpdateUtil {
 					prochainDepart = prochainsDeparts.get(0);
 					views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.blanc));
 				}
-				views.setTextViewText(R.id.tempsRestantPasse, formatterCalendar(context, prochainsDeparts.get(0)));
+				views.setTextViewText(R.id.tempsRestantPasse, formatterCalendar(prochainsDeparts.get(0)));
 
 			} else {
 				views.setTextViewText(R.id.tempsRestantPasse, "");
 			}
 			if (prochainsDeparts.size() > 1) {
-				views.setTextViewText(R.id.tempsRestant, formatterCalendar(context, prochainsDeparts.get(1)));
+				views.setTextViewText(R.id.tempsRestant, formatterCalendar(prochainsDeparts.get(1)));
 				if (prochainDepart == null) {
 					prochainDepart = prochainsDeparts.get(1);
 				}
@@ -82,9 +82,9 @@ public class Widget21UpdateUtil {
 			}
 
 			views.setTextViewText(R.id.tempsRestant,
-					prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1)));
+					prochainsDeparts.size() < 2 ? "" : formatterCalendar(prochainsDeparts.get(1)));
 			views.setTextViewText(R.id.tempsRestantFutur,
-					prochainsDeparts.size() < 3 ? "" : formatterCalendar(context, prochainsDeparts.get(2)));
+					prochainsDeparts.size() < 3 ? "" : formatterCalendar(prochainsDeparts.get(2)));
 
 			views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : (context.getString(R.string.prochain)
 					+ " " + formatterTempsRestant(context, prochainDepart, now)));
@@ -93,7 +93,7 @@ public class Widget21UpdateUtil {
 		}
 	}
 
-	public static String formatterCalendar(Context context, int prochainDepart) {
+	private static String formatterCalendar(int prochainDepart) {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		int heures = prochainDepart / 60;
@@ -114,7 +114,7 @@ public class Widget21UpdateUtil {
 		return stringBuilder.toString();
 	}
 
-	public static String formatterTempsRestant(Context context, int prochainDepart, int now) {
+	private static String formatterTempsRestant(Context context, int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {

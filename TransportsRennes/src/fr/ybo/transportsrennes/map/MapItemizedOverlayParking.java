@@ -96,9 +96,5 @@ public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
 		alert.show();
 		return true;
 	}
-	
-	@Override
-	public boolean onTouchEvent(MotionEvent pEvent, MapView pMapView) {
-		return super.onTouchEvent(pEvent, pMapView);
-	}
+
 }

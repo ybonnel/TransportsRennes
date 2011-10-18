@@ -188,42 +188,42 @@ public class TransportsRennes extends CapptainActivity {
 		editor.commit();
 	}
 
-	public void onAlertClick() {
+	private void onAlertClick() {
 		Intent intent = new Intent(this, TabAlertes.class);
 		startActivity(intent);
 	}
 
-	public void onBusClick() {
+	private void onBusClick() {
 		Intent intent = new Intent(this, BusRennes.class);
 		startActivity(intent);
 	}
 
-	public void onBusFavoriClick() {
+	private void onBusFavoriClick() {
 		Intent intent = new Intent(this, TabFavoris.class);
 		startActivity(intent);
 	}
 
-	public void onBusGpsClick() {
+	private void onBusGpsClick() {
 		Intent intent = new Intent(this, ListArretByPosition.class);
 		startActivity(intent);
 	}
 
-	public void onVeloClick() {
+	private void onVeloClick() {
 		Intent intent = new Intent(this, ListStationsByPosition.class);
 		startActivity(intent);
 	}
 
-	public void onVeloFavoriClick() {
+	private void onVeloFavoriClick() {
 		Intent intent = new Intent(this, ListStationsFavoris.class);
 		startActivity(intent);
 	}
 
-	public void onParkingClick() {
+	private void onParkingClick() {
 		Intent intent = new Intent(this, ListParkRelais.class);
 		startActivity(intent);
 	}
 
-	public void onItinerairesClick() {
+	private void onItinerairesClick() {
 		Intent intent = new Intent(this, ItineraireRequete.class);
 		startActivity(intent);
 	}

@@ -204,7 +204,7 @@ public class GeoClusterer {
 	 */
 	private boolean isItemNotInViewport(GeoItem item) {
 		savedBounds = getCurBounds();
-		return !savedBounds.isInBounds(item.getLocation());
+		return savedBounds.isNotInBounds(item.getLocation());
 	}
 
 	/**

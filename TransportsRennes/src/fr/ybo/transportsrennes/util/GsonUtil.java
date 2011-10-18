@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 
 import fr.ybo.opentripplanner.client.Constantes;
 
-public class GsonUtil {
+class GsonUtil {
 	
 	private static Gson gson = null;
 	

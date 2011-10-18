@@ -26,7 +26,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-public class Version {
+class Version {
 
 	private static final String MARKET_URL = "https://market.android.com/details?id=";
 	private static final String VERSION_PATTERN = ".*<dd itemprop=\"softwareVersion\">([^<]*)<.*";
@@ -49,7 +49,7 @@ public class Version {
 	 *            Nom du package de l'application
 	 * @return Nom de la version disponible sur le market
 	 */
-	public static String getMarketVersion(String packageName) {
+	private static String getMarketVersion(String packageName) {
 		String version = null;
 		BufferedReader reader = null;
 		try {

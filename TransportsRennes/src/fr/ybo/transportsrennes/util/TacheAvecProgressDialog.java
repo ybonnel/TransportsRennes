@@ -46,18 +46,18 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 		}
 	}
 
-	protected abstract Result myDoBackground(Params... params) throws ErreurReseau;
+	protected abstract void myDoBackground() throws ErreurReseau;
 
 	protected Result doInBackground(Params... params) {
 		try {
-			return myDoBackground(params);
+			myDoBackground();
 		} catch (ErreurReseau erreurReseau) {
 			erreur = true;
 		}
 		return null;
-	};
+	}
 
-	@Override
+    @Override
 	protected void onPostExecute(Result result) {
 		try {
 			myProgressDialog.dismiss();
@@ -67,5 +67,5 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 			Toast.makeText(context, context.getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 		}
 		super.onPostExecute(result);
-	};
+	}
 }

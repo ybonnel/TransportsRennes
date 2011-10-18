@@ -45,9 +45,8 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 		lv.setTextFilterEnabled(true);
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteTwitter)) {
 			@Override
-			protected Void myDoBackground(Void... pParams) throws ErreurReseau {
+			protected void myDoBackground() throws ErreurReseau {
 				messages.addAll(GetTwitters.getInstance().getMessages());
-				return null;
 			}
 
 			@Override
@@ -55,7 +54,7 @@ public class ListTwitter extends MenuAccueil.ListActivity {
 				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				super.onPostExecute(result);
 			}
-		}.execute();
+		}.execute((Void)null);
 	}
 
 }

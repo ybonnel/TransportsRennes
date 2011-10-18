@@ -82,10 +82,10 @@ public class Horaire {
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Trajet.macroDirection = :macroDirection");
 
-		if (!JoursFeries.is1erMai(calendar.getTime())) {
-			requete.append(" and Horaire.terminus = 0");
-		} else {
+		if (JoursFeries.is1erMai(calendar.getTime())) {
 			requete.append(" and Horaire.terminus = 2");
+		} else {
+			requete.append(" and Horaire.terminus = 0");
 		}
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>(2);

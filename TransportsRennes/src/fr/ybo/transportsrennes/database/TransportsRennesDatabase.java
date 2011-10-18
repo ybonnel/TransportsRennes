@@ -263,12 +263,6 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 						}
 						mapArretsRoutes.get(arretRoute.ligneId).get(arretRoute.arretId).add(arretRoute);
 					}
-					Map<Integer, String> directions = new HashMap<Integer, String>();
-
-					for (Direction direction : moteur.parseInputStream(
-							context.getResources().openRawResource(R.raw.directions), Direction.class)) {
-						directions.put(direction.id, direction.direction);
-					}
 					while (arretFavoriTmp.moveToNext()) {
 						favori.arretId = arretFavoriTmp.getString(arretIdIndex);
 						favori.ligneId = arretFavoriTmp.getString(ligneIdIndex);

@@ -28,7 +28,7 @@ public class IconeLigne {
 		try {
 			return R.drawable.class.getDeclaredField('i' + nomCourt.toLowerCase()).getInt(null);
 		} catch (Exception ignore) {
-			return -1;
+			return R.drawable.icone_bus;
 		}
 	}
 
@@ -37,7 +37,7 @@ public class IconeLigne {
 		try {
 			return R.drawable.class.getDeclaredField('m' + nomCourt.toLowerCase()).getInt(null);
 		} catch (Exception ignore) {
-			return -1;
+			return R.drawable.icone_bus;
 		}
 	}
 }
