@@ -30,7 +30,7 @@ import fr.ybo.database.modele.Table;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;

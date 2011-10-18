@@ -22,7 +22,7 @@ import java.util.List;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import fr.ybo.moteurcsv.MoteurCsv;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;

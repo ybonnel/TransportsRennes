@@ -31,7 +31,7 @@ import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
-import fr.ybo.transportsrennes.DetailArret;
+import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 

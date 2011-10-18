@@ -24,7 +24,7 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
 @SuppressWarnings({"serial"})

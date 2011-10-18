@@ -25,7 +25,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.TransportsWidget;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 

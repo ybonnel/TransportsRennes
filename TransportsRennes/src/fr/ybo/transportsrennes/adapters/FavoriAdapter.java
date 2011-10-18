@@ -31,7 +31,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
 import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
@@ -44,8 +44,7 @@ public class FavoriAdapter extends BaseAdapter {
 
 	private int now;
 	private Calendar calendar;
-	private Calendar calendarLaVeille;
-	private final Context myContext;
+    private final Context myContext;
 
 	public FavoriAdapter(Context context, List<ArretFavori> favoris) {
 		// Cache the LayoutInflate to avoid asking for a new one each time.
@@ -58,8 +57,6 @@ public class FavoriAdapter extends BaseAdapter {
 
 	public void majCalendar() {
 		calendar = Calendar.getInstance();
-		calendarLaVeille = Calendar.getInstance();
-		calendarLaVeille.add(Calendar.DATE, -1);
 		now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 

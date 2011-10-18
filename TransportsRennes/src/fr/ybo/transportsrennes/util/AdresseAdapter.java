@@ -28,7 +28,7 @@ import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
 

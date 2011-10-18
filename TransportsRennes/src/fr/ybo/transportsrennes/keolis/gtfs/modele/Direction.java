@@ -22,7 +22,7 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 @FichierCsv("directions.txt")
 @Entity

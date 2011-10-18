@@ -29,7 +29,7 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
 

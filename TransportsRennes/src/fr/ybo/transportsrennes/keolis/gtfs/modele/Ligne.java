@@ -31,7 +31,7 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.TransportsRennesApplication;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
