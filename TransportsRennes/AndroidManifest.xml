@@ -18,8 +18,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
-          android:versionCode="238"
-          android:versionName="2.3.8">
+          android:versionCode="239"
+          android:versionName="2.3.9">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="false" android:name=".application.TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
