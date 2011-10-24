@@ -370,6 +370,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
 									|| e.getCause() instanceof UnknownHostException
 									|| e.getCause() instanceof JsonIOException
 									|| e.getCause() instanceof SocketTimeoutException || e.getCause() instanceof JsonParseException)) {
+                        LOG_YBO.erreur("Erreur de connextion", e.getCause());
 						return null;
 					} else {
 						throw new TcbException(e);
