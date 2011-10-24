@@ -50,7 +50,7 @@ public class GetTwitters {
 	public Collection<MessageTwitter> getMessages() throws TbcErreurReseaux {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(
-					"http://transports-rennes.appspot.com/twittertbc").openConnection();
+					"http://support-twitter.herokuapp.com/tbc").openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
             connection.setConnectTimeout(20000);
