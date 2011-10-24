@@ -49,7 +49,7 @@ public class GetTwitters {
 	public Collection<MessageTwitter> getMessages() throws ErreurReseau {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) new URL(
-					"http://transports-rennes.appspot.com/twitterstarbusmetrogson").openConnection();
+					"http://support-twitter.herokuapp.com/starbusmetro").openConnection();
 			connection.setRequestMethod("GET");
 			connection.setDoOutput(true);
             connection.setConnectTimeout(20000);
