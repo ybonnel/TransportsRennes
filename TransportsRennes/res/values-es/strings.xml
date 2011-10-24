@@ -32,7 +32,8 @@
 <string name="dialogRequeteTwitter">Consultando Twitter.</string>
 <string name="dialogRequeteParkRelais">Consultando STAR.</string>
 <string name="dialogRequetePointsDeVente">Consultando STAR.</string>
-<string name="dialogAPropos">La aplicación "Transports Rennes" se desarrolló en el marco de la publicacion de los datos del servicio STAR y LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis -rennes.com&lt;/a&gt;).&lt;br/&gt;Esta aplicación es desarrollada y mantenida durante mi tiempo libre, así que gracias por su indulgencia.&lt;br/&gt;Puede enviarme cualquier sugerencia o problema.</string>
+<string name="dialogAPropos">La aplicación "Transports Rennes" se desarrolló en el marco de la publicacion de los datos del servicio STAR y LE vélo STAR (&lt;a href=\'http://data.keolis-rennes.com\'&gt;data.keolis -rennes.com&lt;/a&gt;).&lt;br/&gt;Esta aplicación es desarrollada y mantenida durante mi tiempo libre, así que gracias por su indulgencia.&lt;br/&gt;Puede enviarme cualquier sugerencia o problema.&lt;br/&gt;
+        Analytics, real-time monitoring and communications provided by Capptain (http://www.capptain.com).</string>
 <string name="detailarret_empty">No hay más autobuses hoy, se puede ver todos los autobuses del día o elegir una fecha en particular a travez del menú.</string>
 <string name="itineraires_empty">No itinerario se ha encontrado para obtener estas direcciones.</string>
 <string name="hint_rechercherarret">Buscar paradas</string>

@@ -42,7 +42,8 @@
     <string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the STAR and LE vélo STAR (&lt;a
         href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;This application is
         developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free to send me any suggestions or
-        problem.
+        problem.&lt;br/&gt;
+        Analytics, real-time monitoring and communications provided by Capptain (http://www.capptain.com).
     </string>
     <string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular date using the menu.</string>
     <string name="itineraires_empty">No itinerary has been found for these addresses.</string>
