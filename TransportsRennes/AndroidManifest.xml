@@ -18,8 +18,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
-          android:versionCode="239"
-          android:versionName="2.3.9">
+          android:versionCode="240"
+          android:versionName="2.4.0">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="false" android:name=".application.TransportsRennesApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
@@ -115,7 +115,7 @@
 				<action android:name="com.ubikod.capptain.ICapptainService" />
 				<data android:scheme="capptain" />
 			</intent-filter>
-			<meta-data android:name="capptain:api:level" android:value="8" />
+			<meta-data android:name="capptain:api:level" android:value="9" />
 			<meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84" />
 		</service>
         <!-- Cappbrain -->
