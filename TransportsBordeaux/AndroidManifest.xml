@@ -100,7 +100,7 @@
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 
 		<service android:name="com.ubikod.capptain.android.service.CapptainService"
-			android:label="TransportsRennesService" android:process=":Capptain">
+			android:label="TransportsBordeauxService" android:process=":Capptain">
 			<intent-filter>
 				<category android:name="android.intent.category.DEFAULT" />
 				<action android:name="com.ubikod.capptain.ICapptainService" />
