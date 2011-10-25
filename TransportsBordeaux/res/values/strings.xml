@@ -27,7 +27,7 @@
     <string name="verificationUpdate">Recherche de mise à jour.</string>
     <string name="dialogAPropos">Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;Il s\'agit d\'une toute première version il est donc possible que l\'application contienne des bugs.&lt;br/&gt;N\'hésitez pas en m\'envoyer
         toute suggestion ou problème.&lt;br/&gt;
-        Analytics, real-time monitoring and communications provided by Capptain (http://www.capptain.com).
+        Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
     <string name="titleTransportsBordeaux">Bienvenue dans l\'application Transports Bordeaux</string>
     <string name="Terminer">Terminer</string>
