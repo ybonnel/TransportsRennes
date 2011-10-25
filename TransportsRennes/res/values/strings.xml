@@ -46,8 +46,9 @@
     <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
     <string name="dialogAPropos">Transports Rennes : application "Rennes Métropole en accès libre", sources des données : Data Keolis Rennes (&lt;a
         href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Cette application est
-        développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas en m\'envoyer
+        développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez pas à m\'envoyer
         toute suggestion ou problème.&lt;br/&gt;
+        L\'icône de l\'application a gracieusement été réalisée par Nicolas (&lt;a href=\'http://www.cryptik-web.com\'&gt;www.cryptik-web.com&lt;/a&gt;).&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le
