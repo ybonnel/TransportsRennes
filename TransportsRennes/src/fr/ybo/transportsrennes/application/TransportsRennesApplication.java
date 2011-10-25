@@ -72,7 +72,7 @@ public class TransportsRennesApplication extends Application {
 		geocodeUtil = new GeocodeUtil(this);
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
 		PackageManager pm = getPackageManager();
-		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".UpdateTimeService"),
+		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),
 				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
 		// Récupération des alertes
