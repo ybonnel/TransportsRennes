@@ -2,23 +2,16 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Contributors:
- *     ybonnel - initial API and implementation
  */
 package fr.ybo.transportsrennes.util;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,231 +21,235 @@ import android.view.View;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.ArretFavori;
-import fr.ybo.transportsrennes.keolis.gtfs.modele.Horaire;
+import fr.ybo.transportsrennes.database.modele.ArretFavori;
+import fr.ybo.transportsrennes.database.modele.Horaire;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class WidgetUpdateUtil {
 
-	private WidgetUpdateUtil() {
-	}
+    private WidgetUpdateUtil() {
+    }
 
-	public static void updateAppWidget(Context context, RemoteViews views, ArrayList<ArretFavori> favoris,
-			Calendar calendar) {
+    public static void updateAppWidget(Context context, RemoteViews views, ArrayList<ArretFavori> favoris,
+                                       Calendar calendar) {
 
-		switch (favoris.size()) {
-			case 1:
-				updateAppWidget1Arret(context, views, favoris.get(0));
-				remplirRemoteViews1Arret(context, views, favoris, calendar);
-				break;
-			case 2:
-				updateAppWidget2Arret(context, views, favoris.get(0), favoris.get(1));
-				remplirRemoteViews2Arret(context, views, favoris, calendar);
-				break;
-			case 3:
-				updateAppWidget3Arret(context, views, favoris.get(0), favoris.get(1), favoris.get(2));
-				remplirRemoteViews3Arret(context, views, favoris, calendar);
-				break;
-		}
-	}
+        switch (favoris.size()) {
+            case 1:
+                updateAppWidget1Arret(context, views, favoris.get(0));
+                remplirRemoteViews1Arret(context, views, favoris, calendar);
+                break;
+            case 2:
+                updateAppWidget2Arret(context, views, favoris.get(0), favoris.get(1));
+                remplirRemoteViews2Arret(context, views, favoris, calendar);
+                break;
+            case 3:
+                updateAppWidget3Arret(context, views, favoris.get(0), favoris.get(1), favoris.get(2));
+                remplirRemoteViews3Arret(context, views, favoris, calendar);
+                break;
+        }
+    }
 
-	private static void updateAppWidget1Arret(Context context, RemoteViews views, ArretFavori favori) {
-		views.setTextViewText(R.id.nomArret_1arret, favori.nomArret);
-		views.setTextViewText(R.id.direction_1arret, "-> " + favori.direction);
-		views.setImageViewResource(R.id.iconeLigne_1arret, IconeLigne.getIconeResource(favori.nomCourt));
-		Intent intent = new Intent(context, TransportsWidget.class);
-		intent.setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
-		views.setViewVisibility(R.id.layout_1arret, View.VISIBLE);
-		views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
-		views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
-	}
+    private static void updateAppWidget1Arret(Context context, RemoteViews views, ArretFavori favori) {
+        views.setTextViewText(R.id.nomArret_1arret, favori.nomArret);
+        views.setTextViewText(R.id.direction_1arret, "-> " + favori.direction);
+        views.setImageViewResource(R.id.iconeLigne_1arret, IconeLigne.getIconeResource(favori.nomCourt));
+        Intent intent = new Intent(context, TransportsWidget.class);
+        intent.setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
+        views.setViewVisibility(R.id.layout_1arret, View.VISIBLE);
+        views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
+        views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
+    }
 
-	private static void updateAppWidget2Arret(Context context, RemoteViews views, ArretFavori favori1,
-			ArretFavori favori2) {
-		views.setTextViewText(R.id.nomArret1_2arret, favori1.nomArret);
-		views.setTextViewText(R.id.direction1_2arret, "-> " + favori1.direction);
-		views.setImageViewResource(R.id.iconeLigne1_2arret, IconeLigne.getIconeResource(favori1.nomCourt));
-		views.setTextViewText(R.id.nomArret2_2arret, favori2.nomArret);
-		views.setTextViewText(R.id.direction2_2arret, "-> " + favori2.direction);
-		views.setImageViewResource(R.id.iconeLigne2_2arret, IconeLigne.getIconeResource(favori2.nomCourt));
-		Intent intent1 = new Intent(context, TransportsWidget.class);
-		intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
-		PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.layout_2arret_1, pendingIntent1);
-		Intent intent2 = new Intent(context, TransportsWidget.class);
-		intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
-		PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.layout_2arret_2, pendingIntent2);
-		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
-		views.setViewVisibility(R.id.layout_2arret, View.VISIBLE);
-		views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
-	}
+    private static void updateAppWidget2Arret(Context context, RemoteViews views, ArretFavori favori1,
+                                              ArretFavori favori2) {
+        views.setTextViewText(R.id.nomArret1_2arret, favori1.nomArret);
+        views.setTextViewText(R.id.direction1_2arret, "-> " + favori1.direction);
+        views.setImageViewResource(R.id.iconeLigne1_2arret, IconeLigne.getIconeResource(favori1.nomCourt));
+        views.setTextViewText(R.id.nomArret2_2arret, favori2.nomArret);
+        views.setTextViewText(R.id.direction2_2arret, "-> " + favori2.direction);
+        views.setImageViewResource(R.id.iconeLigne2_2arret, IconeLigne.getIconeResource(favori2.nomCourt));
+        Intent intent1 = new Intent(context, TransportsWidget.class);
+        intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.layout_2arret_1, pendingIntent1);
+        Intent intent2 = new Intent(context, TransportsWidget.class);
+        intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.layout_2arret_2, pendingIntent2);
+        views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
+        views.setViewVisibility(R.id.layout_2arret, View.VISIBLE);
+        views.setViewVisibility(R.id.layout_3arret, View.INVISIBLE);
+    }
 
-	private static void updateAppWidget3Arret(Context context, RemoteViews views, ArretFavori favori1,
-			ArretFavori favori2, ArretFavori favori3) {
-		views.setTextViewText(R.id.nomArret1_3arret, favori1.nomArret);
-		views.setTextViewText(R.id.direction1_3arret, "-> " + favori1.direction);
-		views.setImageViewResource(R.id.iconeLigne1_3arret, IconeLigne.getIconeResource(favori1.nomCourt));
-		views.setTextViewText(R.id.nomArret2_3arret, favori2.nomArret);
-		views.setTextViewText(R.id.direction2_3arret, "-> " + favori2.direction);
-		views.setImageViewResource(R.id.iconeLigne2_3arret, IconeLigne.getIconeResource(favori2.nomCourt));
-		views.setTextViewText(R.id.nomArret3_3arret, favori3.nomArret);
-		views.setTextViewText(R.id.direction3_3arret, "-> " + favori3.direction);
-		views.setImageViewResource(R.id.iconeLigne3_3arret, IconeLigne.getIconeResource(favori3.nomCourt));
-		Intent intent1 = new Intent(context, TransportsWidget.class);
-		intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
-		PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.layout_3arret_1, pendingIntent1);
-		Intent intent2 = new Intent(context, TransportsWidget.class);
-		intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
-		PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.layout_3arret_2, pendingIntent2);
-		Intent intent3 = new Intent(context, TransportsWidget.class);
-		intent3.setAction("YboClick_" + favori3.arretId + '_' + favori3.ligneId);
-		PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, intent3,
-				PendingIntent.FLAG_UPDATE_CURRENT);
-		views.setOnClickPendingIntent(R.id.layout_3arret_3, pendingIntent3);
-		views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
-		views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
-		views.setViewVisibility(R.id.layout_3arret, View.VISIBLE);
-	}
+    private static void updateAppWidget3Arret(Context context, RemoteViews views, ArretFavori favori1,
+                                              ArretFavori favori2, ArretFavori favori3) {
+        views.setTextViewText(R.id.nomArret1_3arret, favori1.nomArret);
+        views.setTextViewText(R.id.direction1_3arret, "-> " + favori1.direction);
+        views.setImageViewResource(R.id.iconeLigne1_3arret, IconeLigne.getIconeResource(favori1.nomCourt));
+        views.setTextViewText(R.id.nomArret2_3arret, favori2.nomArret);
+        views.setTextViewText(R.id.direction2_3arret, "-> " + favori2.direction);
+        views.setImageViewResource(R.id.iconeLigne2_3arret, IconeLigne.getIconeResource(favori2.nomCourt));
+        views.setTextViewText(R.id.nomArret3_3arret, favori3.nomArret);
+        views.setTextViewText(R.id.direction3_3arret, "-> " + favori3.direction);
+        views.setImageViewResource(R.id.iconeLigne3_3arret, IconeLigne.getIconeResource(favori3.nomCourt));
+        Intent intent1 = new Intent(context, TransportsWidget.class);
+        intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.layout_3arret_1, pendingIntent1);
+        Intent intent2 = new Intent(context, TransportsWidget.class);
+        intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.layout_3arret_2, pendingIntent2);
+        Intent intent3 = new Intent(context, TransportsWidget.class);
+        intent3.setAction("YboClick_" + favori3.arretId + '_' + favori3.ligneId);
+        PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, intent3,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.layout_3arret_3, pendingIntent3);
+        views.setViewVisibility(R.id.layout_1arret, View.INVISIBLE);
+        views.setViewVisibility(R.id.layout_2arret, View.INVISIBLE);
+        views.setViewVisibility(R.id.layout_3arret, View.VISIBLE);
+    }
 
-	private static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
-			Calendar calendar) {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		try {
-			List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-					favoris.get(0).arretId, favoris.get(0).macroDirection, 4, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant1_1arret,
-					prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts.get(0), now));
-			remoteViews.setTextViewText(
-					R.id.tempsRestant2_1arret,
-					prochainsDeparts.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts.get(1), now));
-			remoteViews.setTextViewText(
-					R.id.tempsRestant3_1arret,
-					prochainsDeparts.size() < 3 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts.get(2), now));
-			remoteViews.setTextViewText(
-					R.id.tempsRestant4_1arret,
-					prochainsDeparts.size() < 4 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts.get(3), now));
-		} catch (SQLiteException ignore) {
+    private static void remplirRemoteViews1Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+                                                 Calendar calendar) {
+        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+        try {
+            List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+                    favoris.get(0).arretId, favoris.get(0).macroDirection, 4, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant1_1arret,
+                    prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts.get(0), now));
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant2_1arret,
+                    prochainsDeparts.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts.get(1), now));
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant3_1arret,
+                    prochainsDeparts.size() < 3 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts.get(2), now));
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant4_1arret,
+                    prochainsDeparts.size() < 4 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts.get(3), now));
+        } catch (SQLiteException ignore) {
 
-		}
+        }
 
-	}
+    }
 
-	private static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
-			Calendar calendar) {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		try {
-			List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-					favoris.get(0).arretId, favoris.get(0).macroDirection, 2, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant11_2arret,
-					prochainsDeparts1.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts1.get(0), now));
-			remoteViews.setTextViewText(
-					R.id.tempsRestant12_2arret,
-					prochainsDeparts1.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts1.get(1), now));
-		} catch (SQLiteException ignore) {
+    private static void remplirRemoteViews2Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+                                                 Calendar calendar) {
+        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+        try {
+            List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+                    favoris.get(0).arretId, favoris.get(0).macroDirection, 2, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant11_2arret,
+                    prochainsDeparts1.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts1.get(0), now));
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant12_2arret,
+                    prochainsDeparts1.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts1.get(1), now));
+        } catch (SQLiteException ignore) {
 
-		}
-		try {
-			List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
-					favoris.get(1).arretId, favoris.get(1).macroDirection, 2, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant21_2arret,
-					prochainsDeparts2.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts2.get(0), now));
-			remoteViews.setTextViewText(
-					R.id.tempsRestant22_2arret,
-					prochainsDeparts2.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts2.get(1), now));
-		} catch (SQLiteException ignore) {
+        }
+        try {
+            List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
+                    favoris.get(1).arretId, favoris.get(1).macroDirection, 2, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant21_2arret,
+                    prochainsDeparts2.size() < 1 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts2.get(0), now));
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant22_2arret,
+                    prochainsDeparts2.size() < 2 ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts2.get(1), now));
+        } catch (SQLiteException ignore) {
 
-		}
-	}
+        }
+    }
 
-	private static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
-			Calendar calendar) {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		try {
-			List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-					favoris.get(0).arretId, favoris.get(0).macroDirection, 1, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant1_3arret,
-					prochainsDeparts1.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts1.get(0), now));
-		} catch (SQLiteException ignore) {
+    private static void remplirRemoteViews3Arret(Context context, RemoteViews remoteViews, List<ArretFavori> favoris,
+                                                 Calendar calendar) {
+        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+        try {
+            List<Integer> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
+                    favoris.get(0).arretId, favoris.get(0).macroDirection, 1, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant1_3arret,
+                    prochainsDeparts1.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts1.get(0), now));
+        } catch (SQLiteException ignore) {
 
-		}
+        }
 
-		try {
-			List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
-					favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant2_3arret,
-					prochainsDeparts2.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts2.get(0), now));
-		} catch (SQLiteException ignore) {
+        try {
+            List<Integer> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
+                    favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant2_3arret,
+                    prochainsDeparts2.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts2.get(0), now));
+        } catch (SQLiteException ignore) {
 
-		}
-		try {
-			List<Integer> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(2).ligneId,
-					favoris.get(2).arretId, favoris.get(2).macroDirection, 1, calendar);
-			remoteViews.setTextViewText(
-					R.id.tempsRestant3_3arret,
-					prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-							+ formatterCalendar(context, prochainsDeparts3.get(0), now));
-		} catch (SQLiteException ignore) {
+        }
+        try {
+            List<Integer> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(2).ligneId,
+                    favoris.get(2).arretId, favoris.get(2).macroDirection, 1, calendar);
+            remoteViews.setTextViewText(
+                    R.id.tempsRestant3_3arret,
+                    prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
+                            + formatterCalendar(context, prochainsDeparts3.get(0), now));
+        } catch (SQLiteException ignore) {
 
-		}
-	}
+        }
+    }
 
-	public static String formatterCalendar(Context context, int prochainDepart, int now) {
-		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
-		if (tempsEnMinutes < 0) {
-			stringBuilder.append(context.getString(R.string.tropTard));
-		} else {
-			int heures = tempsEnMinutes / 60;
-			int minutes = tempsEnMinutes - heures * 60;
-			boolean tempsAjoute = false;
-			if (heures > 0) {
-				stringBuilder.append(heures);
-				stringBuilder.append(' ');
-				stringBuilder.append(context.getString(R.string.miniHeures));
-				stringBuilder.append(' ');
-				tempsAjoute = true;
-			}
-			if (minutes > 0) {
-				if (heures <= 0) {
-					stringBuilder.append(minutes);
-					stringBuilder.append(' ');
-					stringBuilder.append(context.getString(R.string.miniMinutes));
-				} else {
-					if (minutes < 10) {
-						stringBuilder.append('0');
-					}
-					stringBuilder.append(minutes);
-				}
-				tempsAjoute = true;
-			}
-			if (!tempsAjoute) {
-				stringBuilder.append("0 ");
-				stringBuilder.append(context.getString(R.string.miniMinutes));
-			}
-		}
-		return stringBuilder.toString();
-	}
+    public static String formatterCalendar(Context context, int prochainDepart, int now) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int tempsEnMinutes = prochainDepart - now;
+        if (tempsEnMinutes < 0) {
+            stringBuilder.append(context.getString(R.string.tropTard));
+        } else {
+            int heures = tempsEnMinutes / 60;
+            int minutes = tempsEnMinutes - heures * 60;
+            boolean tempsAjoute = false;
+            if (heures > 0) {
+                stringBuilder.append(heures);
+                stringBuilder.append(' ');
+                stringBuilder.append(context.getString(R.string.miniHeures));
+                stringBuilder.append(' ');
+                tempsAjoute = true;
+            }
+            if (minutes > 0) {
+                if (heures <= 0) {
+                    stringBuilder.append(minutes);
+                    stringBuilder.append(' ');
+                    stringBuilder.append(context.getString(R.string.miniMinutes));
+                } else {
+                    if (minutes < 10) {
+                        stringBuilder.append('0');
+                    }
+                    stringBuilder.append(minutes);
+                }
+                tempsAjoute = true;
+            }
+            if (!tempsAjoute) {
+                stringBuilder.append("0 ");
+                stringBuilder.append(context.getString(R.string.miniMinutes));
+            }
+        }
+        return stringBuilder.toString();
+    }
 }

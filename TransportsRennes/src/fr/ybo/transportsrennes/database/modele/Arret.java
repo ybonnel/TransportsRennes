@@ -2,21 +2,16 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Contributors:
- *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsrennes.keolis.gtfs.modele;
-
-import java.io.Serializable;
+package fr.ybo.transportsrennes.database.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
@@ -27,35 +22,37 @@ import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 
+import java.io.Serializable;
+
 @SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
 @Entity
 public class Arret extends ObjetWithDistance implements Serializable {
-	@BaliseCsv("id")
-	@Column
-	@PrimaryKey
-	public String id;
-	@BaliseCsv("nom")
-	@Column
-	public String nom;
-	@BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
-	@Column(type = Column.TypeColumn.NUMERIC)
-	public Double latitude;
-	@BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
-	@Column(type = Column.TypeColumn.NUMERIC)
-	public Double longitude;
+    @BaliseCsv("id")
+    @Column
+    @PrimaryKey
+    public String id;
+    @BaliseCsv("nom")
+    @Column
+    public String nom;
+    @BaliseCsv(value = "latitude", adapter = AdapterDouble.class)
+    @Column(type = Column.TypeColumn.NUMERIC)
+    public Double latitude;
+    @BaliseCsv(value = "longitude", adapter = AdapterDouble.class)
+    @Column(type = Column.TypeColumn.NUMERIC)
+    public Double longitude;
 
-	public ArretFavori favori;
+    public ArretFavori favori;
 
-	@Override
-	public double getLatitude() {
-		return latitude;
-	}
+    @Override
+    public double getLatitude() {
+        return latitude;
+    }
 
-	@Override
-	public double getLongitude() {
-		return longitude;
-	}
+    @Override
+    public double getLongitude() {
+        return longitude;
+    }
 
     public static Arret getArret(String arretId) {
         Arret arret = new Arret();
