@@ -175,11 +175,11 @@ public class FavoriAdapter extends BaseAdapter {
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 
         try {
-            List<Integer> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
+            List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
                     favori.macroDirection, 1, calendar);
 
             if (!prochainsDepart.isEmpty()) {
-                holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0), now));
+                holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0).getHoraire(), now));
             }
         } catch (SQLiteException ignore) {
         }

@@ -14,15 +14,16 @@
 package fr.ybo.transportsrennes.adapters.bus;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 
-public class DetailArretAdapter extends CursorAdapter {
+import java.util.List;
+
+public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
 
     private final int now;
 
@@ -32,13 +33,12 @@ public class DetailArretAdapter extends CursorAdapter {
 
     private boolean isToday;
 
-    public DetailArretAdapter(Context context, Cursor cursor, int now, boolean isToday) {
-        super(context, cursor);
+    public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday) {
+        super(context, R.layout.detailarretliste, prochainsDeparts);
         this.isToday = isToday;
         myContext = context;
         this.now = now;
         inflater = LayoutInflater.from(context);
-        prochainDepartCol = cursor.getColumnIndex("_id");
     }
 
     private static class ViewHolder {
@@ -46,29 +46,27 @@ public class DetailArretAdapter extends CursorAdapter {
         TextView tempsRestant;
     }
 
-    private final int prochainDepartCol;
-
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.detailarretliste, parent, false);
-        DetailArretAdapter.ViewHolder holder = new DetailArretAdapter.ViewHolder();
-        holder.heureProchain = (TextView) view.findViewById(R.id.detailArret_heureProchain);
-        holder.tempsRestant = (TextView) view.findViewById(R.id.detailArret_tempsRestant);
-        view.setTag(holder);
-        return view;
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        int prochainDepart = cursor.getInt(prochainDepartCol);
-        ((DetailArretAdapter.ViewHolder) view.getTag()).heureProchain.setText(formatterCalendarHeure(prochainDepart));
-        if (isToday) {
-            ((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant
-                    .setText(formatterCalendar(prochainDepart, now));
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View convertView1 = convertView;
+        DetailArretAdapter.ViewHolder holder;
+        if (convertView1 == null) {
+            convertView1 = inflater.inflate(R.layout.detailarretliste, parent, false);
+            holder = new DetailArretAdapter.ViewHolder();
+            holder.heureProchain = (TextView) convertView1.findViewById(R.id.detailArret_heureProchain);
+            holder.tempsRestant = (TextView) convertView1.findViewById(R.id.detailArret_tempsRestant);
+            convertView1.setTag(holder);
         } else {
-            ((DetailArretAdapter.ViewHolder) view.getTag()).tempsRestant.setText("");
-
+            holder = (DetailArretAdapter.ViewHolder) convertView1.getTag();
         }
+        int prochainDepart = getItem(position).getHoraire();
+        holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
+        if (isToday) {
+            holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+        } else {
+            holder.tempsRestant.setText("");
+        }
+        return convertView1;
     }
 
     private CharSequence formatterCalendar(int prochainDepart, int now) {

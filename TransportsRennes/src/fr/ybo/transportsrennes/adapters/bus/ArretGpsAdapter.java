@@ -93,10 +93,10 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
 
     private CharSequence getTempsRestant(Arret arret) {
         try {
-            List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
+            List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
                     arret.favori.arretId, arret.favori.macroDirection, 1, calendar);
             return prochainsDeparts.isEmpty() ? "" : WidgetUpdateUtil.formatterCalendar(myContext,
-                    prochainsDeparts.get(0), now);
+                    prochainsDeparts.get(0).getHoraire(), now);
         } catch (SQLiteException ignore) {
             return "";
         }

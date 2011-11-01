@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteException;
 import android.widget.RemoteViews;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
+import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.Horaire;
 
@@ -45,11 +46,11 @@ public class Widget11UpdateUtil {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         calendar.add(Calendar.MINUTE, -3);
         try {
-            List<Integer> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
+            List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
                     favori.macroDirection, 2, calendar);
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
             if (prochainsDeparts.size() > 0) {
-                int heureProchain = prochainsDeparts.get(0);
+                int heureProchain = prochainsDeparts.get(0).getHoraire();
                 if (heureProchain >= 24 * 60) {
                     heureProchain -= 24 * 60;
                 }
@@ -61,14 +62,14 @@ public class Widget11UpdateUtil {
                 } else {
                     views.setTextColor(R.id.tempsRestant, context.getResources().getColor(R.color.blanc));
                 }
-                views.setTextViewText(R.id.tempsRestant, formatterCalendar(prochainsDeparts.get(0)));
+                views.setTextViewText(R.id.tempsRestant, formatterCalendar(prochainsDeparts.get(0).getHoraire()));
 
             } else {
                 views.setTextViewText(R.id.tempsRestant, "");
             }
             views.setTextViewText(
                     R.id.tempsRestantFutur,
-                    prochainsDeparts.size() < 2 ? "" : formatterCalendar(prochainsDeparts.get(1)));
+                    prochainsDeparts.size() < 2 ? "" : formatterCalendar(prochainsDeparts.get(1).getHoraire()));
         } catch (SQLiteException ignore) {
 
         }

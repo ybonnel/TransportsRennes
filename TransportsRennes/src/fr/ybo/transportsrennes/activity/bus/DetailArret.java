@@ -30,6 +30,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
 import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
+import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
@@ -62,8 +63,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
     private static final int DISTANCE_MAX_METRE = 151;
 
     private boolean prochainArrets = true;
-
-    private Cursor currentCursor;
 
     private boolean isToday() {
         return calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)
@@ -104,7 +103,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
     }
 
     private ListAdapter construireAdapter() {
-        closeCurrentCursor();
         if (prochainArrets && isToday()) {
             return construireAdapterProchainsDeparts();
         }
@@ -113,15 +111,13 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
     private ListAdapter construireAdapterAllDeparts() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        currentCursor = Horaire.getAllHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection, calendar);
-        return new DetailArretAdapter(getApplicationContext(), currentCursor, now, isToday());
+        return new DetailArretAdapter(getApplicationContext(), Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection, calendar), now, isToday());
     }
 
     private ListAdapter construireAdapterProchainsDeparts() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        currentCursor = Horaire.getProchainHorairesAsCursor(favori.ligneId, favori.arretId, favori.macroDirection,
-                null, calendar);
-        return new DetailArretAdapter(getApplicationContext(), currentCursor, now, isToday());
+        return new DetailArretAdapter(getApplicationContext(), Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection,
+                null, calendar), now, isToday());
     }
 
     private Ligne myLigne;
@@ -196,10 +192,10 @@ public class DetailArret extends MenuAccueil.ListActivity {
             @SuppressWarnings({"unchecked"})
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
-                Cursor cursor = (Cursor) arretAdapter.getItem(position);
+                DetailArretConteneur detailArretConteneur = (DetailArretConteneur) arretAdapter.getItem(position);
                 Intent intent = new Intent(DetailArret.this, DetailTrajet.class);
-                intent.putExtra("trajetId", cursor.getInt(cursor.getColumnIndex("trajetId")));
-                intent.putExtra("sequence", cursor.getInt(cursor.getColumnIndex("sequence")));
+                intent.putExtra("trajetId", detailArretConteneur.getTrajetId());
+                intent.putExtra("sequence", detailArretConteneur.getSequence());
                 startActivity(intent);
             }
         });
@@ -377,15 +373,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
     }
 
-    private void closeCurrentCursor() {
-        if (currentCursor != null && !currentCursor.isClosed()) {
-            currentCursor.close();
-        }
-    }
-
     @Override
     protected void onDestroy() {
-        closeCurrentCursor();
         super.onDestroy();
     }
 

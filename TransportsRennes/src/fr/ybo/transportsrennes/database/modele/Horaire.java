@@ -22,6 +22,7 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.util.JoursFeries;
 import fr.ybo.transportsrennes.util.LogYbo;
@@ -53,18 +54,28 @@ public class Horaire {
 
     private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-    public static List<Integer> getProchainHorairesAsList(String ligneId, String arretId, int macroDirection,
-                                                          Integer limit, Calendar calendar) throws SQLiteException {
-        List<Integer> prochainsDeparts = new ArrayList<Integer>();
-        Cursor cursor = getProchainHorairesAsCursor(ligneId, arretId, macroDirection, limit, calendar);
+    public static List<DetailArretConteneur> getProchainHorairesAsList(String ligneId, String arretId, int macroDirection,
+                                                                       Integer limit, Calendar calendar) throws SQLiteException {
+        return getListFromCursor(getProchainHorairesAsCursor(ligneId, arretId, macroDirection, limit, calendar));
+    }
+
+    public static List<DetailArretConteneur> getAllHorairesAsList(String ligneId, String arretId, int macroDirection, Calendar calendar) {
+        return getListFromCursor(getAllHorairesAsCursor(ligneId, arretId, macroDirection, calendar));
+    }
+
+    private static List<DetailArretConteneur> getListFromCursor(Cursor cursor) {
+        List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
+        int heureDepartCol = cursor.getColumnIndex("_id");
+        int trajetIdCol = cursor.getColumnIndex("trajetId");
+        int stopSequenceCol = cursor.getColumnIndex("stopSequence");
         while (cursor.moveToNext()) {
-            prochainsDeparts.add(cursor.getInt(0));
+            prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol), cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
         }
         cursor.close();
         return prochainsDeparts;
     }
 
-    public static Cursor getAllHorairesAsCursor(String ligneId, String arretId, int macroDirection, Calendar calendar) {
+    private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, int macroDirection, Calendar calendar) {
         StringBuilder requete = new StringBuilder();
         requete.append("select Horaire.heureDepart as _id,");
         requete.append(" Trajet.id as trajetId, stopSequence as sequence ");
@@ -94,8 +105,8 @@ public class Horaire {
         return TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
     }
 
-    public static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, int macroDirection, Integer limit,
-                                                     Calendar calendar) throws SQLiteException {
+    private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, int macroDirection, Integer limit,
+                                                      Calendar calendar) throws SQLiteException {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         Calendar calendarLaVeille = Calendar.getInstance();
         calendarLaVeille.add(Calendar.DATE, -1);
