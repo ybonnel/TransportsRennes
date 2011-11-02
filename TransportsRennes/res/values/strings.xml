@@ -212,4 +212,6 @@
     <string name="preferences">Préférences</string>
 
     <string name="creerNotif">Créer une alerte.</string>
+    <string name="tempsRestant">Notification dans %1$s.</string>
+    <string name="notifText">Ligne %1$s, arrêt %2$s arrive dans %3$s minutes</string>
 </resources>
