@@ -16,7 +16,9 @@ package fr.ybo.transportsrennes.activity.bus;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -80,6 +82,12 @@ public class DetailArret extends MenuAccueil.ListActivity {
             favori.nomArret = getIntent().getExtras().getString("nomArret");
             favori.direction = getIntent().getExtras().getString("direction");
             favori.macroDirection = getIntent().getExtras().getInt("macroDirection");
+            int notificationId = getIntent().getIntExtra("idNotification", -1);
+            if (notificationId != -1) {
+                NotificationManager mNotificationManager = (NotificationManager)
+                        getSystemService(Context.NOTIFICATION_SERVICE);
+                mNotificationManager.cancel(notificationId);
+            }
             Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
             if (ligne == null) {
                 finish();
@@ -473,6 +481,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
                         notification.setArretId(arretId);
                         notification.setHeure(heure + minutes);
                         notification.setTempsAttente(minutes);
+                        notification.setDirection(favori.direction);
+                        notification.setMacroDirection(favori.macroDirection);
                         TransportsRennesApplication.getDataBaseHelper().delete(notification);
                         TransportsRennesApplication.getDataBaseHelper().insert(notification);
                         Calendar calendar = Calendar.getInstance();

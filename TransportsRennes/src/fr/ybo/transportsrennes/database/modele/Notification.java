@@ -32,6 +32,10 @@ public class Notification {
     private Integer heure;
     @Column(type = Column.TypeColumn.INTEGER)
     private Integer tempsAttente;
+    @Column(type = Column.TypeColumn.INTEGER)
+    public Integer macroDirection;
+    @Column
+    public String direction;
 
     public String getLigneId() {
         return ligneId;
@@ -63,5 +67,21 @@ public class Notification {
 
     public void setTempsAttente(Integer tempsAttente) {
         this.tempsAttente = tempsAttente;
+    }
+
+    public Integer getMacroDirection() {
+        return macroDirection;
+    }
+
+    public void setMacroDirection(Integer macroDirection) {
+        this.macroDirection = macroDirection;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 }

@@ -17,4 +17,5 @@
     <item type="id" name="supprimerFavori"/>
     <item type="id" name="deplacerGroupe"/>
     <item type="id" name="creerNotif"/>
+    <item type="id" name="supprimerNotif"/>
 </resources>

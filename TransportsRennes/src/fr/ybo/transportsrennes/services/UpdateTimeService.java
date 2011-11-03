@@ -15,6 +15,7 @@
 package fr.ybo.transportsrennes.services;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -23,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.widgets.*;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
@@ -115,6 +117,7 @@ public class UpdateTimeService extends Service {
         Calendar calendar = Calendar.getInstance();
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         notifSelect.setHeure(now);
+        LOG_YBO.debug("Recherche des notif pour " + now);
         for (Notification notification : TransportsRennesApplication.getDataBaseHelper().select(notifSelect)) {
             createNotification(notification);
             TransportsRennesApplication.getDataBaseHelper().delete(notification);
@@ -124,12 +127,22 @@ public class UpdateTimeService extends Service {
 
 
     private void createNotification(Notification notification) {
+        LOG_YBO.debug("Création d'une notif pour la ligne " + notification.getLigneId());
         Ligne ligne = Ligne.getLigne(notification.getLigneId());
         Arret arret = Arret.getArret(notification.getArretId());
         int icon = IconeLigne.getIconeResource(ligne.nomCourt);
         String texte = getResources().getString(R.string.notifText, ligne.nomCourt, arret.nom, notification.getTempsAttente());
+        Intent notificationIntent = new Intent(this, DetailArret.class);
+        notificationIntent.putExtra("ligne", ligne);
+        notificationIntent.putExtra("idArret", notification.getArretId());
+        notificationIntent.putExtra("nomArret", arret.nom);
+        notificationIntent.putExtra("direction", notification.getDirection());
+        notificationIntent.putExtra("macroDirection", notification.getMacroDirection());
+        notificationIntent.putExtra("idNotification", notification.getHeure());
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         android.app.Notification notif = new android.app.Notification(icon, texte, System.currentTimeMillis());
-        notif.setLatestEventInfo(this, texte, texte, null);
+        notif.setLatestEventInfo(this, texte, texte, contentIntent);
         notif.defaults |= android.app.Notification.DEFAULT_ALL;
         NotificationManager mNotificationManager = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
