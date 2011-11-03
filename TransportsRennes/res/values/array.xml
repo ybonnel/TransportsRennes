@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -12,10 +11,18 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <resources>
-    <item type="id" name="ajoutFavori"/>
-    <item type="id" name="supprimerFavori"/>
-    <item type="id" name="deplacerGroupe"/>
-    <item type="id" name="creerNotif"/>
-    <item type="id" name="supprimerNotif"/>
+    <integer-array name="choixTempInt">
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>20</item>
+    </integer-array>
+    <string-array name="choixTemps">
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>20 minutes</item>
+    </string-array>
 </resources>

@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
-  Contributors:
-      ybonnel - initial API and implementation
--->
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
@@ -37,35 +34,46 @@
         <activity android:name=".activity.bus.DetailArret" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListFavoris" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.TabFavoris" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.velos.ListStationsByPosition" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.velos.ListStationsFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.velos.ListStationsByPosition"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.velos.ListStationsFavoris"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.parkrelais.ListParkRelais" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.pointsdevente.ListPointsDeVente" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.parkrelais.ListParkRelais"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.pointsdevente.ListPointsDeVente"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.ListTwitter" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.velos.StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.parkrelais.ParkRelaisOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.parkrelais.ParkRelaisOnMap"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap"
+                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.itineraires.ItineraireRequete" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
+        <activity android:name=".activity.itineraires.ItineraireRequete"
+                  android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
-        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
+        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"
+                  android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
         <activity android:name=".activity.itineraires.TrajetOnMap" android:configChanges="keyboardHidden"/>
-        <activity android:name=".activity.preferences.PreferencesRennes" android:configChanges="orientation|keyboardHidden"/>
-        
+        <activity android:name=".activity.preferences.PreferencesRennes"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
+
         <service
-            android:name=".services.UpdateTimeService"
-            android:label="TransportsRennesUpdateTimeService" >
+                android:name=".services.UpdateTimeService"
+                android:label="TransportsRennesUpdateTimeService">
 
             <intent-filter>
-                <action android:name="fr.ybo.transportsrennes.action.UPDATE" />
+                <action android:name="fr.ybo.transportsrennes.action.UPDATE"/>
             </intent-filter>
         </service>
-        <receiver android:process=":remote" android:name=".util.AlarmReceiver" android:label="TransportsRennesAlarmReceiver"/>
+        <receiver android:process=":remote" android:name=".util.AlarmReceiver"
+                  android:label="TransportsRennesAlarmReceiver"/>
         <receiver android:name=".activity.widgets.TransportsWidget" android:label="@string/widget22_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -78,7 +86,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        
+
         <receiver android:name=".activity.widgets.TransportsWidget11" android:label="@string/widget11_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -91,7 +99,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        
+
         <receiver android:name=".activity.widgets.TransportsWidget21" android:label="@string/widget21_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -104,20 +112,20 @@
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
-        
+
         <!-- Cappbrain -->
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 
-		<service android:name="com.ubikod.capptain.android.service.CapptainService"
-			android:label="TransportsRennesService" android:process=":Capptain">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT" />
-				<action android:name="com.ubikod.capptain.ICapptainService" />
-				<data android:scheme="capptain" />
-			</intent-filter>
-			<meta-data android:name="capptain:api:level" android:value="9" />
-			<meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84" />
-		</service>
+        <service android:name="com.ubikod.capptain.android.service.CapptainService"
+                 android:label="TransportsRennesService" android:process=":Capptain">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="com.ubikod.capptain.ICapptainService"/>
+                <data android:scheme="capptain"/>
+            </intent-filter>
+            <meta-data android:name="capptain:api:level" android:value="9"/>
+            <meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84"/>
+        </service>
         <!-- Cappbrain -->
 
         <uses-library android:name="com.google.android.maps"/>

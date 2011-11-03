@@ -37,6 +37,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
 import fr.ybo.transportsrennes.activity.bus.BusRennes;
 import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
+import fr.ybo.transportsrennes.activity.bus.ListNotif;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.map.AllOnMap;
@@ -319,6 +320,7 @@ public class TransportsRennes extends CapptainActivity {
     private static final int MENU_LOAD_LINES = 4;
     private static final int MENU_SHARE = 5;
     private static final int MENU_PREFS = 6;
+    private static final int MENU_NOTIF = 7;
 
 
     @Override
@@ -336,6 +338,8 @@ public class TransportsRennes extends CapptainActivity {
         itemShare.setIcon(android.R.drawable.ic_menu_share);
         MenuItem itemPrefs = menu.add(GROUP_ID, MENU_PREFS, Menu.NONE, R.string.preferences);
         itemPrefs.setIcon(android.R.drawable.ic_menu_manage);
+        MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
+        itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
         return true;
     }
 
@@ -379,8 +383,10 @@ public class TransportsRennes extends CapptainActivity {
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
                 return true;
             case MENU_PREFS:
-                Intent intentPrefs = new Intent(this, PreferencesRennes.class);
-                startActivity(intentPrefs);
+                startActivity(new Intent(this, PreferencesRennes.class));
+                break;
+            case MENU_NOTIF:
+                startActivity(new Intent(this, ListNotif.class));
                 break;
         }
         return false;

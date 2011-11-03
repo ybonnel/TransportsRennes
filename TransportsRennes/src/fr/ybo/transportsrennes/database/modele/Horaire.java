@@ -67,7 +67,7 @@ public class Horaire {
         List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
         int heureDepartCol = cursor.getColumnIndex("_id");
         int trajetIdCol = cursor.getColumnIndex("trajetId");
-        int stopSequenceCol = cursor.getColumnIndex("stopSequence");
+        int stopSequenceCol = cursor.getColumnIndex("sequence");
         while (cursor.moveToNext()) {
             prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol), cursor.getInt(trajetIdCol), cursor.getInt(stopSequenceCol)));
         }
