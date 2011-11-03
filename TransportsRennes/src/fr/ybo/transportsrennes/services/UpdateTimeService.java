@@ -113,6 +113,10 @@ public class UpdateTimeService extends Service {
             TransportsWidget.updateAppWidget(getApplicationContext(),
                     AppWidgetManager.getInstance(getApplicationContext()), widgetId);
         }
+
+    }
+
+    private void updateNotifs() {
         // GestionNotif.
         Calendar calendar = Calendar.getInstance();
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
@@ -120,9 +124,15 @@ public class UpdateTimeService extends Service {
         LOG_YBO.debug("Recherche des notif pour " + now);
         for (Notification notification : TransportsRennesApplication.getDataBaseHelper().select(notifSelect)) {
             createNotification(notification);
-            TransportsRennesApplication.getDataBaseHelper().delete(notification);
         }
-
+        notifSelect.setHeure(now - 1);
+        for (Notification notification : TransportsRennesApplication.getDataBaseHelper().select(notifSelect)) {
+            createNotification(notification);
+        }
+        notifSelect.setHeure(now - 2);
+        for (Notification notification : TransportsRennesApplication.getDataBaseHelper().select(notifSelect)) {
+            createNotification(notification);
+        }
     }
 
 
@@ -149,6 +159,7 @@ public class UpdateTimeService extends Service {
         NotificationManager mNotificationManager = (NotificationManager)
                 getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(notification.getHeure(), notif);
+        TransportsRennesApplication.getDataBaseHelper().delete(notification);
     }
 
     /**
@@ -172,6 +183,7 @@ public class UpdateTimeService extends Service {
             if (screenOn) {
                 update();
             }
+            updateNotifs();
         }
     };
 
