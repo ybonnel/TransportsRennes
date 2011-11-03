@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -24,6 +25,8 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.bus.NotifAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.database.modele.Arret;
+import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
@@ -42,6 +45,20 @@ public class ListNotif extends MenuAccueil.ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listnotif);
         setListAdapter(new NotifAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().selectAll(Notification.class)));
+        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Notification notification = (Notification) adapterView.getItemAtPosition(i);
+                Intent intent = new Intent(ListNotif.this, DetailArret.class);
+                Ligne ligne = Ligne.getLigne(notification.getLigneId());
+                Arret arret = Arret.getArret(notification.getArretId());
+                intent.putExtra("ligne", ligne);
+                intent.putExtra("idArret", notification.getArretId());
+                intent.putExtra("nomArret", arret.nom);
+                intent.putExtra("direction", notification.getDirection());
+                intent.putExtra("macroDirection", notification.getMacroDirection());
+                startActivity(intent);
+            }
+        });
         registerForContextMenu(getListView());
         updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
 
