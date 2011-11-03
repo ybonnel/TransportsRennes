@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
-  Contributors:
-      ybonnel - initial API and implementation
--->
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
     <!-- Messages -->
-    <string name="premierLancement">This is the first launch, the application needs to update the data, this may take a few tens of seconds, do you do
+    <string name="premierLancement">This is the first launch, the application needs to update the data, this may take a
+        few tens of seconds, do you do
         now?
     </string>
     <string name="titleInfoAllInMap">Welcome to the multimodal map</string>
     <string name="titleTransportsRennes">Welcome to the application Transports Rennes</string>
-    <string name="infoAllInMap">The purpose of this map is to display all the points of interest of the application on a single map. To make the map
-        clear, it was not possible to display all the points. That is why they were grouped together. The number displayed on the icon
-        is the number of points of interest contained in the selected area. To see the detail of the group, double click on the icon.
+    <string name="infoAllInMap">The purpose of this map is to display all the points of interest of the
+        application on a single map. To make the map
+        clear, it was not possible to display all the points. That is why they were grouped together. The number
+        displayed on the icon
+        is the number of points of interest contained in the selected area. To see the detail of the group, double click
+        on the icon.
     </string>
-    <string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to reload schedules you
+    <string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to
+        reload schedules you
         have already loaded.
     </string>
     <string name="infoChargementGtfs">Loading data from STAR.</string>
@@ -39,13 +41,17 @@
     <string name="dialogRequeteTwitter">Twitter query</string>
     <string name="dialogRequeteParkRelais">STAR query</string>
     <string name="dialogRequetePointsDeVente">STAR query</string>
-    <string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the STAR and LE vélo STAR (&lt;a
+    <string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the
+        STAR and LE vélo STAR (&lt;a
         href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;This application is
-        developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free to send me any suggestions or
+        developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free
+        to send me any suggestions or
         problem.&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
-    <string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular date using the menu.</string>
+    <string name="detailarret_empty">No more buses today, you can see all the buses of the day or choose a particular
+        date using the menu.
+    </string>
     <string name="itineraires_empty">No itinerary has been found for these addresses.</string>
     <string name="hint_rechercherarret">Bus stop search.</string>
     <string name="listfavori_empty">No favorites found.</string>
@@ -65,10 +71,13 @@
     <string name="activeGps">To fully enjoy this page, it is preferable to activate your GPS.</string>
     <string name="ajouterFavori">Add to favorites</string>
     <string name="suprimerFavori">Remove from favorites</string>
-    <string name="favoriUsedByWidget">A widget is using this favorite, thank you for deleting it before the favorite.</string>
+    <string name="favoriUsedByWidget">A widget is using this favorite, thank you for deleting it before the favorite.
+    </string>
     <string name="chargementLigneFavori">\nLoading bus route %1$s which you have favorites.</string>
-    <string name="loadAllLineAlert">Attention load data from all lines can take several minutes (5 minutes on a Nexus One), and will occupy
-        approximately 8.5 MB of data, but you will have access to all schedules in offline mode. Are you sure you want to load (wifi strongly
+    <string name="loadAllLineAlert">Attention load data from all lines can take several minutes (5 minutes on a Nexus
+        One), and will occupy
+        approximately 8.5 MB of data, but you will have access to all schedules in offline mode. Are you sure you want
+        to load (wifi strongly
         recommended)?
     </string>
     <string name="geocodageAdresseDepart">Geo-coding the start address</string>
@@ -118,41 +127,52 @@
     <string name="twitter">Twitter</string>
     <string name="oui">Yes</string>
     <string name="non">No</string>
-    <string name="prochain">Next : </string>
+    <string name="prochain">Next :</string>
     <!-- Erreurs -->
-    <string name="erreur_chargementStar">An error occurred while retrieving data from the STAR surely due to network problems, try again later.
+    <string name="erreur_chargementStar">An error occurred while retrieving data from the STAR surely due to network
+        problems, try again later.
     </string>
-    <string name="erreur_interrogationStar">An error occurred when querying the STAR surely due to network problems, try again later.</string>
-    <string name="erreur_interrogationVeloStar">An error occurred while querying LE vélo STAR surely due to network problems, try again later.
+    <string name="erreur_interrogationStar">An error occurred when querying the STAR surely due to network problems, try
+        again later.
+    </string>
+    <string name="erreur_interrogationVeloStar">An error occurred while querying LE vélo STAR surely due to network
+        problems, try again later.
     </string>
     <string name="erreur_twitter">Error retrieving twitter messages.</string>
-    <string name="erreur_quotaTwitter">The number of requests to twitter to your IP has been exceeded (150/h). This limitation will be reset to zero
+    <string name="erreur_quotaTwitter">The number of requests to twitter to your IP has been exceeded (150/h). This
+        limitation will be reset to zero
         on %1$s
     </string>
-    <string name="erreur_verifUpdate">Error checking for updates surely due to network problems, try again later.</string>
-    <string name="erreur_widgetBeforeLaunch">You have not yet started the application, please run it before trying to add widgets.</string>
+    <string name="erreur_verifUpdate">Error checking for updates surely due to network problems, try again later.
+    </string>
+    <string name="erreur_widgetBeforeLaunch">You have not yet started the application, please run it before trying to
+        add widgets.
+    </string>
     <string name="erreur_widgetWithNoFavori">You do not have favorites yet. To use widgets add favorites.</string>
     <string name="erreur_auMoinsUnFavori">Select at least one favorite stop.</string>
     <string name="erreur_geocodage">An error occurred while geo-coding address, please try again later.</string>
     <string name="erreur_pasAdresseDepart">No matches were found for the starting address</string>
     <string name="erreur_pasAdresseArrivee">No matches were found for the destination address</string>
     <string name="erreur_gpsPasPret">The GPS position has not yet been found.</string>
-    <string name="erreur_calculItineraires">An error occurred when calculating the route, please try again later.</string>
+    <string name="erreur_calculItineraires">An error occurred when calculating the route, please try again later.
+    </string>
     <string name="erreur_multipleAdresses">Found several addresses, please detail address</string>
-    
+
     <string name="erreur_outOfBounds">The route requested has addresses outside the area covered.</string>
     <string name="erreur_noTransitTimes">No bus found for the requested time.</string>
     <string name="erreur_pathNotFound">No route found.</string>
-    
+
     <string name="nouvelleVersion">New version available</string>
     <string name="versionDisponible">Version %1$s is available!</string>
-    
+
     <string name="erreurNonPrevue">Unexpected error, a crash report was sent to the developer</string>
     <string name="erreurReseau">A connection error has been detected, please try again later.</string>
-    
+
     <string name="menu_share">Share</string>
-    <string name="shareText">Transport Rennes, Android application to help you in transit of Rennes: http://goo.gl/ALKs0</string>
-    <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.</string>
+    <string name="shareText">Transport Rennes, Android application to help you in transit of Rennes: http://goo.gl/ALKs0
+    </string>
+    <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.
+    </string>
     <string name="noGoogleMap">GoogleMap not found</string>
     <string name="all">All</string>
     <string name="ajouterGroupe">Add a new group</string>
@@ -163,7 +183,16 @@
     <string name="groupeExistant">There is already a group with that name</string>
     <string name="deplacerGroupe">Move in a group</string>
     <string name="chooseGroupe">Choose a group</string>
-    
+
     <string name="notifUpdateOn">Notification for updates</string>
     <string name="preferences">Preferences</string>
+
+    <string name="creerNotif">Create an alert.</string>
+    <string name="tempsRestant">Alert in %1$s.</string>
+    <string name="notifText">Line %1$s, stop %2$s arrive in %3$s minutes</string>
+    <string name="notifShortText">Line %1$s, stop %2$s</string>
+    <string name="notifDescriptionText">Arrive in %1$s minutes</string>
+    <string name="listnotif_empty">No notification found.</string>
+    <string name="notif">Notifications</string>
+    <string name="supprimerNotif">Delete the notification</string>
 </resources>
