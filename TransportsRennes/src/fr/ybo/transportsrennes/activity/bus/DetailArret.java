@@ -468,10 +468,14 @@ public class DetailArret extends MenuAccueil.ListActivity {
                         if (heure >= 24 * 60) {
                             heure -= (24 * 60);
                         }
+                        int heureNotif = heure - minutes;
+                        if (heureNotif < 0) {
+                            heureNotif += (24 * 60);
+                        }
                         Notification notification = new Notification();
                         notification.setLigneId(ligneId);
                         notification.setArretId(arretId);
-                        notification.setHeure(heure + minutes);
+                        notification.setHeure(heureNotif);
                         notification.setTempsAttente(minutes);
                         notification.setDirection(favori.direction);
                         notification.setMacroDirection(favori.macroDirection);
@@ -479,7 +483,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
                         TransportsRennesApplication.getDataBaseHelper().insert(notification);
                         Calendar calendar = Calendar.getInstance();
                         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                        int tempsRestant = (heure + minutes) - now;
+                        int tempsRestant = (heureNotif) - now;
                         if (tempsRestant <= 0) {
                             tempsRestant += (24 * 60);
                         }
