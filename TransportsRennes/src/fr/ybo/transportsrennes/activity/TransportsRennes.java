@@ -316,11 +316,11 @@ public class TransportsRennes extends CapptainActivity {
     private static final int GROUP_ID = 0;
     private static final int MENU_ID = 1;
     private static final int MENU_MAP_ID = 2;
-    private static final int MENU_TICKETS = 3;
-    private static final int MENU_LOAD_LINES = 4;
+    private static final int MENU_PREFS = 3;
+    private static final int MENU_NOTIF = 4;
     private static final int MENU_SHARE = 5;
-    private static final int MENU_PREFS = 6;
-    private static final int MENU_NOTIF = 7;
+    private static final int MENU_LOAD_LINES = 6;
+    private static final int MENU_TICKETS = 7;
 
 
     @Override
@@ -330,16 +330,16 @@ public class TransportsRennes extends CapptainActivity {
         item.setIcon(android.R.drawable.ic_menu_info_details);
         MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
         itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
-        MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
-        itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
-        MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
-        itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
-        MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
-        itemShare.setIcon(android.R.drawable.ic_menu_share);
         MenuItem itemPrefs = menu.add(GROUP_ID, MENU_PREFS, Menu.NONE, R.string.preferences);
         itemPrefs.setIcon(android.R.drawable.ic_menu_manage);
         MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
         itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
+        MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
+        itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
+        MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
+        itemShare.setIcon(android.R.drawable.ic_menu_share);
+        MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
+        itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
         return true;
     }
 
