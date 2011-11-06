@@ -13,18 +13,17 @@
  */
 package fr.ybo.transportsbordeaux;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -228,7 +227,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
             findViewById(R.id.alerte).setVisibility(View.GONE);
         }
 
-
+        registerForContextMenu(lv);
         // Look up the AdView as a resource and load a request.
         ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
     }
@@ -369,11 +368,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private static final int GROUP_ID = 0;
     private static final int MENU_ALL_STOPS = Menu.FIRST;
     private static final int MENU_SELECT_DAY = MENU_ALL_STOPS + 1;
@@ -434,5 +428,113 @@ public class DetailArret extends MenuAccueil.ListActivity {
                     calendar.get(Calendar.DAY_OF_MONTH));
         }
         return null;
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == android.R.id.list) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(info.position);
+            menu.setHeaderTitle(formatterCalendarHeure(detailArretConteneur.getHoraire()));
+            menu.add(Menu.NONE, R.id.creerNotif, 0, getString(R.string.creerNotif));
+        }
+    }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.creerNotif:
+                final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(info.position);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(formatterCalendarHeure(detailArretConteneur.getHoraire()));
+                builder.setItems(getResources().getStringArray(R.array.choixTemps), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        int minutes = getResources().getIntArray(R.array.choixTempInt)[item];
+                        String ligneId = favori.ligneId;
+                        String arretId = favori.arretId;
+                        int heure = detailArretConteneur.getHoraire();
+                        if (heure >= 24 * 60) {
+                            heure -= (24 * 60);
+                        }
+                        int heureNotif = heure - minutes;
+                        if (heureNotif < 0) {
+                            heureNotif += (24 * 60);
+                        }
+                        Notification notification = new Notification();
+                        notification.setLigneId(ligneId);
+                        notification.setArretId(arretId);
+                        notification.setHeure(heureNotif);
+                        notification.setTempsAttente(minutes);
+                        notification.setDirection(favori.direction);
+                        TransportsBordeauxApplication.getDataBaseHelper().delete(notification);
+                        TransportsBordeauxApplication.getDataBaseHelper().insert(notification);
+                        Calendar calendar = Calendar.getInstance();
+                        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                        int tempsRestant = (heureNotif) - now;
+                        if (tempsRestant <= 0) {
+                            tempsRestant += (24 * 60);
+                        }
+                        Toast.makeText(DetailArret.this, getResources().getString(R.string.tempsRestant, formatterCalendar(tempsRestant)), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setCancelable(true);
+                builder.create().show();
+
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    private CharSequence formatterCalendarHeure(int prochainDepart) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int heures = prochainDepart / 60;
+        int minutes = prochainDepart - heures * 60;
+        if (heures >= 24) {
+            heures -= 24;
+        }
+        String heuresChaine = Integer.toString(heures);
+        String minutesChaine = Integer.toString(minutes);
+        if (heuresChaine.length() < 2) {
+            stringBuilder.append('0');
+        }
+        stringBuilder.append(heuresChaine);
+        stringBuilder.append(':');
+        if (minutesChaine.length() < 2) {
+            stringBuilder.append('0');
+        }
+        stringBuilder.append(minutesChaine);
+        return stringBuilder.toString();
+    }
+
+    private CharSequence formatterCalendar(int tempsRestant) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(this.getString(R.string.dans));
+        stringBuilder.append(' ');
+        int heures = tempsRestant / 60;
+        int minutes = tempsRestant - heures * 60;
+        boolean tempsAjoute = false;
+        if (heures > 0) {
+            stringBuilder.append(heures);
+            stringBuilder.append(' ');
+            stringBuilder.append(this.getString(R.string.heures));
+            stringBuilder.append(' ');
+            tempsAjoute = true;
+        }
+        if (minutes > 0) {
+            stringBuilder.append(minutes);
+            stringBuilder.append(' ');
+            stringBuilder.append(this.getString(R.string.minutes));
+            tempsAjoute = true;
+        }
+        if (!tempsAjoute) {
+            stringBuilder.append("0 ");
+            stringBuilder.append(this.getString(R.string.minutes));
+        }
+        return stringBuilder.toString();
     }
 }

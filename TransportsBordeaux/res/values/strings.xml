@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
-  Contributors:
-      ybonnel - initial API and implementation
--->
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
 <resources>
     <string name="app_name">Transports Bordeaux</string>
     <string name="widget11_name">Transports Bordeaux 1x1</string>
@@ -25,7 +22,8 @@
     <string name="btn_velo">VCUB</string>
     <string name="btn_velo_favori">Stations favorites</string>
     <string name="verificationUpdate">Recherche de mise à jour.</string>
-    <string name="dialogAPropos">Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;&lt;br/&gt;N\'hésitez pas à m\'envoyer
+    <string name="dialogAPropos">Cette application est développée et maintenue par une seule personne sur du temps
+        personnel, merci donc de votre indulgence.&lt;br/&gt;&lt;br/&gt;N\'hésitez pas à m\'envoyer
         toute suggestion ou problème.&lt;br/&gt;
         L\'icône de l\'application a gracieusement été réalisée par Nicolas (&lt;a href=\'http://www.cryptik-web.com\'&gt;www.cryptik-web.com&lt;/a&gt;).&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
@@ -46,15 +44,19 @@
     <string name="oui">Oui</string>
     <string name="non">Non</string>
     <string name="dialogRequeteVcub">Interrogation du site VCUB.</string>
-    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les données, cette opération peut durer
+    <string name="premierLancement">Il s\'agit du premier lancement, l\'application a besoin de mettre à jour les
+        données, cette opération peut durer
         quelques dizaines de secondes, voulez-vous l\'effectuer maintenant?
     </string>
     <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
     <string name="hint_rechercheStation">Recherche de stations</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="rechercheArrets">Recherche des arrêts de bus.</string>
-    <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?</string>
-    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir une date particulière via le menu.</string>
+    <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?
+    </string>
+    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir
+        une date particulière via le menu.
+    </string>
     <string name="listfavori_empty">Aucun favoris trouvé.</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="menu_prochainArrets">Prochains horaires</string>
@@ -69,19 +71,24 @@
     <string name="dialogRequeteAlerts">Interrogation du TBC.</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
     <string name="widget11_choix">Choisissez un arrêt favori.</string>
-    <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur</string>
+    <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur
+    </string>
     <string name="recuperationTrajet">Récupération du trajet en cours...</string>
     <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
-    <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant d\'essayer d\'ajouter des
+    <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant
+        d\'essayer d\'ajouter des
         widgets.
     </string>
-    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut ajouter des favoris.</string>
+    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut
+        ajouter des favoris.
+    </string>
     <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
     <string name="miniHeures">h</string>
     <string name="miniMinutes">min</string>
-    <string name="prochain">Prochain : </string>
-    <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.</string>
+    <string name="prochain">Prochain :</string>
+    <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.
+    </string>
     <string name="nouvelleVersion">Nouvelle version disponible</string>
     <string name="versionDisponible">La version %1$s est disponible!</string>
     <string name="menu_orderByName">Ordre alphabétique</string>
@@ -90,21 +97,30 @@
     <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
     <string name="menu_share">Partager</string>
-    <string name="shareText">Transports Bordeaux, l\'application Android pour vous faciliter les Transports Bordelais : http://goo.gl/x1Z9o</string>
-    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes (5 minutes sur un Galaxy S II),
-        et occupera environ 45Mo de données, mais vous permettra d\'accéder à tous les horaires de manière instantanée. Êtes-vous sûr de vouloir les charger?
+    <string name="shareText">Transports Bordeaux, l\'application Android pour vous faciliter les Transports Bordelais :
+        http://goo.gl/x1Z9o
     </string>
-    
+    <string name="loadAllLineAlert">Attention, charger les données de toutes les lignes peut prendre plusieurs minutes
+        (5 minutes sur un Galaxy S II),
+        et occupera environ 45Mo de données, mais vous permettra d\'accéder à tous les horaires de manière instantanée.
+        Êtes-vous sûr de vouloir les charger?
+    </string>
+
     <string name="textAdresseDepart">Départ</string>
     <string name="textAdresseArrivee">Destination</string>
     <string name="exempleAdresse">Ex : place de la victoire, Bordeaux</string>
     <string name="hint_positionCourante">Position courante</string>
-    <string name="erreur_geocodage">Une erreur est survenue lors du géo-codage de l\'adresse, veuillez réessayer plus tard.</string>
+    <string name="erreur_geocodage">Une erreur est survenue lors du géo-codage de l\'adresse, veuillez réessayer plus
+        tard.
+    </string>
     <string name="erreur_pasAdresseDepart">Aucune correspondance n\'a été trouvé pour l\'adresse de départ</string>
-    <string name="erreur_pasAdresseArrivee">Aucune correspondance n\'a été trouvé pour l\'adresse de destination</string>
+    <string name="erreur_pasAdresseArrivee">Aucune correspondance n\'a été trouvé pour l\'adresse de destination
+    </string>
     <string name="erreur_gpsPasPret">La position gps n\'a pas encore été trouvée.</string>
-    <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer plus tard.</string>
-    <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>    
+    <string name="erreur_calculItineraires">Une erreur est survenue lors du calcul de l\'itinéraire, veuillez réessayer
+        plus tard.
+    </string>
+    <string name="erreur_multipleAdresses">Plusieurs adresses trouvées, veuillez préciser l\'adresse</string>
     <string name="erreur_outOfBounds">L\'itinéraire demandé possède des adresses en déhors de la zone couverte.</string>
     <string name="erreur_noTransitTimes">Aucun bus trouvé pour l\'heure demandée.</string>
     <string name="erreur_pathNotFound">Aucun itinéraire trouvé.</string>
@@ -119,10 +135,11 @@
     <string name="alertes">Alertes</string>
     <string name="bus">Bus</string>
     <string name="tram">Tramway</string>
-    
-    <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.</string>
+
+    <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.
+    </string>
     <string name="menu_carte">Carte</string>
-    
+
     <string name="all">Tous</string>
     <string name="ajouterGroupe">Ajouter un groupe</string>
     <string name="suprimerGroupe">Supprimer le groupe</string>
@@ -132,19 +149,35 @@
     <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
     <string name="deplacerGroupe">Déplacer dans un groupe</string>
     <string name="chooseGroupe">Choisissez un groupe</string>
-    
-    <string name="erreurDBOnSdCard">La SdCard est inaccessible, merci de réessayer plus tard, si le problème persiste, vous pouvez supprimer les données, et elle seront alors stockés sur le téléphone.</string>
-    <string name="sdCardInaccessbile">La SdCard est inaccessible, il est donc impossible de mettre les données dessus</string>
+
+    <string name="erreurDBOnSdCard">La SdCard est inaccessible, merci de réessayer plus tard, si le problème persiste,
+        vous pouvez supprimer les données, et elle seront alors stockés sur le téléphone.
+    </string>
+    <string name="sdCardInaccessbile">La SdCard est inaccessible, il est donc impossible de mettre les données dessus
+    </string>
     <string name="dbOnSdCard">Données sur la SDCard</string>
-    <string name="changeDbOnSdCard">ATTENTION, toutes les données seront perdues, de plus en mettant les données sur la SDCard, celà peut affecter les performances de l\'application, il faut donc utiliser cette fonction seulement si votre place sur le téléphone est limitée. Êtes vous sûr de vouloir déplacer les données?</string>
+    <string name="changeDbOnSdCard">ATTENTION, toutes les données seront perdues, de plus en mettant les données sur la
+        SDCard, celà peut affecter les performances de l\'application, il faut donc utiliser cette fonction seulement si
+        votre place sur le téléphone est limitée. Êtes vous sûr de vouloir déplacer les données?
+    </string>
     <string name="suppressionDB">Suppression des anciennes données en cours...</string>
     <string name="preferences">Préférences</string>
-    
-    <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de la place avec de charger d\'autres données.</string>
-    
+
+    <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de
+        la place avec de charger d\'autres données.
+    </string>
+
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="dialogRequeteParkRelais">Interrogation de la CUB.</string>
     <string name="menu_parkings">Parkings</string>
-    
+
     <string name="notifUpdateOn">Notification pour les mises à jour</string>
+    <string name="creerNotif">Créer une alerte.</string>
+    <string name="tempsRestant">Notification dans %1$s.</string>
+    <string name="notifText">Ligne %1$s, arrêt %2$s arrive dans %3$s minutes</string>
+    <string name="notifShortText">Ligne %1$s, arrêt %2$s</string>
+    <string name="notifDescriptionText">Arrive dans %1$s minutes</string>
+    <string name="listnotif_empty">Aucune notification trouvée.</string>
+    <string name="notif">Notifications</string>
+    <string name="supprimerNotif">Supprimer la notification</string>
 </resources>
