@@ -683,6 +683,7 @@ id,nom,latitude,longitude
 670b,Beauséjour,44.79967,-0.68643
 2456b,Mérignac Centre (Médiathèque),44.84177,-0.6482
 1105b,Madran,44.96794,-0.53397
+2831b,Collège Paul Langevin,44.85057,-0.66151
 5784b,Jeunesse,44.8501,-0.63775
 3579b,F. Buisson (vers Courréjean),44.82423,-0.55088
 450b,Rives d'Arcins,44.7948,-0.53512
@@ -707,6 +708,7 @@ id,nom,latitude,longitude
 2514b,Collège F. Mitterrand,44.79333,-0.64738
 1779b,Village de Magudas,44.86407,-0.72874
 3072b,Route de Picot,44.91688,-0.73541
+6511b,Cité des Pins Terminus,44.85529,-0.65704
 1837b,Jean Prat,44.93231,-0.50311
 3283b,Collège G.Rayet,44.84222,-0.51549
 5674b,Laplace,44.85686,-0.66816
@@ -766,7 +768,6 @@ id,nom,latitude,longitude
 3133b,Bir Hakeim,44.83171,-0.62533
 169b,Villa,44.95742,-0.60515
 808b,Socrate,44.80906,-0.66204
-2460b,Mérignac Cité des Pins,44.85469,-0.65696
 3203b,Le Dorat 1-3,44.79826,-0.5512
 1776b,Mickaëlis,44.93673,-0.48083
 5363b,Stade Batany,44.84234,-0.60738
@@ -1357,6 +1358,7 @@ id,nom,latitude,longitude
 6353b,Rigal,44.86798,-0.58033
 943b,Emile Zola,44.90374,-0.50445
 5345b,Chiquet Brion,44.80773,-0.61886
+614b,Collège Paul Langevin,44.85079,-0.66127
 1067b,Louis Mie,44.83171,-0.58313
 2430b,Archimède,44.78527,-0.64422
 3233b,Les Airelles,44.76616,-0.59616
