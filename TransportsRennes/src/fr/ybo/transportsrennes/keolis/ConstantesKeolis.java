@@ -36,6 +36,8 @@ public final class ConstantesKeolis {
         LIST_CLASSES_DATABASE.add(Direction.class);
         LIST_CLASSES_DATABASE.add(GroupeFavori.class);
         LIST_CLASSES_DATABASE.add(Notification.class);
+        LIST_CLASSES_DATABASE.add(AlertBdd.class);
+        LIST_CLASSES_DATABASE.add(Bounds.class);
     }
 
     public static final Collection<Class<?>> CLASSES_DB_TO_DELETE_ON_UPDATE = new ArrayList<Class<?>>(7);

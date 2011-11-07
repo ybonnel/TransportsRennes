@@ -27,7 +27,7 @@ import java.util.*;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
     private static final String DATABASE_NAME = "keolis.db";
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 14;
 
     private Context context;
 
@@ -298,6 +298,12 @@ public class TransportsRennesDatabase extends DataBaseHelper {
             mapUpgrades.put(13, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
                     getBase().getTable(Notification.class).createTable(db);
+                }
+            });
+            mapUpgrades.put(14, new UpgradeDatabaseWithError() {
+                public void myUpgrade(SQLiteDatabase db) {
+                    getBase().getTable(AlertBdd.class).createTable(db);
+                    getBase().getTable(Bounds.class).createTable(db);
                 }
             });
         }
