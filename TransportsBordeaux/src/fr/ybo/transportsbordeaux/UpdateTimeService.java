@@ -19,9 +19,11 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import fr.ybo.transportsbordeaux.modele.Arret;
 import fr.ybo.transportsbordeaux.modele.Ligne;
@@ -59,6 +61,9 @@ public class UpdateTimeService extends Service {
     public void onCreate() {
         super.onCreate();
         LOG_YBO.debug("onCreate");
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".services.UpdateTimeService"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         registerReceiver(mTimeChangedReceiver, sIntentFilter);
     }
 

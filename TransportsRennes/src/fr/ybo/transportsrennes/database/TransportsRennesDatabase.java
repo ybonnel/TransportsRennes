@@ -19,10 +19,26 @@ import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.database.modele.*;
+import fr.ybo.transportsrennes.database.modele.AlertBdd;
+import fr.ybo.transportsrennes.database.modele.Arret;
+import fr.ybo.transportsrennes.database.modele.ArretFavori;
+import fr.ybo.transportsrennes.database.modele.ArretRoute;
+import fr.ybo.transportsrennes.database.modele.Bounds;
+import fr.ybo.transportsrennes.database.modele.Calendrier;
+import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.database.modele.Direction;
+import fr.ybo.transportsrennes.database.modele.GroupeFavori;
+import fr.ybo.transportsrennes.database.modele.Ligne;
+import fr.ybo.transportsrennes.database.modele.Notification;
+import fr.ybo.transportsrennes.database.modele.Trajet;
+import fr.ybo.transportsrennes.database.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TransportsRennesDatabase extends DataBaseHelper {
 

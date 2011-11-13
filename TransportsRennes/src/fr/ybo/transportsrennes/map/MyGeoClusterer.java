@@ -2,17 +2,14 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Contributors:
- *     ybonnel - initial API and implementation
  */
 /*
  * Copyright (C) 2009 Huan Erdao
@@ -32,58 +29,56 @@
 
 package fr.ybo.transportsrennes.map;
 
-import java.util.List;
-
 import android.app.Activity;
-
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
-
 import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
 import fr.ybo.transportsrennes.map.mapviewutil.GeoItem;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.GeoClusterer;
 import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 
+import java.util.List;
+
 public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClusterer {
 
-	private final Activity activity;
-	private final String paramName;
-	private final Class<? extends Activity> intentClass;
+    private final Activity activity;
+    private final String paramName;
+    private final Class<? extends Activity> intentClass;
 
-	public MyGeoClusterer(Activity activity, MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity, String paramName,
-	                      Class<? extends Activity> intentClass) {
-		super(mapView, markerIconBmps, screenDensity);
-		gridSize = 70;
-		this.activity = activity;
-		this.paramName = paramName;
-		this.intentClass = intentClass;
-	}
+    public MyGeoClusterer(Activity activity, MapView mapView, List<MarkerBitmap> markerIconBmps, float screenDensity, String paramName,
+                          Class<? extends Activity> intentClass) {
+        super(mapView, markerIconBmps, screenDensity);
+        gridSize = 70;
+        this.activity = activity;
+        this.paramName = paramName;
+        this.intentClass = intentClass;
+    }
 
-	@Override
-	public void createCluster(GeoItem item) {
-		MyGeoCluster cluster = new MyGeoCluster(this);
-		cluster.addItem(item);
-		clusters.add(cluster);
-	}
+    @Override
+    public void createCluster(GeoItem item) {
+        MyGeoCluster cluster = new MyGeoCluster(this);
+        cluster.addItem(item);
+        clusters.add(cluster);
+    }
 
-	public class MyGeoCluster extends GeoClusterer.GeoCluster {
-		private final MyGeoClusterer<?> clusterer;
+    public class MyGeoCluster extends GeoClusterer.GeoCluster {
+        private final MyGeoClusterer<?> clusterer;
 
-		public MyGeoCluster(MyGeoClusterer<?> clusterer) {
-			super(clusterer);
-			this.clusterer = clusterer;
-		}
+        public MyGeoCluster(MyGeoClusterer<?> clusterer) {
+            super(clusterer);
+            this.clusterer = clusterer;
+        }
 
-		@Override
-		public void redraw() {
-			if (!isInBounds(clusterer.getCurBounds())) {
-				return;
-			}
-			if (clusterMarker == null) {
-				clusterMarker = new MyClusterMarker<Objet>(this, markerIconBmps, screenDensity, activity, paramName, intentClass);
-				List<Overlay> mapOverlays = mapView.getOverlays();
-				mapOverlays.add(clusterMarker);
-			}
-		}
-	}
+        @Override
+        public void redraw() {
+            if (!isInBounds(clusterer.getCurBounds())) {
+                return;
+            }
+            if (clusterMarker == null) {
+                clusterMarker = new MyClusterMarker<Objet>(this, markerIconBmps, screenDensity, activity, paramName, intentClass);
+                List<Overlay> mapOverlays = mapView.getOverlays();
+                mapOverlays.add(clusterMarker);
+            }
+        }
+    }
 }

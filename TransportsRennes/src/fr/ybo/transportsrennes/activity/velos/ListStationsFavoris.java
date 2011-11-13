@@ -35,7 +35,11 @@ import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.Formatteur;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.

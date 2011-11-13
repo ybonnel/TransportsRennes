@@ -195,4 +195,6 @@
     <string name="listnotif_empty">No notification found.</string>
     <string name="notif">Notifications</string>
     <string name="supprimerNotif">Delete the notification</string>
+    <string name="lineShortcut">Bus line</string>
+    <string name="lineName">Line %1$s</string>
 </resources>

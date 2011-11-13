@@ -13,7 +13,20 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
-import fr.ybo.transportsrennes.database.modele.*;
+import fr.ybo.transportsrennes.database.modele.AlertBdd;
+import fr.ybo.transportsrennes.database.modele.Arret;
+import fr.ybo.transportsrennes.database.modele.ArretFavori;
+import fr.ybo.transportsrennes.database.modele.ArretRoute;
+import fr.ybo.transportsrennes.database.modele.Bounds;
+import fr.ybo.transportsrennes.database.modele.Calendrier;
+import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.database.modele.Direction;
+import fr.ybo.transportsrennes.database.modele.GroupeFavori;
+import fr.ybo.transportsrennes.database.modele.Horaire;
+import fr.ybo.transportsrennes.database.modele.Ligne;
+import fr.ybo.transportsrennes.database.modele.Notification;
+import fr.ybo.transportsrennes.database.modele.Trajet;
+import fr.ybo.transportsrennes.database.modele.VeloFavori;
 
 import java.util.ArrayList;
 import java.util.Collection;

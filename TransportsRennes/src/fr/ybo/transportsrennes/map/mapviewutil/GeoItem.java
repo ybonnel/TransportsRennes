@@ -2,17 +2,14 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * Contributors:
- *     ybonnel - initial API and implementation
  */
 /*
  * Copyright (C) 2009 Huan Erdao
@@ -35,7 +32,6 @@ package fr.ybo.transportsrennes.map.mapviewutil;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import com.google.android.maps.GeoPoint;
 
 /**
@@ -45,74 +41,74 @@ import com.google.android.maps.GeoPoint;
  */
 public class GeoItem implements Parcelable {
 
-	/**
-	 * id of item.
-	 */
-	private final long id;
-	/**
-	 * item location in GeoPoint.
-	 */
-	private final GeoPoint location;
-	/**
-	 * selection state flag. true if selected.
-	 */
-	private boolean isSelected;
+    /**
+     * id of item.
+     */
+    private final long id;
+    /**
+     * item location in GeoPoint.
+     */
+    private final GeoPoint location;
+    /**
+     * selection state flag. true if selected.
+     */
+    private boolean isSelected;
 
-	/**
-	 * @param id          item id.
-	 * @param latitudeE6  latitude of the item in microdegrees (degrees * 1E6).
-	 * @param longitudeE6 longitude of the item in microdegrees (degrees * 1E6).
-	 */
-	protected GeoItem(long id, int latitudeE6, int longitudeE6) {
-		this.id = id;
-		location = new GeoPoint(latitudeE6, longitudeE6);
-		isSelected = false;
-	}
+    /**
+     * @param id          item id.
+     * @param latitudeE6  latitude of the item in microdegrees (degrees * 1E6).
+     * @param longitudeE6 longitude of the item in microdegrees (degrees * 1E6).
+     */
+    protected GeoItem(long id, int latitudeE6, int longitudeE6) {
+        this.id = id;
+        location = new GeoPoint(latitudeE6, longitudeE6);
+        isSelected = false;
+    }
 
-	/* describeContents */
-	public int describeContents() {
-		return 0;
-	}
+    /* describeContents */
+    public int describeContents() {
+        return 0;
+    }
 
-	/**
-	 * getLocation
-	 *
-	 * @return GeoPoint of the item.
-	 */
-	public GeoPoint getLocation() {
-		return location;
-	}
+    /**
+     * getLocation
+     *
+     * @return GeoPoint of the item.
+     */
+    public GeoPoint getLocation() {
+        return location;
+    }
 
-	/**
-	 * selected
-	 *
-	 * @return true if the item is in selected state.
-	 */
-	public boolean isSelected() {
-		return isSelected;
-	}
+    /**
+     * selected
+     *
+     * @return true if the item is in selected state.
+     */
+    public boolean isSelected() {
+        return isSelected;
+    }
 
-	/**
-	 * setSelect
-	 *
-	 * @param flg flag to be set.
-	 */
-	public void setSelect(boolean flg) {
-		isSelected = flg;
-	}
+    /**
+     * setSelect
+     *
+     * @param flg flag to be set.
+     */
+    public void setSelect(boolean flg) {
+        isSelected = flg;
+    }
 
-	/**
-	 * writeToParcel
-	 *
-	 * @param parcel Parcel to be written.
-	 * @param flags  flag.
-	 */
-	public void writeToParcel(Parcel parcel, int flags) {
-		parcel.writeLong(id);
-		parcel.writeInt(location.getLatitudeE6());
-		parcel.writeInt(location.getLongitudeE6());
-		int flg = isSelected ? 1 : 0;
-		parcel.writeInt(flg);
-	}
+    /**
+     * writeToParcel
+     *
+     * @param parcel Parcel to be written.
+     * @param flags  flag.
+     */
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeLong(id);
+        parcel.writeInt(location.getLatitudeE6());
+        parcel.writeInt(location.getLongitudeE6());
+        int flg = isSelected ? 1 : 0;
+        parcel.writeInt(flg);
+    }
 
 }

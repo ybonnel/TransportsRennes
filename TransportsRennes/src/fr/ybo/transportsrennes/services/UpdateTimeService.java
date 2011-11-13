@@ -19,13 +19,20 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
-import fr.ybo.transportsrennes.activity.widgets.*;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
 import fr.ybo.transportsrennes.database.modele.Ligne;
@@ -62,7 +69,9 @@ public class UpdateTimeService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        LOG_YBO.debug("onCreate");
+        PackageManager pm = getPackageManager();
+        pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         registerReceiver(mTimeChangedReceiver, sIntentFilter);
     }
 

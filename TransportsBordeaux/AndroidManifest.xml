@@ -29,7 +29,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListeBus" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
@@ -59,6 +64,17 @@
         <activity android:name=".ParkingsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
 
+
+        <activity
+                android:name=".BusShortcutPicker"
+                android:label="@string/lineShortcut"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <service
                 android:name=".UpdateTimeService"
                 android:label="UpdateTimeService">
@@ -67,6 +83,12 @@
                 <action android:name="fr.ybo.transportsbordeaux.action.UPDATE"/>
             </intent-filter>
         </service>
+
+        <receiver android:name=".UpdateTimeServiceReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <receiver android:process=":remote" android:name=".util.AlarmReceiver"/>
 

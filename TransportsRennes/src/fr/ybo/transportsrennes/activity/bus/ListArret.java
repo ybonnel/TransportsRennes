@@ -21,7 +21,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
 import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
@@ -155,6 +160,12 @@ public class ListArret extends MenuAccueil.ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(fr.ybo.transportsrennes.R.layout.listearrets);
         myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+        if (myLigne == null) {
+            myLigne = new Ligne();
+            myLigne.id = getIntent().getStringExtra("ligneId");
+            myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
+
+        }
         findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onDirectionClick();

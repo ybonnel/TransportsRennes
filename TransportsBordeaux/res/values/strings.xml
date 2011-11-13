@@ -180,4 +180,6 @@
     <string name="listnotif_empty">Aucune notification trouvée.</string>
     <string name="notif">Notifications</string>
     <string name="supprimerNotif">Supprimer la notification</string>
+    <string name="lineShortcut">Ligne de bus</string>
+    <string name="lineName">Ligne %1$s</string>
 </resources>
