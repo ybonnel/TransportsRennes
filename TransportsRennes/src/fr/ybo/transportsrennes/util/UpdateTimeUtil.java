@@ -67,7 +67,6 @@ public class UpdateTimeUtil {
                 if (now > oldNow) {
                     oldNow = now;
                     activity.runOnUiThread(new Runnable() {
-                        @Override
                         public void run() {
                             update.update(calendar);
                         }
