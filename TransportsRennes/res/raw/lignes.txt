@@ -64,6 +64,6 @@ ordre,id,nom_court,nom_long
 63,0207,207,Gares <> Cesson-Sévigné (Lycée Saint-Etienne)
 64,0208,208,Saint-Grégoire (Uttenreuth) <> Saint-Grégoire (MFR Rabinardières)
 65,0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne)
-66,0089,STN,Beaulieu Atalante <> J.F. Kennedy
+66,0089,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy
 67,0101,TTZ,Rennes <> Touche Tizon
 68,a,a,La Poterie <> J.F. Kennedy
