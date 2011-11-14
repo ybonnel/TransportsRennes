@@ -37,12 +37,32 @@
         </activity>
         <activity android:name=".activity.bus.ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.DetailArret" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.ListFavoris" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.TabFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListFavoris" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.bus.TabFavoris" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.velos.ListStationsByPosition"
-                  android:configChanges="orientation|keyboardHidden"/>
+                  android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.velos.ListStationsFavoris"
-                  android:configChanges="orientation|keyboardHidden"/>
+                  android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.ListAlerts" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.ListTwitter" android:configChanges="orientation|keyboardHidden"/>
@@ -62,7 +82,12 @@
         <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesBordeaux"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.parkrelais.ListParkings" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.parkrelais.ListParkings" android:configChanges="orientation|keyboardHidden">
+            <intent-filter>
+                <!-- This action is only to allow an entry point for launcher shortcuts -->
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".activity.parkrelais.ParkingsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
 
@@ -70,6 +95,46 @@
         <activity
                 android:name=".activity.bus.BusShortcutPicker"
                 android:label="@string/lineShortcut"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activity.bus.BusFavorisShortcutPicker"
+                android:label="@string/btn_bus_favori"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activity.velos.StationsShortcutPicker"
+                android:label="@string/btn_velo"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activity.velos.StationsFavorisShortcutPicker"
+                android:label="@string/btn_velo_favori"
+                >
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activity.parkrelais.ParkRelaisShortcutPicker"
+                android:label="@string/menu_parkings"
                 >
             <intent-filter>
                 <action android:name="android.intent.action.CREATE_SHORTCUT"/>
