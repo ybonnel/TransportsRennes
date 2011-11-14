@@ -22,10 +22,10 @@ import fr.ybo.database.modele.Table;
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.TransportsBordeauxApplication;
+import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
-import fr.ybo.transportsbordeaux.modele.Horaire;
-import fr.ybo.transportsbordeaux.tbc.TcbException;
+import fr.ybo.transportsbordeaux.database.modele.Horaire;
+import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 import fr.ybo.transportsbordeaux.util.LogYbo;
 import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 
@@ -129,9 +129,6 @@ public final class GestionZipKeolis {
                                 dataBaseHelper.beginTransaction();
                             }
                         }
-
-                        ;
-
                     });
                     LOG_YBO.debug("Fin de parse du fichier");
                 } finally {

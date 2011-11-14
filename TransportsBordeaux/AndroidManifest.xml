@@ -18,9 +18,9 @@
 
 
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="false" android:name="TransportsBordeauxApplication"
+                 android:debuggable="false" android:name=".application.TransportsBordeauxApplication"
                  android:theme="@android:style/Theme.NoTitleBar">
-        <activity android:name=".TransportsBordeaux"
+        <activity android:name=".activity.TransportsBordeaux"
                   android:configChanges="orientation|keyboardHidden"
                   android:launchMode="singleTop">
             <intent-filter>
@@ -28,45 +28,47 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ListeBus" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListArret" android:configChanges="orientation|keyboardHidden">
+        <activity android:name=".activity.bus.ListeBus" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListArret" android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <!-- This action is only to allow an entry point for launcher shortcuts -->
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".DetailArret" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListFavoris" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".TabFavoris" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListStationsByPosition"
+        <activity android:name=".activity.bus.ListArretByPosition" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.DetailArret" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.TabFavoris" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.velos.ListStationsByPosition"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListStationsFavoris"
+        <activity android:name=".activity.velos.ListStationsFavoris"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".TabAlertes" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListAlerts" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListTwitter" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".StationsOnMap"
+        <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.alerts.ListAlerts" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.alerts.ListTwitter" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.velos.StationsOnMap"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ArretsOnMap"
+        <activity android:name=".activity.bus.ArretsOnMap"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ItineraireRequete" android:configChanges="orientation|keyboardHidden"
+        <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.itineraires.ItineraireRequete"
+                  android:configChanges="orientation|keyboardHidden"
                   android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
-        <activity android:name=".Itineraires" android:configChanges="orientation|keyboardHidden"
+        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"
                   android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
-        <activity android:name=".TrajetOnMap" android:configChanges="keyboardHidden"/>
-        <activity android:name=".AllOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".PreferencesBordeaux" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ListParkings" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".ParkingsOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.map.TrajetOnMap" android:configChanges="keyboardHidden"/>
+        <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.preferences.PreferencesBordeaux"
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.parkrelais.ListParkings" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.parkrelais.ParkingsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
 
 
         <activity
-                android:name=".BusShortcutPicker"
+                android:name=".activity.bus.BusShortcutPicker"
                 android:label="@string/lineShortcut"
                 >
             <intent-filter>
@@ -76,7 +78,7 @@
         </activity>
 
         <service
-                android:name=".UpdateTimeService"
+                android:name=".services.UpdateTimeService"
                 android:label="UpdateTimeService">
 
             <intent-filter>
@@ -84,7 +86,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".UpdateTimeServiceReceiver" android:enabled="true">
+        <receiver android:name=".services.UpdateTimeServiceReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
@@ -92,27 +94,27 @@
 
         <receiver android:process=":remote" android:name=".util.AlarmReceiver"/>
 
-        <receiver android:name=".TransportsWidget11" android:label="@string/widget11_name">
+        <receiver android:name=".activity.widgets.TransportsWidget11" android:label="@string/widget11_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/transportswidget11"/>
         </receiver>
-        <activity android:name=".TransportsWidget11Configure">
+        <activity android:name=".activity.widgets.TransportsWidget11Configure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>
         </activity>
 
-        <receiver android:name=".TransportsWidget21" android:label="@string/widget21_name">
+        <receiver android:name=".activity.widgets.TransportsWidget21" android:label="@string/widget21_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                        android:resource="@xml/transportswidget21"/>
         </receiver>
-        <activity android:name=".TransportsWidget21Configure">
+        <activity android:name=".activity.widgets.TransportsWidget21Configure">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
             </intent-filter>

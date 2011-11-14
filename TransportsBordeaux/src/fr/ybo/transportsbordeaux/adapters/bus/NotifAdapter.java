@@ -21,9 +21,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.modele.Arret;
-import fr.ybo.transportsbordeaux.modele.Ligne;
-import fr.ybo.transportsbordeaux.modele.Notification;
+import fr.ybo.transportsbordeaux.database.modele.Arret;
+import fr.ybo.transportsbordeaux.database.modele.Ligne;
+import fr.ybo.transportsbordeaux.database.modele.Notification;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
 
 import java.util.Calendar;

@@ -17,9 +17,25 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import fr.ybo.database.DataBaseHelper;
-import fr.ybo.transportsbordeaux.modele.*;
+import fr.ybo.transportsbordeaux.database.modele.Arret;
+import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
+import fr.ybo.transportsbordeaux.database.modele.ArretRoute;
+import fr.ybo.transportsbordeaux.database.modele.Calendrier;
+import fr.ybo.transportsbordeaux.database.modele.CalendrierException;
+import fr.ybo.transportsbordeaux.database.modele.DernierMiseAJour;
+import fr.ybo.transportsbordeaux.database.modele.Direction;
+import fr.ybo.transportsbordeaux.database.modele.GroupeFavori;
+import fr.ybo.transportsbordeaux.database.modele.Horaire;
+import fr.ybo.transportsbordeaux.database.modele.Ligne;
+import fr.ybo.transportsbordeaux.database.modele.Notification;
+import fr.ybo.transportsbordeaux.database.modele.Trajet;
+import fr.ybo.transportsbordeaux.database.modele.VeloFavori;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
