@@ -99,35 +99,41 @@ public class UpdateTimeService extends Service {
      * Updates and redraws the Widget.
      */
     private void update() {
-        LOG_YBO.debug("update");
-        for (int widgetId : TransportsWidget11Configure.getWidgetIds(getApplicationContext())) {
-            TransportsWidget11.updateAppWidget(getApplicationContext(),
-                    AppWidgetManager.getInstance(getApplicationContext()), widgetId);
-        }
-        for (int widgetId : TransportsWidget21Configure.getWidgetIds(getApplicationContext())) {
-            TransportsWidget21.updateAppWidget(getApplicationContext(),
-                    AppWidgetManager.getInstance(getApplicationContext()), widgetId);
+        try {
+            LOG_YBO.debug("update");
+            for (int widgetId : TransportsWidget11Configure.getWidgetIds(getApplicationContext())) {
+                TransportsWidget11.updateAppWidget(getApplicationContext(),
+                        AppWidgetManager.getInstance(getApplicationContext()), widgetId);
+            }
+            for (int widgetId : TransportsWidget21Configure.getWidgetIds(getApplicationContext())) {
+                TransportsWidget21.updateAppWidget(getApplicationContext(),
+                        AppWidgetManager.getInstance(getApplicationContext()), widgetId);
+            }
+        } catch (Exception ignore) {
         }
     }
 
     private Notification notifSelect = new Notification();
 
     private void updateNotifs() {
-        // GestionNotif.
-        Calendar calendar = Calendar.getInstance();
-        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        notifSelect.setHeure(now);
-        LOG_YBO.debug("Recherche des notif pour " + now);
-        for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
-            createNotification(notification);
-        }
-        notifSelect.setHeure(now - 1);
-        for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
-            createNotification(notification);
-        }
-        notifSelect.setHeure(now - 2);
-        for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
-            createNotification(notification);
+        try {
+            // GestionNotif.
+            Calendar calendar = Calendar.getInstance();
+            int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+            notifSelect.setHeure(now);
+            LOG_YBO.debug("Recherche des notif pour " + now);
+            for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+                createNotification(notification);
+            }
+            notifSelect.setHeure(now - 1);
+            for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+                createNotification(notification);
+            }
+            notifSelect.setHeure(now - 2);
+            for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+                createNotification(notification);
+            }
+        } catch (Exception ignore) {
         }
     }
 
