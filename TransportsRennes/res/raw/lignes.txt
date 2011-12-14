@@ -1,4 +1,5 @@
 ordre,id,nom_court,nom_long
+0,a,a,La Poterie <> J.F. Kennedy
 1,0001,1,Cesson-Sévigné (Chêne Germain) <> Chantepie (Rosa Parks)
 2,0002,2,Grand Quartier <> La Poterie / Haut Sancé
 3,0003,3,Saint Laurent <> Alma
@@ -66,4 +67,3 @@ ordre,id,nom_court,nom_long
 65,0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne)
 66,0089,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy
 67,0101,TTZ,Rennes <> Touche Tizon
-68,a,a,La Poterie <> J.F. Kennedy

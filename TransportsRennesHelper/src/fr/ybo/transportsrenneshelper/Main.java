@@ -61,6 +61,7 @@ public final class Main {
      * Traitement principale.
      *
      * @param toGtfs si true, on génère du GTFS, sinon on génère dans l'autre format.
+     * @param date   date du gtfs.
      * @throws IOException problème d'entrée/sortie.
      */
     private static void genereGtfs(boolean toGtfs, String date) throws IOException {
@@ -243,10 +244,10 @@ public final class Main {
             tripIdMax += 2;
         }
 
-        for (HoraireMetro horaireMetro : moteurMetro
-                .parseInputStream(Generateur.class
-                        .getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche.txt"),
-                        HoraireMetro.class)) {
+        for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(
+                Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche"
+                        + ".txt"),
+                HoraireMetro.class)) {
             for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, dimancheId, headSign1, headSign2)) {
                 horairesMetro.add(horaire);
                 if (!trajetMetro.containsKey(horaire.tripId)) {

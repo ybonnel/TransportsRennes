@@ -43,7 +43,7 @@ import java.util.Map;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
     private static final String DATABASE_NAME = "keolis.db";
-    private static final int DATABASE_VERSION = 14;
+    private static final int DATABASE_VERSION = 15;
 
     private Context context;
 
@@ -89,12 +89,12 @@ public class TransportsRennesDatabase extends DataBaseHelper {
             });
             mapUpgrades.put(5, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
-                    Cursor cursor =
-                            db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
-                                    null);
+                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                            " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
                         String tableName = cursor.getString(0);
-                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori".equals(tableName)) {
+                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
+                                .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
                         }
                     }
@@ -117,7 +117,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("routeNomCourt");
                     columns.add("routeNomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
+                    Cursor arretFavoriTmp =
+                            db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
                     int arretIdIndex = arretFavoriTmp.getColumnIndex("stopId");
                     int ligneIdIndex = arretFavoriTmp.getColumnIndex("routeId");
                     int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
@@ -143,12 +144,12 @@ public class TransportsRennesDatabase extends DataBaseHelper {
             });
             mapUpgrades.put(6, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
-                    Cursor cursor =
-                            db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]), " type = 'table'", null, null, null,
-                                    null);
+                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                            " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
                         String tableName = cursor.getString(0);
-                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori".equals(tableName)) {
+                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
+                                .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
                         }
                     }
@@ -180,7 +181,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("nomCourt");
                     columns.add("nomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
+                    Cursor arretFavoriTmp =
+                            db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
                     int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
                     int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
                     int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
@@ -213,8 +215,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
                         String tableName = cursor.getString(0);
-                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName)
-                                && !"ArretFavori".equals(tableName)) {
+                        if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
+                                .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
                         }
                     }
@@ -237,8 +239,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("nomCourt");
                     columns.add("nomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null,
-                            null, null, null);
+                    Cursor arretFavoriTmp =
+                            db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
                     int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
                     int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
                     int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
@@ -251,9 +253,11 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     classCsv.add(ArretRoute.class);
                     classCsv.add(Direction.class);
                     MoteurCsv moteur = new MoteurCsv(classCsv);
-                    Map<String, Map<String, List<ArretRoute>>> mapArretsRoutes = new HashMap<String, Map<String, List<ArretRoute>>>();
-                    for (ArretRoute arretRoute : moteur.parseInputStream(
-                            context.getResources().openRawResource(R.raw.arrets_routes), ArretRoute.class)) {
+                    Map<String, Map<String, List<ArretRoute>>> mapArretsRoutes =
+                            new HashMap<String, Map<String, List<ArretRoute>>>();
+                    for (ArretRoute arretRoute : moteur
+                            .parseInputStream(context.getResources().openRawResource(R.raw.arrets_routes),
+                                    ArretRoute.class)) {
                         if (!mapArretsRoutes.containsKey(arretRoute.ligneId)) {
                             mapArretsRoutes.put(arretRoute.ligneId, new HashMap<String, List<ArretRoute>>());
                         }
@@ -271,8 +275,8 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                         favori.nomCourt = arretFavoriTmp.getString(nomCourtIndex);
                         favori.nomLong = arretFavoriTmp.getString(nomLongIndex);
                         favori.ordre = arretFavoriTmp.getInt(ordreIndex);
-                        if (mapArretsRoutes.containsKey(favori.ligneId)
-                                && mapArretsRoutes.get(favori.ligneId).containsKey(favori.arretId)) {
+                        if (mapArretsRoutes.containsKey(favori.ligneId) && mapArretsRoutes.get(favori.ligneId)
+                                .containsKey(favori.arretId)) {
                             for (ArretRoute arretRoute : mapArretsRoutes.get(favori.ligneId).get(favori.arretId)) {
                                 favori.macroDirection = arretRoute.macroDirection;
                             }
@@ -320,6 +324,18 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                 public void myUpgrade(SQLiteDatabase db) {
                     getBase().getTable(AlertBdd.class).createTable(db);
                     getBase().getTable(Bounds.class).createTable(db);
+                }
+            });
+            mapUpgrades.put(15, new UpgradeDatabaseWithError() {
+                public void myUpgrade(SQLiteDatabase db) {
+                    Ligne ligneA = new Ligne();
+                    ligneA.id = "a";
+                    List<Ligne> result = getBase().select(db, ligneA, null, null, null);
+                    if (result != null && !result.isEmpty()) {
+                        ligneA = result.get(0);
+                        ligneA.ordre = 0;
+                        getBase().update(db, ligneA);
+                    }
                 }
             });
         }
