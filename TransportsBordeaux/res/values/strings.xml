@@ -57,7 +57,7 @@
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir
         une date particulière via le menu.
     </string>
-    <string name="listfavori_empty">Aucun favoris trouvé.</string>
+    <string name="listfavori_empty">Aucun favori trouvé.</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="menu_prochainArrets">Prochains horaires</string>
     <string name="menu_allArrets">Tous les horaires</string>
@@ -79,7 +79,7 @@
         d\'essayer d\'ajouter des
         widgets.
     </string>
-    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut
+    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favori, pour utiliser les widgets, il faut
         ajouter des favoris.
     </string>
     <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>

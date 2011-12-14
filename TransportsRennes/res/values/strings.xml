@@ -61,7 +61,7 @@
     </string>
     <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
-    <string name="listfavori_empty">Aucun favoris trouvé.</string>
+    <string name="listfavori_empty">Aucun favori trouvé.</string>
     <string name="go_googlemap">Visualiser sur GoogleMap</string>
     <string name="textAdresseDepart">Départ</string>
     <string name="textAdresseArrivee">Destination</string>
@@ -159,7 +159,7 @@
         d\'essayer d\'ajouter des
         widgets.
     </string>
-    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favoris, pour utiliser les widgets, il faut
+    <string name="erreur_widgetWithNoFavori">Vous n\'avez pas encore de favori, pour utiliser les widgets, il faut
         ajouter des favoris.
     </string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
