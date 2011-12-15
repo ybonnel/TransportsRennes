@@ -43,7 +43,7 @@ public class BusFavorisShortcutPicker extends MenuAccueil.Activity {
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_bus_favori));
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_favori_white_default);
+		Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_star_default);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
