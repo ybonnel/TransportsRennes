@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
+  Contributors:
+      ybonnel - initial API and implementation
+-->
+<resources>
+    <style name="HomeButton">
+        <item name="android:layout_width">100dip</item>
+        <item name="android:layout_height">100dip</item>
+        <item name="android:background">@null</item>
+        <item name="android:padding">2dip</item>
+        <item name="android:layout_marginTop">30dip</item>
+        <item name="android:layout_marginBottom">30dip</item>
+        <item name="android:layout_marginLeft">20dip</item>
+        <item name="android:gravity">center</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+</resources>
