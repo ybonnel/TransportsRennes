@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsrennes.activity;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -32,7 +36,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
 import fr.ybo.transportsrennes.activity.bus.BusRennes;
@@ -55,10 +61,6 @@ import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-
 
 public class TransportsRennes extends CapptainActivity {
 
@@ -69,6 +71,7 @@ public class TransportsRennes extends CapptainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         afficheMessage();
+		afficheMessageMaj1912();
         assignerBoutons();
         new AsyncTask<Void, Void, Void>() {
 
@@ -157,6 +160,16 @@ public class TransportsRennes extends CapptainActivity {
 
     }
 
+	private void afficheMessageMaj1912() {
+		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+				"TransportsRennes_maj1912", true);
+		if (afficheMessage) {
+			showDialogMaj1912();
+			saveAfficheMessage1912();
+		}
+
+	}
+
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
@@ -171,6 +184,20 @@ public class TransportsRennes extends CapptainActivity {
         builder.create().show();
     }
 
+	private void showDialogMaj1912() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
+		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
+		Spanned spanned = Html.fromHtml(getString(R.string.dialogMaj1912));
+		textView.setText(spanned, TextView.BufferType.SPANNABLE);
+		textView.setMovementMethod(LinkMovementMethod.getInstance());
+		builder.setView(view);
+		builder.setTitle(R.string.titreMaj1912);
+		builder.setCancelable(false);
+		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
+		builder.create().show();
+	}
+
     private static class TerminerClickListener implements DialogInterface.OnClickListener {
         public void onClick(DialogInterface dialogInterface, int i) {
             dialogInterface.cancel();
@@ -183,6 +210,12 @@ public class TransportsRennes extends CapptainActivity {
         editor.putBoolean("TransportsRennes141_dialog", false);
         editor.commit();
     }
+
+	private void saveAfficheMessage1912() {
+		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
+		editor.putBoolean("TransportsRennes_maj1912", false);
+		editor.commit();
+	}
 
     private void onAlertClick() {
         Intent intent = new Intent(this, TabAlertes.class);
