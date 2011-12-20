@@ -15,73 +15,182 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ffffff" >
+    android:background="#ffffff"
+    android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/home_btn_bus"
-        style="@style/HomeButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/home_btn_bus"
-        android:contentDescription="@string/btn_bus" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/home_btn_bus_gps"
-        style="@style/HomeButton"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/home_btn_bus"
-        android:src="@drawable/home_btn_bus_gps"
-        android:contentDescription="@string/btn_bus_gps" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/home_btn_velo"
-        style="@style/HomeButton"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/home_btn_bus_gps"
-        android:src="@drawable/home_btn_velo"
-        android:contentDescription="@string/btn_velo" />
+            <ImageButton
+                android:id="@+id/home_btn_bus"
+                style="@style/HomeButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/btn_bus"
+                android:src="@drawable/home_btn_bus" />
 
-    <ImageButton
-        android:id="@+id/home_btn_parking"
-        style="@style/HomeButton"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/home_btn_velo"
-        android:src="@drawable/home_btn_parking"
-        android:contentDescription="@string/btn_parking" />
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_bus" />
+        </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/home_btn_bus_favori"
-        style="@style/HomeButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/home_btn_bus_favori"
-        android:contentDescription="@string/btn_bus_favori" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/home_btn_alert"
-        style="@style/HomeButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/home_btn_bus_favori"
-        android:src="@drawable/home_btn_alert"
-        android:contentDescription="@string/btn_alert" />
+            <ImageButton
+                android:id="@+id/home_btn_bus_favori"
+                style="@style/HomeButton"
+                android:layout_weight="1"
+                android:contentDescription="@string/btn_bus_favori"
+                android:src="@drawable/home_btn_bus_favori" />
 
-    <ImageButton
-        android:id="@+id/home_btn_velo_favori"
-        style="@style/HomeButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/home_btn_alert"
-        android:src="@drawable/home_btn_velo_favori"
-        android:contentDescription="@string/btn_velo_favori" />
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_bus_favori" />
+        </LinearLayout>
+    </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/home_btn_itineraires"
-        style="@style/HomeButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/home_btn_velo_favori"
-        android:src="@drawable/home_btn_itineraire"
-        android:contentDescription="@string/btn_itineraires" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_bus_gps"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_bus_gps"
+            android:src="@drawable/home_btn_bus_gps" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_bus_gps" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_alert"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_alert"
+            android:src="@drawable/home_btn_alert" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_alert" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_velo"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_velo"
+            android:src="@drawable/home_btn_velo" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_velo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_velo_favori"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_velo_favori"
+            android:src="@drawable/home_btn_velo_favori" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_velo_favori" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_parking"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_parking"
+            android:src="@drawable/home_btn_parking" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_parking" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/home_btn_itineraires"
+            style="@style/HomeButton"
+            android:layout_weight="1"
+            android:contentDescription="@string/btn_itineraires"
+            android:src="@drawable/home_btn_itineraire" />
+
+            <TextView
+                style="@style/HomeText"
+                android:text="@string/btn_itineraires" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

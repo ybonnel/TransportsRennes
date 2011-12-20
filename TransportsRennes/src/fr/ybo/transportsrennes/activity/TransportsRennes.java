@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsrennes.activity;
 
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -30,9 +34,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
 import fr.ybo.transportsrennes.activity.bus.BusRennes;
@@ -54,10 +60,6 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
-
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
 
 
 public class TransportsRennes extends CapptainActivity {
@@ -98,14 +100,14 @@ public class TransportsRennes extends CapptainActivity {
 
     private void assignerBoutons() {
 
-        Button btnBus = (Button) findViewById(R.id.home_btn_bus);
-        Button btnBusFavori = (Button) findViewById(R.id.home_btn_bus_favori);
-        Button btnBusGps = (Button) findViewById(R.id.home_btn_bus_gps);
-        Button btnAlert = (Button) findViewById(R.id.home_btn_alert);
-        Button btnVeloStar = (Button) findViewById(R.id.home_btn_velo);
-        Button btnVeloFavori = (Button) findViewById(R.id.home_btn_velo_favori);
-        Button btnParking = (Button) findViewById(R.id.home_btn_parking);
-        Button btnItineraires = (Button) findViewById(R.id.home_btn_itineraires);
+		ImageButton btnBus = (ImageButton) findViewById(R.id.home_btn_bus);
+		ImageButton btnBusFavori = (ImageButton) findViewById(R.id.home_btn_bus_favori);
+		ImageButton btnBusGps = (ImageButton) findViewById(R.id.home_btn_bus_gps);
+		ImageButton btnAlert = (ImageButton) findViewById(R.id.home_btn_alert);
+		ImageButton btnVeloStar = (ImageButton) findViewById(R.id.home_btn_velo);
+		ImageButton btnVeloFavori = (ImageButton) findViewById(R.id.home_btn_velo_favori);
+		ImageButton btnParking = (ImageButton) findViewById(R.id.home_btn_parking);
+		ImageButton btnItineraires = (ImageButton) findViewById(R.id.home_btn_itineraires);
         btnBus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onBusClick();
