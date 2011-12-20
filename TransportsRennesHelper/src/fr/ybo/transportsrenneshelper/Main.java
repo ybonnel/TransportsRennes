@@ -54,7 +54,7 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-        genereGtfs(false, "20111114");
+        genereGtfs(false, "20111220");
     }
 
     /**
@@ -244,9 +244,8 @@ public final class Main {
             tripIdMax += 2;
         }
 
-        for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(
-                Generateur.class.getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche"
-                        + ".txt"),
+        for (HoraireMetro horaireMetro : moteurMetro.parseInputStream(Generateur.class
+                .getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_dimanche" + ".txt"),
                 HoraireMetro.class)) {
             for (StopTime horaire : horaireMetro.getStopTime(tripIdMax, dimancheId, headSign1, headSign2)) {
                 horairesMetro.add(horaire);

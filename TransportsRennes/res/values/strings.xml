@@ -221,10 +221,4 @@
     <string name="supprimerNotif">Supprimer la notification</string>
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
-    
-    <string name="dialogMaj1912">Le STAR accuse quelques retards pour mettre à disposition les données relatives aux nouveaux horaires (du 19/12), les horaires fournies par l\'application seront donc erronés à partir de cette date, j\'essayerai de publier le plus rapidement possible suite à la fourniture des données.
-Pour informations les fichiers horaires ont été mises à jour : &lt;a href=\'http://www.star.fr/fr/se-deplacer/horaires/de-votre-ligne.html\'&gt;www.star.fr&lt;/a&gt;
-Ces nouveaux horaires concernent les lignes 1, 2, 11/42 Express, 4/40 Express, 5, 9 et 61/161 Express.
-    </string>
-    <string name="titreMaj1912">Horaires du 19/12</string>
 </resources>

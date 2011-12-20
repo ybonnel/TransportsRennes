@@ -18,3 +18,7 @@ target
 **/.DS_Store
 TransportsRennes.ipr
 TransportsRennes.iws
+
+out
+**/*.apk
+
