@@ -36,8 +36,8 @@ id,direction
 33,Corps-Nuds
 38,Haut Sancé
 39,Cesson-Sévigné Base de Loisirs
-36,Patton
-37,Chartres-de-B. / Pont-Péan
+36,Chartres-de-B. / Pont-Péan
+37,Patton
 42,Cintré
 43,La Poterie
 40,Beauregard
@@ -82,8 +82,8 @@ id,direction
 84,Saint Grégoire via Pontay
 87,Pacé / Saint-Gilles
 86,Touche Tizon 1
-81,Touche Tizon 2
-80,Le Rheu
+81,Le Rheu
+80,Touche Tizon 2
 83,Saint-Gilles
 82,Rennes Henri Fréville
 93,Saint-Sulpice-la-Forêt

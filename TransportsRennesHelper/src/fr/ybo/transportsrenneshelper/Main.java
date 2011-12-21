@@ -13,6 +13,13 @@
  */
 package fr.ybo.transportsrenneshelper;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrenneshelper.generateurmodele.Generateur;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.HoraireMetro;
@@ -26,13 +33,6 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Classe réalisant l'enchènement des traitements.
@@ -54,7 +54,7 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-        genereGtfs(false, "20111220");
+		genereGtfs(false, "20111221");
     }
 
     /**
