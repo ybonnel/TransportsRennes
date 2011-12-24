@@ -17,9 +17,11 @@
 package fr.ybo.transportsrennes.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import fr.ybo.transportsrennes.R;
 
 /**
  * Custom layout that arranges children in a grid-like manner, optimizing for even horizontal and
@@ -32,16 +34,22 @@ public class DashboardLayout extends ViewGroup {
     private int mMaxChildWidth = 0;
     private int mMaxChildHeight = 0;
 
+	private int nbRows = -1;
+
     public DashboardLayout(Context context) {
         super(context, null);
     }
 
     public DashboardLayout(Context context, AttributeSet attrs) {
         super(context, attrs, 0);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DashboardLayout);
+		nbRows = a.getInt(R.styleable.DashboardLayout_nbRows, -1);
     }
 
     public DashboardLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DashboardLayout);
+		nbRows = a.getInt(R.styleable.DashboardLayout_nbRows, -1);
     }
 
     @Override
@@ -120,39 +128,68 @@ public class DashboardLayout extends ViewGroup {
         int hSpace = 0;
         int vSpace = 0;
 
+
         int cols = 1;
         int rows;
 
-        while (true) {
-            rows = (visibleCount - 1) / cols + 1;
 
-            hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-            vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+        if (nbRows == -1) {
 
-            spaceDifference = Math.abs(vSpace - hSpace);
-            if (rows * cols != visibleCount) {
-                spaceDifference *= UNEVEN_GRID_PENALTY_MULTIPLIER;
-            }
+			while (true) {
+				rows = (visibleCount - 1) / cols + 1;
 
-            if (spaceDifference < bestSpaceDifference) {
-                // Found a better whitespace squareness/ratio
-                bestSpaceDifference = spaceDifference;
+				hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+				vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
 
-                // If we found a better whitespace squareness and there's only 1 row, this is
-                // the best we can do.
-                if (rows == 1) {
-                    break;
-                }
-            } else {
-                // This is a worse whitespace ratio, use the previous value of cols and exit.
-                --cols;
-                rows = (visibleCount - 1) / cols + 1;
-                hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-                vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
-                break;
-            }
+				spaceDifference = Math.abs(vSpace - hSpace);
+				if (rows * cols != visibleCount) {
+					spaceDifference *= UNEVEN_GRID_PENALTY_MULTIPLIER;
+				}
 
-            ++cols;
+				if (spaceDifference < bestSpaceDifference) {
+					// Found a better whitespace squareness/ratio
+					bestSpaceDifference = spaceDifference;
+
+					// If we found a better whitespace squareness and there's
+					// only 1 row, this is
+					// the best we can do.
+					if (rows == 1) {
+						break;
+					}
+				} else {
+					// This is a worse whitespace ratio, use the previous value
+					// of cols and exit.
+					--cols;
+					rows = (visibleCount - 1) / cols + 1;
+					hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+					vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+					break;
+				}
+
+				++cols;
+			}
+		} else {
+			rows = nbRows;
+			cols = (visibleCount - 1) / rows + 1;
+			hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+			vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+
+			spaceDifference = Math.abs(vSpace - hSpace);
+			if (rows * cols != visibleCount) {
+				spaceDifference *= UNEVEN_GRID_PENALTY_MULTIPLIER;
+			}
+
+			if (spaceDifference < bestSpaceDifference) {
+				// Found a better whitespace squareness/ratio
+				bestSpaceDifference = spaceDifference;
+			} else {
+				// This is a worse whitespace ratio, use the previous value
+				// of cols and exit.
+				--cols;
+				rows = (visibleCount - 1) / cols + 1;
+				hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
+				vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+			}
         }
 
         // Lay out children based on calculated best-fit number of rows and cols.
