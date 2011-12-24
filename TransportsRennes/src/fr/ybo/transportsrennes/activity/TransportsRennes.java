@@ -34,24 +34,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
-
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
-import fr.ybo.transportsrennes.activity.bus.BusRennes;
-import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
-import fr.ybo.transportsrennes.activity.bus.TabFavoris;
-import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.map.AllOnMap;
-import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
-import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
-import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
@@ -60,9 +48,10 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
+import fr.ybo.transportsrennes.util.CapptainFragmentActivity;
 
 
-public class TransportsRennes extends CapptainActivity {
+public class TransportsRennes extends CapptainFragmentActivity {
 
     private ProgressDialog myProgressDialog;
 
@@ -71,7 +60,6 @@ public class TransportsRennes extends CapptainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         afficheMessage();
-        assignerBoutons();
         new AsyncTask<Void, Void, Void>() {
 
             @Override
@@ -96,58 +84,6 @@ public class TransportsRennes extends CapptainActivity {
                 }
             }
         }.execute((Void[]) null);
-    }
-
-    private void assignerBoutons() {
-
-		ImageButton btnBus = (ImageButton) findViewById(R.id.home_btn_bus);
-		ImageButton btnBusFavori = (ImageButton) findViewById(R.id.home_btn_bus_favori);
-		ImageButton btnBusGps = (ImageButton) findViewById(R.id.home_btn_bus_gps);
-		ImageButton btnAlert = (ImageButton) findViewById(R.id.home_btn_alert);
-		ImageButton btnVeloStar = (ImageButton) findViewById(R.id.home_btn_velo);
-		ImageButton btnVeloFavori = (ImageButton) findViewById(R.id.home_btn_velo_favori);
-		ImageButton btnParking = (ImageButton) findViewById(R.id.home_btn_parking);
-		ImageButton btnItineraires = (ImageButton) findViewById(R.id.home_btn_itineraires);
-        btnBus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onBusClick();
-            }
-        });
-        btnBusFavori.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onBusFavoriClick();
-            }
-        });
-        btnBusGps.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onBusGpsClick();
-            }
-        });
-        btnAlert.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onAlertClick();
-            }
-        });
-        btnVeloStar.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onVeloClick();
-            }
-        });
-        btnVeloFavori.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onVeloFavoriClick();
-            }
-        });
-        btnParking.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onParkingClick();
-            }
-        });
-        btnItineraires.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                onItinerairesClick();
-            }
-        });
     }
 
     private void afficheMessage() {
@@ -185,46 +121,6 @@ public class TransportsRennes extends CapptainActivity {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         editor.putBoolean("TransportsRennes141_dialog", false);
         editor.commit();
-    }
-
-    private void onAlertClick() {
-        Intent intent = new Intent(this, TabAlertes.class);
-        startActivity(intent);
-    }
-
-    private void onBusClick() {
-        Intent intent = new Intent(this, BusRennes.class);
-        startActivity(intent);
-    }
-
-    private void onBusFavoriClick() {
-        Intent intent = new Intent(this, TabFavoris.class);
-        startActivity(intent);
-    }
-
-    private void onBusGpsClick() {
-        Intent intent = new Intent(this, ListArretByPosition.class);
-        startActivity(intent);
-    }
-
-    private void onVeloClick() {
-        Intent intent = new Intent(this, ListStationsByPosition.class);
-        startActivity(intent);
-    }
-
-    private void onVeloFavoriClick() {
-        Intent intent = new Intent(this, ListStationsFavoris.class);
-        startActivity(intent);
-    }
-
-    private void onParkingClick() {
-        Intent intent = new Intent(this, ListParkRelais.class);
-        startActivity(intent);
-    }
-
-    private void onItinerairesClick() {
-        Intent intent = new Intent(this, ItineraireRequete.class);
-        startActivity(intent);
     }
 
 
@@ -314,7 +210,6 @@ public class TransportsRennes extends CapptainActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.main);
-        assignerBoutons();
     }
 
     private static final int GROUP_ID = 0;
