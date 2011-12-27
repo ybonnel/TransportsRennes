@@ -20,10 +20,9 @@
               android:layout_height="fill_parent">
     <ListView android:id="@id/android:list" android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
+              android:cacheColorHint="#00000000"/>
     <TextView android:id="@id/android:empty"
               android:layout_width="fill_parent" android:layout_height="fill_parent"
-              android:layout_alignParentLeft="true"
               android:gravity="center"
               android:textSize="18dip"
               android:padding="10dip"

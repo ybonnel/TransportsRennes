@@ -100,19 +100,11 @@
                       android:orientation="vertical"/>
     </ScrollView>
 
-    <ImageView android:layout_width="fill_parent"
-               android:layout_height="10dip"
-               android:layout_below="@id/detailCorrespondance_scroll"
-               android:paddingTop="4dip"
-               android:paddingBottom="0dip"
-               android:src="@android:drawable/divider_horizontal_dim_dark"
-               android:id="@+id/separateur"/>
-
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent" android:layout_height="wrap_content"
-              android:layout_below="@id/separateur"
+              android:layout_below="@id/detailCorrespondance_scroll"
               android:layout_alignParentLeft="true"
-              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
+              android:cacheColorHint="#00000000"/>
     <TextView android:id="@id/android:empty"
               android:layout_width="fill_parent" android:layout_height="fill_parent"
               android:layout_below="@id/separateur"

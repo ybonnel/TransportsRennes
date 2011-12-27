@@ -26,7 +26,8 @@
               android:layout_height="50dip"
               android:textSize="20dip"
               android:gravity="center_vertical|left"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:textColor="@android:color/black"/>
 
     <TextView android:id="@+id/detailArret_tempsRestant"
               android:padding="5dip"
@@ -34,5 +35,6 @@
               android:layout_height="50dip"
               android:textSize="20dip"
               android:gravity="center_vertical|right"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/black"/>
 </RelativeLayout>

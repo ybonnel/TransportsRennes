@@ -17,7 +17,7 @@
 -->
 <resources>
 
-    <style name="Theme.TransportsRennes" parent="android:style/Theme.Light">
+    <style name="Theme.TransportsRennes" parent="android:style/Theme.Holo.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/background_noise</item>

@@ -29,6 +29,7 @@
               android:layout_width="wrap_content"
               android:layout_height="38dip"
               android:textSize="18dip"
+              android:textColor="@android:color/black"
               android:gravity="center_vertical|left"
               android:layout_toRightOf="@id/dispovelo_icone"/>
 
@@ -49,6 +50,7 @@
               android:layout_width="wrap_content"
               android:layout_height="38dip"
               android:textSize="18dip"
+              android:textColor="@android:color/black"
               android:gravity="center_vertical|right"
               android:layout_below="@id/dispovelo_station"
               android:layout_alignParentRight="true"/>

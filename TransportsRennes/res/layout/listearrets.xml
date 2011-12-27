@@ -34,7 +34,7 @@
             android:layout_toLeftOf="@id/googlemap">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="50dip"
                   android:textSize="20dip"
                   android:gravity="center_vertical|left"/>
@@ -93,19 +93,11 @@
                   android:drawableRight="@android:drawable/arrow_down_float"/>
     </HorizontalScrollView>
 
-    <ImageView android:layout_width="fill_parent"
-               android:layout_height="10dip"
-               android:layout_below="@id/directionEntete"
-               android:paddingTop="4dip"
-               android:paddingBottom="0dip"
-               android:src="@android:drawable/divider_horizontal_dim_dark"
-               android:id="@+id/listearrets_separateur"/>
-
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:layout_below="@id/listearrets_separateur"
+              android:layout_below="@id/directionArretCouranteScroll"
               android:layout_alignParentLeft="true"
-              android:divider="@android:drawable/divider_horizontal_dim_dark"
+              android:cacheColorHint="#00000000"
             />
 </RelativeLayout>

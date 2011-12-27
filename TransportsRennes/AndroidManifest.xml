@@ -21,7 +21,7 @@
                  android:debuggable="true" android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.TransportsRennes">
         <activity android:name=".activity.TransportsRennes"
-                  android:launchMode="singleTop" android:theme="@style/Theme.TransportsRennes.Home">
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

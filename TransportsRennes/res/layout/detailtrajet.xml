@@ -32,7 +32,7 @@
             android:layout_toRightOf="@id/iconeLigne">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
                   android:textSize="20dip"
                   android:gravity="center_vertical|left"/>
@@ -46,25 +46,16 @@
                   android:paddingRight="5dip"
                   android:paddingTop="5dip"
                   android:paddingBottom="3dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="38dip"
                   android:textSize="20dip"
-                  android:gravity="center_vertical|left"
-                  android:layout_alignParentLeft="true"/>
+                  android:gravity="center_vertical|left"/>
     </HorizontalScrollView>
-
-    <ImageView android:layout_width="fill_parent"
-               android:layout_height="10dip"
-               android:layout_below="@id/detailTrajet_scrolling"
-               android:paddingTop="4dip"
-               android:paddingBottom="0dip"
-               android:src="@android:drawable/divider_horizontal_dim_dark"
-               android:id="@+id/separateur"/>
 
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent" android:layout_height="wrap_content"
-              android:layout_below="@id/separateur"
+              android:layout_below="@id/detailTrajet_scrolling"
               android:layout_alignParentLeft="true"
-              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
+              android:cacheColorHint="#00000000"/>
 
 </RelativeLayout>
