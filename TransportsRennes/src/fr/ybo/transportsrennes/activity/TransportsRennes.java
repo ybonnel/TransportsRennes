@@ -49,8 +49,9 @@ public class TransportsRennes extends CapptainFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        afficheMessage();
-		verifierUpgrade();
+		if (!verifierUpgrade()) {
+			afficheMessage();
+		}
     }
 
     private void afficheMessage() {
@@ -97,7 +98,7 @@ public class TransportsRennes extends CapptainFragmentActivity {
 		startActivity(intent);
     }
 
-    private void verifierUpgrade() {
+	private boolean verifierUpgrade() {
         TransportsRennesDatabase dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
         DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
         Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources());
@@ -128,7 +129,9 @@ public class TransportsRennes extends CapptainFragmentActivity {
             }
 			AlertDialog alert = builder.create();
 			alert.show();
+			return true;
         }
+		return false;
     }
 
     private static final int GROUP_ID = 0;
