@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.keolis.gtfs;
 
+import java.util.Date;
+import java.util.List;
+
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
 import fr.ybo.moteurcsv.MoteurCsv;
@@ -26,16 +29,14 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
+import fr.ybo.transportsrennes.util.LoadingInfo;
 import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.Date;
-import java.util.List;
 
 public final class UpdateDataBase {
 
     private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-    public static void updateIfNecessaryDatabase(Resources resources) {
+	public static void updateIfNecessaryDatabase(Resources resources, LoadingInfo loadingInfo) {
         LOG_YBO.debug("Mise à jour des données Keolis...");
         DernierMiseAJour dernierMiseAJour = TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour());
         Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(resources);
@@ -43,6 +44,7 @@ public final class UpdateDataBase {
                 dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
             LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
             LOG_YBO.debug("Suppression des lignes chargées");
+			loadingInfo.setNbEtape(9);
             for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
                 if (ligne.isChargee()) {
                     try {
@@ -51,12 +53,15 @@ public final class UpdateDataBase {
                     }
                 }
             }
+			loadingInfo.etapeSuivante();
             LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
             for (Class<?> clazz : ConstantesKeolis.CLASSES_DB_TO_DELETE_ON_UPDATE) {
                 TransportsRennesApplication.getDataBaseHelper().deleteAll(clazz);
             }
+			loadingInfo.etapeSuivante();
             LOG_YBO.debug("Mise à jour des donnees");
-            GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), resources);
+			GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(ConstantesKeolis.LIST_CLASSES_GTFS), resources,
+					loadingInfo);
             LOG_YBO.debug("Mise à jour des arrêts favoris suite à la mise à jour.");
             Ligne ligneSelect = new Ligne();
             Arret arretSelect = new Arret();
@@ -89,6 +94,7 @@ public final class UpdateDataBase {
             DernierMiseAJour miseAJour = new DernierMiseAJour();
             miseAJour.derniereMiseAJour = dateDernierFichierKeolis;
             TransportsRennesApplication.getDataBaseHelper().insert(miseAJour);
+			loadingInfo.etapeSuivante();
         }
         TransportsRennesApplication.getDataBaseHelper().endTransaction();
         TransportsRennesApplication.getDataBaseHelper().close();

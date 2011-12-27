@@ -13,17 +13,13 @@
  */
 package fr.ybo.transportsrennes.activity;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -36,53 +32,25 @@ import android.view.View;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
+import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.activity.map.AllOnMap;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.CapptainFragmentActivity;
 
 
 public class TransportsRennes extends CapptainFragmentActivity {
 
-    private ProgressDialog myProgressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         afficheMessage();
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected void onPreExecute() {
-                myProgressDialog =
-                        ProgressDialog.show(TransportsRennes.this, "", getString(R.string.verificationUpdate), true);
-            }
-
-            @Override
-            protected Void doInBackground(Void... pParams) {
-                verifierUpgrade();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                super.onPostExecute(result);
-                try {
-                    myProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignore) {
-
-                }
-            }
-        }.execute((Void[]) null);
+		verifierUpgrade();
     }
 
     private void afficheMessage() {
@@ -124,45 +92,9 @@ public class TransportsRennes extends CapptainFragmentActivity {
 
 
     private void upgradeDatabase() {
-        myProgressDialog = ProgressDialog.show(this, "", getString(R.string.infoChargementGtfs), true);
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... pParams) {
-                UpdateDataBase.updateIfNecessaryDatabase(getResources());
-                Collection<String> ligneIds = new HashSet<String>(10);
-                for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori())) {
-                    if (!ligneIds.contains(favori.ligneId)) {
-                        ligneIds.add(favori.ligneId);
-                    }
-                }
-                Ligne ligneSelect = new Ligne();
-                for (String ligneId : ligneIds) {
-                    ligneSelect.id = ligneId;
-                    Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
-                    final String nomLigne = ligne.nomCourt;
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            myProgressDialog.setMessage(
-                                    getString(R.string.infoChargementGtfs) + getString(R.string.chargementLigneFavori,
-                                            nomLigne));
-                        }
-                    });
-                    try {
-                        UpdateDataBase.chargeDetailLigne(ligne, getResources());
-                    } catch (LigneInexistanteException ignore) {
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                super.onPostExecute(result);
-                myProgressDialog.dismiss();
-            }
-        }.execute((Void[]) null);
+		Intent intent = new Intent(this, LoadingActivity.class);
+		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		startActivity(intent);
     }
 
     private void verifierUpgrade() {
@@ -194,14 +126,8 @@ public class TransportsRennes extends CapptainFragmentActivity {
                     }
                 });
             }
-            runOnUiThread(new Runnable() {
-                public void run() {
-                    if (!isFinishing()) {
-                        AlertDialog alert = builder.create();
-                        alert.show();
-                    }
-                }
-            });
+			AlertDialog alert = builder.create();
+			alert.show();
         }
     }
 
@@ -285,35 +211,8 @@ public class TransportsRennes extends CapptainFragmentActivity {
     }
 
     private void loadAllLines() {
-        myProgressDialog = ProgressDialog.show(this, "", getString(R.string.infoChargementGtfs), true);
-
-        new AsyncTask<Void, Void, Void>() {
-
-            @Override
-            protected Void doInBackground(Void... pParams) {
-                for (Ligne ligne : TransportsRennesApplication.getDataBaseHelper().select(new Ligne())) {
-                    if (!ligne.isChargee()) {
-                        final String nomLigne = ligne.nomCourt;
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                myProgressDialog.setMessage(getString(R.string.infoChargementGtfs) + '\n' + getString(
-                                        R.string.premierAccesLigne, nomLigne));
-                            }
-                        });
-                        try {
-                            UpdateDataBase.chargeDetailLigne(ligne, getResources());
-                        } catch (LigneInexistanteException ignore) {
-                        }
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                super.onPostExecute(result);
-                myProgressDialog.dismiss();
-            }
-        }.execute((Void[]) null);
+		Intent intent = new Intent(this, LoadingActivity.class);
+		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
+		startActivity(intent);
     }
 }

@@ -16,17 +16,14 @@
       ybonnel - initial API and implementation
 -->
 <resources>
-    <style name="Theme" parent="android:style/Theme" />
 
-    <!-- Variation on the Light theme that turns off the title -->
     <style name="Theme.TransportsRennes" parent="android:style/Theme.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/background_noise</item>
     </style>
 
-    <!-- Start with the Holographic Light theme -->
     <style name="Theme.TransportsRennes.Home" parent="style/Theme.TransportsRennes">
-        <item name="android:windowBackground">@drawable/background_noise</item>
     </style>
 	
 
