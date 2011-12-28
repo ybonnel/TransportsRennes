@@ -221,4 +221,8 @@
     <string name="supprimerNotif">Supprimer la notification</string>
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
+    
+    <string name="themeBlanc">Thème blanc</string>
+    <string name="themeNoir">Thème noir</string>
+    <string name="chooseTheme">Choisissez un thème</string>
 </resources>

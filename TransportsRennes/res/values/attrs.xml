@@ -3,4 +3,5 @@
     <declare-styleable name="DashboardLayout">
         <attr name="nbRows" format="integer" />
     </declare-styleable>
+    <attr name="myTextColor" format="color" />
 </resources>

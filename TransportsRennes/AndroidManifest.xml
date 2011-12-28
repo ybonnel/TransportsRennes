@@ -18,7 +18,7 @@
           android:versionCode="258"
           android:versionName="2.5.8">
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="true" android:name=".application.TransportsRennesApplication"
+                 android:debuggable="false" android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.TransportsRennes">
         <activity android:name=".activity.TransportsRennes"
                   android:launchMode="singleTop">
@@ -83,11 +83,8 @@
         <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.ItineraireRequete"
-                  android:configChanges="orientation|keyboardHidden" android:label="@string/btn_itineraires"
-                  android:theme="@android:style/Theme"/>
-        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"
-                  android:label="@string/btn_itineraires"
-                  android:theme="@android:style/Theme"/>
+                  android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.TrajetOnMap" android:configChanges="keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesRennes"
                   android:configChanges="orientation|keyboardHidden"/>

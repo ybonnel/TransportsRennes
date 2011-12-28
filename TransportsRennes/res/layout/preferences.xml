@@ -8,16 +8,26 @@
 	have received a copy of the GNU General Public License along with this program. 
 	If not, see <http://www.gnu.org/licenses/>. Contributors: ybonnel - initial 
 	API and implementation -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<CheckBox android:id="@+id/notifUpdateOn" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/notifUpdateOn"
-		android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"
+		android:layout_marginLeft="32dp"
 		android:layout_marginTop="16dp" android:checked="true"/>
+
+	<Spinner
+	    android:id="@+id/choixTheme"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+		android:layout_marginLeft="32dp"
+		android:layout_marginTop="18dp"
+        android:drawSelectorOnTop="true"
+        android:prompt="@string/chooseTheme"/>
 	<Button android:textSize="18dip" android:gravity="center"
 		android:id="@+id/preferencesTermine" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="@string/Terminer"
-		android:layout_below="@+id/notifUpdateOn" android:layout_alignLeft="@+id/notifUpdateOn"
+		android:layout_marginLeft="32dp"
 		android:layout_marginTop="18dp"/>
-</RelativeLayout>
+
+</LinearLayout>

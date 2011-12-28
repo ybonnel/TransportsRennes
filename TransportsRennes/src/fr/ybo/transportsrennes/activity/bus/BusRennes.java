@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.io.Serializable;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,9 +26,6 @@ import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
 import fr.ybo.transportsrennes.adapters.bus.LigneAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Ligne;
-
-import java.io.Serializable;
-import java.util.List;
 
 /**
  * Activité affichant les lignes de bus..

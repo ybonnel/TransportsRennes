@@ -45,14 +45,26 @@ import fr.ybo.transportsrennes.util.CapptainFragmentActivity;
 
 public class TransportsRennes extends CapptainFragmentActivity {
 
+	private int currentTheme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
+		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 		if (!verifierUpgrade()) {
 			afficheMessage();
 		}
     }
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (currentTheme != TransportsRennesApplication.getTheme(getApplicationContext())) {
+			recreate();
+		}
+	}
 
     private void afficheMessage() {
         boolean afficheMessage =

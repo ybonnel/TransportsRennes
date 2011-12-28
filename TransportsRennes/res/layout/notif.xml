@@ -33,7 +33,6 @@
               android:layout_width="wrap_content"
               android:layout_height="38dip"
               android:textSize="20dip"
-              android:textColor="@android:color/black"
               android:gravity="center_vertical|left"
               android:layout_toRightOf="@id/iconeLigne"/>
 
@@ -45,7 +44,6 @@
               android:layout_height="38dip"
               android:minHeight="55dip"
               android:textSize="18dip"
-              android:textColor="@android:color/black"
               android:gravity="center_vertical|right"
               android:layout_toRightOf="@id/nomArret"
               android:layout_alignParentRight="true"/>
@@ -58,7 +56,6 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:textSize="14dip"
-              android:textColor="@android:color/black"
               android:gravity="center_vertical|left"
               android:layout_alignParentLeft="true"
               android:layout_below="@id/iconeLigne"

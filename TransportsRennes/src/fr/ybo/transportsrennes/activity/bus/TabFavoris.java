@@ -13,20 +13,23 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.GroupeFavori;
-
-import java.util.List;
 
 public class TabFavoris extends CapptainTabActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabfavoris);
         List<GroupeFavori> groupes = TransportsRennesApplication.getDataBaseHelper().selectAll(GroupeFavori.class);

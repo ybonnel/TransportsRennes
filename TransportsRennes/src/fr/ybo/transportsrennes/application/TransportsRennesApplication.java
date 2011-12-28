@@ -13,6 +13,13 @@
  */
 package fr.ybo.transportsrennes.application;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.Application;
@@ -22,12 +29,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
 import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
+
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.AlertBdd;
 import fr.ybo.transportsrennes.database.modele.Bounds;
@@ -38,13 +50,6 @@ import fr.ybo.transportsrennes.util.AlarmReceiver;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.GeocodeUtil;
-
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à
@@ -81,11 +86,37 @@ public class TransportsRennesApplication extends Application {
         return false;
     }
 
-    @Override
-    public void onCreate() {
-        if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
-            return;
-        super.onCreate();
+	public static int getTheme(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getInt("TransportsRennes_theme", 0);
+	}
+
+	public static int getTextColor(Context context) {
+		switch (getTheme(context)) {
+			case 1:
+				return Color.LTGRAY;
+			default:
+				return Color.BLACK;
+		}
+	}
+
+	public static void majTheme(Context context) {
+		int theme = getTheme(context);
+		switch (theme) {
+			case 1:
+				context.setTheme(R.style.Theme_TransportsRennes_black);
+				break;
+			default:
+				context.setTheme(R.style.Theme_TransportsRennes);
+				break;
+		}
+	}
+
+	@Override
+	public void onCreate() {
+		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
+			return;
+		majTheme(this);
+		super.onCreate();
 
         databaseHelper = new TransportsRennesDatabase(this);
         if (!isInPrincipalProcess()) {

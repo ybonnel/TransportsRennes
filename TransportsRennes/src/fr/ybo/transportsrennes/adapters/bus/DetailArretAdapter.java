@@ -13,32 +13,34 @@
  */
 package fr.ybo.transportsrennes.adapters.bus;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-import java.util.List;
-
-public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
+public class DetailArretAdapter extends BaseAdapter {
 
     private final int now;
 
     private final LayoutInflater inflater;
+	private List<DetailArretConteneur> prochainsDeparts;
 
     private final Context myContext;
 
     private boolean isToday;
 
     public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday) {
-        super(context, R.layout.detailarretliste, prochainsDeparts);
         this.isToday = isToday;
         myContext = context;
         this.now = now;
         inflater = LayoutInflater.from(context);
+		this.prochainsDeparts = prochainsDeparts;
     }
 
     private static class ViewHolder {
@@ -46,9 +48,21 @@ public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
         TextView tempsRestant;
     }
 
+	public int getCount() {
+		return prochainsDeparts.size();
+	}
+
+	public DetailArretConteneur getItem(int position) {
+		return prochainsDeparts.get(position);
+	}
+
+	public long getItemId(int position) {
+		return position;
+	}
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View convertView1 = convertView;
+		View convertView1 = convertView;
         DetailArretAdapter.ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.detailarretliste, parent, false);
@@ -59,8 +73,10 @@ public class DetailArretAdapter extends ArrayAdapter<DetailArretConteneur> {
         } else {
             holder = (DetailArretAdapter.ViewHolder) convertView1.getTag();
         }
-        int prochainDepart = getItem(position).getHoraire();
+		int prochainDepart = prochainsDeparts.get(position).getHoraire();
         holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
+		holder.heureProchain.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
         if (isToday) {
             holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
         } else {

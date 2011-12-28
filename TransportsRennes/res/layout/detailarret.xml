@@ -43,7 +43,7 @@
             android:layout_toLeftOf="@id/googlemap">
         <TextView android:id="@+id/nomLong"
                   android:padding="5dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
                   android:textSize="20dip"
                   android:gravity="center_vertical|left"/>
@@ -82,11 +82,10 @@
                   android:paddingRight="5dip"
                   android:paddingTop="5dip"
                   android:paddingBottom="3dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="wrap_content"
                   android:layout_height="38dip"
                   android:textSize="20dip"
-                  android:gravity="center_vertical|left"
-                  android:layout_alignParentLeft="true"/>
+                  android:gravity="center_vertical|left"/>
     </HorizontalScrollView>
 
     <ScrollView android:layout_width="fill_parent"

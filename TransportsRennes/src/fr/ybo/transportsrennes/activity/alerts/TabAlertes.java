@@ -18,13 +18,17 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
+
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class TabAlertes extends CapptainTabActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabalertes);
 

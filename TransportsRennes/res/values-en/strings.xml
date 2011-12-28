@@ -197,4 +197,8 @@
     <string name="supprimerNotif">Delete the notification</string>
     <string name="lineShortcut">Bus line</string>
     <string name="lineName">Line %1$s</string>
+    
+    <string name="themeBlanc">White style</string>
+    <string name="themeNoir">Black style</string>
+    <string name="chooseTheme">Choose a style</string>
 </resources>

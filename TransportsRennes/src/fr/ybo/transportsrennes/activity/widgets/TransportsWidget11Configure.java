@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsrennes.activity.widgets;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -22,18 +28,14 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TransportsWidget11Configure extends CapptainListActivity {
 
@@ -42,6 +44,7 @@ public class TransportsWidget11Configure extends CapptainListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
         super.onCreate(savedInstanceState);
         Intent launchIntent = getIntent();
         Bundle extras = launchIntent.getExtras();

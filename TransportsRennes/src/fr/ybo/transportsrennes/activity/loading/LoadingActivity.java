@@ -46,6 +46,7 @@ public class LoadingActivity extends CapptainActivity {
 
 	@Override
 	protected void onCreate(Bundle bundle) {
+		TransportsRennesApplication.majTheme(this);
 		super.onCreate(bundle);
 		setContentView(R.layout.loading);
 		message = (TextView) findViewById(R.id.messageLoading);
