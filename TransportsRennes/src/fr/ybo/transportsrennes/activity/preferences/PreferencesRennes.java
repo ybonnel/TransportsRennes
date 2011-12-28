@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportsrennes.activity.preferences;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -79,7 +80,8 @@ public class PreferencesRennes extends MenuAccueil.Activity {
 					editor.putInt("TransportsRennes_theme", position);
 					editor.commit();
 					TransportsRennesApplication.majTheme(PreferencesRennes.this);
-					PreferencesRennes.this.recreate();
+					startActivity(new Intent(PreferencesRennes.this, PreferencesRennes.class));
+					finish();
 				}
 			}
 

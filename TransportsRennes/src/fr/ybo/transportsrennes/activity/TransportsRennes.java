@@ -62,7 +62,8 @@ public class TransportsRennes extends CapptainFragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		if (currentTheme != TransportsRennesApplication.getTheme(getApplicationContext())) {
-			recreate();
+			startActivity(new Intent(this, TransportsRennes.class));
+			finish();
 		}
 	}
 
