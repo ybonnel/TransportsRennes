@@ -13,21 +13,22 @@
  */
 package fr.ybo.transportsbordeaux.twitter;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
-import fr.ybo.transportsbordeaux.tbcapi.TcbException;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
+import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 
 public class GetTwitters {
 
@@ -45,13 +46,11 @@ public class GetTwitters {
 
     public Collection<MessageTwitter> getMessages() throws TbcErreurReseaux {
         try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(
-                    "http://support-twitter.herokuapp.com/tbc").openConnection();
-            connection.setRequestMethod("GET");
-            connection.setDoOutput(true);
+			URL myUrl = new URL("http://support-twitter.herokuapp.com/tbc");
+			URLConnection connection = myUrl.openConnection();
             connection.setConnectTimeout(20000);
             connection.setReadTimeout(20000);
-            connection.connect();
+			connection.addRequestProperty("Accept", "application/json");
             Gson gson = new GsonBuilder().create();
             Type listType = new TypeToken<List<MessageTwitter>>() {
             }.getType();
