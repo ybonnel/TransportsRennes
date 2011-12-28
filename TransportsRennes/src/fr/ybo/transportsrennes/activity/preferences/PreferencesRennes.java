@@ -21,14 +21,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.Spinner;
+import android.widget.RadioButton;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -63,32 +60,45 @@ public class PreferencesRennes extends MenuAccueil.Activity {
 				editor.commit();
 			}
 		});
-		Spinner choixTheme = (Spinner) findViewById(R.id.choixTheme);
-		String[] themes = { getString(R.string.themeBlanc), getString(R.string.themeNoir) };
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-				themes);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		choixTheme.setAdapter(adapter);
-		choixTheme.setSelection(TransportsRennesApplication.getTheme(getApplicationContext()));
-		choixTheme.setOnItemSelectedListener(new OnItemSelectedListener() {
 
+		RadioButton whiteTheme = (RadioButton) findViewById(R.id.whiteTheme);
+		whiteTheme.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onItemSelected(AdapterView<?> adapter, View arg1, int position, long arg3) {
-				if (TransportsRennesApplication.getTheme(getApplicationContext()) != position) {
-					SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-							PreferencesRennes.this).edit();
-					editor.putInt("TransportsRennes_theme", position);
-					editor.commit();
-					TransportsRennesApplication.majTheme(PreferencesRennes.this);
-					startActivity(new Intent(PreferencesRennes.this, PreferencesRennes.class));
-					finish();
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					changeTheme(0);
 				}
 			}
-
+		});
+		RadioButton blackTheme = (RadioButton) findViewById(R.id.blackTheme);
+		blackTheme.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					changeTheme(1);
+				}
 			}
 		});
+		switch (TransportsRennesApplication.getTheme(getApplicationContext())) {
+			case 1:
+				blackTheme.setChecked(true);
+				break;
+			default:
+				whiteTheme.setChecked(true);
+				break;
+		}
+	}
+
+	private void changeTheme(int theme) {
+		if (theme != TransportsRennesApplication.getTheme(getApplicationContext())) {
+			SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(PreferencesRennes.this)
+					.edit();
+			editor.putInt("TransportsRennes_theme", theme);
+			editor.commit();
+			TransportsRennesApplication.majTheme(PreferencesRennes.this);
+			startActivity(new Intent(PreferencesRennes.this, PreferencesRennes.class));
+			finish();
+		}
 	}
 
 }

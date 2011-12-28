@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This program is free software: you can redistribute it and/or modify 
+<!--
+     This program is free software: you can redistribute it and/or modify 
 	it under the terms of the GNU General Public License as published by the 
 	Free Software Foundation, either version 3 of the License. This program is 
 	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -7,27 +8,50 @@
 	PURPOSE. See the GNU General Public License for more details. You should 
 	have received a copy of the GNU General Public License along with this program. 
 	If not, see <http://www.gnu.org/licenses/>. Contributors: ybonnel - initial 
-	API and implementation -->
+	API and implementation
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<CheckBox android:id="@+id/notifUpdateOn" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/notifUpdateOn"
-		android:layout_marginLeft="32dp"
-		android:layout_marginTop="16dp" android:checked="true"/>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<Spinner
-	    android:id="@+id/choixTheme"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-		android:layout_marginLeft="32dp"
-		android:layout_marginTop="18dp"
-        android:drawSelectorOnTop="true"
-        android:prompt="@string/chooseTheme"/>
-	<Button android:textSize="18dip" android:gravity="center"
-		android:id="@+id/preferencesTermine" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:text="@string/Terminer"
-		android:layout_marginLeft="32dp"
-		android:layout_marginTop="18dp"/>
+    <CheckBox
+        android:id="@+id/notifUpdateOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:checked="true"
+        android:text="@string/notifUpdateOn" />
+
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical" >
+
+        <RadioButton
+            android:id="@+id/whiteTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/themeBlanc" />
+
+        <RadioButton
+            android:id="@+id/blackTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/themeNoir" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/preferencesTermine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:text="@string/Terminer"
+        android:textSize="18dip" />
 
 </LinearLayout>
