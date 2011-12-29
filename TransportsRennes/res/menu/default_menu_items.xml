@@ -12,7 +12,7 @@
           android:showAsAction="always" />
     
     <item android:id="@+id/menu_prefs"
-        android:icon="@android:drawable/ic_menu_manage"
+        android:icon="@drawable/actionbar_prefs"
           android:title="@string/preferences"
           android:showAsAction="always" />
 
