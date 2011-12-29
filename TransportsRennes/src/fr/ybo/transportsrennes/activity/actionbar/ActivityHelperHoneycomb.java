@@ -18,7 +18,7 @@ package fr.ybo.transportsrennes.activity.actionbar;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Bundle;
+import android.view.Menu;
 
 /**
  * An extension of {@link ActivityHelper} that provides Android 3.0-specific functionality for
@@ -28,12 +28,6 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 
     protected ActivityHelperHoneycomb(Activity activity) {
         super(activity);
-    }
-
-    @Override
-    public void onPostCreate(Bundle savedInstanceState) {
-        // Do nothing in onPostCreate. ActivityHelper creates the old action bar, we don't
-        // need to for Honeycomb.
     }
 
     /** {@inheritDoc} */
@@ -70,20 +64,16 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
         }
     }
 
-    /**
-     * No-op on Honeycomb. The action bar title always remains the same.
-     */
+	private int resourceMenu;
+
     @Override
-    public void setActionBarTitle(CharSequence title) {
+	protected void addMenus(int resourceMenu) {
+		this.resourceMenu = resourceMenu;
     }
 
-    /**
-     * No-op on Honeycomb. The action bar color always remains the same.
-     */
     @Override
-    public void setActionBarColor(int color) {
-        if (!UIUtils.isTablet(mActivity)) {
-            super.setActionBarColor(color);
-        }
+	public boolean onCreateOptionsMenu(Menu menu) {
+		mActivity.getMenuInflater().inflate(resourceMenu, menu);
+		return super.onCreateOptionsMenu(menu);
     }
 }

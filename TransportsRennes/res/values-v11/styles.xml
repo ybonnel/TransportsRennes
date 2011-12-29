@@ -18,9 +18,10 @@
 <resources>
 
     <style name="Theme.TransportsRennes" parent="android:style/Theme.Holo.Light">
-        <item name="android:windowNoTitle">true</item>
+        <!-- <item name="android:windowNoTitle">true</item> -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/background_noise</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
 
         <!-- custom attributes -->
         <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
@@ -28,8 +29,9 @@
     </style>
 
     <style name="Theme.TransportsRennes.black" parent="android:style/Theme.Holo">
-        <item name="android:windowNoTitle">true</item>
+        <!-- <item name="android:windowNoTitle">true</item> -->
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/ActionBar.black</item>
 
         <!-- custom attributes -->
         <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
@@ -54,6 +56,8 @@
         <item name="android:background">@color/actionbar_background</item>
         <item name="android:textColor">@color/accent_1</item>
         <item name="android:titleTextStyle">@style/ActionBarText</item>
+    </style>
+    <style name="ActionBar.black" parent="android:style/Widget.Holo.ActionBar">
     </style>
 
     <style name="ActionBarText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">

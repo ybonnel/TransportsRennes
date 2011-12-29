@@ -25,11 +25,6 @@
         android:text="@string/btn_bus"
         android:drawableTop="@drawable/home_btn_bus" />
 
-    <Button android:id="@+id/home_btn_bus_favori"
-        style="@style/DashboardButton"
-        android:text="@string/btn_bus_favori"
-        android:drawableTop="@drawable/home_btn_bus_favori" />
-
     <Button android:id="@+id/home_btn_bus_gps"
         style="@style/DashboardButton"
         android:text="@string/btn_bus_gps"
@@ -44,11 +39,6 @@
         style="@style/DashboardButton"
         android:text="@string/btn_velo"
         android:drawableTop="@drawable/home_btn_velo" />
-
-    <Button android:id="@+id/home_btn_velo_favori"
-        style="@style/DashboardButton"
-        android:text="@string/btn_velo_favori"
-        android:drawableTop="@drawable/home_btn_velo_favori" />
 
     <Button android:id="@+id/home_btn_parking"
         style="@style/DashboardButton"
