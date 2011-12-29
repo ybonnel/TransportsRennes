@@ -21,11 +21,19 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/background_noise</item>
+
+        <!-- custom attributes -->
+        <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
+        <item name="trackAbstractMaxLines">@integer/track_abstract_max_lines</item>
     </style>
 
     <style name="Theme.TransportsRennes.black" parent="android:style/Theme.Holo">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
+
+        <!-- custom attributes -->
+        <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
+        <item name="trackAbstractMaxLines">@integer/track_abstract_max_lines</item>
     </style>
 	
 
@@ -39,5 +47,17 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#ff29549f</item>
         <item name="android:background">@null</item>
+    </style>
+    
+
+    <style name="ActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:titleTextStyle">@style/ActionBarText</item>
+    </style>
+
+    <style name="ActionBarText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>
