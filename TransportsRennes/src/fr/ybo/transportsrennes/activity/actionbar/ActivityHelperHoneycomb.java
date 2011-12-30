@@ -21,59 +21,56 @@ import android.app.Activity;
 import android.view.Menu;
 
 /**
- * An extension of {@link ActivityHelper} that provides Android 3.0-specific functionality for
- * Honeycomb tablets. It thus requires API level 11.
+ * An extension of {@link ActivityHelper} that provides Android 3.0-specific
+ * functionality for Honeycomb tablets. It thus requires API level 11.
  */
 public class ActivityHelperHoneycomb extends ActivityHelper {
 
-    protected ActivityHelperHoneycomb(Activity activity) {
-        super(activity);
-    }
+	protected ActivityHelperHoneycomb(Activity activity) {
+		super(activity);
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public void setupHomeActivity() {
-        super.setupHomeActivity();
-        // NOTE: there needs to be a content view set before this is called, so this method
-        // should be called in onPostCreate.
-        if (UIUtils.isTablet(mActivity)) {
-            mActivity.getActionBar().setDisplayOptions(
-                    0,
-                    ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
-        } else {
-            mActivity.getActionBar().setDisplayOptions(
-                    ActionBar.DISPLAY_USE_LOGO,
-                    ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
-        }
-    }
+	/** {@inheritDoc} */
+	@Override
+	public void setupHomeActivity() {
+		super.setupHomeActivity();
+		// NOTE: there needs to be a content view set before this is called, so
+		// this method
+		// should be called in onPostCreate.
+		if (UIUtils.isTablet(mActivity)) {
+			mActivity.getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
+		} else {
+			mActivity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_USE_LOGO,
+					ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
+		}
+	}
 
-    /** {@inheritDoc} */
-    @Override
-    public void setupSubActivity() {
-        super.setupSubActivity();
-        // NOTE: there needs to be a content view set before this is called, so this method
-        // should be called in onPostCreate.
-        if (UIUtils.isTablet(mActivity)) {
-            mActivity.getActionBar().setDisplayOptions(
-                    ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_USE_LOGO,
-                    ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_USE_LOGO);
-        } else {
-            mActivity.getActionBar().setDisplayOptions(
-                    0,
-                    ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_USE_LOGO);
-        }
-    }
+	/** {@inheritDoc} */
+	@Override
+	public void setupSubActivity() {
+		super.setupSubActivity();
+		// NOTE: there needs to be a content view set before this is called, so
+		// this method
+		// should be called in onPostCreate.
+		if (UIUtils.isTablet(mActivity)) {
+			mActivity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_USE_LOGO,
+					ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_USE_LOGO);
+		} else {
+			mActivity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_USE_LOGO,
+					ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
+		}
+	}
 
 	private int resourceMenu;
 
-    @Override
+	@Override
 	protected void addMenus(int resourceMenu) {
 		this.resourceMenu = resourceMenu;
-    }
+	}
 
-    @Override
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mActivity.getMenuInflater().inflate(resourceMenu, menu);
-		return super.onCreateOptionsMenu(menu);
-    }
+		return true;
+	}
 }

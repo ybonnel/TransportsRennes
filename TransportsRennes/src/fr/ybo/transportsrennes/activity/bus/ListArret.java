@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,24 +34,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.ArretAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Liste des arrêts d'une ligne de bus.
  *
  * @author ybonnel
  */
-public class ListArret extends MenuAccueil.ListActivity {
+public class ListArret extends BaseListActivity {
 
     private static final LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
@@ -159,6 +159,7 @@ public class ListArret extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(fr.ybo.transportsrennes.R.layout.listearrets);
+		getActivityHelper().setupActionBar(R.menu.listarrets_menu_items);
         myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
         if (myLigne == null) {
             myLigne = new Ligne();
@@ -169,16 +170,6 @@ public class ListArret extends MenuAccueil.ListActivity {
         findViewById(fr.ybo.transportsrennes.R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 onDirectionClick();
-            }
-        });
-        findViewById(R.id.googlemap).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
-                intent.putExtra("ligne", myLigne);
-                if (currentDirection != null) {
-                    intent.putExtra("direction", currentDirection);
-                }
-                startActivity(intent);
             }
         });
         ((TextView) findViewById(R.id.nomLong)).setText(myLigne.nomLong);
@@ -203,25 +194,16 @@ public class ListArret extends MenuAccueil.ListActivity {
         closeCurrentCursor();
         super.onDestroy();
     }
-
-    private static final int GROUP_ID = 0;
-    private static final int MENU_ORDER = Menu.FIRST;
-
     private boolean orderDirection = true;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(GROUP_ID, MENU_ORDER, Menu.NONE, R.string.menu_orderByName);
-        return true;
-    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(MENU_ORDER)
+		menu.findItem(R.id.menu_order)
                 .setTitle(orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
-        menu.findItem(MENU_ORDER).setIcon(orderDirection ? android.R.drawable.ic_menu_sort_alphabetically : android.R.drawable.ic_menu_sort_by_size);
+		menu.findItem(R.id.menu_order).setIcon(
+				orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
+						: android.R.drawable.ic_menu_sort_by_size);
         return true;
     }
 
@@ -229,11 +211,19 @@ public class ListArret extends MenuAccueil.ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
-        if (item.getItemId() == MENU_ORDER) {
+		if (item.getItemId() == R.id.menu_order) {
             orderDirection = !orderDirection;
             construireListe();
             getListView().invalidate();
+			invalidateOptionsMenu();
             return true;
+		} else if (item.getItemId() == R.id.menu_google_map) {
+			Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
+			intent.putExtra("ligne", myLigne);
+			if (currentDirection != null) {
+				intent.putExtra("direction", currentDirection);
+			}
+			startActivity(intent);
         }
         return false;
     }

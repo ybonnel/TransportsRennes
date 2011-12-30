@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,9 +36,11 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
@@ -48,19 +56,13 @@ import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances
  * de la position actuelle.
  *
  * @author ybonnel
  */
-public class ListArretByPosition extends MenuAccueil.ListActivity implements UpdateLocationListenner {
+public class ListArretByPosition extends BaseListActivity implements UpdateLocationListenner {
 
     private LocationUtil locationUtil;
 
@@ -93,7 +95,11 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
     }
 
     private void metterAJourListeArrets() {
-        String query = editText.getText().toString().toUpperCase();
+		metterAJourListeArrets(editText.getText().toString());
+	}
+
+	private void metterAJourListeArrets(String newQuery) {
+		String query = newQuery.toUpperCase();
         arretsFiltrees.clear();
         synchronized (arrets) {
             for (Arret arret : arrets) {
@@ -113,6 +119,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listarretgps);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items_with_search);
         arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable(
                 "arrets"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -337,6 +344,26 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
             Collections.sort(arrets, new Arret.ComparatorDistance());
         }
         metterAJourListeArrets();
+    }
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				return false;
+			}
+
+			@Override
+			public boolean onQueryTextChange(String newText) {
+				metterAJourListeArrets(newText);
+				return true;
+			}
+		});
+		return true;
     }
 
 }

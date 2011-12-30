@@ -15,112 +15,136 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-<RelativeLayout android:id="@+id/mainlayout"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <com.google.android.maps.MapView
-            android:id="@+id/mapview"
+    <include layout="@layout/actionbar" />
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@+id/mainlayout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:clickable="true"
-            android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
-            />
+            android:orientation="vertical" >
 
-    <!-- Debug
+            <com.google.android.maps.MapView
+                android:id="@+id/mapview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
+                android:clickable="true" />
+
+            <!--
+         Debug
         android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A"
-        -->
-    <!-- Release
+            -->
+            <!--
+         Release
         android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
-        -->
-    <LinearLayout android:orientation="horizontal"
-                  android:id="@+id/allCheckBox"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentBottom="true"
-            android:visibility="invisible"
-            android:background="#000000">
+            -->
 
-        <ImageView android:id="@+id/checkBusIcone"
-                   android:layout_width="39dip"
-                   android:layout_height="42dip"
-                   android:src="@drawable/icone_bus"
-                   android:paddingBottom="3dip"
-                   android:paddingLeft="2dip"
-                   android:paddingRight="1dip"
-                   android:paddingTop="3dip"/>
-        <CheckBox android:id="@+id/checkBus"
-                  android:layout_width="36dip"
-                  android:layout_height="42dip"
-                  android:paddingBottom="3dip"
-                  android:paddingLeft="0dip"
-                  android:paddingRight="0dip"
-                  android:paddingTop="3dip"/>
+            <LinearLayout
+                android:id="@+id/allCheckBox"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:background="#000000"
+                android:orientation="horizontal"
+                android:visibility="invisible" >
 
-        <ImageView android:id="@+id/checkVeloIcone"
-                   android:layout_width="44dip"
-                   android:layout_height="42dip"
-                   android:src="@drawable/icone_velo"
-                   android:paddingBottom="3dip"
-                   android:paddingLeft="7dip"
-                   android:paddingRight="1dip"
-                   android:paddingTop="3dip"/>
-        <CheckBox android:id="@+id/checkVelo"
-                  android:layout_width="36dip"
-                  android:layout_height="42dip"
-                  android:paddingBottom="3dip"
-                  android:paddingLeft="0dip"
-                  android:paddingRight="0dip"
-                  android:paddingTop="3dip"/>
+                <ImageView
+                    android:id="@+id/checkBusIcone"
+                    android:layout_width="39dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="2dip"
+                    android:paddingRight="1dip"
+                    android:paddingTop="3dip"
+                    android:src="@drawable/icone_bus" />
 
-        <ImageView android:id="@+id/checkParcIcone"
-                   android:layout_width="44dip"
-                   android:layout_height="42dip"
-                   android:src="@drawable/icone_parc"
-                   android:paddingBottom="3dip"
-                   android:paddingLeft="7dip"
-                   android:paddingRight="1dip"
-                   android:paddingTop="3dip"/>
-        <CheckBox android:id="@+id/checkParc"
-                  android:layout_width="36dip"
-                  android:layout_height="42dip"
-                  android:paddingBottom="3dip"
-                  android:paddingLeft="0dip"
-                  android:paddingRight="0dip"
-                  android:paddingTop="3dip"/>
+                <CheckBox
+                    android:id="@+id/checkBus"
+                    android:layout_width="36dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="0dip"
+                    android:paddingRight="0dip"
+                    android:paddingTop="3dip" />
 
-        <ImageView android:id="@+id/checkPosIcone"
-                   android:layout_width="44dip"
-                   android:layout_height="42dip"
-                   android:src="@drawable/icone_pos"
-                   android:paddingBottom="3dip"
-                   android:paddingLeft="7dip"
-                   android:paddingRight="1dip"
-                   android:paddingTop="3dip"/>
-        <CheckBox android:id="@+id/checkPos"
-                  android:layout_width="36dip"
-                  android:layout_height="42dip"
-                  android:paddingBottom="3dip"
-                  android:paddingLeft="0dip"
-                  android:paddingRight="0dip"
-                  android:paddingTop="3dip"/>
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/checkVeloIcone"
+                    android:layout_width="44dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="7dip"
+                    android:paddingRight="1dip"
+                    android:paddingTop="3dip"
+                    android:src="@drawable/icone_velo" />
 
-</RelativeLayout>
-                
-                
-		<ImageButton
-	        android:id="@+id/layers_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="42dp"
-	        android:layout_marginRight="5dp"
-	        android:layout_gravity="bottom|right"
-	        android:src="@android:drawable/ic_menu_preferences"
-	        />
-</FrameLayout>
+                <CheckBox
+                    android:id="@+id/checkVelo"
+                    android:layout_width="36dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="0dip"
+                    android:paddingRight="0dip"
+                    android:paddingTop="3dip" />
+
+                <ImageView
+                    android:id="@+id/checkParcIcone"
+                    android:layout_width="44dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="7dip"
+                    android:paddingRight="1dip"
+                    android:paddingTop="3dip"
+                    android:src="@drawable/icone_parc" />
+
+                <CheckBox
+                    android:id="@+id/checkParc"
+                    android:layout_width="36dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="0dip"
+                    android:paddingRight="0dip"
+                    android:paddingTop="3dip" />
+
+                <ImageView
+                    android:id="@+id/checkPosIcone"
+                    android:layout_width="44dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="7dip"
+                    android:paddingRight="1dip"
+                    android:paddingTop="3dip"
+                    android:src="@drawable/icone_pos" />
+
+                <CheckBox
+                    android:id="@+id/checkPos"
+                    android:layout_width="36dip"
+                    android:layout_height="42dip"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="0dip"
+                    android:paddingRight="0dip"
+                    android:paddingTop="3dip" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/layers_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="42dp"
+            android:layout_marginRight="5dp"
+            android:src="@android:drawable/ic_menu_preferences" />
+    </FrameLayout>
+
+</LinearLayout>

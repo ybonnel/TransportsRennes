@@ -32,13 +32,10 @@ import android.view.View;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
-import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.activity.map.AllOnMap;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
-import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
-import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
@@ -50,20 +47,13 @@ public class TransportsRennes extends BaseFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		TransportsRennesApplication.majTheme(this);
-		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		super.onCreate(savedInstanceState);
+		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.accueil_menu_items);
 		if (!verifierUpgrade()) {
 			afficheMessage();
 		}
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		getActivityHelper().setupHomeActivity();
 	}
 
 	@Override
@@ -183,15 +173,6 @@ public class TransportsRennes extends BaseFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
-			case R.id.menu_bus_favoris:
-				startActivity(new Intent(this, TabFavoris.class));
-				break;
-			case R.id.menu_velo_favoris:
-				startActivity(new Intent(this, ListStationsFavoris.class));
-				break;
-			case R.id.menu_prefs:
-				startActivity(new Intent(this, PreferencesRennes.class));
-				break;
 			case MENU_ID:
 				showDialog();
 				return true;

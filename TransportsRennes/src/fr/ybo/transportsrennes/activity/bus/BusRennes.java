@@ -22,7 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.LigneAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Ligne;
@@ -32,7 +32,7 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
  *
  * @author ybonnel
  */
-public class BusRennes extends MenuAccueil.ListActivity {
+public class BusRennes extends BaseListActivity {
 
     private void constructionListe() {
         List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
@@ -55,6 +55,7 @@ public class BusRennes extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
         constructionListe();
     }
 }
