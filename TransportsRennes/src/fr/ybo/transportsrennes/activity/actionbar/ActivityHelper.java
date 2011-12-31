@@ -123,12 +123,30 @@ public class ActivityHelper {
 		mActivity.getMenuInflater().inflate(resourceMenu, simpleMenu);
 		for (int i = 0; i < simpleMenu.size(); i++) {
 			final MenuItem item = simpleMenu.getItem(i);
-			addActionButtonCompat(item.getIcon(), item.getTitle(), new View.OnClickListener() {
+			addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					mActivity.onOptionsItemSelected(item);
 				}
 			}, true);
+		}
+	}
+
+	public void invalidateOptionsMenu() {
+		if (UIUtils.isHoneycomb()) {
+			mActivity.invalidateOptionsMenu();
+		} else if (mActivity instanceof ChangeIconActionBar) {
+			final ViewGroup actionBar = getActionBarCompat();
+			if (actionBar == null) {
+				return;
+			}
+			for (int i = 0; i < actionBar.getChildCount(); i++) {
+				View view = actionBar.getChildAt(i);
+				if (view instanceof ImageButton) {
+					((ChangeIconActionBar) mActivity).changeIconActionBar((ImageButton) view);
+				}
+			}
+			actionBar.invalidate();
 		}
 	}
 
@@ -143,7 +161,7 @@ public class ActivityHelper {
 	/**
 	 * Adds an action bar button to the compatibility action bar (on phones).
 	 */
-	public View addActionButtonCompat(Drawable icon, CharSequence title, View.OnClickListener clickListener,
+	public View addActionButtonCompat(int id, Drawable icon, CharSequence title, View.OnClickListener clickListener,
 			boolean separatorAfter) {
 		final ViewGroup actionBar = getActionBarCompat();
 		if (actionBar == null) {
@@ -156,6 +174,7 @@ public class ActivityHelper {
 
 		// Create the button
 		ImageButton actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
+		actionButton.setId(id);
 		actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources().getDimension(
 				R.dimen.actionbar_compat_height), ViewGroup.LayoutParams.FILL_PARENT));
 		actionButton.setImageDrawable(icon);

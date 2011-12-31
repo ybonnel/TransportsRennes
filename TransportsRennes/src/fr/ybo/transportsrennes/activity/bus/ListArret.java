@@ -28,11 +28,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.activity.actionbar.ChangeIconActionBar;
 import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.ArretAdapter;
@@ -46,7 +48,7 @@ import fr.ybo.transportsrennes.util.LogYbo;
  *
  * @author ybonnel
  */
-public class ListArret extends BaseListActivity {
+public class ListArret extends BaseListActivity implements ChangeIconActionBar {
 
     private static final LogYbo LOG_YBO = new LogYbo(ListArret.class);
 
@@ -196,6 +198,14 @@ public class ListArret extends BaseListActivity {
     }
     private boolean orderDirection = true;
 
+	@Override
+	public void changeIconActionBar(ImageButton imageButton) {
+		if (imageButton.getId() == R.id.menu_order) {
+			imageButton.setImageResource(orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
+					: android.R.drawable.ic_menu_sort_by_size);
+		}
+	}
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -215,7 +225,7 @@ public class ListArret extends BaseListActivity {
             orderDirection = !orderDirection;
             construireListe();
             getListView().invalidate();
-			invalidateOptionsMenu();
+			getActivityHelper().invalidateOptionsMenu();
             return true;
 		} else if (item.getItemId() == R.id.menu_google_map) {
 			Intent intent = new Intent(ListArret.this, ArretsOnMap.class);
