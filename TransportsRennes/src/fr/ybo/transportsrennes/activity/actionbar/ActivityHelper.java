@@ -19,10 +19,13 @@ package fr.ybo.transportsrennes.activity.actionbar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -123,12 +126,45 @@ public class ActivityHelper {
 		mActivity.getMenuInflater().inflate(resourceMenu, simpleMenu);
 		for (int i = 0; i < simpleMenu.size(); i++) {
 			final MenuItem item = simpleMenu.getItem(i);
-			addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					mActivity.onOptionsItemSelected(item);
+			if (item.getItemId() == R.id.menu_search && mActivity instanceof Searchable) {
+				addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
+
+					private boolean visible = false;
+
+					@Override
+					public void onClick(View v) {
+						if (!visible) {
+							mActivity.findViewById(R.id.edittext_search).setVisibility(View.VISIBLE);
+							mActivity.findViewById(R.id.edittext_search).requestFocus();
+							visible = true;
+						} else {
+							mActivity.findViewById(R.id.edittext_search).setVisibility(View.GONE);
+							visible = false;
+						}
+					}
+				}, false);
+			} else {
+				addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						mActivity.onOptionsItemSelected(item);
+					}
+				}, false);
+			}
+		}
+		if (mActivity instanceof Searchable) {
+			final EditText editText = (EditText) mActivity.findViewById(R.id.edittext_search);
+			editText.addTextChangedListener(new TextWatcher() {
+				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 				}
-			}, false);
+
+				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				}
+
+				public void afterTextChanged(Editable editable) {
+					((Searchable) mActivity).updateQuery(editText.getText().toString());
+				}
+			});
 		}
 	}
 

@@ -19,6 +19,9 @@ package fr.ybo.transportsrennes.activity.actionbar;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.view.Menu;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
+import fr.ybo.transportsrennes.R;
 
 /**
  * An extension of {@link ActivityHelper} that provides Android 3.0-specific
@@ -71,6 +74,22 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		mActivity.getMenuInflater().inflate(resourceMenu, menu);
+		if (mActivity instanceof Searchable) {
+			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+			searchView.setOnQueryTextListener(new OnQueryTextListener() {
+
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					return false;
+				}
+
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					((Searchable) mActivity).updateQuery(newText);
+					return true;
+				}
+			});
+		}
 		return true;
 	}
 }

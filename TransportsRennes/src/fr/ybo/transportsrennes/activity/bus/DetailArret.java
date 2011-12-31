@@ -143,13 +143,13 @@ public class DetailArret extends BaseListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items);
         mInflater = LayoutInflater.from(this);
         calendar = Calendar.getInstance();
         today = Calendar.getInstance();
         calendarLaVeille = Calendar.getInstance();
         calendarLaVeille.add(Calendar.DATE, -1);
         setContentView(R.layout.detailarret);
+		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items);
         recuperationDonneesIntent();
         if (favori.ligneId == null) {
             return;
