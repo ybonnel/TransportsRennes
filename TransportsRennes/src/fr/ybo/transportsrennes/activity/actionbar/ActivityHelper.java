@@ -128,7 +128,7 @@ public class ActivityHelper {
 				public void onClick(View v) {
 					mActivity.onOptionsItemSelected(item);
 				}
-			}, true);
+			}, false);
 		}
 	}
 
