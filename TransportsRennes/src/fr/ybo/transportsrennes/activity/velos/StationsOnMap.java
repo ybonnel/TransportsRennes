@@ -13,24 +13,26 @@
  */
 package fr.ybo.transportsrennes.activity.velos;
 
+import java.util.List;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayVelo;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.Formatteur;
 
-import java.util.List;
-
-public class StationsOnMap extends MenuAccueil.MapActivity {
+public class StationsOnMap extends BaseMapActivity {
 
     /**
      * Called when the activity is first created.
@@ -40,6 +42,7 @@ public class StationsOnMap extends MenuAccueil.MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
 
         Iterable<Station> stations = (Iterable<Station>) getIntent().getExtras().getSerializable("stations");
 

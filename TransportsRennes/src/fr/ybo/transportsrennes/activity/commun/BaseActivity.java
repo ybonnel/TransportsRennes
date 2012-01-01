@@ -13,12 +13,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 import com.google.android.maps.MapView;
+import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
+import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
 import fr.ybo.transportsrennes.activity.actionbar.ActivityHelper;
+import fr.ybo.transportsrennes.activity.actionbar.Refreshable;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
@@ -41,6 +44,11 @@ public class BaseActivity {
 				return true;
 			case R.id.menu_prefs:
 				activity.startActivity(new Intent(activity, PreferencesRennes.class));
+				return true;
+			case R.id.menu_refresh:
+				if (activity instanceof Refreshable) {
+					((Refreshable) activity).refresh();
+				}
 				return true;
 			default:
 				return false;
@@ -80,6 +88,67 @@ public class BaseActivity {
 			}
 		}
 
+	}
+
+	public static abstract class BaseTabActivity extends CapptainTabActivity {
+		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
+		public ActivityHelper getActivityHelper() {
+			return mActivityHelper;
+		}
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			TransportsRennesApplication.majTheme(this);
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			return mActivityHelper.onCreateOptionsMenu(menu);
+		}
+
+		@Override
+		protected void onPostCreate(Bundle savedInstanceState) {
+			super.onPostCreate(savedInstanceState);
+			getActivityHelper().setupSubActivity();
+		}
+
+	}
+
+	public static abstract class BaseSimpleActivity extends CapptainActivity {
+		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
+		public ActivityHelper getActivityHelper() {
+			return mActivityHelper;
+		}
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			TransportsRennesApplication.majTheme(this);
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			return mActivityHelper.onCreateOptionsMenu(menu);
+		}
+
+		@Override
+		protected void onPostCreate(Bundle savedInstanceState) {
+			super.onPostCreate(savedInstanceState);
+			getActivityHelper().setupSubActivity();
+		}
 	}
 
 	public static abstract class BaseListActivity extends CapptainListActivity {

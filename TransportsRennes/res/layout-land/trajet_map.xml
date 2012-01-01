@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This program is free software: you can redistribute it and/or modify 
+<!--
+     This program is free software: you can redistribute it and/or modify 
 	it under the terms of the GNU General Public License as published by the 
 	Free Software Foundation, either version 3 of the License. This program is 
 	distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
@@ -7,39 +8,62 @@
 	PURPOSE. See the GNU General Public License for more details. You should 
 	have received a copy of the GNU General Public License along with this program. 
 	If not, see <http://www.gnu.org/licenses/>. Contributors: ybonnel - initial 
-	API and implementation -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/mainlayout" android:orientation="vertical"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<ScrollView android:layout_width="250dip"
-		android:layout_height="fill_parent" android:layout_alignParentLeft="true"
-		android:id="@+id/scrollTrajets">
-		<LinearLayout android:orientation="vertical" android:id="@+id/trajetDetail"
-			android:layout_width="fill_parent" android:layout_height="fill_parent">
-		</LinearLayout>
-	</ScrollView>
+	API and implementation
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<FrameLayout android:layout_toRightOf="@id/scrollTrajets"
-		android:layout_width="fill_parent" android:layout_height="wrap_content">
-		<com.google.android.maps.MapView
-			android:id="@+id/mapview" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:clickable="true"
-			android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" />
-		
-                
-		<ImageButton
-	        android:id="@+id/layers_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="5dp"
-	        android:layout_marginRight="5dp"
-	        android:layout_gravity="bottom|right"
-	        android:src="@android:drawable/ic_menu_preferences"
-	        />
+    <include layout="@layout/actionbar" />
 
-		<!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
-		<!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-	</FrameLayout>
+        <ScrollView
+            android:id="@+id/scrollTrajets"
+            android:layout_width="250dip"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true" >
 
-</RelativeLayout>
+            <LinearLayout
+                android:id="@+id/trajetDetail"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/scrollTrajets" >
+
+            <com.google.android.maps.MapView
+                android:id="@+id/mapview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
+                android:clickable="true" />
+
+            <ImageButton
+                android:id="@+id/layers_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@android:drawable/ic_menu_preferences" />
+
+            <!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
+            <!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->
+
+        </FrameLayout>
+    </RelativeLayout>
+
+</LinearLayout>
