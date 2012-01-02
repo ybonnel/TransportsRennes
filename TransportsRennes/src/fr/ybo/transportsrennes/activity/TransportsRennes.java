@@ -145,7 +145,6 @@ public class TransportsRennes extends BaseFragmentActivity {
 
 	private static final int GROUP_ID = 0;
 	private static final int MENU_ID = 1;
-	private static final int MENU_MAP_ID = 2;
 	private static final int MENU_NOTIF = 4;
 	private static final int MENU_SHARE = 5;
 	private static final int MENU_LOAD_LINES = 6;
@@ -156,8 +155,6 @@ public class TransportsRennes extends BaseFragmentActivity {
 		super.onCreateOptionsMenu(menu);
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
-		MenuItem itemMap = menu.add(GROUP_ID, MENU_MAP_ID, Menu.NONE, R.string.menu_carte);
-		itemMap.setIcon(android.R.drawable.ic_menu_mapmode);
 		MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
 		itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
 		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
@@ -176,7 +173,7 @@ public class TransportsRennes extends BaseFragmentActivity {
 			case MENU_ID:
 				showDialog();
 				return true;
-			case MENU_MAP_ID:
+			case R.id.menu_plan:
 				Intent intentMap = new Intent(this, StarMap.class);
 				startActivity(intentMap);
 				return true;

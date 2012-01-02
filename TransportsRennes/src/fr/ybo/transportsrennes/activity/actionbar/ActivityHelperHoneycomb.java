@@ -64,7 +64,7 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 		}
 	}
 
-	private int resourceMenu;
+	private int resourceMenu = -1;
 
 	@Override
 	protected void addMenus(int resourceMenu) {
@@ -73,6 +73,9 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		if (resourceMenu == -1) {
+			return false;
+		}
 		mActivity.getMenuInflater().inflate(resourceMenu, menu);
 		if (mActivity instanceof Searchable) {
 			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();

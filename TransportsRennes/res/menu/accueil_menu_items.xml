@@ -15,5 +15,10 @@
         android:icon="@drawable/actionbar_prefs"
           android:title="@string/preferences"
           android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_plan"
+        android:icon="@drawable/ic_title_plan"
+          android:title="@string/menu_carte"
+          android:showAsAction="always" />
 
 </menu>

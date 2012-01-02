@@ -41,6 +41,7 @@ public class PreferencesRennes extends BaseSimpleActivity {
 		notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_notifUpdate",
 				true);
 		setContentView(R.layout.preferences);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
 		Button boutonTerminer = (Button) findViewById(R.id.preferencesTermine);
 		boutonTerminer.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
