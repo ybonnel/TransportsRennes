@@ -34,7 +34,7 @@
             <LinearLayout
                 android:id="@+id/trajetDetail"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical" >
             </LinearLayout>
         </ScrollView>
@@ -58,7 +58,8 @@
                 android:layout_gravity="bottom|right"
                 android:layout_marginBottom="5dp"
                 android:layout_marginRight="5dp"
-                android:src="@android:drawable/ic_menu_preferences" />
+                android:src="@android:drawable/ic_menu_preferences"
+                android:contentDescription="@string/preferences" />
 
             <!-- Debug android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A" -->
             <!-- Release android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw" -->

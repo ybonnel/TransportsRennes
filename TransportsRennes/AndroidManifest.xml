@@ -17,6 +17,16 @@
           android:installLocation="auto"
           android:versionCode="302"
           android:versionName="3.0.2">
+    
+    <uses-sdk android:minSdkVersion="3"
+              android:targetSdkVersion="11"/>
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="true" android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.TransportsRennes">
@@ -80,7 +90,9 @@
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
+        
+        <activity android:name=".activity.map.StarMap" android:configChanges="orientation|keyboardHidden"/>
+        
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.ItineraireRequete"
                   android:configChanges="orientation|keyboardHidden"/>
@@ -212,12 +224,4 @@
 
         <uses-library android:name="com.google.android.maps"/>
     </application>
-
-    <uses-sdk android:minSdkVersion="3"
-              android:targetSdkVersion="11"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 </manifest>

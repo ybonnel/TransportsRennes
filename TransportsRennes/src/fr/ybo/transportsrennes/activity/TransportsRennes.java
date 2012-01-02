@@ -34,7 +34,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
-import fr.ybo.transportsrennes.activity.map.AllOnMap;
+import fr.ybo.transportsrennes.activity.map.StarMap;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
@@ -177,7 +177,7 @@ public class TransportsRennes extends BaseFragmentActivity {
 				showDialog();
 				return true;
 			case MENU_MAP_ID:
-				Intent intentMap = new Intent(this, AllOnMap.class);
+				Intent intentMap = new Intent(this, StarMap.class);
 				startActivity(intentMap);
 				return true;
 			case MENU_TICKETS:
