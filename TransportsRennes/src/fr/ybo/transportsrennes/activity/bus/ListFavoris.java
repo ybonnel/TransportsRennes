@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -28,7 +33,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
@@ -39,15 +44,10 @@ import fr.ybo.transportsrennes.database.modele.GroupeFavori;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
 /**
  * @author ybonnel
  */
-public class ListFavoris extends MenuAccueil.ListActivity {
+public class ListFavoris extends BaseListActivity {
 
     private void construireListe() {
         ArretFavori favoriExemple = new ArretFavori();

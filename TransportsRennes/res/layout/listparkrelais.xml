@@ -25,7 +25,8 @@
               android:layout_width="fill_parent"
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
-              android:hint="@string/hint_rechercheParcRelai" />
+              android:hint="@string/hint_rechercheParcRelai"
+              android:visibility="gone" />
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"

@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.activity.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -30,13 +33,15 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
@@ -53,10 +58,7 @@ import fr.ybo.transportsrennes.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AllOnMap extends MenuAccueil.MapActivity {
+public class AllOnMap extends BaseMapActivity {
 
     private MapView mapView;
     private MyGeoClusterer<Arret> clustererForArret;

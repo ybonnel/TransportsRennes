@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +25,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.alerts.AlertAdapter;
 import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -28,12 +33,7 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class ListAlerts extends MenuAccueil.ListActivity {
+public class ListAlerts extends BaseListActivity {
 
     /**
      * Permet d'accéder aux apis keolis.
