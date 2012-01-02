@@ -13,22 +13,22 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.os.Bundle;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.alerts.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-public class ListTwitter extends MenuAccueil.ListActivity {
+public class ListTwitter extends BaseListActivity {
 
     private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>(20));
 

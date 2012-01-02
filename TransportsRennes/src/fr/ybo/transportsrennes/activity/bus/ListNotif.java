@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.Calendar;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -22,7 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.NotifAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
@@ -31,12 +33,10 @@ import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
-import java.util.Calendar;
-
 /**
  * @author ybonnel
  */
-public class ListNotif extends MenuAccueil.ListActivity {
+public class ListNotif extends BaseListActivity {
 
     private UpdateTimeUtil updateTimeUtil;
 
@@ -44,6 +44,7 @@ public class ListNotif extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listnotif);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
         setListAdapter(new NotifAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().selectAll(Notification.class)));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

@@ -17,10 +17,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 
 
-public class ParkRelaisShortcutPicker extends MenuAccueil.Activity {
+public class ParkRelaisShortcutPicker extends BaseSimpleActivity {
 
 
     @Override

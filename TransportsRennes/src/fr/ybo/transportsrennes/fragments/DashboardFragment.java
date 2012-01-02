@@ -26,11 +26,9 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
 import fr.ybo.transportsrennes.activity.bus.BusRennes;
 import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
-import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
-import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
 
 public class DashboardFragment extends Fragment {
 
@@ -40,11 +38,6 @@ public class DashboardFragment extends Fragment {
 		root.findViewById(R.id.home_btn_bus).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				startActivity(new Intent(getActivity(), BusRennes.class));
-			}
-		});
-		root.findViewById(R.id.home_btn_bus_favori).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				startActivity(new Intent(getActivity(), TabFavoris.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_bus_gps).setOnClickListener(new View.OnClickListener() {
@@ -60,11 +53,6 @@ public class DashboardFragment extends Fragment {
 		root.findViewById(R.id.home_btn_velo).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				startActivity(new Intent(getActivity(), ListStationsByPosition.class));
-			}
-		});
-		root.findViewById(R.id.home_btn_velo_favori).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				startActivity(new Intent(getActivity(), ListStationsFavoris.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_parking).setOnClickListener(new View.OnClickListener() {

@@ -13,22 +13,24 @@
  */
 package fr.ybo.transportsrennes.util;
 
+import java.util.List;
+
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
+
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-import java.util.List;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
 
     public AdresseAdapter(Context context) {
-        super(context, android.R.layout.simple_dropdown_item_1line);
+		super(context, android.R.layout.simple_spinner_item);
     }
 
     private final MyFilter filter = new MyFilter();

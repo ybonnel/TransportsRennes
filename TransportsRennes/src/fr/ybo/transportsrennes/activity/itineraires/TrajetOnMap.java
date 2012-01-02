@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsrennes.activity.itineraires;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +24,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.itineraires.PortionTrajet;
 import fr.ybo.transportsrennes.itineraires.Trajet;
 import fr.ybo.transportsrennes.map.LineItemizedOverlay;
@@ -37,11 +43,7 @@ import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-public class TrajetOnMap extends MenuAccueil.MapActivity {
+public class TrajetOnMap extends BaseMapActivity {
 
     private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 
@@ -52,6 +54,7 @@ public class TrajetOnMap extends MenuAccueil.MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trajet_map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
         Trajet trajet = (Trajet) getIntent().getSerializableExtra("trajet");
 
         MapView mapView = (MapView) findViewById(R.id.mapview);

@@ -18,4 +18,9 @@
     <item type="id" name="deplacerGroupe"/>
     <item type="id" name="creerNotif"/>
     <item type="id" name="supprimerNotif"/>
+    
+    <item type="id" name="actionbar_compat" />
+    <item type="id" name="actionbar_compat_container" />
+    <item type="id" name="actionbar_compat_logo" />
+    <item type="id" name="actionbar_compat_text" />
 </resources>

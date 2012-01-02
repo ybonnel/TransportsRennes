@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -20,20 +22,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.LigneAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.List;
 
 /**
  * Activité affichant les lignes de bus..
  *
  * @author ybonnel
  */
-public class BusShortcutPicker extends MenuAccueil.ListActivity {
+public class BusShortcutPicker extends BaseListActivity {
 
     private void constructionListe() {
         List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");

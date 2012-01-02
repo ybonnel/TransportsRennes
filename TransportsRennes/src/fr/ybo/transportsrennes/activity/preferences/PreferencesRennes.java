@@ -27,10 +27,10 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-public class PreferencesRennes extends MenuAccueil.Activity {
+public class PreferencesRennes extends BaseSimpleActivity {
 
 	private boolean notifUpdateOn = true;
 

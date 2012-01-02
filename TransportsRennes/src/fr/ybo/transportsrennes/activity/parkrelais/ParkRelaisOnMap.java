@@ -13,26 +13,28 @@
  */
 package fr.ybo.transportsrennes.activity.parkrelais;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.Formatteur;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class ParkRelaisOnMap extends MenuAccueil.MapActivity {
+public class ParkRelaisOnMap extends BaseMapActivity {
 
     private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
@@ -44,6 +46,7 @@ public class ParkRelaisOnMap extends MenuAccueil.MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
         if (MAP_STATES.isEmpty()) {
             MAP_STATES.put(1, getString(R.string.ferme));
             MAP_STATES.put(2, getString(R.string.complet));
