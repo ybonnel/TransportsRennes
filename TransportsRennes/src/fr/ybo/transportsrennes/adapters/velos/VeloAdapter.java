@@ -52,7 +52,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
     }
 
     private static class ViewHolder {
-        ImageView icone;
+		TextView icone;
         TextView dispoVeloText;
         TextView dispoVeloStation;
         TextView dispoVeloDistance;
@@ -66,7 +66,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.dispovelo, null);
             holder = new VeloAdapter.ViewHolder();
-            holder.icone = (ImageView) convertView1.findViewById(R.id.dispovelo_image);
+			holder.icone = (TextView) convertView1.findViewById(R.id.itemSymbole);
             holder.dispoVeloText = (TextView) convertView1.findViewById(R.id.dispovelo_text);
             holder.dispoVeloStation = (TextView) convertView1.findViewById(R.id.dispovelo_station);
             holder.dispoVeloDistance = (TextView) convertView1.findViewById(R.id.dispovelo_distance);
@@ -82,11 +82,11 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
         if (poucentageDispo < SEUIL_ROUGE) {
-            holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));
         } else if (poucentageDispo < SEUIL_ORANGE) {
-            holder.icone.setImageResource(R.drawable.dispo_velo_orange);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_orange));
         } else {
-            holder.icone.setImageResource(R.drawable.dispo_velo_bleue);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_blue));
         }
 
         holder.dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);

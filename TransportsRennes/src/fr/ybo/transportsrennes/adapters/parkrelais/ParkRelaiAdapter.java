@@ -13,19 +13,18 @@
  */
 package fr.ybo.transportsrennes.adapters.parkrelais;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Adapteur pour les park relais.
@@ -57,7 +56,7 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
         TextView dispoParkRelaiNom;
         TextView dispoParkRelaiDistance;
         TextView dispoParkRelaiText;
-        ImageView icone;
+		TextView icone;
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
             holder.dispoParkRelaiNom = (TextView) convertView1.findViewById(R.id.dispoparkrelai_nom);
             holder.dispoParkRelaiDistance = (TextView) convertView1.findViewById(R.id.dispoparkrelai_distance);
             holder.dispoParkRelaiText = (TextView) convertView1.findViewById(R.id.dispoparkrelai_text);
-            holder.icone = (ImageView) convertView1.findViewById(R.id.dispoparkrelai_image);
+			holder.icone = (TextView) convertView1.findViewById(R.id.itemSymbole);
             convertView1.setTag(holder);
         } else {
             holder = (ParkRelaiAdapter.ViewHolder) convertView1.getTag();
@@ -82,20 +81,22 @@ public class ParkRelaiAdapter extends ArrayAdapter<ParkRelai> {
         if (parkRelai.state == 0) {
             double poucentageDispo = (double) parkRelai.carParkAvailable.intValue() / (double) parkRelai.carParkCapacity.intValue();
 
-
-            if (poucentageDispo < SEUIL_ROUGE) {
-                holder.icone.setImageResource(R.drawable.dispo_parkrelai_rouge);
-            } else if (poucentageDispo < SEUIL_ORANGE) {
-                holder.icone.setImageResource(R.drawable.dispo_parkrelai_orange);
-            } else {
-                holder.icone.setImageResource(R.drawable.dispo_parkrelai_bleue);
-            }
+			if (poucentageDispo < SEUIL_ROUGE) {
+				holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));
+			} else if (poucentageDispo < SEUIL_ORANGE) {
+				holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(
+						R.drawable.item_symbol_orange));
+			} else {
+				holder.icone
+						.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_blue));
+			}
 
             holder.dispoParkRelaiText.setText(parkRelai.carParkAvailable + " / " + parkRelai.carParkCapacity);
         } else {
             // Cas ou le park relai n'est pas disponible (complet, fermé, indisponible).
-            holder.icone.setImageResource(R.drawable.dispo_parkrelai_rouge);
             holder.dispoParkRelaiText.setText(MAP_STATES.get(parkRelai.state));
+
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));
         }
         return convertView1;
     }

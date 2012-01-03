@@ -19,17 +19,17 @@
                 android:orientation="horizontal"
                 android:layout_width="76dip"
                 android:layout_height="76dip">
-    <ImageView android:layout_height="70dip"
-               android:layout_width="70dip"
-               android:id="@+id/dispovelo_image"
-               android:layout_x="0dip"
-               android:layout_y="3dip"/>
+    
+    <TextView
+        android:id="@+id/itemSymbole"
+        style="@style/ItemSymbole"
+        android:text="V"/>
 
     <TextView android:layout_height="fill_parent"
               android:layout_width="fill_parent"
               android:id="@+id/dispovelo_text"
-              android:paddingTop="28dip"
-              android:textSize="12dip"
+              android:paddingTop="25dip"
+              android:textSize="14dip"
               android:gravity="center"
               android:textColor="#ffffff"/>
 
