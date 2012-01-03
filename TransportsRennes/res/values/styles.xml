@@ -116,4 +116,18 @@
         <item name="android:singleLine">true</item>
         <item name="android:ellipsize">end</item>
     </style>
+    
+    
+
+    <style name="ItemSymbole">
+        <item name="android:textSize">23dip</item>
+        <item name="android:layout_width">65dip</item>
+        <item name="android:layout_height">65dip</item>
+        <item name="android:paddingTop">5dip</item>
+        <item name="android:layout_alignParentTop">false</item>
+        <item name="android:layout_gravity">center_horizontal|center_vertical</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center_horizontal|top</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
 </resources>
