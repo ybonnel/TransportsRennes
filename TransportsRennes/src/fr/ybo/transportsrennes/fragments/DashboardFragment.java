@@ -29,12 +29,18 @@ import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
 import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class DashboardFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root = inflater.inflate(R.layout.fragment_dashboard, container);
+		View root;
+		if (TransportsRennesApplication.getTheme(getActivity()) == 1) {
+			root = inflater.inflate(R.layout.fragment_dashboard_noir, container);
+		} else {
+			root = inflater.inflate(R.layout.fragment_dashboard, container);
+		}
 		root.findViewById(R.id.home_btn_bus).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				startActivity(new Intent(getActivity(), BusRennes.class));
