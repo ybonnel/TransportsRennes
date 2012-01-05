@@ -201,4 +201,5 @@
     <string name="themeBlanc">White style</string>
     <string name="themeNoir">Black style</string>
     <string name="chooseTheme">Choose a style</string>
+    <string name="theme">Style</string>
 </resources>

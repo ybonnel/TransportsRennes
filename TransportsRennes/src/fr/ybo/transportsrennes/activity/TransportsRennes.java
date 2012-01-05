@@ -40,10 +40,11 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
+import fr.ybo.transportsrennes.util.Theme;
 
 public class TransportsRennes extends BaseFragmentActivity {
 
-	private int currentTheme;
+	private Theme currentTheme;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
