@@ -30,13 +30,14 @@ import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.util.Theme;
 
 public class DashboardFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View root;
-		if (TransportsRennesApplication.getTheme(getActivity()) == 1) {
+		if (TransportsRennesApplication.getTheme(getActivity()) == Theme.NOIR) {
 			root = inflater.inflate(R.layout.fragment_dashboard_noir, container);
 		} else {
 			root = inflater.inflate(R.layout.fragment_dashboard, container);

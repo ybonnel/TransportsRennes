@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
@@ -39,7 +38,6 @@ import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
-import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.AlertBdd;
 import fr.ybo.transportsrennes.database.modele.Bounds;
@@ -50,6 +48,7 @@ import fr.ybo.transportsrennes.util.AlarmReceiver;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.GeocodeUtil;
+import fr.ybo.transportsrennes.util.Theme;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à
@@ -86,29 +85,17 @@ public class TransportsRennesApplication extends Application {
         return false;
     }
 
-	public static int getTheme(Context context) {
-		return PreferenceManager.getDefaultSharedPreferences(context).getInt("TransportsRennes_theme", 0);
+	public static Theme getTheme(Context context) {
+		return Theme.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
+				"TransportsRennes_choixTheme", Theme.BLANC.name()));
 	}
 
 	public static int getTextColor(Context context) {
-		switch (getTheme(context)) {
-			case 1:
-				return Color.LTGRAY;
-			default:
-				return Color.BLACK;
-		}
+		return getTheme(context).getTextColor();
 	}
 
 	public static void majTheme(Context context) {
-		int theme = getTheme(context);
-		switch (theme) {
-			case 1:
-				context.setTheme(R.style.Theme_TransportsRennes_black);
-				break;
-			default:
-				context.setTheme(R.style.Theme_TransportsRennes);
-				break;
-		}
+		context.setTheme(getTheme(context).getTheme());
 	}
 
 	@Override

@@ -225,4 +225,6 @@
     <string name="themeBlanc">Thème blanc</string>
     <string name="themeNoir">Thème noir</string>
     <string name="chooseTheme">Choisissez un thème</string>
+    
+    <string name="theme">Thème</string>
 </resources>
