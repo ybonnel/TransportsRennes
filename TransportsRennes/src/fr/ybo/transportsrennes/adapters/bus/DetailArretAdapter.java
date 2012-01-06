@@ -35,12 +35,28 @@ public class DetailArretAdapter extends BaseAdapter {
 
     private boolean isToday;
 
+	private int positionToMove;
+
+	public int getPositionToMove() {
+		return positionToMove;
+	}
+
     public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday) {
         this.isToday = isToday;
         myContext = context;
         this.now = now;
         inflater = LayoutInflater.from(context);
 		this.prochainsDeparts = prochainsDeparts;
+		if (isToday) {
+			positionToMove = 0;
+			for (DetailArretConteneur horaire : prochainsDeparts) {
+				if (horaire.getHoraire() < now) {
+					positionToMove++;
+				}
+			}
+		} else {
+			positionToMove = 0;
+		}
     }
 
     private static class ViewHolder {
@@ -88,9 +104,7 @@ public class DetailArretAdapter extends BaseAdapter {
     private CharSequence formatterCalendar(int prochainDepart, int now) {
         StringBuilder stringBuilder = new StringBuilder();
         int tempsEnMinutes = prochainDepart - now;
-        if (tempsEnMinutes < 0) {
-            stringBuilder.append(myContext.getString(R.string.tropTard));
-        } else {
+		if (tempsEnMinutes >= 0) {
             stringBuilder.append(myContext.getString(R.string.dans));
             stringBuilder.append(' ');
             int heures = tempsEnMinutes / 60;
