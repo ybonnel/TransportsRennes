@@ -16,6 +16,7 @@ import com.google.android.maps.MapView;
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
+import com.ubikod.capptain.android.sdk.activity.CapptainPreferenceActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
 import fr.ybo.transportsrennes.R;
@@ -122,6 +123,36 @@ public class BaseActivity {
 	}
 
 	public static abstract class BaseSimpleActivity extends CapptainActivity {
+		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+
+		public ActivityHelper getActivityHelper() {
+			return mActivityHelper;
+		}
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) {
+			TransportsRennesApplication.majTheme(this);
+			super.onCreate(savedInstanceState);
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+		}
+
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			return mActivityHelper.onCreateOptionsMenu(menu);
+		}
+
+		@Override
+		protected void onPostCreate(Bundle savedInstanceState) {
+			super.onPostCreate(savedInstanceState);
+			getActivityHelper().setupSubActivity();
+		}
+	}
+
+	public static abstract class BasePreferenceActivity extends CapptainPreferenceActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
