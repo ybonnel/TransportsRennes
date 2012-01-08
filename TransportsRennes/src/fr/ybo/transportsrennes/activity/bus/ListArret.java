@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.actionbar.ChangeIconActionBar;
-import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
+import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.ArretAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -180,7 +180,7 @@ public class ListArret extends BaseListActivity implements ChangeIconActionBar {
             findViewById(R.id.alerte).setVisibility(View.VISIBLE);
             findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Intent intent = new Intent(ListArret.this, ListAlerts.class);
+                    Intent intent = new Intent(ListArret.this, ListAlertsForOneLine.class);
                     intent.putExtra("ligne", myLigne);
                     startActivity(intent);
                 }

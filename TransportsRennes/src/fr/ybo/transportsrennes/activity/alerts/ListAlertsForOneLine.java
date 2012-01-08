@@ -15,23 +15,22 @@ package fr.ybo.transportsrennes.activity.alerts;
 
 import android.os.Bundle;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseTabFragmentActivity;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
+import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
-import fr.ybo.transportsrennes.fragments.alerts.ListTwitter;
 
-public class TabAlertes extends BaseTabFragmentActivity {
+public class ListAlertsForOneLine extends BaseFragmentActivity {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		TransportsRennesApplication.majTheme(this);
+    private Ligne ligne;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tabalertes);
+		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+		setContentView(R.layout.listalert);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items);
-		configureTabs();
-		addTab("alertes", getString(R.string.alertes), ListAlerts.class);
-		addTab("twitter", getString(R.string.twitter), ListTwitter.class);
-		setCurrentTab(savedInstanceState);
-	}
+		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
+		fragmentAlert.setLigne(ligne);
+    }
 
 }

@@ -22,7 +22,7 @@
     android:layout_height="fill_parent">
     <include layout="@layout/actionbar" />
 
-    <fragment android:name="fr.ybo.transportsrennes.fragments.bus.ListFavoris"
+    <fragment android:name="fr.ybo.transportsrennes.fragments.alerts.ListAlerts"
         android:id="@+id/fragment_alerts"
         android:layout_width="fill_parent"
         android:layout_height="0dip"

@@ -44,7 +44,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
+import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
@@ -213,7 +213,7 @@ public class DetailArret extends BaseListActivity {
             findViewById(R.id.alerte).setVisibility(View.VISIBLE);
             findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Intent intent = new Intent(DetailArret.this, ListAlerts.class);
+                    Intent intent = new Intent(DetailArret.this, ListAlertsForOneLine.class);
                     intent.putExtra("ligne", myLigne);
                     startActivity(intent);
                 }
