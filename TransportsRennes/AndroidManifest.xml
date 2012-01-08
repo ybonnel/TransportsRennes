@@ -83,7 +83,6 @@
         <activity android:name=".activity.pointsdevente.ListPointsDeVente"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.alerts.ListTwitter" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.velos.StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.parkrelais.ParkRelaisOnMap"
