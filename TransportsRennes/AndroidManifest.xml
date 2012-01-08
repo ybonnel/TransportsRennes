@@ -39,7 +39,7 @@
         </activity>
         <activity android:name=".activity.loading.LoadingActivity" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.BusRennes" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.alerts.ListAlerts" android:configChanges="orientation|keyboardHidden">
+        <activity android:name=".activity.alerts.ListAlertsForOneLine" android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity android:name=".activity.alerts.DetailAlert" android:configChanges="orientation|keyboardHidden">
         </activity>
