@@ -20,13 +20,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-
-import com.ubikod.capptain.android.sdk.activity.CapptainPreferenceActivity;
-
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BasePreferenceActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-public class PreferencesRennes extends CapptainPreferenceActivity {
+public class PreferencesRennes extends BasePreferenceActivity {
 
 	private OnSharedPreferenceChangeListener prefListenner;
 
@@ -34,6 +32,8 @@ public class PreferencesRennes extends CapptainPreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		TransportsRennesApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.preferences);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items);
 		addPreferencesFromResource(R.xml.preferences);
 		prefListenner = new OnSharedPreferenceChangeListener() {
 
