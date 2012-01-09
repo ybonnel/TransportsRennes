@@ -54,7 +54,7 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-		genereGtfs(false, "20111227");
+		genereGtfs(false, "20120109");
     }
 
     /**
