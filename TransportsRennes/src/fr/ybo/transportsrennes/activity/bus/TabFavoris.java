@@ -36,7 +36,7 @@ public class TabFavoris extends BaseTabFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabfavoris);
-		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items);
+		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
 		List<GroupeFavori> groupes = TransportsRennesApplication.getDataBaseHelper().selectAll(GroupeFavori.class);
 		if (groupes.isEmpty()) {
 			Intent intent = new Intent(this, ListFavorisForNoGroup.class);

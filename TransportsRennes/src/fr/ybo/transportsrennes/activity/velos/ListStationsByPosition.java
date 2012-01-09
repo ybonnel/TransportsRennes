@@ -109,7 +109,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liststations);
-		getActivityHelper().setupActionBar(R.menu.liststation_menu_items);
+		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
         locationUtil = new LocationUtil(this, this);
         stationIntent = (List<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("stations"));

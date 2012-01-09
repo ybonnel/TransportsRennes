@@ -117,7 +117,8 @@ public class ListArretByPosition extends BaseListActivity implements UpdateLocat
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listarretgps);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items_with_search);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items_with_search,
+				R.menu.holo_default_menu_items_with_search);
 		arretsIntent = (List<Arret>) (getIntent().getExtras() == null ? null : getIntent().getExtras().getSerializable(
 				"arrets"));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

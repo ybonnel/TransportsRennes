@@ -39,7 +39,7 @@ public class DetailAlert extends BaseSimpleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailalert);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
         ((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());

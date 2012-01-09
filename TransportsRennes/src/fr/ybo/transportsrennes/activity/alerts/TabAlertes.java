@@ -27,7 +27,7 @@ public class TabAlertes extends BaseTabFragmentActivity {
 		TransportsRennesApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabalertes);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 		configureTabs();
 		addTab("alertes", getString(R.string.alertes), ListAlerts.class);
 		addTab("twitter", getString(R.string.twitter), ListTwitter.class);

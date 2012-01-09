@@ -12,7 +12,7 @@ public class StarMap extends BaseSimpleActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.starmap);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 		WebView webView = (WebView) findViewById(R.id.webview);
 		webView.getSettings().setBuiltInZoomControls(true);
 		webView.getSettings().setDefaultZoom(ZoomDensity.FAR);

@@ -45,7 +45,7 @@ public class ArretsOnMap extends BaseMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         Ligne myLigne = (Ligne) getIntent().getSerializableExtra("ligne");
         String currentDirection = getIntent().getStringExtra("direction");
 

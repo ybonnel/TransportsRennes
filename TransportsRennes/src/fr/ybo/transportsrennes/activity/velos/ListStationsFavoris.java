@@ -63,7 +63,8 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listvelofavoris);
-		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items);
+		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
+				R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
         ListView listView = getListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

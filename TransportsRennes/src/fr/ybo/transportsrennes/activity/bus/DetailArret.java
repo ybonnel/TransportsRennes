@@ -134,7 +134,7 @@ public class DetailArret extends BaseListActivity {
         calendarLaVeille = Calendar.getInstance();
         calendarLaVeille.add(Calendar.DATE, -1);
         setContentView(R.layout.detailarret);
-		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items);
+		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items, R.menu.holo_detailarret_menu_items);
         recuperationDonneesIntent();
         if (favori.ligneId == null) {
             return;

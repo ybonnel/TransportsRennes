@@ -31,6 +31,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.util.Theme;
 
 /**
  * A class that handles some common activity-related functionality in the app,
@@ -88,7 +90,11 @@ public class ActivityHelper {
 	 * home button and title are visible. If color is null, then the default
 	 * colorstrip is visible.
 	 */
-	public void setupActionBar(int resourceMenu) {
+	public void setupActionBar(int resourceMenuNormal, int resourceMenuHolo) {
+		int resourceMenu = resourceMenuNormal;
+		if (UIUtils.isHoneycomb() && TransportsRennesApplication.getTheme(mActivity) == Theme.NOIR) {
+			resourceMenu = resourceMenuHolo;
+		}
 		final ViewGroup actionBarCompat = getActionBarCompat();
 		if (actionBarCompat == null) {
 			addMenus(resourceMenu);
