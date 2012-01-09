@@ -55,7 +55,7 @@ public class BusRennes extends BaseListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         constructionListe();
     }
 }

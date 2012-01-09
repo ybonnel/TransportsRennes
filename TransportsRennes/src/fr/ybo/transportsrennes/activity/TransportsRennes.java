@@ -51,7 +51,7 @@ public class TransportsRennes extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
-		getActivityHelper().setupActionBar(R.menu.accueil_menu_items);
+		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
 		if (!verifierUpgrade()) {
 			afficheMessage();
 		}

@@ -28,7 +28,7 @@ public class ListAlertsForOneLine extends BaseFragmentActivity {
 		super.onCreate(savedInstanceState);
 		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		setContentView(R.layout.listalert);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
 		fragmentAlert.setLigne(ligne);
     }

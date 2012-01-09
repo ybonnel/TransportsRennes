@@ -42,7 +42,7 @@ public class PointsDeVentesOnMap extends BaseMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
         Iterable<PointDeVente> pointDeVentes = (Iterable<PointDeVente>) getIntent().getExtras().getSerializable("pointsDeVente");
 

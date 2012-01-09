@@ -103,7 +103,7 @@ public class ListParkRelais extends BaseListActivity implements UpdateLocationLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listparkrelais);
-		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items);
+		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items, R.menu.holo_listparkings_menu_items);
         parkRelaiIntent = (List<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("parcRelais"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

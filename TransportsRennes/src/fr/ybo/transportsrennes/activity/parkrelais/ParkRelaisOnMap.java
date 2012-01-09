@@ -46,7 +46,7 @@ public class ParkRelaisOnMap extends BaseMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         if (MAP_STATES.isEmpty()) {
             MAP_STATES.put(1, getString(R.string.ferme));
             MAP_STATES.put(2, getString(R.string.complet));

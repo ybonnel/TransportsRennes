@@ -99,7 +99,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpointsdevente);
-		getActivityHelper().setupActionBar(R.menu.listpdv_menu_items);
+		getActivityHelper().setupActionBar(R.menu.listpdv_menu_items, R.menu.holo_listpdv_menu_items);
         pointsDeVenteIntent = (List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("pointsDeVente"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

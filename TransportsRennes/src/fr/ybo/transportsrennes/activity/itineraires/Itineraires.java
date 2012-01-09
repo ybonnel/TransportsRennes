@@ -33,7 +33,7 @@ public class Itineraires extends BaseListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
                 "itinerairesReponse");
         int heureDepart = getIntent().getIntExtra("heureDepart", 0);

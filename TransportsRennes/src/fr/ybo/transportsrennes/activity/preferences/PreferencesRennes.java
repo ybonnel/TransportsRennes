@@ -33,7 +33,7 @@ public class PreferencesRennes extends BasePreferenceActivity {
 		TransportsRennesApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.preferences);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 		addPreferencesFromResource(R.xml.preferences);
 		prefListenner = new OnSharedPreferenceChangeListener() {
 

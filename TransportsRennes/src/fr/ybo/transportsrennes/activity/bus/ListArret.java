@@ -161,7 +161,7 @@ public class ListArret extends BaseListActivity implements ChangeIconActionBar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(fr.ybo.transportsrennes.R.layout.listearrets);
-		getActivityHelper().setupActionBar(R.menu.listarrets_menu_items);
+		getActivityHelper().setupActionBar(R.menu.listarrets_menu_items, R.menu.holo_listarrets_menu_items);
         myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
         if (myLigne == null) {
             myLigne = new Ligne();

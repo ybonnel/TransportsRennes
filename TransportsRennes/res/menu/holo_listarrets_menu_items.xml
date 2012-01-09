@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/menu_bus_favoris"
+        android:icon="@drawable/actionbar_bus_favoris_clair"
+          android:title="@string/btn_bus_favori"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_velo_favoris"
+        android:icon="@drawable/actionbar_velo_favoris_clair"
+          android:title="@string/btn_velo_favori"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_order"
+        android:icon="@android:drawable/ic_menu_sort_alphabetically"
+        android:title="@string/menu_orderByName"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_google_map"
+        android:icon="@drawable/ic_title_map"
+        android:title="@string/go_googlemap"
+        android:showAsAction="always"/>
+        
+
+</menu>

@@ -42,7 +42,7 @@ public class StationsOnMap extends BaseMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
         Iterable<Station> stations = (Iterable<Station>) getIntent().getExtras().getSerializable("stations");
 

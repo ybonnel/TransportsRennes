@@ -36,7 +36,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listfavoris);
-		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items);
+		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
     }
 
     private static final int GROUP_ID = 0;
