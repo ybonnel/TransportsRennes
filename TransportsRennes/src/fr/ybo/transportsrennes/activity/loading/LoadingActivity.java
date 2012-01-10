@@ -13,6 +13,7 @@ import java.util.Random;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -64,6 +65,17 @@ public class LoadingActivity extends CapptainActivity {
 				finish();
 				break;
 		}
+	}
+
+	// Verrue pour faire marcher en 1.6.
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if ((!(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.DONUT)
+				&& keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)) {
+			onBackPressed();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override

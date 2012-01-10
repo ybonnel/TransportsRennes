@@ -33,6 +33,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.util.Theme;
+import fr.ybo.transportsrennes.util.honeycomb.CompatUtil;
 
 /**
  * A class that handles some common activity-related functionality in the app,
@@ -176,7 +177,7 @@ public class ActivityHelper {
 
 	public void invalidateOptionsMenu() {
 		if (UIUtils.isHoneycomb()) {
-			mActivity.invalidateOptionsMenu();
+			CompatUtil.invalidateOptionsMenu(mActivity);
 		} else if (mActivity instanceof ChangeIconActionBar) {
 			final ViewGroup actionBar = getActionBarCompat();
 			if (actionBar == null) {
