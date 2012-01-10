@@ -68,7 +68,7 @@
 
         <TextView android:id="@+id/tempsRestant2_1arret"
                   android:paddingLeft="24dip"
-                  android:paddingTop="5dip"
+                  android:paddingTop="2dip"
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
@@ -79,7 +79,7 @@
 
         <TextView android:id="@+id/tempsRestant3_1arret"
                   android:paddingLeft="24dip"
-                  android:paddingTop="5dip"
+                  android:paddingTop="2dip"
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
@@ -90,7 +90,7 @@
 
         <TextView android:id="@+id/tempsRestant4_1arret"
                   android:paddingLeft="24dip"
-                  android:paddingTop="5dip"
+                  android:paddingTop="2dip"
                   android:layout_width="140dip"
                   android:layout_height="wrap_content"
                   android:textSize="20dip"
@@ -139,7 +139,7 @@
 
             <TextView android:id="@+id/tempsRestant11_2arret"
                       android:paddingLeft="24dip"
-                      android:paddingTop="5dip"
+                      android:paddingTop="2dip"
                       android:layout_width="140dip"
                       android:layout_height="wrap_content"
                       android:textSize="16dip"
@@ -167,13 +167,13 @@
             <ImageView android:id="@+id/iconeLigne2_2arret"
                        android:layout_width="45dip"
                        android:layout_height="44dip"
-                       android:paddingTop="19dip"
+                       android:paddingTop="5dip"
                        android:paddingLeft="20dip"
                        android:gravity="center_vertical|center_horizontal"/>
 
             <TextView android:id="@+id/nomArret2_2arret"
                       android:paddingLeft="3dip"
-                      android:paddingTop="16dip"
+                      android:paddingTop="2dip"
                       android:paddingBottom="0dip"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
 
             <TextView android:id="@+id/tempsRestant21_2arret"
                       android:paddingLeft="24dip"
-                      android:paddingTop="5dip"
+                      android:paddingTop="2dip"
                       android:layout_width="140dip"
                       android:layout_height="wrap_content"
                       android:textSize="16dip"
@@ -258,7 +258,7 @@
 
             <TextView android:id="@+id/tempsRestant1_3arret"
                       android:paddingLeft="24dip"
-                      android:paddingTop="5dip"
+                      android:paddingTop="2dip"
                       android:layout_width="140dip"
                       android:layout_height="wrap_content"
                       android:textSize="16dip"
@@ -274,13 +274,13 @@
             <ImageView android:id="@+id/iconeLigne2_3arret"
                        android:layout_width="45dip"
                        android:layout_height="30dip"
-                       android:paddingTop="5dip"
+                       android:paddingTop="3dip"
                        android:paddingLeft="20dip"
                        android:gravity="center_vertical|center_horizontal"/>
 
             <TextView android:id="@+id/nomArret2_3arret"
                       android:paddingLeft="3dip"
-                      android:paddingTop="2dip"
+                      android:paddingTop="0dip"
                       android:paddingBottom="0dip"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -302,7 +302,7 @@
 
             <TextView android:id="@+id/tempsRestant2_3arret"
                       android:paddingLeft="24dip"
-                      android:paddingTop="5dip"
+                      android:paddingTop="2dip"
                       android:layout_width="140dip"
                       android:layout_height="wrap_content"
                       android:textSize="16dip"
@@ -318,13 +318,13 @@
             <ImageView android:id="@+id/iconeLigne3_3arret"
                        android:layout_width="45dip"
                        android:layout_height="30dip"
-                       android:paddingTop="5dip"
+                       android:paddingTop="3dip"
                        android:paddingLeft="20dip"
                        android:gravity="center_vertical|center_horizontal"/>
 
             <TextView android:id="@+id/nomArret3_3arret"
                       android:paddingLeft="3dip"
-                      android:paddingTop="2dip"
+                      android:paddingTop="0dip"
                       android:paddingBottom="0dip"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
@@ -346,7 +346,7 @@
 
             <TextView android:id="@+id/tempsRestant3_3arret"
                       android:paddingLeft="24dip"
-                      android:paddingTop="5dip"
+                      android:paddingTop="2dip"
                       android:layout_width="140dip"
                       android:layout_height="wrap_content"
                       android:textSize="16dip"
