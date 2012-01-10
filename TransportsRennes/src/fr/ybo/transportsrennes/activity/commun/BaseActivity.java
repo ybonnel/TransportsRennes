@@ -1,6 +1,8 @@
 package fr.ybo.transportsrennes.activity.commun;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -88,12 +90,24 @@ public class BaseActivity {
 			mTabsAdapter.addTab(mTabHost.newTabSpec(id).setIndicator(title), fragment, args);
 		}
 
+		protected void setCurrentTab(String tag) {
+			mTabHost.setCurrentTabByTag(tag);
+		}
+
 		protected void setCurrentTab(Bundle savedInstanceState) {
 			if (savedInstanceState != null) {
 				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 			} else {
 				mTabHost.setCurrentTab(0);
 			}
+		}
+
+		protected void setOnFragmentChange(OnFragmentChange onFragmentChange) {
+			mTabsAdapter.setOnFragmentChange(onFragmentChange);
+		}
+
+		protected Fragment getCurrentFragment() {
+			return mTabsAdapter.getItem(mTabHost.getCurrentTab());
 		}
 
 		protected String getCurrentTab() {
@@ -321,6 +335,10 @@ public class BaseActivity {
 		}
 	}
 
+	public static interface OnFragmentChange {
+		public void onFragmentChanged(Fragment currentFragment);
+	}
+
 	/**
 	 * This is a helper class that implements the management of tabs and all
 	 * details of connecting a ViewPager with associated TabHost. It relies on a
@@ -392,16 +410,34 @@ public class BaseActivity {
 			return mTabs.size();
 		}
 
+		private Map<Integer, Fragment> mapFragments = new HashMap<Integer, Fragment>();
+
 		@Override
 		public Fragment getItem(int position) {
-			TabInfo info = mTabs.get(position);
-			return Fragment.instantiate(mContext, info.clss.getName(), info.args);
+			if (!mapFragments.containsKey(position)) {
+				TabInfo info = mTabs.get(position);
+				mapFragments.put(position, Fragment.instantiate(mContext, info.clss.getName(), info.args));
+			}
+			return mapFragments.get(position);
 		}
 
 		@Override
 		public void onTabChanged(String tabId) {
 			int position = mTabHost.getCurrentTab();
 			mViewPager.setCurrentItem(position);
+			onFragmentChange(position);
+		}
+
+		public void onFragmentChange(int position) {
+			if (onFragmentChange != null) {
+				onFragmentChange.onFragmentChanged(getItem(position));
+			}
+		}
+
+		private OnFragmentChange onFragmentChange = null;
+
+		public void setOnFragmentChange(OnFragmentChange onFragmentChange) {
+			this.onFragmentChange = onFragmentChange;
 		}
 
 		@Override
