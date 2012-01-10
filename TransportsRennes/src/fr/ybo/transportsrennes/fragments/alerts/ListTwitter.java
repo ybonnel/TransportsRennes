@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.alerts.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
 import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 public class ListTwitter extends ListFragment {
 
@@ -23,20 +24,40 @@ public class ListTwitter extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setListAdapter(new TwitterAdapter(getActivity(), messages));
+		MessageTwitter messageChargement = new MessageTwitter();
+		messageChargement.texte = getString(R.string.dialogRequeteTwitter);
+		messages.add(messageChargement);
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
-		new TacheAvecProgressDialog<Void, Void, Void>(getActivity(), getString(R.string.dialogRequeteTwitter)) {
+		new AsyncTask<Void, Void, Void>() {
+
+			private boolean erreurReseau = false;
+
+			private List<MessageTwitter> messagesTmp = new ArrayList<MessageTwitter>();
+
 			@Override
-			protected void myDoBackground() throws ErreurReseau {
-				messages.addAll(GetTwitters.getInstance().getMessages());
+			protected Void doInBackground(Void... params) {
+				try {
+					messagesTmp.addAll(GetTwitters.getInstance().getMessages());
+				} catch (ErreurReseau e) {
+					erreurReseau = true;
+				}
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (erreurReseau) {
+					Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				} else {
+					messages.clear();
+					messages.addAll(messagesTmp);
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
+
 		}.execute((Void) null);
 	}
 

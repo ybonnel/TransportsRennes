@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.adapters.alerts;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
-
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * Adapteur pour les alerts.
@@ -57,7 +57,11 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
             holder = (TwitterAdapter.ViewHolder) convertView1.getTag();
         }
         MessageTwitter message = messages.get(position);
-        holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
+		if (message.dateCreation != null) {
+			holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
+		} else {
+			holder.twitter.setText(message.texte);
+		}
         return convertView1;
     }
 }

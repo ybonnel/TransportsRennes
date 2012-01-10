@@ -6,11 +6,13 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.DetailAlert;
 import fr.ybo.transportsrennes.adapters.alerts.AlertAdapter;
@@ -18,7 +20,6 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 public class ListAlerts extends ListFragment {
 
@@ -51,38 +52,56 @@ public class ListAlerts extends ListFragment {
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		setListAdapter(new AlertAdapter(getActivity(), alerts));
+		Alert alertChargement = new Alert();
+		alertChargement.title = getString(R.string.dialogRequeteAlerts);
+		alerts.add(alertChargement);
+		new AsyncTask<Void, Void, Void>() {
 
-		new TacheAvecProgressDialog<Void, Void, Void>(getActivity(), getString(R.string.dialogRequeteAlerts)) {
+			private boolean erreurReseau = false;
+
+			private List<Alert> alertsTmp = new ArrayList<Alert>();
 
 			@Override
-			protected void myDoBackground() throws ErreurReseau {
-				for (Alert alerte : keolis.getAlerts()) {
-					while (alerte.lines.size() > 1) {
-						Alert newAlerte = new Alert(alerte);
-						newAlerte.lines.add(alerte.lines.remove(0));
+			protected Void doInBackground(Void... params) {
+				try {
+					for (Alert alerte : keolis.getAlerts()) {
+						while (alerte.lines.size() > 1) {
+							Alert newAlerte = new Alert(alerte);
+							newAlerte.lines.add(alerte.lines.remove(0));
+							if (ligne != null) {
+								if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
+									alertsTmp.add(newAlerte);
+								}
+							} else {
+								alertsTmp.add(newAlerte);
+							}
+						}
 						if (ligne != null) {
-							if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
-								alerts.add(newAlerte);
+							if (ligne.nomCourt.equals(alerte.lines.get(0))) {
+								alertsTmp.add(alerte);
 							}
 						} else {
-							alerts.add(newAlerte);
+							alertsTmp.add(alerte);
 						}
 					}
-					if (ligne != null) {
-						if (ligne.nomCourt.equals(alerte.lines.get(0))) {
-							alerts.add(alerte);
-						}
-					} else {
-						alerts.add(alerte);
-					}
+				} catch (ErreurReseau e) {
+					erreurReseau = true;
 				}
+				return null;
 			}
 
 			@Override
 			protected void onPostExecute(Void result) {
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (erreurReseau) {
+					Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+				} else {
+					alerts.clear();
+					alerts.addAll(alertsTmp);
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
+
 		}.execute((Void) null);
 	}
 
