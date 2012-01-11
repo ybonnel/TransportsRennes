@@ -96,11 +96,13 @@ public class ListArret extends BaseTabFragmentActivity implements ChangeIconActi
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
-		menu.findItem(R.id.menu_order).setTitle(
-				orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
-		menu.findItem(R.id.menu_order).setIcon(
-				orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
-						: android.R.drawable.ic_menu_sort_by_size);
+		if (menu.findItem(R.id.menu_order) != null) {
+			menu.findItem(R.id.menu_order).setTitle(
+					orderDirection ? R.string.menu_orderByName : R.string.menu_orderBySequence);
+			menu.findItem(R.id.menu_order).setIcon(
+					orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
+							: android.R.drawable.ic_menu_sort_by_size);
+		}
 		return true;
 	}
 
