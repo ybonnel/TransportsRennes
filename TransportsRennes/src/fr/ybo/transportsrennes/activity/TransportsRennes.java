@@ -52,9 +52,8 @@ public class TransportsRennes extends BaseFragmentActivity {
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
 		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
-		if (!verifierUpgrade()) {
-			afficheMessage();
-		}
+		afficheMessage();
+		verifierUpgrade();
 	}
 
 	@Override
@@ -108,14 +107,16 @@ public class TransportsRennes extends BaseFragmentActivity {
 		startActivity(intent);
 	}
 
-	private boolean verifierUpgrade() {
+	private void verifierUpgrade() {
 		TransportsRennesDatabase dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources());
-		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
+		if (dernierMiseAJour == null) {
+			upgradeDatabase();
+		} else if (dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
+			builder.setMessage(getString(R.string.majDispo));
 			builder.setCancelable(false);
 			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
 				public void onClick(DialogInterface dialog, int id) {
@@ -123,25 +124,14 @@ public class TransportsRennes extends BaseFragmentActivity {
 					upgradeDatabase();
 				}
 			});
-			if (dernierMiseAJour == null) {
-				builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						finish();
-					}
-				});
-			} else {
-				builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-			}
+			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
 			AlertDialog alert = builder.create();
 			alert.show();
-			return true;
 		}
-		return false;
 	}
 
 	private static final int GROUP_ID = 0;
