@@ -23,7 +23,7 @@
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
               android:background="@android:drawable/editbox_background"
-              android:inputType="textNoSuggestions"
+              android:inputType="text"
               android:imeOptions="actionSearch"
               android:hint="@string/hint_rechercherarret"/>
 
