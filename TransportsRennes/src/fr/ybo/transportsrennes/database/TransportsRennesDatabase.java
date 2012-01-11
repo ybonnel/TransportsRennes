@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsrennes.database;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,16 +40,10 @@ import fr.ybo.transportsrennes.database.modele.Trajet;
 import fr.ybo.transportsrennes.database.modele.VeloFavori;
 import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class TransportsRennesDatabase extends DataBaseHelper {
 
     private static final String DATABASE_NAME = "keolis.db";
-    private static final int DATABASE_VERSION = 15;
+	private static final int DATABASE_VERSION = 16;
 
     private Context context;
 
@@ -338,6 +338,11 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     }
                 }
             });
+			mapUpgrades.put(16, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
+					db.execSQL("CREATE INDEX ArretRoute_directionId ON ArretRoute(directionId)");
+				}
+			});
         }
         return mapUpgrades;
     }

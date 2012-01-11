@@ -83,10 +83,13 @@ public class ListArretFragment extends ListFragment {
 				Collections.singletonList(myLigne.id));
 		int directionIndex = cursor.getColumnIndex("direction");
 		final List<String> items = new ArrayList<String>(5);
+		long startTime = System.currentTimeMillis();
 		while (cursor.moveToNext()) {
 			items.add(cursor.getString(directionIndex));
 		}
 		cursor.close();
+		long elapsedTime = System.currentTimeMillis() - startTime;
+		LOG_YBO.debug("Temps requete récupération des directions : " + elapsedTime);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseDirection));
 		final String toutes = getString(fr.ybo.transportsrennes.R.string.Toutes);
