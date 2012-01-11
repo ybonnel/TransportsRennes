@@ -19,32 +19,17 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-    <TextView android:id="@+id/enteteGoogleMap"
-              android:text="@string/go_googlemap"
+    <include layout="@layout/actionbar"/>
+    <EditText android:id="@+id/edittext_search"
               android:layout_height="wrap_content"
               android:layout_width="fill_parent"
-              android:paddingTop="10dip"
-              android:paddingBottom="3dip"
-              android:textSize="18dip"
-              android:gravity="center_horizontal"
-              android:drawableRight="@android:drawable/ic_dialog_map"
-            android:drawablePadding="5dip"/>
-    <EditText android:id="@+id/listparkrelai_input"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:background="@android:drawable/editbox_background"
               android:inputType="textNoSuggestions"
               android:imeOptions="actionSearch"
-              android:hint="@string/hint_rechercheParcRelai" />
-    <ImageView android:layout_width="fill_parent"
-               android:layout_height="wrap_content"
-            android:paddingTop="4dip"
-            android:paddingBottom="4dip"
-            android:src="@android:drawable/divider_horizontal_dim_dark"
-            android:id="@+id/separateur"/>
+              android:hint="@string/hint_rechercheParcRelai"
+              android:visibility="gone" />
     <ListView android:id="@id/android:list"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:divider="@android:drawable/divider_horizontal_dim_dark"
+              android:cacheColorHint="#00000000"
             />
 </LinearLayout>

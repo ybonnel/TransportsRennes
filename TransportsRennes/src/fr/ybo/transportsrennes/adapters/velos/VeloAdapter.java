@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.adapters.velos;
 
+import java.util.Collection;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.Formatteur;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Adapteur pour les alerts.
@@ -51,7 +52,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
     }
 
     private static class ViewHolder {
-        ImageView icone;
+		TextView icone;
         TextView dispoVeloText;
         TextView dispoVeloStation;
         TextView dispoVeloDistance;
@@ -65,7 +66,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.dispovelo, null);
             holder = new VeloAdapter.ViewHolder();
-            holder.icone = (ImageView) convertView1.findViewById(R.id.dispovelo_image);
+			holder.icone = (TextView) convertView1.findViewById(R.id.itemSymbole);
             holder.dispoVeloText = (TextView) convertView1.findViewById(R.id.dispovelo_text);
             holder.dispoVeloStation = (TextView) convertView1.findViewById(R.id.dispovelo_station);
             holder.dispoVeloDistance = (TextView) convertView1.findViewById(R.id.dispovelo_distance);
@@ -74,16 +75,18 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         } else {
             holder = (VeloAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.dispoVeloStation.setTextColor(TransportsRennesApplication.getTextColor(getContext()));
+		holder.dispoVeloDistance.setTextColor(TransportsRennesApplication.getTextColor(getContext()));
         Station station = stations.get(position);
         int placesTotales = station.bikesavailable + station.slotsavailable;
         double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
         if (poucentageDispo < SEUIL_ROUGE) {
-            holder.icone.setImageResource(R.drawable.dispo_velo_rouge);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));
         } else if (poucentageDispo < SEUIL_ORANGE) {
-            holder.icone.setImageResource(R.drawable.dispo_velo_orange);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_orange));
         } else {
-            holder.icone.setImageResource(R.drawable.dispo_velo_bleue);
+			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_blue));
         }
 
         holder.dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);

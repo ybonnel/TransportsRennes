@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -23,7 +26,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.DetailTrajetAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Direction;
@@ -31,15 +34,12 @@ import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.database.modele.Trajet;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Activitée permettant d'afficher le détail d'un trajet
  *
  * @author ybonnel
  */
-public class DetailTrajet extends MenuAccueil.ListActivity {
+public class DetailTrajet extends BaseListActivity {
 
     private Cursor currentCursor;
 
@@ -71,6 +71,7 @@ public class DetailTrajet extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailtrajet);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         recuperationDonneesIntent();
         gestionViewsTitle();
         construireListe();

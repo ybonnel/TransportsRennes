@@ -16,7 +16,7 @@
       ybonnel - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="@drawable/appwidget_bg_serre" android:id="@+id/widgetlayout"
+	android:background="@drawable/appwidget_dark_bg" android:id="@+id/widgetlayout"
 	android:layout_width="fill_parent" android:layout_height="fill_parent">
 
 	<ImageView android:id="@+id/iconeLigne" android:layout_width="15dip"
@@ -59,7 +59,7 @@
 
 
 	<TextView android:id="@+id/prochainBus" android:paddingTop="8dip"
-		android:layout_weight="1" android:layout_width="fill_parent"
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:textSize="17dip"
 		android:textColor="#E1E1E1" android:gravity="center_vertical|center_horizontal"
 		android:layout_below="@id/layoutTempsRestant" />

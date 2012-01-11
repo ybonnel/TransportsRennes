@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.adapters.bus;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +24,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
 import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class NotifAdapter extends BaseAdapter {
 
@@ -90,6 +91,9 @@ public class NotifAdapter extends BaseAdapter {
         } else {
             holder = (NotifAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.arret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.directionArret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
 
         final Notification notification = notifications.get(position);
 

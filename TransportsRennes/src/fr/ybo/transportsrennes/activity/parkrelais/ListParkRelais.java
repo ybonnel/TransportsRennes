@@ -13,25 +13,29 @@
  */
 package fr.ybo.transportsrennes.activity.parkrelais;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.actionbar.Refreshable;
+import fr.ybo.transportsrennes.activity.actionbar.Searchable;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.parkrelais.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
@@ -40,19 +44,13 @@ import fr.ybo.transportsrennes.util.LocationUtil;
 import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de
  * la position actuelle.
  *
  * @author ybonnel
  */
-public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLocationListenner {
+public class ListParkRelais extends BaseListActivity implements UpdateLocationListenner, Searchable, Refreshable {
 
     /**
      * Permet d'accéder aux apis keolis.
@@ -81,8 +79,12 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
         super.onPause();
     }
 
-    private void metterAJourListeParkRelais() {
-        String query = editText.getText().toString().toUpperCase();
+	private String currentQuery = "";
+
+	@Override
+	public void updateQuery(String newQuery) {
+		currentQuery = newQuery;
+		String query = newQuery.toUpperCase();
         synchronized (parkRelais) {
             parkRelaisFiltres.clear();
             for (ParkRelai parkRelai : parkRelais) {
@@ -94,7 +96,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
         ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 
-    private EditText editText;
     private ListView listView;
 
     @Override
@@ -102,6 +103,7 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listparkrelais);
+		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items, R.menu.holo_listparkings_menu_items);
         parkRelaiIntent = (List<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("parcRelais"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -109,18 +111,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 
         setListAdapter(new ParkRelaiAdapter(this, parkRelaisFiltres));
         listView = getListView();
-        editText = (EditText) findViewById(R.id.listparkrelai_input);
-        editText.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void afterTextChanged(Editable editable) {
-                metterAJourListeParkRelais();
-            }
-        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 ParkRelaiAdapter adapter = (ParkRelaiAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
@@ -158,18 +148,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
 
             @Override
             protected void onPostExecute(Void result) {
-                findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        if (!parkRelaisFiltres.isEmpty()) {
-                            Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
-                            ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>(parkRelaisFiltres
-                                    .size());
-                            parkRelaisSerializable.addAll(parkRelaisFiltres);
-                            intent.putExtra("parkRelais", parkRelaisSerializable);
-                            startActivity(intent);
-                        }
-                    }
-                });
                 updateLocation(locationUtil.getCurrentLocation());
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 super.onPostExecute(result);
@@ -180,65 +158,65 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
         }
     }
 
-    private static final int GROUP_ID = 0;
-    private static final int MENU_REFRESH = Menu.FIRST;
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
-        item.setIcon(R.drawable.ic_menu_refresh);
-        return true;
-    }
+	public void refresh() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
+            @Override
+			protected void myDoBackground() throws ErreurReseau {
+				List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
+				synchronized (parkRelais) {
+					majParkRelais(parkRelaisTmp);
+				}
+			}
 
-        if (item.getItemId() == MENU_REFRESH) {
-            new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
-
-                @Override
-                protected void myDoBackground() throws ErreurReseau {
-                    List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
-                    synchronized (parkRelais) {
-                        majParkRelais(parkRelaisTmp);
+            private void majParkRelais(List<ParkRelai> parkRelaisTmp) {
+				parkRelais.clear();
+				if (parkRelaiIntent == null) {
+					parkRelais.addAll(parkRelaisTmp);
+				} else {
+					Collection<String> ids = new ArrayList<String>(parkRelaiIntent.size());
+					for (ParkRelai parc : parkRelaiIntent) {
+						ids.add(parc.name);
+					}
+					for (ParkRelai parc : parkRelaisTmp) {
+						if (ids.contains(parc.name)) {
+							parkRelais.add(parc);
+						}
                     }
                 }
+				Collections.sort(parkRelais, new Comparator<ParkRelai>() {
+					public int compare(ParkRelai o1, ParkRelai o2) {
+						return o1.name.compareToIgnoreCase(o2.name);
+					}
+				});
+				parkRelaisFiltres.clear();
+				parkRelaisFiltres.addAll(parkRelais);
 
-                private void majParkRelais(List<ParkRelai> parkRelaisTmp) {
-                    parkRelais.clear();
-                    if (parkRelaiIntent == null) {
-                        parkRelais.addAll(parkRelaisTmp);
-                    } else {
-                        Collection<String> ids = new ArrayList<String>(parkRelaiIntent.size());
-                        for (ParkRelai parc : parkRelaiIntent) {
-                            ids.add(parc.name);
-                        }
-                        for (ParkRelai parc : parkRelaisTmp) {
-                            if (ids.contains(parc.name)) {
-                                parkRelais.add(parc);
-                            }
-                        }
-                    }
-                    Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-                        public int compare(ParkRelai o1, ParkRelai o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
-                    parkRelaisFiltres.clear();
-                    parkRelaisFiltres.addAll(parkRelais);
+            }
 
-                }
+			@Override
+			protected void onPostExecute(Void result) {
+				updateQuery(currentQuery);
+				updateLocation(locationUtil.getCurrentLocation());
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				super.onPostExecute(result);
+			}
+		}.execute((Void) null);
+	}
 
-                @Override
-                protected void onPostExecute(Void result) {
-                    metterAJourListeParkRelais();
-                    updateLocation(locationUtil.getCurrentLocation());
-                    ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                    super.onPostExecute(result);
-                }
-            }.execute((Void) null);
+    @Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+
+		if (item.getItemId() == R.id.menu_google_map) {
+			if (!parkRelaisFiltres.isEmpty()) {
+				Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
+				ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>(parkRelaisFiltres.size());
+				parkRelaisSerializable.addAll(parkRelaisFiltres);
+				intent.putExtra("parkRelais", parkRelaisSerializable);
+				startActivity(intent);
+			}
             return true;
         }
         return false;
@@ -254,6 +232,6 @@ public class ListParkRelais extends MenuAccueil.ListActivity implements UpdateLo
             }
             Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
         }
-        metterAJourListeParkRelais();
+		updateQuery(currentQuery);
     }
 }

@@ -13,32 +13,33 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
  *
  * @author ybonnel
  */
-public class DetailAlert extends MenuAccueil.Activity {
+public class DetailAlert extends BaseSimpleActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailalert);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
         ((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());

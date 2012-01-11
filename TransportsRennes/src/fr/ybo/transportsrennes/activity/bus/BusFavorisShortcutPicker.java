@@ -17,14 +17,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 
 /**
  * Activité affichant les lignes de bus..
  *
  * @author ybonnel
  */
-public class BusFavorisShortcutPicker extends MenuAccueil.Activity {
+public class BusFavorisShortcutPicker extends BaseSimpleActivity {
 
 
     @Override
@@ -43,7 +43,7 @@ public class BusFavorisShortcutPicker extends MenuAccueil.Activity {
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_bus_favori));
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_favori_white_default);
+		Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_star_default);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher

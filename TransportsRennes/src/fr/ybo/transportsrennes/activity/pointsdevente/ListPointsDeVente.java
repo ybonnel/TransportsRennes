@@ -13,22 +13,26 @@
  */
 package fr.ybo.transportsrennes.activity.pointsdevente;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.actionbar.Searchable;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.pointsdevente.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
@@ -37,18 +41,13 @@ import fr.ybo.transportsrennes.util.LocationUtil;
 import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Activité de type liste permettant de lister les points de vente par distances
  * de la position actuelle.
  *
  * @author ybonnel
  */
-public class ListPointsDeVente extends MenuAccueil.ListActivity implements UpdateLocationListenner {
+public class ListPointsDeVente extends BaseListActivity implements UpdateLocationListenner, Searchable {
 
     private LocationUtil locationUtil;
 
@@ -76,20 +75,23 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
         super.onPause();
     }
 
-    private void metterAJourListe() {
-        String query = editText.getText().toString().toUpperCase();
-        pointsDeVenteFiltres.clear();
-        synchronized (pointsDeVente) {
-            for (PointDeVente pointDeVente : pointsDeVente) {
-                if (pointDeVente.name.toUpperCase().contains(query.toUpperCase())) {
-                    pointsDeVenteFiltres.add(pointDeVente);
-                }
-            }
-        }
-        ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
-    }
+	private String currentQuery = "";
 
-    private EditText editText;
+	@Override
+	public void updateQuery(String newQuery) {
+		currentQuery = newQuery;
+		String query = newQuery.toUpperCase();
+		pointsDeVenteFiltres.clear();
+		synchronized (pointsDeVente) {
+			for (PointDeVente pointDeVente : pointsDeVente) {
+				if (pointDeVente.name.toUpperCase().contains(query)) {
+					pointsDeVenteFiltres.add(pointDeVente);
+				}
+			}
+		}
+		((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+	}
+
     private ListView listView;
 
     @Override
@@ -97,6 +99,7 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpointsdevente);
+		getActivityHelper().setupActionBar(R.menu.listpdv_menu_items, R.menu.holo_listpdv_menu_items);
         pointsDeVenteIntent = (List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("pointsDeVente"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -104,18 +107,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
         setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
         listView = getListView();
         listView.setFastScrollEnabled(true);
-        editText = (EditText) findViewById(R.id.listpointsdevente_input);
-        editText.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void afterTextChanged(Editable editable) {
-                metterAJourListe();
-            }
-        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
@@ -152,18 +143,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
-                findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        if (!pointsDeVenteFiltres.isEmpty()) {
-                            Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
-                            ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(
-                                    pointsDeVenteFiltres.size());
-                            pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
-                            intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
-                            startActivity(intent);
-                        }
-                    }
-                });
                 updateLocation(locationUtil.getCurrentLocation());
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
             }
@@ -172,6 +151,19 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
             Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
         }
     }
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.menu_google_map && !pointsDeVenteFiltres.isEmpty()) {
+			Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
+			ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(pointsDeVenteFiltres.size());
+			pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
+			intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
     public void updateLocation(Location location) {
         if (location == null) {
@@ -183,6 +175,6 @@ public class ListPointsDeVente extends MenuAccueil.ListActivity implements Updat
             }
             Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
         }
-        metterAJourListe();
+		updateQuery(currentQuery);
     }
 }

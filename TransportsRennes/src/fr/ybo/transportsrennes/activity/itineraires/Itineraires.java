@@ -19,12 +19,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.itineraires.TrajetAdapter;
 import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
 import fr.ybo.transportsrennes.itineraires.Trajet;
 
-public class Itineraires extends MenuAccueil.ListActivity {
+public class Itineraires extends BaseListActivity {
 
     /**
      * Called when the activity is first created.
@@ -33,6 +33,7 @@ public class Itineraires extends MenuAccueil.ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
                 "itinerairesReponse");
         int heureDepart = getIntent().getIntExtra("heureDepart", 0);

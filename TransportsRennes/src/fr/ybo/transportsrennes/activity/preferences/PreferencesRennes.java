@@ -16,46 +16,45 @@
  */
 package fr.ybo.transportsrennes.activity.preferences;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BasePreferenceActivity;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-public class PreferencesRennes extends MenuAccueil.Activity {
+public class PreferencesRennes extends BasePreferenceActivity {
 
-	private boolean notifUpdateOn = true;
+	private OnSharedPreferenceChangeListener prefListenner;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
-		notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_notifUpdate",
-				true);
 		setContentView(R.layout.preferences);
-		Button boutonTerminer = (Button) findViewById(R.id.preferencesTermine);
-		boutonTerminer.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				finish();
-			}
-		});
-		CheckBox notifUpdateOnCheckBox = (CheckBox) findViewById(R.id.notifUpdateOn);
-		notifUpdateOnCheckBox.setChecked(notifUpdateOn);
-		notifUpdateOnCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
+		addPreferencesFromResource(R.xml.preferences);
+		prefListenner = new OnSharedPreferenceChangeListener() {
 
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				notifUpdateOn = isChecked;
-				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(PreferencesRennes.this)
-						.edit();
-				editor.putBoolean("TransportsRennes_notifUpdate", notifUpdateOn);
-				editor.commit();
+			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+				if ("TransportsRennes_choixTheme".equals(key)) {
+					restart();
+				}
 			}
-		});
+		};
+		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(prefListenner);
 	}
 
+	@Override
+	protected void onDestroy() {
+		getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(prefListenner);
+		super.onDestroy();
+	}
+
+	public void restart() {
+		startActivity(new Intent(PreferencesRennes.this, PreferencesRennes.class));
+		finish();
+	}
 }

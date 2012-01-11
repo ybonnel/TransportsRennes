@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -39,8 +44,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.alerts.ListAlerts;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -56,17 +61,12 @@ import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Activitée permettant d'afficher les détails d'une station.
  *
  * @author ybonnel
  */
-public class DetailArret extends MenuAccueil.ListActivity {
+public class DetailArret extends BaseListActivity {
 
     private static final double DISTANCE_RECHERCHE_METRE = 1000.0;
     private static final double DEGREE_LATITUDE_EN_METRES = 111192.62;
@@ -74,8 +74,6 @@ public class DetailArret extends MenuAccueil.ListActivity {
     private static final double DEGREE_LONGITUDE_EN_METRES = 74452.10;
     private static final double DISTANCE_LNG_IN_DEGREE = DISTANCE_RECHERCHE_METRE / DEGREE_LONGITUDE_EN_METRES;
     private static final int DISTANCE_MAX_METRE = 151;
-
-    private boolean prochainArrets = true;
 
     private boolean isToday() {
         return calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)
@@ -116,21 +114,8 @@ public class DetailArret extends MenuAccueil.ListActivity {
     }
 
     private ListAdapter construireAdapter() {
-        if (prochainArrets && isToday()) {
-            return construireAdapterProchainsDeparts();
-        }
-        return construireAdapterAllDeparts();
-    }
-
-    private ListAdapter construireAdapterAllDeparts() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         return new DetailArretAdapter(getApplicationContext(), Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection, calendar), now, isToday());
-    }
-
-    private ListAdapter construireAdapterProchainsDeparts() {
-        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        return new DetailArretAdapter(getApplicationContext(), Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection,
-                null, calendar), now, isToday());
     }
 
     private Ligne myLigne;
@@ -149,27 +134,12 @@ public class DetailArret extends MenuAccueil.ListActivity {
         calendarLaVeille = Calendar.getInstance();
         calendarLaVeille.add(Calendar.DATE, -1);
         setContentView(R.layout.detailarret);
+		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items, R.menu.holo_detailarret_menu_items);
         recuperationDonneesIntent();
         if (favori.ligneId == null) {
             return;
         }
         gestionViewsTitle();
-        ImageView imageGoogleMap = (ImageView) findViewById(R.id.googlemap);
-        imageGoogleMap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Arret arret = new Arret();
-                arret.id = favori.arretId;
-                arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
-                String lat = Double.toString(arret.getLatitude());
-                String lon = Double.toString(arret.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + lat + ',' + lon);
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                } catch (ActivityNotFoundException activityNotFound) {
-                    Toast.makeText(DetailArret.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
         myLigne = new Ligne();
         myLigne.id = favori.ligneId;
         myLigne = TransportsRennesApplication.getDataBaseHelper().selectSingle(myLigne);
@@ -188,6 +158,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
                     calendarLaVeille = Calendar.getInstance();
                     calendarLaVeille.add(Calendar.DATE, -1);
                     setListAdapter(construireAdapter());
+					if (getListAdapter().getCount() != 0) {
+						setSelection(((DetailArretAdapter) getListAdapter()).getPositionToMove());
+					}
                     getListView().invalidate();
                 }
             }
@@ -196,6 +169,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
             chargerLigne();
         } else {
             setListAdapter(construireAdapter());
+			if (getListAdapter().getCount() != 0) {
+				setSelection(((DetailArretAdapter) getListAdapter()).getPositionToMove());
+			}
             updateTimeUtil.start();
             firstUpdate = true;
         }
@@ -237,7 +213,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
             findViewById(R.id.alerte).setVisibility(View.VISIBLE);
             findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Intent intent = new Intent(DetailArret.this, ListAlerts.class);
+                    Intent intent = new Intent(DetailArret.this, ListAlertsForOneLine.class);
                     intent.putExtra("ligne", myLigne);
                     startActivity(intent);
                 }
@@ -377,6 +353,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
                     finish();
                 } else {
                     setListAdapter(construireAdapter());
+					if (getListAdapter().getCount() != 0) {
+						setSelection(((DetailArretAdapter) getListAdapter()).getPositionToMove());
+					}
                     getListView().invalidate();
                     updateTimeUtil.start();
                     firstUpdate = true;
@@ -392,38 +371,25 @@ public class DetailArret extends MenuAccueil.ListActivity {
         super.onDestroy();
     }
 
-    private static final int GROUP_ID = 0;
-    private static final int MENU_ALL_STOPS = Menu.FIRST;
-    private static final int MENU_SELECT_DAY = MENU_ALL_STOPS + 1;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        menu.add(GROUP_ID, MENU_ALL_STOPS, Menu.NONE, R.string.menu_prochainArrets).setIcon(
-                android.R.drawable.ic_menu_view);
-        menu.add(GROUP_ID, MENU_SELECT_DAY, Menu.NONE, R.string.menu_selectDay).setIcon(
-                android.R.drawable.ic_menu_month);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        menu.findItem(MENU_ALL_STOPS).setTitle(prochainArrets ? R.string.menu_allArrets : R.string.menu_prochainArrets);
-        return true;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
         switch (item.getItemId()) {
-            case MENU_ALL_STOPS:
-                prochainArrets = !prochainArrets;
-                setListAdapter(construireAdapter());
-                getListView().invalidate();
-                return true;
-            case MENU_SELECT_DAY:
+			case R.id.menu_google_map:
+				Arret arret = new Arret();
+				arret.id = favori.arretId;
+				arret = TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
+				String lat = Double.toString(arret.getLatitude());
+				String lon = Double.toString(arret.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + lat + ',' + lon);
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException activityNotFound) {
+					Toast.makeText(DetailArret.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				}
+				return true;
+			case R.id.menu_choix_date:
                 showDialog(DATE_DIALOG_ID);
                 return true;
         }
@@ -443,6 +409,9 @@ public class DetailArret extends MenuAccueil.ListActivity {
             calendarLaVeille.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             calendarLaVeille.add(Calendar.DATE, -1);
             setListAdapter(construireAdapter());
+			if (getListAdapter().getCount() != 0) {
+				setSelection(((DetailArretAdapter) getListAdapter()).getPositionToMove());
+			}
             getListView().invalidate();
         }
     };

@@ -13,17 +13,22 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.Ligne;
@@ -31,10 +36,7 @@ import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ArretsOnMap extends MenuAccueil.MapActivity {
+public class ArretsOnMap extends BaseMapActivity {
 
     /**
      * Called when the activity is first created.
@@ -43,6 +45,7 @@ public class ArretsOnMap extends MenuAccueil.MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         Ligne myLigne = (Ligne) getIntent().getSerializableExtra("ligne");
         String currentDirection = getIntent().getStringExtra("direction");
 

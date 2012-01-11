@@ -13,40 +13,25 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
-
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.TabHost;
-import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseTabFragmentActivity;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
+import fr.ybo.transportsrennes.fragments.alerts.ListTwitter;
 
-public class TabAlertes extends CapptainTabActivity {
+public class TabAlertes extends BaseTabFragmentActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabalertes);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		TransportsRennesApplication.majTheme(this);
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.tabalertes);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
+		configureTabs();
+		addTab("alertes", getString(R.string.alertes), ListAlerts.class);
+		addTab("twitter", getString(R.string.twitter), ListTwitter.class);
+		setCurrentTab(savedInstanceState);
+	}
 
-        Resources res = getResources();
-        TabHost tabHost = getTabHost();
-
-        // Create an Intent to launch an Activity for the tab (to be reused)
-        Intent intent = new Intent().setClass(this, ListAlerts.class);
-
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        TabHost.TabSpec spec =
-                tabHost.newTabSpec("alertes").setIndicator(getString(R.string.alertes), res.getDrawable(android.R.drawable.ic_dialog_alert))
-                        .setContent(intent);
-        tabHost.addTab(spec);
-
-        // Do the same for the other tabs
-        Intent intentTwitter = new Intent().setClass(this, ListTwitter.class);
-        TabHost.TabSpec twitterSpec =
-                tabHost.newTabSpec("twitter").setIndicator(getString(R.string.twitter), res.getDrawable(R.drawable.ic_menu_twitter))
-                        .setContent(intentTwitter);
-        tabHost.addTab(twitterSpec);
-
-        tabHost.setCurrentTab(0);
-    }
 }

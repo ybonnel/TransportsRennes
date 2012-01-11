@@ -55,10 +55,7 @@
         L\'icône de l\'application a gracieusement été réalisée par Nicolas (&lt;a href=\'http://www.cryptik-web.com\'&gt;www.cryptik-web.com&lt;/a&gt;).&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
-    <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir
-        une date particulière via le
-        menu.
-    </string>
+    <string name="detailarret_empty">Pas de bus à la date sélectionner, vous pouvez changer de date dans le bar d\'actions</string>
     <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="listfavori_empty">Aucun favori trouvé.</string>
@@ -221,4 +218,10 @@
     <string name="supprimerNotif">Supprimer la notification</string>
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
+    
+    <string name="themeBlanc">Thème blanc</string>
+    <string name="themeNoir">Thème noir</string>
+    <string name="chooseTheme">Choisissez un thème</string>
+    
+    <string name="theme">Thème</string>
 </resources>

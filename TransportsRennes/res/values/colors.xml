@@ -18,4 +18,8 @@
 <resources>
     <color name="blanc">#E1E1E1</color>
     <color name="red">#E11111</color>
+    <color name="actionbar_text">#ff29549f</color>
+
+    <color name="accent_1">#ff29549f</color>
+
 </resources>

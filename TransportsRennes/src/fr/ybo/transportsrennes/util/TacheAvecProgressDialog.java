@@ -52,6 +52,7 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 		try {
 			myDoBackground();
 		} catch (ErreurReseau erreurReseau) {
+			erreurReseau.printStackTrace();
 			erreur = true;
 		}
 		return null;

@@ -13,6 +13,15 @@
  */
 package fr.ybo.transportsrennes.activity.itineraires;
 
+import java.io.FileNotFoundException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -35,6 +44,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -42,12 +52,13 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
 import fr.ybo.transportsrennes.util.AdresseAdapter;
@@ -57,16 +68,7 @@ import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.LogYbo;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 
-import java.io.FileNotFoundException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLocationListenner {
+public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {
 
     private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);
 
@@ -97,6 +99,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itinerairerequete);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         locationUtil = new LocationUtil(this, this);
         calendar = Calendar.getInstance();
@@ -105,9 +108,11 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
         AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
         AdresseAdapter adapterDepart = new AdresseAdapter(this);
         adresseDepart.setAdapter(adapterDepart);
+		adresseDepart.setTextColor(TransportsRennesApplication.getTextColor(this));
         AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
         AdresseAdapter adapterArrivee = new AdresseAdapter(this);
         adresseArrivee.setAdapter(adapterArrivee);
+		adresseArrivee.setTextColor(TransportsRennesApplication.getTextColor(this));
         adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

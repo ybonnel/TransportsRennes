@@ -24,7 +24,7 @@
                 android:layout_width="fill_parent"
                 android:layout_below="@id/detailAlert_Titre">
         <TextView android:id="@+id/detailAlert_Detail" android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
+                  android:layout_height="wrap_content"
                   android:textSize="18dip"/>
     </ScrollView>
 </RelativeLayout>

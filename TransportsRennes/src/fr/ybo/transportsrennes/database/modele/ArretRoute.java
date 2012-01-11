@@ -16,6 +16,7 @@ package fr.ybo.transportsrennes.database.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
+import fr.ybo.database.annotation.Indexed;
 import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
@@ -39,6 +40,7 @@ public class ArretRoute {
     public Integer macroDirection;
     @BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
     @Column(type = Column.TypeColumn.INTEGER)
+	@Indexed
     public Integer directionId;
     @BaliseCsv(value = "sequence", adapter = AdapterInteger.class)
     @Column(type = Column.TypeColumn.INTEGER)

@@ -13,13 +13,17 @@
  */
 package fr.ybo.transportsrennes.activity.velos;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,12 +31,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.actionbar.Refreshable;
+import fr.ybo.transportsrennes.activity.actionbar.Searchable;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.adapters.velos.VeloAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.VeloFavori;
@@ -44,19 +49,14 @@ import fr.ybo.transportsrennes.util.LocationUtil;
 import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 /**
  * Activité de type liste permettant de lister les stations pas distances de la
  * position actuelle.
  *
  * @author ybonnel
  */
-public class ListStationsByPosition extends MenuAccueil.ListActivity implements UpdateLocationListenner {
+public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
+		Refreshable {
 
     /**
      * Permet d'accéder aux apis keolis.
@@ -84,8 +84,12 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
         super.onPause();
     }
 
-    private void metterAJourListeStations() {
-        String query = editText.getText().toString().toUpperCase();
+	private String currentQuery = "";
+
+	@Override
+	public void updateQuery(String newQuery) {
+		currentQuery = newQuery;
+		String query = newQuery.toUpperCase();
         stationsFiltrees.clear();
         synchronized (stations) {
             for (Station station : stations) {
@@ -95,9 +99,9 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
             }
         }
         ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+
     }
 
-    private EditText editText;
     private ListView listView;
 
     @SuppressWarnings("unchecked")
@@ -105,6 +109,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liststations);
+		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
         locationUtil = new LocationUtil(this, this);
         stationIntent = (List<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
                 .getSerializable("stations"));
@@ -113,18 +118,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
         setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
         listView = getListView();
         listView.setFastScrollEnabled(true);
-        editText = (EditText) findViewById(R.id.liststations_input);
-        editText.addTextChangedListener(new TextWatcher() {
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            public void afterTextChanged(Editable editable) {
-                metterAJourListeStations();
-            }
-        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -163,17 +156,6 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
 
             @Override
             protected void onPostExecute(Void result) {
-                findViewById(R.id.enteteGoogleMap).setOnClickListener(new View.OnClickListener() {
-                    public void onClick(View view) {
-                        if (!stationsFiltrees.isEmpty()) {
-                            Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-                            ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-                            stationsSerializable.addAll(stationsFiltrees);
-                            intent.putExtra("stations", stationsSerializable);
-                            startActivity(intent);
-                        }
-                    }
-                });
                 updateLocation(locationUtil.getCurrentLocation());
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 super.onPostExecute(result);
@@ -184,59 +166,57 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
         }
     }
 
-    private static final int GROUP_ID = 0;
-    private static final int MENU_REFRESH = Menu.FIRST;
+	@Override
+	public void refresh() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
-        item.setIcon(R.drawable.ic_menu_refresh);
-        return true;
-    }
+			@Override
+			protected void myDoBackground() throws ErreurReseau {
+				Collection<Station> stationsTmp;
+				if (stationIntent == null) {
+					stationsTmp = keolis.getStations();
+				} else {
+					Collection<String> ids = new ArrayList<String>(10);
+					for (Station station : stationIntent) {
+						ids.add(station.number);
+					}
+					stationsTmp = keolis.getStationByNumbers(ids);
+				}
+				synchronized (stations) {
+					stations.clear();
+					stations.addAll(stationsTmp);
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
+					stationsFiltrees.clear();
+					stationsFiltrees.addAll(stations);
+				}
+			}
+
+            @Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				updateQuery(currentQuery);
+				updateLocation(locationUtil.getCurrentLocation());
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+		}.execute((Void) null);
+	}
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
-
-        if (item.getItemId() == MENU_REFRESH) {
-            new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
-
-                @Override
-                protected void myDoBackground() throws ErreurReseau {
-                    Collection<Station> stationsTmp;
-                    if (stationIntent == null) {
-                        stationsTmp = keolis.getStations();
-                    } else {
-                        Collection<String> ids = new ArrayList<String>(10);
-                        for (Station station : stationIntent) {
-                            ids.add(station.number);
-                        }
-                        stationsTmp = keolis.getStationByNumbers(ids);
-                    }
-                    synchronized (stations) {
-                        stations.clear();
-                        stations.addAll(stationsTmp);
-                        Collections.sort(stations, new Comparator<Station>() {
-                            public int compare(Station o1, Station o2) {
-                                return o1.name.compareToIgnoreCase(o2.name);
-                            }
-                        });
-                        stationsFiltrees.clear();
-                        stationsFiltrees.addAll(stations);
-                    }
-                }
-
-                @Override
-                protected void onPostExecute(Void result) {
-                    super.onPostExecute(result);
-                    metterAJourListeStations();
-                    updateLocation(locationUtil.getCurrentLocation());
-                    ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                }
-            }.execute((Void) null);
-            return true;
-        }
+		if (item.getItemId() == R.id.menu_google_map) {
+			if (!stationsFiltrees.isEmpty()) {
+				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
+				ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
+				stationsSerializable.addAll(stationsFiltrees);
+				intent.putExtra("stations", stationsSerializable);
+				startActivity(intent);
+			}
+		}
         return false;
     }
 
@@ -288,7 +268,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
             }
             Collections.sort(stations, new Station.ComparatorDistance());
         }
-        metterAJourListeStations();
+		updateQuery(currentQuery);
         ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
     }
 }

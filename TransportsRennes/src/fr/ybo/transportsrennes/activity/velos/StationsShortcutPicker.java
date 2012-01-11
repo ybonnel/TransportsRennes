@@ -17,10 +17,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.MenuAccueil;
+import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 
 
-public class StationsShortcutPicker extends MenuAccueil.Activity {
+public class StationsShortcutPicker extends BaseSimpleActivity {
 
 
     @Override
@@ -39,7 +39,7 @@ public class StationsShortcutPicker extends MenuAccueil.Activity {
         Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_velo));
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_white_default);
+		Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_default);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher

@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsrennes.adapters.bus;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
@@ -27,11 +32,6 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
 
 public class FavoriAdapter extends BaseAdapter {
 
@@ -99,6 +99,9 @@ public class FavoriAdapter extends BaseAdapter {
         } else {
             holder = (FavoriAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.arret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.direction.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
 
         final ArretFavori favori = favoris.get(position);
 

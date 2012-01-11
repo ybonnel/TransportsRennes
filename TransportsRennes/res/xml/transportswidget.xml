@@ -20,5 +20,6 @@
     android:minHeight="148dp"
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/widget_arrets"
-    android:configure="fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure">
+    android:configure="fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure"
+    android:previewImage="@drawable/appercu_widget">
 </appwidget-provider>

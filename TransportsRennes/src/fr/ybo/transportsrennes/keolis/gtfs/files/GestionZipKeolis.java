@@ -26,6 +26,7 @@ import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.Horaire;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
+import fr.ybo.transportsrennes.util.LoadingInfo;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 import java.io.BufferedReader;
@@ -122,7 +123,8 @@ public final class GestionZipKeolis {
         }
     }
 
-    public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources) throws GestionFilesException, MoteurCsvException, DataBaseException {
+	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources, LoadingInfo info)
+			throws GestionFilesException, MoteurCsvException, DataBaseException {
         try {
             for (CoupleResourceFichier resource : RESOURCES_PRINCIPALE) {
                 LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);
@@ -139,6 +141,7 @@ public final class GestionZipKeolis {
                     bufReader.close();
                     TransportsRennesApplication.getDataBaseHelper().endTransaction();
                 }
+				info.etapeSuivante();
                 LOG_YBO.debug("Fin du traitement du fichier " + resource.fichier);
             }
             TransportsRennesApplication.getDataBaseHelper().close();

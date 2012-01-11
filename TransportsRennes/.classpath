@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/gson-1.7.1-OTP.jar"/>
 	<classpathentry kind="lib" path="libs/moteurcsv-1.0.2.jar"/>
 	<classpathentry kind="lib" path="libs/opentripplanner-client-1.0.3.jar"/>
+	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

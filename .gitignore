@@ -16,6 +16,7 @@ target
 /TransportsRennesServer/war/WEB-INF/classes/
 
 **/.DS_Store
+.DS_Store
 TransportsRennes.ipr
 TransportsRennes.iws
 

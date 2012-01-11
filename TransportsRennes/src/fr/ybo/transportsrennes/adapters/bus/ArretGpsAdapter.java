@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsrennes.adapters.bus;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
@@ -22,13 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.Arret;
 import fr.ybo.transportsrennes.database.modele.Horaire;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.WidgetUpdateUtil;
-
-import java.util.Calendar;
-import java.util.List;
 
 /**
  * Adapteur pour les arrets pas positionnement GPS..
@@ -83,6 +84,10 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
         } else {
             holder = (ArretGpsAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.arretDirection.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.nomArret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.distance.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
         holder.arretDirection.setText(arret.favori.direction);
         holder.nomArret.setText(arret.nom);
