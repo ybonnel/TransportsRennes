@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsrennes.adapters.widget;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +27,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 public class FavoriAdapterForWidget extends BaseAdapter {
 
@@ -90,6 +91,9 @@ public class FavoriAdapterForWidget extends BaseAdapter {
         } else {
             holder = (FavoriAdapterForWidget.ViewHolder) convertView1.getTag();
         }
+
+		holder.arret.setTextColor(TransportsRennesApplication.getTextColor(mContext));
+		holder.direction.setTextColor(TransportsRennesApplication.getTextColor(mContext));
 
         ArretFavori favori = favoris.get(position);
 
