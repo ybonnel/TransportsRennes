@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import fr.ybo.transportsrennes.R;
 
@@ -31,16 +32,30 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        LOG_YBO.debug("Debut AlarmReceiver.onReceive");
         boolean notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 "TransportsRennes_notifUpdate", true);
+		LOG_YBO.debug("Notif : " + notifUpdateOn);
         if (!notifUpdateOn) {
             return;
         }
+		new AsyncTask<Context, Void, Void>() {
+			@Override
+			protected Void doInBackground(Context... params) {
+				verifVersion(params[0]);
+				return null;
+			}
+		}.execute(context);
+    }
+
+	private void verifVersion(Context context) {
 		String result = Version.getMarketVersion();
+
+		LOG_YBO.debug("Version Market : " + result);
+		LOG_YBO.debug("Version Courante : " + Version.getVersionCourante(context.getApplicationContext()));
         if (result != null && !result.equals(Version.getVersionCourante(context.getApplicationContext()))) {
             String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     "TransportsRennesVersion", null);
+			LOG_YBO.debug("Last Version : " + lastVersion);
             if (!result.equals(lastVersion)) {
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 editor.putString("TransportsRennesVersion", result);
@@ -48,8 +63,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 createNotification(context, result);
             }
         }
-        LOG_YBO.debug("Fin AlarmReceiver.onReceive");
-    }
+	}
 
     private static final int NOTIFICATION_VERSION_ID = 1;
 

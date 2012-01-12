@@ -45,6 +45,7 @@ class Version {
 			version = reader.readLine();
 
         } catch (Exception ignore) {
+			ignore.printStackTrace();
         } finally {
             closeReader(reader);
         }
