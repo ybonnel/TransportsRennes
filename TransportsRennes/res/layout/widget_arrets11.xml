@@ -16,7 +16,7 @@
       ybonnel - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:background="@drawable/appwidget_dark_bg"
+                android:background="@drawable/appwidget_dark_bg_clickable"
                 android:id="@+id/widgetlayout" android:layout_width="fill_parent" android:layout_height="fill_parent">
 
         <ImageView android:id="@+id/iconeLigne"

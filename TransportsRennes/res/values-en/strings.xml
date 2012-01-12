@@ -16,11 +16,6 @@
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
     <!-- Messages -->
-    <string name="premierLancement">This is the first launch, the application needs to update the data, this may take a
-        few tens of seconds, do you do
-        now?
-    </string>
-    <string name="titleInfoAllInMap">Welcome to the multimodal map</string>
     <string name="titleTransportsRennes">Welcome to the application Transports Rennes</string>
     <string name="infoAllInMap">The purpose of this map is to display all the points of interest of the
         application on a single map. To make the map
@@ -34,7 +29,6 @@
         have already loaded.
     </string>
     <string name="infoChargementGtfs">Loading data from STAR.</string>
-    <string name="verificationUpdate">Research Update.</string>
     <string name="rechercheArrets">Search for bus stops.</string>
     <string name="dialogRequeteVeloStar">LE vélo STAR query</string>
     <string name="dialogRequeteAlerts">STAR query</string>
@@ -93,13 +87,10 @@
     <string name="btn_parking">Park &amp; Ride</string>
     <string name="menu_tickets">Points of sale</string>
     <!-- Libellés de menus -->
-    <string name="menu_prochainArrets">Upcoming timetable</string>
-    <string name="menu_allArrets">All times</string>
     <string name="menu_selectDay">Select a date</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_orderByName">Alphabetically</string>
     <string name="menu_orderBySequence">Route order</string>
-    <string name="menu_accueil">Home</string>
     <string name="menu_apropos">About</string>
     <string name="menu_carte">Map</string>
     <string name="menu_loadLines">Load all bus lines</string>
@@ -127,22 +118,6 @@
     <string name="non">No</string>
     <string name="prochain">Next :</string>
     <!-- Erreurs -->
-    <string name="erreur_chargementStar">An error occurred while retrieving data from the STAR surely due to network
-        problems, try again later.
-    </string>
-    <string name="erreur_interrogationStar">An error occurred when querying the STAR surely due to network problems, try
-        again later.
-    </string>
-    <string name="erreur_interrogationVeloStar">An error occurred while querying LE vélo STAR surely due to network
-        problems, try again later.
-    </string>
-    <string name="erreur_twitter">Error retrieving twitter messages.</string>
-    <string name="erreur_quotaTwitter">The number of requests to twitter to your IP has been exceeded (150/h). This
-        limitation will be reset to zero
-        on %1$s
-    </string>
-    <string name="erreur_verifUpdate">Error checking for updates surely due to network problems, try again later.
-    </string>
     <string name="erreur_widgetBeforeLaunch">You have not yet started the application, please run it before trying to
         add widgets.
     </string>
@@ -154,7 +129,6 @@
     <string name="erreur_gpsPasPret">The GPS position has not yet been found.</string>
     <string name="erreur_calculItineraires">An error occurred when calculating the route, please try again later.
     </string>
-    <string name="erreur_multipleAdresses">Found several addresses, please detail address</string>
 
     <string name="erreur_outOfBounds">The route requested has addresses outside the area covered.</string>
     <string name="erreur_noTransitTimes">No bus found for the requested time.</string>
@@ -163,7 +137,6 @@
     <string name="nouvelleVersion">New version available</string>
     <string name="versionDisponible">Version %1$s is available!</string>
 
-    <string name="erreurNonPrevue">Unexpected error, a crash report was sent to the developer</string>
     <string name="erreurReseau">A connection error has been detected, please try again later.</string>
 
     <string name="menu_share">Share</string>
@@ -196,8 +169,6 @@
     <string name="lineShortcut">Bus line</string>
     <string name="lineName">Line %1$s</string>
     
-    <string name="themeBlanc">White style</string>
-    <string name="themeNoir">Black style</string>
     <string name="chooseTheme">Choose a style</string>
     <string name="theme">Style</string>
 </resources>
