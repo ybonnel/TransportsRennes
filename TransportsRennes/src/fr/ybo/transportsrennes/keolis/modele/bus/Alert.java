@@ -13,13 +13,13 @@
  */
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import fr.ybo.transportsrennes.util.Formatteur;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+
+import fr.ybo.transportsrennes.util.Formatteur;
 
 /**
  * Class représentant une alerte Keolis.
@@ -79,13 +79,6 @@ public class Alert implements Serializable {
     public String link;
 
     public String getDetailFormatte(Iterable<String> arrets) {
-        StringBuilder lignes = new StringBuilder();
-        for (String line : lines) {
-            lignes.append(line);
-            lignes.append(", ");
-        }
-        lignes.deleteCharAt(lignes.length() - 1);
-        lignes.deleteCharAt(lignes.length() - 1);
         String detailFormatte =
                 detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
                         .replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
@@ -146,6 +139,8 @@ public class Alert implements Serializable {
                 titleFormate = titleFormate.substring(3);
             } else if (titleFormate.startsWith("kl")) {
                 titleFormate = titleFormate.substring(2);
+			} else if (titleFormate.startsWith("SDN")) {
+				titleFormate = titleFormate.substring(3);
             }
         }
         return Formatteur.formatterChaine(titleFormate);
