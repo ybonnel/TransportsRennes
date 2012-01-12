@@ -37,7 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if (!notifUpdateOn) {
             return;
         }
-        String result = Version.getMarketVersion(context.getApplicationContext());
+		String result = Version.getMarketVersion();
         if (result != null && !result.equals(Version.getVersionCourante(context.getApplicationContext()))) {
             String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     "TransportsRennesVersion", null);

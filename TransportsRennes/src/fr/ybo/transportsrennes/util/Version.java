@@ -13,30 +13,19 @@
  */
 package fr.ybo.transportsrennes.util;
 
-import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+
 class Version {
 
-    private static final String MARKET_URL = "https://market.android.com/details?id=";
-    private static final String VERSION_PATTERN = ".*<dd itemprop=\"softwareVersion\">([^<]*)<.*";
-
-    /**
-     * Nom de la version disponible sur le market
-     *
-     * @param context Context
-     * @return Nom de la version disponible sur le market
-     */
-    public static String getMarketVersion(Context context) {
-        return getMarketVersion(context.getPackageName());
-    }
+	public static final String URL_VERSION = "http://transports-rennes.ic-s.org/version/transports-rennes.version";
 
     /**
      * Nom de la version disponible sur le market
@@ -44,24 +33,17 @@ class Version {
      * @param packageName Nom du package de l'application
      * @return Nom de la version disponible sur le market
      */
-    private static String getMarketVersion(String packageName) {
+	public static String getMarketVersion() {
         String version = null;
         BufferedReader reader = null;
         try {
-            URL marketURL = new URL(MARKET_URL + packageName);
+			URL marketURL = new URL(URL_VERSION);
             URLConnection connection = marketURL.openConnection();
             connection.setConnectTimeout(30000);
             connection.setReadTimeout(30000);
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			version = reader.readLine();
 
-            String line = reader.readLine();
-            while (line != null) {
-                if (line.matches(VERSION_PATTERN)) {
-                    version = line.replaceFirst(VERSION_PATTERN, "$1");
-                    break;
-                }
-                line = reader.readLine();
-            }
         } catch (Exception ignore) {
         } finally {
             closeReader(reader);
