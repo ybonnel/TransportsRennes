@@ -21,14 +21,6 @@
     <string name="widget22_name">Transports Rennes 2x2</string>
     <!-- Messages -->
     <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes</string>
-    <string name="infoAllInMap">Le but de cette carte est d\'afficher tous les points d\'intérêts de l\'application sur
-        une seule carte. Pour des
-        raisons de lisibilité, il n\'est pas possible d\'afficher tout les points, c\'est donc des regroupements qui
-        sont affichés. Le nombre affiché
-        sur l\'icône est le nombre de points d\'intérêts contenus dans la zone associée. Pour ouvrir le détail
-        correspondant à un regroupement, il
-        suffit de cliquer deux fois de suite sur l\'icône.
-    </string>
     <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez-vous l\'effectuer maintenant?
         Attention, vous devrez charger à
         nouveau les horaires que vous avez déjà chargés.

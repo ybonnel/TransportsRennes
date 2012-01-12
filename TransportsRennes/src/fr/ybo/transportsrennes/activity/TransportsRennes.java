@@ -13,13 +13,20 @@
  */
 package fr.ybo.transportsrennes.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -35,11 +42,11 @@ import fr.ybo.transportsrennes.activity.actionbar.UIUtils;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
-import fr.ybo.transportsrennes.activity.map.StarMap;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
+import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.Theme;
 
@@ -169,7 +176,9 @@ public class TransportsRennes extends BaseFragmentActivity {
 				showDialog();
 				return true;
 			case R.id.menu_plan:
-				Intent intentMap = new Intent(this, StarMap.class);
+				copieImageIfNotExists();
+				Intent intentMap = new Intent(Intent.ACTION_VIEW);
+				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "rennes_urb_complet.jpg")), "image/*");
 				startActivity(intentMap);
 				return true;
 			case MENU_TICKETS:
@@ -205,6 +214,45 @@ public class TransportsRennes extends BaseFragmentActivity {
 				break;
 		}
 		return false;
+	}
+
+	private void copieImageIfNotExists() {
+		boolean fichierExistant = false;
+		for (String nom : fileList()) {
+			if ("rennes_urb_complet.jpg".equals(nom)) {
+				fichierExistant = true;
+			}
+		}
+		if (!fichierExistant) {
+			InputStream inputStream = getResources().openRawResource(R.raw.rennes_urb_complet);
+			try {
+				OutputStream outputStream = openFileOutput("rennes_urb_complet.jpg",
+						Context.MODE_WORLD_READABLE);
+				try {
+					byte[] buffre = new byte[50 * 1024];
+					int result = inputStream.read(buffre);
+					while (result != -1) {
+						outputStream.write(buffre, 0, result);
+						result = inputStream.read(buffre);
+					}
+				} catch (IOException e) {
+
+					throw new KeolisException("Erreur lors de la copie de l'image", e);
+				} finally {
+					try {
+						outputStream.close();
+					} catch (IOException ignore) {
+					}
+				}
+			} catch (FileNotFoundException e) {
+				throw new KeolisException("Erreur lors de la copie de l'image", e);
+			} finally {
+				try {
+					inputStream.close();
+				} catch (IOException ignore) {
+				}
+			}
+		}
 	}
 
 	private void loadAllLines() {

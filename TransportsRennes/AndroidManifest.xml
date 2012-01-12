@@ -90,8 +90,6 @@
         <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap"
                   android:configChanges="orientation|keyboardHidden"/>
         
-        <activity android:name=".activity.map.StarMap" android:configChanges="orientation|keyboardHidden"/>
-        
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.ItineraireRequete"
                   android:configChanges="orientation|keyboardHidden"/>

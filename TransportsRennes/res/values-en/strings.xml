@@ -17,13 +17,6 @@
     <string name="app_name">Transports Rennes</string>
     <!-- Messages -->
     <string name="titleTransportsRennes">Welcome to the application Transports Rennes</string>
-    <string name="infoAllInMap">The purpose of this map is to display all the points of interest of the
-        application on a single map. To make the map
-        clear, it was not possible to display all the points. That is why they were grouped together. The number
-        displayed on the icon
-        is the number of points of interest contained in the selected area. To see the detail of the group, double click
-        on the icon.
-    </string>
     <string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to
         reload schedules you
         have already loaded.
