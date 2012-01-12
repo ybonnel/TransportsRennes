@@ -31,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import fr.ybo.transportsrennes.R;
+import fr.ybo.transportsrennes.activity.actionbar.UIUtils;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
@@ -79,6 +80,9 @@ public class TransportsRennes extends BaseFragmentActivity {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
 		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
+		if (UIUtils.isHoneycomb()) {
+			textView.setTextColor(TransportsRennesApplication.getTextColor(this));
+		}
 		Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
 		textView.setText(spanned, TextView.BufferType.SPANNABLE);
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
