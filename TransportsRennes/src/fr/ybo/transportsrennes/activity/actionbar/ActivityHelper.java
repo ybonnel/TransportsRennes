@@ -91,17 +91,17 @@ public class ActivityHelper {
 	 * home button and title are visible. If color is null, then the default
 	 * colorstrip is visible.
 	 */
-	public void setupActionBar(int resourceMenuNormal, int resourceMenuHolo) {
+	public void setupActionBar(int resourceMenuNormal, int resourceMenuNoir) {
 		int resourceMenu = resourceMenuNormal;
-		if (UIUtils.isHoneycomb() && TransportsRennesApplication.getTheme(mActivity) == Theme.NOIR) {
-			resourceMenu = resourceMenuHolo;
+		if (TransportsRennesApplication.getTheme(mActivity) == Theme.NOIR) {
+			resourceMenu = resourceMenuNoir;
 		}
 		final ViewGroup actionBarCompat = getActionBarCompat();
 		if (actionBarCompat == null) {
 			addMenus(resourceMenu);
 			return;
 		}
-
+		actionBarCompat.setBackgroundResource(TransportsRennesApplication.getTheme(mActivity).getActionBarBackground());
 		LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0,
 				ViewGroup.LayoutParams.FILL_PARENT);
 		springLayoutParams.weight = 1;
