@@ -13,6 +13,13 @@
  */
 package fr.ybo.transportsbordeauxhelper;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsbordeauxhelper.gtfs.GestionnaireGtfs;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.Agency;
@@ -22,13 +29,6 @@ import fr.ybo.transportsbordeauxhelper.gtfs.modele.Route;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.Stop;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.StopTime;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.Trip;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Classe réalisant l'enchènement des traitements.
@@ -72,7 +72,7 @@ public final class Main {
      * @throws ParseException
      */
     public static void main(String[] args) throws IOException, ParseException {
-        genereGtfs(false, "20111113");
+		genereGtfs(false, "20120116");
     }
 
     /**
