@@ -20,7 +20,7 @@
     <string name="widget21_name">Transports Rennes 2x1</string>
     <string name="widget22_name">Transports Rennes 2x2</string>
     <!-- Messages -->
-    <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes</string>
+    <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes %1$s</string>
     <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez-vous l\'effectuer maintenant?
         Attention, vous devrez charger à
         nouveau les horaires que vous avez déjà chargés.

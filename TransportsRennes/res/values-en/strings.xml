@@ -16,7 +16,7 @@
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
     <!-- Messages -->
-    <string name="titleTransportsRennes">Welcome to the application Transports Rennes</string>
+    <string name="titleTransportsRennes">Welcome to the application Transports Rennes %1$s</string>
     <string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to
         reload schedules you
         have already loaded.

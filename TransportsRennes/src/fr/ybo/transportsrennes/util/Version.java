@@ -23,7 +23,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-class Version {
+public class Version {
 
 	public static final String URL_VERSION = "http://transports-rennes.ic-s.org/version/transports-rennes.version";
 

@@ -49,6 +49,7 @@ import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.Theme;
+import fr.ybo.transportsrennes.util.Version;
 
 public class TransportsRennes extends BaseFragmentActivity {
 
@@ -94,7 +95,7 @@ public class TransportsRennes extends BaseFragmentActivity {
 		textView.setText(spanned, TextView.BufferType.SPANNABLE);
 		textView.setMovementMethod(LinkMovementMethod.getInstance());
 		builder.setView(view);
-		builder.setTitle(R.string.titleTransportsRennes);
+		builder.setTitle(getString(R.string.titleTransportsRennes, Version.getVersionCourante(getApplicationContext())));
 		builder.setCancelable(false);
 		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
 		builder.create().show();
