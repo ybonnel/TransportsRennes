@@ -93,7 +93,11 @@ public class ListAlerts extends ListFragment {
 			@Override
 			protected void onPostExecute(Void result) {
 				if (erreurReseau) {
-					Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+					try {
+						Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+					} catch (Exception ignore) {
+
+					}
 				} else {
 					alerts.clear();
 					alerts.addAll(alertsTmp);
