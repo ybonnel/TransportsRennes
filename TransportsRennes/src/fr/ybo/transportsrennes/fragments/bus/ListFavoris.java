@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +34,18 @@ import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 public class ListFavoris extends ListFragment {
 
+	private int groupId;
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (getArguments() != null && getArguments().containsKey("groupe")) {
 			groupe = getArguments().getString("groupe");
+			groupId = groupe.hashCode();
+		} else {
+			groupId = getString(R.string.all).hashCode();
 		}
+
 		construireListe();
 		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
 
@@ -103,13 +108,16 @@ public class ListFavoris extends ListFragment {
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			ArretFavori favori = (ArretFavori) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(favori.nomArret);
-			menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
-			menu.add(Menu.NONE, R.id.deplacerGroupe, 0, getString(R.string.deplacerGroupe));
+			menu.add(groupId, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
+			menu.add(groupId, R.id.deplacerGroupe, 0, getString(R.string.deplacerGroupe));
 		}
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
+		if (item.getGroupId() != groupId) {
+			return super.onContextItemSelected(item);
+		}
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		final ArretFavori favori;
 		switch (item.getItemId()) {
