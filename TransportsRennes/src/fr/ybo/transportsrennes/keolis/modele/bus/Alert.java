@@ -79,6 +79,9 @@ public class Alert implements Serializable {
     public String link;
 
     public String getDetailFormatte(Iterable<String> arrets) {
+		if (detail == null) {
+			return "";
+		}
         String detailFormatte =
                 detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
                         .replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
