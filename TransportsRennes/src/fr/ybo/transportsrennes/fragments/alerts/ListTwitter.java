@@ -30,6 +30,7 @@ public class ListTwitter extends ListFragment {
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
+		lv.setCacheColorHint(R.color.transparent);
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreurReseau = false;

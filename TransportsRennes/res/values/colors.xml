@@ -21,5 +21,6 @@
     <color name="actionbar_text">#ff29549f</color>
 
     <color name="accent_1">#ff29549f</color>
+    <color name="transparent">#00000000</color>
 
 </resources>
