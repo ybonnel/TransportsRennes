@@ -6,5 +6,5 @@
 
 	<TextView android:id="@+id/tabsText" android:layout_width="wrap_content"
 		android:layout_height="wrap_content" android:text="Title"
-		android:textSize="15dip" android:textColor="@drawable/tab_text_selector" />
+		android:textSize="15dip" android:textColor="@android:color/black" />
 </LinearLayout>
