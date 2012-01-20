@@ -164,4 +164,11 @@
     
     <string name="chooseTheme">Choose a style</string>
     <string name="theme">Style</string>
+    
+    <string name="exportFavoris">Export your favorites</string>
+    <string name="importFavoris">Import your favorites</string>
+    
+    <string name="exportErreurSd">No SDCard detected, the export is impossible</string>
+    <string name="exportResult">The favorites have been exported in the folder "transportsrennes"</string>
+    
 </resources>

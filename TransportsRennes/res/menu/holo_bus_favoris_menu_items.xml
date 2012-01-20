@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_export"
+        android:icon="@drawable/actionbar_export"
+          android:title="@string/exportFavoris"
+          android:showAsAction="always" />
+    <item android:id="@+id/menu_import"
+        android:icon="@drawable/actionbar_import"
+          android:title="@string/importFavoris"
+          android:showAsAction="always" />
     
     <item android:id="@+id/menu_velo_favoris"
         android:icon="@drawable/actionbar_velo_favoris_clair"

@@ -181,4 +181,10 @@
     <string name="chooseTheme">Choisissez un thème</string>
     
     <string name="theme">Thème</string>
+    
+    <string name="exportFavoris">Export des favoris</string>
+    <string name="importFavoris">Import des favoris</string>
+    
+    <string name="exportErreurSd">Pas de SDCard détectée, impossible d\'exporter les données</string>
+    <string name="exportResult">Les arrêts favoris ont été exportés dans le répertoire "transportsrennes"</string>
 </resources>

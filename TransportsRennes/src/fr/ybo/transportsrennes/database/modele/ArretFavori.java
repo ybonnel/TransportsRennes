@@ -13,34 +13,42 @@
  */
 package fr.ybo.transportsrennes.database.modele;
 
+import java.io.Serializable;
+
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
-
-import java.io.Serializable;
+import fr.ybo.moteurcsv.adapter.AdapterInteger;
+import fr.ybo.moteurcsv.annotation.BaliseCsv;
+import fr.ybo.moteurcsv.annotation.FichierCsv;
 
 @SuppressWarnings("serial")
 @Entity
+@FichierCsv("arrets_favoris.txt")
 public class ArretFavori implements Serializable {
-    @Column
-    @PrimaryKey
-    public String arretId;
-    @Column
-    @PrimaryKey
-    public String ligneId;
-    @Column(type = Column.TypeColumn.INTEGER)
-    @PrimaryKey
-    public Integer macroDirection;
-    @Column
-    public String nomArret;
-    @Column
-    public String direction;
-    @Column
-    public String nomCourt;
-    @Column
-    public String nomLong;
-    @Column(type = Column.TypeColumn.INTEGER)
-    public Integer ordre;
-    @Column()
-    public String groupe;
+	@Column
+	@PrimaryKey
+	@BaliseCsv(value = "arret_id", ordre = 1)
+	public String arretId;
+	@Column
+	@PrimaryKey
+	@BaliseCsv(value = "ligne_id", ordre = 2)
+	public String ligneId;
+	@Column(type = Column.TypeColumn.INTEGER)
+	@PrimaryKey
+	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class)
+	public Integer macroDirection;
+	@Column
+	public String nomArret;
+	@Column
+	public String direction;
+	@Column
+	public String nomCourt;
+	@Column
+	public String nomLong;
+	@Column(type = Column.TypeColumn.INTEGER)
+	public Integer ordre;
+	@Column
+	@BaliseCsv(value = "groupe")
+	public String groupe;
 }

@@ -25,6 +25,7 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.database.FavorisManager;
 import fr.ybo.transportsrennes.database.modele.GroupeFavori;
 
 /**
@@ -54,6 +55,12 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
+			case R.id.menu_export:
+				FavorisManager.getInstance().export(this);
+				break;
+			case R.id.menu_import:
+				FavorisManager.getInstance().load(this);
+				break;
 			case MENU_AJOUTER:
 				showDialog(AJOUTER_GROUPE_DIALOG_ID);
 				return true;
