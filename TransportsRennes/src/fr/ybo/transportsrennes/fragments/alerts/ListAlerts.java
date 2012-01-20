@@ -51,6 +51,7 @@ public class ListAlerts extends ListFragment {
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
+		lv.setCacheColorHint(R.color.transparent);
 		setListAdapter(new AlertAdapter(getActivity(), alerts));
 		Alert alertChargement = new Alert();
 		alertChargement.title = getString(R.string.dialogRequeteAlerts);

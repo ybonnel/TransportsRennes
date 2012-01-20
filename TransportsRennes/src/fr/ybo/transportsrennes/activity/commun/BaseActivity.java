@@ -15,6 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 
 import com.google.android.maps.MapView;
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
@@ -35,6 +37,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
 import fr.ybo.transportsrennes.activity.actionbar.ActivityHelper;
 import fr.ybo.transportsrennes.activity.actionbar.Refreshable;
+import fr.ybo.transportsrennes.activity.actionbar.UIUtils;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
@@ -87,7 +90,7 @@ public class BaseActivity {
 		}
 
 		protected void addTab(String id, String title, Class<? extends Fragment> fragment, Bundle args) {
-			mTabsAdapter.addTab(mTabHost.newTabSpec(id).setIndicator(title), fragment, args);
+			mTabsAdapter.addTab(mTabHost.newTabSpec(id), fragment, args, title);
 		}
 
 		protected void setCurrentTab(String tag) {
@@ -356,6 +359,7 @@ public class BaseActivity {
 		private final TabHost mTabHost;
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+		private final DummyTabFactory dummyTabFactory;
 
 		static final class TabInfo {
 			private final String tag;
@@ -393,10 +397,20 @@ public class BaseActivity {
 			mTabHost.setOnTabChangedListener(this);
 			mViewPager.setAdapter(this);
 			mViewPager.setOnPageChangeListener(this);
+			dummyTabFactory = new DummyTabFactory(activity);
 		}
 
-		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-			tabSpec.setContent(new DummyTabFactory(mContext));
+		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args, String title) {
+			if (UIUtils.isHoneycomb()) {
+				tabSpec.setIndicator(title);
+			} else {
+				View view = LayoutInflater.from(mContext).inflate(R.layout.tabs_bg, null);
+				TextView tv = (TextView) view.findViewById(R.id.tabsText);
+				tv.setText(title);
+				tv.setTextColor(TransportsRennesApplication.getTextColor(mContext));
+				tabSpec.setIndicator(view);
+			}
+			tabSpec.setContent(dummyTabFactory);
 			String tag = tabSpec.getTag();
 
 			TabInfo info = new TabInfo(tag, clss, args);
