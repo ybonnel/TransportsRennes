@@ -407,6 +407,7 @@ public class BaseActivity {
 				View view = LayoutInflater.from(mContext).inflate(R.layout.tabs_bg, null);
 				TextView tv = (TextView) view.findViewById(R.id.tabsText);
 				tv.setText(title);
+				tv.setTextColor(TransportsRennesApplication.getTextColor(mContext));
 				tabSpec.setIndicator(view);
 			}
 			tabSpec.setContent(dummyTabFactory);
