@@ -26,6 +26,7 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseTabFragmentActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportsrennes.database.FavorisManager;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.GroupeFavori;
 import fr.ybo.transportsrennes.fragments.bus.ListFavoris;
@@ -86,6 +87,14 @@ public class TabFavoris extends BaseTabFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
+			case R.id.menu_export:
+				FavorisManager.getInstance().export(this);
+				break;
+			case R.id.menu_import:
+				FavorisManager.getInstance().load(this);
+				startActivity(new Intent(this, TabFavoris.class));
+				finish();
+				break;
 			case MENU_SUPPRIMER:
 				ArretFavori arretFavori = new ArretFavori();
 				arretFavori.groupe = getCurrentTab();

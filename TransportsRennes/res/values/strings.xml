@@ -181,4 +181,14 @@
     <string name="chooseTheme">Choisissez un thème</string>
     
     <string name="theme">Thème</string>
+    
+    <string name="exportFavoris">Export des favoris</string>
+    <string name="importFavoris">Import des favoris</string>
+    
+    <string name="exportErreurSd">Pas de SDCard détectée, impossible d\'exporter les données</string>
+    <string name="exportResult">Les arrêts favoris ont été exportés dans le répertoire "transportsrennes"</string>
+    <string name="importErreurSd">Pas de SDCard détectée, impossible d\'importer les données</string>
+    <string name="importErreurFichierNonPresent">Le fichier "transportsrennes/arrets_favoris.txt" n\'existe pas</string>
+    <string name="importErreurGenerique">Un erreur est survenue pendant l\'import des favoris : %1$s</string>
+    <string name="importResult">Les favoris ont été importés</string>
 </resources>
