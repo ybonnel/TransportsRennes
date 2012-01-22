@@ -16,5 +16,12 @@
             android:title="@string/chooseTheme"
             android:defaultValue="BLANC" />
     </PreferenceCategory>
+    
+    <PreferenceCategory android:title="@string/debug">
+    	<CheckBoxPreference
+            android:key="TransportsRennes_debug"
+            android:title="@string/activateDebug"
+            android:defaultValue="false"/>
+    </PreferenceCategory>
 
 </PreferenceScreen>

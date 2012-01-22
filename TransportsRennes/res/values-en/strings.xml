@@ -174,5 +174,7 @@
     <string name="importErreurFichierNonPresent">The file "transportsrennes/arrets_favoris.txt" doesn\'t exist</string>
     <string name="importErreurGenerique">An error has been detected : %1$s</string>
     <string name="importResult">The favorites have been imported with success</string>
+    <string name="debug">Debug</string>
+    <string name="activateDebug">Activate debug logs.</string>
     
 </resources>

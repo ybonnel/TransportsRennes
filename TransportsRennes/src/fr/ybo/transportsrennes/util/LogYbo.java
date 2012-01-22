@@ -13,23 +13,23 @@
  */
 package fr.ybo.transportsrennes.util;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import android.util.Log;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class LogYbo {
 
     private static final String PREFIX_TAG = "YBO";
     private final String tag;
-    private static final boolean IS_DEBUG = true;
 
     public LogYbo(Class<?> clazz) {
         tag = clazz.getSimpleName();
     }
 
     public void debug(String message) {
-        if (IS_DEBUG) {
+		if (TransportsRennesApplication.isDebug()) {
             Log.d(PREFIX_TAG, tag + " : " + message);
         }
     }
@@ -56,13 +56,13 @@ public class LogYbo {
     }
 
     public void startChrono(String message) {
-        if (IS_DEBUG) {
+		if (TransportsRennesApplication.isDebug()) {
             getMapStartTimes().put(message, System.nanoTime());
         }
     }
 
     public void stopChrono(String message) {
-        if (IS_DEBUG) {
+		if (TransportsRennesApplication.isDebug()) {
             long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
             Log.d(PREFIX_TAG, tag + " : "
                     + new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());

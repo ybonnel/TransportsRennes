@@ -42,6 +42,9 @@ public class PreferencesRennes extends BasePreferenceActivity {
 				if ("TransportsRennes_choixTheme".equals(key)) {
 					restart();
 				}
+				if ("TransportsRennes_debug".equals(key)) {
+					TransportsRennesApplication.setDebug(sharedPreferences.getBoolean("TransportsRennes_debug", false));
+				}
 			}
 		};
 		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(prefListenner);

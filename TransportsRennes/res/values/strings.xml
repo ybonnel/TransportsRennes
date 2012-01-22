@@ -191,4 +191,6 @@
     <string name="importErreurFichierNonPresent">Le fichier "transportsrennes/arrets_favoris.txt" n\'existe pas</string>
     <string name="importErreurGenerique">Un erreur est survenue pendant l\'import des favoris : %1$s</string>
     <string name="importResult">Les favoris ont été importés</string>
+    <string name="debug">Debug</string>
+    <string name="activateDebug">Activer les logs debugs.</string>
 </resources>

@@ -62,6 +62,16 @@ public class TransportsRennesApplication extends Application {
         return geocodeUtil;
     }
 
+	private static boolean debug = false;
+
+	public static boolean isDebug() {
+		return debug;
+	}
+
+	public static void setDebug(boolean debug) {
+		TransportsRennesApplication.debug = debug;
+	}
+
     private static TransportsRennesDatabase databaseHelper;
 
     public static TransportsRennesDatabase getDataBaseHelper() {
@@ -104,6 +114,8 @@ public class TransportsRennesApplication extends Application {
 			return;
 		majTheme(this);
 		super.onCreate();
+
+		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_debug", false);
 
         databaseHelper = new TransportsRennesDatabase(this);
         if (!isInPrincipalProcess()) {
