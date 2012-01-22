@@ -1,6 +1,10 @@
 package fr.ybo.transportsrennes.database;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +15,11 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
+import fr.ybo.transportsrennes.util.LogYbo;
 
 public class FavorisManager {
+
+	private static final LogYbo LOG_YBO = new LogYbo(ArretFavori.class);
 
 	private static FavorisManager instance = null;
 
@@ -39,12 +46,7 @@ public class FavorisManager {
 			return;
 		}
 
-		File root = Environment.getExternalStorageDirectory();
-		File repertoire = new File(root, "transportsrennes");
-		if (!repertoire.exists()) {
-			repertoire.mkdir();
-		}
-		File outputFile = new File(repertoire, FILE_NAME);
+		File outputFile = openCsvFile();
 		if (outputFile.exists()) {
 			outputFile.delete();
 		}
@@ -54,7 +56,50 @@ public class FavorisManager {
 	}
 
 	public void load(Context context) {
-		Toast.makeText(context, "Not yet implemented", Toast.LENGTH_LONG).show();
+		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			Toast.makeText(context, R.string.importErreurSd, Toast.LENGTH_LONG).show();
+			return;
+		}
+
+		BufferedReader bufReader = openCsvFileAsBufReader(context);
+		if (bufReader == null) {
+			return;
+		}
+		try {
+			moteurCsv.parseFileAndInsert(bufReader, ArretFavori.class, new InsertArretFavori());
+			Toast.makeText(context, R.string.importResult, Toast.LENGTH_SHORT).show();
+		} catch (Exception exception) {
+			LOG_YBO.erreur("Une erreur pendant l'import : ", exception);
+			Toast.makeText(context, context.getString(R.string.importErreurGenerique, exception.getMessage()),
+					Toast.LENGTH_LONG).show();
+		} finally {
+			closeBufReader(bufReader);
+		}
+	}
+
+	private void closeBufReader(BufferedReader bufReader) {
+		try {
+			bufReader.close();
+		} catch (IOException ignore) {
+		}
+	}
+
+	private BufferedReader openCsvFileAsBufReader(Context context) {
+		try {
+			return new BufferedReader(new FileReader(openCsvFile()));
+		} catch (FileNotFoundException e) {
+			Toast.makeText(context, R.string.importErreurFichierNonPresent, Toast.LENGTH_LONG).show();
+			return null;
+		}
+	}
+
+	private File openCsvFile() {
+		File root = Environment.getExternalStorageDirectory();
+		File repertoire = new File(root, "transportsrennes");
+		if (!repertoire.exists()) {
+			repertoire.mkdir();
+		}
+		return new File(repertoire, FILE_NAME);
 	}
 
 }

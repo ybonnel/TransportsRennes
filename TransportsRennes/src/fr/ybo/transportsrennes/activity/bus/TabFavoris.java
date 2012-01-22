@@ -30,11 +30,8 @@ import fr.ybo.transportsrennes.database.FavorisManager;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.database.modele.GroupeFavori;
 import fr.ybo.transportsrennes.fragments.bus.ListFavoris;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 public class TabFavoris extends BaseTabFragmentActivity {
-
-	private static final LogYbo LOG_YBO = new LogYbo(TabFavoris.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +92,8 @@ public class TabFavoris extends BaseTabFragmentActivity {
 				break;
 			case R.id.menu_import:
 				FavorisManager.getInstance().load(this);
+				startActivity(new Intent(this, TabFavoris.class));
+				finish();
 				break;
 			case MENU_SUPPRIMER:
 				ArretFavori arretFavori = new ArretFavori();

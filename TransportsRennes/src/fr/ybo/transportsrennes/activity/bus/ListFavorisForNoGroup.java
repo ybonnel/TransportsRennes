@@ -60,6 +60,8 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 				break;
 			case R.id.menu_import:
 				FavorisManager.getInstance().load(this);
+				startActivity(new Intent(this, TabFavoris.class));
+				finish();
 				break;
 			case MENU_AJOUTER:
 				showDialog(AJOUTER_GROUPE_DIALOG_ID);
