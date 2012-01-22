@@ -212,7 +212,7 @@
                 <action android:name="com.ubikod.capptain.ICapptainService"/>
                 <data android:scheme="capptain"/>
             </intent-filter>
-            <meta-data android:name="capptain:api:level" android:value="9"/>
+            <meta-data android:name="capptain:api:level" android:value="11"/>
             <meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84"/>
         </service>
         <!-- Cappbrain -->
