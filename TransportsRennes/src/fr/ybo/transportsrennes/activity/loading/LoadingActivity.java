@@ -61,6 +61,9 @@ public class LoadingActivity extends CapptainActivity {
 			case OPERATION_LOAD_ALL_LINES:
 				loadAllLines();
 				break;
+			case OPERATION_LOAD_FAVORIS:
+				loadFavoris();
+				break;
 			default:
 				finish();
 				break;
@@ -84,6 +87,58 @@ public class LoadingActivity extends CapptainActivity {
 		arretDemande = true;
 	}
 
+	private void loadFavoris() {
+		message.setText(R.string.infoChargementGtfs);
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... pParams) {
+				Collection<String> ligneIds = new HashSet<String>();
+				for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
+					if (!ligneIds.contains(favori.ligneId)) {
+						ligneIds.add(favori.ligneId);
+					}
+				}
+
+				if (!ligneIds.isEmpty()) {
+					int count = 0;
+					Ligne ligneSelect = new Ligne();
+					for (String ligneId : ligneIds) {
+						ligneSelect.id = ligneId;
+						Ligne ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligneSelect);
+						final String nomLigne = ligne.nomCourt;
+						runOnUiThread(new Runnable() {
+							public void run() {
+								message.setText(getString(R.string.infoChargementGtfs)
+										+ getString(R.string.chargementLigneFavori, nomLigne));
+							}
+						});
+						try {
+							UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						} catch (LigneInexistanteException ignore) {
+						}
+						count++;
+						final int progress = 100 * count / ligneIds.size();
+						handler.post(new Runnable() {
+
+							@Override
+							public void run() {
+								loadingBar.setProgress(progress);
+							}
+						});
+					}
+				}
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				super.onPostExecute(result);
+				LoadingActivity.this.finish();
+			}
+		}.execute((Void[]) null);
+	}
+
 	private void upgradeDatabase() {
 		message.setText(R.string.infoChargementGtfs);
 		new AsyncTask<Void, Void, Void>() {
@@ -94,11 +149,12 @@ public class LoadingActivity extends CapptainActivity {
 					@Override
 					public void etapeSuivante() {
 						super.etapeSuivante();
+						final int progress = 100 * getEtapeCourante() / getNbEtape();
 						handler.post(new Runnable() {
 							
 							@Override
 							public void run() {
-								loadingBar.setProgress(100 * getEtapeCourante() / getNbEtape());
+								loadingBar.setProgress(progress);
 							}
 						});
 					}
@@ -213,4 +269,5 @@ public class LoadingActivity extends CapptainActivity {
 
 	public static final int OPERATION_UPGRADE_DATABASE = 1;
 	public static final int OPERATION_LOAD_ALL_LINES = 2;
+	public static final int OPERATION_LOAD_FAVORIS = 3;
 }

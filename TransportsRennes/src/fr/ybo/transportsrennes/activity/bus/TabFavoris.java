@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseTabFragmentActivity;
+import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.FavorisManager;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
@@ -56,6 +57,11 @@ public class TabFavoris extends BaseTabFragmentActivity {
 		}
 
 		setCurrentTab(savedInstanceState);
+		if (FavorisManager.getInstance().hasFavorisToLoad()) {
+			Intent intent = new Intent(this, LoadingActivity.class);
+			intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+			startActivity(intent);
+		}
 	}
 
 	private static final int GROUP_ID = 0;

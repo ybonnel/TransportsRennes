@@ -24,6 +24,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
+import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.FavorisManager;
 import fr.ybo.transportsrennes.database.modele.GroupeFavori;
@@ -38,6 +39,11 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listfavoris);
 		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
+		if (FavorisManager.getInstance().hasFavorisToLoad()) {
+			Intent intent = new Intent(this, LoadingActivity.class);
+			intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+			startActivity(intent);
+		}
     }
 
     private static final int GROUP_ID = 0;

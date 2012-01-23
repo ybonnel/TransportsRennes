@@ -15,6 +15,7 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.modele.ArretFavori;
+import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.util.LogYbo;
 
 public class FavorisManager {
@@ -55,7 +56,7 @@ public class FavorisManager {
 		Toast.makeText(context, R.string.exportResult, Toast.LENGTH_LONG).show();
 	}
 
-	public void load(Context context) {
+	public void load(final Context context) {
 		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			Toast.makeText(context, R.string.importErreurSd, Toast.LENGTH_LONG).show();
 			return;
@@ -100,6 +101,15 @@ public class FavorisManager {
 			repertoire.mkdir();
 		}
 		return new File(repertoire, FILE_NAME);
+	}
+
+	public boolean hasFavorisToLoad() {
+		for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
+			if (!Ligne.getLigne(favori.ligneId).isChargee()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
