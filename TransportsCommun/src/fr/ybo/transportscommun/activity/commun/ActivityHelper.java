@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.ybo.transportsrennes.activity.actionbar;
+package fr.ybo.transportscommun.activity.commun;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -29,11 +29,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.TransportsRennes;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.Theme;
-import fr.ybo.transportsrennes.util.honeycomb.CompatUtil;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.R;
+import fr.ybo.transportscommun.activity.AccueilActivity;
+import fr.ybo.transportscommun.util.CompatUtil;
 
 /**
  * A class that handles some common activity-related functionality in the app,
@@ -76,11 +75,12 @@ public class ActivityHelper {
 	 * {@link com.google.android.apps.iosched.ui.HomeActivity}.
 	 */
 	public void goHome() {
-		if (mActivity instanceof TransportsRennes) {
+		if (mActivity instanceof AccueilActivity) {
 			return;
 		}
 
-		final Intent intent = new Intent(mActivity, TransportsRennes.class);
+		final Intent intent = new Intent(mActivity,
+				((AbstractTransportsApplication) mActivity.getApplication()).getAccueilActivity());
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		mActivity.startActivity(intent);
 	}
@@ -93,7 +93,7 @@ public class ActivityHelper {
 	 */
 	public void setupActionBar(int resourceMenuNormal, int resourceMenuNoir) {
 		int resourceMenu = resourceMenuNormal;
-		if (TransportsRennesApplication.getTheme(mActivity) == Theme.NOIR) {
+		if (((AbstractTransportsApplication) mActivity.getApplication()).isThemeNoir()) {
 			resourceMenu = resourceMenuNoir;
 		}
 		final ViewGroup actionBarCompat = getActionBarCompat();
@@ -101,7 +101,8 @@ public class ActivityHelper {
 			addMenus(resourceMenu);
 			return;
 		}
-		actionBarCompat.setBackgroundResource(TransportsRennesApplication.getTheme(mActivity).getActionBarBackground());
+		actionBarCompat.setBackgroundResource(((AbstractTransportsApplication) mActivity.getApplication())
+				.getActionBarBackground());
 		LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0,
 				ViewGroup.LayoutParams.FILL_PARENT);
 		springLayoutParams.weight = 1;

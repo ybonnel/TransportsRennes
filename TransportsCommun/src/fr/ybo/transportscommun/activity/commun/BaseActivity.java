@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.activity.commun;
+package fr.ybo.transportscommun.activity.commun;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -33,42 +32,15 @@ import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainPreferenceActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.TransportsRennes;
-import fr.ybo.transportsrennes.activity.actionbar.ActivityHelper;
-import fr.ybo.transportsrennes.activity.actionbar.Refreshable;
-import fr.ybo.transportsrennes.activity.actionbar.UIUtils;
-import fr.ybo.transportsrennes.activity.bus.TabFavoris;
-import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
-import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.CapptainFragmentActivity;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.R;
+import fr.ybo.transportscommun.activity.AccueilActivity;
 
 public class BaseActivity {
 
 	private static boolean onOptionsItemSelected(MenuItem item, ActivityHelper helper, Activity activity) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				// app icon in action bar clicked; go home
-				helper.goHome();
-				return true;
-			case R.id.menu_bus_favoris:
-				activity.startActivity(new Intent(activity, TabFavoris.class));
-				return true;
-			case R.id.menu_velo_favoris:
-				activity.startActivity(new Intent(activity, ListStationsFavoris.class));
-				return true;
-			case R.id.menu_prefs:
-				activity.startActivity(new Intent(activity, PreferencesRennes.class));
-				return true;
-			case R.id.menu_refresh:
-				if (activity instanceof Refreshable) {
-					((Refreshable) activity).refresh();
-				}
-				return true;
-			default:
-				return false;
-		}
+		return ((AbstractTransportsApplication) activity.getApplication())
+				.onOptionsItemSelected(item, activity, helper);
 	}
 
 	public static abstract class BaseTabFragmentActivity extends BaseFragmentActivity {
@@ -136,7 +108,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -153,7 +125,7 @@ public class BaseActivity {
 		@Override
 		protected void onPostCreate(Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			if (this instanceof TransportsRennes) {
+			if (this instanceof AccueilActivity) {
 				getActivityHelper().setupHomeActivity();
 			} else {
 				getActivityHelper().setupSubActivity();
@@ -171,7 +143,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -185,6 +157,7 @@ public class BaseActivity {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPostCreate(Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
@@ -202,7 +175,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -232,7 +205,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -262,7 +235,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -292,7 +265,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			((TransportsRennesApplication) getApplication()).majTheme(this);
+			((AbstractTransportsApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -355,19 +328,17 @@ public class BaseActivity {
 	 */
 	protected static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener,
 			ViewPager.OnPageChangeListener {
-		private final Context mContext;
+		private final FragmentActivity mContext;
 		private final TabHost mTabHost;
 		private final ViewPager mViewPager;
 		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 		private final DummyTabFactory dummyTabFactory;
 
 		static final class TabInfo {
-			private final String tag;
 			private final Class<?> clss;
 			private final Bundle args;
 
-			TabInfo(String _tag, Class<?> _class, Bundle _args) {
-				tag = _tag;
+			TabInfo(Class<?> _class, Bundle _args) {
 				clss = _class;
 				args = _args;
 			}
@@ -407,13 +378,12 @@ public class BaseActivity {
 				View view = LayoutInflater.from(mContext).inflate(R.layout.tabs_bg, null);
 				TextView tv = (TextView) view.findViewById(R.id.tabsText);
 				tv.setText(title);
-				tv.setTextColor(TransportsRennesApplication.getTextColor(mContext));
+				tv.setTextColor(((AbstractTransportsApplication) mContext.getApplication()).getTextColor());
 				tabSpec.setIndicator(view);
 			}
 			tabSpec.setContent(dummyTabFactory);
-			String tag = tabSpec.getTag();
 
-			TabInfo info = new TabInfo(tag, clss, args);
+			TabInfo info = new TabInfo(clss, args);
 			mTabs.add(info);
 			mTabHost.addTab(tabSpec);
 			notifyDataSetChanged();

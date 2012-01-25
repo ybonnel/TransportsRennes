@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package fr.ybo.transportsrennes.activity.actionbar;
+package fr.ybo.transportscommun.activity.commun;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.view.Menu;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
-import fr.ybo.transportsrennes.R;
+import fr.ybo.transportscommun.R;
 
 /**
  * An extension of {@link ActivityHelper} that provides Android 3.0-specific

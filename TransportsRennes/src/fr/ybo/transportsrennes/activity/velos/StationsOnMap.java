@@ -25,8 +25,8 @@ import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayVelo;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;

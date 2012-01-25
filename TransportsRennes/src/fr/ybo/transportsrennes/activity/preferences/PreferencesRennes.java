@@ -20,8 +20,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BasePreferenceActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BasePreferenceActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class PreferencesRennes extends BasePreferenceActivity {

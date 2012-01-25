@@ -14,8 +14,8 @@
 package fr.ybo.transportsrennes.activity.alerts;
 
 import android.os.Bundle;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
 

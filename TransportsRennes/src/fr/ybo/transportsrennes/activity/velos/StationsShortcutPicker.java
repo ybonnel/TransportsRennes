@@ -16,8 +16,8 @@ package fr.ybo.transportsrennes.activity.velos;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 
 
 public class StationsShortcutPicker extends BaseSimpleActivity {

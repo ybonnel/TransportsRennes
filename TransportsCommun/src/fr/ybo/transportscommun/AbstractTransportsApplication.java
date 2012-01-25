@@ -13,15 +13,19 @@
  */
 package fr.ybo.transportscommun;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 
 import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
+import fr.ybo.transportscommun.activity.AccueilActivity;
+import fr.ybo.transportscommun.activity.commun.ActivityHelper;
 import fr.ybo.transportscommun.util.GeocodeUtil;
 
 public abstract class AbstractTransportsApplication extends Application {
@@ -72,6 +76,7 @@ public abstract class AbstractTransportsApplication extends Application {
 			return;
 		}
 		geocodeUtil = new GeocodeUtil(this);
+		postCreate();
 	}
 
 	public abstract void majTheme(Context context);
@@ -79,5 +84,17 @@ public abstract class AbstractTransportsApplication extends Application {
 	public abstract String getApplicationName();
 
 	public abstract void constructDatabase();
+
+	public abstract Class<? extends AccueilActivity> getAccueilActivity();
+
+	public abstract boolean isThemeNoir();
+
+	public abstract boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper);
+
+	public abstract int getTextColor();
+
+	public abstract int getActionBarBackground();
+
+	public abstract void postCreate();
 
 }

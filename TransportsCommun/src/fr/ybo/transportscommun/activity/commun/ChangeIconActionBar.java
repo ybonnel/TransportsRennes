@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.activity.actionbar;
+package fr.ybo.transportscommun.activity.commun;
 
 import android.widget.ImageButton;
 

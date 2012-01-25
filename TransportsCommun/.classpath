@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="libs/capptain-agent.jar"/>
 	<classpathentry kind="lib" path="libs/capptain-common.jar"/>
 	<classpathentry kind="lib" path="libs/capptain-service.jar"/>
+	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <declare-styleable name="AppTheme">
+        <attr name="actionbarCompatButtonStyle" format="reference" />
+        <attr name="actionbarCompatProgressIndicatorStyle" format="reference" />
+        <attr name="actionbarCompatSeparatorStyle" format="reference" />
+        <attr name="actionbarCompatLogoStyle" format="reference" />
+        <attr name="actionbarCompatTextStyle" format="reference" />
+        <attr name="textHeaderMaxLines" format="integer" />
+        <attr name="trackAbstractMaxLines" format="integer" />
+    </declare-styleable>
+</resources>

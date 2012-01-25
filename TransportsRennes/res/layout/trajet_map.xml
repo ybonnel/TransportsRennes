@@ -46,14 +46,14 @@
             android:layout_above="@id/scrollTrajets" >
 
             <com.google.android.maps.MapView
-                android:id="@+id/mapview"
+                android:id="@id/mapview"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
                 android:clickable="true" />
 
             <ImageButton
-                android:id="@+id/layers_button"
+                android:id="@id/layers_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"

@@ -37,10 +37,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import fr.ybo.transportscommun.activity.AccueilActivity;
+import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.actionbar.UIUtils;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -51,7 +51,7 @@ import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
 import fr.ybo.transportsrennes.util.Theme;
 import fr.ybo.transportsrennes.util.Version;
 
-public class TransportsRennes extends BaseFragmentActivity {
+public class TransportsRennes extends AccueilActivity {
 
 	private Theme currentTheme;
 

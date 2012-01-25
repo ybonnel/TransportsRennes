@@ -14,8 +14,8 @@
 package fr.ybo.transportsrennes.activity.alerts;
 
 import android.os.Bundle;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseTabFragmentActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
 import fr.ybo.transportsrennes.fragments.alerts.ListTwitter;

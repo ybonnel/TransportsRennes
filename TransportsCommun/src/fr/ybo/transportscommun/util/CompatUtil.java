@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.util.honeycomb;
+package fr.ybo.transportscommun.util;
 
 import android.app.Activity;
 

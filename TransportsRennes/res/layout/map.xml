@@ -34,7 +34,7 @@
             android:orientation="vertical" >
 
             <com.google.android.maps.MapView
-                android:id="@+id/mapview"
+                android:id="@id/mapview"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
@@ -138,7 +138,7 @@
         </RelativeLayout>
 
         <ImageButton
-            android:id="@+id/layers_button"
+            android:id="@id/layers_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"

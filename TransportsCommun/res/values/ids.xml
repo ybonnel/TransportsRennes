@@ -13,9 +13,16 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <item type="id" name="ajoutFavori"/>
-    <item type="id" name="supprimerFavori"/>
-    <item type="id" name="deplacerGroupe"/>
-    <item type="id" name="creerNotif"/>
-    <item type="id" name="supprimerNotif"/>
+    <item type="id" name="menu_search"/>
+    <item type="id" name="edittext_search"/>
+    
+    <item type="id" name="actionbar_compat" />
+    <item type="id" name="actionbar_compat_container" />
+    <item type="id" name="actionbar_compat_logo" />
+    <item type="id" name="actionbar_compat_text" />
+    
+    <item type="id" name="mapview"/>
+    <item type="id" name="layers_button"/>
+    <item type="id" name="pager"/>
+    
 </resources>

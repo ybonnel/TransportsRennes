@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.activity.commun;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package fr.ybo.transportsrennes.activity.actionbar;
+package fr.ybo.transportscommun.activity.commun;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

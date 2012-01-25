@@ -16,8 +16,8 @@ package fr.ybo.transportsrennes.activity.bus;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseSimpleActivity;
 
 /**
  * Activité affichant les lignes de bus..
