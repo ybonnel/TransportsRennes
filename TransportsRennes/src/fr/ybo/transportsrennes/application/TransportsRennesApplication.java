@@ -20,24 +20,21 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.app.ActivityManager;
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
-import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.AlertBdd;
 import fr.ybo.transportsrennes.database.modele.Bounds;
@@ -47,52 +44,18 @@ import fr.ybo.transportsrennes.services.UpdateTimeService;
 import fr.ybo.transportsrennes.util.AlarmReceiver;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.GeocodeUtil;
 import fr.ybo.transportsrennes.util.Theme;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à
  * l'application.
  */
-public class TransportsRennesApplication extends Application {
-
-    private static GeocodeUtil geocodeUtil;
-
-    public static GeocodeUtil getGeocodeUtil() {
-        return geocodeUtil;
-    }
-
-	private static boolean debug = false;
-
-	public static boolean isDebug() {
-		return debug;
-	}
-
-	public static void setDebug(boolean debug) {
-		TransportsRennesApplication.debug = debug;
-	}
+public class TransportsRennesApplication extends AbstractTransportsApplication {
 
     private static TransportsRennesDatabase databaseHelper;
 
     public static TransportsRennesDatabase getDataBaseHelper() {
         return databaseHelper;
-    }
-
-    private boolean isInPrincipalProcess() {
-        PackageInfo packageinfo;
-        try {
-            packageinfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES);
-        } catch (android.content.pm.PackageManager.NameNotFoundException ex) {
-            return false;
-        }
-        String processName = packageinfo.applicationInfo.processName;
-
-        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getRunningAppProcesses()) {
-            if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
-                return runningAppProcessInfo.processName.equals(processName);
-            }
-        }
-        return false;
     }
 
 	public static Theme getTheme(Context context) {
@@ -104,24 +67,22 @@ public class TransportsRennesApplication extends Application {
 		return getTheme(context).getTextColor();
 	}
 
-	public static void majTheme(Context context) {
+	public void majTheme(Context context) {
 		context.setTheme(getTheme(context).getTheme());
+	}
+
+	public String getApplicationName() {
+		return "TransportsRennes";
+	}
+
+	public void constructDatabase() {
+		databaseHelper = new TransportsRennesDatabase(this);
 	}
 
 	@Override
 	public void onCreate() {
-		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
-			return;
-		majTheme(this);
 		super.onCreate();
 
-		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes_debug", false);
-
-        databaseHelper = new TransportsRennesDatabase(this);
-        if (!isInPrincipalProcess()) {
-            return;
-        }
-        geocodeUtil = new GeocodeUtil(this);
         startService(new Intent(UpdateTimeService.ACTION_UPDATE));
         PackageManager pm = getPackageManager();
         pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),

@@ -136,7 +136,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -171,7 +171,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -202,7 +202,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -232,7 +232,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -262,7 +262,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
@@ -292,7 +292,7 @@ public class BaseActivity {
 
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			TransportsRennesApplication.majTheme(this);
+			((TransportsRennesApplication) getApplication()).majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 

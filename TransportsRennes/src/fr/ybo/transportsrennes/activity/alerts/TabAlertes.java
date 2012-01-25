@@ -24,7 +24,7 @@ public class TabAlertes extends BaseTabFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		TransportsRennesApplication.majTheme(this);
+		((TransportsRennesApplication) getApplication()).majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabalertes);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);

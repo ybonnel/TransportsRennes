@@ -12,7 +12,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 import android.content.Context;
 import android.location.Address;

@@ -44,7 +44,7 @@ public class TransportsWidget21Configure extends CapptainListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		TransportsRennesApplication.majTheme(this);
+		((TransportsRennesApplication) getApplication()).majTheme(this);
         super.onCreate(savedInstanceState);
         Intent launchIntent = getIntent();
         Bundle extras = launchIntent.getExtras();
