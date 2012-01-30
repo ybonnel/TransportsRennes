@@ -97,4 +97,6 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	public abstract void postCreate();
 
+	public abstract int getCompactLogo();
+
 }

@@ -13,25 +13,27 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
-import android.os.Bundle;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActivity;
+import android.support.v4.app.ListFragment;
+import fr.ybo.transportscommun.activity.alerts.AbstractTabAlertes;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
 import fr.ybo.transportsrennes.fragments.alerts.ListTwitter;
 
-public class TabAlertes extends BaseTabFragmentActivity {
+public class TabAlertes extends AbstractTabAlertes {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		((TransportsRennesApplication) getApplication()).majTheme(this);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tabalertes);
+	protected void setupActionBar() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-		configureTabs();
-		addTab("alertes", getString(R.string.alertes), ListAlerts.class);
-		addTab("twitter", getString(R.string.twitter), ListTwitter.class);
-		setCurrentTab(savedInstanceState);
+	}
+
+	@Override
+	protected Class<? extends ListFragment> getListAlertsClass() {
+		return ListAlerts.class;
+	}
+
+	@Override
+	protected Class<? extends ListFragment> getListTwitterClass() {
+		return ListTwitter.class;
 	}
 
 }

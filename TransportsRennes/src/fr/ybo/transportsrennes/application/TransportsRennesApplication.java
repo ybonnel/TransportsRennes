@@ -229,4 +229,8 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 		return getTheme(this).getActionBarBackground();
 	}
 
+	public int getCompactLogo() {
+		return R.drawable.compact_icon;
+	}
+
 }

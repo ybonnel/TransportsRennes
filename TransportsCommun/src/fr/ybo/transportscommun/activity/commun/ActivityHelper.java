@@ -115,6 +115,7 @@ public class ActivityHelper {
 
 		// Add logo
 		ImageButton logo = new ImageButton(mActivity, null, R.attr.actionbarCompatLogoStyle);
+		logo.setImageResource(((AbstractTransportsApplication) mActivity.getApplication()).getCompactLogo());
 		logo.setOnClickListener(homeClickListener);
 		actionBarCompat.addView(logo);
 
