@@ -12,7 +12,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;

@@ -11,10 +11,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import android.content.res.Resources;
 import android.database.Cursor;
+import fr.ybo.database.DataBaseHelper;
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
 import fr.ybo.database.annotation.PrimaryKey;
@@ -23,16 +29,10 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.keolis.gtfs.files.GestionZipKeolis;
-import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
+import fr.ybo.transportscommun.util.LogYbo;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
@@ -57,20 +57,20 @@ public class Ligne implements Serializable {
     @Column(type = Column.TypeColumn.BOOLEAN)
     public Boolean chargee;
 
-    public void chargerHeuresArrets(TransportsRennesDatabase dataBaseHelper, Resources resources)
+	public void chargerHeuresArrets(Class<?> rawClass, DataBaseHelper dataBaseHelper, Resources resources)
             throws LigneInexistanteException {
         LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
         List<Class<?>> classes = new ArrayList<Class<?>>(1000);
         classes.add(Horaire.class);
         MoteurCsv moteur = new MoteurCsv(classes);
-        GestionZipKeolis.chargeLigne(moteur, id, dataBaseHelper, resources);
+		GestionZipKeolis.chargeLigne(rawClass, moteur, id, dataBaseHelper, resources);
         LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
     }
 
     public static Ligne getLigne(String ligneId) {
         Ligne ligne = new Ligne();
         ligne.id = ligneId;
-        return TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
+		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligne);
     }
 
     public boolean isChargee() {
@@ -78,9 +78,9 @@ public class Ligne implements Serializable {
             return false;
         }
         // On regarde si la table existe.
-        Table table = TransportsRennesApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
+		Table table = AbstractTransportsApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
         table.addSuffixeToTableName(id);
-        Cursor cursor = TransportsRennesApplication
+		Cursor cursor = AbstractTransportsApplication
                 .getDataBaseHelper()
                 .getReadableDatabase()
                 .query("sqlite_master",

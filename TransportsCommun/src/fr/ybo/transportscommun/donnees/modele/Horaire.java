@@ -11,7 +11,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
@@ -22,14 +26,9 @@ import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.JoursFeries;
-import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.util.JoursFeries;
+import fr.ybo.transportscommun.util.LogYbo;
 
 @FichierCsv("horaires.txt")
 @Entity
@@ -102,7 +101,7 @@ public class Horaire {
         selectionArgs.add(Integer.toString(macroDirection));
         LOG_YBO.debug("Requete : " + requete.toString());
         LOG_YBO.debug("SelectionArgs : " + selectionArgs);
-        return TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		return AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
     }
 
     private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, int macroDirection, Integer limit,
@@ -168,7 +167,7 @@ public class Horaire {
         }
         LOG_YBO.debug("Requete : " + requete.toString());
         LOG_YBO.debug("SelectionArgs : " + selectionArgs);
-        return TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+		return AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
     }
 
     private static String clauseWhereForTodayCalendrier(Calendar calendar) {

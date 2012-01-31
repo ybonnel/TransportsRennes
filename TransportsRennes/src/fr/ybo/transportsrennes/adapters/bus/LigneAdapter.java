@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsrennes.adapters.bus;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.util.IconeLigne;
-
-import java.util.List;
 
 public class LigneAdapter extends BaseAdapter {
 

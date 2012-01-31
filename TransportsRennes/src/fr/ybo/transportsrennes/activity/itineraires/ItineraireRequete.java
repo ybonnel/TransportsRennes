@@ -58,6 +58,7 @@ import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
@@ -65,7 +66,6 @@ import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.LocationUtil;
 import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
-import fr.ybo.transportsrennes.util.LogYbo;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 
 public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {

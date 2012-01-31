@@ -23,14 +23,14 @@ import android.widget.TextView;
 
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.LoadingInfo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LoadingInfo;
 
 public class LoadingActivity extends CapptainActivity {
 
@@ -114,7 +114,7 @@ public class LoadingActivity extends CapptainActivity {
 							}
 						});
 						try {
-							UpdateDataBase.chargeDetailLigne(ligne, getResources());
+							UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, getResources());
 						} catch (LigneInexistanteException ignore) {
 						}
 						count++;
@@ -145,7 +145,7 @@ public class LoadingActivity extends CapptainActivity {
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
-				UpdateDataBase.updateIfNecessaryDatabase(getResources(), new LoadingInfo() {
+				UpdateDataBase.updateIfNecessaryDatabase(R.raw.last_update, getResources(), new LoadingInfo() {
 					@Override
 					public void etapeSuivante() {
 						super.etapeSuivante();
@@ -177,7 +177,7 @@ public class LoadingActivity extends CapptainActivity {
 						}
 					});
 					try {
-						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, getResources());
 					} catch (LigneInexistanteException ignore) {
 					}
 				}
@@ -245,7 +245,7 @@ public class LoadingActivity extends CapptainActivity {
 						}
 					});
 					try {
-						UpdateDataBase.chargeDetailLigne(ligne, getResources());
+						UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, getResources());
 					} catch (LigneInexistanteException ignore) {
 					}
 					handler.post(new Runnable() {

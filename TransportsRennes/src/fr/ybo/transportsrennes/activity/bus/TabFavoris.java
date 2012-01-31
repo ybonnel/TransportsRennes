@@ -24,12 +24,12 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActivity;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.database.FavorisManager;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.GroupeFavori;
 import fr.ybo.transportsrennes.fragments.bus.ListFavoris;
 
 public class TabFavoris extends BaseTabFragmentActivity {

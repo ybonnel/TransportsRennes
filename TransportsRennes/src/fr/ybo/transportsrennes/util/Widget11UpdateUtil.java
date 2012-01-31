@@ -13,19 +13,20 @@
  */
 package fr.ybo.transportsrennes.util;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.widget.RemoteViews;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
-import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.Horaire;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class Widget11UpdateUtil {
 

@@ -26,12 +26,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.donnees.modele.Direction;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Trajet;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.bus.DetailTrajetAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Direction;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Trajet;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
 /**

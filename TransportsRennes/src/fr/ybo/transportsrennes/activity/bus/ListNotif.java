@@ -24,12 +24,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.bus.NotifAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 

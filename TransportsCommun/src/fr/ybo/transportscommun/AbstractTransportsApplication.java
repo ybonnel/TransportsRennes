@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportscommun;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
@@ -24,8 +26,10 @@ import android.view.MenuItem;
 
 import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
+import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
+import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 import fr.ybo.transportscommun.util.GeocodeUtil;
 
 public abstract class AbstractTransportsApplication extends Application {
@@ -62,6 +66,18 @@ public abstract class AbstractTransportsApplication extends Application {
 			}
 		}
 		return false;
+	}
+
+	protected static DataBaseHelper databaseHelper;
+
+	public static DataBaseHelper getDataBaseHelper() {
+		return databaseHelper;
+	}
+
+	protected static List<CoupleResourceFichier> RESOURCES_PRINCIPALE;
+
+	public static List<CoupleResourceFichier> getResourcesPrincipale() {
+		return RESOURCES_PRINCIPALE;
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsrennes.services;
 
+import java.util.Calendar;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -25,6 +27,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
@@ -34,13 +40,7 @@ import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.IconeLigne;
-import fr.ybo.transportsrennes.util.LogYbo;
-
-import java.util.Calendar;
 
 public class UpdateTimeService extends Service {
 

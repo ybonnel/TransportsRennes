@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 

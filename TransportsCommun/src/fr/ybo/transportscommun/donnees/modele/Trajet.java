@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
@@ -19,27 +19,24 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-@FichierCsv("directions.txt")
+@FichierCsv("trajets.txt")
 @Entity
-public class Direction {
+public class Trajet {
     @BaliseCsv(value = "id", adapter = AdapterInteger.class)
     @Column(type = Column.TypeColumn.INTEGER)
     @PrimaryKey
     public Integer id;
-    @BaliseCsv("direction")
+    @BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
+    @Column(type = Column.TypeColumn.INTEGER)
+    public Integer calendrierId;
+    @BaliseCsv("ligne_id")
     @Column
-    public String direction;
-
-
-    private static Direction directionSelect = null;
-
-    public static String getDirectionById(int id) {
-        if (directionSelect == null) {
-            directionSelect = new Direction();
-        }
-        directionSelect.id = id;
-        return TransportsRennesApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
-    }
+    public String ligneId;
+    @BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
+    @Column(type = Column.TypeColumn.INTEGER)
+    public Integer directionId;
+    @BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
+    @Column(type = Column.TypeColumn.INTEGER)
+    public Integer macroDirection;
 }

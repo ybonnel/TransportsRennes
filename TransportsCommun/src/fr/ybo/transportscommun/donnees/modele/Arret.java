@@ -11,7 +11,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
+
+import java.io.Serializable;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
@@ -19,10 +21,7 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
-import java.io.Serializable;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
@@ -57,6 +56,6 @@ public class Arret extends ObjetWithDistance implements Serializable {
     public static Arret getArret(String arretId) {
         Arret arret = new Arret();
         arret.id = arretId;
-        return TransportsRennesApplication.getDataBaseHelper().selectSingle(arret);
+		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(arret);
     }
 }

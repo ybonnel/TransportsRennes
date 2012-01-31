@@ -1,14 +1,14 @@
 package fr.ybo.transportsrennes.database;
 
 import fr.ybo.moteurcsv.MoteurCsv.InsertObject;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.ArretRoute;
+import fr.ybo.transportscommun.donnees.modele.Direction;
+import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.ArretRoute;
-import fr.ybo.transportsrennes.database.modele.Direction;
-import fr.ybo.transportsrennes.database.modele.GroupeFavori;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.util.LogYbo;
 import fr.ybo.transportsrennes.util.StringUtils;
 
 public class InsertArretFavori implements InsertObject<ArretFavori> {

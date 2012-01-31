@@ -2,27 +2,28 @@
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License.
- *
+ * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
+ * 
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Contributors:
+ *     ybonnel - initial API and implementation
  */
+package fr.ybo.transportscommun.donnees.manager.gtfs;
 
-package fr.ybo.transportsrennes.database.modele;
+@SuppressWarnings("serial")
+class GestionFilesException extends RuntimeException {
 
-import fr.ybo.database.annotation.Column;
-import fr.ybo.database.annotation.Entity;
-import fr.ybo.database.annotation.PrimaryKey;
+	GestionFilesException(Throwable throwable) {
+		super(throwable);
+	}
 
-@Entity
-public class GroupeFavori {
-
-    @PrimaryKey
-    @Column
-    public String name;
-
+	public GestionFilesException(String string, Exception exception) {
+		super(string, exception);
+	}
 }

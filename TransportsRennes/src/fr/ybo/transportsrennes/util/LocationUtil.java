@@ -22,6 +22,8 @@ import android.os.Bundle;
 
 import java.util.List;
 
+import fr.ybo.transportscommun.util.LogYbo;
+
 public class LocationUtil implements LocationListener {
 
     private final static LogYbo LOG_YBO = new LogYbo(LocationUtil.class);

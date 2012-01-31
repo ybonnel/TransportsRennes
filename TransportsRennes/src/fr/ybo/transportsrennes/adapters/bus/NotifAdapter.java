@@ -23,11 +23,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Notification;
 import fr.ybo.transportsrennes.util.IconeLigne;
 
 public class NotifAdapter extends BaseAdapter {

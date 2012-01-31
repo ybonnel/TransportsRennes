@@ -44,18 +44,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
-import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.Horaire;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Notification;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
@@ -338,7 +338,7 @@ public class DetailArret extends BaseListActivity {
             @Override
             protected void myDoBackground() {
                 try {
-                    UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+					UpdateDataBase.chargeDetailLigne(R.raw.class, myLigne, getResources());
                 } catch (LigneInexistanteException e) {
                     erreurLigneNonTrouvee = true;
                 }

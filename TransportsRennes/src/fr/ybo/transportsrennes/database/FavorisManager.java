@@ -12,11 +12,11 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.util.LogYbo;
 
 public class FavorisManager {
 

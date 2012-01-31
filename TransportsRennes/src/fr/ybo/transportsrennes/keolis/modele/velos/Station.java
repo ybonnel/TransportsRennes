@@ -13,9 +13,9 @@
  */
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
  * Classe représentant une station de velo star.

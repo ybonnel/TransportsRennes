@@ -14,21 +14,23 @@
 package fr.ybo.transportsrennes.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
-import fr.ybo.transportsrennes.activity.bus.DetailArret;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.util.TransportsRennesException;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportsrennes.activity.bus.DetailArret;
+import fr.ybo.transportsrennes.util.TransportsRennesException;
 
 public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 

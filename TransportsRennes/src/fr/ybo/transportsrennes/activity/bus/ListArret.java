@@ -19,12 +19,12 @@ import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
-import fr.ybo.transportscommun.activity.commun.ChangeIconActionBar;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.OnFragmentChange;
+import fr.ybo.transportscommun.activity.commun.ChangeIconActionBar;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Ligne;
 import fr.ybo.transportsrennes.fragments.bus.ListArretFragment;
 
 /**

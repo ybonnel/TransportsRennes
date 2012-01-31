@@ -11,29 +11,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.keolis.gtfs.files;
-
-import android.content.res.Resources;
-import android.database.DatabaseUtils.InsertHelper;
-import android.database.sqlite.SQLiteDatabase;
-import fr.ybo.database.DataBaseException;
-import fr.ybo.database.modele.Table;
-import fr.ybo.moteurcsv.MoteurCsv;
-import fr.ybo.moteurcsv.exception.MoteurCsvException;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
-import fr.ybo.transportsrennes.database.modele.Horaire;
-import fr.ybo.transportsrennes.keolis.KeolisException;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.util.LoadingInfo;
-import fr.ybo.transportsrennes.util.LogYbo;
+package fr.ybo.transportscommun.donnees.manager.gtfs;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import android.content.res.Resources;
+import android.database.DatabaseUtils.InsertHelper;
+import android.database.sqlite.SQLiteDatabase;
+import fr.ybo.database.DataBaseException;
+import fr.ybo.database.DataBaseHelper;
+import fr.ybo.database.modele.Table;
+import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.LoadingInfo;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public final class GestionZipKeolis {
 
@@ -42,11 +40,12 @@ public final class GestionZipKeolis {
 
     private static final String URL_STOP_TIMES = "horaires_";
 
-    private static CoupleResourceFichier getResourceForStopTime(String ligneId) throws LigneInexistanteException {
+	private static CoupleResourceFichier getResourceForStopTime(Class<?> rawClass, String ligneId)
+			throws LigneInexistanteException {
 
         try {
             String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
-            int resourceId = R.raw.class.getDeclaredField(nomResource).getInt(null);
+			int resourceId = rawClass.getDeclaredField(nomResource).getInt(null);
             return new CoupleResourceFichier(resourceId, nomResource + ".txt");
         } catch (NoSuchFieldException noSuchFieldException) {
             throw new LigneInexistanteException();
@@ -55,10 +54,12 @@ public final class GestionZipKeolis {
         }
     }
 
-    public static void chargeLigne(MoteurCsv moteurCsv, String ligneId, TransportsRennesDatabase dataBaseHelper,
+	public static void chargeLigne(Class<?> rawClass, MoteurCsv moteurCsv, String ligneId,
+			DataBaseHelper dataBaseHelper,
                                    Resources resources) throws LigneInexistanteException {
         try {
-            BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(getResourceForStopTime(ligneId).resourceId)), 8 << 10);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(
+					resources.openRawResource(getResourceForStopTime(rawClass, ligneId).resourceId)), 8 << 10);
             try {
 
                 final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
@@ -106,45 +107,28 @@ public final class GestionZipKeolis {
 
     }
 
-    private static final CoupleResourceFichier[] RESOURCES_PRINCIPALE = {new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
-            new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"),
-            new CoupleResourceFichier(R.raw.calendriers, "calendriers.txt"),
-            new CoupleResourceFichier(R.raw.directions, "directions.txt"),
-            new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
-            new CoupleResourceFichier(R.raw.trajets, "trajets.txt")};
-
-    private static class CoupleResourceFichier {
-        private final int resourceId;
-        private final String fichier;
-
-        private CoupleResourceFichier(int resourceId, String fichier) {
-            this.resourceId = resourceId;
-            this.fichier = fichier;
-        }
-    }
-
-	public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources, LoadingInfo info)
+    public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources, LoadingInfo info)
 			throws GestionFilesException, MoteurCsvException, DataBaseException {
         try {
-            for (CoupleResourceFichier resource : RESOURCES_PRINCIPALE) {
+			for (CoupleResourceFichier resource : AbstractTransportsApplication.getResourcesPrincipale()) {
                 LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);
                 BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(resource.resourceId)), 8 << 10);
                 try {
                     moteur.nouveauFichier(resource.fichier, bufReader.readLine());
-                    TransportsRennesApplication.getDataBaseHelper().beginTransaction();
+					AbstractTransportsApplication.getDataBaseHelper().beginTransaction();
                     String ligne = bufReader.readLine();
                     while (ligne != null) {
-                        TransportsRennesApplication.getDataBaseHelper().insert(moteur.creerObjet(ligne));
+						AbstractTransportsApplication.getDataBaseHelper().insert(moteur.creerObjet(ligne));
                         ligne = bufReader.readLine();
                     }
                 } finally {
                     bufReader.close();
-                    TransportsRennesApplication.getDataBaseHelper().endTransaction();
+					AbstractTransportsApplication.getDataBaseHelper().endTransaction();
                 }
 				info.etapeSuivante();
                 LOG_YBO.debug("Fin du traitement du fichier " + resource.fichier);
             }
-            TransportsRennesApplication.getDataBaseHelper().close();
+			AbstractTransportsApplication.getDataBaseHelper().close();
             LOG_YBO.debug("Fin getAndParseZipKeolis.");
         } catch (IOException e) {
             throw new GestionFilesException(e);
@@ -152,16 +136,17 @@ public final class GestionZipKeolis {
     }
 
 
-    public static Date getLastUpdate(Resources resources) {
+	public static Date getLastUpdate(Resources resources, int lastUpdate) {
         try {
-            BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(R.raw.last_update)), 100);
+			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(lastUpdate)),
+					100);
             try {
                 return SDF.parse(bufReader.readLine());
             } finally {
                 bufReader.close();
             }
         } catch (Exception exception) {
-            throw new KeolisException("Erreur lors de la récupération du fichier last_update", exception);
+			throw new GestionFilesException("Erreur lors de la récupération du fichier last_update", exception);
         }
     }
 

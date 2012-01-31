@@ -13,24 +13,23 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
-import fr.ybo.transportsrennes.database.modele.AlertBdd;
-import fr.ybo.transportsrennes.database.modele.Arret;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.ArretRoute;
-import fr.ybo.transportsrennes.database.modele.Bounds;
-import fr.ybo.transportsrennes.database.modele.Calendrier;
-import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
-import fr.ybo.transportsrennes.database.modele.Direction;
-import fr.ybo.transportsrennes.database.modele.GroupeFavori;
-import fr.ybo.transportsrennes.database.modele.Horaire;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.database.modele.Notification;
-import fr.ybo.transportsrennes.database.modele.Trajet;
-import fr.ybo.transportsrennes.database.modele.VeloFavori;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.ArretRoute;
+import fr.ybo.transportscommun.donnees.modele.Bounds;
+import fr.ybo.transportscommun.donnees.modele.Calendrier;
+import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
+import fr.ybo.transportscommun.donnees.modele.Direction;
+import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.donnees.modele.Trajet;
+import fr.ybo.transportscommun.donnees.modele.VeloFavori;
+import fr.ybo.transportsrennes.database.modele.AlertBdd;
 
 public final class ConstantesKeolis {
 
@@ -51,30 +50,6 @@ public final class ConstantesKeolis {
         LIST_CLASSES_DATABASE.add(Notification.class);
         LIST_CLASSES_DATABASE.add(AlertBdd.class);
         LIST_CLASSES_DATABASE.add(Bounds.class);
-    }
-
-    public static final Collection<Class<?>> CLASSES_DB_TO_DELETE_ON_UPDATE = new ArrayList<Class<?>>(7);
-
-    static {
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Arret.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Calendrier.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(DernierMiseAJour.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Ligne.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(ArretRoute.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Trajet.class);
-        CLASSES_DB_TO_DELETE_ON_UPDATE.add(Direction.class);
-    }
-
-    public static final List<Class<?>> LIST_CLASSES_GTFS = new ArrayList<Class<?>>(7);
-
-    static {
-        LIST_CLASSES_GTFS.add(Arret.class);
-        LIST_CLASSES_GTFS.add(ArretRoute.class);
-        LIST_CLASSES_GTFS.add(Calendrier.class);
-        LIST_CLASSES_GTFS.add(Horaire.class);
-        LIST_CLASSES_GTFS.add(Ligne.class);
-        LIST_CLASSES_GTFS.add(Trajet.class);
-        LIST_CLASSES_GTFS.add(Direction.class);
     }
 
     private ConstantesKeolis() {

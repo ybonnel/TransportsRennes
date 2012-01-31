@@ -15,6 +15,7 @@ package fr.ybo.transportsrennes.application;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -40,6 +41,8 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
+import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
+import fr.ybo.transportscommun.donnees.modele.Bounds;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
@@ -47,7 +50,6 @@ import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.AlertBdd;
-import fr.ybo.transportsrennes.database.modele.Bounds;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.services.UpdateTimeService;
@@ -61,12 +63,6 @@ import fr.ybo.transportsrennes.util.Theme;
  * l'application.
  */
 public class TransportsRennesApplication extends AbstractTransportsApplication {
-
-	private static TransportsRennesDatabase databaseHelper;
-
-	public static TransportsRennesDatabase getDataBaseHelper() {
-		return databaseHelper;
-	}
 
 	public static Theme getTheme(Context context) {
 		return Theme.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
@@ -90,6 +86,12 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 	}
 
 	public void postCreate() {
+		RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
+	            new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"),
+	            new CoupleResourceFichier(R.raw.calendriers, "calendriers.txt"),
+	            new CoupleResourceFichier(R.raw.directions, "directions.txt"),
+	            new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
+				new CoupleResourceFichier(R.raw.trajets, "trajets.txt"));
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
 		PackageManager pm = getPackageManager();

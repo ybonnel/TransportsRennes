@@ -22,10 +22,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.bus.LigneAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.Ligne;
 
 /**
  * Activité affichant les lignes de bus..

@@ -11,15 +11,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
 
-import fr.ybo.database.annotation.Column;
-import fr.ybo.database.annotation.Entity;
-import fr.ybo.database.annotation.PrimaryKey;
+package fr.ybo.transportscommun.donnees.modele;
 
-@Entity
-public class VeloFavori {
-    @Column
-    @PrimaryKey
-    public String number;
+public class DetailArretConteneur {
+
+    private int horaire;
+    private int trajetId;
+    private int sequence;
+
+    public DetailArretConteneur(int horaire, int trajetId, int sequence) {
+        super();
+        this.horaire = horaire;
+        this.trajetId = trajetId;
+        this.sequence = sequence;
+    }
+
+    public int getHoraire() {
+        return horaire;
+    }
+
+    public int getTrajetId() {
+        return trajetId;
+    }
+
+    public int getSequence() {
+        return sequence;
+    }
+
 }

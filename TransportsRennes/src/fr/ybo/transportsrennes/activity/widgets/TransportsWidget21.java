@@ -13,20 +13,20 @@
  */
 package fr.ybo.transportsrennes.activity.widgets;
 
+import java.util.Calendar;
+
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
 import fr.ybo.transportsrennes.services.UpdateTimeService;
-import fr.ybo.transportsrennes.util.LogYbo;
 import fr.ybo.transportsrennes.util.Widget21UpdateUtil;
-
-import java.util.Calendar;
 
 public class TransportsWidget21 extends AppWidgetProvider {
 

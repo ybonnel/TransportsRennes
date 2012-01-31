@@ -11,13 +11,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import android.util.Log;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 
 public class LogYbo {
 
@@ -29,7 +29,7 @@ public class LogYbo {
     }
 
     public void debug(String message) {
-		if (TransportsRennesApplication.isDebug()) {
+		if (AbstractTransportsApplication.isDebug()) {
             Log.d(PREFIX_TAG, tag + " : " + message);
         }
     }
@@ -56,13 +56,13 @@ public class LogYbo {
     }
 
     public void startChrono(String message) {
-		if (TransportsRennesApplication.isDebug()) {
+		if (AbstractTransportsApplication.isDebug()) {
             getMapStartTimes().put(message, System.nanoTime());
         }
     }
 
     public void stopChrono(String message) {
-		if (TransportsRennesApplication.isDebug()) {
+		if (AbstractTransportsApplication.isDebug()) {
             long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
             Log.d(PREFIX_TAG, tag + " : "
                     + new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());

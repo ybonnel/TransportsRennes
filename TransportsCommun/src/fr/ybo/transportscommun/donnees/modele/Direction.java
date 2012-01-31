@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+package fr.ybo.transportscommun.donnees.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
@@ -19,24 +19,27 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 
-@FichierCsv("trajets.txt")
+@FichierCsv("directions.txt")
 @Entity
-public class Trajet {
+public class Direction {
     @BaliseCsv(value = "id", adapter = AdapterInteger.class)
     @Column(type = Column.TypeColumn.INTEGER)
     @PrimaryKey
     public Integer id;
-    @BaliseCsv(value = "calendrier_id", adapter = AdapterInteger.class)
-    @Column(type = Column.TypeColumn.INTEGER)
-    public Integer calendrierId;
-    @BaliseCsv("ligne_id")
+    @BaliseCsv("direction")
     @Column
-    public String ligneId;
-    @BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
-    @Column(type = Column.TypeColumn.INTEGER)
-    public Integer directionId;
-    @BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
-    @Column(type = Column.TypeColumn.INTEGER)
-    public Integer macroDirection;
+    public String direction;
+
+
+    private static Direction directionSelect = null;
+
+    public static String getDirectionById(int id) {
+        if (directionSelect == null) {
+            directionSelect = new Direction();
+        }
+        directionSelect.id = id;
+		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
+    }
 }

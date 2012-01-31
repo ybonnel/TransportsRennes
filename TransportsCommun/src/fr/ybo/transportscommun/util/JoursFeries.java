@@ -14,7 +14,7 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;

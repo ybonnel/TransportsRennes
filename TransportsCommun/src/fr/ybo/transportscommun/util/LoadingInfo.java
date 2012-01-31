@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 public abstract class LoadingInfo {
 

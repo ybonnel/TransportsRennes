@@ -19,15 +19,15 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.Ligne;
-import fr.ybo.transportsrennes.keolis.LigneInexistanteException;
-import fr.ybo.transportsrennes.keolis.gtfs.UpdateDataBase;
 
 public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
@@ -67,7 +67,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             @Override
             protected Void doInBackground(Void... pParams) {
                 try {
-                    UpdateDataBase.chargeDetailLigne(ligne, activity.getResources());
+					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
                 } catch (LigneInexistanteException e) {
                     erreurLigneNonTrouvee = true;
                 }

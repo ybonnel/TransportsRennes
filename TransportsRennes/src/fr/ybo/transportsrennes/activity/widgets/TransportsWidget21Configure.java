@@ -31,11 +31,11 @@ import android.widget.Toast;
 
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
 
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.database.modele.ArretFavori;
-import fr.ybo.transportsrennes.database.modele.DernierMiseAJour;
 
 public class TransportsWidget21Configure extends CapptainListActivity {
 

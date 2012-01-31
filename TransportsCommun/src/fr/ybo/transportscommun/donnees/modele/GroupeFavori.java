@@ -11,16 +11,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.database.modele;
+
+package fr.ybo.transportscommun.donnees.modele;
 
 import fr.ybo.database.annotation.Column;
 import fr.ybo.database.annotation.Entity;
-
-import java.util.Date;
+import fr.ybo.database.annotation.PrimaryKey;
 
 @Entity
-public class DernierMiseAJour {
+public class GroupeFavori {
 
-    @Column(type = Column.TypeColumn.DATE)
-    public Date derniereMiseAJour;
+    @PrimaryKey
+    @Column
+    public String name;
+
 }

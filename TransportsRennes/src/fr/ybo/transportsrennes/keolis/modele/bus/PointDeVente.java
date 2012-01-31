@@ -13,9 +13,9 @@
  */
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
-import fr.ybo.transportsrennes.keolis.modele.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
  * Un point de vente.
