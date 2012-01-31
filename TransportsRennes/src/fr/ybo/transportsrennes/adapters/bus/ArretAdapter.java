@@ -91,6 +91,7 @@ public class ArretAdapter extends CursorAdapter {
         private ImageView correspondance;
         private LinearLayout detailCorrespondance;
         private ImageView iconeHandicap;
+        private ImageView iconeLignePourListe;
     }
 
     @Override
@@ -104,6 +105,7 @@ public class ArretAdapter extends CursorAdapter {
         holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
         holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
         holder.iconeHandicap = (ImageView) view.findViewById(R.id.iconeHandicap);
+        holder.iconeLignePourListe = (ImageView) view.findViewById(R.id.iconeLignePourListe);
         view.setTag(holder);
         return view;
 
