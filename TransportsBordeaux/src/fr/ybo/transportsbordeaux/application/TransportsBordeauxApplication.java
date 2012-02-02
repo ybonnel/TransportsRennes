@@ -127,7 +127,7 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 		RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
 				new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
 						R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.calendriers_exceptions,
-						"calendriers.txt"), new CoupleResourceFichier(R.raw.directions, "directions.txt"),
+						"calendriers_exceptions.txt"), new CoupleResourceFichier(R.raw.directions, "directions.txt"),
 				new CoupleResourceFichier(R.raw.lignes, "lignes.txt"), new CoupleResourceFichier(R.raw.trajets,
 						"trajets.txt"));
 

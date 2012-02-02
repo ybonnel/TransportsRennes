@@ -13,7 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<fr.ybo.transportsrennes.widget.DashboardLayout
+<fr.ybo.transportscommun.widget.DashboardLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res/fr.ybo.transportsrennes"
     android:layout_width="fill_parent"
@@ -48,4 +48,4 @@
         style="@style/DashboardButton_clair"
         android:text="@string/btn_itineraires"
         android:drawableTop="@drawable/home_btn_itineraire_clair" />
-</fr.ybo.transportsrennes.widget.DashboardLayout>
+</fr.ybo.transportscommun.widget.DashboardLayout>

@@ -50,4 +50,10 @@ public class Calendrier {
     @BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class)
     @Column(type = Column.TypeColumn.BOOLEAN)
     public Boolean dimanche;
+	@BaliseCsv(value = "dateDebut")
+	@Column
+	public String dateDebut;
+	@BaliseCsv(value = "dateFin")
+	@Column
+	public String dateFin;
 }

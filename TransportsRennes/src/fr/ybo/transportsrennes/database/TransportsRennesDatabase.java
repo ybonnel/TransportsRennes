@@ -29,6 +29,7 @@ import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.ArretRoute;
 import fr.ybo.transportscommun.donnees.modele.Bounds;
 import fr.ybo.transportscommun.donnees.modele.Calendrier;
+import fr.ybo.transportscommun.donnees.modele.CalendrierException;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportscommun.donnees.modele.Direction;
 import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
@@ -43,7 +44,7 @@ import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
     private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 16;
+	private static final int DATABASE_VERSION = 17;
 
     private Context context;
 
@@ -341,6 +342,13 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 			mapUpgrades.put(16, new UpgradeDatabaseWithError() {
 				public void myUpgrade(SQLiteDatabase db) {
 					db.execSQL("CREATE INDEX ArretRoute_directionId ON ArretRoute(directionId)");
+				}
+			});
+			mapUpgrades.put(17, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
+					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateDebut TEXT");
+					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateFin TEXT");
+					getBase().getTable(CalendrierException.class).createTable(db);
 				}
 			});
         }

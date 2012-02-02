@@ -40,7 +40,7 @@ import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
     public static final String DATABASE_NAME = "transportsbordeaux.db";
-    private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
     @SuppressWarnings("unchecked")
     private static final List<Class<?>> DATABASE_ENTITITES =
@@ -115,6 +115,12 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
                     getBase().getTable(Notification.class).createTable(db);
                 }
             });
+			mapUpgrades.put(8, new UpgradeDatabase() {
+				public void upgrade(SQLiteDatabase db) {
+					getBase().getTable(VeloFavori.class).dropTable(db);
+					getBase().getTable(VeloFavori.class).createTable(db);
+				}
+			});
         }
         return mapUpgrades;
     }
