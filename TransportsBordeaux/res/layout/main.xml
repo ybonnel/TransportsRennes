@@ -16,37 +16,37 @@
       ybonnel - initial API and implementation
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<TableLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:layout_marginBottom="50dip">
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:layout_weight="1">
-			<Button android:id="@+id/home_btn_bus" style="@style/HomeButton"
-				android:text="@string/btn_bus" android:drawableTop="@drawable/home_btn_bus" />
-			<Button android:id="@+id/home_btn_bus_favori" style="@style/HomeButton"
-				android:text="@string/btn_bus_favori" android:drawableTop="@drawable/home_btn_bus_favori" />
-		</TableRow>
+    <LinearLayout
+        android:id="@+id/home_root"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1">
-			<Button android:drawableTop="@drawable/home_btn_bus_gps" style="@style/HomeButton" android:id="@+id/home_btn_bus_gps" android:text="@string/btn_bus_gps"></Button>
-			<Button android:drawableTop="@drawable/home_btn_itineraire" style="@style/HomeButton" android:id="@+id/home_btn_itineraire" android:text="@string/btn_itineraires"></Button>
-		</TableRow>
+        <include layout="@layout/actionbar" />
 
-		<TableRow android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1">
-			<Button android:drawableTop="@drawable/home_btn_velo" style="@style/HomeButton" android:id="@+id/home_btn_velo" android:text="@string/btn_velo"></Button>
-			<Button android:drawableTop="@drawable/home_btn_velo_favori" style="@style/HomeButton" android:id="@+id/home_btn_velo_favori" android:text="@string/btn_velo_favori"></Button>
-		</TableRow>
+        <fragment
+            android:id="@+id/fragment_dashboard"
+            android:name="fr.ybo.transportsbordeaux.fragments.DashboardFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
 
-	</TableLayout>
-	<com.google.ads.AdView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/adView" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" ads:adUnitId="a14dd0387e93eb2"
-		ads:adSize="BANNER" android:layout_gravity="bottom"  />
+            <!-- Preview: layout=@layout/fragment_dashboard -->
+        </fragment>
+    </LinearLayout>
+
+    <com.google.ads.AdView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14dd0387e93eb2" />
 
 </FrameLayout>

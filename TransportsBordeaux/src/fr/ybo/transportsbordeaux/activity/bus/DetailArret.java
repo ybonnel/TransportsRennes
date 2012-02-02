@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -37,30 +42,28 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.alerts.ListAlerts;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.DetailArretConteneur;
-import fr.ybo.transportsbordeaux.database.modele.Horaire;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-import fr.ybo.transportsbordeaux.database.modele.Notification;
-import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -359,21 +362,28 @@ public class DetailArret extends MenuAccueil.ListActivity {
         new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
             private boolean erreurNoSpaceLeft = false;
+			private boolean erreurLigneNonTrouvee = false;
 
             @Override
             protected Void doInBackground(Void... pParams) {
                 try {
-                    UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+					UpdateDataBase.chargeDetailLigne(R.raw.class, myLigne, getResources());
                 } catch (NoSpaceLeftException e) {
                     erreurNoSpaceLeft = true;
-                }
+				} catch (LigneInexistanteException e) {
+					erreurLigneNonTrouvee = true;
+				}
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
-                if (erreurNoSpaceLeft) {
+				if (erreurLigneNonTrouvee) {
+					Toast.makeText(DetailArret.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
+							Toast.LENGTH_LONG).show();
+					finish();
+				} else if (erreurNoSpaceLeft) {
                     Toast.makeText(DetailArret.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
                     finish();
                 } else {

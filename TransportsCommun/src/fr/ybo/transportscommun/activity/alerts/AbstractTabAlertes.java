@@ -23,7 +23,7 @@ public abstract class AbstractTabAlertes extends BaseTabFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		((AbstractTransportsApplication) getApplication()).majTheme(this);
+		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tabalertes);
 		setupActionBar();

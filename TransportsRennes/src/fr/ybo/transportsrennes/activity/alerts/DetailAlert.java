@@ -23,10 +23,10 @@ import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
-import fr.ybo.transportsrennes.util.IconeLigne;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.

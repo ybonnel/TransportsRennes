@@ -14,6 +14,9 @@
 package fr.ybo.transportsbordeaux.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,14 +24,13 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.view.MotionEvent;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.util.Formatteur;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
 

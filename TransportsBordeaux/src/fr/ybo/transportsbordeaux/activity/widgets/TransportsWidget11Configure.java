@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsbordeaux.activity.widgets;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -22,18 +28,14 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.DernierMiseAJour;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 
 public class TransportsWidget11Configure extends CapptainListActivity {
 

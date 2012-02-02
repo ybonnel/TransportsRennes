@@ -13,24 +13,26 @@
  */
 package fr.ybo.transportsbordeaux.tbcapi;
 
-import fr.ybo.transportsbordeaux.database.modele.Parking;
-import fr.ybo.transportsbordeaux.tbcapi.sax.GetParkingHandler;
-import fr.ybo.transportsbordeaux.tbcapi.sax.KeolisHandler;
-import fr.ybo.transportsbordeaux.util.HttpUtils;
-import fr.ybo.transportsbordeaux.util.LogYbo;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
+import fr.ybo.transportsbordeaux.database.modele.Parking;
+import fr.ybo.transportsbordeaux.tbcapi.sax.GetParkingHandler;
+import fr.ybo.transportsbordeaux.tbcapi.sax.KeolisHandler;
+import fr.ybo.transportsbordeaux.util.HttpUtils;
+import fr.ybo.transportscommun.util.LogYbo;
 
 /**
  * Classe d'accés aux API Keolis. Cette classe est une singletton.

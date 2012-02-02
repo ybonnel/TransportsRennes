@@ -13,9 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.database.modele;
 
-import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
-
 import java.io.Serializable;
+
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
  * @author ybonnel

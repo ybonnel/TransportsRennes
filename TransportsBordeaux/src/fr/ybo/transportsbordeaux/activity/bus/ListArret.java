@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,21 +32,18 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.alerts.ListAlerts;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.ArretAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.LogYbo;
 
 /**
  * Liste des arrêts d'une ligne de bus.

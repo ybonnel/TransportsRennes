@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsbordeaux.adapters.widget;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 
 public class FavoriAdapterForWidget1 extends BaseAdapter {
 

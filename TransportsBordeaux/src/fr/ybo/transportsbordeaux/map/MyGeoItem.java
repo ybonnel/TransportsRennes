@@ -17,7 +17,7 @@
 package fr.ybo.transportsbordeaux.map;
 
 import fr.ybo.transportsbordeaux.map.mapviewutil.GeoItem;
-import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 public class MyGeoItem<Objet extends ObjetWithDistance> extends GeoItem {
 

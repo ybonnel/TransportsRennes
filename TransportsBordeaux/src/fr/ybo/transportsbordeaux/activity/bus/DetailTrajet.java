@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,19 +25,18 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.DetailTrajetAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Direction;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-import fr.ybo.transportsbordeaux.database.modele.Trajet;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Direction;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Trajet;
 
 /**
  * Activitée permettant d'afficher le détail d'un trajet

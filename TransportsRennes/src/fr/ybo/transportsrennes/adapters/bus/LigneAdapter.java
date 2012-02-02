@@ -23,9 +23,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.KeolisException;
-import fr.ybo.transportsrennes.util.IconeLigne;
 
 public class LigneAdapter extends BaseAdapter {
 

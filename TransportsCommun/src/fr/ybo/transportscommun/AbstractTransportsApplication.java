@@ -13,7 +13,9 @@
  */
 package fr.ybo.transportscommun;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -24,6 +26,7 @@ import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
+import com.google.code.geocoder.model.LatLngBounds;
 import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
 import fr.ybo.database.DataBaseHelper;
@@ -31,8 +34,17 @@ import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 import fr.ybo.transportscommun.util.GeocodeUtil;
+import fr.ybo.transportscommun.util.Theme;
 
 public abstract class AbstractTransportsApplication extends Application {
+
+	protected static DonnesSpecifiques donnesSpecifiques;
+
+	public static DonnesSpecifiques getDonnesSpecifiques() {
+		return donnesSpecifiques;
+	}
+
+	protected abstract void initDonneesSpecifiques();
 
 	private static boolean debug = false;
 
@@ -84,9 +96,11 @@ public abstract class AbstractTransportsApplication extends Application {
 	public void onCreate() {
 		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
 			return;
+		initDonneesSpecifiques();
 		majTheme(this);
 		super.onCreate();
-		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(getApplicationName() + "_debug", false);
+		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+				getDonnesSpecifiques().getApplicationName() + "_debug", false);
 		constructDatabase();
 		if (!isInPrincipalProcess()) {
 			return;
@@ -95,24 +109,55 @@ public abstract class AbstractTransportsApplication extends Application {
 		postCreate();
 	}
 
-	public abstract void majTheme(Context context);
+	public static Theme getTheme(Context context) {
+		return Theme.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
+				getDonnesSpecifiques().getApplicationName() + "_choixTheme", Theme.BLANC.name()));
+	}
 
-	public abstract String getApplicationName();
+	public static int getTextColor(Context context) {
+		return getTheme(context).getTextColor();
+	}
+
+	public static void majTheme(Context context) {
+		context.setTheme(getTheme(context).getTheme());
+	}
 
 	public abstract void constructDatabase();
 
 	public abstract Class<? extends AccueilActivity> getAccueilActivity();
 
-	public abstract boolean isThemeNoir();
+
+	public boolean isThemeNoir() {
+		return getTheme(this) == Theme.NOIR;
+	}
 
 	public abstract boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper);
 
-	public abstract int getTextColor();
 
-	public abstract int getActionBarBackground();
+	public int getActionBarBackground() {
+		return getTheme(this).getActionBarBackground();
+	}
 
 	public abstract void postCreate();
 
-	public abstract int getCompactLogo();
+	private static Set<String> lignesWithAlerts = new HashSet<String>();
+
+	public static Set<String> getLignesWithAlerts() {
+		return lignesWithAlerts;
+	}
+
+	public static boolean hasAlert(String ligneNomCourt) {
+		return lignesWithAlerts.contains(ligneNomCourt);
+	}
+
+	private static LatLngBounds bounds;
+
+	public static void setBounds(LatLngBounds bounds) {
+		AbstractTransportsApplication.bounds = bounds;
+	}
+
+	public static LatLngBounds getBounds() {
+		return bounds;
+	}
 
 }

@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsbordeaux.adapters.bus;
 
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
@@ -23,15 +27,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.DetailArretConteneur;
-import fr.ybo.transportsbordeaux.database.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class FavoriAdapter extends BaseAdapter {
 

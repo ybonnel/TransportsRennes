@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsbordeaux.activity.velos;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,23 +31,19 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.
@@ -94,15 +96,15 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
             try {
                 List<VeloFavori> velosFavoris = TransportsBordeauxApplication
                         .getDataBaseHelper().select(new VeloFavori());
-                Collection<Integer> ids = new ArrayList<Integer>(10);
+				Collection<String> ids = new ArrayList<String>();
                 for (VeloFavori favori : velosFavoris) {
-                    ids.add(favori.id);
+					ids.add(favori.number);
                 }
                 Collection<Station> stationsTmp = Station.recupererStations();
                 synchronized (stations) {
                     stations.clear();
                     for (Station station : stationsTmp) {
-                        if (ids.contains(station.id)) {
+						if (ids.contains(Integer.toString(station.id))) {
                             stations.add(station);
                         }
                     }
@@ -172,7 +174,7 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
             case R.id.supprimerFavori:
                 station = (Station) getListAdapter().getItem(info.position);
                 veloFavori = new VeloFavori();
-                veloFavori.id = station.id;
+				veloFavori.number = Integer.toString(station.id);
                 TransportsBordeauxApplication.getDataBaseHelper().delete(veloFavori);
                 ((VeloAdapter) getListAdapter()).getStations().remove(station);
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();

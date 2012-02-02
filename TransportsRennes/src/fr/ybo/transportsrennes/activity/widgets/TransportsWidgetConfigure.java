@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
 
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportsrennes.R;
@@ -44,7 +45,7 @@ public class TransportsWidgetConfigure extends CapptainListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		((TransportsRennesApplication) getApplication()).majTheme(this);
+		AbstractTransportsApplication.majTheme(this);
         super.onCreate(savedInstanceState);
         Intent launchIntent = getIntent();
         Bundle extras = launchIntent.getExtras();

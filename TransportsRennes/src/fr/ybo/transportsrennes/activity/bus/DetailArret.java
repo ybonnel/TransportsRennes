@@ -52,11 +52,12 @@ import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.IconeLigne;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.IconeLigne;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
@@ -334,6 +335,7 @@ public class DetailArret extends BaseListActivity {
         new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
             private boolean erreurLigneNonTrouvee = false;
+			private boolean erreurNoSpaceLeft = false;
 
             @Override
             protected void myDoBackground() {
@@ -341,7 +343,9 @@ public class DetailArret extends BaseListActivity {
 					UpdateDataBase.chargeDetailLigne(R.raw.class, myLigne, getResources());
                 } catch (LigneInexistanteException e) {
                     erreurLigneNonTrouvee = true;
-                }
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
+				}
             }
 
             @Override
@@ -351,7 +355,10 @@ public class DetailArret extends BaseListActivity {
                     Toast.makeText(DetailArret.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
                             Toast.LENGTH_LONG).show();
                     finish();
-                } else {
+				} else if (erreurNoSpaceLeft) {
+					Toast.makeText(DetailArret.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+					finish();
+				} else {
                     setListAdapter(construireAdapter());
 					if (getListAdapter().getCount() != 0) {
 						setSelection(((DetailArretAdapter) getListAdapter()).getPositionToMove());

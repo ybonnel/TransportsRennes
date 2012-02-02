@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsbordeaux.activity.parkrelais;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
@@ -39,12 +45,6 @@ import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de

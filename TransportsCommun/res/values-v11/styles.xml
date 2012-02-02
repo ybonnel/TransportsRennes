@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
+  Contributors:
+      ybonnel - initial API and implementation
+-->
+<resources>
+
+    <style name="Theme.Transports" parent="android:style/Theme.Holo.Light">
+        <!-- <item name="android:windowNoTitle">true</item> -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@drawable/background_noise</item>
+        <item name="android:actionBarStyle">@style/ActionBar</item>
+
+        <!-- custom attributes -->
+        <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
+        <item name="trackAbstractMaxLines">@integer/track_abstract_max_lines</item>
+    </style>
+
+    <style name="Theme.Transports.black" parent="android:style/Theme.Holo">
+        <!-- <item name="android:windowNoTitle">true</item> -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/ActionBar.black</item>
+
+        <!-- custom attributes -->
+        <item name="textHeaderMaxLines">@integer/text_header_max_lines</item>
+        <item name="trackAbstractMaxLines">@integer/track_abstract_max_lines</item>
+    </style>
+	
+
+    <style name="DashboardButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#ff29549f</item>
+        <item name="android:background">@null</item>
+    </style>
+    
+
+    <style name="ActionBar" parent="android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:titleTextStyle">@style/ActionBarText</item>
+    </style>
+    <style name="ActionBar.black" parent="android:style/Widget.Holo.ActionBar">
+    </style>
+
+    <style name="ActionBarText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/accent_1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

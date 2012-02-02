@@ -13,26 +13,28 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayArret;
 import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 public class ArretsOnMap extends MenuAccueil.MapActivity {
 

@@ -13,6 +13,14 @@
  */
 package fr.ybo.transportsbordeaux.adapters.bus;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,18 +38,10 @@ import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.bus.DetailArret;
 import fr.ybo.transportsbordeaux.activity.commun.OnClickFavoriGestionnaire;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 /**
  * Adapteur pour les arrêts.

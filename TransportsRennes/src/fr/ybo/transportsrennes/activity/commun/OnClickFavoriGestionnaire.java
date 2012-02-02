@@ -23,6 +23,7 @@ import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
@@ -58,6 +59,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
         new AsyncTask<Void, Void, Void>() {
 
             private boolean erreurLigneNonTrouvee = false;
+			private boolean erreurNoSpaceLeft = false;
 
             @Override
             protected void onPreExecute() {
@@ -68,6 +70,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             protected Void doInBackground(Void... pParams) {
                 try {
 					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
                 } catch (LigneInexistanteException e) {
                     erreurLigneNonTrouvee = true;
                 }
@@ -86,6 +90,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
                     Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
                             Toast.LENGTH_LONG).show();
                     activity.finish();
+				} else if (erreurNoSpaceLeft) {
+					Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+					activity.finish();
                 }
             }
 

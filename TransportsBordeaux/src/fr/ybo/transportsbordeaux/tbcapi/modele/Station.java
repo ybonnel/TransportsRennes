@@ -13,10 +13,6 @@
  */
 package fr.ybo.transportsbordeaux.tbcapi.modele;
 
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
-import fr.ybo.transportsbordeaux.tbcapi.TcbException;
-import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Serializable;
@@ -29,6 +25,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
+import fr.ybo.transportsbordeaux.tbcapi.TcbException;
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 @SuppressWarnings("serial")
 public class Station extends ObjetWithDistance implements Serializable {

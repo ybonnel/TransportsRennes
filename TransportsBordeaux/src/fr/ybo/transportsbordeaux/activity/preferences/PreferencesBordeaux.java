@@ -85,7 +85,7 @@ public class PreferencesBordeaux extends MenuAccueil.Activity {
                                             PreferencesBordeaux.this).edit();
                                     editor.putBoolean("TransportsBordeaux_sdCard", dbOnSdCard);
                                     editor.commit();
-                                    TransportsBordeauxApplication.constuctDatabase(PreferencesBordeaux.this
+                                    TransportsBordeauxApplication.constructDatabase(PreferencesBordeaux.this
                                             .getApplicationContext());
                                     TransportsBordeauxApplication.setBaseNeuve(true);
                                     PreferencesBordeaux.this.finish();

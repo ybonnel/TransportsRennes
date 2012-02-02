@@ -17,7 +17,7 @@
 -->
 <resources>
 
-    <style name="Theme.TransportsRennes" parent="android:style/Theme.Light">
+    <style name="Theme.Transports" parent="android:style/Theme.Light">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@drawable/background_noise</item>
@@ -34,7 +34,7 @@
         <item name="actionbarCompatTextStyle">@style/ActionBarCompatText</item>
     </style>
 
-    <style name="Theme.TransportsRennes.black" parent="android:style/Theme">
+    <style name="Theme.Transports.black" parent="android:style/Theme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
 

@@ -42,7 +42,7 @@ import com.google.android.maps.Overlay;
 import fr.ybo.transportsbordeaux.map.mapviewutil.GeoItem;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.GeoClusterer;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.MarkerBitmap;
-import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 public class MyGeoClusterer<Objet extends ObjetWithDistance> extends GeoClusterer {
 

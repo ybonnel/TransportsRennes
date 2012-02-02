@@ -42,13 +42,13 @@ import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
+import fr.ybo.transportscommun.util.Theme;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListNotif;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.KeolisException;
-import fr.ybo.transportsrennes.util.Theme;
 import fr.ybo.transportsrennes.util.Version;
 
 public class TransportsRennes extends AccueilActivity {

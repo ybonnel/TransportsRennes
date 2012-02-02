@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsbordeaux.activity.widgets;
 
+import java.util.Calendar;
+
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -21,12 +23,10 @@ import android.widget.RemoteViews;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.bus.DetailArret;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.services.UpdateTimeService;
-import fr.ybo.transportsbordeaux.util.LogYbo;
 import fr.ybo.transportsbordeaux.util.Widget11UpdateUtil;
-
-import java.util.Calendar;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class TransportsWidget11 extends AppWidgetProvider {
 

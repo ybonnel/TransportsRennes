@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/menu_bus_favoris"
+        android:icon="@drawable/actionbar_bus_favoris_clair"
+          android:title="@string/btn_bus_favori"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_velo_favoris"
+        android:icon="@drawable/actionbar_velo_favoris_clair"
+          android:title="@string/btn_velo_favori"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_prefs"
+        android:icon="@drawable/actionbar_prefs"
+          android:title="@string/preferences"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/menu_plan"
+        android:icon="@drawable/ic_title_plan"
+          android:title="@string/menu_carte"
+          android:showAsAction="always" />
+
+</menu>

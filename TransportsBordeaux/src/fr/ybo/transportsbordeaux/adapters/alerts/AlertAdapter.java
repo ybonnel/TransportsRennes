@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsbordeaux.adapters.alerts;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +25,8 @@ import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.modele.Alert;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 /**
  * Adapteur pour les alerts.

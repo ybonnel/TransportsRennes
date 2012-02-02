@@ -22,6 +22,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import fr.ybo.transportscommun.util.Theme;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
 import fr.ybo.transportsrennes.activity.bus.BusRennes;
@@ -30,7 +31,6 @@ import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
 import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.Theme;
 
 public class DashboardFragment extends Fragment {
 

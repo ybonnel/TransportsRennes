@@ -41,6 +41,7 @@ import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
@@ -294,6 +295,7 @@ public class ListArretByPosition extends BaseListActivity implements UpdateLocat
 		new AsyncTask<Void, Void, Void>() {
 
 			private boolean erreurLigneNonTrouvee = false;
+			private boolean erreurNoSpaceLeft = false;
 
 			@Override
 			protected Void doInBackground(Void... pParams) {
@@ -301,6 +303,8 @@ public class ListArretByPosition extends BaseListActivity implements UpdateLocat
 					UpdateDataBase.chargeDetailLigne(R.raw.class, myLigne, getResources());
 				} catch (LigneInexistanteException e) {
 					erreurLigneNonTrouvee = true;
+				} catch (NoSpaceLeftException e) {
+					erreurNoSpaceLeft = true;
 				}
 				return null;
 			}
@@ -312,6 +316,9 @@ public class ListArretByPosition extends BaseListActivity implements UpdateLocat
 				if (erreurLigneNonTrouvee) {
 					Toast.makeText(ListArretByPosition.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
 							Toast.LENGTH_LONG).show();
+					finish();
+				} else if (erreurNoSpaceLeft) {
+					Toast.makeText(ListArretByPosition.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
 					finish();
 				}
 			}

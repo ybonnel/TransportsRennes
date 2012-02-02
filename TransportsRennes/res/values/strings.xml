@@ -191,4 +191,9 @@
     <string name="importResult">Les favoris ont été importés</string>
     <string name="debug">Debug</string>
     <string name="activateDebug">Activer les logs debugs.</string>
+    
+    
+    <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de
+        la place avec de charger d\'autres données.
+    </string>
 </resources>

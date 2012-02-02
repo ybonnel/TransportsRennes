@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BasePreferenceActivity;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -30,7 +31,7 @@ public class PreferencesRennes extends BasePreferenceActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		((TransportsRennesApplication) getApplication()).majTheme(this);
+		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.preferences);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);

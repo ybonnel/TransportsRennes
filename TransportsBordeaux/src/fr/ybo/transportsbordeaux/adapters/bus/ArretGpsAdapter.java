@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.adapters.bus;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteException;
 import android.view.LayoutInflater;
@@ -22,13 +25,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.DetailArretConteneur;
-import fr.ybo.transportsbordeaux.database.modele.Horaire;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.Calendar;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
 
 /**
  * Adapteur pour les arrets pas positionnement GPS..

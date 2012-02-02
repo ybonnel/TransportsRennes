@@ -13,6 +13,11 @@
  */
 package fr.ybo.transportsbordeaux.activity.velos;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
@@ -31,24 +36,21 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.VeloFavori;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 
 /**
  * Activité de type liste permettant de lister les stations pas distances de la
@@ -236,7 +238,7 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             Station station = (Station) getListAdapter().getItem(info.position);
             VeloFavori veloFavori = new VeloFavori();
-            veloFavori.id = station.id;
+			veloFavori.number = Integer.toString(station.id);
             veloFavori = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(veloFavori);
             menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
             menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
@@ -253,13 +255,13 @@ public class ListStationsByPosition extends MenuAccueil.ListActivity implements 
             case R.id.ajoutFavori:
                 station = (Station) getListAdapter().getItem(info.position);
                 veloFavori = new VeloFavori();
-                veloFavori.id = station.id;
+				veloFavori.number = Integer.toString(station.id);
                 TransportsBordeauxApplication.getDataBaseHelper().insert(veloFavori);
                 return true;
             case R.id.supprimerFavori:
                 station = (Station) getListAdapter().getItem(info.position);
                 veloFavori = new VeloFavori();
-                veloFavori.id = station.id;
+				veloFavori.number = Integer.toString(station.id);
                 TransportsBordeauxApplication.getDataBaseHelper().delete(veloFavori);
                 return true;
             default:

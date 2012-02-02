@@ -13,6 +13,8 @@
  */
 package fr.ybo.transportsbordeaux.adapters.bus;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.database.modele.DetailArretConteneur;
-
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 
 /**
  * @author ybonnel

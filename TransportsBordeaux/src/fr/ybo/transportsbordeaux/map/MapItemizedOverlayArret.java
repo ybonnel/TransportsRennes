@@ -14,18 +14,20 @@
 package fr.ybo.transportsbordeaux.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
-import fr.ybo.transportsbordeaux.activity.bus.DetailArret;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportsbordeaux.activity.bus.DetailArret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 
 public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 

@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.activity.map;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,27 +23,26 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.bus.ListArretByPosition;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.velos.ListStationsByPosition;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
 import fr.ybo.transportsbordeaux.map.MyGeoClusterer;
 import fr.ybo.transportsbordeaux.map.MyGeoItem;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class AllOnMap extends MenuAccueil.MapActivity {
 

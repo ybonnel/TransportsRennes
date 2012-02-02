@@ -14,6 +14,8 @@
 
 package fr.ybo.transportsbordeaux.services;
 
+import java.util.Calendar;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -32,13 +34,11 @@ import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-import fr.ybo.transportsbordeaux.database.modele.Notification;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
-import java.util.Calendar;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class UpdateTimeService extends Service {
 

@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.util;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -20,12 +23,10 @@ import android.database.sqlite.SQLiteException;
 import android.widget.RemoteViews;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.DetailArretConteneur;
-import fr.ybo.transportsbordeaux.database.modele.Horaire;
-
-import java.util.Calendar;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class Widget11UpdateUtil {
 

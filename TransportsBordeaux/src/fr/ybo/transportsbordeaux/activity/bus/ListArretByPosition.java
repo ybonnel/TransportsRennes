@@ -13,6 +13,12 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,29 +37,26 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsbordeaux.adapters.bus.ArretGpsAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.ArretFavori;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-import fr.ybo.transportsbordeaux.donnees.UpdateDataBase;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
-import fr.ybo.transportsbordeaux.util.NoSpaceLeftException;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil.UpdateTime;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
 /**
  * Activité de type liste permettant de lister les arrêts de bus par distances
@@ -298,12 +301,15 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
 
         new AsyncTask<Void, Void, Void>() {
 
+			private boolean erreurLigneNonTrouvee = false;
             private boolean erreurNoSpaceLeft = false;
 
             @Override
             protected Void doInBackground(Void... pParams) {
                 try {
-                    UpdateDataBase.chargeDetailLigne(myLigne, getResources());
+					UpdateDataBase.chargeDetailLigne(R.raw.class, myLigne, getResources());
+				} catch (LigneInexistanteException e) {
+					erreurLigneNonTrouvee = true;
                 } catch (NoSpaceLeftException e) {
                     erreurNoSpaceLeft = true;
                 }
@@ -314,8 +320,13 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
                 myProgressDialog.dismiss();
-                if (erreurNoSpaceLeft) {
+				if (erreurLigneNonTrouvee) {
+					Toast.makeText(ListArretByPosition.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
+							Toast.LENGTH_LONG).show();
+					finish();
+				} else if (erreurNoSpaceLeft) {
                     Toast.makeText(ListArretByPosition.this, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+					finish();
                 }
             }
 

@@ -13,15 +13,17 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
+
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.GroupeFavori;
-
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
 
 public class TabFavoris extends CapptainTabActivity {
 

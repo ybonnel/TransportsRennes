@@ -18,7 +18,9 @@ import java.util.List;
 
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteException;
+import fr.ybo.database.DataBaseException;
 import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.Constantes;
 import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
@@ -30,12 +32,14 @@ import fr.ybo.transportscommun.donnees.modele.Direction;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.LoadingInfo;
 import fr.ybo.transportscommun.util.LogYbo;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
 public final class UpdateDataBase {
 
     private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	public static void updateIfNecessaryDatabase(int lastUpdate, Resources resources, LoadingInfo loadingInfo) {
+	public static void updateIfNecessaryDatabase(int lastUpdate, Resources resources, LoadingInfo loadingInfo)
+			throws GestionFilesException, MoteurCsvException, DataBaseException, NoSpaceLeftException {
         LOG_YBO.debug("Mise à jour des données Keolis...");
 		DernierMiseAJour dernierMiseAJour = AbstractTransportsApplication.getDataBaseHelper().selectSingle(
 				new DernierMiseAJour());
@@ -103,7 +107,7 @@ public final class UpdateDataBase {
     }
 
 	public static void chargeDetailLigne(Class<?> rawClass, Ligne ligne, Resources resources)
-			throws LigneInexistanteException {
+			throws LigneInexistanteException, NoSpaceLeftException {
         LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
         try {
 			AbstractTransportsApplication.getDataBaseHelper().beginTransaction();

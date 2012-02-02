@@ -13,175 +13,195 @@
  */
 package fr.ybo.transportsbordeaux.application;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
+
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlarmManager;
-import android.app.Application;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.widget.Toast;
+
 import com.google.code.geocoder.model.LatLng;
 import com.google.code.geocoder.model.LatLngBounds;
-import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
+
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportsbordeaux.activity.TransportsBordeaux;
+import fr.ybo.transportsbordeaux.activity.bus.TabFavoris;
+import fr.ybo.transportsbordeaux.activity.preferences.PreferencesBordeaux;
+import fr.ybo.transportsbordeaux.activity.velos.ListStationsFavoris;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.database.modele.Alert;
 import fr.ybo.transportsbordeaux.services.UpdateTimeService;
 import fr.ybo.transportsbordeaux.util.AlarmReceiver;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportsbordeaux.util.ContextWithDatabasePath;
-import fr.ybo.transportsbordeaux.util.GeocodeUtil;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.DonnesSpecifiques;
+import fr.ybo.transportscommun.activity.AccueilActivity;
+import fr.ybo.transportscommun.activity.commun.ActivityHelper;
+import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 
 /**
- * Classe de l'application permettant de stocker les attributs globaux à l'application.
+ * Classe de l'application permettant de stocker les attributs globaux à
+ * l'application.
  */
-public class TransportsBordeauxApplication extends Application {
+public class TransportsBordeauxApplication extends AbstractTransportsApplication {
 
-    private static TransportsBordeauxDatabase databaseHelper;
+	private static boolean baseNeuve = false;
 
-    private static boolean baseNeuve = false;
+	public static boolean isBaseNeuve() {
+		return baseNeuve;
+	}
 
-    public static boolean isBaseNeuve() {
-        return baseNeuve;
-    }
+	public static void setBaseNeuve(boolean baseNeuve) {
+		TransportsBordeauxApplication.baseNeuve = baseNeuve;
+	}
 
-    public static void setBaseNeuve(boolean baseNeuve) {
-        TransportsBordeauxApplication.baseNeuve = baseNeuve;
-    }
+	public static void constructDatabase(Context pContext) {
+		Context context = pContext;
+		boolean databaseOnSDCard = PreferenceManager.getDefaultSharedPreferences(pContext).getBoolean(
+				"TransportsBordeaux_sdCard", false);
 
-    public static TransportsBordeauxDatabase getDataBaseHelper() {
-        return databaseHelper;
-    }
+		if (databaseOnSDCard) {
+			ContextWithDatabasePath contextWithDatabasePath = new ContextWithDatabasePath(pContext);
+			try {
+				contextWithDatabasePath.getDatabasePath(TransportsBordeauxDatabase.DATABASE_NAME);
+				context = contextWithDatabasePath;
+			} catch (Exception exception) {
+				Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
+				try {
+					ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
+					am.restartPackage(pContext.getPackageName());
+				} catch (Exception ignore) {
 
-    private static GeocodeUtil geocodeUtil;
+				}
+				return;
+			}
+		}
+		databaseHelper = new TransportsBordeauxDatabase(context);
+	}
 
-    public static GeocodeUtil getGeocodeUtil() {
-        return geocodeUtil;
-    }
+	@Override
+	public void constructDatabase() {
+		constructDatabase(this);
+	}
 
-    public static void constuctDatabase(Context pContext) {
-        Context context = pContext;
-        boolean databaseOnSDCard = PreferenceManager.getDefaultSharedPreferences(pContext).getBoolean(
-                "TransportsBordeaux_sdCard", false);
+	@Override
+	protected void initDonneesSpecifiques() {
+		donnesSpecifiques = new DonnesSpecifiques() {
 
-        if (databaseOnSDCard) {
-            ContextWithDatabasePath contextWithDatabasePath = new ContextWithDatabasePath(pContext);
-            try {
-                contextWithDatabasePath.getDatabasePath(TransportsBordeauxDatabase.DATABASE_NAME);
-                context = contextWithDatabasePath;
-            } catch (Exception exception) {
-                Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
-                try {
-                    ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
-                    am.restartPackage(pContext.getPackageName());
-                } catch (Exception ignore) {
+			@Override
+			public int getCompactLogo() {
+				return R.drawable.compact_icon;
+			}
 
-                }
-                return;
-            }
-        }
-        databaseHelper = new TransportsBordeauxDatabase(context);
-    }
+			@Override
+			public String getApplicationName() {
+				return "TransportsBordeaux";
+			}
 
-    private boolean isInPrincipalProcess() {
-        PackageInfo packageinfo;
-        try {
-            packageinfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES);
-        } catch (android.content.pm.PackageManager.NameNotFoundException ex) {
-            return false;
-        }
-        String processName = packageinfo.applicationInfo.processName;
+			@Override
+			public Class<?> getDrawableClass() {
+				return R.drawable.class;
+			}
 
-        for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE)).getRunningAppProcesses()) {
-            if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
-                return runningAppProcessInfo.processName.equals(processName);
-            }
-        }
-        return false;
-    }
+			@Override
+			public int getIconeLigne() {
+				return R.drawable.icone_bus;
+			}
+		};
+	}
 
-    @Override
-    public void onCreate() {
-        if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
-            return;
-        super.onCreate();
+	@Override
+	public void postCreate() {
+		RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
+				new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
+						R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.calendriers_exceptions,
+						"calendriers.txt"), new CoupleResourceFichier(R.raw.directions, "directions.txt"),
+				new CoupleResourceFichier(R.raw.lignes, "lignes.txt"), new CoupleResourceFichier(R.raw.trajets,
+						"trajets.txt"));
 
-        constuctDatabase(this);
+		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+		PackageManager pm = getPackageManager();
+		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".services.UpdateTimeService"),
+				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
-        if (!isInPrincipalProcess()) {
-            return;
-        }
+		// Récupération des alertes
+		new AsyncTask<Void, Void, Void>() {
+			@Override
+			protected Void doInBackground(Void... voids) {
+				try {
+					for (Alert alert : Alert.getAlertes()) {
+						getLignesWithAlerts().add(alert.ligne);
+					}
+				} catch (Exception ignored) {
 
-        startService(new Intent(UpdateTimeService.ACTION_UPDATE));
-        PackageManager pm = getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".services.UpdateTimeService"),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+				}
+				try {
+					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+					if (metadata != null) {
+						setBounds(new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()),
+								new BigDecimal(metadata.getMinLongitude())), new LatLng(new BigDecimal(
+								metadata.getMaxLatitude()), new BigDecimal(metadata.getMaxLongitude()))));
+					}
+				} catch (OpenTripPlannerException ignore) {
+				}
+				return null;
+			}
+		}.execute((Void) null);
 
-        geocodeUtil = new GeocodeUtil(this);
+		setRecurringAlarm(this);
+	}
 
-        // Récupération des alertes
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    for (Alert alert : Alert.getAlertes()) {
-                        lignesWithAlerts.add(alert.ligne);
-                    }
-                } catch (Exception ignored) {
+	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
 
-                }
-                try {
-                    GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
-                    if (metadata != null) {
-                        bounds = new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()), new BigDecimal(
-                                metadata.getMinLongitude())), new LatLng(new BigDecimal(metadata.getMaxLatitude()),
-                                new BigDecimal(metadata.getMaxLongitude())));
-                    }
-                } catch (OpenTripPlannerException ignore) {
-                }
-                return null;
-            }
-        }.execute((Void) null);
+	private void setRecurringAlarm(Context context) {
+		Intent alarm = new Intent(context, AlarmReceiver.class);
+		PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-        setRecurringAlarm(this);
-    }
+		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
+	}
 
-    private static LatLngBounds bounds;
+	@Override
+	public Class<? extends AccueilActivity> getAccueilActivity() {
+		return TransportsBordeaux.class;
+	}
 
-    public static LatLngBounds getBounds() {
-        return bounds;
-    }
+	public boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper) {
 
-    private static Set<String> lignesWithAlerts = new HashSet<String>();
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				// app icon in action bar clicked; go home
+				helper.goHome();
+				return true;
+			case R.id.menu_bus_favoris:
+				activity.startActivity(new Intent(activity, TabFavoris.class));
+				return true;
+			case R.id.menu_velo_favoris:
+				activity.startActivity(new Intent(activity, ListStationsFavoris.class));
+				return true;
+			case R.id.menu_prefs:
+				activity.startActivity(new Intent(activity, PreferencesBordeaux.class));
+				return true;
+				/*
+				 * case R.id.menu_refresh: if (activity instanceof Refreshable)
+				 * { ((Refreshable) activity).refresh(); } return true;
+				 */
+			default:
+				return false;
+		}
 
-    public static boolean hasAlert(String ligneNomLong) {
-        return lignesWithAlerts.contains(ligneNomLong);
-    }
-
-    private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
-
-    private static final boolean activeUpdates = true;
-
-    private void setRecurringAlarm(Context context) {
-        if (activeUpdates) {
-            Intent alarm = new Intent(context, AlarmReceiver.class);
-            PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm,
-                    PendingIntent.FLAG_CANCEL_CURRENT);
-            AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-
-            alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
-        }
-    }
+	}
 
 }

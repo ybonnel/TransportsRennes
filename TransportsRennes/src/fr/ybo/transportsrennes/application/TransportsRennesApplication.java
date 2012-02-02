@@ -29,7 +29,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.google.code.geocoder.model.LatLng;
@@ -38,6 +37,7 @@ import com.google.code.geocoder.model.LatLngBounds;
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.DonnesSpecifiques;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
@@ -56,7 +56,6 @@ import fr.ybo.transportsrennes.services.UpdateTimeService;
 import fr.ybo.transportsrennes.util.AlarmReceiver;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.Theme;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à
@@ -64,21 +63,30 @@ import fr.ybo.transportsrennes.util.Theme;
  */
 public class TransportsRennesApplication extends AbstractTransportsApplication {
 
-	public static Theme getTheme(Context context) {
-		return Theme.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
-				"TransportsRennes_choixTheme", Theme.BLANC.name()));
-	}
+	@Override
+	protected void initDonneesSpecifiques() {
+		donnesSpecifiques = new DonnesSpecifiques() {
 
-	public static int getTextColor(Context context) {
-		return getTheme(context).getTextColor();
-	}
+			@Override
+			public String getApplicationName() {
+				return "TransportsRennes";
+			}
 
-	public void majTheme(Context context) {
-		context.setTheme(getTheme(context).getTheme());
-	}
+			@Override
+			public int getCompactLogo() {
+				return R.drawable.compact_icon;
+			}
 
-	public String getApplicationName() {
-		return "TransportsRennes";
+			@Override
+			public Class<?> getDrawableClass() {
+				return R.drawable.class;
+			}
+
+			@Override
+			public int getIconeLigne() {
+				return R.drawable.icone_bus;
+			}
+		};
 	}
 
 	public void constructDatabase() {
@@ -87,10 +95,9 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 
 	public void postCreate() {
 		RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
-	            new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"),
-	            new CoupleResourceFichier(R.raw.calendriers, "calendriers.txt"),
-	            new CoupleResourceFichier(R.raw.directions, "directions.txt"),
-	            new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
+				new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
+						R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.directions,
+						"directions.txt"), new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
 				new CoupleResourceFichier(R.raw.trajets, "trajets.txt"));
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
@@ -135,7 +142,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 						getDataBaseHelper().insert(alertBdd);
 					}
 
-					Collections.addAll(lignesWithAlerts, alertBdd.getLignes().split(","));
+					Collections.addAll(getLignesWithAlerts(), alertBdd.getLignes().split(","));
 				} catch (ErreurReseau ignore) {
 				}
 				try {
@@ -153,9 +160,9 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 						}
 					}
 					if (boundsBdd != null) {
-						bounds = new LatLngBounds(new LatLng(new BigDecimal(boundsBdd.getMinLatitude()),
+						setBounds(new LatLngBounds(new LatLng(new BigDecimal(boundsBdd.getMinLatitude()),
 								new BigDecimal(boundsBdd.getMinLongitude())), new LatLng(new BigDecimal(
-								boundsBdd.getMaxLatitude()), new BigDecimal(boundsBdd.getMaxLongitude())));
+								boundsBdd.getMaxLatitude()), new BigDecimal(boundsBdd.getMaxLongitude()))));
 					}
 				} catch (OpenTripPlannerException ignore) {
 				}
@@ -164,18 +171,6 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 		}.execute((Void) null);
 
 		setRecurringAlarm(this);
-	}
-
-	private static Set<String> lignesWithAlerts = new HashSet<String>();
-
-	public static boolean hasAlert(String ligneNomCourt) {
-		return lignesWithAlerts.contains(ligneNomCourt);
-	}
-
-	private static LatLngBounds bounds;
-
-	public static LatLngBounds getBounds() {
-		return bounds;
 	}
 
 	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
@@ -190,10 +185,6 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 
 	public Class<? extends AccueilActivity> getAccueilActivity() {
 		return TransportsRennes.class;
-	}
-
-	public boolean isThemeNoir() {
-		return getTheme(this) == Theme.NOIR;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper) {
@@ -221,18 +212,6 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 				return false;
 		}
 
-	}
-
-	public int getTextColor() {
-		return getTextColor(this);
-	}
-
-	public int getActionBarBackground() {
-		return getTheme(this).getActionBarBackground();
-	}
-
-	public int getCompactLogo() {
-		return R.drawable.compact_icon;
 	}
 
 }

@@ -13,21 +13,23 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.io.Serializable;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.LigneAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-
-import java.io.Serializable;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 /**
  * Activité affichant les lignes de bus..

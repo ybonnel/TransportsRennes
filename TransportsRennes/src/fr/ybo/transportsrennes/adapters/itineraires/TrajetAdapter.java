@@ -22,10 +22,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.itineraires.PortionTrajet;
 import fr.ybo.transportsrennes.itineraires.Trajet;
-import fr.ybo.transportsrennes.util.IconeLigne;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

@@ -33,6 +33,7 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
 import fr.ybo.transportscommun.util.LogYbo;
+import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
 @SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
@@ -58,7 +59,7 @@ public class Ligne implements Serializable {
     public Boolean chargee;
 
 	public void chargerHeuresArrets(Class<?> rawClass, DataBaseHelper dataBaseHelper, Resources resources)
-            throws LigneInexistanteException {
+			throws LigneInexistanteException, NoSpaceLeftException {
         LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
         List<Class<?>> classes = new ArrayList<Class<?>>(1000);
         classes.add(Horaire.class);

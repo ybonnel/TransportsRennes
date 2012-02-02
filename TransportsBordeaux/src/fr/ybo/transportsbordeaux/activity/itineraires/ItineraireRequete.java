@@ -13,6 +13,15 @@
  */
 package fr.ybo.transportsbordeaux.activity.itineraires;
 
+import java.io.FileNotFoundException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -38,6 +47,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -45,6 +55,7 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
+
 import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.Message;
 import fr.ybo.opentripplanner.client.modele.Request;
@@ -60,16 +71,7 @@ import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportsbordeaux.util.LocationUtil;
 import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
-import fr.ybo.transportsbordeaux.util.LogYbo;
-
-import java.io.FileNotFoundException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLocationListenner {
 

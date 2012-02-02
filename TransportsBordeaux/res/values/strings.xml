@@ -131,7 +131,7 @@
     <string name="depart">Départ à %1$s</string>
     <string name="arrivee">Arrivée à %1$s</string>
     <string name="btn_itineraires">Calcul d\'itinéraires</string>
-    <string name="menu_alerts">Alertes</string>
+    <string name="btn_alert">Alertes</string>
     <string name="alertes">Alertes</string>
     <string name="bus">Bus</string>
     <string name="tram">Tramway</string>
@@ -169,7 +169,7 @@
 
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="dialogRequeteParkRelais">Interrogation de la CUB.</string>
-    <string name="menu_parkings">Parkings</string>
+    <string name="btn_parking">Parkings</string>
 
     <string name="notifUpdateOn">Notification pour les mises à jour</string>
     <string name="creerNotif">Créer une alerte.</string>
@@ -182,4 +182,5 @@
     <string name="supprimerNotif">Supprimer la notification</string>
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
+    <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
 </resources>

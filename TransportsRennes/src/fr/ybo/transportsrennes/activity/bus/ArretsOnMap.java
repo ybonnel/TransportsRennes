@@ -30,11 +30,11 @@ import com.google.android.maps.OverlayItem;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayArret;
 import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
-import fr.ybo.transportsrennes.util.IconeLigne;
 
 public class ArretsOnMap extends BaseMapActivity {
 

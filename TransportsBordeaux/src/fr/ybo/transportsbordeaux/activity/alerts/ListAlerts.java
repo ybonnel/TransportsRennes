@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsbordeaux.activity.alerts;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,14 +29,10 @@ import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.alerts.AlertAdapter;
 import fr.ybo.transportsbordeaux.database.modele.Alert;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.TcbConstantes;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 public class ListAlerts extends MenuAccueil.ListActivity {
 

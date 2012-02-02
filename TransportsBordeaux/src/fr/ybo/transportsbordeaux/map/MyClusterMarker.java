@@ -33,7 +33,7 @@ import fr.ybo.transportsbordeaux.map.mapviewutil.GeoItem;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.ClusterMarker;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.GeoClusterer;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.MarkerBitmap;
-import fr.ybo.transportsbordeaux.util.ObjetWithDistance;
+import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 class MyClusterMarker<Objet extends ObjetWithDistance> extends ClusterMarker {
 	/**

@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportscommun.util.LogYbo;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

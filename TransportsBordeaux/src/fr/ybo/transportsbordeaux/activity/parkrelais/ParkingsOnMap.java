@@ -13,22 +13,24 @@
  */
 package fr.ybo.transportsbordeaux.activity.parkrelais;
 
+import java.util.List;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayParking;
 import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportsbordeaux.util.Formatteur;
-
-import java.util.List;
 
 public class ParkingsOnMap extends MenuAccueil.MapActivity {
 

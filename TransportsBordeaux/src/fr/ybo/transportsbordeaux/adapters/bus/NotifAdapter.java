@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.adapters.bus;
 
+import java.util.Calendar;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +24,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.database.modele.Arret;
-import fr.ybo.transportsbordeaux.database.modele.Ligne;
-import fr.ybo.transportsbordeaux.database.modele.Notification;
 import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.util.Calendar;
-import java.util.List;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.donnees.modele.Notification;
 
 public class NotifAdapter extends BaseAdapter {
 
