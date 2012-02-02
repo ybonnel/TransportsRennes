@@ -89,9 +89,9 @@ public class ArretAdapter extends CursorAdapter {
         private TextView directionArret;
         private ImageView isFavori;
         private ImageView correspondance;
+        private LinearLayout separateurCorrespondance;
         private LinearLayout detailCorrespondance;
         private ImageView iconeHandicap;
-        private ImageView iconeLignePourListe;
     }
 
     @Override
@@ -103,9 +103,9 @@ public class ArretAdapter extends CursorAdapter {
         holder.directionArret = (TextView) view.findViewById(R.id.directionArret);
         holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
         holder.correspondance = (ImageView) view.findViewById(R.id.imageCorrespondance);
+        holder.separateurCorrespondance = (LinearLayout) view.findViewById(R.id.separateurCorrespondance);
         holder.detailCorrespondance = (LinearLayout) view.findViewById(R.id.detailCorrespondance);
         holder.iconeHandicap = (ImageView) view.findViewById(R.id.iconeHandicap);
-        holder.iconeLignePourListe = (ImageView) view.findViewById(R.id.iconeLignePourListe);
         view.setTag(holder);
         return view;
 
@@ -147,16 +147,20 @@ public class ArretAdapter extends CursorAdapter {
     }
 
     private void correspondancesNoDetail(ArretAdapter.ViewHolder holder) {
+    	holder.separateurCorrespondance.removeAllViews();
+    	holder.separateurCorrespondance.setVisibility(View.INVISIBLE);
         holder.detailCorrespondance.removeAllViews();
         holder.detailCorrespondance.setVisibility(View.INVISIBLE);
-        holder.correspondance.setImageResource(R.drawable.arrow_right_float);
+        holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
     }
 
     private void correspondancesWithDetail(ArretAdapter.ViewHolder holder, String arretId) {
+    	holder.separateurCorrespondance.setVisibility(View.VISIBLE);
+        holder.separateurCorrespondance.removeAllViews();
         holder.detailCorrespondance.setVisibility(View.VISIBLE);
         holder.detailCorrespondance.removeAllViews();
-        construireCorrespondance(holder.detailCorrespondance, arretId);
-        holder.correspondance.setImageResource(R.drawable.arrow_down_float);
+        construireCorrespondance(holder.detailCorrespondance, holder.separateurCorrespondance, arretId);
+        holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
     }
 
     private final Map<String, List<Arret>> mapDetailCorrespondances = new HashMap<String, List<Arret>>();
@@ -165,6 +169,7 @@ public class ArretAdapter extends CursorAdapter {
         for (final Arret arret : arrets) {
             RelativeLayout relativeLayout = getRelativeLayout();
             ArretAdapter.RelativeLayoutHolder holder = (ArretAdapter.RelativeLayoutHolder) relativeLayout.getTag();
+            holder.iconeLigne.setImageResource(R.drawable.ligneaveccorrespondance);
             holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
             holder.arretDirection.setText(arret.favori.direction);
             holder.nomArret.setText(arret.nom);
@@ -180,9 +185,18 @@ public class ArretAdapter extends CursorAdapter {
         }
     }
 
-    private void construireCorrespondance(LinearLayout detailCorrespondance, String arretId) {
+    private void construireRelativeLayoutsSeparateurCorrespondance(LinearLayout separateurCorrespondance) {
+            RelativeLayout relativeLayout = getRelativeLayoutSeparateurCorrespondance();
+            ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder holder = (ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder) relativeLayout.getTag();
+            holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondance);
+            holder.libelleCorrespondance.setText("Correspondances");
+            separateurCorrespondance.addView(relativeLayout);
+    }
+
+    private void construireCorrespondance(LinearLayout detailCorrespondance, LinearLayout separateurCorrespondance, String arretId) {
+    	construireRelativeLayoutsSeparateurCorrespondance(separateurCorrespondance);
         if (mapDetailCorrespondances.containsKey(arretId)) {
-            construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);
+        	construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);    
         } else {
             /* Recuperation de l'arretCourant */
             Arret arretCourant = new Arret();
@@ -256,8 +270,8 @@ public class ArretAdapter extends CursorAdapter {
         }
     }
 
-
     private static class RelativeLayoutHolder {
+    	private ImageView ligneAvecCorrespondance;
         private ImageView iconeLigne;
         private TextView arretDirection;
         private TextView nomArret;
@@ -267,6 +281,7 @@ public class ArretAdapter extends CursorAdapter {
     private RelativeLayout getRelativeLayout() {
         RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
         ArretAdapter.RelativeLayoutHolder holder = new ArretAdapter.RelativeLayoutHolder();
+        holder.ligneAvecCorrespondance = (ImageView) relativeLayout.findViewById(R.id.ligneAvecCorrespondance);
         holder.iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
         holder.arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
         holder.nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
@@ -274,5 +289,18 @@ public class ArretAdapter extends CursorAdapter {
         relativeLayout.setTag(holder);
         return relativeLayout;
     }
+    
+    private static class RelativeLayoutSeparateurCorrespondanceHolder {
+    	private ImageView imageSeparateurCorrespondance;
+        private TextView libelleCorrespondance;
+    }
 
+    private RelativeLayout getRelativeLayoutSeparateurCorrespondance() {
+        RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.separateurcorrespondance, null);
+        ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder holder = new ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder();
+        holder.imageSeparateurCorrespondance = (ImageView) relativeLayout.findViewById(R.id.imageSeparateurCorrespondance);
+        holder.libelleCorrespondance = (TextView) relativeLayout.findViewById(R.id.libelleCorrespondance);
+        relativeLayout.setTag(holder);
+        return relativeLayout;
+    }
 }
