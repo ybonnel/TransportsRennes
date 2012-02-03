@@ -47,7 +47,7 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.alerts.ListAlerts;
+import fr.ybo.transportsbordeaux.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
@@ -241,7 +241,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
             findViewById(R.id.alerte).setVisibility(View.VISIBLE);
             findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    Intent intent = new Intent(DetailArret.this, ListAlerts.class);
+					Intent intent = new Intent(DetailArret.this, ListAlertsForOneLine.class);
                     intent.putExtra("ligne", myLigne);
                     startActivity(intent);
                 }

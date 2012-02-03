@@ -13,45 +13,31 @@
  */
 package fr.ybo.transportsbordeaux.activity.alerts;
 
-
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.fragments.alerts.ListAlerts;
-import fr.ybo.transportsbordeaux.fragments.alerts.ListTwitter;
-import fr.ybo.transportscommun.activity.alerts.AbstractTabAlertes;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
+import fr.ybo.transportscommun.donnees.modele.Ligne;
 
-public class TabAlertes extends AbstractTabAlertes {
+public class ListAlertsForOneLine extends BaseFragmentActivity {
+
+    private Ligne ligne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
+		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+		setContentView(R.layout.listalert);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
+		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
+		fragmentAlert.setLigne(ligne);
 
-        // Look up the AdView as a resource and load a request.
-        ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 
-	@Override
-	protected void setupActionBar() {
-		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-	}
-
-	@Override
-	protected int getLayout() {
-		return R.layout.tabalertes;
-	}
-
-	@Override
-	protected Class<? extends ListFragment> getListAlertsClass() {
-		return ListAlerts.class;
-	}
-
-	@Override
-	protected Class<? extends ListFragment> getListTwitterClass() {
-		return ListTwitter.class;
-	}
 }

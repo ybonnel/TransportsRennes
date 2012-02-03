@@ -36,4 +36,9 @@ public class TabAlertes extends AbstractTabAlertes {
 		return ListTwitter.class;
 	}
 
+	@Override
+	protected int getLayout() {
+		return R.layout.tabalertes;
+	}
+
 }

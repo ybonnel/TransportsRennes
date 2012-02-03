@@ -25,7 +25,7 @@ public abstract class AbstractTabAlertes extends BaseTabFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.tabalertes);
+		setContentView(getLayout());
 		setupActionBar();
 		configureTabs();
 		addTab("alertes", getString(R.string.alertes), getListAlertsClass());
@@ -38,5 +38,7 @@ public abstract class AbstractTabAlertes extends BaseTabFragmentActivity {
 	protected abstract Class<? extends ListFragment> getListAlertsClass();
 
 	protected abstract Class<? extends ListFragment> getListTwitterClass();
+
+	protected abstract int getLayout();
 
 }
