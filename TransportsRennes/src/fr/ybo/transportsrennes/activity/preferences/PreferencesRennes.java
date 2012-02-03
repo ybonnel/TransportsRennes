@@ -16,49 +16,18 @@
  */
 package fr.ybo.transportsrennes.activity.preferences;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.os.Bundle;
-import fr.ybo.transportscommun.AbstractTransportsApplication;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BasePreferenceActivity;
+import fr.ybo.transportscommun.activity.preferences.AbstractPreferences;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-public class PreferencesRennes extends BasePreferenceActivity {
-
-	private OnSharedPreferenceChangeListener prefListenner;
+public class PreferencesRennes extends AbstractPreferences {
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		AbstractTransportsApplication.majTheme(this);
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.preferences);
+	protected int getXmlPreferences() {
+		return R.xml.preferences;
+	}
+
+	@Override
+	protected void setupActionBar() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-		addPreferencesFromResource(R.xml.preferences);
-		prefListenner = new OnSharedPreferenceChangeListener() {
-
-			@Override
-			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-				if ("TransportsRennes_choixTheme".equals(key)) {
-					restart();
-				}
-				if ("TransportsRennes_debug".equals(key)) {
-					TransportsRennesApplication.setDebug(sharedPreferences.getBoolean("TransportsRennes_debug", false));
-				}
-			}
-		};
-		getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(prefListenner);
-	}
-
-	@Override
-	protected void onDestroy() {
-		getPreferenceManager().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(prefListenner);
-		super.onDestroy();
-	}
-
-	public void restart() {
-		startActivity(new Intent(PreferencesRennes.this, PreferencesRennes.class));
-		finish();
 	}
 }

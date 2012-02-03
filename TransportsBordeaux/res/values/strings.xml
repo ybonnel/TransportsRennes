@@ -183,4 +183,10 @@
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
     <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
+    <string name="chooseTheme">Choisissez un thème</string>
+    
+    <string name="theme">Thème</string>
+    <string name="debug">Debug</string>
+    <string name="activateDebug">Activer les logs debugs.</string>
+    
 </resources>
