@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -51,7 +52,7 @@ public class ListAlerts extends ListFragment {
 		ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
-		lv.setCacheColorHint(R.color.transparent);
+		lv.setCacheColorHint(Color.TRANSPARENT);
 		setListAdapter(new AlertAdapter(getActivity(), alerts));
 		Alert alertChargement = new Alert();
 		alertChargement.title = getString(R.string.dialogRequeteAlerts);

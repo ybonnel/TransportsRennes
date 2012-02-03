@@ -63,11 +63,14 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
         }
 
         holder.titreAlerte.setText(alert.title);
-        Ligne ligneTmp = new Ligne();
-        ligneTmp.nomLong = alert.ligne;
-        ligneTmp = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligneTmp);
+		Ligne ligneTmp = null;
+		if (alert.ligne != null) {
+			ligneTmp = new Ligne();
+			ligneTmp.nomLong = alert.ligne;
+			ligneTmp = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligneTmp);
+		}
         if (ligneTmp == null) {
-            holder.iconeLigne.setVisibility(View.INVISIBLE);
+			holder.iconeLigne.setVisibility(View.GONE);
         } else {
             holder.iconeLigne.setVisibility(View.VISIBLE);
             holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligneTmp.nomCourt));

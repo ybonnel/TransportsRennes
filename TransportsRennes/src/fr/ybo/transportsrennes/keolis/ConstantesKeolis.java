@@ -21,6 +21,7 @@ import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.ArretRoute;
 import fr.ybo.transportscommun.donnees.modele.Bounds;
 import fr.ybo.transportscommun.donnees.modele.Calendrier;
+import fr.ybo.transportscommun.donnees.modele.CalendrierException;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportscommun.donnees.modele.Direction;
 import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
@@ -38,6 +39,7 @@ public final class ConstantesKeolis {
     static {
         LIST_CLASSES_DATABASE.add(Arret.class);
         LIST_CLASSES_DATABASE.add(Calendrier.class);
+		LIST_CLASSES_DATABASE.add(CalendrierException.class);
         LIST_CLASSES_DATABASE.add(DernierMiseAJour.class);
         LIST_CLASSES_DATABASE.add(Ligne.class);
         LIST_CLASSES_DATABASE.add(Horaire.class);
