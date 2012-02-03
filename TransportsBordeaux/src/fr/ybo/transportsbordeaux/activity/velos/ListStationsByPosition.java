@@ -42,14 +42,14 @@ import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.Formatteur;
-import fr.ybo.transportsbordeaux.util.LocationUtil;
-import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
+import fr.ybo.transportscommun.util.Formatteur;
+import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 
 /**
  * Activité de type liste permettant de lister les stations pas distances de la

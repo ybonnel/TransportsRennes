@@ -21,4 +21,27 @@
     <string name="groupeExistant">There is already a group with that name</string>
     <string name="deplacerGroupe">Move in a group</string>
     <string name="chooseGroupe">Choose a group</string>
+    
+    <string name="vers">to</string>
+    <string name="erreurReseau">A connection error has been detected, please try again later.</string>
+    <string name="dans">in</string>
+    <string name="heures">hours</string>
+    <string name="minutes">minutes</string>
+    <string name="miniHeures">h</string>
+    <string name="miniMinutes">min</string>
+    <string name="tempsRestant">Alert in %1$s.</string>
+    <string name="creerNotif">Create an alert.</string>
+    <string name="noGoogleMap">GoogleMap not found</string>
+    <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.
+    </string>
+    <string name="premierAccesLigne">First access to line %1$s, loading data.</string>
+    <string name="chooseDirection">Choose a direction</string>
+    <string name="Toutes">All</string>
+    <string name="menu_orderByName">Alphabetically</string>
+    <string name="menu_orderBySequence">Route order</string>
+    <string name="rechercheArrets">Search for bus stops.</string>
+    <string name="activeGps">To fully enjoy this page, it is preferable to activate your GPS.</string>
+    <string name="ajouterFavori">Add to favorites</string>
+    <string name="suprimerFavori">Remove from favorites</string>
+    <string name="tropTard">Too late!</string>
 </resources>

@@ -27,11 +27,11 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.UpdateTimeUtil;
+import fr.ybo.transportscommun.util.UpdateTimeUtil.UpdateTime;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.bus.NotifAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.UpdateTimeUtil;
-import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 /**
  * @author ybonnel

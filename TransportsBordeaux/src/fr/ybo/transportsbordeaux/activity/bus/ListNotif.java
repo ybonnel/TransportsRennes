@@ -24,10 +24,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.NotifAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.util.UpdateTimeUtil;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
@@ -35,7 +35,7 @@ import fr.ybo.transportscommun.donnees.modele.Notification;
 /**
  * @author ybonnel
  */
-public class ListNotif extends MenuAccueil.ListActivity {
+public class ListNotif extends BaseListActivity {
 
     private UpdateTimeUtil updateTimeUtil;
 
@@ -43,6 +43,7 @@ public class ListNotif extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listnotif);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         setListAdapter(new NotifAdapter(getApplicationContext(), TransportsBordeauxApplication.getDataBaseHelper().selectAll(Notification.class)));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

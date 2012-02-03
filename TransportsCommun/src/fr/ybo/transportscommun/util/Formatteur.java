@@ -14,7 +14,10 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsbordeaux.util;
+package fr.ybo.transportscommun.util;
+
+import android.content.Context;
+import fr.ybo.transportscommun.R;
 
 public final class Formatteur {
 
@@ -45,5 +48,42 @@ public final class Formatteur {
 			nomLongFormate = nomLongFormate.substring(1);
 		}
 		return nomLongFormate;
+	}
+
+	public static String formatterCalendar(Context context, int prochainDepart, int now) {
+		StringBuilder stringBuilder = new StringBuilder();
+		int tempsEnMinutes = prochainDepart - now;
+		if (tempsEnMinutes < 0) {
+			stringBuilder.append(context.getString(R.string.tropTard));
+		} else {
+			int heures = tempsEnMinutes / 60;
+			int minutes = tempsEnMinutes - heures * 60;
+			boolean tempsAjoute = false;
+			if (heures > 0) {
+				stringBuilder.append(heures);
+				stringBuilder.append(' ');
+				stringBuilder.append(context.getString(R.string.miniHeures));
+				stringBuilder.append(' ');
+				tempsAjoute = true;
+			}
+			if (minutes > 0) {
+				if (heures <= 0) {
+					stringBuilder.append(minutes);
+					stringBuilder.append(' ');
+					stringBuilder.append(context.getString(R.string.miniMinutes));
+				} else {
+					if (minutes < 10) {
+						stringBuilder.append('0');
+					}
+					stringBuilder.append(minutes);
+				}
+				tempsAjoute = true;
+			}
+			if (!tempsAjoute) {
+				stringBuilder.append("0 ");
+				stringBuilder.append(context.getString(R.string.miniMinutes));
+			}
+		}
+		return stringBuilder.toString();
 	}
 }

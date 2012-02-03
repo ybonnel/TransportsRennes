@@ -11,11 +11,11 @@ import android.support.v4.app.ListFragment;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.alerts.TwitterAdapter;
 import fr.ybo.transportsrennes.twitter.GetTwitters;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
-import fr.ybo.transportsrennes.util.ErreurReseau;
 
 public class ListTwitter extends ListFragment {
 

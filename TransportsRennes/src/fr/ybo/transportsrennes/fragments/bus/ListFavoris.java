@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
+import fr.ybo.transportscommun.util.UpdateTimeUtil;
+import fr.ybo.transportscommun.util.UpdateTimeUtil.UpdateTime;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
@@ -29,8 +31,6 @@ import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.adapters.bus.FavoriAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.UpdateTimeUtil;
-import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 
 public class ListFavoris extends ListFragment {
 

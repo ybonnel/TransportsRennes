@@ -22,8 +22,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
+
+import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
-import fr.ybo.transportsrennes.util.Formatteur;
 
 import java.util.ArrayList;
 import java.util.List;

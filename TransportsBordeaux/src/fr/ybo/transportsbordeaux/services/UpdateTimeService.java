@@ -34,10 +34,10 @@ import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportscommun.util.LogYbo;
 
 public class UpdateTimeService extends Service {

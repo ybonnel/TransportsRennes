@@ -13,22 +13,24 @@
  */
 package fr.ybo.transportsbordeaux.activity.velos;
 
+import java.util.List;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayVelo;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
-import fr.ybo.transportsbordeaux.util.Formatteur;
-
-import java.util.List;
+import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
+import fr.ybo.transportscommun.util.Formatteur;
 
 public class StationsOnMap extends MenuAccueil.MapActivity {
 

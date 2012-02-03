@@ -17,14 +17,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 
 /**
  * Activité affichant les lignes de bus..
  *
  * @author ybonnel
  */
-public class BusFavorisShortcutPicker extends MenuAccueil.Activity {
+public class BusFavorisShortcutPicker extends BaseSimpleActivity {
 
 
     @Override

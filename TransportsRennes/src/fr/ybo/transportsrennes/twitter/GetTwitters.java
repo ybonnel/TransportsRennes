@@ -27,7 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import fr.ybo.transportsrennes.util.ErreurReseau;
+import fr.ybo.transportscommun.util.ErreurReseau;
 
 public class GetTwitters {
 

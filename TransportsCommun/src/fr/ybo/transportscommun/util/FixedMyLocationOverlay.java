@@ -14,7 +14,7 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsbordeaux.util;
+package fr.ybo.transportscommun.util;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -29,7 +29,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Projection;
 
-import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportscommun.R;
 
 public class FixedMyLocationOverlay extends MyLocationOverlay {
 	private boolean bugged = false;

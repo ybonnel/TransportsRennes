@@ -35,14 +35,14 @@ import android.widget.Toast;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.parkrelais.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de

@@ -33,6 +33,7 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
+import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.itineraires.PortionTrajet;
@@ -40,7 +41,6 @@ import fr.ybo.transportsrennes.itineraires.Trajet;
 import fr.ybo.transportsrennes.map.LineItemizedOverlay;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsrennes.util.Coordinate;
-import fr.ybo.transportsrennes.util.FixedMyLocationOverlay;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
 public class TrajetOnMap extends BaseMapActivity {

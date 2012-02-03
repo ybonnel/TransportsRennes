@@ -22,7 +22,6 @@
         have already loaded.
     </string>
     <string name="infoChargementGtfs">Loading data from STAR.</string>
-    <string name="rechercheArrets">Search for bus stops.</string>
     <string name="dialogRequeteVeloStar">LE vélo STAR query</string>
     <string name="dialogRequeteAlerts">STAR query</string>
     <string name="dialogRequeteTwitter">Twitter query</string>
@@ -50,12 +49,8 @@
     <string name="hint_positionCourante">Current position</string>
     <string name="listevelofavoris_empty">No favorites station found.</string>
     <string name="directionEntete">Towards :</string>
-    <string name="premierAccesLigne">First access to line %1$s, loading data.</string>
     <string name="tooMuchFavoris">Already selected three favorite stops</string>
     <string name="justOneFavori">Already selected one favorite stop</string>
-    <string name="activeGps">To fully enjoy this page, it is preferable to activate your GPS.</string>
-    <string name="ajouterFavori">Add to favorites</string>
-    <string name="suprimerFavori">Remove from favorites</string>
     <string name="favoriUsedByWidget">A widget is using this favorite, thank you for deleting it before the favorite.
     </string>
     <string name="chargementLigneFavori">\nLoading bus route %1$s which you have favorites.</string>
@@ -82,8 +77,6 @@
     <!-- Libellés de menus -->
     <string name="menu_selectDay">Select a date</string>
     <string name="menu_refresh">Refresh</string>
-    <string name="menu_orderByName">Alphabetically</string>
-    <string name="menu_orderBySequence">Route order</string>
     <string name="menu_apropos">About</string>
     <string name="menu_carte">Map</string>
     <string name="menu_loadLines">Load all bus lines</string>
@@ -93,18 +86,9 @@
     <string name="widget11_choix">Choose one favorite stop.</string>
     <!-- Génériques -->
     <string name="Terminer">Finish</string>
-    <string name="Toutes">All</string>
-    <string name="vers">to</string>
-    <string name="tropTard">Too late!</string>
-    <string name="dans">in</string>
-    <string name="heures">hours</string>
-    <string name="minutes">minutes</string>
-    <string name="miniHeures">h</string>
-    <string name="miniMinutes">min</string>
     <string name="ferme">Closed</string>
     <string name="complet">Full</string>
     <string name="indisponible">Unavailable</string>
-    <string name="chooseDirection">Choose a direction</string>
     <string name="oui">Yes</string>
     <string name="non">No</string>
     <string name="prochain">Next :</string>
@@ -128,20 +112,13 @@
     <string name="nouvelleVersion">New version available</string>
     <string name="versionDisponible">Version %1$s is available!</string>
 
-    <string name="erreurReseau">A connection error has been detected, please try again later.</string>
-
     <string name="menu_share">Share</string>
     <string name="shareText">Transport Rennes, Android application to help you in transit of Rennes: http://goo.gl/ALKs0
     </string>
-    <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.
-    </string>
-    <string name="noGoogleMap">GoogleMap not found</string>
 
     <string name="notifUpdateOn">Notification for updates</string>
     <string name="preferences">Preferences</string>
 
-    <string name="creerNotif">Create an alert.</string>
-    <string name="tempsRestant">Alert in %1$s.</string>
     <string name="notifText">Line %1$s, stop %2$s arrive in %3$s minutes</string>
     <string name="notifShortText">Line %1$s, stop %2$s</string>
     <string name="notifDescriptionText">Arrive in %1$s minutes</string>

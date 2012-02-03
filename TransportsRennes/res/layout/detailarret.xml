@@ -28,7 +28,7 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/iconeLigne"
+            android:id="@id/iconeLigne"
             android:layout_width="44dip"
             android:layout_height="50dip"
             android:gravity="center_vertical|center_horizontal"
@@ -43,7 +43,7 @@
             android:layout_toRightOf="@id/iconeLigne" >
 
             <TextView
-                android:id="@+id/nomLong"
+                android:id="@id/nomLong"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical|left"
@@ -52,7 +52,7 @@
         </HorizontalScrollView>
 
         <ImageView
-            android:id="@+id/imageCorrespondance"
+            android:id="@id/imageCorrespondance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -64,7 +64,7 @@
             android:src="@drawable/arrow_right_float" />
 
         <ImageView
-            android:id="@+id/alerte"
+            android:id="@id/alerte"
             android:layout_width="wrap_content"
             android:layout_height="38dip"
             android:layout_alignParentLeft="true"
@@ -75,7 +75,7 @@
             android:src="@android:drawable/ic_dialog_alert" />
 
         <HorizontalScrollView
-            android:id="@+id/detailArret_scrolling"
+            android:id="@id/detailArret_scrolling"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/iconeLigne"
@@ -83,7 +83,7 @@
             android:layout_toRightOf="@id/alerte" >
 
             <TextView
-                android:id="@+id/detailArret_nomArret"
+                android:id="@id/detailArret_nomArret"
                 android:layout_width="wrap_content"
                 android:layout_height="38dip"
                 android:gravity="center_vertical|left"
@@ -95,13 +95,13 @@
         </HorizontalScrollView>
 
         <ScrollView
-            android:id="@+id/detailCorrespondance_scroll"
+            android:id="@id/detailCorrespondance_scroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/detailArret_scrolling" >
 
             <LinearLayout
-                android:id="@+id/detailCorrespondance"
+                android:id="@id/detailCorrespondance"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

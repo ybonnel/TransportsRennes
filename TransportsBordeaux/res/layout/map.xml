@@ -15,40 +15,50 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/mainlayout"
-                android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-    <com.google.android.maps.MapView
-            android:id="@+id/mapview"
+    <include layout="@layout/actionbar" />
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@+id/mainlayout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:clickable="true"
-        	android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
-            />
+            android:orientation="vertical" >
 
-    <!-- Debug
+            <com.google.android.maps.MapView
+                android:id="@id/mapview"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
+                android:clickable="true" />
+
+            <!--
+         Debug
         android:apiKey="03l-WrraTStXRjFXn_GnLQo4bKKF5hpT-_B6Z3A"
-        -->
-    <!-- Release
+            -->
+            <!--
+         Release
         android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
-        -->
+            -->
 
-</RelativeLayout>
-                
-                
-		<ImageButton
-	        android:id="@+id/layers_button"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginBottom="5dp"
-	        android:layout_marginRight="5dp"
-	        android:layout_gravity="bottom|right"
-	        android:src="@android:drawable/ic_menu_preferences"
-	        />
-</FrameLayout>
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@id/layers_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="42dp"
+            android:layout_marginRight="5dp"
+            android:src="@android:drawable/ic_menu_preferences" />
+    </FrameLayout>
+
+</LinearLayout>

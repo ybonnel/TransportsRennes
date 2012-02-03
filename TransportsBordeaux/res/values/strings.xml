@@ -33,14 +33,7 @@
     <string name="infoChargementGtfs">Chargement des données du TBC.</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_accueil">Accueil</string>
-    <string name="chooseDirection">Choisissez une direction</string>
     <string name="directionEntete">Direction :</string>
-    <string name="Toutes">Toutes</string>
-    <string name="vers">vers</string>
-    <string name="tropTard">Trop tard!</string>
-    <string name="dans">dans</string>
-    <string name="heures">heures</string>
-    <string name="minutes">minutes</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
     <string name="dialogRequeteVcub">Interrogation du site VCUB.</string>
@@ -48,10 +41,8 @@
         données, cette opération peut durer
         quelques dizaines de secondes, voulez-vous l\'effectuer maintenant?
     </string>
-    <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
     <string name="hint_rechercheStation">Recherche de stations</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
-    <string name="rechercheArrets">Recherche des arrêts de bus.</string>
     <string name="majDispo">Une mise à jour des données du TBC est disponible, voulez-vous l\'effectuer maintenant?
     </string>
     <string name="detailarret_empty">Plus de bus aujourd\'hui, vous pouvez voir tous les bus de la journée ou choisir
@@ -63,8 +54,6 @@
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
-    <string name="ajouterFavori">Ajouter aux favoris</string>
-    <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="recuperationHoraires">Récupération des horaires en cours...</string>
     <string name="twitter">Twitter</string>
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
@@ -74,7 +63,6 @@
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur
     </string>
     <string name="recuperationTrajet">Récupération du trajet en cours...</string>
-    <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
     <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant
         d\'essayer d\'ajouter des
         widgets.
@@ -84,17 +72,11 @@
     </string>
     <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>
     <string name="erreur_auMoinsUnFavori">Sélectionnez au moins un arrêt favori.</string>
-    <string name="miniHeures">h</string>
-    <string name="miniMinutes">min</string>
     <string name="prochain">Prochain :</string>
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.
     </string>
     <string name="nouvelleVersion">Nouvelle version disponible</string>
     <string name="versionDisponible">La version %1$s est disponible!</string>
-    <string name="menu_orderByName">Ordre alphabétique</string>
-    <string name="menu_orderBySequence">Ordre de la ligne</string>
-    <string name="noGoogleMap">Vous n\'avez pas googleMap d\'installer</string>
-    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
     <string name="menu_share">Partager</string>
     <string name="shareText">Transports Bordeaux, l\'application Android pour vous faciliter les Transports Bordelais :
@@ -136,8 +118,6 @@
     <string name="bus">Bus</string>
     <string name="tram">Tramway</string>
 
-    <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.
-    </string>
     <string name="menu_carte">Carte</string>
 
     <string name="erreurDBOnSdCard">La SdCard est inaccessible, merci de réessayer plus tard, si le problème persiste,
@@ -153,17 +133,11 @@
     <string name="suppressionDB">Suppression des anciennes données en cours...</string>
     <string name="preferences">Préférences</string>
 
-    <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de
-        la place avec de charger d\'autres données.
-    </string>
-
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
     <string name="dialogRequeteParkRelais">Interrogation de la CUB.</string>
     <string name="btn_parking">Parkings</string>
 
     <string name="notifUpdateOn">Notification pour les mises à jour</string>
-    <string name="creerNotif">Créer une alerte.</string>
-    <string name="tempsRestant">Notification dans %1$s.</string>
     <string name="notifText">Ligne %1$s, arrêt %2$s arrive dans %3$s minutes</string>
     <string name="notifShortText">Ligne %1$s, arrêt %2$s</string>
     <string name="notifDescriptionText">Arrive dans %1$s minutes</string>

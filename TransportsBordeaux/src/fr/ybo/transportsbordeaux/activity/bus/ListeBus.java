@@ -26,9 +26,9 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.LigneAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 /**
@@ -36,7 +36,7 @@ import fr.ybo.transportscommun.donnees.modele.Ligne;
  *
  * @author ybonnel
  */
-public class ListeBus extends MenuAccueil.ListActivity {
+public class ListeBus extends BaseListActivity {
 
     private void constructionListe() {
         List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");
@@ -59,6 +59,7 @@ public class ListeBus extends MenuAccueil.ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         constructionListe();
 
         // Look up the AdView as a resource and load a request.

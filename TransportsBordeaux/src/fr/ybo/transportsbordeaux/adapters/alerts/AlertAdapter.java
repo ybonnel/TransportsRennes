@@ -25,8 +25,8 @@ import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.modele.Alert;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 /**
  * Adapteur pour les alerts.

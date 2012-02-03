@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
+  Contributors:
+      ybonnel - initial API and implementation
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/iconeLigne"
+        android:layout_width="44dip"
+        android:layout_height="50dip"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingBottom="5dip"
+        android:paddingLeft="2dip"
+        android:paddingRight="2dip"
+        android:paddingTop="5dip" />
+
+    <HorizontalScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:layout_toRightOf="@id/iconeLigne" >
+
+        <TextView
+            android:id="@+id/nomLong"
+            android:layout_width="wrap_content"
+            android:layout_height="50dip"
+            android:gravity="center_vertical|left"
+            android:padding="5dip"
+            android:textSize="20dip" />
+    </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/alerte"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/iconeLigne"
+        android:paddingBottom="1dip"
+        android:paddingLeft="2dip"
+        android:paddingTop="2dip"
+        android:src="@android:drawable/ic_dialog_alert" />
+
+    <TextView
+        android:id="@+id/directionEntete"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_below="@id/iconeLigne"
+        android:layout_toRightOf="@id/alerte"
+        android:gravity="center_vertical|left"
+        android:paddingBottom="3dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="6dip"
+        android:paddingTop="5dip"
+        android:text="@string/directionEntete"
+        android:textSize="20dip" />
+
+    <HorizontalScrollView
+        android:id="@+id/directionArretCouranteScroll"
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:layout_below="@id/iconeLigne"
+        android:layout_toRightOf="@id/directionEntete" >
+
+        <TextView
+            android:id="@+id/directionArretCourante"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:drawablePadding="2dip"
+            android:drawableRight="@android:drawable/arrow_down_float"
+            android:gravity="center_vertical|left"
+            android:paddingBottom="3dip"
+            android:paddingRight="5dip"
+            android:paddingTop="5dip"
+            android:text="@string/Toutes"
+            android:textSize="20dip" />
+    </HorizontalScrollView>
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/directionArretCouranteScroll"
+        android:cacheColorHint="#00000000" />
+
+</RelativeLayout>

@@ -13,6 +13,10 @@
  */
 package fr.ybo.transportsbordeaux.activity.map;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +24,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.itineraires.PortionTrajet;
@@ -33,13 +39,9 @@ import fr.ybo.transportsbordeaux.itineraires.Trajet;
 import fr.ybo.transportsbordeaux.map.LineItemizedOverlay;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsbordeaux.util.Coordinate;
-import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportsbordeaux.util.PolylineEncoder;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 public class TrajetOnMap extends MenuAccueil.MapActivity {
 

@@ -29,8 +29,8 @@ import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayParking;
-import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
-import fr.ybo.transportsbordeaux.util.Formatteur;
+import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
+import fr.ybo.transportscommun.util.Formatteur;
 
 public class ParkingsOnMap extends MenuAccueil.MapActivity {
 

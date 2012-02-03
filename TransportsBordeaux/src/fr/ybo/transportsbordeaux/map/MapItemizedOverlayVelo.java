@@ -14,19 +14,21 @@
 package fr.ybo.transportsbordeaux.map;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.OverlayItem;
-import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.Formatteur;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
+import fr.ybo.transportscommun.util.Formatteur;
 
 public class MapItemizedOverlayVelo extends ItemizedOverlay<OverlayItem> {
 

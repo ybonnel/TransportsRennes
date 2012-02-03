@@ -69,8 +69,8 @@ import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
 import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
-import fr.ybo.transportsbordeaux.util.LocationUtil;
-import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportscommun.util.LogYbo;
 
 public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLocationListenner {

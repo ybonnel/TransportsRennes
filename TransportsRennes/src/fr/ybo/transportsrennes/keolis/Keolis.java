@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
@@ -25,7 +26,6 @@ import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
-import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.HttpUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

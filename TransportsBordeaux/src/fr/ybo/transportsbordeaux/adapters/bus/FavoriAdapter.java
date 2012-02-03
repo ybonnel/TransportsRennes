@@ -27,10 +27,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportscommun.util.LogYbo;
 
 public class FavoriAdapter extends BaseAdapter {

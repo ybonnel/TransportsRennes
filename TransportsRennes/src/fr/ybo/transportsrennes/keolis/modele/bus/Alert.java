@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import fr.ybo.transportsrennes.util.Formatteur;
+import fr.ybo.transportscommun.util.Formatteur;
 
 /**
  * Class représentant une alerte Keolis.

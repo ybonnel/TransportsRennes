@@ -22,18 +22,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.bus.LigneAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 /**
  * Activité affichant les lignes de bus..
  *
  * @author ybonnel
  */
-public class BusShortcutPicker extends MenuAccueil.ListActivity {
+public class BusShortcutPicker extends BaseListActivity {
 
     private void constructionListe() {
         List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");

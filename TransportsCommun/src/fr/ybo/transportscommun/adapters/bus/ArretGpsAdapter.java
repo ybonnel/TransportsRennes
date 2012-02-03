@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.adapters.bus;
+package fr.ybo.transportscommun.adapters.bus;
 
 import java.util.Calendar;
 import java.util.List;
@@ -24,13 +24,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportscommun.util.IconeLigne;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.WidgetUpdateUtil;
 
 /**
  * Adapteur pour les arrets pas positionnement GPS..
@@ -85,10 +85,10 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
         } else {
             holder = (ArretGpsAdapter.ViewHolder) convertView1.getTag();
         }
-		holder.arretDirection.setTextColor(TransportsRennesApplication.getTextColor(myContext));
-		holder.nomArret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
-		holder.distance.setTextColor(TransportsRennesApplication.getTextColor(myContext));
-		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
+		holder.arretDirection.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.nomArret.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.distance.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
         holder.arretDirection.setText(arret.favori.direction);
         holder.nomArret.setText(arret.nom);
@@ -101,7 +101,7 @@ public class ArretGpsAdapter extends ArrayAdapter<Arret> {
         try {
             List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
                     arret.favori.arretId, arret.favori.macroDirection, 1, calendar);
-            return prochainsDeparts.isEmpty() ? "" : WidgetUpdateUtil.formatterCalendar(myContext,
+			return prochainsDeparts.isEmpty() ? "" : Formatteur.formatterCalendar(myContext,
                     prochainsDeparts.get(0).getHoraire(), now);
         } catch (SQLiteException ignore) {
             return "";

@@ -14,13 +14,13 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
-import fr.ybo.transportsrennes.R;
+import fr.ybo.transportscommun.R;
 
 public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
 

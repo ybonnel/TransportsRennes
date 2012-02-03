@@ -13,9 +13,4 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <item type="id" name="ajoutFavori"/>
-    <item type="id" name="supprimerFavori"/>
-    <item type="id" name="deplacerGroupe"/>
-    <item type="id" name="creerNotif"/>
-    <item type="id" name="supprimerNotif"/>
 </resources>

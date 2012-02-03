@@ -39,9 +39,9 @@ import fr.ybo.transportsbordeaux.map.MyGeoItem;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.MarkerBitmap;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.util.LogYbo;
 
 public class AllOnMap extends MenuAccueil.MapActivity {

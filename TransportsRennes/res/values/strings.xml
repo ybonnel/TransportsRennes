@@ -26,7 +26,6 @@
         nouveau les horaires que vous avez déjà chargés.
     </string>
     <string name="infoChargementGtfs">Chargement des données du STAR.</string>
-    <string name="rechercheArrets">Recherche des arrêts de bus.</string>
     <string name="dialogRequeteVeloStar">Interrogation du service LE vélo STAR.</string>
     <string name="dialogRequeteAlerts">Interrogation du STAR.</string>
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
@@ -55,12 +54,8 @@
     <string name="hint_positionCourante">Position courante</string>
     <string name="listevelofavoris_empty">Aucune station favorite trouvée.</string>
     <string name="directionEntete">Direction :</string>
-    <string name="premierAccesLigne">Premier accès à la ligne %1$s, chargement des données.</string>
     <string name="tooMuchFavoris">Déjà trois arrêts favoris sélectionnés</string>
     <string name="justOneFavori">Déjà un arrêt favori sélectionné</string>
-    <string name="activeGps">Pour mieux profiter de cette page, il est préférable d\'activer votre GPS.</string>
-    <string name="ajouterFavori">Ajouter aux favoris</string>
-    <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="favoriUsedByWidget">Un widget utilise ce favori, merci de le supprimer avant de supprimer ce favori.
     </string>
     <string name="chargementLigneFavori">\nChargement de la ligne %1$s dont vous avez des favoris.</string>
@@ -86,8 +81,6 @@
     <!-- Libellés de menus -->
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
-    <string name="menu_orderByName">Ordre alphabétique</string>
-    <string name="menu_orderBySequence">Ordre de la ligne</string>
     <string name="menu_apropos">A propos</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
@@ -97,18 +90,9 @@
     <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
-    <string name="Toutes">Toutes</string>
-    <string name="vers">vers</string>
-    <string name="tropTard">Trop tard!</string>
-    <string name="dans">dans</string>
-    <string name="heures">heures</string>
-    <string name="minutes">minutes</string>
-    <string name="miniHeures">h</string>
-    <string name="miniMinutes">min</string>
     <string name="ferme">Fermé</string>
     <string name="complet">Complet</string>
     <string name="indisponible">Indispo.</string>
-    <string name="chooseDirection">Choisissez une direction</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
     <string name="prochain">Prochain :</string>
@@ -141,22 +125,14 @@
     <string name="nouvelleVersion">Nouvelle version disponible</string>
     <string name="versionDisponible">La version %1$s est disponible!</string>
 
-    <string name="erreurReseau">Une erreur de connection a été détectée, veuillez réessayer plus tard.</string>
-
     <string name="menu_share">Partager</string>
     <string name="shareText">Transports Rennes, l\'application Android pour vous faciliter les Transports Rennais :
         http://goo.gl/ALKs0
     </string>
 
-    <string name="erreurLigneInconue">La ligne %1$s n\'existe plus dans les horaires, merci recharger les données.
-    </string>
-    <string name="noGoogleMap">GoogleMap non trouvé</string>
-
     <string name="notifUpdateOn">Notification pour les mises à jour</string>
     <string name="preferences">Préférences</string>
 
-    <string name="creerNotif">Créer une alerte.</string>
-    <string name="tempsRestant">Notification dans %1$s.</string>
     <string name="notifText">Ligne %1$s, arrêt %2$s arrive dans %3$s minutes</string>
     <string name="notifShortText">Ligne %1$s, arrêt %2$s</string>
     <string name="notifDescriptionText">Arrive dans %1$s minutes</string>
@@ -173,7 +149,4 @@
     <string name="activateDebug">Activer les logs debugs.</string>
     
     
-    <string name="erreurNoSpaceLeft">Vous n\'avez plus de plus de disponible pour charger les données, veuillez faire de
-        la place avec de charger d\'autres données.
-    </string>
 </resources>

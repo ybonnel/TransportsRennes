@@ -15,12 +15,12 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.DetailAlert;
 import fr.ybo.transportsrennes.adapters.alerts.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
-import fr.ybo.transportsrennes.util.ErreurReseau;
 
 public class ListAlerts extends ListFragment {
 

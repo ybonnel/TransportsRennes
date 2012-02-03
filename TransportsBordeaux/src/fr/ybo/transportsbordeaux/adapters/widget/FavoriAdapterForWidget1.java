@@ -25,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 public class FavoriAdapterForWidget1 extends BaseAdapter {
 

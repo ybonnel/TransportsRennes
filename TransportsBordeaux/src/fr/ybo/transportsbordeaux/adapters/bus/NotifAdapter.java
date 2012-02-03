@@ -24,10 +24,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 public class NotifAdapter extends BaseAdapter {
 

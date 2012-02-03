@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.map;
+package fr.ybo.transportscommun.map;
 
 
 import java.util.ArrayList;
@@ -28,9 +28,8 @@ import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
-import fr.ybo.transportsrennes.activity.bus.DetailArret;
-import fr.ybo.transportsrennes.util.TransportsRennesException;
 
 public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
 
@@ -83,7 +82,8 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
         builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
-                Intent intent = new Intent(mContext, DetailArret.class);
+				Intent intent = new Intent(mContext, AbstractTransportsApplication.getDonnesSpecifiques()
+						.getDetailArretClass());
                 intent.putExtra("favori", favori);
                 mContext.startActivity(intent);
             }
@@ -105,7 +105,8 @@ public class MapItemizedOverlayArret extends ItemizedOverlay<OverlayItem> {
         try {
             return super.onTouchEvent(pEvent, pMapView);
         } catch (NullPointerException nullPointerException) {
-            throw new TransportsRennesException("NullPointer détecté, context : ligneId=" + ligneId + ", direction='" + direction + "'", nullPointerException);
+			throw new RuntimeException("NullPointer détecté, context : ligneId=" + ligneId + ", direction='"
+					+ direction + "'", nullPointerException);
         }
     }
 }

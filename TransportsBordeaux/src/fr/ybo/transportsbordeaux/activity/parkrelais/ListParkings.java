@@ -42,9 +42,9 @@ import fr.ybo.transportsbordeaux.adapters.parkrelais.ParkingAdapter;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.tbcapi.Keolis;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
-import fr.ybo.transportsbordeaux.util.LocationUtil;
-import fr.ybo.transportsbordeaux.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
+import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 
 /**
  * Activité de type liste permettant de lister les parcs relais par distances de

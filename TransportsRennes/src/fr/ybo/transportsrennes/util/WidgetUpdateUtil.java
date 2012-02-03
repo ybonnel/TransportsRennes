@@ -26,6 +26,7 @@ import android.widget.RemoteViews;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget;
@@ -130,19 +131,19 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant1_1arret,
                     prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts.get(0).getHoraire(), now));
             remoteViews.setTextViewText(
                     R.id.tempsRestant2_1arret,
                     prochainsDeparts.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts.get(1).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts.get(1).getHoraire(), now));
             remoteViews.setTextViewText(
                     R.id.tempsRestant3_1arret,
                     prochainsDeparts.size() < 3 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts.get(2).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts.get(2).getHoraire(), now));
             remoteViews.setTextViewText(
                     R.id.tempsRestant4_1arret,
                     prochainsDeparts.size() < 4 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts.get(3).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts.get(3).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
@@ -158,11 +159,11 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant11_2arret,
                     prochainsDeparts1.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts1.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts1.get(0).getHoraire(), now));
             remoteViews.setTextViewText(
                     R.id.tempsRestant12_2arret,
                     prochainsDeparts1.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts1.get(1).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts1.get(1).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
@@ -172,11 +173,11 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant21_2arret,
                     prochainsDeparts2.size() < 1 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts2.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts2.get(0).getHoraire(), now));
             remoteViews.setTextViewText(
                     R.id.tempsRestant22_2arret,
                     prochainsDeparts2.size() < 2 ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts2.get(1).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts2.get(1).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
@@ -191,7 +192,7 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant1_3arret,
                     prochainsDeparts1.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts1.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts1.get(0).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
@@ -202,7 +203,7 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant2_3arret,
                     prochainsDeparts2.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts2.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts2.get(0).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
@@ -212,46 +213,9 @@ public class WidgetUpdateUtil {
             remoteViews.setTextViewText(
                     R.id.tempsRestant3_3arret,
                     prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
-                            + formatterCalendar(context, prochainsDeparts3.get(0).getHoraire(), now));
+							+ Formatteur.formatterCalendar(context, prochainsDeparts3.get(0).getHoraire(), now));
         } catch (SQLiteException ignore) {
 
         }
-    }
-
-    public static String formatterCalendar(Context context, int prochainDepart, int now) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int tempsEnMinutes = prochainDepart - now;
-        if (tempsEnMinutes < 0) {
-            stringBuilder.append(context.getString(R.string.tropTard));
-        } else {
-            int heures = tempsEnMinutes / 60;
-            int minutes = tempsEnMinutes - heures * 60;
-            boolean tempsAjoute = false;
-            if (heures > 0) {
-                stringBuilder.append(heures);
-                stringBuilder.append(' ');
-                stringBuilder.append(context.getString(R.string.miniHeures));
-                stringBuilder.append(' ');
-                tempsAjoute = true;
-            }
-            if (minutes > 0) {
-                if (heures <= 0) {
-                    stringBuilder.append(minutes);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(context.getString(R.string.miniMinutes));
-                } else {
-                    if (minutes < 10) {
-                        stringBuilder.append('0');
-                    }
-                    stringBuilder.append(minutes);
-                }
-                tempsAjoute = true;
-            }
-            if (!tempsAjoute) {
-                stringBuilder.append("0 ");
-                stringBuilder.append(context.getString(R.string.miniMinutes));
-            }
-        }
-        return stringBuilder.toString();
     }
 }

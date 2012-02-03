@@ -26,6 +26,7 @@ import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
+import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportscommun.util.LogYbo;
 
 public class Widget21UpdateUtil {

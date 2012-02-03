@@ -25,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.util.Formatteur;
 
 /**
  * Adapteur pour les alerts.

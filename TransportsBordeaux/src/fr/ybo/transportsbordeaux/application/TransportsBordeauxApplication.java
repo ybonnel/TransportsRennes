@@ -36,6 +36,7 @@ import fr.ybo.opentripplanner.client.OpenTripPlannerException;
 import fr.ybo.opentripplanner.client.modele.GraphMetadata;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.TransportsBordeaux;
+import fr.ybo.transportsbordeaux.activity.bus.DetailArret;
 import fr.ybo.transportsbordeaux.activity.bus.TabFavoris;
 import fr.ybo.transportsbordeaux.activity.preferences.PreferencesBordeaux;
 import fr.ybo.transportsbordeaux.activity.velos.ListStationsFavoris;
@@ -49,6 +50,7 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.DonnesSpecifiques;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 
@@ -119,6 +121,11 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 			@Override
 			public int getIconeLigne() {
 				return R.drawable.icone_bus;
+			}
+
+			@Override
+			public Class<? extends BaseListActivity> getDetailArretClass() {
+				return DetailArret.class;
 			}
 		};
 	}

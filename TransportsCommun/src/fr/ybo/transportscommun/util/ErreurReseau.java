@@ -14,30 +14,25 @@
  * Contributors:
  *     ybonnel - initial API and implementation
  */
-package fr.ybo.transportsbordeaux.util;
+package fr.ybo.transportscommun.util;
 
+public class ErreurReseau extends Exception {
 
-import fr.ybo.transportsbordeaux.R;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class IconeLigne {
-
-	private IconeLigne() {
+	public ErreurReseau(String detailMessage, Throwable throwable) {
+		super(detailMessage, throwable);
 	}
 
-	public static int getIconeResource(String nomCourt) {
-		try {
-			return R.drawable.class.getDeclaredField('i' + nomCourt.toLowerCase()).getInt(null);
-		} catch (Exception ignore) {
-			return -1;
-		}
+	public ErreurReseau() {
+		super("Erreur réseau détectée");
 	}
 
-
-	public static int getMarkeeResource(String nomCourt) {
-		try {
-			return R.drawable.class.getDeclaredField('m' + nomCourt.toLowerCase()).getInt(null);
-		} catch (Exception ignore) {
-			return -1;
-		}
+	public ErreurReseau(Throwable throwable) {
+		super(throwable);
 	}
+
 }

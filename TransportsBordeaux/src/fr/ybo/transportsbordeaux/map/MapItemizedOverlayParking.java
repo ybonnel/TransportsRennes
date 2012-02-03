@@ -30,7 +30,7 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsbordeaux.database.modele.Parking;
-import fr.ybo.transportsbordeaux.util.Formatteur;
+import fr.ybo.transportscommun.util.Formatteur;
 
 public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
 

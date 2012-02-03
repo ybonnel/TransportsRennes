@@ -40,11 +40,14 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.DonnesSpecifiques;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 import fr.ybo.transportscommun.donnees.modele.Bounds;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
+import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
@@ -55,7 +58,6 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.services.UpdateTimeService;
 import fr.ybo.transportsrennes.util.AlarmReceiver;
 import fr.ybo.transportsrennes.util.CalculItineraires;
-import fr.ybo.transportsrennes.util.ErreurReseau;
 
 /**
  * Classe de l'application permettant de stocker les attributs globaux à
@@ -85,6 +87,11 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 			@Override
 			public int getIconeLigne() {
 				return R.drawable.icone_bus;
+			}
+
+			@Override
+			public Class<? extends BaseListActivity> getDetailArretClass() {
+				return DetailArret.class;
 			}
 		};
 	}

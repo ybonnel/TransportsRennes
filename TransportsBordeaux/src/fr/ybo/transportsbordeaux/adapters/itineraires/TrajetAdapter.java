@@ -13,6 +13,9 @@
  */
 package fr.ybo.transportsbordeaux.adapters.itineraires;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +28,7 @@ import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.itineraires.PortionTrajet;
 import fr.ybo.transportsbordeaux.itineraires.Trajet;
-import fr.ybo.transportsbordeaux.util.IconeLigne;
-
-import java.text.SimpleDateFormat;
-import java.util.List;
+import fr.ybo.transportscommun.util.IconeLigne;
 
 public class TrajetAdapter extends ArrayAdapter<Trajet> {
 

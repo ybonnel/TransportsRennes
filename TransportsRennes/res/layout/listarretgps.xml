@@ -16,20 +16,25 @@
       ybonnel - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
-    <include layout="@layout/actionbar"/>
-    <EditText android:id="@+id/edittext_search"
-              android:layout_height="wrap_content"
-              android:layout_width="fill_parent"
-              android:inputType="textNoSuggestions"
-              android:imeOptions="actionSearch"
-              android:visibility="gone"
-              android:hint="@string/hint_rechercherarret"/>
-    <ListView android:id="@id/android:list"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:cacheColorHint="#00000000"
-            />
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/actionbar" />
+
+    <EditText
+        android:id="@+id/edittext_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_rechercherarret"
+        android:imeOptions="actionSearch"
+        android:inputType="textNoSuggestions"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:cacheColorHint="#00000000" />
+
 </LinearLayout>

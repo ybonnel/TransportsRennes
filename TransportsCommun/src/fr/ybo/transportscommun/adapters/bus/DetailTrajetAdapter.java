@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.adapters.bus;
+package fr.ybo.transportscommun.adapters.bus;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -20,7 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-import fr.ybo.transportsrennes.R;
+import fr.ybo.transportscommun.R;
 
 public class DetailTrajetAdapter extends CursorAdapter {
 

@@ -28,4 +28,29 @@
     <item type="id" name="menu_import"/>
     <item type="id" name="menu_export"/>
     
+    <item type="id" name="nomLong"/>
+    <item type="id" name="detailArret_nomArret"/>
+    <item type="id" name="imageCorrespondance"/>
+    <item type="id" name="detailCorrespondance"/>
+    <item type="id" name="alerte"/>
+    <item type="id" name="arretgps_direction"/>
+    <item type="id" name="arretgps_distance"/>
+    <item type="id" name="arretgps_nomArret"/>
+    <item type="id" name="arretgps_tempsRestant"/>
+
+    <item type="id" name="ajoutFavori"/>
+    <item type="id" name="supprimerFavori"/>
+    <item type="id" name="deplacerGroupe"/>
+    <item type="id" name="creerNotif"/>
+    <item type="id" name="supprimerNotif"/>
+    <item type="id" name="menu_google_map"/>
+    <item type="id" name="menu_choix_date"/>
+    <item type="id" name="detailArret_heureProchain"/>
+    <item type="id" name="detailArret_tempsRestant"/>
+    <item type="id" name="detailArret_scrolling"/>
+    <item type="id" name="detailCorrespondance_scroll"/>
+    <item type="id" name="detailTrajet_nomTrajet"/>
+    <item type="id" name="menu_order"/>
+    <item type="id" name="directionArretCourante"/>
+    <item type="id" name="directionArretCouranteScroll"/>
 </resources>
