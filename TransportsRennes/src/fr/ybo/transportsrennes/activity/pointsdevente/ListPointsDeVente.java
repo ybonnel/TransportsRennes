@@ -32,13 +32,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Searchable;
+import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.pointsdevente.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.util.ErreurReseau;
-import fr.ybo.transportsrennes.util.LocationUtil;
-import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**

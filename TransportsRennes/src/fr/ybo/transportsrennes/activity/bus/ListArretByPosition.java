@@ -41,15 +41,15 @@ import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
+import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.NoSpaceLeftException;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
 import fr.ybo.transportsrennes.adapters.bus.ArretGpsAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
-import fr.ybo.transportsrennes.util.LocationUtil;
-import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil;
 import fr.ybo.transportsrennes.util.UpdateTimeUtil.UpdateTime;
 

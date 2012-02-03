@@ -38,6 +38,8 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
+import fr.ybo.transportscommun.util.LocationUtil;
+import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.velos.VeloAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -45,44 +47,38 @@ import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.util.ErreurReseau;
 import fr.ybo.transportsrennes.util.Formatteur;
-import fr.ybo.transportsrennes.util.LocationUtil;
-import fr.ybo.transportsrennes.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les stations pas distances de la
  * position actuelle.
- *
+ * 
  * @author ybonnel
  */
 public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
 		Refreshable {
 
-    /**
-     * Permet d'accéder aux apis keolis.
-     */
-    private final Keolis keolis = Keolis.getInstance();
+	/**
+	 * Permet d'accéder aux apis keolis.
+	 */
+	private final Keolis keolis = Keolis.getInstance();
 
-    /**
-     * Liste des stations.
-     */
-    private List<Station> stationIntent;
-    private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
-    private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
+	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
+	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
 
-    private LocationUtil locationUtil;
+	private LocationUtil locationUtil;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        locationUtil.activeGps();
-    }
+	@Override
+	protected void onResume() {
+		super.onResume();
+		locationUtil.activeGps();
+	}
 
-    @Override
-    protected void onPause() {
-        locationUtil.desactiveGps();
-        super.onPause();
-    }
+	@Override
+	protected void onPause() {
+		locationUtil.desactiveGps();
+		super.onPause();
+	}
 
 	private String currentQuery = "";
 
@@ -90,98 +86,56 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	public void updateQuery(String newQuery) {
 		currentQuery = newQuery;
 		String query = newQuery.toUpperCase();
-        stationsFiltrees.clear();
-        synchronized (stations) {
-            for (Station station : stations) {
-                if (station.name.toUpperCase().contains(query.toUpperCase())) {
-                    stationsFiltrees.add(station);
-                }
-            }
-        }
-        ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
+		stationsFiltrees.clear();
+		synchronized (stations) {
+			for (Station station : stations) {
+				if (station.name.toUpperCase().contains(query.toUpperCase())) {
+					stationsFiltrees.add(station);
+				}
+			}
+		}
+		((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
 
-    }
+	}
 
-    private ListView listView;
+	private ListView listView;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.liststations);
-		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
-        locationUtil = new LocationUtil(this, this);
-        stationIntent = (List<Station>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
-                .getSerializable("stations"));
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
-        setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
-        listView = getListView();
-        listView.setFastScrollEnabled(true);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-                Station station = veloAdapter.getItem(position);
-                String lat = Double.toString(station.getLatitude());
-                String lon = Double.toString(station.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                } catch (ActivityNotFoundException activityNotFound) {
-                    Toast.makeText(ListStationsByPosition.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        listView.setTextFilterEnabled(true);
-        registerForContextMenu(listView);
-        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
-
-            @Override
-            protected void myDoBackground() throws ErreurReseau {
-                List<Station> stationsTmp = (stationIntent == null ? keolis.getStations() : stationIntent);
-                synchronized (stations) {
-                    stations.clear();
-                    stations.addAll(stationsTmp);
-                    Collections.sort(stations, new Comparator<Station>() {
-                        public int compare(Station o1, Station o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
-                    stationsFiltrees.clear();
-                    stationsFiltrees.addAll(stations);
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                updateLocation(locationUtil.getCurrentLocation());
-                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                super.onPostExecute(result);
-            }
-        }.execute();
-        if (!locationUtil.activeGps()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-        }
-    }
-
+	@SuppressWarnings("unchecked")
 	@Override
-	public void refresh() {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.liststations);
+		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
+		locationUtil = new LocationUtil(this, this);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
+		listView = getListView();
+		listView.setFastScrollEnabled(true);
+
+		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+				VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				Station station = veloAdapter.getItem(position);
+				String lat = Double.toString(station.getLatitude());
+				String lon = Double.toString(station.getLongitude());
+				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
+				try {
+					startActivity(new Intent(Intent.ACTION_VIEW, uri));
+				} catch (ActivityNotFoundException activityNotFound) {
+					Toast.makeText(ListStationsByPosition.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				}
+			}
+		});
+
+		listView.setTextFilterEnabled(true);
+		registerForContextMenu(listView);
+
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				Collection<Station> stationsTmp;
-				if (stationIntent == null) {
-					stationsTmp = keolis.getStations();
-				} else {
-					Collection<String> ids = new ArrayList<String>(10);
-					for (Station station : stationIntent) {
-						ids.add(station.number);
-					}
-					stationsTmp = keolis.getStationByNumbers(ids);
-				}
+				List<Station> stationsTmp = keolis.getStations();
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
@@ -195,7 +149,41 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				}
 			}
 
-            @Override
+			@Override
+			protected void onPostExecute(Void result) {
+				updateLocation(locationUtil.getCurrentLocation());
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				super.onPostExecute(result);
+			}
+		}.execute();
+		if (!locationUtil.activeGps()) {
+			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	@Override
+	public void refresh() {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
+
+			@Override
+			protected void myDoBackground() throws ErreurReseau {
+				Collection<Station> stationsTmp;
+				stationsTmp = keolis.getStations();
+
+				synchronized (stations) {
+					stations.clear();
+					stations.addAll(stationsTmp);
+					Collections.sort(stations, new Comparator<Station>() {
+						public int compare(Station o1, Station o2) {
+							return o1.name.compareToIgnoreCase(o2.name);
+						}
+					});
+					stationsFiltrees.clear();
+					stationsFiltrees.addAll(stations);
+				}
+			}
+
+			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
 				updateQuery(currentQuery);
@@ -205,9 +193,9 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		}.execute((Void) null);
 	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
 		if (item.getItemId() == R.id.menu_google_map) {
 			if (!stationsFiltrees.isEmpty()) {
 				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
@@ -217,58 +205,58 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				startActivity(intent);
 			}
 		}
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == android.R.id.list) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Station station = (Station) getListAdapter().getItem(info.position);
-            VeloFavori veloFavori = new VeloFavori();
-            veloFavori.number = station.number;
-            veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
-            menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
-            menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
-                    veloFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.suprimerFavori));
-        }
-    }
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		if (v.getId() == android.R.id.list) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			Station station = (Station) getListAdapter().getItem(info.position);
+			VeloFavori veloFavori = new VeloFavori();
+			veloFavori.number = station.number;
+			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
+			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
+			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
+					veloFavori == null ? getString(R.string.ajouterFavori) : getString(R.string.suprimerFavori));
+		}
+	}
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Station station;
-        VeloFavori veloFavori;
-        switch (item.getItemId()) {
-            case R.id.ajoutFavori:
-                station = (Station) getListAdapter().getItem(info.position);
-                veloFavori = new VeloFavori();
-                veloFavori.number = station.number;
-                TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
-                return true;
-            case R.id.supprimerFavori:
-                station = (Station) getListAdapter().getItem(info.position);
-                veloFavori = new VeloFavori();
-                veloFavori.number = station.number;
-                TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		Station station;
+		VeloFavori veloFavori;
+		switch (item.getItemId()) {
+			case R.id.ajoutFavori:
+				station = (Station) getListAdapter().getItem(info.position);
+				veloFavori = new VeloFavori();
+				veloFavori.number = station.number;
+				TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
+				return true;
+			case R.id.supprimerFavori:
+				station = (Station) getListAdapter().getItem(info.position);
+				veloFavori = new VeloFavori();
+				veloFavori.number = station.number;
+				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 
-    public void updateLocation(Location location) {
-        if (location == null) {
-            return;
-        }
-        synchronized (stations) {
-            for (Station station : stations) {
-                station.calculDistance(location);
-            }
-            Collections.sort(stations, new Station.ComparatorDistance());
-        }
+	public void updateLocation(Location location) {
+		if (location == null) {
+			return;
+		}
+		synchronized (stations) {
+			for (Station station : stations) {
+				station.calculDistance(location);
+			}
+			Collections.sort(stations, new Station.ComparatorDistance());
+		}
 		updateQuery(currentQuery);
-        ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-    }
+		((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+	}
 }

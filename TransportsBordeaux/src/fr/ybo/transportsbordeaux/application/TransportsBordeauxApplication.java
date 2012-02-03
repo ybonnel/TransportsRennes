@@ -49,6 +49,7 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.DonnesSpecifiques;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
+import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 
 /**
@@ -194,10 +195,11 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 			case R.id.menu_prefs:
 				activity.startActivity(new Intent(activity, PreferencesBordeaux.class));
 				return true;
-				/*
-				 * case R.id.menu_refresh: if (activity instanceof Refreshable)
-				 * { ((Refreshable) activity).refresh(); } return true;
-				 */
+			case R.id.menu_refresh:
+				if (activity instanceof Refreshable) {
+					((Refreshable) activity).refresh();
+				}
+				return true;
 			default:
 				return false;
 		}

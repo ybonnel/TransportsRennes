@@ -12,7 +12,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.ybo.transportsrennes.util;
+package fr.ybo.transportscommun.util;
 
 import android.content.Context;
 import android.location.Location;
@@ -22,7 +22,6 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import fr.ybo.transportscommun.util.LogYbo;
 
 public class LocationUtil implements LocationListener {
 

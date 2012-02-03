@@ -36,13 +36,14 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportsbordeaux.util.Formatteur;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 
 /**
@@ -50,7 +51,7 @@ import fr.ybo.transportscommun.donnees.modele.VeloFavori;
  *
  * @author ybonnel
  */
-public class ListStationsFavoris extends MenuAccueil.ListActivity {
+public class ListStationsFavoris extends BaseListActivity implements Refreshable {
 
     /**
      * Liste des stations.
@@ -61,6 +62,8 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listvelofavoris);
+		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
+				R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
         ListView listView = getListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,27 +135,10 @@ public class ListStationsFavoris extends MenuAccueil.ListActivity {
         }
     }
 
-    private static final int GROUP_ID = 0;
-    private static final int MENU_REFRESH = Menu.FIRST;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add(GROUP_ID, MENU_REFRESH, Menu.NONE, R.string.menu_refresh);
-        item.setIcon(R.drawable.ic_menu_refresh);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        super.onOptionsItemSelected(item);
-
-        if (item.getItemId() == MENU_REFRESH) {
-            new GetStations().execute((Void) null);
-            return true;
-        }
-        return false;
-    }
+	@Override
+	public void refresh() {
+		new GetStations().execute((Void) null);
+	}
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
