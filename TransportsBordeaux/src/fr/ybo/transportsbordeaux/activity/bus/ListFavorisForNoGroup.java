@@ -11,7 +11,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.ybo.transportsrennes.activity.bus;
+package fr.ybo.transportsbordeaux.activity.bus;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,12 +22,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.donnees.manager.FavorisManager;
 import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 /**
  * @author ybonnel
@@ -94,13 +94,13 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 					}
 					GroupeFavori groupeFavori = new GroupeFavori();
 					groupeFavori.name = value;
-					if (!TransportsRennesApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
+					if (!AbstractTransportsApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
 							|| value.equals(getString(R.string.all))) {
 						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeExistant),
 								Toast.LENGTH_LONG).show();
 						return;
 					}
-					TransportsRennesApplication.getDataBaseHelper().insert(groupeFavori);
+					AbstractTransportsApplication.getDataBaseHelper().insert(groupeFavori);
 					startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
 					ListFavorisForNoGroup.this.finish();
 				}

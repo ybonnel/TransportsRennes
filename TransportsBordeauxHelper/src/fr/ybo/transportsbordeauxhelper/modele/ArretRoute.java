@@ -37,5 +37,7 @@ public class ArretRoute {
 	public int directionId;
 	@BaliseCsv( value = "sequence", adapter = AdapterInteger.class, ordre = 3)
 	public int sequence;
+	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class, ordre = 4)
+	public Integer macroDirection = 0;
 
 }

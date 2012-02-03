@@ -13,45 +13,54 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
-import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TabHost;
+import android.support.v4.app.ListFragment;
 
-import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
+import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
+import fr.ybo.transportsbordeaux.fragments.bus.ListFavoris;
+import fr.ybo.transportscommun.activity.bus.AbstractTabFavoris;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 
-public class TabFavoris extends CapptainTabActivity {
+public class TabFavoris extends AbstractTabFavoris {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tabfavoris);
-        List<GroupeFavori> groupes = TransportsBordeauxApplication.getDataBaseHelper().selectAll(GroupeFavori.class);
-        if (groupes.isEmpty()) {
-            Intent intent = new Intent(this, ListFavoris.class);
-            startActivity(intent);
-            finish();
-            return;
-        }
 
-        TabHost tabHost = getTabHost();
+	@Override
+	protected int getLayout() {
+		return R.layout.tabfavoris;
+	}
 
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        Intent intentTous = new Intent().setClass(this, ListFavoris.class);
-        tabHost.addTab(tabHost.newTabSpec("all").setIndicator(getString(R.string.all)).setContent(intentTous));
+	@Override
+	protected void setupActionBar() {
+		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
+	}
 
-        // Do the same for the other tabs
-        for (GroupeFavori groupe : groupes) {
-            Intent intent = new Intent().setClass(this, ListFavoris.class);
-            intent.putExtra("groupe", groupe.name);
-            tabHost.addTab(tabHost.newTabSpec(groupe.name).setIndicator(groupe.name).setContent(intent));
-        }
+	@Override
+	protected Class<? extends BaseFragmentActivity> getListFavorisForNoGroupClass() {
+		return ListFavorisForNoGroup.class;
+	}
 
-        tabHost.setCurrentTab(0);
-    }
+	@Override
+	protected Class<? extends ListFragment> getListFavoris() {
+		return ListFavoris.class;
+	}
+
+	@Override
+	protected void loadFavoris() {
+		Intent intent = new Intent(this, LoadingActivity.class);
+		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+		startActivity(intent);
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+	}
+
 }

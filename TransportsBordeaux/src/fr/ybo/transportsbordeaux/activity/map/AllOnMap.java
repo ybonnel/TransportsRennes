@@ -144,6 +144,7 @@ public class AllOnMap extends MenuAccueil.MapActivity {
                     arret.favori.nomCourt = cursor.getString(ligneNomCourtIndex);
                     arret.favori.nomLong = cursor.getString(ligneNomLongIndex);
                     arret.favori.nomArret = arret.nom;
+					arret.favori.macroDirection = 0;
                     arret.favori.arretId = arret.id;
                     arrets.add(arret);
                     clustererForArret.addItem(new MyGeoItem<Arret>(idGeoItem, arret));

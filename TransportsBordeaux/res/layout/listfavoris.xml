@@ -16,22 +16,36 @@
       ybonnel - initial API and implementation
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="vertical" android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:layout_marginBottom="50dip">
-		<ListView android:id="@id/android:list" android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:divider="@android:drawable/divider_horizontal_dim_dark" />
-		<TextView android:id="@id/android:empty"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:layout_alignParentLeft="true" android:gravity="center"
-			android:textSize="18dip" android:padding="10dip" android:text="@string/listfavori_empty" />
-	</LinearLayout>
-	<com.google.ads.AdView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/adView" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" ads:adUnitId="a14dd0387e93eb2"
-		ads:adSize="BANNER" android:layout_gravity="bottom" />
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dip"
+        android:orientation="vertical" >
+
+        <include layout="@layout/actionbar" />
+
+        <fragment
+            android:id="@+id/fragment_alerts"
+            android:name="fr.ybo.transportsbordeaux.fragments.bus.ListFavoris"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+        </fragment>
+    </LinearLayout>
+
+    <com.google.ads.AdView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14dd0387e93eb2" />
 
 </FrameLayout>

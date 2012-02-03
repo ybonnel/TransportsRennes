@@ -25,4 +25,7 @@
     <item type="id" name="layers_button"/>
     <item type="id" name="pager"/>
     
+    <item type="id" name="menu_import"/>
+    <item type="id" name="menu_export"/>
+    
 </resources>

@@ -152,16 +152,6 @@
     </string>
     <string name="noGoogleMap">GoogleMap non trouvé</string>
 
-    <string name="all">Tous</string>
-    <string name="ajouterGroupe">Ajouter un groupe</string>
-    <string name="suprimerGroupe">Supprimer le groupe</string>
-    <string name="ajouter">Ajouter</string>
-    <string name="annuler">Annuler</string>
-    <string name="groupeObligatoire">Le nom du groupe est obligatoire</string>
-    <string name="groupeExistant">Il existe déjà un groupe avec ce nom</string>
-    <string name="deplacerGroupe">Déplacer dans un groupe</string>
-    <string name="chooseGroupe">Choisissez un groupe</string>
-
     <string name="notifUpdateOn">Notification pour les mises à jour</string>
     <string name="preferences">Préférences</string>
 
@@ -179,16 +169,6 @@
     <string name="chooseTheme">Choisissez un thème</string>
     
     <string name="theme">Thème</string>
-    
-    <string name="exportFavoris">Export des favoris</string>
-    <string name="importFavoris">Import des favoris</string>
-    
-    <string name="exportErreurSd">Pas de SDCard détectée, impossible d\'exporter les données</string>
-    <string name="exportResult">Les arrêts favoris ont été exportés dans le répertoire "transportsrennes"</string>
-    <string name="importErreurSd">Pas de SDCard détectée, impossible d\'importer les données</string>
-    <string name="importErreurFichierNonPresent">Le fichier "transportsrennes/arrets_favoris.txt" n\'existe pas</string>
-    <string name="importErreurGenerique">Un erreur est survenue pendant l\'import des favoris : %1$s</string>
-    <string name="importResult">Les favoris ont été importés</string>
     <string name="debug">Debug</string>
     <string name="activateDebug">Activer les logs debugs.</string>
     

@@ -100,6 +100,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
             favori.arretId = getIntent().getExtras().getString("idArret");
             favori.nomArret = getIntent().getExtras().getString("nomArret");
             favori.direction = getIntent().getExtras().getString("direction");
+			favori.macroDirection = 0;
             Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
             if (ligne == null) {
                 finish();
@@ -322,6 +323,7 @@ public class DetailArret extends MenuAccueil.ListActivity {
             arret.favori.direction = cursor.getString(directionIndex);
             arret.nom = cursor.getString(arretNomIndex);
             arret.favori.nomArret = arret.nom;
+			arret.favori.macroDirection = 0;
             arret.latitude = cursor.getDouble(latitudeIndex);
             arret.longitude = cursor.getDouble(longitudeIndex);
             arret.favori.nomCourt = cursor.getString(nomCourtIndex);

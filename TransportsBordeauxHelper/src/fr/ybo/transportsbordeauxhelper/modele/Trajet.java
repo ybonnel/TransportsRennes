@@ -36,4 +36,6 @@ public class Trajet {
 	public String ligneId;
 	@BaliseCsv(value = "direction_id", adapter = AdapterInteger.class)
 	public int directionId;
+	@BaliseCsv(value = "macro_direction", adapter = AdapterInteger.class, ordre = 5)
+	public Integer macroDirection = 0;
 }

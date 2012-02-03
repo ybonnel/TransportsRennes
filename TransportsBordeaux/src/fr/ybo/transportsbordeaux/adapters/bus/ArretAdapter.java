@@ -242,6 +242,7 @@ public class ArretAdapter extends CursorAdapter {
                 arret.favori.direction = cursor.getString(directionIndex);
                 arret.nom = cursor.getString(arretNomIndex);
                 arret.favori.nomArret = arret.nom;
+				arret.favori.macroDirection = 0;
                 arret.latitude = cursor.getDouble(latitudeIndex);
                 arret.longitude = cursor.getDouble(longitudeIndex);
                 arret.favori.nomCourt = cursor.getString(nomCourtIndex);

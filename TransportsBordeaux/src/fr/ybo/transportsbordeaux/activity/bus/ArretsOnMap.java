@@ -108,6 +108,7 @@ public class ArretsOnMap extends MenuAccueil.MapActivity {
             arretFavori.nomCourt = myLigne.nomCourt;
             arretFavori.nomLong = myLigne.nomLong;
             arretFavori.arretId = id;
+			arretFavori.macroDirection = 0;
             itemizedoverlay.addOverlay(overlayitem, arretFavori);
         }
         cursor.close();

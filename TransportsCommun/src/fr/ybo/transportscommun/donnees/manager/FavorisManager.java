@@ -1,4 +1,4 @@
-package fr.ybo.transportsrennes.database;
+package fr.ybo.transportscommun.donnees.manager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,11 +12,11 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.LogYbo;
-import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class FavorisManager {
 
@@ -51,9 +51,12 @@ public class FavorisManager {
 		if (outputFile.exists()) {
 			outputFile.delete();
 		}
-		moteurCsv.writeFile(outputFile, TransportsRennesApplication.getDataBaseHelper().selectAll(ArretFavori.class),
+		moteurCsv.writeFile(outputFile, AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class),
 				ArretFavori.class);
-		Toast.makeText(context, R.string.exportResult, Toast.LENGTH_LONG).show();
+		Toast.makeText(
+				context,
+				context.getString(R.string.exportResult, AbstractTransportsApplication.getDonnesSpecifiques()
+						.getApplicationName()), Toast.LENGTH_LONG).show();
 	}
 
 	public void load(final Context context) {
@@ -89,14 +92,17 @@ public class FavorisManager {
 		try {
 			return new BufferedReader(new FileReader(openCsvFile()));
 		} catch (FileNotFoundException e) {
-			Toast.makeText(context, R.string.importErreurFichierNonPresent, Toast.LENGTH_LONG).show();
+			Toast.makeText(
+					context,
+					context.getString(R.string.importErreurFichierNonPresent, AbstractTransportsApplication
+							.getDonnesSpecifiques().getApplicationName()), Toast.LENGTH_LONG).show();
 			return null;
 		}
 	}
 
 	private File openCsvFile() {
 		File root = Environment.getExternalStorageDirectory();
-		File repertoire = new File(root, "transportsrennes");
+		File repertoire = new File(root, AbstractTransportsApplication.getDonnesSpecifiques().getApplicationName());
 		if (!repertoire.exists()) {
 			repertoire.mkdir();
 		}
@@ -104,7 +110,7 @@ public class FavorisManager {
 	}
 
 	public boolean hasFavorisToLoad() {
-		for (ArretFavori favori : TransportsRennesApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
+		for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
 			if (!Ligne.getLigne(favori.ligneId).isChargee()) {
 				return true;
 			}

@@ -106,6 +106,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             myFavori.nomLong = ligne.nomLong;
             myFavori.direction = direction;
             myFavori.nomArret = nomArret;
+			myFavori.macroDirection = 0;
+			myFavori.macroDirection = 0;
             TransportsBordeauxApplication.getDataBaseHelper().insert(myFavori);
             imageView.setImageResource(android.R.drawable.btn_star_big_on);
             imageView.invalidate();

@@ -239,6 +239,7 @@ public class ListArretByPosition extends MenuAccueil.ListActivity implements Upd
             arret.favori.nomCourt = cursor.getString(nomCourtIndex);
             arret.favori.nomLong = cursor.getString(nomLongIndex);
             arret.favori.nomArret = arret.nom;
+			arret.favori.macroDirection = 0;
             arret.favori.arretId = arret.id;
             arrets.add(arret);
         }

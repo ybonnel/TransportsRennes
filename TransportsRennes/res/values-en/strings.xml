@@ -136,15 +136,6 @@
     <string name="erreurLigneInconue">The Bus line %1$s don\'t exist anymore in schedules, please reload the data.
     </string>
     <string name="noGoogleMap">GoogleMap not found</string>
-    <string name="all">All</string>
-    <string name="ajouterGroupe">Add a new group</string>
-    <string name="suprimerGroupe">Delete the group</string>
-    <string name="ajouter">Add</string>
-    <string name="annuler">Cancel</string>
-    <string name="groupeObligatoire">The group name is mandatory</string>
-    <string name="groupeExistant">There is already a group with that name</string>
-    <string name="deplacerGroupe">Move in a group</string>
-    <string name="chooseGroupe">Choose a group</string>
 
     <string name="notifUpdateOn">Notification for updates</string>
     <string name="preferences">Preferences</string>
@@ -162,16 +153,6 @@
     
     <string name="chooseTheme">Choose a style</string>
     <string name="theme">Style</string>
-    
-    <string name="exportFavoris">Export your favorites</string>
-    <string name="importFavoris">Import your favorites</string>
-    
-    <string name="exportErreurSd">No SDCard detected, the export is impossible</string>
-    <string name="exportResult">The favorites have been exported in the folder "transportsrennes"</string>
-    <string name="importErreurSd">No SDCard detected, the import is impossibl</string>
-    <string name="importErreurFichierNonPresent">The file "transportsrennes/arrets_favoris.txt" doesn\'t exist</string>
-    <string name="importErreurGenerique">An error has been detected : %1$s</string>
-    <string name="importResult">The favorites have been imported with success</string>
     <string name="debug">Debug</string>
     <string name="activateDebug">Activate debug logs.</string>
     
