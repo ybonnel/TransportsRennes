@@ -33,17 +33,17 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.itineraires.PortionTrajet;
 import fr.ybo.transportsbordeaux.itineraires.Trajet;
 import fr.ybo.transportsbordeaux.map.LineItemizedOverlay;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsbordeaux.util.Coordinate;
 import fr.ybo.transportsbordeaux.util.PolylineEncoder;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.util.IconeLigne;
 
-public class TrajetOnMap extends MenuAccueil.MapActivity {
+public class TrajetOnMap extends BaseMapActivity {
 
     private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 

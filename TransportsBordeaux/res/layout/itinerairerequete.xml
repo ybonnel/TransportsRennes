@@ -15,98 +15,153 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
-	<ScrollView android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-			android:orientation="vertical" android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
-		    <TextView android:id="@+id/dateItineraire"
-		              android:layout_height="wrap_content"
-		              android:layout_width="wrap_content"
-		              android:textSize="24dip"
-		              android:textStyle="bold"
-		              android:textColor="#aaaaaa"
-		              android:paddingLeft="5dip"
-		              android:paddingTop="10dip"
-		              android:gravity="center_vertical"
-		              android:drawableRight="@android:drawable/ic_menu_more"/>
-		    <TextView android:id="@+id/heureItineraire"
-		              android:layout_height="wrap_content"
-		              android:layout_width="wrap_content"
-		              android:textSize="24dip"
-		              android:textStyle="bold"
-		              android:textColor="#aaaaaa"
-		              android:paddingRight="5dip"
-		              android:paddingTop="10dip"
-		              android:gravity="center_vertical"
-		              android:drawableRight="@android:drawable/ic_menu_more"
-		              android:layout_alignParentRight="true"/>
-		    <TextView android:id="@+id/textAdresseDepart"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:textSize="20dip"
-		              android:paddingTop="10dip"
-		              android:paddingLeft="5dip"
-		              android:text="@string/textAdresseDepart"
-		              android:layout_below="@id/dateItineraire"/>
-		              
-		    <AutoCompleteTextView android:id="@+id/adresseDepart"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:background="@android:drawable/editbox_background"
-		              android:inputType="textNoSuggestions"
-		              android:imeOptions="normal"
-		              android:completionThreshold="6"
-		              android:hint="@string/hint_positionCourante"
-		              android:layout_below="@id/textAdresseDepart"/>
-		    <TextView android:id="@+id/exempleAdresseDepart"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:textSize="12dip"
-		              android:text="@string/exempleAdresse"
-		              android:layout_below="@id/adresseDepart"/>
-		    <TextView android:id="@+id/textAdresseArrivee"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:textSize="20dip"
-		              android:paddingTop="20dip"
-		              android:paddingLeft="5dip"
-		              android:text="@string/textAdresseArrivee"
-		              android:layout_below="@id/exempleAdresseDepart"/>
-		    <AutoCompleteTextView android:id="@+id/adresseArrivee"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:background="@android:drawable/editbox_background"
-		              android:inputType="textNoSuggestions"
-		              android:imeOptions="normal"
-		              android:completionThreshold="6"
-		              android:hint="@string/hint_positionCourante"
-		              android:layout_below="@id/textAdresseArrivee"/>
-		    <TextView android:id="@+id/exempleAdresseArrivee"
-		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
-		              android:textSize="12dip"
-		              android:text="@string/exempleAdresse"
-		              android:layout_below="@id/adresseArrivee"/>
-		    <CheckBox android:id="@+id/busCheckBox"
-				android:layout_width="wrap_content" android:layout_height="wrap_content"
-				android:text="@string/bus" android:layout_below="@+id/exempleAdresseArrivee"
-				android:layout_alignParentLeft="true" android:layout_marginLeft="32dp"
-				android:layout_marginTop="16dp" android:checked="true"></CheckBox>
-			<CheckBox android:id="@+id/tramCheckBox" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/tram"
-				android:layout_alignTop="@+id/busCheckBox"
-				android:layout_alignParentRight="true" android:layout_marginRight="29dp"
-				android:checked="true"></CheckBox>
-			<Button android:text="@string/Terminer" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:gravity="center"
-				android:id="@+id/itineraireTermine" android:textSize="18dip"
-				android:layout_alignParentRight="true" android:layout_marginRight="15dp"
-				android:layout_marginBottom="16dp" android:layout_below="@id/busCheckBox"
-				android:layout_marginTop="16dp" ></Button>
-		</RelativeLayout>
-	</ScrollView>
-</LinearLayout>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dip"
+        android:orientation="vertical" >
+
+        <include layout="@layout/actionbar" />
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/dateItineraire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@android:drawable/ic_menu_more"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="10dip"
+                    android:textColor="#aaaaaa"
+                    android:textSize="24dip"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/heureItineraire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:drawableRight="@android:drawable/ic_menu_more"
+                    android:gravity="center_vertical"
+                    android:paddingRight="5dip"
+                    android:paddingTop="10dip"
+                    android:textColor="#aaaaaa"
+                    android:textSize="24dip"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textAdresseDepart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dateItineraire"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="10dip"
+                    android:text="@string/textAdresseDepart"
+                    android:textSize="20dip" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/adresseDepart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textAdresseDepart"
+                    android:background="@android:drawable/editbox_background"
+                    android:completionThreshold="6"
+                    android:hint="@string/hint_positionCourante"
+                    android:imeOptions="normal"
+                    android:inputType="textNoSuggestions" />
+
+                <TextView
+                    android:id="@+id/exempleAdresseDepart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/adresseDepart"
+                    android:text="@string/exempleAdresse"
+                    android:textSize="12dip" />
+
+                <TextView
+                    android:id="@+id/textAdresseArrivee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/exempleAdresseDepart"
+                    android:paddingLeft="5dip"
+                    android:paddingTop="20dip"
+                    android:text="@string/textAdresseArrivee"
+                    android:textSize="20dip" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/adresseArrivee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textAdresseArrivee"
+                    android:background="@android:drawable/editbox_background"
+                    android:completionThreshold="6"
+                    android:hint="@string/hint_positionCourante"
+                    android:imeOptions="normal"
+                    android:inputType="textNoSuggestions" />
+
+                <TextView
+                    android:id="@+id/exempleAdresseArrivee"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/adresseArrivee"
+                    android:text="@string/exempleAdresse"
+                    android:textSize="12dip" />
+
+                <CheckBox
+                    android:id="@+id/busCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/exempleAdresseArrivee"
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginTop="16dp"
+                    android:checked="true"
+                    android:text="@string/bus" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/tramCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/busCheckBox"
+                    android:layout_marginRight="29dp"
+                    android:checked="true"
+                    android:text="@string/tram" >
+                </CheckBox>
+
+                <Button
+                    android:id="@+id/itineraireTermine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/busCheckBox"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="@string/Terminer"
+                    android:textSize="18dip" >
+                </Button>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

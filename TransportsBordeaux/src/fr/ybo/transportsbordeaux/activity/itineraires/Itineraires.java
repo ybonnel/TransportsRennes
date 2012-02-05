@@ -18,16 +18,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.activity.map.TrajetOnMap;
 import fr.ybo.transportsbordeaux.adapters.itineraires.TrajetAdapter;
 import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
 import fr.ybo.transportsbordeaux.itineraires.Trajet;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 
-public class Itineraires extends MenuAccueil.ListActivity {
+public class Itineraires extends BaseListActivity {
 
     /**
      * Called when the activity is first created.
@@ -36,6 +38,7 @@ public class Itineraires extends MenuAccueil.ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
                 "itineraireReponse");
         int heureDepart = getIntent().getIntExtra("heureDepart", 0);

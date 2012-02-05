@@ -16,36 +16,53 @@
       ybonnel - initial API and implementation
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	              android:id="@+id/mainlayout"
-	              android:orientation="vertical"
-	              android:layout_width="fill_parent"
-	              android:layout_height="fill_parent" android:layout_marginBottom="50dip">
-	    <ImageView android:layout_width="fill_parent"
-	               android:layout_height="10dip"
-	               android:paddingTop="4dip"
-	               android:paddingBottom="0dip"
-	               android:src="@android:drawable/divider_horizontal_dim_dark"/>
-	    <ListView android:id="@android:id/list"
-	              android:layout_width="fill_parent"
-	              android:layout_height="wrap_content"
-	              android:divider="@android:drawable/divider_horizontal_dim_dark"/>
-	    <TextView android:id="@id/android:empty"
-	              android:layout_width="fill_parent" android:layout_height="fill_parent"
-	              android:layout_below="@id/separateur"
-	              android:layout_alignParentLeft="true"
-	              android:gravity="center"
-	              android:textSize="18dip"
-	              android:padding="10dip"
-	              android:text="@string/itineraires_empty"/>
-	
-	</LinearLayout>
-	<com.google.ads.AdView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/adView" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" ads:adUnitId="a14dd0387e93eb2"
-		ads:adSize="BANNER" android:layout_gravity="bottom" />
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dip"
+        android:orientation="vertical" >
+
+        <include layout="@layout/actionbar" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="10dip"
+            android:paddingBottom="0dip"
+            android:paddingTop="4dip"
+            android:src="@android:drawable/divider_horizontal_dim_dark" />
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:drawable/divider_horizontal_dim_dark" />
+
+        <TextView
+            android:id="@id/android:empty"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/separateur"
+            android:gravity="center"
+            android:padding="10dip"
+            android:text="@string/itineraires_empty"
+            android:textSize="18dip" />
+    </LinearLayout>
+
+    <com.google.ads.AdView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14dd0387e93eb2" />
 
 </FrameLayout>

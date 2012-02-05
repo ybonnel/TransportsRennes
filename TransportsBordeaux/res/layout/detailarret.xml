@@ -16,127 +16,134 @@
       ybonnel - initial API and implementation
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	android:orientation="vertical">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:layout_marginBottom="30dip" >
+    android:orientation="vertical" >
 
-    <include layout="@layout/actionbar" />
-
-    <RelativeLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="50dip"
+        android:orientation="vertical" >
 
-        <ImageView
-            android:id="@id/iconeLigne"
-            android:layout_width="44dip"
-            android:layout_height="50dip"
-            android:gravity="center_vertical|center_horizontal"
-            android:paddingBottom="5dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip"
-            android:paddingTop="5dip" />
+        <include layout="@layout/actionbar" />
 
-        <HorizontalScrollView
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:layout_toRightOf="@id/iconeLigne" >
+            android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@id/nomLong"
+            <ImageView
+                android:id="@id/iconeLigne"
+                android:layout_width="44dip"
+                android:layout_height="50dip"
+                android:gravity="center_vertical|center_horizontal"
+                android:paddingBottom="5dip"
+                android:paddingLeft="2dip"
+                android:paddingRight="2dip"
+                android:paddingTop="5dip" />
+
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="50dip"
+                android:layout_toRightOf="@id/iconeLigne" >
+
+                <TextView
+                    android:id="@id/nomLong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="center_vertical|left"
+                    android:padding="5dip"
+                    android:textSize="20dip" />
+            </HorizontalScrollView>
+
+            <ImageView
+                android:id="@id/imageCorrespondance"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:gravity="center_vertical|left"
-                android:padding="5dip"
-                android:textSize="20dip" />
-        </HorizontalScrollView>
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/iconeLigne"
+                android:paddingBottom="10dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:src="@drawable/arrow_right_float" />
 
-        <ImageView
-            android:id="@id/imageCorrespondance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/iconeLigne"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="10dip"
-            android:src="@drawable/arrow_right_float" />
-
-        <ImageView
-            android:id="@id/alerte"
-            android:layout_width="wrap_content"
-            android:layout_height="38dip"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/iconeLigne"
-            android:paddingBottom="2dip"
-            android:paddingLeft="5dip"
-            android:paddingTop="2dip"
-            android:src="@android:drawable/ic_dialog_alert" />
-
-        <HorizontalScrollView
-            android:id="@id/detailArret_scrolling"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/iconeLigne"
-            android:layout_toLeftOf="@id/imageCorrespondance"
-            android:layout_toRightOf="@id/alerte" >
-
-            <TextView
-                android:id="@id/detailArret_nomArret"
+            <ImageView
+                android:id="@id/alerte"
                 android:layout_width="wrap_content"
                 android:layout_height="38dip"
-                android:gravity="center_vertical|left"
-                android:paddingBottom="3dip"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/iconeLigne"
+                android:paddingBottom="2dip"
                 android:paddingLeft="5dip"
-                android:paddingRight="5dip"
-                android:paddingTop="5dip"
-                android:textSize="20dip" />
-        </HorizontalScrollView>
+                android:paddingTop="2dip"
+                android:src="@android:drawable/ic_dialog_alert" />
 
-        <ScrollView
-            android:id="@id/detailCorrespondance_scroll"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/detailArret_scrolling" >
-
-            <LinearLayout
-                android:id="@id/detailCorrespondance"
+            <HorizontalScrollView
+                android:id="@id/detailArret_scrolling"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="invisible" />
-        </ScrollView>
+                android:layout_below="@id/iconeLigne"
+                android:layout_toLeftOf="@id/imageCorrespondance"
+                android:layout_toRightOf="@id/alerte" >
 
-        <ListView
-            android:id="@id/android:list"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/detailCorrespondance_scroll"
-            android:cacheColorHint="#00000000" />
+                <TextView
+                    android:id="@id/detailArret_nomArret"
+                    android:layout_width="wrap_content"
+                    android:layout_height="38dip"
+                    android:gravity="center_vertical|left"
+                    android:paddingBottom="3dip"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="5dip"
+                    android:paddingTop="5dip"
+                    android:textSize="20dip" />
+            </HorizontalScrollView>
 
-        <TextView
-            android:id="@id/android:empty"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/separateur"
-            android:gravity="center"
-            android:padding="10dip"
-            android:text="@string/detailarret_empty"
-            android:textSize="18dip" />
-    </RelativeLayout>
+            <ScrollView
+                android:id="@id/detailCorrespondance_scroll"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detailArret_scrolling" >
 
-</LinearLayout>
-	<com.google.ads.AdView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/adView" android:layout_width="fill_parent"
-		android:layout_height="wrap_content" ads:adUnitId="a14dd0387e93eb2"
-		ads:adSize="BANNER" android:layout_gravity="bottom" />
+                <LinearLayout
+                    android:id="@id/detailCorrespondance"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="invisible" />
+            </ScrollView>
+
+            <ListView
+                android:id="@id/android:list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/detailCorrespondance_scroll"
+                android:cacheColorHint="#00000000" />
+
+            <TextView
+                android:id="@id/android:empty"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@id/separateur"
+                android:gravity="center"
+                android:padding="10dip"
+                android:text="@string/detailarret_empty"
+                android:textSize="18dip" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <com.google.ads.AdView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/adView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="a14dd0387e93eb2" />
 
 </FrameLayout>

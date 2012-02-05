@@ -48,6 +48,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -63,17 +65,17 @@ import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.opentripplanner.client.modele.TraverseMode;
 import fr.ybo.opentripplanner.client.modele.TraverseModeSet;
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
 import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportscommun.util.LogYbo;
 
-public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLocationListenner {
+public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {
 
     private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);
 
@@ -103,6 +105,7 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itinerairerequete);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         locationUtil = new LocationUtil(this, this);
         calendar = Calendar.getInstance();
@@ -164,6 +167,9 @@ public class ItineraireRequete extends MenuAccueil.Activity implements UpdateLoc
                 }
             }
         });
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 
     private void terminer() {
