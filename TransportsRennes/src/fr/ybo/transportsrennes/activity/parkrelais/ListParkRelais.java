@@ -13,34 +13,12 @@
  */
 package fr.ybo.transportsrennes.activity.parkrelais;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.location.Location;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
-import fr.ybo.transportscommun.activity.commun.Refreshable;
-import fr.ybo.transportscommun.activity.commun.Searchable;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
+import fr.ybo.transportscommun.activity.parkings.AbstractListParkings;
 import fr.ybo.transportscommun.util.ErreurReseau;
-import fr.ybo.transportscommun.util.LocationUtil;
-import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
-import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.adapters.parkrelais.ParkRelaiAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 
@@ -50,188 +28,32 @@ import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
  *
  * @author ybonnel
  */
-public class ListParkRelais extends BaseListActivity implements UpdateLocationListenner, Searchable, Refreshable {
+public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 
-    /**
-     * Permet d'accéder aux apis keolis.
-     */
-    private final Keolis keolis = Keolis.getInstance();
-
-    /**
-     * Liste des stations.
-     */
-    private List<ParkRelai> parkRelaiIntent;
-    private final List<ParkRelai> parkRelais = Collections.synchronizedList(new ArrayList<ParkRelai>(4));
-    private final List<ParkRelai> parkRelaisFiltres = Collections.synchronizedList(new ArrayList<ParkRelai>(4));
-
-    private LocationUtil locationUtil;
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        locationUtil.activeGps();
-    }
-
-    @Override
-    protected void onPause() {
-        locationUtil.desactiveGps();
-        super.onPause();
-    }
-
-	private String currentQuery = "";
+	private final Keolis keolis = Keolis.getInstance();
 
 	@Override
-	public void updateQuery(String newQuery) {
-		currentQuery = newQuery;
-		String query = newQuery.toUpperCase();
-        synchronized (parkRelais) {
-            parkRelaisFiltres.clear();
-            for (ParkRelai parkRelai : parkRelais) {
-                if (parkRelai.name.toUpperCase().contains(query.toUpperCase())) {
-                    parkRelaisFiltres.add(parkRelai);
-                }
-            }
-        }
-        ((BaseAdapter) listView.getAdapter()).notifyDataSetChanged();
-    }
-
-    private ListView listView;
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listparkrelais);
-		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items, R.menu.holo_listparkings_menu_items);
-        parkRelaiIntent = (List<ParkRelai>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
-                .getSerializable("parcRelais"));
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        locationUtil = new LocationUtil(this, this);
-
-        setListAdapter(new ParkRelaiAdapter(this, parkRelaisFiltres));
-        listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                ParkRelaiAdapter adapter = (ParkRelaiAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-                ParkRelai parkRelai = adapter.getItem(position);
-                String lat = Double.toString(parkRelai.getLatitude());
-                String lon = Double.toString(parkRelai.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + parkRelai.name + "+@" + lat + ',' + lon);
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, uri));
-                } catch (ActivityNotFoundException activityNotFound) {
-                    Toast.makeText(ListParkRelais.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-        listView.setTextFilterEnabled(true);
-        registerForContextMenu(listView);
-        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteParkRelais)) {
-
-            @Override
-            protected void myDoBackground() throws ErreurReseau {
-                List<ParkRelai> parkRelaisTmp = (parkRelaiIntent == null ? keolis.getParkRelais() : parkRelaiIntent);
-                synchronized (parkRelais) {
-                    parkRelais.clear();
-                    parkRelais.addAll(parkRelaisTmp);
-                    Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-                        public int compare(ParkRelai o1, ParkRelai o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
-                    parkRelaisFiltres.clear();
-                    parkRelaisFiltres.addAll(parkRelais);
-                }
-            }
-
-            @Override
-            protected void onPostExecute(Void result) {
-                updateLocation(locationUtil.getCurrentLocation());
-                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                super.onPostExecute(result);
-            }
-        }.execute();
-        if (!locationUtil.activeGps()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-	public void refresh() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
-
-            @Override
-			protected void myDoBackground() throws ErreurReseau {
-				List<ParkRelai> parkRelaisTmp = keolis.getParkRelais();
-				synchronized (parkRelais) {
-					majParkRelais(parkRelaisTmp);
-				}
-			}
-
-            private void majParkRelais(List<ParkRelai> parkRelaisTmp) {
-				parkRelais.clear();
-				if (parkRelaiIntent == null) {
-					parkRelais.addAll(parkRelaisTmp);
-				} else {
-					Collection<String> ids = new ArrayList<String>(parkRelaiIntent.size());
-					for (ParkRelai parc : parkRelaiIntent) {
-						ids.add(parc.name);
-					}
-					for (ParkRelai parc : parkRelaisTmp) {
-						if (ids.contains(parc.name)) {
-							parkRelais.add(parc);
-						}
-                    }
-                }
-				Collections.sort(parkRelais, new Comparator<ParkRelai>() {
-					public int compare(ParkRelai o1, ParkRelai o2) {
-						return o1.name.compareToIgnoreCase(o2.name);
-					}
-				});
-				parkRelaisFiltres.clear();
-				parkRelaisFiltres.addAll(parkRelais);
-
-            }
-
-			@Override
-			protected void onPostExecute(Void result) {
-				updateQuery(currentQuery);
-				updateLocation(locationUtil.getCurrentLocation());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				super.onPostExecute(result);
-			}
-		}.execute((Void) null);
+	protected int getDialogueRequete() {
+		return R.string.dialogRequeteParkRelais;
 	}
 
-    @Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
+	@Override
+	protected int getLayout() {
+		return R.layout.listparkrelais;
+	}
 
-		if (item.getItemId() == R.id.menu_google_map) {
-			if (!parkRelaisFiltres.isEmpty()) {
-				Intent intent = new Intent(ListParkRelais.this, ParkRelaisOnMap.class);
-				ArrayList<ParkRelai> parkRelaisSerializable = new ArrayList<ParkRelai>(parkRelaisFiltres.size());
-				parkRelaisSerializable.addAll(parkRelaisFiltres);
-				intent.putExtra("parkRelais", parkRelaisSerializable);
-				startActivity(intent);
-			}
-            return true;
-        }
-        return false;
-    }
+	@Override
+	protected List<ParkRelai> getParkings() throws ErreurReseau {
+		return keolis.getParkRelais();
+	}
 
-    public void updateLocation(Location location) {
-        if (location == null) {
-            return;
-        }
-        synchronized (parkRelais) {
-            for (ParkRelai parkRelai : parkRelais) {
-                parkRelai.calculDistance(location);
-            }
-            Collections.sort(parkRelais, new ParkRelai.ComparatorDistance());
-        }
-		updateQuery(currentQuery);
-    }
+	@Override
+	protected Class<? extends BaseMapActivity> getParkingsOnMap() {
+		return ParkRelaisOnMap.class;
+	}
+
+	@Override
+	protected void setupActionBar() {
+		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items, R.menu.holo_listparkings_menu_items);
+	}
 }

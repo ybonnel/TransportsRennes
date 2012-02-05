@@ -26,13 +26,13 @@ import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.commun.MenuAccueil;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.map.MapItemizedOverlayParking;
+import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.util.Formatteur;
 
-public class ParkingsOnMap extends MenuAccueil.MapActivity {
+public class ParkingsOnMap extends BaseMapActivity {
 
     /**
      * Called when the activity is first created.
@@ -42,6 +42,7 @@ public class ParkingsOnMap extends MenuAccueil.MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
         Iterable<Parking> parkRelais = (Iterable<Parking>) getIntent().getExtras().getSerializable("parkRelais");
 

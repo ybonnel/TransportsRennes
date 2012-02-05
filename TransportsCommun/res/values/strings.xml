@@ -49,4 +49,8 @@
     <string name="ajouterFavori">Ajouter aux favoris</string>
     <string name="suprimerFavori">Supprimer des favoris</string>
     <string name="tropTard">Trop tard!</string>
+    
+    <string name="ferme">Fermé</string>
+    <string name="complet">Complet</string>
+    <string name="indisponible">Indispo.</string>
 </resources>

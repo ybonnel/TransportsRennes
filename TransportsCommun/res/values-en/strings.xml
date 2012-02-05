@@ -44,4 +44,8 @@
     <string name="ajouterFavori">Add to favorites</string>
     <string name="suprimerFavori">Remove from favorites</string>
     <string name="tropTard">Too late!</string>
+    
+    <string name="ferme">Closed</string>
+    <string name="complet">Full</string>
+    <string name="indisponible">Unavailable</string>
 </resources>

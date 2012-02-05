@@ -90,9 +90,6 @@
     <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
-    <string name="ferme">Fermé</string>
-    <string name="complet">Complet</string>
-    <string name="indisponible">Indispo.</string>
     <string name="oui">Oui</string>
     <string name="non">Non</string>
     <string name="prochain">Prochain :</string>

@@ -86,9 +86,6 @@
     <string name="widget11_choix">Choose one favorite stop.</string>
     <!-- Génériques -->
     <string name="Terminer">Finish</string>
-    <string name="ferme">Closed</string>
-    <string name="complet">Full</string>
-    <string name="indisponible">Unavailable</string>
     <string name="oui">Yes</string>
     <string name="non">No</string>
     <string name="prochain">Next :</string>

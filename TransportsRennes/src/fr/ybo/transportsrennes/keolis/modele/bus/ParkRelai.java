@@ -15,13 +15,14 @@ package fr.ybo.transportsrennes.keolis.modele.bus;
 
 import java.io.Serializable;
 
+import fr.ybo.transportscommun.adapters.parkings.IParking;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
  * @author ybonnel
  */
 @SuppressWarnings("serial")
-public class ParkRelai extends ObjetWithDistance implements Serializable {
+public class ParkRelai extends ObjetWithDistance implements Serializable, IParking {
 
     /**
      * name.
@@ -67,4 +68,24 @@ public class ParkRelai extends ObjetWithDistance implements Serializable {
     public double getLongitude() {
         return longitude;
     }
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public int getCarParkAvailable() {
+		return carParkAvailable;
+	}
+
+	@Override
+	public int getCarParkCapacity() {
+		return carParkCapacity;
+	}
+
+	@Override
+	public int getState() {
+		return state;
+	}
 }

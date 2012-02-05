@@ -32,6 +32,7 @@ import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.tbcapi.sax.GetParkingHandler;
 import fr.ybo.transportsbordeaux.tbcapi.sax.KeolisHandler;
 import fr.ybo.transportsbordeaux.util.HttpUtils;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LogYbo;
 
 /**
@@ -88,7 +89,7 @@ public final class Keolis {
      * @throws TbcErreurReseaux en cas d'erreur réseau.
      */
     private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler)
-            throws TbcErreurReseaux {
+			throws ErreurReseau {
         LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
         long startTime = System.nanoTime() / 1000;
         HttpClient httpClient = HttpUtils.getHttpClient();
@@ -104,14 +105,14 @@ public final class Keolis {
             parser.parse(new ByteArrayInputStream(contenu.getBytes("UTF-8")), handler);
             answer = handler.getObjets();
         } catch (IOException socketException) {
-            throw new TbcErreurReseaux(socketException);
+			throw new ErreurReseau(socketException);
         } catch (SAXException saxException) {
-            throw new TbcErreurReseaux(saxException);
+			throw new ErreurReseau(saxException);
         } catch (ParserConfigurationException exception) {
             throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
         }
         if (answer == null) {
-            throw new TbcErreurReseaux("Erreur dans la réponse données par Keolis.");
+			throw new ErreurReseau("Erreur dans la réponse données par Keolis.");
         }
         long elapsedTime = System.nanoTime() / 1000 - startTime;
         LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
@@ -123,7 +124,7 @@ public final class Keolis {
      * @throws KeolisException  en cas d'erreur lors de l'appel aux API Keolis.
      * @throws TbcErreurReseaux erreur réseaux.
      */
-    public List<Parking> getParkings() throws KeolisException, TbcErreurReseaux {
+	public List<Parking> getParkings() throws KeolisException, ErreurReseau {
         return appelKeolis(getUrl(COUCHE_PARKINGS), new GetParkingHandler());
     }
 
