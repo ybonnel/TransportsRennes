@@ -24,6 +24,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
@@ -90,6 +91,9 @@ public class NotifAdapter extends BaseAdapter {
         } else {
             holder = (NotifAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.arret.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.directionArret.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 
         final Notification notification = notifications.get(position);
 

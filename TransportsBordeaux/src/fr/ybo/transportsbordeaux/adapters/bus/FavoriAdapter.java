@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
@@ -107,6 +108,9 @@ public class FavoriAdapter extends BaseAdapter {
         } else {
             holder = (FavoriAdapter.ViewHolder) convertView1.getTag();
         }
+		holder.arret.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 
         final ArretFavori favori = favoris.get(position);
 

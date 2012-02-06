@@ -198,7 +198,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 				Intent intent = new Intent(this, getParkingsOnMap());
 				ArrayList<T> parkRelaisSerializable = new ArrayList<T>(parkingsFiltres.size());
 				parkRelaisSerializable.addAll(parkingsFiltres);
-				intent.putExtra("parcRelais", parkRelaisSerializable);
+				intent.putExtra("parkRelais", parkRelaisSerializable);
 				startActivity(intent);
 			}
 			return true;

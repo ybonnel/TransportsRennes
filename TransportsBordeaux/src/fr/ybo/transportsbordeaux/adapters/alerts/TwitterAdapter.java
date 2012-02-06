@@ -60,7 +60,7 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 		if (message.dateCreation != null) {
 			holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
 		} else {
-			holder.twitter.setText("");
+			holder.twitter.setText(message.texte);
 		}
         return convertView1;
     }

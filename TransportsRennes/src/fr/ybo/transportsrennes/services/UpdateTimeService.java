@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.IBinder;
+import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.donnees.modele.Notification;
@@ -194,10 +195,12 @@ public class UpdateTimeService extends Service {
             if (Intent.ACTION_SCREEN_OFF.equals(action)) {
                 screenOn = false;
             }
-            if (screenOn) {
-                update();
-            }
-            updateNotifs();
+			if (!UpdateDataBase.isMajDatabaseEncours()) {
+				if (screenOn) {
+					update();
+				}
+				updateNotifs();
+			}
         }
     };
 

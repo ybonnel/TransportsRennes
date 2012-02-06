@@ -15,6 +15,11 @@ package fr.ybo.transportsbordeaux.activity.parkrelais;
 
 import java.util.List;
 
+import android.os.Bundle;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.tbcapi.Keolis;
@@ -53,5 +58,13 @@ public class ListParkings extends AbstractListParkings<Parking> {
 	@Override
 	protected void setupActionBar() {
 		getActivityHelper().setupActionBar(R.menu.listparkings_menu_items, R.menu.holo_listparkings_menu_items);
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// Look up the AdView as a resource and load a request.
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

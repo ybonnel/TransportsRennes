@@ -121,9 +121,13 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 					getBase().getTable(Trajet.class).dropTable(db);
 					getBase().getTable(ArretRoute.class).dropTable(db);
 					getBase().getTable(DernierMiseAJour.class).dropTable(db);
+					getBase().getTable(VeloFavori.class).dropTable(db);
+					getBase().getTable(Notification.class).dropTable(db);
 					getBase().getTable(Trajet.class).createTable(db);
 					getBase().getTable(ArretRoute.class).createTable(db);
 					getBase().getTable(DernierMiseAJour.class).createTable(db);
+					getBase().getTable(VeloFavori.class).createTable(db);
+					getBase().getTable(Notification.class).createTable(db);
 
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
 					getBase().getTable(ArretFavori.class).createTable(db);
@@ -162,6 +166,7 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 						getBase().insert(db, favori);
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
+
 				}
 			});
         }

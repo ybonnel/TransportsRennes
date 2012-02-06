@@ -76,6 +76,7 @@ public final class GestionZipKeolis {
 			final DataBaseHelper dataBaseHelper, Resources resources) throws LigneInexistanteException,
 			NoSpaceLeftException {
 		try {
+			UpdateDataBase.setMajDatabaseEncours(true);
 			LOG_YBO.debug("Début chargeLigne");
 			final Table table = dataBaseHelper.getBase().getTable(Horaire.class);
 			table.addSuffixeToTableName(ligneId);
@@ -141,6 +142,8 @@ public final class GestionZipKeolis {
 			throw new NoSpaceLeftException();
         } catch (Exception exception) {
             throw new GestionFilesException(exception);
+		} finally {
+			UpdateDataBase.setMajDatabaseEncours(false);
         }
 
     }
