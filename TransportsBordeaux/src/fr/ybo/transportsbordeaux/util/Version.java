@@ -28,8 +28,7 @@ import android.content.pm.PackageManager;
 
 public class Version {
 
-	private static final String MARKET_URL = "https://market.android.com/details?id=";
-	private static final String VERSION_PATTERN = ".*<dd itemprop=\"softwareVersion\">([^<]*)<.*";
+	public static final String URL_VERSION = "http://transports-rennes.ic-s.org/version/transports-bordeaux-cupcake.version";
 
 	/**
 	 * Nom de la version disponible sur le market
@@ -38,36 +37,19 @@ public class Version {
 	 *            Context
 	 * @return Nom de la version disponible sur le market
 	 */
-	public static String getMarketVersion(Context context) {
-		return getMarketVersion(context.getPackageName());
-	}
-
-	/**
-	 * Nom de la version disponible sur le market
-	 * 
-	 * @param packageName
-	 *            Nom du package de l'application
-	 * @return Nom de la version disponible sur le market
-	 */
-	public static String getMarketVersion(String packageName) {
+	public static String getMarketVersion() {
 		String version = null;
 		BufferedReader reader = null;
 		try {
-			URL marketURL = new URL(MARKET_URL + packageName);
+			URL marketURL = new URL(URL_VERSION);
 			URLConnection connection = marketURL.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
 			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			version = reader.readLine();
 
-			String line = reader.readLine();
-			while (line != null) {
-				if (line.matches(VERSION_PATTERN)) {
-					version = line.replaceFirst(VERSION_PATTERN, "$1");
-					break;
-				}
-				line = reader.readLine();
-			}
-		} catch (Exception ignore) {
+        } catch (Exception ignore) {
+			ignore.printStackTrace();
 		} finally {
 			closeReader(reader);
 		}
