@@ -28,19 +28,20 @@
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/iconeLigne"
-            android:layout_width="44dip"
-            android:layout_height="50dip"
-            android:gravity="center_vertical|center_horizontal"
-            android:paddingBottom="5dip"
-            android:paddingLeft="2dip"
-            android:paddingRight="2dip"
-            android:paddingTop="5dip" />
+            android:id="@+id/imageCorrespondance"
+            android:layout_width="35dip"
+            android:layout_height="70dip"
+            android:paddingBottom="0dip"
+            android:paddingLeft="0dip"
+            android:paddingRight="0dip"
+            android:paddingTop="0dip"
+            android:src="@drawable/lignedebutdetail" />
 
         <HorizontalScrollView
             android:layout_width="fill_parent"
             android:layout_height="50dip"
-            android:layout_toRightOf="@id/iconeLigne" >
+            android:layout_toLeftOf="@+id/alerte"
+            android:layout_toRightOf="@+id/imageCorrespondance" >
 
             <TextView
                 android:id="@+id/nomLong"
@@ -51,36 +52,12 @@
                 android:textSize="20dip" />
         </HorizontalScrollView>
 
-        <ImageView
-            android:id="@+id/imageCorrespondance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/iconeLigne"
-            android:paddingBottom="10dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="10dip"
-            android:src="@drawable/arrow_right_float" />
-
-        <ImageView
-            android:id="@+id/alerte"
-            android:layout_width="wrap_content"
-            android:layout_height="38dip"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/iconeLigne"
-            android:paddingBottom="2dip"
-            android:paddingLeft="5dip"
-            android:paddingTop="2dip"
-            android:src="@android:drawable/ic_dialog_alert" />
-
         <HorizontalScrollView
             android:id="@+id/detailArret_scrolling"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iconeLigne"
-            android:layout_toLeftOf="@id/imageCorrespondance"
-            android:layout_toRightOf="@id/alerte" >
+            android:layout_toLeftOf="@+id/alerte"
+            android:layout_toRightOf="@+id/imageCorrespondance" >
 
             <TextView
                 android:id="@+id/detailArret_nomArret"
@@ -98,14 +75,23 @@
             android:id="@+id/detailCorrespondance_scroll"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detailArret_scrolling" >
-
+            android:layout_below="@+id/imageCorrespondance" >
             <LinearLayout
-                android:id="@+id/detailCorrespondance"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="invisible" />
+            	android:layout_height="wrap_content" >
+				<LinearLayout
+	                android:id="@+id/separateurDetailCorrespondance"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:visibility="invisible" />
+	            <LinearLayout
+	                android:id="@+id/detailCorrespondance"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:visibility="invisible" />
+            </LinearLayout>
         </ScrollView>
 
         <ListView
@@ -113,7 +99,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/detailCorrespondance_scroll"
+            android:layout_below="@+id/detailCorrespondance_scroll"
             android:cacheColorHint="#00000000" />
 
         <TextView
@@ -121,11 +107,34 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/separateur"
+            android:layout_below="@+id/imageCorrespondance"
             android:gravity="center"
             android:padding="10dip"
             android:text="@string/detailarret_empty"
             android:textSize="18dip" />
+
+        <ImageView
+            android:id="@+id/iconeLigne"
+            android:layout_width="44dip"
+            android:layout_height="50dip"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageCorrespondance"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingBottom="5dip"
+            android:paddingLeft="2dip"
+            android:paddingRight="2dip"
+            android:paddingTop="5dip" />
+
+        <ImageView
+            android:id="@+id/alerte"
+            android:layout_width="wrap_content"
+            android:layout_height="38dip"
+            android:layout_above="@+id/detailCorrespondance_scroll"
+            android:layout_alignParentRight="true"
+            android:paddingBottom="2dip"
+            android:paddingLeft="5dip"
+            android:paddingTop="2dip"
+            android:src="@android:drawable/ic_dialog_alert" />
     </RelativeLayout>
 
 </LinearLayout>

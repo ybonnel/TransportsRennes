@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,14 +113,15 @@ public class ArretAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, Context context, final Cursor cursor) {
         String name = cursor.getString(nameCol);
         String direction = cursor.getString(directionCol);
         boolean accessible = (cursor.getInt(accessibleCol) == 1);
+        final int etat = cursor.isFirst() ? 1 : cursor.isLast() ? 3 : 2;
         favori.arretId = cursor.getString(arretIdCol);
         favori.macroDirection = cursor.getInt(macroDirectionCol);
         final String arretId = favori.arretId;
-        final ArretAdapter.ViewHolder holder = (ArretAdapter.ViewHolder) view.getTag();
+        final ArretAdapter.ViewHolder holder = (ArretAdapter.ViewHolder) view.getTag();        
         holder.nomArret.setText(name);
         holder.directionArret.setText(context.getString(R.string.vers) + ' ' + direction);
         holder.isFavori.setImageResource(
@@ -128,48 +130,84 @@ public class ArretAdapter extends CursorAdapter {
         holder.isFavori.setOnClickListener(new OnClickFavoriGestionnaire(ligne, favori.arretId, name, direction,
                 activity, favori.macroDirection));
         if (setCorrespondances.contains(arretId)) {
-            correspondancesWithDetail(holder, arretId);
+            correspondancesWithDetail(holder, arretId, etat);
         } else {
-            correspondancesNoDetail(holder);
+            correspondancesNoDetail(holder, etat);
         }
         holder.correspondance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View myView) {
                 if (setCorrespondances.contains(arretId)) {
                     setCorrespondances.remove(arretId);
-                    correspondancesNoDetail(holder);
+                    correspondancesNoDetail(holder, etat);
                 } else {
                     setCorrespondances.add(arretId);
-                    correspondancesWithDetail(holder, arretId);
+                    correspondancesWithDetail(holder, arretId, etat);
                 }
             }
         });
         holder.iconeHandicap.setVisibility(accessible ? View.VISIBLE : View.GONE);
     }
 
-    private void correspondancesNoDetail(ArretAdapter.ViewHolder holder) {
+    private void correspondancesNoDetail(ArretAdapter.ViewHolder holder, int etat) {
     	holder.separateurCorrespondance.removeAllViews();
     	holder.separateurCorrespondance.setVisibility(View.INVISIBLE);
         holder.detailCorrespondance.removeAllViews();
         holder.detailCorrespondance.setVisibility(View.INVISIBLE);
-        holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
+        switch (etat) {
+        	case 1 : 
+        		holder.correspondance.setImageResource(R.drawable.lignedebut);
+        		break;
+        	default :
+        		holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
+        		break;
+        	case 3 :
+        		holder.correspondance.setImageResource(R.drawable.lignefin);
+        		break;
+        }
     }
 
-    private void correspondancesWithDetail(ArretAdapter.ViewHolder holder, String arretId) {
+    private void correspondancesWithDetail(ArretAdapter.ViewHolder holder, String arretId, int etat) {
     	holder.separateurCorrespondance.setVisibility(View.VISIBLE);
         holder.separateurCorrespondance.removeAllViews();
         holder.detailCorrespondance.setVisibility(View.VISIBLE);
         holder.detailCorrespondance.removeAllViews();
-        construireCorrespondance(holder.detailCorrespondance, holder.separateurCorrespondance, arretId);
-        holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
+        construireCorrespondance(holder.detailCorrespondance, holder.separateurCorrespondance, arretId, etat);
+        Log.d("gfo", "Etat : " + etat);
+        switch (etat) {
+        	case 1 : 
+        		holder.correspondance.setImageResource(R.drawable.lignedebut);
+        		break;
+        	default :
+        		holder.correspondance.setImageResource(R.drawable.lignesanscorrespondance);
+        		break;
+        	case 3 :
+        		holder.correspondance.setImageResource(R.drawable.lignesanscorrespondancedernier);
+        		break;
+        }
     }
 
     private final Map<String, List<Arret>> mapDetailCorrespondances = new HashMap<String, List<Arret>>();
 
-    private void construireRelativeLayouts(List<Arret> arrets, LinearLayout detailCorrespondance) {
+    private void construireRelativeLayouts(List<Arret> arrets, LinearLayout detailCorrespondance, int etat) {
+    	int nbArrets, numArretCourant;
+    	nbArrets = arrets.size();
+    	numArretCourant = 1;
         for (final Arret arret : arrets) {
             RelativeLayout relativeLayout = getRelativeLayout();
             ArretAdapter.RelativeLayoutHolder holder = (ArretAdapter.RelativeLayoutHolder) relativeLayout.getTag();
-            holder.iconeLigne.setImageResource(R.drawable.ligneaveccorrespondance);
+            if (etat == 3) {
+	            if ( numArretCourant == nbArrets ) {
+	            	holder.ligneAvecCorrespondance.setImageResource(R.drawable.ligneavecdernierecorrespondancedernier);
+	            } else {
+	            	holder.ligneAvecCorrespondance.setImageResource(R.drawable.ligneaveccorrespondancedernier);
+	            }
+            } else {
+            	if ( numArretCourant == nbArrets ) {
+	            	holder.ligneAvecCorrespondance.setImageResource(R.drawable.ligneavecdernierecorrespondance);
+	            } else {
+	            	holder.ligneAvecCorrespondance.setImageResource(R.drawable.ligneaveccorrespondance);
+	            }
+            }
             holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
             holder.arretDirection.setText(arret.favori.direction);
             holder.nomArret.setText(arret.nom);
@@ -182,21 +220,26 @@ public class ArretAdapter extends CursorAdapter {
                 }
             });
             detailCorrespondance.addView(relativeLayout);
+            numArretCourant++;
         }
     }
 
-    private void construireRelativeLayoutsSeparateurCorrespondance(LinearLayout separateurCorrespondance) {
+    private void construireRelativeLayoutsSeparateurCorrespondance(LinearLayout separateurCorrespondance, int etat) {
             RelativeLayout relativeLayout = getRelativeLayoutSeparateurCorrespondance();
             ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder holder = (ArretAdapter.RelativeLayoutSeparateurCorrespondanceHolder) relativeLayout.getTag();
-            holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondance);
+            if (etat == 3) {
+            	holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondancederniere);
+            } else {
+            	holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondance);
+            }
             holder.libelleCorrespondance.setText("Correspondances");
             separateurCorrespondance.addView(relativeLayout);
     }
 
-    private void construireCorrespondance(LinearLayout detailCorrespondance, LinearLayout separateurCorrespondance, String arretId) {
-    	construireRelativeLayoutsSeparateurCorrespondance(separateurCorrespondance);
+    private void construireCorrespondance(LinearLayout detailCorrespondance, LinearLayout separateurCorrespondance, String arretId, int etat) {
+    	construireRelativeLayoutsSeparateurCorrespondance(separateurCorrespondance, etat);
         if (mapDetailCorrespondances.containsKey(arretId)) {
-        	construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);    
+        	construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance, etat);    
         } else {
             /* Recuperation de l'arretCourant */
             Arret arretCourant = new Arret();
@@ -266,7 +309,7 @@ public class ArretAdapter extends CursorAdapter {
             cursor.close();
             Collections.sort(arrets, new Arret.ComparatorDistance());
             mapDetailCorrespondances.put(arretId, arrets);
-            construireRelativeLayouts(arrets, detailCorrespondance);
+            construireRelativeLayouts(arrets, detailCorrespondance, etat);
         }
     }
 

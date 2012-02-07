@@ -26,8 +26,7 @@
         android:layout_height="70dip"
         android:paddingLeft="0dip"
         android:paddingRight="0dip"
-        android:paddingTop="0dip"
-        android:src="@drawable/ligneaveccorrespondance" />
+        android:paddingTop="0dip" />
 
     <TextView
         android:id="@+id/arretgps_nomArret"

@@ -46,6 +46,7 @@ import android.widget.Toast;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportsrennes.adapters.bus.ArretAdapter;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretConteneur;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -192,20 +193,26 @@ public class DetailArret extends BaseListActivity {
 
         final ImageView correspondance = (ImageView) findViewById(R.id.imageCorrespondance);
         final LinearLayout detailCorrespondance = (LinearLayout) findViewById(R.id.detailCorrespondance);
-        correspondance.setImageResource(R.drawable.arrow_right_float);
+        final LinearLayout separateurDetailCorrespondance = (LinearLayout) findViewById(R.id.separateurDetailCorrespondance);
+        correspondance.setImageResource(R.drawable.lignedebutdetail);
+        separateurDetailCorrespondance.removeAllViews();
         detailCorrespondance.removeAllViews();
+        separateurDetailCorrespondance.setVisibility(View.INVISIBLE);
         detailCorrespondance.setVisibility(View.INVISIBLE);
         correspondance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if (detailCorrespondance.getVisibility() == View.VISIBLE) {
-                    correspondance.setImageResource(R.drawable.arrow_right_float);
+                    correspondance.setImageResource(R.drawable.lignedebutdetail);
+                    separateurDetailCorrespondance.removeAllViews();
                     detailCorrespondance.removeAllViews();
+                    separateurDetailCorrespondance.setVisibility(View.INVISIBLE);
                     detailCorrespondance.setVisibility(View.INVISIBLE);
                 } else {
+                	separateurDetailCorrespondance.setVisibility(View.VISIBLE);
                     detailCorrespondance.setVisibility(View.VISIBLE);
                     detailCorrespondance.removeAllViews();
-                    construireCorrespondance(detailCorrespondance);
-                    correspondance.setImageResource(R.drawable.arrow_down_float);
+                    construireCorrespondance(detailCorrespondance, separateurDetailCorrespondance);
+                    correspondance.setImageResource(R.drawable.lignedebutdetailaveccorrespondance);
                 }
             }
         });
@@ -238,7 +245,8 @@ public class DetailArret extends BaseListActivity {
         super.onPause();
     }
 
-    private void construireCorrespondance(LinearLayout detailCorrespondance) {
+    private void construireCorrespondance(LinearLayout detailCorrespondance, LinearLayout separateurdetailCorrespondance) {
+    	construireRelativeLayoutsSeparateurCorrespondance(separateurdetailCorrespondance);
         /* Recuperation de l'arretCourant */
         Arret arretCourant = new Arret();
         arretCourant.id = favori.arretId;
@@ -309,8 +317,18 @@ public class DetailArret extends BaseListActivity {
 
         Collections.sort(arrets, new Arret.ComparatorDistance());
 
+        int nbArrets, numArretCourant;
+    	nbArrets = arrets.size();
+    	numArretCourant = 1;
         for (final Arret arret : arrets) {
             RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
+
+            ImageView ligneAvecCorrespondance = (ImageView) relativeLayout.findViewById(R.id.ligneAvecCorrespondance);
+            if ( numArretCourant == nbArrets ) {
+            	ligneAvecCorrespondance.setImageResource(R.drawable.ligneavecdernierecorrespondancedernier);
+            } else {
+            	ligneAvecCorrespondance.setImageResource(R.drawable.ligneaveccorrespondancedernier);
+            }
             ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
             iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
             TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
@@ -327,9 +345,32 @@ public class DetailArret extends BaseListActivity {
                 }
             });
             detailCorrespondance.addView(relativeLayout);
+            numArretCourant++;
         }
     }
 
+    private void construireRelativeLayoutsSeparateurCorrespondance(LinearLayout separateurCorrespondance) {
+        RelativeLayout relativeLayout = getRelativeLayoutSeparateurCorrespondance();
+        DetailArret.RelativeLayoutSeparateurCorrespondanceHolder holder = (DetailArret.RelativeLayoutSeparateurCorrespondanceHolder) relativeLayout.getTag();
+        holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondancederniere);
+        holder.libelleCorrespondance.setText("Correspondances");
+        separateurCorrespondance.addView(relativeLayout);
+    }
+    
+    private static class RelativeLayoutSeparateurCorrespondanceHolder {
+    	private ImageView imageSeparateurCorrespondance;
+        private TextView libelleCorrespondance;
+    }
+
+    private RelativeLayout getRelativeLayoutSeparateurCorrespondance() {
+        RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.separateurcorrespondance, null);
+        DetailArret.RelativeLayoutSeparateurCorrespondanceHolder holder = new DetailArret.RelativeLayoutSeparateurCorrespondanceHolder();
+        holder.imageSeparateurCorrespondance = (ImageView) relativeLayout.findViewById(R.id.imageSeparateurCorrespondance);
+        holder.libelleCorrespondance = (TextView) relativeLayout.findViewById(R.id.libelleCorrespondance);
+        relativeLayout.setTag(holder);
+        return relativeLayout;
+    }
+    
     private void chargerLigne() {
         new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
 
