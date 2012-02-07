@@ -192,24 +192,23 @@ public class DetailArret extends BaseListActivity {
         lv.setTextFilterEnabled(true);
 
         final ImageView correspondance = (ImageView) findViewById(R.id.imageCorrespondance);
-        final LinearLayout detailCorrespondance = (LinearLayout) findViewById(R.id.detailCorrespondance);
+        final LinearLayout conteneurDetailCorrespondance = (LinearLayout) findViewById(R.id.conteneurDetailCorrespondance);
         final LinearLayout separateurDetailCorrespondance = (LinearLayout) findViewById(R.id.separateurDetailCorrespondance);
+        final LinearLayout detailCorrespondance = (LinearLayout) findViewById(R.id.detailCorrespondance);        
         correspondance.setImageResource(R.drawable.lignedebutdetail);
         separateurDetailCorrespondance.removeAllViews();
         detailCorrespondance.removeAllViews();
-        separateurDetailCorrespondance.setVisibility(View.INVISIBLE);
-        detailCorrespondance.setVisibility(View.INVISIBLE);
+        conteneurDetailCorrespondance.setVisibility(View.INVISIBLE);
         correspondance.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                if (detailCorrespondance.getVisibility() == View.VISIBLE) {
+                if (conteneurDetailCorrespondance.getVisibility() == View.VISIBLE) {
                     correspondance.setImageResource(R.drawable.lignedebutdetail);
                     separateurDetailCorrespondance.removeAllViews();
                     detailCorrespondance.removeAllViews();
-                    separateurDetailCorrespondance.setVisibility(View.INVISIBLE);
-                    detailCorrespondance.setVisibility(View.INVISIBLE);
+                    conteneurDetailCorrespondance.setVisibility(View.INVISIBLE);
                 } else {
-                	separateurDetailCorrespondance.setVisibility(View.VISIBLE);
-                    detailCorrespondance.setVisibility(View.VISIBLE);
+                	conteneurDetailCorrespondance.setVisibility(View.VISIBLE);
+                    separateurDetailCorrespondance.removeAllViews();
                     detailCorrespondance.removeAllViews();
                     construireCorrespondance(detailCorrespondance, separateurDetailCorrespondance);
                     correspondance.setImageResource(R.drawable.lignedebutdetailaveccorrespondance);

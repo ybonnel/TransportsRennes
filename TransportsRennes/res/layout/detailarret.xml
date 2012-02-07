@@ -38,39 +38,36 @@
             android:src="@drawable/lignedebutdetail" />
 
         <HorizontalScrollView
+            android:id="@+id/detailArret_scrolling"
             android:layout_width="fill_parent"
-            android:layout_height="50dip"
+            android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/alerte"
-            android:layout_toRightOf="@+id/imageCorrespondance" >
+            android:layout_toRightOf="@+id/iconeLigne" >
+
+            <TextView
+                android:id="@+id/detailArret_nomArret"
+                android:layout_width="wrap_content"
+                android:layout_height="35dip"
+                android:gravity="center_vertical|left"
+                android:textSize="20dip" 
+                android:text="Nom Arrêt"/>
+        </HorizontalScrollView>
+        
+        <HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="35dip"
+            android:layout_toLeftOf="@+id/alerte"
+            android:layout_toRightOf="@+id/iconeLigne"
+            android:layout_below="@+id/detailArret_scrolling" >
 
             <TextView
                 android:id="@+id/nomLong"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical|left"
-                android:padding="5dip"
-                android:textSize="20dip" />
+                android:textSize="20dip" 
+                android:text="Nom Long"/>
         </HorizontalScrollView>
-
-        <HorizontalScrollView
-            android:id="@+id/detailArret_scrolling"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@+id/alerte"
-            android:layout_toRightOf="@+id/imageCorrespondance" >
-
-            <TextView
-                android:id="@+id/detailArret_nomArret"
-                android:layout_width="wrap_content"
-                android:layout_height="38dip"
-                android:gravity="center_vertical|left"
-                android:paddingBottom="3dip"
-                android:paddingLeft="5dip"
-                android:paddingRight="5dip"
-                android:paddingTop="5dip"
-                android:textSize="20dip" />
-        </HorizontalScrollView>
-
         <ScrollView
             android:id="@+id/detailCorrespondance_scroll"
             android:layout_width="fill_parent"
@@ -78,19 +75,20 @@
             android:layout_below="@+id/imageCorrespondance" >
             <LinearLayout
                 android:layout_width="fill_parent"
-            	android:layout_height="wrap_content" >
+            	android:layout_height="wrap_content" 
+            	android:id="@+id/conteneurDetailCorrespondance"
+            	android:visibility="invisible" >
+            	
 				<LinearLayout
 	                android:id="@+id/separateurDetailCorrespondance"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:orientation="vertical"
-	                android:visibility="invisible" />
+	                android:orientation="vertical"/>
 	            <LinearLayout
 	                android:id="@+id/detailCorrespondance"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:orientation="vertical"
-	                android:visibility="invisible" />
+	                android:orientation="vertical"/>
             </LinearLayout>
         </ScrollView>
 
