@@ -70,6 +70,7 @@ import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
 import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
@@ -112,11 +113,13 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         dateItineraire = (TextView) findViewById(R.id.dateItineraire);
         heureItineraire = (TextView) findViewById(R.id.heureItineraire);
         AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
-        AdresseAdapter adapterDepart = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		AdresseAdapter adapterDepart = new AdresseAdapter(this);
         adresseDepart.setAdapter(adapterDepart);
+		adresseDepart.setTextColor(AbstractTransportsApplication.getTextColor(this));
         AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
-        AdresseAdapter adapterArrivee = new AdresseAdapter(this, android.R.layout.simple_dropdown_item_1line);
+		AdresseAdapter adapterArrivee = new AdresseAdapter(this);
         adresseArrivee.setAdapter(adapterArrivee);
+		adresseArrivee.setTextColor(AbstractTransportsApplication.getTextColor(this));
         adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {

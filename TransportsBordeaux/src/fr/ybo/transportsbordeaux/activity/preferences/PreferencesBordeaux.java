@@ -30,9 +30,14 @@ import fr.ybo.transportscommun.activity.preferences.AbstractPreferences;
 
 public class PreferencesBordeaux extends AbstractPreferences {
 
+	private boolean fermetureEnCours = false;
+
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		super.onSharedPreferenceChanged(sharedPreferences, key);
+		if (fermetureEnCours) {
+			return;
+		}
 		if ("TransportsBordeaux_sdCard".equals(key)) {
 			final boolean dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(PreferencesBordeaux.this)
 					.getBoolean(
@@ -52,10 +57,12 @@ public class PreferencesBordeaux extends AbstractPreferences {
 				builder.setCancelable(false);
 				builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
+						fermetureEnCours = true;
 						SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								PreferencesBordeaux.this).edit();
 						editor.putBoolean("TransportsBordeaux_sdCard", !dbOnSdCard);
 						editor.commit();
+						finish();
 					}
 				});
 				builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {

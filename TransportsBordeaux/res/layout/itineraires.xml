@@ -42,7 +42,7 @@
             android:id="@android:id/list"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="@android:drawable/divider_horizontal_dim_dark" />
+            android:cacheColorHint="#00000000" />
 
         <TextView
             android:id="@id/android:empty"

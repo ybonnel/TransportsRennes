@@ -54,6 +54,7 @@ public class TrajetOnMap extends BaseMapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trajet_map);
+		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         Trajet trajet = (Trajet) getIntent().getSerializableExtra("trajet");
 
         MapView mapView = (MapView) findViewById(R.id.mapview);

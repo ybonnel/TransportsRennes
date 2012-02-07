@@ -28,7 +28,7 @@
         L\'icône de l\'application a gracieusement été réalisée par Nicolas (&lt;a href=\'http://www.cryptik-web.com\'&gt;www.cryptik-web.com&lt;/a&gt;).&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
-    <string name="titleTransportsBordeaux">Bienvenue dans l\'application Transports Bordeaux</string>
+    <string name="titleTransportsBordeaux">Bienvenue dans l\'application Transports Bordeaux %1$s</string>
     <string name="Terminer">Terminer</string>
     <string name="infoChargementGtfs">Chargement des données du TBC.</string>
     <string name="menu_apropos">A propos</string>

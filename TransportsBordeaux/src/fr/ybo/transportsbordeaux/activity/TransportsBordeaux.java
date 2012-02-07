@@ -40,7 +40,10 @@ import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
 import fr.ybo.transportsbordeaux.activity.map.AllOnMap;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
+import fr.ybo.transportsbordeaux.util.Version;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.AccueilActivity;
+import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportscommun.util.Theme;
@@ -90,10 +93,14 @@ public class TransportsBordeaux extends AccueilActivity {
         View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
         TextView textView = (TextView) view.findViewById(R.id.textAPropos);
         Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+		if (UIUtils.isHoneycomb()) {
+			textView.setTextColor(AbstractTransportsApplication.getTextColor(this));
+		}
         textView.setText(spanned, TextView.BufferType.SPANNABLE);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         builder.setView(view);
-        builder.setTitle(R.string.titleTransportsBordeaux);
+		builder.setTitle(getString(R.string.titleTransportsBordeaux,
+				Version.getVersionCourante(getApplicationContext())));
         builder.setCancelable(false);
         builder.setNeutralButton(getString(R.string.Terminer), new TransportsBordeaux.TerminerClickListener());
         builder.create().show();
