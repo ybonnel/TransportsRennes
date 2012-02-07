@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/capptain-agent.jar"/>
 	<classpathentry kind="lib" path="libs/capptain-common.jar"/>
 	<classpathentry kind="lib" path="libs/capptain-service.jar"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
