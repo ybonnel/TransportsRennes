@@ -26,6 +26,8 @@ import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
+import fr.ybo.transportscommun.AbstractTransportsApplication;
+import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportscommun.activity.preferences.AbstractPreferences;
 
 public class PreferencesBordeaux extends AbstractPreferences {
@@ -52,6 +54,9 @@ public class PreferencesBordeaux extends AbstractPreferences {
 				AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesBordeaux.this);
 				View alertView = LayoutInflater.from(PreferencesBordeaux.this).inflate(R.layout.infoapropos, null);
 				TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
+				if (UIUtils.isHoneycomb()) {
+					textView.setTextColor(AbstractTransportsApplication.getTextColor(this));
+				}
 				textView.setText(R.string.changeDbOnSdCard);
 				builder.setView(alertView);
 				builder.setCancelable(false);
