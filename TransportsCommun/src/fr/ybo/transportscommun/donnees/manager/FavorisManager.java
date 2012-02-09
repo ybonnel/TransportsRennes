@@ -12,6 +12,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
 import fr.ybo.moteurcsv.MoteurCsv;
+import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
@@ -51,8 +52,14 @@ public class FavorisManager {
 		if (outputFile.exists()) {
 			outputFile.delete();
 		}
-		moteurCsv.writeFile(outputFile, AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class),
-				ArretFavori.class);
+		try {
+			moteurCsv.writeFile(outputFile,
+					AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class), ArretFavori.class);
+		} catch (MoteurCsvException erreurEcriture) {
+			LOG_YBO.erreur("Erreur à l'écriture du fichier", erreurEcriture);
+			Toast.makeText(context, R.string.exportErreurSd, Toast.LENGTH_LONG).show();
+			return;
+		}
 		Toast.makeText(
 				context,
 				context.getString(R.string.exportResult, AbstractTransportsApplication.getDonnesSpecifiques()
