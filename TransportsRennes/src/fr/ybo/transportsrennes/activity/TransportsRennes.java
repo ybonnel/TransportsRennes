@@ -37,6 +37,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.UIUtils;
@@ -121,7 +122,12 @@ public class TransportsRennes extends AccueilActivity {
 
 	private void verifierUpgrade() {
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
-		DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		DernierMiseAJour dernierMiseAJour = null;
+		try {
+			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		} catch (DataBaseException exception) {
+			dataBaseHelper.deleteAll(DernierMiseAJour.class);
+		}
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
 			upgradeDatabase();
