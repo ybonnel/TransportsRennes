@@ -25,6 +25,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import fr.ybo.transportscommun.util.ErreurReseau;
@@ -60,6 +61,8 @@ public class GetTwitters {
             throw new ErreurReseau(erreurReseau);
         } catch (IOException exception) {
             throw new ErreurReseau(exception);
+		} catch (JsonParseException exception) {
+			throw new ErreurReseau(exception);
         }
     }
 }

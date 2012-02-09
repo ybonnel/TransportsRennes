@@ -25,6 +25,7 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
@@ -61,6 +62,8 @@ public class GetTwitters {
             throw new TbcErreurReseaux(erreurReseau);
         } catch (IOException exception) {
             throw new TbcErreurReseaux(exception);
+		} catch (JsonParseException exception) {
+			throw new TbcErreurReseaux(exception);
         } catch (Exception e) {
             throw new TcbException("Erreur lors de l'interrogation de twitter", e);
         }
