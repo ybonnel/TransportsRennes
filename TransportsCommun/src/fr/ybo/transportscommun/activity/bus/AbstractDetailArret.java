@@ -341,7 +341,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 	
 	private void construireRelativeLayoutsSeparateurCorrespondance(LinearLayout separateurCorrespondance) {
         RelativeLayout relativeLayout = getRelativeLayoutSeparateurCorrespondance();
-        DetailArret.RelativeLayoutSeparateurCorrespondanceHolder holder = (DetailArret.RelativeLayoutSeparateurCorrespondanceHolder) relativeLayout.getTag();
+		RelativeLayoutSeparateurCorrespondanceHolder holder = (RelativeLayoutSeparateurCorrespondanceHolder) relativeLayout
+				.getTag();
         holder.imageSeparateurCorrespondance.setImageResource(R.drawable.lignecorrespondancederniere);
         holder.libelleCorrespondance.setText("Correspondances");
         separateurCorrespondance.addView(relativeLayout);
@@ -354,7 +355,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
     private RelativeLayout getRelativeLayoutSeparateurCorrespondance() {
         RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.separateurcorrespondance, null);
-        DetailArret.RelativeLayoutSeparateurCorrespondanceHolder holder = new DetailArret.RelativeLayoutSeparateurCorrespondanceHolder();
+		RelativeLayoutSeparateurCorrespondanceHolder holder = new RelativeLayoutSeparateurCorrespondanceHolder();
         holder.imageSeparateurCorrespondance = (ImageView) relativeLayout.findViewById(R.id.imageSeparateurCorrespondance);
         holder.libelleCorrespondance = (TextView) relativeLayout.findViewById(R.id.libelleCorrespondance);
         relativeLayout.setTag(holder);

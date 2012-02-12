@@ -53,4 +53,5 @@
     <item type="id" name="menu_order"/>
     <item type="id" name="directionArretCourante"/>
     <item type="id" name="directionArretCouranteScroll"/>
+    <item type="id" name="separateurDetailCorrespondance"/>
 </resources>
