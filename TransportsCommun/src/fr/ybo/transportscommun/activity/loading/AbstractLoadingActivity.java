@@ -29,12 +29,16 @@ import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportscommun.util.LoadingInfo;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
 public abstract class AbstractLoadingActivity extends CapptainActivity {
+
+	private static final LogYbo LOG_YBO = new LogYbo(AbstractLoadingActivity.class);
 
 	private TextView message;
 	private ProgressBar loadingBar;
@@ -179,7 +183,15 @@ public abstract class AbstractLoadingActivity extends CapptainActivity {
 						}
 					});
 				} catch (NoSpaceLeftException e) {
-					Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG).show();
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG)
+									.show();
+						}
+					});
+					AbstractTransportsApplication.getDataBaseHelper().deleteAll(DernierMiseAJour.class);
+					return null;
 				}
 				Collection<String> ligneIds = new HashSet<String>();
 				for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().select(new ArretFavori())) {
@@ -191,6 +203,13 @@ public abstract class AbstractLoadingActivity extends CapptainActivity {
 				for (String ligneId : ligneIds) {
 					ligneSelect.id = ligneId;
 					Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
+					if (ligne == null) {
+						LOG_YBO.debug("La ligne " + ligneId + " n'existe plus, suppression des favoris associés");
+						ArretFavori favori = new ArretFavori();
+						favori.ligneId = ligneId;
+						AbstractTransportsApplication.getDataBaseHelper().delete(favori);
+						continue;
+					}
 					final String nomLigne = ligne.nomCourt;
 					runOnUiThread(new Runnable() {
 						public void run() {
@@ -202,7 +221,13 @@ public abstract class AbstractLoadingActivity extends CapptainActivity {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
 					} catch (LigneInexistanteException ignore) {
 					} catch (NoSpaceLeftException e) {
-						Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG).show();
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG)
+										.show();
+							}
+						});
 					}
 				}
 				return null;

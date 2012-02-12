@@ -118,7 +118,8 @@ public class FavorisManager {
 
 	public boolean hasFavorisToLoad() {
 		for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
-			if (!Ligne.getLigne(favori.ligneId).isChargee()) {
+			Ligne ligne = Ligne.getLigne(favori.ligneId);
+			if (ligne != null && !ligne.isChargee()) {
 				return true;
 			}
 		}
