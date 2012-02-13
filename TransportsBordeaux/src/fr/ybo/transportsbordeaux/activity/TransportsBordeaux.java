@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
+import fr.ybo.database.DataBaseException;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.bus.ListNotif;
 import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
@@ -127,7 +128,12 @@ public class TransportsBordeaux extends AccueilActivity {
     private void verifierUpgrade() {
 		TransportsBordeauxDatabase dataBaseHelper = (TransportsBordeauxDatabase) TransportsBordeauxApplication
 				.getDataBaseHelper();
-        DernierMiseAJour dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		DernierMiseAJour dernierMiseAJour = null;
+		try {
+			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+		} catch (DataBaseException exception) {
+			dataBaseHelper.deleteAll(DernierMiseAJour.class);
+		}
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
         if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
                 || dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
