@@ -98,6 +98,9 @@ public final class Keolis {
         try {
             HttpResponse reponse = httpClient.execute(httpPost);
             ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+			if (reponse == null || reponse.getEntity() == null) {
+				throw new ErreurReseau("Erreur lors de la récupération de la réponse http");
+			}
             reponse.getEntity().writeTo(ostream);
             String contenu = new String(ostream.toByteArray(), "ISO-8859-1");
             SAXParserFactory factory = SAXParserFactory.newInstance();
