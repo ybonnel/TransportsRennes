@@ -297,7 +297,13 @@ public abstract class AbstractLoadingActivity extends CapptainActivity {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
 					} catch (LigneInexistanteException ignore) {
 					} catch (NoSpaceLeftException e) {
-						Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG).show();
+						handler.post(new Runnable() {
+							@Override
+							public void run() {
+								Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG)
+										.show();
+							}
+						});
 					}
 					handler.post(new Runnable() {
 
