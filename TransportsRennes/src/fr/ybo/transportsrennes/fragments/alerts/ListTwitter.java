@@ -1,6 +1,7 @@
 package fr.ybo.transportsrennes.fragments.alerts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,7 +42,12 @@ public class ListTwitter extends ListFragment {
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
-					messagesTmp.addAll(GetTwitters.getInstance().getMessages());
+					Collection<MessageTwitter> messagesReponse = GetTwitters.getInstance().getMessages();
+					if (messagesReponse != null) {
+						messagesTmp.addAll(messagesReponse);
+					} else {
+						erreurReseau = true;
+					}
 				} catch (ErreurReseau e) {
 					erreurReseau = true;
 				}
