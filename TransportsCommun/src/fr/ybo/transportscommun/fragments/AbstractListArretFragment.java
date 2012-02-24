@@ -136,14 +136,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 				+ currentCursor.getCount());
 	}
 
-	private boolean construct = false;
-
-	public boolean isConstruct() {
-		return construct;
-	}
-
-	private boolean activityCreated = false;
-
 	protected abstract void setupAdapter();
 
 	protected abstract Class<? extends AbstractDetailArret> getDetailArret();
@@ -153,9 +145,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 	protected abstract int getLayout();
 
 	public void construireListe() {
-		if (!activityCreated) {
-			return;
-		}
 		LOG_YBO.debug("construireListe");
 		construireCursor();
 		setupAdapter();
@@ -178,13 +167,11 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		lv.setTextFilterEnabled(true);
 		registerForContextMenu(lv);
 		getListView().invalidate();
-		construct = true;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		LOG_YBO.debug("onActivityCreated");
 		if (getArguments() != null && getArguments().containsKey("ligne")) {
 			myLigne = (Ligne) getArguments().getSerializable("ligne");
 		}
@@ -208,10 +195,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		} else {
 			getView().findViewById(R.id.alerte).setVisibility(View.GONE);
 		}
-		activityCreated = true;
-		if (((AbstractListArret) getActivity()).getCurrrentTabTag().equals(myLigne.id)) {
-			construireListe();
-		}
+		construireListe();
 	}
 
 	@Override

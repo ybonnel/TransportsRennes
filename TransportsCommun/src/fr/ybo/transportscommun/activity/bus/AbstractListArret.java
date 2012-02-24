@@ -2,7 +2,6 @@ package fr.ybo.transportscommun.activity.bus;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +9,6 @@ import android.widget.ImageButton;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActivity;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.OnFragmentChange;
 import fr.ybo.transportscommun.activity.commun.ChangeIconActionBar;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.fragments.AbstractListArretFragment;
@@ -31,43 +29,29 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 		setContentView(getLayout());
 		setupActionBar();
 		configureTabs();
-		for (Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().selectAll(Ligne.class)) {
-			Bundle args = new Bundle();
-			args.putSerializable("ligne", ligne);
-			addTab(ligne.id, ligne.nomCourt, getListArretFragment(), args);
-		}
-
-		setOnFragmentChange(new OnFragmentChange() {
-
-			@Override
-			public void onFragmentChanged(Fragment currentFragment) {
-				if (!((AbstractListArretFragment) currentFragment).isConstruct()
-						|| orderDirection != ((AbstractListArretFragment) currentFragment).isLastOrderDirection()) {
-					((AbstractListArretFragment) currentFragment).construireListe();
-				}
-			}
-		});
 		Ligne myLigne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		if (myLigne == null) {
 			myLigne = new Ligne();
 			myLigne.id = getIntent().getStringExtra("ligneId");
-			myLigne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(myLigne);
+		}
+
+		for (Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().selectAll(Ligne.class)) {
+			Bundle args = new Bundle();
+			args.putSerializable("ligne", ligne);
+			if (myLigne.id.equals(ligne.id)) {
+				myLigne = ligne;
+			}
+			addTab(ligne.id, ligne.nomCourt, getListArretFragment(), args);
 		}
 		if (savedInstanceState != null) {
 			setCurrentTab(savedInstanceState);
 		} else {
 			setCurrentTab(myLigne.id);
 		}
-
 	}
 
 	public String getCurrrentTabTag() {
 		return getCurrentTab();
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
 	}
 
 	private boolean orderDirection = true;
