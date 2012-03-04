@@ -153,7 +153,7 @@
 
         <service
                 android:name=".services.UpdateTimeService"
-                android:label="UpdateTimeService">
+                android:label="TransportsBordeauxUpdateTimeService">
 
             <intent-filter>
                 <action android:name="fr.ybo.transportsbordeaux.action.UPDATE"/>
@@ -165,8 +165,10 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-
-        <receiver android:process=":remote" android:name=".util.AlarmReceiver"/>
+        <receiver
+            android:name=".util.AlarmReceiver"
+            android:label="TransportsBordeauxAlarmReceiver"
+            android:process=":remote" />
 
         <receiver android:name=".activity.widgets.TransportsWidget11" android:label="@string/widget11_name">
             <intent-filter>
