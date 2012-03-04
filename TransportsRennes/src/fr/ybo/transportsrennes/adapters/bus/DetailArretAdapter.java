@@ -22,8 +22,9 @@ import fr.ybo.transportsrennes.R;
 
 public class DetailArretAdapter extends AbstractDetailArretAdapter {
 
-	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday) {
-		super(context, prochainsDeparts, now, isToday);
+	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday,
+			String currentDirection) {
+		super(context, prochainsDeparts, now, isToday, currentDirection);
 	}
 
 	@Override

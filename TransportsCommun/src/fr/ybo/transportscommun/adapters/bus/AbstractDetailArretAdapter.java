@@ -27,13 +27,16 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 
 	private int positionToMove;
 
+	private String currentDirection;
+
 	public int getPositionToMove() {
 		return positionToMove;
 	}
 
 	public AbstractDetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now,
-			boolean isToday) {
+			boolean isToday, String currentDirection) {
 		this.isToday = isToday;
+		this.currentDirection = currentDirection;
 		myContext = context;
 		this.now = now;
 		inflater = LayoutInflater.from(context);
@@ -53,6 +56,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 	private static class ViewHolder {
 		TextView heureProchain;
 		TextView tempsRestant;
+		TextView direction;
 	}
 
 	public int getCount() {
@@ -76,6 +80,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			holder = new AbstractDetailArretAdapter.ViewHolder();
 			holder.heureProchain = (TextView) convertView1.findViewById(R.id.detailArret_heureProchain);
 			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.detailArret_tempsRestant);
+			holder.direction = (TextView) convertView1.findViewById(R.id.detailArret_directionTrajet);
 			convertView1.setTag(holder);
 		} else {
 			holder = (AbstractDetailArretAdapter.ViewHolder) convertView1.getTag();
@@ -84,10 +89,17 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
 		holder.heureProchain.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
+		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
 			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
 		} else {
 			holder.tempsRestant.setText("");
+		}
+		if (prochainsDeparts.get(position).getDirection().equals(currentDirection)) {
+			holder.direction.setVisibility(View.GONE);
+		} else {
+			holder.direction.setVisibility(View.VISIBLE);
+			holder.direction.setText(prochainsDeparts.get(position).getDirection());
 		}
 		return convertView1;
 	}

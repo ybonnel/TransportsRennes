@@ -40,7 +40,7 @@ public class DetailArret extends AbstractDetailArret {
 	protected ListAdapter construireAdapter() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         return new DetailArretAdapter(getApplicationContext(), Horaire.getAllHorairesAsList(favori.ligneId,
-                favori.arretId, calendar), now, isToday());
+				favori.arretId, calendar), now, isToday(), favori.direction);
     }
 
 	@Override

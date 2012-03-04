@@ -47,6 +47,7 @@
     <item type="id" name="menu_choix_date"/>
     <item type="id" name="detailArret_heureProchain"/>
     <item type="id" name="detailArret_tempsRestant"/>
+    <item type="id" name="detailArret_directionTrajet"/>
     <item type="id" name="detailArret_scrolling"/>
     <item type="id" name="detailCorrespondance_scroll"/>
     <item type="id" name="detailTrajet_nomTrajet"/>

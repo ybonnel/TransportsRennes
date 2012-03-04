@@ -19,12 +19,14 @@ public class DetailArretConteneur {
     private int horaire;
     private int trajetId;
     private int sequence;
+	private String direction;
 
-    public DetailArretConteneur(int horaire, int trajetId, int sequence) {
+	public DetailArretConteneur(int horaire, int trajetId, int sequence, String direction) {
         super();
         this.horaire = horaire;
         this.trajetId = trajetId;
         this.sequence = sequence;
+		this.direction = direction;
     }
 
     public int getHoraire() {
@@ -39,4 +41,7 @@ public class DetailArretConteneur {
         return sequence;
     }
 
+	public String getDirection() {
+		return direction;
+	}
 }
