@@ -23,22 +23,22 @@
     <TextView
         android:id="@+id/detailArret_heureProchain"
         android:layout_width="wrap_content"
-        android:layout_height="50dip"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:gravity="center_vertical|left"
-        android:layout_marginTop="5dip"
-        android:layout_marginBottom="5dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
         android:layout_marginLeft="5dip"
         android:textSize="20dip" />
 
     <TextView
         android:id="@+id/detailArret_tempsRestant"
         android:layout_width="wrap_content"
-        android:layout_height="50dip"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:gravity="center_vertical|right"
-        android:layout_marginTop="5dip"
-        android:layout_marginBottom="5dip"
+        android:paddingTop="10dip"
+        android:paddingBottom="10dip"
         android:layout_marginRight="5dip"
         android:textSize="20dip" />
 
@@ -48,9 +48,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/detailArret_heureProchain"
-        android:layout_marginTop="-15dip"
+        android:layout_marginTop="-10dip"
         android:layout_marginLeft="10dip"
-        android:layout_marginBottom="20dip"
+        android:paddingBottom="10dip"
         android:gravity="center_vertical|left"
         android:textSize="14dip"
         android:visibility="gone"/>
