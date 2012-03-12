@@ -62,8 +62,9 @@ public class TransportsRennes extends AccueilActivity {
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
 		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
-		afficheMessage();
-		verifierUpgrade();
+		if (!verifierUpgrade()) {
+			afficheMessage();
+		}
 	}
 
 	@Override
@@ -120,7 +121,8 @@ public class TransportsRennes extends AccueilActivity {
 		startActivity(intent);
 	}
 
-	private void verifierUpgrade() {
+	private boolean verifierUpgrade() {
+		boolean hasUpgrade = false;
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = null;
 		try {
@@ -130,9 +132,11 @@ public class TransportsRennes extends AccueilActivity {
 		}
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
+			hasUpgrade = true;
 			upgradeDatabase();
 		} else if (dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
+			hasUpgrade = true;
 			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(R.string.majDispo));
 			builder.setCancelable(false);
@@ -150,6 +154,7 @@ public class TransportsRennes extends AccueilActivity {
 			AlertDialog alert = builder.create();
 			alert.show();
 		}
+		return hasUpgrade;
 	}
 
 	private static final int GROUP_ID = 0;
