@@ -77,30 +77,55 @@ public class TransportsRennes extends AccueilActivity {
 	}
 
 	private void afficheMessage() {
-		boolean afficheMessage = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				"TransportsRennes141_dialog", true);
+		boolean afficheMessage =
+				PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes141_dialog", true);
 		if (afficheMessage) {
-			showDialog();
+			showDialog(DIALOG_A_PROPOS);
 			saveAfficheMessage();
 		}
 
 	}
 
-	private void showDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
-		TextView textView = (TextView) view.findViewById(R.id.textAPropos);
-		if (UIUtils.isHoneycomb()) {
-			textView.setTextColor(TransportsRennesApplication.getTextColor(this));
+	private static final int DIALOG_A_PROPOS = 1;
+	private static final int DIALOG_UPGRADE = 2;
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		if (id == DIALOG_A_PROPOS) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
+			TextView textView = (TextView) view.findViewById(R.id.textAPropos);
+			if (UIUtils.isHoneycomb()) {
+				textView.setTextColor(TransportsRennesApplication.getTextColor(this));
+			}
+			Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+			textView.setText(spanned, TextView.BufferType.SPANNABLE);
+			textView.setMovementMethod(LinkMovementMethod.getInstance());
+			builder.setView(view);
+			builder.setTitle(getString(R.string.titleTransportsRennes,
+					Version.getVersionCourante(getApplicationContext())));
+			builder.setCancelable(false);
+			builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
+			return builder.create();
 		}
-		Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
-		textView.setText(spanned, TextView.BufferType.SPANNABLE);
-		textView.setMovementMethod(LinkMovementMethod.getInstance());
-		builder.setView(view);
-		builder.setTitle(getString(R.string.titleTransportsRennes, Version.getVersionCourante(getApplicationContext())));
-		builder.setCancelable(false);
-		builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
-		builder.create().show();
+		if (id == DIALOG_UPGRADE) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(getString(R.string.majDispo));
+			builder.setCancelable(false);
+			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.dismiss();
+					upgradeDatabase();
+				}
+			});
+			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.cancel();
+				}
+			});
+			return builder.create();
+		}
+		return super.onCreateDialog(id);
 	}
 
 	private static class TerminerClickListener implements DialogInterface.OnClickListener {
@@ -137,22 +162,7 @@ public class TransportsRennes extends AccueilActivity {
 		} else if (dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			hasUpgrade = true;
-			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.majDispo));
-			builder.setCancelable(false);
-			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
-					upgradeDatabase();
-				}
-			});
-			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
+			showDialog(DIALOG_UPGRADE);
 		}
 		return hasUpgrade;
 	}
@@ -185,7 +195,7 @@ public class TransportsRennes extends AccueilActivity {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case MENU_ID:
-				showDialog();
+				showDialog(DIALOG_A_PROPOS);
 				return true;
 			case R.id.menu_plan:
 				copieImageIfNotExists();
