@@ -62,9 +62,9 @@ public class TransportsRennes extends AccueilActivity {
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
 		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
-		if (!verifierUpgrade()) {
-			afficheMessage();
-		}
+		verifierUpgrade();
+		afficheMessage();
+
 	}
 
 	@Override
@@ -146,8 +146,7 @@ public class TransportsRennes extends AccueilActivity {
 		startActivity(intent);
 	}
 
-	private boolean verifierUpgrade() {
-		boolean hasUpgrade = false;
+	private void verifierUpgrade() {
 		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = null;
 		try {
@@ -157,14 +156,11 @@ public class TransportsRennes extends AccueilActivity {
 		}
 		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
-			hasUpgrade = true;
 			upgradeDatabase();
 		} else if (dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
-			hasUpgrade = true;
 			showDialog(DIALOG_UPGRADE);
 		}
-		return hasUpgrade;
 	}
 
 	private static final int GROUP_ID = 0;
@@ -248,8 +244,7 @@ public class TransportsRennes extends AccueilActivity {
 		if (!fichierExistant) {
 			InputStream inputStream = getResources().openRawResource(R.raw.rennes_urb_complet);
 			try {
-				OutputStream outputStream = openFileOutput("rennes_urb_complet.jpg",
-						Context.MODE_WORLD_READABLE);
+				OutputStream outputStream = openFileOutput("rennes_urb_complet.jpg", Context.MODE_WORLD_READABLE);
 				try {
 					byte[] buffre = new byte[50 * 1024];
 					int result = inputStream.read(buffre);
