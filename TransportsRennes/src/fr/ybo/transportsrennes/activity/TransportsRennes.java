@@ -25,10 +25,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
@@ -120,12 +118,6 @@ public class TransportsRennes extends AccueilActivity {
 		public void onClick(DialogInterface dialogInterface, int i) {
 			dialogInterface.cancel();
 		}
-	}
-
-	private void saveAfficheMessage() {
-		SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-		editor.putBoolean("TransportsRennes141_dialog", false);
-		editor.commit();
 	}
 
 	private void upgradeDatabase() {
