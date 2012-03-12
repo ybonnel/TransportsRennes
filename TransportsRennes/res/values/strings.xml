@@ -19,6 +19,7 @@
     <string name="widget11_name">Transports Rennes 1x1</string>
     <string name="widget21_name">Transports Rennes 2x1</string>
     <string name="widget22_name">Transports Rennes 2x2</string>
+    <string name="widgetlowres_name">Transports Rennes 2x2 LowRes</string>
     <!-- Messages -->
     <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes %1$s</string>
     <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez-vous l\'effectuer maintenant?

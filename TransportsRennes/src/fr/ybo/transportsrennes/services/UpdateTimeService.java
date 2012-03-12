@@ -41,6 +41,8 @@ import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetLowRes;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetLowResConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class UpdateTimeService extends Service {
@@ -124,6 +126,10 @@ public class UpdateTimeService extends Service {
                 TransportsWidget.updateAppWidget(getApplicationContext(),
                         AppWidgetManager.getInstance(getApplicationContext()), widgetId);
             }
+			for (int widgetId : TransportsWidgetLowResConfigure.getWidgetIds(getApplicationContext())) {
+				TransportsWidgetLowRes.updateAppWidget(getApplicationContext(),
+						AppWidgetManager.getInstance(getApplicationContext()), widgetId);
+			}
         } catch (Exception ignore) {
         }
     }

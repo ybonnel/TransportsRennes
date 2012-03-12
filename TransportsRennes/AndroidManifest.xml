@@ -205,6 +205,19 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".activity.widgets.TransportsWidgetLowRes" android:label="@string/widgetlowres_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/transportswidgetlowres"/>
+        </receiver>
+        <activity android:name=".activity.widgets.TransportsWidgetLowResConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
         <!-- Cappbrain -->
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 

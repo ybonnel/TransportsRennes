@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  
+  Contributors:
+      ybonnel - initial API and implementation
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:background="@drawable/appwidget_dark_bg_clickable"
+                android:id="@+id/widgetlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+        <ImageView android:id="@+id/iconeLigne"
+                   android:layout_width="30dip"
+                   android:layout_height="30dip"
+                   android:layout_marginTop="5dip"
+                   android:layout_marginLeft="5dip"
+                   android:layout_alignParentTop="true"/>
+
+        <TextView android:id="@+id/nomArret"
+                  android:paddingLeft="2dip"
+                  android:paddingTop="0dip"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="12dip"
+                  android:textColor="#E1E1E1"
+                  android:gravity="center_vertical|left"
+                  android:layout_toRightOf="@id/iconeLigne"
+                  android:layout_alignTop="@id/iconeLigne"/>
+
+        <TextView android:id="@+id/directionArret"
+                  android:paddingLeft="2dip"
+                  android:paddingTop="0dip"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="10dip"
+                  android:textColor="#E1E1E1"
+                  android:gravity="center_vertical|left"
+                  android:layout_below="@id/nomArret"
+                  android:layout_alignLeft="@id/nomArret"/>
+
+        <TextView android:id="@+id/tempsRestant"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="42dip"
+                  android:textColor="@color/red"
+                  android:gravity="center_vertical|center_horizontal"
+                  android:layout_below="@+id/directionArret"/>
+
+        <TextView android:id="@+id/tempsRestantFutur"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="42dip"
+                  android:textColor="#E1E1E1"
+                  android:gravity="center_vertical|center_horizontal"
+                  android:layout_below="@+id/tempsRestant"/>
+
+</RelativeLayout>

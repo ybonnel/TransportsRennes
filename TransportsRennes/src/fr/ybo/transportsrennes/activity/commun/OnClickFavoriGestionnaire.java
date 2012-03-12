@@ -28,6 +28,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetLowResConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class OnClickFavoriGestionnaire implements View.OnClickListener {
@@ -119,7 +120,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             // Supression d'un favori.
             if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)
                     && TransportsWidget11Configure.isNotUsed(activity, myFavori)
-                    && TransportsWidget21Configure.isNotUsed(activity, myFavori)) {
+					&& TransportsWidget21Configure.isNotUsed(activity, myFavori)
+					&& TransportsWidgetLowResConfigure.isNotUsed(activity, myFavori)) {
                 TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();

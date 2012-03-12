@@ -29,6 +29,7 @@ import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetLowResConfigure;
 import fr.ybo.transportsrennes.adapters.bus.FavoriAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
@@ -126,7 +127,8 @@ public class ListFavoris extends ListFragment {
 
 				if (TransportsWidgetConfigure.isNotUsed(getActivity(), favori)
 						&& TransportsWidget11Configure.isNotUsed(getActivity(), favori)
-						&& TransportsWidget21Configure.isNotUsed(getActivity(), favori)) {
+						&& TransportsWidget21Configure.isNotUsed(getActivity(), favori)
+						&& TransportsWidgetLowResConfigure.isNotUsed(getActivity(), favori)) {
 					TransportsRennesApplication.getDataBaseHelper().delete(favori);
 					((FavoriAdapter) getListAdapter()).getFavoris().clear();
 					((FavoriAdapter) getListAdapter()).getFavoris().addAll(

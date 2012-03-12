@@ -21,6 +21,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetConfigure;
+import fr.ybo.transportsrennes.activity.widgets.TransportsWidgetLowResConfigure;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 /**
@@ -50,7 +51,8 @@ public class ListArretByPosition extends AbstractListArretByPosition {
 	@Override
 	protected void deleteFavori(ArretFavori favori) {
 		if (TransportsWidgetConfigure.isNotUsed(this, favori) && TransportsWidget11Configure.isNotUsed(this, favori)
-				&& TransportsWidget21Configure.isNotUsed(this, favori)) {
+				&& TransportsWidget21Configure.isNotUsed(this, favori)
+				&& TransportsWidgetLowResConfigure.isNotUsed(this, favori)) {
 			TransportsRennesApplication.getDataBaseHelper().delete(favori);
 		} else {
 			Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
