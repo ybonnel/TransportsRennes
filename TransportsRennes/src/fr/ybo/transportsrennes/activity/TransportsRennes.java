@@ -63,8 +63,6 @@ public class TransportsRennes extends AccueilActivity {
 		setContentView(R.layout.main);
 		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
 		verifierUpgrade();
-		afficheMessage();
-
 	}
 
 	@Override
@@ -74,16 +72,6 @@ public class TransportsRennes extends AccueilActivity {
 			startActivity(new Intent(this, TransportsRennes.class));
 			finish();
 		}
-	}
-
-	private void afficheMessage() {
-		boolean afficheMessage =
-				PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsRennes141_dialog", true);
-		if (afficheMessage) {
-			showDialog(DIALOG_A_PROPOS);
-			saveAfficheMessage();
-		}
-
 	}
 
 	private static final int DIALOG_A_PROPOS = 1;
