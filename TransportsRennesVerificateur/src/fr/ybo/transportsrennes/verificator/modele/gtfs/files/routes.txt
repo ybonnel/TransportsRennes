@@ -1,0 +1,71 @@
+route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color
+0151,1,151,Rennes (Sainte Anne) <> Betton,Express suburbaine,3,,FCE000,93007C
+0150,1,150,Rennes (République) <> Thorigné-Fouillard,Express suburbaine,3,,FCE000,8EA1CF
+0153,1,153,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault,Express suburbaine,3,,FCE000,D01733
+0152,1,152,Rennes (Lycée V. H. Basch) <> Clayes / Saint-Gilles,Express suburbaine,3,,FCE000,007A76
+0011,1,11,Z.I. Ouest / Stade Rennais <> Saint Saëns / Z.I. Sud-Est,Urbaine,3,,dc81ae,ffffff
+0059,1,59,Vern-sur-Seiche <> Rennes (La Poterie) / Rennes (Henri Fréville) <> Bruz,Suburbaine,3,,f09cbe,201d21
+0057,1,57,Rennes (République) <> Saint-Jacques-de-la-Lande / Bruz,Suburbaine,3,,a57223,ffffff
+0055,1,55,Rennes (Charles de Gaulle) <> Mordelles / Le Verger,Suburbaine,3,,f2ab00,201d21
+0056,1,56,Rennes (Charles de Gaulle) <> Chavagne,Suburbaine,3,,009a4a,ffffff
+0065,1,65,Rennes (Villejean-Université) <> Pacé / Parthenay / Clayes,Suburbaine,3,,e16ba0,ffffff
+0064,1,64,Rennes (République) <> Acigné,Suburbaine,3,,008dd6,ffffff
+0061,1,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon,Suburbaine,3,,e43d6a,ffffff
+0005,1,5,Patton <> Lycée Bréquigny,Majeure,3,,eb8200,ffffff
+0004,1,4,Beauregard <> Beaulieu Atalante,Majeure,3,,6f177e,ffffff
+0090,1,90,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande,Intercommunale,3,,8fc255,df171c
+0006,1,6,Cesson-Sévigné (Base de Loisirs) <> Saint-Jacques-de-la-Lande (Morinais),Majeure,3,,66bfd3,ffffff
+0164,1,164,Rennes (République) <> Acigné,Express suburbaine,3,,FCE000,008DD6
+0001,1,1,Cesson-Sévigné (Chêne Germain) <> Chantepie (Rosa Parks),Majeure,3,,90C01B,FFFFFF
+0221,1,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne),Complémentaire,3,,DB9319,FFFFFF
+0003,1,3,Saint Laurent <> Alma,Majeure,3,,00843a,ffffff
+0161,1,161,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche / Saint-Erblon / Bourgbarré,Express suburbaine,3,,FCE000,E43D6A
+0002,1,2,Grand Quartier <> La Poterie / Haut Sancé,Majeure,3,,0083cd,ffffff
+0044,1,44,République <> Lycée Joliot-Curie,Express urbaine,3,,fce000,e10077
+0009,1,9,Saint Laurent <> Cleunay,Majeure,3,,004b9b,ffffff
+0093,1,93,Cintré <> L'Hermitage (Gare),Intercommunale,3,,8FC255,DF171C
+0008,1,8,Saint-Grégoire <> Rennes (La Poterie),Majeure,3,,B8639F,FFFFFF
+0094,1,94,Saint-Sulpice-la-Forêt / Chevaigné <> Betton,Intercommunale,3,,8FC255,DF171C
+0091,1,91,Bruz / Chartres <> Noyal-Châtillon-sur-Seiche,Intercommunale,3,,8fc255,df171c
+0052,1,52,Saint-Gilles / Pacé <> Rennes (Villejean-Université) <> Montgermont / La Chapelle-des-Fougeretz,Suburbaine,3,,007a76,ffffff
+0051,1,51,Rennes (Sainte Anne) <> Betton,Suburbaine,3,,93007c,ffffff
+0054,1,54,Rennes (Charles de Gaulle) <> Le Rheu / Cintré,Suburbaine,3,,cc90ba,ffffff
+0053,1,53,Rennes (République) <> Vezin-le-Coquet / L'Hermitage / La Chapelle-Thouarault,Suburbaine,3,,d01733,ffffff
+0050,1,50,Rennes (République) <> Thorigné-Fouillard,Suburbaine,3,,8ea1cf,ffffff
+0089,1,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,Spéciale,3,,004B96,FFFFFF
+0156,1,156,Rennes (République) <> Chavagne,Express suburbaine,3,,FCE000,009A4A
+0157,1,157,Rennes (République) <> Bruz,Express suburbaine,3,,FCE000,A57223
+0154,1,154,Rennes (République) <> Le Rheu,Express suburbaine,3,,FCE000,CC90BA
+0155,1,155,Rennes (République) <> Mordelles,Express suburbaine,3,,FCE000,F2AB00
+0158,1,KL,Rennes (République) <> Campus de Ker-Lann,Express suburbaine,3,,FCE000,E10077
+0159,1,159,Rennes (Henri Fréville) <> Bruz,Express suburbaine,3,,FCE000,F09CBE
+0035,1,35,Cesson-Sévigné (Chêne Germain) <> Cesson-Sévigné (Gare),Inter-quartiers,3,,FEF466,DF171C
+0034,1,34,Z.I. Sud-Est / La Poterie <> Cesson-Sévigné (Lycée Saint-Etienne),Inter-quartiers,3,,fef466,df171c
+0033,1,33,Saint-Jacques-de-la-Lande / Bréquigny <> La Poterie / Chantepie (Cucé),Inter-quartiers,3,,fef466,df171c
+0172,1,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan,Express suburbaine,3,,FCE000,0C3C91
+0173,1,173,Rennes (La Poterie) <> Saint-Armel / Corps-Nuds,Express suburbaine,3,,FCE000,BF82B2
+0077,1,77,Rennes (Villejean-Université) <> Pacé,Suburbaine,3,,f6c200,201d21
+0078,1,78,Rennes (Villejean-Université) <> Betton / Saint-Grégoire,Suburbaine,3,,e10068,ffffff
+0042,1,42,Gares <> Z.I. Sud-Est,Express urbaine,3,,FCE000,0057A6
+0101,1,TTZ,Rennes <> Touche Tizon,Spéciale,3,,009C99,FFFFFF
+0040,1,40,République <> Beaulieu Atalante,Express urbaine,3,,FCE000,DF171C
+0041,1,41,Gares <> ZAC Saint-Sulpice,Express urbaine,3,,FCE000,00903B
+0200,1,200,Acigné (Timonière) <> Rennes (Lycée Assomption),Complémentaire,3,,A4669D,FFFFFF
+0205,1,205,Villejean-Université <> La Lande du Breil,Complémentaire,3,,a00078,ffffff
+0203,1,203,Gares <> Lycée Joliot-Curie,Complémentaire,3,,DB9319,FFFFFF
+0202,1,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption),Complémentaire,3,,009CDD,FFFFFF
+0208,1,208,Saint-Grégoire (Uttenreuth) <> Saint-Grégoire (MFR Rabinardières),Complémentaire,3,,db9319,ffffff
+0067,1,67,Rennes (République) <> Cesson-Sévigné / Brécé,Suburbaine,3,,e0083b,ffffff
+0207,1,207,Gares <> Cesson-Sévigné (Lycée Saint-Etienne),Complémentaire,3,,a4669d,ffffff
+0068,1,68,Rennes (Villejean-Université) <> Gévezé,Suburbaine,3,,d6c800,201d21
+0070,1,70,Rennes (Sainte Anne) <> Saint-Sulpice-la-Forêt,Suburbaine,3,,ea748a,ffffff
+0072,1,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan,Suburbaine,3,,0c3c91,ffffff
+0071,1,71,Rennes (Sainte Anne) <> Betton / Chevaigné,Suburbaine,3,,a57223,ffffff
+0074,1,74,Rennes (Henri Fréville) <> Orgères / Bourgbarré,Suburbaine,3,,f6c200,201d21
+0073,1,73,Rennes (La Poterie) <> Vern-sur-Seiche / Saint-Armel / Corps-Nuds,Suburbaine,3,,BF82B2,FFFFFF
+0076,1,76,Rennes (Villejean-Université) <> Vezin-le-Coquet / Le Rheu,Express suburbaine,3,,FCE000,0063B0
+0075,1,75,Rennes (La Poterie) <> Nouvoitou,Suburbaine,3,,ef9940,ffffff
+0030,1,30,Stade Rennais <> Cesson-Sévigné (Rigourdière),Inter-quartiers,3,,fef466,df171c
+0031,1,31,Bourgogne <> Beaulieu Ecole de Chimie,Inter-quartiers,3,,fef466,df171c
+0032,1,32,Triangle <> Beaulieu Atalante,Inter-quartiers,3,,fef466,df171c
+a,1,a,La Poterie <> J.F. Kennedy,,1,,,

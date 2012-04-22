@@ -1,0 +1,2 @@
+agency_id,agency_name,agency_url,agency_timezone,agency_phone,agency_lang
+"1","STAR","http://www.star.fr","Europe/Paris","0970821800","fr"
