@@ -17,11 +17,6 @@
 package fr.ybo.transportsrenneshelper.gtfs.compression;
 
 
-import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
-import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
-import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -29,6 +24,11 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
+import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
+import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 
 /**
  * Compression des trips et calendar (et horaires du coup).
@@ -127,6 +127,10 @@ public class CompressionTripAndCalendar {
 	 */
 	public void compressTripsAndCalendars() {
 		for (Trip tripActuel : GestionnaireGtfs.getInstance().getMapTrips().values()) {
+			if (GestionnaireGtfs.getInstance().getStopTimesForOnTrip(tripActuel.id) == null) {
+				System.err.println("Le trajet " + tripActuel.id + " ne contient pas de stopTimes");
+				continue;
+			}
 			CompressionTripAndCalendar.Trajet trajet = new CompressionTripAndCalendar.Trajet(GestionnaireGtfs
 					.getInstance().getStopTimesForOnTrip(tripActuel.id));
 			if (!trajets.containsKey(trajet.getKey())) {
