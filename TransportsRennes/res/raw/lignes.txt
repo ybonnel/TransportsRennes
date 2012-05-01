@@ -60,12 +60,11 @@ ordre,id,nom_court,nom_long
 58,0164,164,Rennes (République) <> Acigné
 59,0172,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan
 60,0173,173,Rennes (La Poterie) <> Saint-Armel / Corps-Nuds
-61,0200,200,Acigné (Timonière) <> Rennes (Lycée Assomption)
-62,0202,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption)
-63,0203,203,Gares <> Lycée Joliot-Curie
-64,0205,205,Villejean-Université <> La Lande du Breil
-65,0207,207,Gares <> Cesson-Sévigné (Lycée Saint-Etienne)
-66,0208,208,Saint-Grégoire (Uttenreuth) <> Saint-Grégoire (MFR Rabinardières)
-67,0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne)
-68,0089,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy
-69,0101,TTZ,Rennes <> Touche Tizon
+61,0203,203,Gares <> Lycée Joliot-Curie
+62,0205,205,Villejean-Université <> La Lande du Breil
+63,0207,207,Gares <> Cesson-Sévigné (Lycée Saint-Etienne)
+64,0208,208,Saint-Grégoire (Uttenreuth) <> Saint-Grégoire (MFR Rabinardières)
+65,0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne)
+66,0088,API,Rennes (République) <> Etangs d'Apigné
+67,0089,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy
+68,0101,TTZ,Rennes <> Touche Tizon
