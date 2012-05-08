@@ -1,11 +1,9 @@
 package fr.ybo.transportsrennes.fragments.alerts;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,7 +15,7 @@ import android.widget.Toast;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.alerts.DetailAlert;
+import fr.ybo.transportsrennes.activity.alerts.DetailAlert_;
 import fr.ybo.transportsrennes.adapters.alerts.AlertAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
@@ -40,10 +38,9 @@ public class ListAlerts extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		Serializable alert = (Serializable) l.getItemAtPosition(position);
-		Intent intent = new Intent(getActivity(), DetailAlert.class);
-		intent.putExtra("alert", alert);
-		startActivity(intent);
+		startActivity(DetailAlert_.intent(getActivity()) //
+				.alert((Alert) l.getItemAtPosition(position))//
+				.get());
 	}
 
 	@Override

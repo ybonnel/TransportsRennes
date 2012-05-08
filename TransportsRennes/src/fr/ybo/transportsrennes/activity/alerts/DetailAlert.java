@@ -18,10 +18,15 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import android.database.Cursor;
-import android.os.Bundle;
 import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ViewById;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
@@ -33,32 +38,46 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
  *
  * @author ybonnel
  */
+@EActivity(R.layout.detailalert)
 public class DetailAlert extends BaseSimpleActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.detailalert);
+	@ViewById
+	TextView titreAlert;
+
+	@ViewById
+	ImageView iconeLigne;
+
+	@ViewById(R.id.detailAlert_Detail)
+	TextView detail;
+
+	@Extra("alert")
+	Alert alert;
+
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-        Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
+		titreAlert.setText(alert.getTitleFormate());
+		if (!alert.lines.isEmpty()) {
+			iconeLigne.setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
+		}
+		detail.setText(Html.fromHtml(alert.getDetailFormatte(getArretToBold())));
+	}
 
-        ((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());
-        if (!alert.lines.isEmpty()) {
-            ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
-        }
-        Collection<String> arretsToBold = new HashSet<String>(20);
-        for (String line : alert.lines) {
-            StringBuilder requete = new StringBuilder();
-            requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
-            requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
-            requete.append("and Arret.id = ArretRoute.arretId");
-            Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
-            while (cursor.moveToNext()) {
-                arretsToBold.add(cursor.getString(0));
-            }
-            cursor.close();
-        }
-        ((TextView) findViewById(R.id.detailAlert_Detail)).setText(Html.fromHtml(alert.getDetailFormatte(arretsToBold)));
-    }
-
+	private Collection<String> getArretToBold() {
+		Collection<String> arretsToBold = new HashSet<String>(20);
+		for (String line : alert.lines) {
+			StringBuilder requete = new StringBuilder();
+			requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
+			requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
+			requete.append("and Arret.id = ArretRoute.arretId");
+			Cursor cursor =
+					TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+							Collections.singletonList(line));
+			while (cursor.moveToNext()) {
+				arretsToBold.add(cursor.getString(0));
+			}
+			cursor.close();
+		}
+		return arretsToBold;
+	}
 }
