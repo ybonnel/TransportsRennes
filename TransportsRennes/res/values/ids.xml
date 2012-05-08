@@ -13,4 +13,9 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
+    <item type="id" name="menu_a_propos"/>
+    <item type="id" name="menu_tickets"/>
+    <item type="id" name="menu_load_lines"/>
+    <item type="id" name="menu_share"/>
+    <item type="id" name="menu_notif"/>
 </resources>

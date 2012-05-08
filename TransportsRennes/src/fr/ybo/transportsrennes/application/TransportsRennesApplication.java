@@ -46,7 +46,7 @@ import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 import fr.ybo.transportscommun.donnees.modele.Bounds;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.TransportsRennes;
+import fr.ybo.transportsrennes.activity.TransportsRennes_;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
@@ -191,7 +191,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 	}
 
 	public Class<? extends AccueilActivity> getAccueilActivity() {
-		return TransportsRennes.class;
+		return TransportsRennes_.class;
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper) {

@@ -31,7 +31,7 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:debuggable="false" android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.Transports">
-        <activity android:name=".activity.TransportsRennes"
+        <activity android:name=".activity.TransportsRennes_"
                   android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

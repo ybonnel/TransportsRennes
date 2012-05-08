@@ -31,10 +31,14 @@ import android.text.Html;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
+
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
@@ -50,6 +54,8 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.util.Version;
 
+@EActivity(R.layout.main)
+@OptionsMenu(R.menu.accueil_menu_no_action_bar)
 public class TransportsRennes extends AccueilActivity {
 
 	private Theme currentTheme;
@@ -58,7 +64,10 @@ public class TransportsRennes extends AccueilActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
-		setContentView(R.layout.main);
+	}
+
+	@AfterViews
+	void afterView() {
 		getActivityHelper().setupActionBar(R.menu.accueil_menu_items, R.menu.holo_accueil_menu_items);
 		verifierUpgrade();
 	}
@@ -67,7 +76,7 @@ public class TransportsRennes extends AccueilActivity {
 	protected void onResume() {
 		super.onResume();
 		if (currentTheme != TransportsRennesApplication.getTheme(getApplicationContext())) {
-			startActivity(new Intent(this, TransportsRennes.class));
+			startActivity(new Intent(this, TransportsRennes_.class));
 			finish();
 		}
 	}
@@ -143,75 +152,55 @@ public class TransportsRennes extends AccueilActivity {
 		}
 	}
 
-	private static final int GROUP_ID = 0;
-	private static final int MENU_ID = 1;
-	private static final int MENU_NOTIF = 4;
-	private static final int MENU_SHARE = 5;
-	private static final int MENU_LOAD_LINES = 6;
-	private static final int MENU_TICKETS = 7;
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
-		item.setIcon(android.R.drawable.ic_menu_info_details);
-		MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
-		itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
-		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
-		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
-		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
-		itemShare.setIcon(android.R.drawable.ic_menu_share);
-		MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
-		itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
-		return true;
+	@OptionsItem(R.id.menu_a_propos)
+	void aPropos() {
+		showDialog(DIALOG_A_PROPOS);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-			case MENU_ID:
-				showDialog(DIALOG_A_PROPOS);
-				return true;
-			case R.id.menu_plan:
-				copieImageIfNotExists();
-				Intent intentMap = new Intent(Intent.ACTION_VIEW);
-				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "rennes_urb_complet.jpg")), "image/*");
-				startActivity(intentMap);
-				return true;
-			case MENU_TICKETS:
-				Intent intentTickets = new Intent(this, ListPointsDeVente.class);
-				startActivity(intentTickets);
-				return true;
-			case MENU_LOAD_LINES:
-				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
-				alertBuilder.setCancelable(false);
-				alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.dismiss();
-						loadAllLines();
-					}
-				});
-				alertBuilder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-				alertBuilder.show();
-				return true;
-			case MENU_SHARE:
-				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-				shareIntent.setType("text/plain");
-				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
-				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
-				return true;
-			case MENU_NOTIF:
-				startActivity(new Intent(this, ListNotif.class));
-				break;
-		}
-		return false;
+	@OptionsItem(R.id.menu_plan)
+	void plan() {
+		copieImageIfNotExists();
+		Intent intentMap = new Intent(Intent.ACTION_VIEW);
+		intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "rennes_urb_complet.jpg")), "image/*");
+		startActivity(intentMap);
+	}
+
+	@OptionsItem(R.id.menu_tickets)
+	void tickets() {
+		startActivity(new Intent(this, ListPointsDeVente.class));
+	}
+
+	@OptionsItem(R.id.menu_load_lines)
+	void menuLoadLines() {
+		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+		alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
+		alertBuilder.setCancelable(false);
+		alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+				loadAllLines();
+			}
+		});
+		alertBuilder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.cancel();
+			}
+		});
+		alertBuilder.show();
+	}
+
+	@OptionsItem(R.id.menu_share)
+	void share() {
+		Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+		shareIntent.setType("text/plain");
+		shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+		shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
+		startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
+	}
+
+	@OptionsItem(R.id.menu_notif)
+	void notif() {
+		startActivity(new Intent(this, ListNotif.class));
 	}
 
 	private void copieImageIfNotExists() {
