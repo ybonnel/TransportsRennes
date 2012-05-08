@@ -35,7 +35,7 @@ public class TabFavoris extends AbstractTabFavoris {
 
 	@Override
 	protected Class<? extends BaseFragmentActivity> getListFavorisForNoGroupClass() {
-		return ListFavorisForNoGroup.class;
+		return ListFavorisForNoGroup_.class;
 	}
 
 	@Override

@@ -13,21 +13,23 @@
  */
 package fr.ybo.transportsrennes.activity.alerts;
 
-import android.os.Bundle;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
 
+@EActivity(R.layout.listalert)
 public class ListAlertsForOneLine extends BaseFragmentActivity {
 
-    private Ligne ligne;
+	@Extra("ligne")
+	Ligne ligne;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
-		setContentView(R.layout.listalert);
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
 		fragmentAlert.setLigne(ligne);

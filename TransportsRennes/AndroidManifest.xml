@@ -39,8 +39,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.loading.LoadingActivity" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.BusRennes" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.alerts.ListAlertsForOneLine" android:configChanges="orientation|keyboardHidden">
+        <activity android:name=".activity.bus.BusRennes_" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.alerts.ListAlertsForOneLine_" android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity android:name=".activity.alerts.DetailAlert_" android:configChanges="orientation|keyboardHidden">
         </activity>
@@ -52,7 +52,7 @@
         </activity>
         <activity android:name=".activity.bus.DetailArret" android:configChanges="orientation|keyboardHidden">
         </activity>
-        <activity android:name=".activity.bus.ListFavorisForNoGroup" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListFavorisForNoGroup_" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.TabFavoris" android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <!-- This action is only to allow an entry point for launcher shortcuts -->
@@ -98,10 +98,10 @@
         <activity android:name=".activity.itineraires.TrajetOnMap" android:configChanges="keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesRennes"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.bus.ListNotif_" android:configChanges="orientation|keyboardHidden"/>
 
         <activity
-                android:name=".activity.bus.BusShortcutPicker"
+                android:name=".activity.bus.BusShortcutPicker_"
                 android:label="@string/lineShortcut"
                 >
             <intent-filter>

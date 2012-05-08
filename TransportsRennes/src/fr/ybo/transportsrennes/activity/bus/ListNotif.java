@@ -16,13 +16,17 @@ package fr.ybo.transportsrennes.activity.bus;
 import java.util.Calendar;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
@@ -36,33 +40,30 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 /**
  * @author ybonnel
  */
+@EActivity(R.layout.listnotif)
 public class ListNotif extends BaseListActivity {
 
     private UpdateTimeUtil updateTimeUtil;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listnotif);
+	@ItemClick
+	void listItemClicked(Notification notification) {
+		Intent intent = new Intent(this, DetailArret.class);
+		Ligne ligne = Ligne.getLigne(notification.getLigneId());
+		Arret arret = Arret.getArret(notification.getArretId());
+		intent.putExtra("ligne", ligne);
+		intent.putExtra("idArret", notification.getArretId());
+		intent.putExtra("nomArret", arret.nom);
+		intent.putExtra("direction", notification.getDirection());
+		intent.putExtra("macroDirection", notification.getMacroDirection());
+		startActivity(intent);
+	}
+
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         setListAdapter(new NotifAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().selectAll(Notification.class)));
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Notification notification = (Notification) adapterView.getItemAtPosition(i);
-                Intent intent = new Intent(ListNotif.this, DetailArret.class);
-                Ligne ligne = Ligne.getLigne(notification.getLigneId());
-                Arret arret = Arret.getArret(notification.getArretId());
-                intent.putExtra("ligne", ligne);
-                intent.putExtra("idArret", notification.getArretId());
-                intent.putExtra("nomArret", arret.nom);
-                intent.putExtra("direction", notification.getDirection());
-                intent.putExtra("macroDirection", notification.getMacroDirection());
-                startActivity(intent);
-            }
-        });
-        registerForContextMenu(getListView());
+		registerForContextMenu(getListView());
         updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
-
             public void update(Calendar calendar) {
                 ((NotifAdapter) getListAdapter()).majCalendar();
                 ((NotifAdapter) getListAdapter()).notifyDataSetChanged();

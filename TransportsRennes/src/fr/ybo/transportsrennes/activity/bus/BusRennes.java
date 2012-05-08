@@ -13,14 +13,15 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
-import java.io.Serializable;
 import java.util.List;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportsrennes.R;
@@ -32,30 +33,26 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
  *
  * @author ybonnel
  */
+@EActivity(R.layout.bus)
 public class BusRennes extends BaseListActivity {
+	@ItemClick
+	void listItemClicked(Ligne ligne) {
+		Intent intent = new Intent(BusRennes.this, ListArret.class);
+		intent.putExtra("ligne", ligne);
+		startActivity(intent);
+	}
 
-    private void constructionListe() {
-        List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
-        setListAdapter(new LigneAdapter(this, lignes));
-        ListView lv = getListView();
-        lv.setFastScrollEnabled(true);
-        lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(BusRennes.this, ListArret.class);
-                intent.putExtra("ligne", ligne);
-                startActivity(intent);
-            }
-
-        });
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus);
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         constructionListe();
     }
+
+	private void constructionListe() {
+		List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
+		setListAdapter(new LigneAdapter(this, lignes));
+		ListView lv = getListView();
+		lv.setFastScrollEnabled(true);
+		lv.setTextFilterEnabled(true);
+	}
 }

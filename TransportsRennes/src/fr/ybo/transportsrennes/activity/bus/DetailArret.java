@@ -21,7 +21,7 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
+import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine_;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 
 /**
@@ -55,7 +55,7 @@ public class DetailArret extends AbstractDetailArret {
 
 	@Override
 	protected Class<? extends BaseFragmentActivity> getListAlertsForOneLineClass() {
-		return ListAlertsForOneLine.class;
+		return ListAlertsForOneLine_.class;
     }
 
 	@Override

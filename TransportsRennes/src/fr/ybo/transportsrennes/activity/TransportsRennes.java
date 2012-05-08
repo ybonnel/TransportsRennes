@@ -47,7 +47,7 @@ import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 import fr.ybo.transportscommun.util.Theme;
 import fr.ybo.transportsrennes.R;
-import fr.ybo.transportsrennes.activity.bus.ListNotif;
+import fr.ybo.transportsrennes.activity.bus.ListNotif_;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
 import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -200,7 +200,7 @@ public class TransportsRennes extends AccueilActivity {
 
 	@OptionsItem(R.id.menu_notif)
 	void notif() {
-		startActivity(new Intent(this, ListNotif.class));
+		startActivity(ListNotif_.intent(this).get());
 	}
 
 	private void copieImageIfNotExists() {

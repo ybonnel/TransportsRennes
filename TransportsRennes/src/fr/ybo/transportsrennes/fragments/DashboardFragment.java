@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import fr.ybo.transportscommun.util.Theme;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.TabAlertes;
-import fr.ybo.transportsrennes.activity.bus.BusRennes;
+import fr.ybo.transportsrennes.activity.bus.BusRennes_;
 import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
 import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
@@ -44,7 +44,7 @@ public class DashboardFragment extends Fragment {
 		}
 		root.findViewById(R.id.home_btn_bus).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				startActivity(new Intent(getActivity(), BusRennes.class));
+				startActivity(BusRennes_.intent(getActivity()).get());
 			}
 		});
 		root.findViewById(R.id.home_btn_bus_gps).setOnClickListener(new View.OnClickListener() {

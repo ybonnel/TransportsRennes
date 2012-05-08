@@ -17,11 +17,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+import com.googlecode.androidannotations.annotations.OptionsMenu;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.donnees.manager.FavorisManager;
 import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
@@ -32,12 +35,12 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 /**
  * @author ybonnel
  */
+@EActivity(R.layout.listfavoris)
+@OptionsMenu(R.menu.bus_favoris_menu_no_action_bar)
 public class ListFavorisForNoGroup extends BaseFragmentActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listfavoris);
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
 		if (FavorisManager.getInstance().hasFavorisToLoad()) {
 			Intent intent = new Intent(this, LoadingActivity.class);
@@ -46,34 +49,21 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 		}
     }
 
-    private static final int GROUP_ID = 0;
-    private static final int MENU_AJOUTER = 1;
+	@OptionsItem
+	void menuExport() {
+		FavorisManager.getInstance().export(this);
+	}
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
-        item.setIcon(android.R.drawable.ic_menu_add);
-        return true;
-    }
+	@OptionsItem
+	void menuImport() {
+		FavorisManager.getInstance().load(this);
+		startActivity(new Intent(this, TabFavoris.class));
+		finish();
+	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-			case R.id.menu_export:
-				FavorisManager.getInstance().export(this);
-				break;
-			case R.id.menu_import:
-				FavorisManager.getInstance().load(this);
-				startActivity(new Intent(this, TabFavoris.class));
-				finish();
-				break;
-			case MENU_AJOUTER:
-				showDialog(AJOUTER_GROUPE_DIALOG_ID);
-				return true;
-		}
-		return false;
+	@OptionsItem
+	void menuAjouter() {
+		showDialog(AJOUTER_GROUPE_DIALOG_ID);
 	}
 
 	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;

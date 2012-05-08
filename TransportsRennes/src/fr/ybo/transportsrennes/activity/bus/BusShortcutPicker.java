@@ -18,9 +18,11 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.IconeLigne;
@@ -33,6 +35,7 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
  *
  * @author ybonnel
  */
+@EActivity(R.layout.bus)
 public class BusShortcutPicker extends BaseListActivity {
 
     private void constructionListe() {
@@ -41,20 +44,17 @@ public class BusShortcutPicker extends BaseListActivity {
         ListView lv = getListView();
         lv.setFastScrollEnabled(true);
         lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Ligne ligne = (Ligne) adapterView.getItemAtPosition(position);
-                setupShortcut(ligne);
-                finish();
-            }
-
-        });
     }
+
+	@ItemClick
+	void listItemClicked(Ligne ligne) {
+		setupShortcut(ligne);
+		finish();
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.bus);
         constructionListe();
     }
 
