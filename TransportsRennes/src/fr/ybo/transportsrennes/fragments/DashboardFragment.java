@@ -44,7 +44,7 @@ public class DashboardFragment extends Fragment {
 		}
 		root.findViewById(R.id.home_btn_bus).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				startActivity(BusRennes_.intent(getActivity()).get());
+				BusRennes_.intent(getActivity()).start();
 			}
 		});
 		root.findViewById(R.id.home_btn_bus_gps).setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class DashboardFragment extends Fragment {
 		});
 		root.findViewById(R.id.home_btn_itineraires).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				startActivity(ItineraireRequete_.intent(getActivity()).get());
+				ItineraireRequete_.intent(getActivity()).start();
 			}
 		});
 		return root;

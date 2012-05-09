@@ -351,9 +351,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 			Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 		} else {
 			int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-			startActivity(Itineraires_.intent(this)//
+			Itineraires_.intent(this)//
 					.itineraireReponse(ItineraireReponse.convert(response.getPlan()))//
-					.heureDepart(heureDepart).get());
+					.heureDepart(heureDepart)//
+					.start();
 		}
 	}
 

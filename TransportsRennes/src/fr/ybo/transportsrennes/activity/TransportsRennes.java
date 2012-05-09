@@ -200,7 +200,7 @@ public class TransportsRennes extends AccueilActivity {
 
 	@OptionsItem(R.id.menu_notif)
 	void notif() {
-		startActivity(ListNotif_.intent(this).get());
+		ListNotif_.intent(this).start();
 	}
 
 	private void copieImageIfNotExists() {

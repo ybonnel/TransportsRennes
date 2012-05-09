@@ -42,6 +42,6 @@ public class Itineraires extends BaseListActivity {
 
 	@ItemClick
 	void listItemClicked(Trajet trajet) {
-		startActivity(TrajetOnMap_.intent(this).trajet(trajet).get());
+		TrajetOnMap_.intent(this).trajet(trajet).start();
     }
 }

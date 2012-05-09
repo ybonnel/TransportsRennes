@@ -38,9 +38,9 @@ public class ListAlerts extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		startActivity(DetailAlert_.intent(getActivity()) //
+		DetailAlert_.intent(getActivity()) //
 				.alert((Alert) l.getItemAtPosition(position))//
-				.get());
+				.start();
 	}
 
 	@Override
