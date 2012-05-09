@@ -49,7 +49,7 @@ public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 
 	@Override
 	protected Class<? extends BaseMapActivity> getParkingsOnMap() {
-		return ParkRelaisOnMap.class;
+		return ParkRelaisOnMap_.class;
 	}
 
 	@Override

@@ -49,7 +49,7 @@ import fr.ybo.transportscommun.util.Theme;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.bus.ListNotif_;
 import fr.ybo.transportsrennes.activity.loading.LoadingActivity;
-import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente;
+import fr.ybo.transportsrennes.activity.pointsdevente.ListPointsDeVente_;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.util.Version;
@@ -167,7 +167,7 @@ public class TransportsRennes extends AccueilActivity {
 
 	@OptionsItem(R.id.menu_tickets)
 	void tickets() {
-		startActivity(new Intent(this, ListPointsDeVente.class));
+		ListPointsDeVente_.intent(this).start();
 	}
 
 	@OptionsItem(R.id.menu_load_lines)

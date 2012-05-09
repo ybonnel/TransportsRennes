@@ -21,21 +21,23 @@ import java.util.List;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ItemClick;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LocationUtil;
-import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.pointsdevente.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -47,6 +49,7 @@ import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
  *
  * @author ybonnel
  */
+@EActivity(R.layout.listpointsdevente)
 public class ListPointsDeVente extends BaseListActivity implements UpdateLocationListenner, Searchable {
 
     private LocationUtil locationUtil;
@@ -59,7 +62,8 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
     /**
      * Liste des points de vente.
      */
-    private List<PointDeVente> pointsDeVenteIntent;
+	@Extra("pointsDeVente")
+	List<PointDeVente> pointsDeVenteIntent;
     private final List<PointDeVente> pointsDeVente = Collections.synchronizedList(new ArrayList<PointDeVente>());
     private final List<PointDeVente> pointsDeVenteFiltres = Collections.synchronizedList(new ArrayList<PointDeVente>());
 
@@ -94,31 +98,22 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
     private ListView listView;
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listpointsdevente);
+	@ItemClick
+	void listItemClicked(PointDeVente pointDeVente) {
+		String lat = Double.toString(pointDeVente.getLatitude());
+		String lon = Double.toString(pointDeVente.getLongitude());
+		Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + lat + ',' + lon);
+		startActivity(new Intent(Intent.ACTION_VIEW, uri));
+	}
+
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.listpdv_menu_items, R.menu.holo_listpdv_menu_items);
-        pointsDeVenteIntent = (List<PointDeVente>) (getIntent().getExtras() == null ? null : getIntent().getExtras()
-                .getSerializable("pointsDeVente"));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         locationUtil = new LocationUtil(this, this);
         setListAdapter(new PointDeVenteAdapter(this, pointsDeVenteFiltres));
         listView = getListView();
         listView.setFastScrollEnabled(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
-                        .getAdapter();
-                PointDeVente pointDeVente = adapter.getItem(position);
-                String lat = Double.toString(pointDeVente.getLatitude());
-                String lon = Double.toString(pointDeVente.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + lat + ',' + lon);
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            }
-        });
-
         listView.setTextFilterEnabled(true);
         registerForContextMenu(listView);
         new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequetePointsDeVente)) {
@@ -155,11 +150,9 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.menu_google_map && !pointsDeVenteFiltres.isEmpty()) {
-			Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
 			ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(pointsDeVenteFiltres.size());
 			pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
-			intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
-			startActivity(intent);
+			PointsDeVentesOnMap_.intent(this).pointDeVentes(pointsDeVenteSerialisable).start();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

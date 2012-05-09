@@ -81,14 +81,14 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.pointsdevente.ListPointsDeVente"
+        <activity android:name=".activity.pointsdevente.ListPointsDeVente_"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.velos.StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.parkrelais.ParkRelaisOnMap"
+        <activity android:name=".activity.parkrelais.ParkRelaisOnMap_"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap"
+        <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap_"
                   android:configChanges="orientation|keyboardHidden"/>
         
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>

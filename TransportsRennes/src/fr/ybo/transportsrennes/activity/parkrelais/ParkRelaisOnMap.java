@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -26,6 +25,10 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
@@ -34,18 +37,19 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayParking;
 
+@EActivity(R.layout.map)
 public class ParkRelaisOnMap extends BaseMapActivity {
 
     private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
 
-    /**
-     * Called when the activity is first created.
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
+	@Extra("parkRelais")
+	Iterable<ParkRelai> parkRelais;
+
+	@ViewById(R.id.mapview)
+	MapView mapView;
+
+    @AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         if (MAP_STATES.isEmpty()) {
             MAP_STATES.put(1, getString(R.string.ferme));
@@ -53,9 +57,6 @@ public class ParkRelaisOnMap extends BaseMapActivity {
             MAP_STATES.put(3, getString(R.string.indisponible));
         }
 
-        Iterable<ParkRelai> parkRelais = (Iterable<ParkRelai>) getIntent().getExtras().getSerializable("parkRelais");
-
-        MapView mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
 
         MapController mc = mapView.getController();

@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.activity.pointsdevente;
 import java.util.List;
 
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapController;
@@ -24,6 +23,10 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
@@ -32,21 +35,19 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayPos;
 
+@EActivity(R.layout.map)
 public class PointsDeVentesOnMap extends BaseMapActivity {
 
-    /**
-     * Called when the activity is first created.
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
+	@Extra("pointsDeVente")
+	Iterable<PointDeVente> pointDeVentes;
+
+	@ViewById(R.id.mapview)
+	MapView mapView;
+
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
-        Iterable<PointDeVente> pointDeVentes = (Iterable<PointDeVente>) getIntent().getExtras().getSerializable("pointsDeVente");
-
-        MapView mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
 
         MapController mc = mapView.getController();
