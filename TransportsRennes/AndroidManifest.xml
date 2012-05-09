@@ -92,10 +92,10 @@
                   android:configChanges="orientation|keyboardHidden"/>
         
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.itineraires.ItineraireRequete"
+        <activity android:name=".activity.itineraires.ItineraireRequete_"
                   android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.itineraires.TrajetOnMap" android:configChanges="keyboardHidden"/>
+        <activity android:name=".activity.itineraires.Itineraires_" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.itineraires.TrajetOnMap_" android:configChanges="keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesRennes"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif_" android:configChanges="orientation|keyboardHidden"/>

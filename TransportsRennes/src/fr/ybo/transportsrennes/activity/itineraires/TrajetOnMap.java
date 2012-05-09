@@ -17,7 +17,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,6 +30,10 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.googlecode.androidannotations.annotations.AfterViews;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
@@ -43,27 +46,27 @@ import fr.ybo.transportsrennes.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsrennes.util.Coordinate;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
+@EActivity(R.layout.trajet_map)
 public class TrajetOnMap extends BaseMapActivity {
 
     private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.trajet_map);
+	@ViewById
+	MapView mapview;
+
+	@Extra("trajet")
+	Trajet trajet;
+
+	@AfterViews
+	void afterViews() {
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-        Trajet trajet = (Trajet) getIntent().getSerializableExtra("trajet");
 
-        MapView mapView = (MapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(true);
+		mapview.setBuiltInZoomControls(true);
 
-        MapController mc = mapView.getController();
+        MapController mc = mapview.getController();
 
         // Creation du geo point
-        List<Overlay> mapOverlays = mapView.getOverlays();
+		List<Overlay> mapOverlays = mapview.getOverlays();
         LinearLayout layoutTrajet = (LinearLayout) findViewById(R.id.trajetDetail);
         layoutTrajet.removeAllViews();
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -142,7 +145,7 @@ public class TrajetOnMap extends BaseMapActivity {
         }
         mc.setZoom(14);
 
-        myLocationOverlay = new FixedMyLocationOverlay(this, mapView);
+		myLocationOverlay = new FixedMyLocationOverlay(this, mapview);
         mapOverlays.add(myLocationOverlay);
         myLocationOverlay.enableMyLocation();
 
