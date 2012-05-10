@@ -29,7 +29,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="false" android:name=".application.TransportsRennesApplication"
+                 android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.Transports">
         <activity android:name=".activity.TransportsRennes_"
                   android:launchMode="singleTop">
@@ -59,14 +59,14 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.velos.ListStationsByPosition"
+        <activity android:name=".activity.velos.ListStationsByPosition_"
                   android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <!-- This action is only to allow an entry point for launcher shortcuts -->
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.velos.ListStationsFavoris"
+        <activity android:name=".activity.velos.ListStationsFavoris_"
                   android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <!-- This action is only to allow an entry point for launcher shortcuts -->
@@ -85,7 +85,7 @@
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.velos.StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
+        <activity android:name=".activity.velos.StationsOnMap_" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.parkrelais.ParkRelaisOnMap_"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap_"
@@ -152,7 +152,8 @@
 
         <service
                 android:name=".services.UpdateTimeService"
-                android:label="TransportsRennesUpdateTimeService">
+                android:label="TransportsRennesUpdateTimeService"
+                android:exported="false">
 
             <intent-filter>
                 <action android:name="fr.ybo.transportsrennes.action.UPDATE"/>
@@ -222,7 +223,8 @@
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 
         <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsRennesService" android:process=":Capptain">
+                 android:label="TransportsRennesService" android:process=":Capptain"
+                 android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="com.ubikod.capptain.ICapptainService"/>

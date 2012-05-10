@@ -24,6 +24,9 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.Extra;
+import com.googlecode.androidannotations.annotations.ViewById;
 
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
@@ -32,21 +35,23 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.map.MapItemizedOverlayVelo;
 
+@EActivity(R.layout.map)
 public class StationsOnMap extends BaseMapActivity {
+
+	@Extra("stations")
+	Iterable<Station> stations;
+
+	@ViewById(R.id.mapview)
+	MapView mapView;
 
     /**
      * Called when the activity is first created.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
-        Iterable<Station> stations = (Iterable<Station>) getIntent().getExtras().getSerializable("stations");
-
-        MapView mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
 
         MapController mc = mapView.getController();

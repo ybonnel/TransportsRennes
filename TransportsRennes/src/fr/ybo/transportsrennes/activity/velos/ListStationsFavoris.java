@@ -28,8 +28,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
@@ -47,6 +50,7 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
  *
  * @author ybonnel
  */
+@EActivity(R.layout.listvelofavoris)
 public class ListStationsFavoris extends BaseListActivity implements Refreshable {
 
     /**
@@ -57,28 +61,23 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     /**
      * Liste des stations.
      */
-    private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(10));
+	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>());
+
+	@ItemClick
+	void listItemClicked(Station station) {
+		String lat = Double.toString(station.getLatitude());
+		String lon = Double.toString(station.getLongitude());
+		Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
+		startActivity(new Intent(Intent.ACTION_VIEW, uri));
+	}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listvelofavoris);
 		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
 				R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
         ListView listView = getListView();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings({"unchecked"})
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-                Station station = veloAdapter.getItem(position);
-                String lat = Double.toString(station.getLatitude());
-                String lon = Double.toString(station.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
-                startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            }
-        });
-
         listView.setTextFilterEnabled(true);
         registerForContextMenu(listView);
         new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {

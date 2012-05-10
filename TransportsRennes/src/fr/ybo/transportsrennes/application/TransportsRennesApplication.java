@@ -50,7 +50,7 @@ import fr.ybo.transportsrennes.activity.TransportsRennes_;
 import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
-import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
+import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris_;
 import fr.ybo.transportsrennes.database.TransportsRennesDatabase;
 import fr.ybo.transportsrennes.database.modele.AlertBdd;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -205,7 +205,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 				activity.startActivity(new Intent(activity, TabFavoris.class));
 				return true;
 			case R.id.menu_velo_favoris:
-				activity.startActivity(new Intent(activity, ListStationsFavoris.class));
+				ListStationsFavoris_.intent(activity).start();
 				return true;
 			case R.id.menu_prefs:
 				activity.startActivity(new Intent(activity, PreferencesRennes.class));

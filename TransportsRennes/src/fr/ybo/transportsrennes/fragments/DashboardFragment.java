@@ -29,7 +29,7 @@ import fr.ybo.transportsrennes.activity.bus.BusRennes_;
 import fr.ybo.transportsrennes.activity.bus.ListArretByPosition;
 import fr.ybo.transportsrennes.activity.itineraires.ItineraireRequete_;
 import fr.ybo.transportsrennes.activity.parkrelais.ListParkRelais;
-import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition;
+import fr.ybo.transportsrennes.activity.velos.ListStationsByPosition_;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class DashboardFragment extends Fragment {
@@ -59,7 +59,7 @@ public class DashboardFragment extends Fragment {
 		});
 		root.findViewById(R.id.home_btn_velo).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				startActivity(new Intent(getActivity(), ListStationsByPosition.class));
+				ListStationsByPosition_.intent(getActivity()).start();
 			}
 		});
 		root.findViewById(R.id.home_btn_parking).setOnClickListener(new View.OnClickListener() {

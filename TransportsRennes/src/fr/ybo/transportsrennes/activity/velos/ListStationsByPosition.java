@@ -31,9 +31,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.googlecode.androidannotations.annotations.EActivity;
+import com.googlecode.androidannotations.annotations.ItemClick;
+import com.googlecode.androidannotations.annotations.OptionsItem;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
@@ -41,8 +45,8 @@ import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportscommun.util.LocationUtil;
-import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.velos.VeloAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -55,6 +59,7 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
  * 
  * @author ybonnel
  */
+@EActivity(R.layout.liststations)
 public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
 		Refreshable {
 
@@ -100,11 +105,21 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 	private ListView listView;
 
-	@SuppressWarnings("unchecked")
+	@ItemClick
+	void listItemClicked(Station station) {
+		String lat = Double.toString(station.getLatitude());
+		String lon = Double.toString(station.getLongitude());
+		Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
+		try {
+			startActivity(new Intent(Intent.ACTION_VIEW, uri));
+		} catch (ActivityNotFoundException activityNotFound) {
+			Toast.makeText(this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+		}
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.liststations);
 		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
 		locationUtil = new LocationUtil(this, this);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -112,22 +127,6 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		setListAdapter(new VeloAdapter(getApplicationContext(), stationsFiltrees));
 		listView = getListView();
 		listView.setFastScrollEnabled(true);
-
-		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				Station station = veloAdapter.getItem(position);
-				String lat = Double.toString(station.getLatitude());
-				String lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.name) + "+@" + lat + ',' + lon);
-				try {
-					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException activityNotFound) {
-					Toast.makeText(ListStationsByPosition.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
-				}
-			}
-		});
-
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
 
@@ -193,19 +192,13 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		}.execute((Void) null);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		if (item.getItemId() == R.id.menu_google_map) {
-			if (!stationsFiltrees.isEmpty()) {
-				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-				ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-				stationsSerializable.addAll(stationsFiltrees);
-				intent.putExtra("stations", stationsSerializable);
-				startActivity(intent);
-			}
+	@OptionsItem
+	void menuGoogleMap() {
+		if (!stationsFiltrees.isEmpty()) {
+			ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
+			stationsSerializable.addAll(stationsFiltrees);
+			StationsOnMap_.intent(this).stations(stationsSerializable).start();
 		}
-		return false;
 	}
 
 	@Override
