@@ -5,7 +5,7 @@ id,direction
 4,Rennes Henri Fréville
 5,Saint-Grégoire Ricoquais
 6,Bourgbarré
-7,Thorigné-Fouillard
+7,Rennes République
 8,Saint Laurent
 9,Chantepie Cucé
 10,Saint Laurent
@@ -22,61 +22,61 @@ id,direction
 20,Cesson-Sévigné Rigourdière
 23,Cesson-Sévigné Gare
 22,Rennes Villejean-Université
-25,Alma
-24,La Chapelle-Thouarault
-27,Cintré
-26,Bruz Lavoisier
-29,Chêne Germain
-28,Beaulieu Atalante
-31,La Poterie
-30,Haut Sancé
-34,Z.I. Ouest
-35,Z.I. Sud-Est
-32,Brécé
-33,J.F. Kennedy
-38,Rennes République
-39,Saint-Jacques Morinais
-36,Lycée Bréquigny
-37,Bourgogne
-42,Le Rheu / Chavagne
-43,Saint-Erblon Parc d'Activités
-40,Rennes République
-41,Chantepie Rosa Parks
-46,Rennes Villejean-Université
-47,Lycée Théodore Monod
-44,Vern-sur-Seiche
-45,Rennes République
-51,Stade Rennais
-50,Acigné
-49,Nouvoitou
-48,Cesson-Sévigné Base de Loisirs
-55,Beaulieu Atalante
-54,Chartres-de-B. / Pont-Péan
-53,Rennes République
-52,Rennes Sainte-Anne
-59,République
-58,Saint-Jacques Gautrais
-57,Rennes Villejean-Université
-56,Pacé Pâtis Roussel
-63,Saint-Saëns
-62,Noyal-Châtillon-sur-Seiche
-61,Rennes La Poterie
-60,Thorigné-Fouillard / Acigné
-68,Touche Tizon
-69,Rennes République
-70,Rennes Henri Fréville
-71,Le Rheu
-64,Bruz Centre
-65,Lycée Joliot-Curie
-66,Rennes Charles de Gaulle
-67,Pacé Vergéal
+25,La Chapelle-Thouarault
+24,Thorigné-Fouillard
+27,Bruz Lavoisier
+26,Alma
+29,Beaulieu Atalante
+28,Cintré
+31,Haut Sancé
+30,Chêne Germain
+34,J.F. Kennedy
+35,Z.I. Ouest
+32,La Poterie
+33,Brécé
+38,Bourgogne
+39,Rennes République
+36,Z.I. Sud-Est
+37,Lycée Bréquigny
+42,Chantepie Rosa Parks
+43,Le Rheu / Chavagne
+40,Saint-Jacques Morinais
+41,Rennes République
+46,Rennes République
+47,Rennes Villejean-Université
+44,Saint-Erblon Parc d'Activités
+45,Vern-sur-Seiche
+51,Acigné
+50,Nouvoitou
+49,Cesson-Sévigné Base de Loisirs
+48,Lycée Théodore Monod
+55,Chartres-de-B. / Pont-Péan
+54,Rennes République
+53,Rennes Sainte-Anne
+52,Stade Rennais
+59,Saint-Jacques Gautrais
+58,Rennes Villejean-Université
+57,Pacé Pâtis Roussel
+56,Beaulieu Atalante
+63,Noyal-Châtillon-sur-Seiche
+62,Rennes La Poterie
+61,Thorigné-Fouillard / Acigné
+60,République
+68,Pacé Vergéal
+69,Touche Tizon
+70,Rennes République
+71,Rennes Henri Fréville
+64,Saint-Saëns
+65,Bruz Centre
+66,Lycée Joliot-Curie
+67,Rennes Charles de Gaulle
 76,Rennes République
 77,Saint-Sulpice-la-Forêt
 78,Bruz
 79,Rennes La Poterie
-72,Chavagne
-73,Rennes Villejean-Université
-74,Rennes République
+72,Le Rheu
+73,Chavagne
+74,Rennes Villejean-Université
 75,Rennes République
 85,République
 84,Corps-Nuds

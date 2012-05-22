@@ -13,6 +13,14 @@
  */
 package fr.ybo.transportsrenneshelper.gtfs.gestionnaire;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
@@ -22,14 +30,6 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Gestionnaire des fichiers GTFS.
@@ -264,6 +264,12 @@ public final class GestionnaireGtfs {
                         System.err.println("Premier : " + trips.get(trip.id).toString());
                         System.err.println("Deuxième : " + trip.toString());
                     }
+					// Verrue pour le problème sur la ligne 50.
+					if (trip.routeId.equals("0050") && trip.directionId == 0
+							&& trip.headSign.equals("50 | Thorigné-Fouillard")) {
+						trip.headSign = "50 | Rennes République";
+						System.err.println("Application de la verrue pour le trip " + trip.id);
+					}
                     if (trip.headSign.equals("8 St Grég via Pon")) {
                         trip.headSign = "8 | Saint Grégoire via Pontay";
                     }
