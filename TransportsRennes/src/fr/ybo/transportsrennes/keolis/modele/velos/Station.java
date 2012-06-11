@@ -15,6 +15,7 @@ package fr.ybo.transportsrennes.keolis.modele.velos;
 
 import java.io.Serializable;
 
+import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
@@ -23,7 +24,7 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
  * @author ybonnel
  */
 @SuppressWarnings("serial")
-public class Station extends ObjetWithDistance implements Serializable {
+public class Station extends ObjetWithDistance implements Serializable, IStation {
     /**
      * Numéro de la station.
      */
@@ -91,4 +92,34 @@ public class Station extends ObjetWithDistance implements Serializable {
     public double getLongitude() {
         return longitude;
     }
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getBikesAvailables()
+	 */
+	@Override
+	public int getBikesAvailables() {
+		return bikesavailable;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getSlotsAvailables()
+	 */
+	@Override
+	public int getSlotsAvailables() {
+		return slotsavailable;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getName()
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
 }

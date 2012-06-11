@@ -28,10 +28,12 @@ import java.util.regex.Pattern;
 
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.TcbException;
+import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
+
 @SuppressWarnings("serial")
-public class Station extends ObjetWithDistance implements Serializable {
+public class Station extends ObjetWithDistance implements Serializable, IStation {
     public int id;
     public String name;
     public String address;
@@ -121,4 +123,28 @@ public class Station extends ObjetWithDistance implements Serializable {
             throw new TcbException(e);
         }
     }
+
+	/* (non-Javadoc)
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getBikesAvailables()
+	 */
+	@Override
+	public int getBikesAvailables() {
+		return availableBikes;
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getSlotsAvailables()
+	 */
+	@Override
+	public int getSlotsAvailables() {
+		return freeSlots;
+	}
+
+	/* (non-Javadoc)
+	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getName()
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
 }
