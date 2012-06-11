@@ -18,7 +18,7 @@ package fr.ybo.transportscommun.activity.velo;
 
 import java.util.List;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
 import com.google.android.maps.GeoPoint;
@@ -26,13 +26,12 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
 import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
 
+import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.map.MapItemizedOverlayVelo;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
-import fr.ybo.transportscommun.util.Formatteur;
 
 /**
  * @author ybonnel
@@ -59,8 +58,8 @@ public abstract class AbstractStationOnMap extends BaseMapActivity {
 
 		MapController mc = mapView.getController();
 		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = getMarkee();
-		MapItemizedOverlayVelo itemizedoverlay = new MapItemizedOverlayVelo(drawable, this);
+		BitmapDrawable marker = (BitmapDrawable) getResources().getDrawable(R.drawable.pin);
+		MapItemizedOverlayVelo itemizedoverlay = new MapItemizedOverlayVelo(marker, this);
 
 		int minLatitude = Integer.MAX_VALUE;
 		int maxLatitude = Integer.MIN_VALUE;
@@ -70,7 +69,6 @@ public abstract class AbstractStationOnMap extends BaseMapActivity {
 		for (IStation station : stations) {
 			int latitude = (int) (station.getLatitude() * 1.0E6);
 			int longitude = (int) (station.getLongitude() * 1.0E6);
-			GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 			if (latitude < minLatitude) {
 				minLatitude = latitude;
 			}
@@ -83,11 +81,7 @@ public abstract class AbstractStationOnMap extends BaseMapActivity {
 			if (longitude > maxLongitude) {
 				maxLongitude = longitude;
 			}
-			int placesTotales = station.getBikesAvailables() + station.getSlotsAvailables();
-			OverlayItem overlayitem =
-					new OverlayItem(geoPoint, Formatteur.formatterChaine(station.getName()),
-							station.getBikesAvailables() + " / " + placesTotales);
-			itemizedoverlay.addOverlay(overlayitem, station);
+			itemizedoverlay.addOverlay(station);
 		}
 		mapOverlays.add(itemizedoverlay);
 		mc.animateTo(new GeoPoint((maxLatitude + minLatitude) / 2, (maxLongitude + minLongitude) / 2));
@@ -123,7 +117,4 @@ public abstract class AbstractStationOnMap extends BaseMapActivity {
 	protected abstract void setupActionBar();
 
 	protected abstract MapView getMapView();
-
-	protected abstract Drawable getMarkee();
-
 }

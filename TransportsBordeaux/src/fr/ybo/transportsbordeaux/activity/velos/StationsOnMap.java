@@ -13,8 +13,6 @@
  */
 package fr.ybo.transportsbordeaux.activity.velos;
 
-import android.graphics.drawable.Drawable;
-
 import com.google.android.maps.MapView;
 
 import fr.ybo.transportsbordeaux.R;
@@ -35,10 +33,5 @@ public class StationsOnMap extends AbstractStationOnMap {
 	@Override
 	protected MapView getMapView() {
 		return (MapView) findViewById(R.id.mapview);
-	}
-
-	@Override
-	protected Drawable getMarkee() {
-		return getResources().getDrawable(R.drawable.markee_velo);
 	}
 }
