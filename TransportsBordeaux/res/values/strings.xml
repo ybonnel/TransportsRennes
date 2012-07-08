@@ -54,7 +54,7 @@
     <string name="menu_allArrets">Tous les horaires</string>
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
-    <string name="recuperationHoraires">Récupération des horaires en cours...</string>
+    <string name="recuperationHoraires">Récupération des horaires en cours…</string>
     <string name="twitter">Twitter</string>
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
     <string name="dialogRequeteAlerts">Interrogation du TBC.</string>
@@ -62,7 +62,7 @@
     <string name="widget11_choix">Choisissez un arrêt favori.</string>
     <string name="erreurNonPrevue">Une erreur non prévue est arrivée, un rapport d\'erreur a été envoyé au développeur
     </string>
-    <string name="recuperationTrajet">Récupération du trajet en cours...</string>
+    <string name="recuperationTrajet">Récupération du trajet en cours…</string>
     <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant
         d\'essayer d\'ajouter des
         widgets.
@@ -130,7 +130,7 @@
         SDCard, celà peut affecter les performances de l\'application, il faut donc utiliser cette fonction seulement si
         votre place sur le téléphone est limitée. Êtes vous sûr de vouloir déplacer les données?
     </string>
-    <string name="suppressionDB">Suppression des anciennes données en cours...</string>
+    <string name="suppressionDB">Suppression des anciennes données en cours…</string>
     <string name="preferences">Préférences</string>
 
     <string name="hint_rechercheParcRelai">Recherche de Parcs Relais</string>
@@ -152,5 +152,6 @@
     <string name="theme">Thème</string>
     <string name="debug">Debug</string>
     <string name="activateDebug">Activer les logs debugs.</string>
+    <string name="messageTbcEnRetard">Les données des horaires ne sont plus valides, soit vous n\'avez pas mis à jour l\'application, soit la TBC n\'a pas encore fournit les horaires, et je n\'ai donc pas pu les intégrer…</string>
     
 </resources>

@@ -13,10 +13,13 @@
  */
 package fr.ybo.transportsbordeaux.activity.bus;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import android.os.Bundle;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -24,9 +27,12 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsbordeaux.adapters.bus.DetailArretAdapter;
+import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportscommun.activity.bus.AbstractDetailArret;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.donnees.modele.Calendrier;
+import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
 
 /**
@@ -39,8 +45,20 @@ public class DetailArret extends AbstractDetailArret {
 	@Override
 	protected ListAdapter construireAdapter() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        return new DetailArretAdapter(getApplicationContext(), Horaire.getAllHorairesAsList(favori.ligneId,
-				favori.arretId, calendar), now, isToday(), favori.direction);
+		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar);
+		if (horaires.isEmpty()) {
+			String maxCalendrier = "00000000";
+			for (Calendrier calendrier : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
+				if (calendrier.dateFin.compareTo(maxCalendrier) > 0) {
+					maxCalendrier = calendrier.dateFin;
+				}
+			}
+			String calendrierCourant = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+			if (maxCalendrier.compareTo(calendrierCourant) < 0) {
+				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageTbcEnRetard);
+			}
+		}
+		return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction);
     }
 
 	@Override
