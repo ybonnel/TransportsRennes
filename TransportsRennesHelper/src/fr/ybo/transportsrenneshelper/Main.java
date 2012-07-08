@@ -54,7 +54,7 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-		genereGtfs(false, "20120529");
+		genereGtfs(false, "20120618");
     }
 
     /**
@@ -67,7 +67,7 @@ public final class Main {
     private static void genereGtfs(boolean toGtfs, String date) throws IOException {
         long startTime = System.currentTimeMillis();
         GetAndContructZip getAndContructZip = new GetAndContructZip(date);
-        getAndContructZip.getZipKeolis();
+		getAndContructZip.getZipKeolis();
         GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
         System.out.println("Avant compression : ");
         afficheCompteurs();
