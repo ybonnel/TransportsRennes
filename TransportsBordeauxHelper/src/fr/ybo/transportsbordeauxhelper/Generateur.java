@@ -218,6 +218,10 @@ public class Generateur {
 				for (Trajet trajet : trajets.get(ligne.id)) {
 					StringBuilder chaineBuilder = new StringBuilder();
 					Horaire terminus = null;
+					if (!mapHorairesByTrajetId.containsKey(trajet.id)) {
+						System.err.println("Pas d'horaires pour le trajet " + trajet.id);
+						continue;
+					}
 					for (Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
 						horairesByLigneId.get(ligne.id).add(horaire);
 						if (!arretOfLigne.containsKey(horaire.arretId)) {
