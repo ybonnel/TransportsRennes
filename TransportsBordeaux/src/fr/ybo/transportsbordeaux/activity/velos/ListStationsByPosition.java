@@ -42,14 +42,15 @@ import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les stations pas distances de la
@@ -153,10 +154,20 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub));
 		}
 
-		private boolean erreurReseaux = false;
-
 		@Override
-		protected Void doInBackground(Void... pParams) {
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * fr.ybo.transportscommun.util.TacheAvecProgressDialog#myDoBackground()
+		 */
+		@Override
+		protected void myDoBackground() throws ErreurReseau {
 			try {
 				List<Station> stationsTmp = Station.recupererStations();
 				synchronized (stations) {
@@ -171,18 +182,8 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 					stationsFiltrees.addAll(stations);
 				}
 			} catch (TbcErreurReseaux exceptionReseaux) {
-				erreurReseaux = true;
+				throw new ErreurReseau(exceptionReseaux);
 			}
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			if (erreurReseaux) {
-				Toast.makeText(ListStationsByPosition.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
-			}
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 		}
 	}
 

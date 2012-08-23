@@ -30,7 +30,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
@@ -40,11 +39,12 @@ import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
-import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.Formatteur;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 
 /**
  * Activité de type liste permettant de lister les stations de velos favorites.
@@ -92,11 +92,21 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                     getString(R.string.dialogRequeteVcub));
         }
 
-        private boolean erreurReseaux = false;
+		@Override
+		protected void onPostExecute(Void result) {
+			super.onPostExecute(result);
+			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+		}
 
-        @Override
-        protected Void doInBackground(Void... pParams) {
-            try {
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * fr.ybo.transportscommun.util.TacheAvecProgressDialog#myDoBackground()
+		 */
+		@Override
+		protected void myDoBackground() throws ErreurReseau {
+			try {
                 List<VeloFavori> velosFavoris = TransportsBordeauxApplication
                         .getDataBaseHelper().select(new VeloFavori());
 				Collection<String> ids = new ArrayList<String>();
@@ -118,21 +128,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                     });
                 }
             } catch (TbcErreurReseaux exceptionReseau) {
-                erreurReseaux = true;
+				throw new ErreurReseau(exceptionReseau);
             }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-            if (erreurReseaux) {
-                Toast.makeText(ListStationsFavoris.this,
-                        getString(R.string.erreurReseau), Toast.LENGTH_LONG)
-                        .show();
-            }
-            ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-        }
+		}
     }
 
 	@Override

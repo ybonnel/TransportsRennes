@@ -25,10 +25,11 @@ import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
-import fr.ybo.transportsbordeaux.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportscommun.activity.preferences.AbstractPreferences;
+import fr.ybo.transportscommun.util.ErreurReseau;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 
 public class PreferencesBordeaux extends AbstractPreferences {
 
@@ -76,9 +77,8 @@ public class PreferencesBordeaux extends AbstractPreferences {
 								PreferencesBordeaux.this.getString(R.string.suppressionDB)) {
 
 							@Override
-							protected Void doInBackground(Void... params) {
+							protected void myDoBackground() throws ErreurReseau {
 								PreferencesBordeaux.this.deleteDatabase(TransportsBordeauxDatabase.DATABASE_NAME);
-								return null;
 							}
 
 							@Override
