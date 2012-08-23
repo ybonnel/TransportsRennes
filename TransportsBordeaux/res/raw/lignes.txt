@@ -46,7 +46,6 @@ ordre,id,nom_court,nom_long
 46,51,51,Flexo 51
 47,52,52,Flexo 52
 48,54,54,Flexo 54
-49,55,55,Flexo 55
 50,56,56,Ligne 56 Express
 51,57,57,Flexo 57
 53,62,62,Ligne 62

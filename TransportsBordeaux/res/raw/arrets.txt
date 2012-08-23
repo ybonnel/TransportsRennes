@@ -286,7 +286,6 @@ id,nom,latitude,longitude
 1845b,Rue de la Vieille Eglise,44.94588,-0.59557
 819b,La Hutte,44.8848,-0.60611
 1120b,Le Printemps,44.95144,-0.60627
-5576b,Stalingrad,44.84059,-0.55977
 1763b,Lycée Agricole,44.91954,-0.63498
 5779b,Gare de Bassens,44.90176,-0.52445
 5350b,IMA,44.84169,-0.71797
@@ -1466,7 +1465,6 @@ id,nom,latitude,longitude
 3004b,Centre Commercial,44.88145,-0.56773
 3883b,INRA,44.78552,-0.57646
 588b,La Hutte,44.8851,-0.6072
-6601b,République,44.89494,-0.71357
 1133b,Molière,44.90464,-0.69975
 3896b,Clemenceau,44.91229,-0.51254
 3228b,Croix de Monjous,44.7768,-0.59351
@@ -3014,7 +3012,6 @@ id,nom,latitude,longitude
 3912b,Clanis,44.9356,-0.51471
 5681b,Les Peupliers,44.78644,-0.57179
 2326b,Stade Chaban Delmas,44.83041,-0.59682
-6428b,AIA,44.83134,-0.5335
 5984b,Montaigne,44.87103,-0.51567
 1171b,La Madeleine,44.77442,-0.6372
 998b,Ampère,44.86256,-0.58408
@@ -3045,7 +3042,6 @@ id,nom,latitude,longitude
 2327b,Barrière d'Arès,44.83587,-0.59882
 199b,Livran,44.82975,-0.58992
 5983b,Bonnet (rue de la Déportation),45.01611,-0.5329
-6427b,AIA,44.83139,-0.5336
 6426b,Hautefort,44.87026,-0.513
 997b,Carton,44.85698,-0.63152
 319b,Capucins,44.82973,-0.56759
