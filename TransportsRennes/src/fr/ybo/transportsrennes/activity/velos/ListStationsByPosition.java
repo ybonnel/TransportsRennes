@@ -41,8 +41,8 @@ import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.Formatteur;
 import fr.ybo.transportscommun.util.LocationUtil;
-import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.velos.VeloAdapter;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
@@ -131,11 +131,14 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
 
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
 				List<Station> stationsTmp = keolis.getStations();
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
@@ -151,8 +154,10 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void onPostExecute(Void result) {
-				updateLocation(locationUtil.getCurrentLocation());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					updateLocation(locationUtil.getCurrentLocation());
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute();
@@ -163,13 +168,14 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 	@Override
 	public void refresh() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				Collection<Station> stationsTmp;
-				stationsTmp = keolis.getStations();
-
+				Collection<Station> stationsTmp = keolis.getStations();
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
@@ -186,9 +192,11 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			@Override
 			protected void onPostExecute(Void result) {
 				super.onPostExecute(result);
-				updateQuery(currentQuery);
-				updateLocation(locationUtil.getCurrentLocation());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					updateQuery(currentQuery);
+					updateLocation(locationUtil.getCurrentLocation());
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 			}
 		}.execute((Void) null);
 	}

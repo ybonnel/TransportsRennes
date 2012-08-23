@@ -112,11 +112,14 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 
 		listView.setTextFilterEnabled(true);
 		registerForContextMenu(listView);
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(getDialogueRequete())) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(getDialogueRequete()), true) {
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
 				List<T> parkRelaisTmp = (parkingsIntent == null ? getParkings() : parkingsIntent);
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (parkings) {
 					parkings.clear();
 					parkings.addAll(parkRelaisTmp);
@@ -132,8 +135,10 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 
 			@Override
 			protected void onPostExecute(Void result) {
-				updateLocation(locationUtil.getCurrentLocation());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					updateLocation(locationUtil.getCurrentLocation());
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute();
@@ -144,11 +149,14 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 
 	@Override
 	public void refresh() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(getDialogueRequete())) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(getDialogueRequete()), true) {
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
 				List<T> parkingsTmp = getParkings();
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (parkings) {
 					majParkings(parkingsTmp);
 				}
@@ -181,9 +189,11 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 
 			@Override
 			protected void onPostExecute(Void result) {
-				updateQuery(currentQuery);
-				updateLocation(locationUtil.getCurrentLocation());
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					updateQuery(currentQuery);
+					updateLocation(locationUtil.getCurrentLocation());
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute((Void) null);

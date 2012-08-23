@@ -81,7 +81,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 
         listView.setTextFilterEnabled(true);
         registerForContextMenu(listView);
-        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
             @Override
             protected void myDoBackground() throws ErreurReseau {
                 List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
@@ -91,6 +91,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                     numbers.add(favori.number);
                 }
                 Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+				if (isCancelled()) {
+					return;
+				}
                 synchronized (stations) {
                     stations.clear();
                     stations.addAll(stationsTmp);
@@ -104,7 +107,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 
             @Override
             protected void onPostExecute(Void result) {
-                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
                 super.onPostExecute(result);
             }
         }.execute((Void) null);
@@ -112,7 +117,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 
 	@Override
 	public void refresh() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
 				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
@@ -122,6 +127,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 					numbers.add(favori.number);
 				}
 				Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
@@ -135,7 +143,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 
             @Override
 			protected void onPostExecute(Void result) {
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
 				super.onPostExecute(result);
 			}
 		}.execute((Void) null);

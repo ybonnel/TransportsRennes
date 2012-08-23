@@ -151,13 +151,15 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
 		public GetStations() {
-			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub));
+			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub), true);
 		}
 
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			if (!isCancelled()) {
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			}
 		}
 
 		/*
@@ -170,6 +172,9 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		protected void myDoBackground() throws ErreurReseau {
 			try {
 				List<Station> stationsTmp = Station.recupererStations();
+				if (isCancelled()) {
+					return;
+				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);

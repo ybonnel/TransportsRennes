@@ -322,7 +322,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 	}
 
 	private void chargerLigne() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt),
+				false) {
 
 			private boolean erreurLigneNonTrouvee = false;
 			private boolean erreurNoSpaceLeft = false;

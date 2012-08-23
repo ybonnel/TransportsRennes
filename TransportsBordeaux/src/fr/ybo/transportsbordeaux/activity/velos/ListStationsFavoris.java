@@ -89,13 +89,15 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
         public GetStations() {
             super(ListStationsFavoris.this,
-                    getString(R.string.dialogRequeteVcub));
+ getString(R.string.dialogRequeteVcub), true);
         }
 
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			if (!isCancelled()) {
+				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+			}
 		}
 
 		/*
@@ -114,6 +116,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 					ids.add(favori.number);
                 }
                 Collection<Station> stationsTmp = Station.recupererStations();
+				if (isCancelled()) {
+					return;
+				}
                 synchronized (stations) {
                     stations.clear();
                     for (Station station : stationsTmp) {

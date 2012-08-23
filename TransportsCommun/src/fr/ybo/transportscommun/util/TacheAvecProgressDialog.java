@@ -18,20 +18,26 @@ package fr.ybo.transportscommun.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import fr.ybo.transportscommun.R;
 
-public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends AsyncTask<Params, Progress, Result> {
+public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends AsyncTask<Params, Progress, Result>
+		implements OnCancelListener {
 
 	private String message;
 
 	private ProgressDialog myProgressDialog;
 	private Context context;
 
-	public TacheAvecProgressDialog(Context context, String message) {
+	private boolean cancellable = false;
+
+	public TacheAvecProgressDialog(Context context, String message, boolean cancellable) {
 		this.message = message;
 		this.context = context;
+		this.cancellable = cancellable;
 	}
 
 	private boolean erreur = false;
@@ -40,7 +46,7 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 	protected void onPreExecute() {
 		super.onPreExecute();
 		try {
-			myProgressDialog = ProgressDialog.show(context, "", message, true);
+			myProgressDialog = ProgressDialog.show(context, "", message, true, cancellable, this);
 		} catch (Exception ignore) {
 
 		}
@@ -68,5 +74,19 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 			Toast.makeText(context, context.getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
 		}
 		super.onPostExecute(result);
+	}
+
+	boolean isCancelled = false;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.content.DialogInterface.OnCancelListener#onCancel(android.content
+	 * .DialogInterface)
+	 */
+	@Override
+	public void onCancel(DialogInterface dialog) {
+		this.cancel(true);
 	}
 }

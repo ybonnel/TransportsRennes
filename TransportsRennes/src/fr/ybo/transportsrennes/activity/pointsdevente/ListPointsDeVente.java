@@ -34,8 +34,8 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LocationUtil;
-import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
+import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.pointsdevente.PointDeVenteAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
@@ -121,12 +121,15 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
         listView.setTextFilterEnabled(true);
         registerForContextMenu(listView);
-        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequetePointsDeVente)) {
+		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequetePointsDeVente), true) {
 
             @Override
             protected void myDoBackground() throws ErreurReseau {
                 List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
                         : pointsDeVenteIntent);
+				if (isCancelled()) {
+					return;
+				}
                 synchronized (pointsDeVente) {
                     pointsDeVente.clear();
                     pointsDeVente.addAll(listPdvTmp);
@@ -143,8 +146,10 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
             @Override
             protected void onPostExecute(Void result) {
                 super.onPostExecute(result);
-                updateLocation(locationUtil.getCurrentLocation());
-                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				if (!isCancelled()) {
+					updateLocation(locationUtil.getCurrentLocation());
+					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+				}
             }
         }.execute();
         if (!locationUtil.activeGps()) {

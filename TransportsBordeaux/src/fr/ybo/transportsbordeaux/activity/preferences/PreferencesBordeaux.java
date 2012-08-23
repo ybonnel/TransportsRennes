@@ -74,7 +74,7 @@ public class PreferencesBordeaux extends AbstractPreferences {
 				builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						new TacheAvecProgressDialog<Void, Void, Void>(PreferencesBordeaux.this,
-								PreferencesBordeaux.this.getString(R.string.suppressionDB)) {
+								PreferencesBordeaux.this.getString(R.string.suppressionDB), false) {
 
 							@Override
 							protected void myDoBackground() throws ErreurReseau {
