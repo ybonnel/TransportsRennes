@@ -13,6 +13,21 @@
  */
 package fr.ybo.transportsrenneshelper.generateurmodele;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.generateurmodele.modele.Arret;
@@ -33,21 +48,6 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.util.CalculDistance;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * Générateur.
@@ -438,7 +438,7 @@ public class Generateur {
                     }
                     arretRoute.directionId = directionId;
                     arretRoute.accessible =
-                            GestionnaireGtfs.getInstance().getStopExtensions().get(arretRoute.arretId).accessible
+							GestionnaireGtfs.getInstance().getMapStops().get(arretRoute.arretId).accessible
                                     && GestionnaireGtfs.getInstance().getRouteExtensions()
                                     .get(arretRoute.ligneId).accessible;
                     arretsRoutes.add(arretRoute);

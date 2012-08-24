@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
+import fr.ybo.moteurcsv.adapter.AdapterBoolean;
 import fr.ybo.moteurcsv.adapter.AdapterDouble;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
@@ -48,6 +49,8 @@ public class Stop {
 	public String locationType;
 	@BaliseCsv(value = "parent_station", ordre = 9)
 	public String parentStation;
+	@BaliseCsv(value = "wheelchair_boarding", ordre = 10, adapter = AdapterBoolean.class)
+	public Boolean accessible;
 
 	@Override
 	public String toString() {

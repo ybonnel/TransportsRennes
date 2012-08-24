@@ -111,32 +111,9 @@ public final class GestionnaireGtfs {
      */
     private Map<String, Trip> trips;
     /**
-     * StopExtension (par stopId).
-     */
-    private Map<String, StopExtension> stopExtensions;
-    /**
      * RouteExtension (par routeId).
      */
     private Map<String, RouteExtension> routeExtensions;
-
-    /**
-     * @return les stopExtensions (par stopId);
-     */
-    public Map<String, StopExtension> getStopExtensions() {
-        if (stopExtensions == null) {
-            stopExtensions = new HashMap<String, StopExtension>();
-            try {
-                for (StopExtension stopExtension : getMoteurCsv()
-                        .parseInputStream(new FileInputStream(new File(repertoire, "stops_extensions.txt")),
-                                StopExtension.class)) {
-                    stopExtensions.put(stopExtension.stopId, stopExtension);
-                }
-            } catch (IOException e) {
-                throw new MoteurCsvException(e);
-            }
-        }
-        return stopExtensions;
-    }
 
     /**
      * @return les RouteExtensions (par routeId).
