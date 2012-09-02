@@ -15,7 +15,6 @@ package fr.ybo.transportsrennes.activity.parkrelais;
 
 import java.util.List;
 
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.activity.parkings.AbstractListParkings;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
@@ -45,11 +44,6 @@ public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 	@Override
 	protected List<ParkRelai> getParkings() throws ErreurReseau {
 		return keolis.getParkRelais();
-	}
-
-	@Override
-	protected Class<? extends BaseMapActivity> getParkingsOnMap() {
-		return ParkRelaisOnMap.class;
 	}
 
 	@Override

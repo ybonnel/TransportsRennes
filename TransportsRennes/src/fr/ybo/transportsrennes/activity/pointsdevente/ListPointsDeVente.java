@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -156,19 +155,6 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
             Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
         }
     }
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.menu_google_map && !pointsDeVenteFiltres.isEmpty()) {
-			Intent intent = new Intent(ListPointsDeVente.this, PointsDeVentesOnMap.class);
-			ArrayList<PointDeVente> pointsDeVenteSerialisable = new ArrayList<PointDeVente>(pointsDeVenteFiltres.size());
-			pointsDeVenteSerialisable.addAll(pointsDeVenteFiltres);
-			intent.putExtra("pointsDeVente", pointsDeVenteSerialisable);
-			startActivity(intent);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
     public void updateLocation(Location location) {
         if (location == null) {

@@ -202,21 +202,6 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		if (item.getItemId() == R.id.menu_google_map) {
-			if (!stationsFiltrees.isEmpty()) {
-				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-				ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-				stationsSerializable.addAll(stationsFiltrees);
-				intent.putExtra("stations", stationsSerializable);
-				startActivity(intent);
-			}
-		}
-		return false;
-	}
-
-	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {

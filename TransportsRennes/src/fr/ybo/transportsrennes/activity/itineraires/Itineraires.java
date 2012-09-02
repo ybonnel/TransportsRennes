@@ -13,16 +13,12 @@
  */
 package fr.ybo.transportsrennes.activity.itineraires;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.itineraires.TrajetAdapter;
 import fr.ybo.transportsrennes.itineraires.ItineraireReponse;
-import fr.ybo.transportsrennes.itineraires.Trajet;
 
 public class Itineraires extends BaseListActivity {
 
@@ -40,14 +36,5 @@ public class Itineraires extends BaseListActivity {
         setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Trajet trajet = (Trajet) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
-                intent.putExtra("trajet", trajet);
-                startActivity(intent);
-            }
-
-        });
     }
 }

@@ -1,6 +1,5 @@
 package fr.ybo.transportscommun.activity.bus;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.Menu;
@@ -20,8 +19,6 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 	protected abstract void setupActionBar();
 
 	protected abstract Class<? extends ListFragment> getListArretFragment();
-
-	protected abstract Class<? extends AbstractArretOnMap> getArretOnMap();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +88,6 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 			fragment.construireListe();
 			getActivityHelper().invalidateOptionsMenu();
 			return true;
-		} else if (item.getItemId() == R.id.menu_google_map) {
-			Intent intent = new Intent(this, getArretOnMap());
-			AbstractListArretFragment fragment = (AbstractListArretFragment) getCurrentFragment();
-			intent.putExtra("ligne", fragment.getMyLigne());
-			if (fragment.getCurrentDirection() != null) {
-				intent.putExtra("direction", fragment.getCurrentDirection());
-			}
-			startActivity(intent);
 		}
 		return false;
 	}

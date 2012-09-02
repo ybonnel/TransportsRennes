@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,7 +20,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.adapters.parkings.IParking;
@@ -79,8 +77,6 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 	protected abstract List<T> getParkings() throws ErreurReseau;
 
 	protected abstract int getDialogueRequete();
-
-	protected abstract Class<? extends BaseMapActivity> getParkingsOnMap();
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -197,23 +193,6 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 				super.onPostExecute(result);
 			}
 		}.execute((Void) null);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-
-		if (item.getItemId() == R.id.menu_google_map) {
-			if (!parkingsFiltres.isEmpty()) {
-				Intent intent = new Intent(this, getParkingsOnMap());
-				ArrayList<T> parkRelaisSerializable = new ArrayList<T>(parkingsFiltres.size());
-				parkRelaisSerializable.addAll(parkingsFiltres);
-				intent.putExtra("parkRelais", parkRelaisSerializable);
-				startActivity(intent);
-			}
-			return true;
-		}
-		return false;
 	}
 
 	@SuppressWarnings("unchecked")

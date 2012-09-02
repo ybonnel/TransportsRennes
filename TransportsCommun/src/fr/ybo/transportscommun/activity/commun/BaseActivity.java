@@ -5,10 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,17 +15,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import com.google.android.maps.MapView;
 import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
-import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainPreferenceActivity;
 import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
@@ -253,61 +246,6 @@ public class BaseActivity {
 		protected void onPostCreate(Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
 			getActivityHelper().setupSubActivity();
-		}
-	}
-
-	public static abstract class BaseMapActivity extends CapptainMapActivity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
-
-		public ActivityHelper getActivityHelper() {
-			return mActivityHelper;
-		}
-
-		@Override
-		protected void onCreate(Bundle savedInstanceState) {
-			AbstractTransportsApplication.majTheme(this);
-			super.onCreate(savedInstanceState);
-		}
-
-		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
-		}
-
-		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
-		}
-
-		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
-			super.onPostCreate(savedInstanceState);
-			getActivityHelper().setupSubActivity();
-		}
-
-		private MapView mapView;
-
-		private boolean satelite = false;
-
-		protected void gestionButtonLayout() {
-			mapView = (MapView) findViewById(R.id.mapview);
-			mapView.setSatellite(false);
-			ImageButton layoutButton = (ImageButton) findViewById(R.id.layers_button);
-			layoutButton.setOnClickListener(new OnClickListener() {
-				public void onClick(View v) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(BaseMapActivity.this);
-					String[] items = { "Satellite" };
-					boolean[] checkeds = { satelite };
-					builder.setMultiChoiceItems(items, checkeds, new OnMultiChoiceClickListener() {
-						public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-							satelite = !satelite;
-							mapView.setSatellite(satelite);
-						}
-					});
-					AlertDialog alert = builder.create();
-					alert.show();
-				}
-			});
 		}
 	}
 
