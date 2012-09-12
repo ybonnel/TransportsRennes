@@ -146,5 +146,6 @@
     <string name="debug">Debug</string>
     <string name="activateDebug">Activer les logs debugs.</string>
     
+    <string name="erreurTimeoNotFound">Erreur : aucun arrêt trouvé avec le code %1$s</string>
     
 </resources>
