@@ -40,7 +40,7 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
+import fr.ybo.transportsbordeaux.tbcapi.Keolis;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
@@ -170,24 +170,20 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		 */
 		@Override
 		protected void myDoBackground() throws ErreurReseau {
-			try {
-				List<Station> stationsTmp = Station.recupererStations();
-				if (isCancelled()) {
-					return;
-				}
-				synchronized (stations) {
-					stations.clear();
-					stations.addAll(stationsTmp);
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
-					stationsFiltrees.clear();
-					stationsFiltrees.addAll(stations);
-				}
-			} catch (TbcErreurReseaux exceptionReseaux) {
-				throw new ErreurReseau(exceptionReseaux);
+			List<Station> stationsTmp = Keolis.getInstance().getStationsVcub();
+			if (isCancelled()) {
+				return;
+			}
+			synchronized (stations) {
+				stations.clear();
+				stations.addAll(stationsTmp);
+				Collections.sort(stations, new Comparator<Station>() {
+					public int compare(Station o1, Station o2) {
+						return o1.name.compareToIgnoreCase(o2.name);
+					}
+				});
+				stationsFiltrees.clear();
+				stationsFiltrees.addAll(stations);
 			}
 		}
 	}
