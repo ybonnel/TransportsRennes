@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsbordeaux.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -26,11 +27,16 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
+import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.util.StringOperation;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
 
-	public AdresseAdapter(Context context) {
+	private List<Arret> arrets;
+
+	public AdresseAdapter(Context context, List<Arret> arrets) {
 		super(context, android.R.layout.simple_spinner_item);
+		this.arrets = arrets;
     }
 
     private final MyFilter filter = new MyFilter();
@@ -55,12 +61,26 @@ public class AdresseAdapter extends ArrayAdapter<String> {
                 } catch (Exception ignore) {
                 }
 
-                if (reponseResult != null && reponseResult.getStatus().equals(GeocoderStatus.OK)) {
-
-                    fr.values = reponseResult.getResults();
-
-                    fr.count = reponseResult.getResults().size();
+				List<String> results = new ArrayList<String>();
+				
+				String upper = StringOperation.sansAccents(constraint.toString().toUpperCase());
+				
+				for (Arret arret : arrets) {
+					if (arret.nom.contains(upper)) {
+						results.add(arret.nom);
+					}
                 }
+
+                if (reponseResult != null && reponseResult.getStatus().equals(GeocoderStatus.OK)) {
+					for (GeocoderResult oneResult : reponseResult.getResults()) {
+						results.add(oneResult.getFormattedAddress());
+					}
+				}
+
+
+				fr.values = results;
+				fr.count = results.size();
+				
             }
             return fr;
         }
@@ -71,8 +91,8 @@ public class AdresseAdapter extends ArrayAdapter<String> {
             if (results.count > 0) {
                 clear();
 
-                for (GeocoderResult result : ((List<GeocoderResult>) results.values))
-                    add(result.getFormattedAddress());
+				for (String result : ((List<String>) results.values))
+					add(result);
 
                 notifyDataSetChanged();
             } else {
