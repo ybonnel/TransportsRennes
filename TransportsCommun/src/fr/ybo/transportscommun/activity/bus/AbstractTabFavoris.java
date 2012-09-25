@@ -31,6 +31,18 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 
 	protected abstract void loadFavoris();
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.ybo.transportscommun.activity.commun.CapptainFragmentActivity#onResume
+	 * ()
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

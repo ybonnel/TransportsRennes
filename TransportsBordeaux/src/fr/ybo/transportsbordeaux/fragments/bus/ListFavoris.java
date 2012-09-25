@@ -65,23 +65,33 @@ public class ListFavoris extends ListFragment {
 	}
 
 	@Override
-	public void onResume() {
+	public void onStart() {
 		updateTimeUtil.start();
+		List<ArretFavori> newFavoris = recupererFavoris();
+		if (newFavoris.size() != favoris.size()) {
+			favoris = null;
+			construireListe();
+		} else {
+			for (int indice = 0; indice < favoris.size(); indice++) {
+				if (!newFavoris.get(indice).arretId.equals(favoris.get(indice).arretId)
+						|| !newFavoris.get(indice).ligneId.equals(favoris.get(indice).ligneId)
+						|| !newFavoris.get(indice).macroDirection.equals(favoris.get(indice).macroDirection)) {
+					favoris = null;
+					construireListe();
+				}
+			}
+		}
 		super.onResume();
 	}
 
 	@Override
-	public void onPause() {
+	public void onStop() {
 		updateTimeUtil.stop();
 		super.onPause();
 	}
 
 	private void construireListe() {
-		ArretFavori favoriExemple = new ArretFavori();
-		if (groupe != null) {
-			favoriExemple.groupe = groupe;
-		}
-		List<ArretFavori> favoris = AbstractTransportsApplication.getDataBaseHelper().select(favoriExemple, "ordre");
+		List<ArretFavori> favoris = getFavoris();
 
 		setListAdapter(new FavoriAdapter(getActivity().getApplicationContext(), favoris));
 		ListView lv = getListView();
@@ -94,6 +104,23 @@ public class ListFavoris extends ListFragment {
 		});
 		lv.setTextFilterEnabled(true);
 		registerForContextMenu(lv);
+	}
+
+	private List<ArretFavori> favoris;
+
+	private List<ArretFavori> getFavoris() {
+		if (favoris == null) {
+			favoris = recupererFavoris();
+		}
+		return favoris;
+	}
+
+	private List<ArretFavori> recupererFavoris() {
+		ArretFavori favoriExemple = new ArretFavori();
+		if (groupe != null) {
+			favoriExemple.groupe = groupe;
+		}
+		return AbstractTransportsApplication.getDataBaseHelper().select(favoriExemple, "ordre");
 	}
 
 	private UpdateTimeUtil updateTimeUtil;
