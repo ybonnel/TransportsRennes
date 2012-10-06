@@ -32,6 +32,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.xml.sax.SAXException;
 
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.keolis.modele.Answer;
@@ -242,12 +243,11 @@ public final class Keolis {
         return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
     }
 
-	public List<Departure> getDepartues(String ligneId, String arretId, int macroDirection) throws ErreurReseau {
+	public List<Departure> getDepartues(ArretFavori favori) throws ErreurReseau {
 		ParametreUrl[] params =
-				{ new ParametreUrl("mode", "stopline"),
-					new ParametreUrl("route][", ligneId),
-					new ParametreUrl("direction][", Integer.toString(macroDirection)),
-					new ParametreUrl("stop][", arretId) };
+				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
+						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
+						new ParametreUrl("stop][", favori.arretId) };
 
 		return appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), new GetDeparturesHandler());
 	}

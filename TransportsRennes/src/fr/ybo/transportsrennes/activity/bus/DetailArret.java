@@ -67,7 +67,7 @@ public class DetailArret extends AbstractDetailArret {
 				@Override
 				protected List<Departure> doInBackground(Void... params) {
 					try {
-						return Keolis.getInstance().getDepartues(favori.ligneId, favori.arretId, favori.macroDirection);
+						return Keolis.getInstance().getDepartues(favori);
 					} catch (ErreurReseau e) {
 						e.printStackTrace();
 						return null;
@@ -104,16 +104,10 @@ public class DetailArret extends AbstractDetailArret {
 			synchronized (departures) {
 				// Pour chaque departure
 				for (Departure departure : departures) {
-					System.out.println("Departure = " + departure);
-					System.out.println("departure.getHoraire : " + departure.getHoraire());
-
 					int diffCourante = -1;
 					DetailArretConteneur departProche = null;
 					// Trouve le prochain depart le plus près.
 					for (DetailArretConteneur depart : prochainsDeparts) {
-						System.out.println("DiffCourante : " + diffCourante);
-						System.out.println("Depart : " + depart.getHoraire());
-
 						if (diffCourante == -1
 								|| (Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante)) {
 							diffCourante = Math.abs(departure.getHoraire() - depart.getHoraire());

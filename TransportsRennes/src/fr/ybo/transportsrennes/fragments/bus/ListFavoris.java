@@ -56,6 +56,7 @@ public class ListFavoris extends ListFragment {
 			}
 		}, getActivity());
 		updateTimeUtil.start();
+
 	}
 
 	@Override
