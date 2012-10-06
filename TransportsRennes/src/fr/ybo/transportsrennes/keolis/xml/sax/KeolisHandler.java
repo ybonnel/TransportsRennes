@@ -13,11 +13,12 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
-import fr.ybo.transportsrennes.keolis.modele.Answer;
-import fr.ybo.transportsrennes.keolis.modele.StatusKeolis;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import fr.ybo.transportsrennes.keolis.modele.Answer;
+import fr.ybo.transportsrennes.keolis.modele.StatusKeolis;
 
 /**
  * Handler pour les appels à Keolis.
@@ -53,7 +54,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
     /**
      * Objet Keolis courant.
      */
-    private ObjetKeolis currentObjetKeolis;
+	protected ObjetKeolis currentObjetKeolis;
 
     /**
      * StringBuilder servant au parsing xml.
@@ -70,10 +71,9 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
     public void endElement(String uri, String localName, String qName) throws SAXException {
         super.endElement(uri, localName, qName);
         if (answer != null) {
+			remplirObjectKeolis(currentObjetKeolis, localName, contenu.toString());
             if (localName.equals(getBaliseData())) {
                 answer.getData().add(currentObjetKeolis);
-            } else {
-                remplirObjectKeolis(currentObjetKeolis, localName, contenu.toString());
             }
             contenu.setLength(0);
         }

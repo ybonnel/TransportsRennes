@@ -33,7 +33,21 @@ public class DetailArretConteneur {
         return horaire;
     }
 
-    public int getTrajetId() {
+	public void setHoraire(int horaire) {
+		this.horaire = horaire;
+	}
+
+	private boolean accurate = false;
+
+	public boolean isAccurate() {
+		return accurate;
+	}
+
+	public void setAccurate(boolean accurate) {
+		this.accurate = accurate;
+	}
+
+	public int getTrajetId() {
         return trajetId;
     }
 

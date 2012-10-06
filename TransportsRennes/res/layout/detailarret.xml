@@ -15,7 +15,10 @@
   Contributors:
       ybonnel - initial API and implementation
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout 
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
@@ -121,7 +124,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/separateur"
             android:gravity="center"
             android:padding="10dip"
             android:text="@string/detailarret_empty"
@@ -129,3 +131,18 @@
     </RelativeLayout>
 
 </LinearLayout>
+<LinearLayout android:layout_height="30dip"
+    android:layout_width="fill_parent"
+    android:layout_gravity="bottom"
+    android:background="@color/dark_transparent"
+    android:id="@+id/infobar"
+    android:visibility="invisible">
+    	<TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="14dip"
+            android:text="@string/getRealTime"/>
+</LinearLayout>
+</FrameLayout>

@@ -148,4 +148,6 @@
     
     <string name="erreurTimeoNotFound">Erreur : aucun arrêt trouvé avec le code %1$s</string>
     
+    <string name="getRealTime">Récupération des horaires temps réels en cours.</string>
+    
 </resources>

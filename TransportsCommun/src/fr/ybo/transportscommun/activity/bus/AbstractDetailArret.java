@@ -114,6 +114,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
 	private UpdateTimeUtil updateTimeUtil;
 
+	protected UpdateTime updateTime;
+
 	private boolean firstUpdate = false;
 
 	@Override
@@ -139,8 +141,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			finish();
 			return;
 		}
-
-		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+		updateTime = new UpdateTime() {
 
 			public void update(Calendar calendar) {
 				if (isToday()) {
@@ -155,7 +156,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 					getListView().invalidate();
 				}
 			}
-		}, this);
+		};
+		updateTimeUtil = new UpdateTimeUtil(updateTime, this);
 		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {

@@ -91,7 +91,11 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
-			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+			String tempsRestant = formatterCalendar(prochainDepart, now);
+			if (prochainsDeparts.get(position).isAccurate()) {
+				tempsRestant += " *";
+			}
+			holder.tempsRestant.setText(tempsRestant);
 		} else {
 			holder.tempsRestant.setText("");
 		}
@@ -104,7 +108,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private CharSequence formatterCalendar(int prochainDepart, int now) {
+	private String formatterCalendar(int prochainDepart, int now) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes >= 0) {
