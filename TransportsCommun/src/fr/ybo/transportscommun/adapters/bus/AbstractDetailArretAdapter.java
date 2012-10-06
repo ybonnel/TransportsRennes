@@ -3,6 +3,7 @@ package fr.ybo.transportscommun.adapters.bus;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
+import fr.ybo.transportscommun.util.Theme;
 
 public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 
@@ -91,11 +93,16 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
-			String tempsRestant = formatterCalendar(prochainDepart, now);
+			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
 			if (prochainsDeparts.get(position).isAccurate()) {
-				tempsRestant += " *";
+				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
+					holder.heureProchain.setTextColor(Color.rgb(0, 0, 255));
+					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 255));
+				} else {
+					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 125));
+					holder.heureProchain.setTextColor(Color.rgb(0, 0, 125));
+				}
 			}
-			holder.tempsRestant.setText(tempsRestant);
 		} else {
 			holder.tempsRestant.setText("");
 		}
