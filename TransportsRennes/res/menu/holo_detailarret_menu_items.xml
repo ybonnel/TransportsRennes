@@ -20,6 +20,11 @@
         android:icon="@drawable/ic_title_map"
         android:title="@string/go_googlemap"
         android:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_refresh"
+        android:icon="@drawable/ic_title_refresh"
+        android:showAsAction="always"
+        android:title="@string/menu_refresh"/>
         
 
 </menu>

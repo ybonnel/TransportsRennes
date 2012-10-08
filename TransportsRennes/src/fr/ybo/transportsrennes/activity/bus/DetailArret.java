@@ -26,9 +26,11 @@ import android.widget.Toast;
 import fr.ybo.transportscommun.activity.bus.AbstractDetailArret;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
+import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
 import fr.ybo.transportscommun.util.ErreurReseau;
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
@@ -40,11 +42,47 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
  *
  * @author ybonnel
  */
-public class DetailArret extends AbstractDetailArret {
+public class DetailArret extends AbstractDetailArret implements Refreshable {
+
+	private final static LogYbo LOG = new LogYbo(DetailArret.class);
 
 	private LinearLayout infoBar;
 
 	private List<Departure> departures = new ArrayList<Departure>();
+
+	private class GetDeparture extends AsyncTask<Void, Void, List<Departure>> {
+		protected void onPreExecute() {
+			infoBar.setVisibility(View.VISIBLE);
+		};
+
+		@Override
+		protected List<Departure> doInBackground(Void... params) {
+			try {
+				return Keolis.getInstance().getDepartues(favori);
+			} catch (ErreurReseau e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
+		protected void onPostExecute(List<Departure> departuresTemp) {
+			if (departuresTemp == null) {
+				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
+			} else {
+				synchronized (departures) {
+					departures.clear();
+					for (Departure departure : departuresTemp) {
+						LOG.debug(departure.toString());
+						if (departure.isAccurate()) {
+							departures.add(departure);
+						}
+					}
+				}
+				updateTime.update(Calendar.getInstance());
+			}
+			infoBar.setVisibility(View.INVISIBLE);
+		}
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -58,40 +96,7 @@ public class DetailArret extends AbstractDetailArret {
 		super.onCreate(savedInstanceState);
 		if (isToday()) {
 			infoBar = (LinearLayout) findViewById(R.id.infobar);
-			new AsyncTask<Void, Void, List<Departure>>() {
-
-				protected void onPreExecute() {
-					infoBar.setVisibility(View.VISIBLE);
-				};
-
-				@Override
-				protected List<Departure> doInBackground(Void... params) {
-					try {
-						return Keolis.getInstance().getDepartues(favori);
-					} catch (ErreurReseau e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
-
-				protected void onPostExecute(List<Departure> departuresTemp) {
-					if (departuresTemp == null) {
-						Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
-					} else {
-						synchronized (departures) {
-							departures.clear();
-							for (Departure departure : departuresTemp) {
-								if (departure.isAccurate()) {
-									departures.add(departure);
-								}
-							}
-						}
-						updateTime.update(Calendar.getInstance());
-					}
-					infoBar.setVisibility(View.INVISIBLE);
-				};
-
-			}.execute();
+			new GetDeparture().execute();
 		}
 	}
 
@@ -117,6 +122,7 @@ public class DetailArret extends AbstractDetailArret {
 					if (departProche != null) {
 						departProche.setAccurate(true);
 						departProche.setHoraire(departure.getHoraire());
+						departProche.setSecondes(departure.getTime().get(Calendar.SECOND));
 					}
 				}
 			}
@@ -152,6 +158,16 @@ public class DetailArret extends AbstractDetailArret {
 	@Override
 	protected Class<?> getRawClass() {
 		return R.raw.class;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.ybo.transportscommun.activity.commun.Refreshable#refresh()
+	 */
+	@Override
+	public void refresh() {
+		new GetDeparture().execute();
 	}
 
 }

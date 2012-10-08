@@ -56,9 +56,6 @@ public class Departure implements Serializable {
 	public int getHoraire() {
 		if (horaire == -1) {
 			horaire = time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
-			if (time.get(Calendar.SECOND) > 30) {
-				horaire++;
-			}
 		}
 		return horaire;
 	}

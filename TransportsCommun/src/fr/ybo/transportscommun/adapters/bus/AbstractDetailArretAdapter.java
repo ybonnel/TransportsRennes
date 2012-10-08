@@ -95,6 +95,11 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		if (isToday) {
 			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
 			if (prochainsDeparts.get(position).isAccurate()) {
+				if (prochainsDeparts.get(position).getSecondes() > 30) {
+					holder.tempsRestant.setText(formatterCalendar(prochainDepart + 1, now));
+				}
+				holder.heureProchain.setText(formatterCalendarHeure(prochainDepart) + ":"
+						+ prochainsDeparts.get(position).getSecondes());
 				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
 					holder.heureProchain.setTextColor(Color.rgb(0, 0, 255));
 					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 255));
