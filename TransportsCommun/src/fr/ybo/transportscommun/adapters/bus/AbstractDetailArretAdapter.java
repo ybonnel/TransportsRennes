@@ -88,18 +88,15 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			holder = (AbstractDetailArretAdapter.ViewHolder) convertView1.getTag();
 		}
 		int prochainDepart = prochainsDeparts.get(position).getHoraire();
-		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart));
+		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart, prochainsDeparts.get(position)
+				.getSecondes()));
 		holder.heureProchain.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
-			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now));
+			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now, prochainsDeparts.get(position)
+					.getSecondes()));
 			if (prochainsDeparts.get(position).isAccurate()) {
-				if (prochainsDeparts.get(position).getSecondes() > 30) {
-					holder.tempsRestant.setText(formatterCalendar(prochainDepart + 1, now));
-				}
-				holder.heureProchain.setText(formatterCalendarHeure(prochainDepart) + ":"
-						+ prochainsDeparts.get(position).getSecondes());
 				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
 					holder.heureProchain.setTextColor(Color.rgb(0, 0, 255));
 					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 255));
@@ -120,9 +117,12 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private String formatterCalendar(int prochainDepart, int now) {
+	private String formatterCalendar(int prochainDepart, int now, Integer secondes) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int tempsEnMinutes = prochainDepart - now;
+		if (secondes != null && secondes > 30) {
+			tempsEnMinutes++;
+		}
 		if (tempsEnMinutes >= 0) {
 			stringBuilder.append(myContext.getString(R.string.dans));
 			stringBuilder.append(' ');
@@ -150,7 +150,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return stringBuilder.toString();
 	}
 
-	private CharSequence formatterCalendarHeure(int prochainDepart) {
+	private CharSequence formatterCalendarHeure(int prochainDepart, Integer secondes) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;
 		int minutes = prochainDepart - heures * 60;
@@ -168,6 +168,14 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			stringBuilder.append('0');
 		}
 		stringBuilder.append(minutesChaine);
+
+		if (secondes != null) {
+			String secondesChaine = secondes.toString();
+			if (secondesChaine.length() < 2) {
+				stringBuilder.append('0');
+			}
+			stringBuilder.append(secondesChaine);
+		}
 		return stringBuilder.toString();
 	}
 
