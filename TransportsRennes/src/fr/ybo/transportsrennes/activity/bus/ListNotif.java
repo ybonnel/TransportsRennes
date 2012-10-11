@@ -14,6 +14,7 @@
 package fr.ybo.transportsrennes.activity.bus;
 
 import java.util.Calendar;
+import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -67,6 +68,16 @@ public class ListNotif extends BaseListActivity {
                 ((NotifAdapter) getListAdapter()).majCalendar();
                 ((NotifAdapter) getListAdapter()).notifyDataSetChanged();
             }
+
+			@Override
+			public boolean updateSecond() {
+				return false;
+			}
+
+			@Override
+			public Set<Integer> secondesToUpdate() {
+				return null;
+			}
         }, this);
         updateTimeUtil.start();
     }

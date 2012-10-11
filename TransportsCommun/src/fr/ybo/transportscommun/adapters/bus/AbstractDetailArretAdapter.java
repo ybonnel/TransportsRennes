@@ -20,6 +20,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 
 	private final int now;
 
+	private final int secondesNow;
+
 	private final LayoutInflater inflater;
 	private List<DetailArretConteneur> prochainsDeparts;
 
@@ -36,11 +38,12 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 	}
 
 	public AbstractDetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now,
-			boolean isToday, String currentDirection) {
+			boolean isToday, String currentDirection, int secondesNow) {
 		this.isToday = isToday;
 		this.currentDirection = currentDirection;
 		myContext = context;
 		this.now = now;
+		this.secondesNow = secondesNow;
 		inflater = LayoutInflater.from(context);
 		this.prochainsDeparts = prochainsDeparts;
 		if (isToday) {
@@ -94,7 +97,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		holder.tempsRestant.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
-			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now, prochainsDeparts.get(position)
+			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now, secondesNow,
+					prochainsDeparts.get(position)
 					.getSecondes()));
 			if (prochainsDeparts.get(position).isAccurate()) {
 				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
@@ -117,13 +121,15 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private String formatterCalendar(int prochainDepart, int now, Integer secondes) {
+	private String formatterCalendar(int prochainDepart, int now, int secondesNow, Integer secondes) {
 		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
-		if (secondes != null && secondes > 30) {
-			tempsEnMinutes++;
+		int secondesNullSafe = secondes == null ? 0 : secondes.intValue();
+		int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);
+		int tempsEnMinutes = (tempsEnSecondes / 60);
+		if (tempsEnSecondes == tempsEnMinutes * 60) {
+			tempsEnMinutes--;
 		}
-		if (tempsEnMinutes >= 0) {
+		if (tempsEnMinutes > 0) {
 			stringBuilder.append(myContext.getString(R.string.dans));
 			stringBuilder.append(' ');
 			int heures = tempsEnMinutes / 60;
@@ -146,6 +152,9 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 				stringBuilder.append("0 ");
 				stringBuilder.append(myContext.getString(R.string.minutes));
 			}
+		} else if (tempsEnMinutes == 0) {
+			stringBuilder.append("< 1 ");
+			stringBuilder.append(myContext.getString(R.string.miniMinutes));
 		}
 		return stringBuilder.toString();
 	}
@@ -170,6 +179,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		stringBuilder.append(minutesChaine);
 
 		if (secondes != null) {
+			stringBuilder.append(':');
 			String secondesChaine = secondes.toString();
 			if (secondesChaine.length() < 2) {
 				stringBuilder.append('0');

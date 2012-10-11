@@ -15,7 +15,9 @@ package fr.ybo.transportsrennes.activity.bus;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,14 +71,21 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 			if (departuresTemp == null) {
 				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
 			} else {
+				Set<Integer> secondsToUpdateTmp = new HashSet<Integer>();
 				synchronized (departures) {
 					departures.clear();
 					for (Departure departure : departuresTemp) {
 						LOG.debug(departure.toString());
 						if (departure.isAccurate()) {
 							departures.add(departure);
+							secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
 						}
 					}
+				}
+
+				synchronized (secondsToUpdate) {
+					secondsToUpdate.clear();
+					secondsToUpdate.addAll(secondsToUpdateTmp);
 				}
 				updateTime.update(Calendar.getInstance());
 			}
@@ -103,6 +112,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 	@Override
     protected ListAdapter construireAdapter() {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+		int secondesNow = calendar.get(Calendar.SECOND);
 		List<DetailArretConteneur> prochainsDeparts =
 				Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection, calendar);
 		if (isToday()) {
@@ -127,7 +137,8 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 				}
 			}
 		}
-		return new DetailArretAdapter(getApplicationContext(), prochainsDeparts, now, isToday(), favori.direction);
+		return new DetailArretAdapter(getApplicationContext(), prochainsDeparts, now, isToday(), favori.direction,
+				secondesNow);
 	}
 
 	@Override
@@ -168,6 +179,22 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 	@Override
 	public void refresh() {
 		new GetDeparture().execute();
+	}
+
+	private Set<Integer> secondsToUpdate = new HashSet<Integer>();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#getSecondsToUpdate
+	 * ()
+	 */
+	@Override
+	protected Set<Integer> getSecondsToUpdate() {
+		synchronized (secondsToUpdate) {
+			return new HashSet<Integer>(secondsToUpdate);
+		}
 	}
 
 }

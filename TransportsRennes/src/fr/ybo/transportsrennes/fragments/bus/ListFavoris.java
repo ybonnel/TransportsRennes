@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -53,6 +54,16 @@ public class ListFavoris extends ListFragment {
 			public void update(Calendar calendar) {
 				((FavoriAdapter) getListAdapter()).majCalendar();
 				((FavoriAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+
+			@Override
+			public boolean updateSecond() {
+				return false;
+			}
+
+			@Override
+			public Set<Integer> secondesToUpdate() {
+				return null;
 			}
 		}, getActivity());
 		updateTimeUtil.start();

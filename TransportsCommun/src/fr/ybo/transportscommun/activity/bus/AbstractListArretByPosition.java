@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -119,6 +120,16 @@ public abstract class AbstractListArretByPosition extends BaseListActivity imple
 			public void update(Calendar calendar) {
 				((ArretGpsAdapter) getListAdapter()).setCalendar(calendar);
 				((ArretGpsAdapter) getListAdapter()).notifyDataSetChanged();
+			}
+
+			@Override
+			public boolean updateSecond() {
+				return false;
+			}
+
+			@Override
+			public Set<Integer> secondesToUpdate() {
+				return null;
 			}
 		}, this);
 		listView = getListView();

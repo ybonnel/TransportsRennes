@@ -24,7 +24,7 @@ public class DetailArretAdapter extends AbstractDetailArretAdapter {
 
 	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday,
 			String currentDirection) {
-		super(context, prochainsDeparts, now, isToday, currentDirection);
+		super(context, prochainsDeparts, now, isToday, currentDirection, 0);
 	}
 
 	@Override
