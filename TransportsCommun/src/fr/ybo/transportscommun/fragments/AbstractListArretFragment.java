@@ -146,6 +146,9 @@ public abstract class AbstractListArretFragment extends ListFragment {
 
 	public void construireListe() {
 		LOG_YBO.debug("construireListe");
+		if (myLigne == null) {
+			return;
+		}
 		construireCursor();
 		setupAdapter();
 		ListView lv = getListView();
