@@ -98,7 +98,9 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 			if (fragment.getCurrentDirection() != null) {
 				intent.putExtra("direction", fragment.getCurrentDirection());
 			}
-			startActivity(intent);
+			if (fragment.getMyLigne() != null) {
+				startActivity(intent);
+			}
 		}
 		return false;
 	}
