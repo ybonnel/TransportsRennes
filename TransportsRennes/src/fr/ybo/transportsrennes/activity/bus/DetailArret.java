@@ -76,10 +76,8 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 					departures.clear();
 					for (Departure departure : departuresTemp) {
 						LOG.debug(departure.toString());
-						if (departure.isAccurate()) {
-							departures.add(departure);
-							secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
-						}
+						departures.add(departure);
+						secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
 					}
 				}
 
@@ -130,7 +128,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 						}
 					}
 					if (departProche != null) {
-						departProche.setAccurate(true);
+						departProche.setAccurate(departure.isAccurate());
 						departProche.setHoraire(departure.getHoraire());
 						departProche.setSecondes(departure.getTime().get(Calendar.SECOND));
 					}

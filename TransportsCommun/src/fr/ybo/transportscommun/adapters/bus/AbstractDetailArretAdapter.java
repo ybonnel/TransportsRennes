@@ -98,9 +98,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		if (isToday) {
 			holder.tempsRestant.setText(formatterCalendar(prochainDepart, now, secondesNow,
-					prochainsDeparts.get(position)
-					.getSecondes()));
-			if (prochainsDeparts.get(position).isAccurate()) {
+					prochainsDeparts.get(position).getSecondes(), prochainsDeparts.get(position).isAccurate()));
+			if (prochainsDeparts.get(position).getSecondes() != null) {
 				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
 					holder.heureProchain.setTextColor(Color.rgb(0, 0, 255));
 					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 255));
@@ -121,7 +120,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private String formatterCalendar(int prochainDepart, int now, int secondesNow, Integer secondes) {
+	private String formatterCalendar(int prochainDepart, int now, int secondesNow, Integer secondes, boolean accurate) {
 		StringBuilder stringBuilder = new StringBuilder();
 		int secondesNullSafe = secondes == null ? 0 : secondes.intValue();
 		int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);
@@ -155,6 +154,9 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		} else if (tempsEnMinutes == 0) {
 			stringBuilder.append("< 1 ");
 			stringBuilder.append(myContext.getString(R.string.miniMinutes));
+		}
+		if (secondes != null && !accurate) {
+			stringBuilder.append("*");
 		}
 		return stringBuilder.toString();
 	}
