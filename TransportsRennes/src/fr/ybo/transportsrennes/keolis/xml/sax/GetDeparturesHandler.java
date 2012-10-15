@@ -31,7 +31,17 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 
 	private static final String DEPARTURE = "departure";
 
+	private static final String DATA = "data";
+
+	private static final String LOCAL_DATETIME = "localdatetime";
+
 	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+
+	private Calendar dateApi;
+
+	public Calendar getDateApi() {
+		return dateApi;
+	}
 
 	@Override
 	protected String getBaliseData() {
@@ -72,6 +82,14 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 		if (DEPARTURE.equals(localName)) {
 			currentObjetKeolis.setAccurate("1".equals(attributes.getValue("accurate")));
 			currentObjetKeolis.setHeadSign(attributes.getValue("headsign"));
+		}
+		if (DATA.equals(localName)) {
+			dateApi = Calendar.getInstance();
+			try {
+				dateApi.setTime(dfm.parse(attributes.getValue(LOCAL_DATETIME)));
+			} catch (ParseException e) {
+				throw new KeolisException("Erreur lors du parse de " + attributes.getValue(LOCAL_DATETIME), e);
+			}
 		}
 	}
 }

@@ -150,4 +150,6 @@
     
     <string name="getRealTime">Récupération des horaires temps réel en cours.</string>
     
+    <string name="diffSecondsToHigh">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d secondes).</string>
+    
 </resources>

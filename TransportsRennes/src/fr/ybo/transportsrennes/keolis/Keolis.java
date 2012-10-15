@@ -41,6 +41,7 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
+import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetDeparturesHandler;
@@ -243,13 +244,15 @@ public final class Keolis {
         return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
     }
 
-	public List<Departure> getDepartues(ArretFavori favori) throws ErreurReseau {
+	public ResultDeparture getDepartues(ArretFavori favori) throws ErreurReseau {
 		ParametreUrl[] params =
 				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
 						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
 						new ParametreUrl("stop][", favori.arretId) };
 
-		return appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), new GetDeparturesHandler());
+		GetDeparturesHandler handler = new GetDeparturesHandler();
+		List<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
+		return new ResultDeparture(departures, handler.getDateApi());
 	}
 
     /**

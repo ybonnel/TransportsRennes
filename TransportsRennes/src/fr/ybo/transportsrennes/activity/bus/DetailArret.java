@@ -38,6 +38,7 @@ import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
+import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
 
 /**
  * Activitée permettant d'afficher les détails d'une station.
@@ -52,13 +53,13 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 
 	private List<Departure> departures = new ArrayList<Departure>();
 
-	private class GetDeparture extends AsyncTask<Void, Void, List<Departure>> {
+	private class GetDeparture extends AsyncTask<Void, Void, ResultDeparture> {
 		protected void onPreExecute() {
 			infoBar.setVisibility(View.VISIBLE);
 		};
 
 		@Override
-		protected List<Departure> doInBackground(Void... params) {
+		protected ResultDeparture doInBackground(Void... params) {
 			try {
 				return Keolis.getInstance().getDepartues(favori);
 			} catch (ErreurReseau e) {
@@ -67,14 +68,14 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 			}
 		}
 
-		protected void onPostExecute(List<Departure> departuresTemp) {
-			if (departuresTemp == null) {
+		protected void onPostExecute(ResultDeparture result) {
+			if (result == null) {
 				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
 			} else {
 				Set<Integer> secondsToUpdateTmp = new HashSet<Integer>();
 				synchronized (departures) {
 					departures.clear();
-					for (Departure departure : departuresTemp) {
+					for (Departure departure : result.getDepartures()) {
 						LOG.debug(departure.toString());
 						departures.add(departure);
 						secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
@@ -86,6 +87,15 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 					secondsToUpdate.addAll(secondsToUpdateTmp);
 				}
 				updateTime.update(Calendar.getInstance());
+				long apiTime = result.getApiTime().getTimeInMillis();
+				long currentTime = Calendar.getInstance().getTimeInMillis();
+				long diffMs = Math.abs(apiTime - currentTime);
+				long diffSeconds = diffMs / 1000;
+				if (diffSeconds > 30) {
+					Toast.makeText(getApplicationContext(),
+							getResources().getString(R.string.diffSecondsToHigh, diffSeconds), Toast.LENGTH_LONG)
+							.show();
+				}
 			}
 			infoBar.setVisibility(View.INVISIBLE);
 		}
