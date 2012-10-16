@@ -32,6 +32,7 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybo.transportsrenneshelper.keolis.GetMetro;
 import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
+import fr.ybo.transportsrenneshelper.parcours.GenerateurParcours;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 
 /**
@@ -54,7 +55,23 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-		genereGtfs(false, "20120912");
+		//genereGtfs(false, "20120912");
+		genereParcoursBus("20120912");
+    }
+    
+    private static void genereParcoursBus(String dateGtfs) {
+    	long startTime = System.currentTimeMillis();
+    	
+        GetAndContructZip getAndContructZip = new GetAndContructZip(dateGtfs);
+		getAndContructZip.getZipKeolis();
+        GestionnaireGtfs.initInstance(new File(GetAndContructZip.REPERTOIRE_GTFS));
+        
+        GenerateurParcours generateur = new GenerateurParcours();
+        generateur.genereParcours();
+        System.out.println(generateur.getParcours());
+
+        long timeElapsed = System.currentTimeMillis() - startTime;
+        System.out.println("Fin de la génération des fichiers pour le mobile : " + timeElapsed + " ms");
     }
 
     /**
