@@ -4,39 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Parcour {
-	
+
 	public static class Arret {
 		private String stopId;
 		private String stopName;
 		private Integer stopSequence;
+
 		public String getStopId() {
 			return stopId;
 		}
+
 		public void setStopId(String stopId) {
 			this.stopId = stopId;
 		}
+
 		public String getStopName() {
 			return stopName;
 		}
+
 		public void setStopName(String stopName) {
 			this.stopName = stopName;
 		}
+
 		public Integer getStopSequence() {
 			return stopSequence;
 		}
+
 		public void setStopSequence(Integer stopSequence) {
 			this.stopSequence = stopSequence;
 		}
 	}
-	
+
 	private String ligneId;
-	
+
 	private String headSign;
-	
+
 	private Integer macroDirection;
-	
+
 	private String ligneName;
-	
+
 	private List<Parcour.Arret> stops;
 
 	public String getLigneId() {
@@ -46,13 +52,17 @@ public class Parcour {
 	public void setLigneId(String ligneId) {
 		this.ligneId = ligneId;
 	}
-	
+
 	public String getHeadSign() {
 		return headSign;
 	}
 
 	public void setHeadSign(String headSign) {
-		this.headSign = headSign;
+		String[] champs = headSign.split("\\|");
+		this.headSign = champs[1];
+		while (headSign.length() > 0 && headSign.charAt(0) == ' ') {
+			headSign = headSign.substring(1);
+		}
 	}
 
 	public Integer getMacroDirection() {

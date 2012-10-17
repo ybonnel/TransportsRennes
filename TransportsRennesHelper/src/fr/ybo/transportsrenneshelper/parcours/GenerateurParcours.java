@@ -180,9 +180,9 @@ public class GenerateurParcours {
             		}
             	}
             	parcour.setHeadSign(headSign);
-            	if (parcour.getLigneId().equals("0003")) {
+            	//if (parcour.getLigneId().equals("0003")) {
             		parcours.add(parcour);
-            	}
+            	//}
             }
         }
 	}
