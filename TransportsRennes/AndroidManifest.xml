@@ -14,8 +14,8 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
-          android:versionCode="273"
-          android:versionName="2.7.3">
+          android:versionCode="274"
+          android:versionName="2.7.4">
 
     <uses-sdk
         android:maxSdkVersion="3"
