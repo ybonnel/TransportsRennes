@@ -15,6 +15,9 @@
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
+    <string name="widget11_name">Transports Rennes 1x1</string>
+    <string name="widget21_name">Transports Rennes 2x1</string>
+    <string name="widget22_name">Transports Rennes 2x2</string>
     <!-- Messages -->
     <string name="premierLancement">This is the first launch, the application needs to update the data, this may take a
         few tens of seconds, do you do
@@ -197,4 +200,7 @@
     <string name="supprimerNotif">Delete the notification</string>
     <string name="lineShortcut">Bus line</string>
     <string name="lineName">Line %1$s</string>
+    <string name="erreur_geocodage_quota">
+        Error while address geocoding, the quota is over (2500 by day).
+    </string>
 </resources>
