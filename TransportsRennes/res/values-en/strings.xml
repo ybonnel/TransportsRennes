@@ -15,6 +15,11 @@
 <resources>
     <!-- Nom de l'application -->
     <string name="app_name">Transports Rennes</string>
+
+    <string name="widget11_name">Transports Rennes 1x1</string>
+    <string name="widget21_name">Transports Rennes 2x1</string>
+    <string name="widget22_name">Transports Rennes 2x2</string>
+    <string name="widgetlowres_name">Transports Rennes 2x2 LowRes</string>
     <!-- Messages -->
     <string name="titleTransportsRennes">Welcome to the application Transports Rennes %1$s</string>
     <string name="majDispo">An update of the STAR\'s data is available, do you want to download it now? You will have to
@@ -134,5 +139,10 @@
     
     <string name="getRealTime">Get real time times.</string>
     <string name="diffSecondsToHigh">There is more than 30 seconds between STAR\'s hour and your phone\'s hour (%1$d seconds).</string>
+    
+    
+    <string name="erreur_geocodage_quota">
+        Error while address geocoding, quota is over (2500 by day).
+    </string>
     
 </resources>

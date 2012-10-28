@@ -21,6 +21,7 @@
     <string name="groupeExistant">There is already a group with that name</string>
     <string name="deplacerGroupe">Move in a group</string>
     <string name="chooseGroupe">Choose a group</string>
+    <string name="erreurNoSpaceLeft">No space left to load data, please free some space before load data.</string>
     
     <string name="vers">to</string>
     <string name="erreurReseau">A connection error has been detected, please try again later.</string>
