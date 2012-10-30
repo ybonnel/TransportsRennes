@@ -72,7 +72,7 @@ public final class Main {
      * @throws ParseException
      */
     public static void main(String[] args) throws IOException, ParseException {
-		genereGtfs(false, "20120827");
+		genereGtfs(false, "20121029");
     }
 
     /**
@@ -119,6 +119,7 @@ public final class Main {
             generateur.remplirTrajets(); //
             generateur.remplirArretRoutes(); //
             generateur.priseEnCompteDatePublication(datePublication, dateNextPublication);
+            System.out.println("Répertoire de sortie : " + new File(REPERTOIRE_OUT).getAbsolutePath());
             generateur.genererFichiers(new File(REPERTOIRE_OUT));
             generateur.rechercherPointsInterets();
         }
