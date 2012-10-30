@@ -36,11 +36,12 @@ import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.map.MyGeoClusterer;
 import fr.ybo.transportsbordeaux.map.MyGeoItem;
 import fr.ybo.transportsbordeaux.map.mapviewutil.markerclusterer.MarkerBitmap;
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
+import fr.ybo.transportsbordeaux.tbcapi.Keolis;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.FixedMyLocationOverlay;
 import fr.ybo.transportscommun.util.LogYbo;
 
@@ -162,10 +163,10 @@ public class AllOnMap extends BaseMapActivity {
 			LOG_YBO.debug("Nombre d'arrêts : " + arrets.size());
 		}
 
-		private void ajouterVelos() throws TbcErreurReseaux {
+		private void ajouterVelos() throws ErreurReseau {
 			LOG_YBO.debug("ajouterVelo");
 			if (stations == null) {
-				stations = Station.recupererStations();
+				stations = Keolis.getInstance().getStationsVcub();
 			}
 			int idGeoItem = 0;
 			for (Station station : stations) {
@@ -182,7 +183,7 @@ public class AllOnMap extends BaseMapActivity {
 			ajouterArrets();
 			try {
 				ajouterVelos();
-			} catch (TbcErreurReseaux erreurReseau) {
+			} catch (ErreurReseau erreurReseau) {
 				erreurKeolis = true;
 			}
 			return null;

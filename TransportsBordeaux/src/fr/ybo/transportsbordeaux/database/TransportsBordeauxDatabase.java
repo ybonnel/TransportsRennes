@@ -41,7 +41,7 @@ import fr.ybo.transportscommun.donnees.modele.VeloFavori;
 public class TransportsBordeauxDatabase extends DataBaseHelper {
 
     public static final String DATABASE_NAME = "transportsbordeaux.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
     @SuppressWarnings("unchecked")
     private static final List<Class<?>> DATABASE_ENTITITES =
@@ -167,6 +167,12 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 					}
 					db.execSQL("DROP TABLE ArretFavori_tmp");
 
+				}
+			});
+			mapUpgrades.put(9, new UpgradeDatabase() {
+				public void upgrade(SQLiteDatabase db) {
+					getBase().getTable(VeloFavori.class).dropTable(db);
+					getBase().getTable(VeloFavori.class).createTable(db);
 				}
 			});
         }

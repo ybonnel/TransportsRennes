@@ -13,29 +13,6 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
-import fr.ybo.transportscommun.util.ErreurReseau;
-import fr.ybo.transportscommun.util.LogYbo;
-import fr.ybo.transportsrennes.keolis.modele.Answer;
-import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
-import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
-import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
-import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
-import fr.ybo.transportsrennes.keolis.modele.velos.Station;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
-import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
-import fr.ybo.transportsrennes.util.HttpUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,6 +21,35 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.xml.sax.SAXException;
+
+import fr.ybo.transportscommun.donnees.modele.ArretFavori;
+import fr.ybo.transportscommun.util.ErreurReseau;
+import fr.ybo.transportscommun.util.LogYbo;
+import fr.ybo.transportsrennes.keolis.modele.Answer;
+import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
+import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
+import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
+import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
+import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
+import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
+import fr.ybo.transportsrennes.keolis.modele.velos.Station;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetDeparturesHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.KeolisHandler;
+import fr.ybo.transportsrennes.util.HttpUtils;
 
 /**
  * Classe d'accés aux API Keolis. Cette classe est une singletton.
@@ -89,6 +95,10 @@ public final class Keolis {
      * Commande pour récupérer les points de vente.
      */
     private static final String COMMANDE_POS = "getpos";
+
+	private static final String COMMANDE_DEPARTURE = "getbusnextdepartures";
+
+	private static final String VERSION_DEPARTURE = "2.1";
 
     /**
      * Retourne l'instance du singletton.
@@ -234,6 +244,17 @@ public final class Keolis {
         return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
     }
 
+	public ResultDeparture getDepartues(ArretFavori favori) throws ErreurReseau {
+		ParametreUrl[] params =
+				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
+						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
+						new ParametreUrl("stop][", favori.arretId) };
+
+		GetDeparturesHandler handler = new GetDeparturesHandler();
+		List<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
+		return new ResultDeparture(departures, handler.getDateApi());
+	}
+
     /**
      * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
      * commande à exécuter.
@@ -242,8 +263,20 @@ public final class Keolis {
      * @return l'url.
      */
     private String getUrl(String commande) {
+		return getUrl(commande, VERSION);
+	}
+
+	/**
+	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+	 * commande à exécuter.
+	 * 
+	 * @param commande
+	 *            commande à exécuter.
+	 * @return l'url.
+	 */
+	private String getUrl(String commande, String version) {
         StringBuilder stringBuilder = new StringBuilder(URL);
-        stringBuilder.append("?version=").append(VERSION);
+		stringBuilder.append("?version=").append(version);
         stringBuilder.append("&key=").append(KEY);
         stringBuilder.append("&cmd=").append(commande);
         return stringBuilder.toString();
@@ -258,7 +291,21 @@ public final class Keolis {
      * @return l'url.
      */
     private String getUrl(String commande, ParametreUrl[] params) {
-        StringBuilder stringBuilder = new StringBuilder(getUrl(commande));
+		return getUrl(commande, params, VERSION);
+	}
+
+	/**
+	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+	 * commande à exécuter et d'un paramètre.
+	 * 
+	 * @param commande
+	 *            commande à exécuter.
+	 * @param params
+	 *            liste de paramètres de l'url.
+	 * @return l'url.
+	 */
+	private String getUrl(String commande, ParametreUrl[] params, String version) {
+		StringBuilder stringBuilder = new StringBuilder(getUrl(commande, version));
         for (ParametreUrl param : params) {
 
             try {

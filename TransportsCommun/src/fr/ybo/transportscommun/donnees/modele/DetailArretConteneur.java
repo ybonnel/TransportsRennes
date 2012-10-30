@@ -17,6 +17,7 @@ package fr.ybo.transportscommun.donnees.modele;
 public class DetailArretConteneur {
 
     private int horaire;
+	private Integer secondes = null;
     private int trajetId;
     private int sequence;
 	private String direction;
@@ -33,7 +34,29 @@ public class DetailArretConteneur {
         return horaire;
     }
 
-    public int getTrajetId() {
+	public void setHoraire(int horaire) {
+		this.horaire = horaire;
+	}
+
+	private boolean accurate = false;
+
+	public boolean isAccurate() {
+		return accurate;
+	}
+
+	public void setAccurate(boolean accurate) {
+		this.accurate = accurate;
+	}
+
+	public Integer getSecondes() {
+		return secondes;
+	}
+
+	public void setSecondes(Integer secondes) {
+		this.secondes = secondes;
+	}
+
+	public int getTrajetId() {
         return trajetId;
     }
 

@@ -37,7 +37,7 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.velos.VeloAdapter;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
+import fr.ybo.transportsbordeaux.tbcapi.Keolis;
 import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
@@ -108,33 +108,28 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 		 */
 		@Override
 		protected void myDoBackground() throws ErreurReseau {
-			try {
-                List<VeloFavori> velosFavoris = TransportsBordeauxApplication
-                        .getDataBaseHelper().select(new VeloFavori());
-				Collection<String> ids = new ArrayList<String>();
-                for (VeloFavori favori : velosFavoris) {
-					ids.add(favori.number);
-                }
-                Collection<Station> stationsTmp = Station.recupererStations();
-				if (isCancelled()) {
-					return;
+			List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(new VeloFavori());
+			Collection<String> ids = new ArrayList<String>();
+			for (VeloFavori favori : velosFavoris) {
+				ids.add(favori.number);
+			}
+			Collection<Station> stationsTmp = Keolis.getInstance().getStationsVcub();
+			if (isCancelled()) {
+				return;
+			}
+			synchronized (stations) {
+				stations.clear();
+				for (Station station : stationsTmp) {
+					if (ids.contains(Integer.toString(station.id))) {
+						stations.add(station);
+					}
 				}
-                synchronized (stations) {
-                    stations.clear();
-                    for (Station station : stationsTmp) {
-						if (ids.contains(Integer.toString(station.id))) {
-                            stations.add(station);
-                        }
-                    }
-                    Collections.sort(stations, new Comparator<Station>() {
-                        public int compare(Station o1, Station o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
-                }
-            } catch (TbcErreurReseaux exceptionReseau) {
-				throw new ErreurReseau(exceptionReseau);
-            }
+				Collections.sort(stations, new Comparator<Station>() {
+					public int compare(Station o1, Station o2) {
+						return o1.name.compareToIgnoreCase(o2.name);
+					}
+				});
+			}
 		}
     }
 

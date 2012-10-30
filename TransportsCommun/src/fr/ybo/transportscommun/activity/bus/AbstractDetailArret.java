@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -114,7 +115,12 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
 	private UpdateTimeUtil updateTimeUtil;
 
+	protected UpdateTime updateTime;
+
 	private boolean firstUpdate = false;
+
+	protected abstract Set<Integer> getSecondsToUpdate();
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +145,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			finish();
 			return;
 		}
-
-		updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
+		updateTime = new UpdateTime() {
 
 			public void update(Calendar calendar) {
 				if (isToday()) {
@@ -155,7 +160,18 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 					getListView().invalidate();
 				}
 			}
-		}, this);
+
+			@Override
+			public boolean updateSecond() {
+				return true;
+			}
+
+			@Override
+			public Set<Integer> secondesToUpdate() {
+				return AbstractDetailArret.this.getSecondsToUpdate();
+			}
+		};
+		updateTimeUtil = new UpdateTimeUtil(updateTime, this);
 		if (!myLigne.isChargee()) {
 			chargerLigne();
 		} else {

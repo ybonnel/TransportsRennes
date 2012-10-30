@@ -14,13 +14,16 @@
 package fr.ybo.transportsbordeaux.activity.itineraires;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -52,9 +55,11 @@ import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
+import com.google.code.geocoder.model.LatLng;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 
@@ -72,9 +77,11 @@ import fr.ybo.transportsbordeaux.util.AdresseAdapter;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
+import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportscommun.util.LogYbo;
+import fr.ybo.transportscommun.util.StringOperation;
 
 public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {
 
@@ -102,6 +109,8 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     private boolean bus = true;
     private boolean tram = true;
 
+	private List<Arret> arrets = new ArrayList<Arret>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,11 +122,11 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         dateItineraire = (TextView) findViewById(R.id.dateItineraire);
         heureItineraire = (TextView) findViewById(R.id.heureItineraire);
         AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
-		AdresseAdapter adapterDepart = new AdresseAdapter(this);
+		AdresseAdapter adapterDepart = new AdresseAdapter(this, arrets);
         adresseDepart.setAdapter(adapterDepart);
 		adresseDepart.setTextColor(AbstractTransportsApplication.getTextColor(this));
         AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
-		AdresseAdapter adapterArrivee = new AdresseAdapter(this);
+		AdresseAdapter adapterArrivee = new AdresseAdapter(this, arrets);
         adresseArrivee.setAdapter(adapterArrivee);
 		adresseArrivee.setTextColor(AbstractTransportsApplication.getTextColor(this));
         adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -173,7 +182,48 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+
+		new AsyncTask<Void, Void, Void>() {
+
+			ProgressDialog myProgressDialog;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				myProgressDialog =
+						ProgressDialog.show(ItineraireRequete.this, "", getString(R.string.rechercheArrets), true);
+			}
+
+			@Override
+			protected Void doInBackground(Void... voids) {
+				construireListeArrets();
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(Void result) {
+				try {
+					myProgressDialog.dismiss();
+				} catch (IllegalArgumentException ignore) {
+				}
+				super.onPostExecute(result);
+			}
+		}.execute();
     }
+
+	private void construireListeArrets() {
+		arrets.clear();
+
+		Map<String, Arret> mapArrets = new HashMap<String, Arret>();
+		for (Arret arret : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Arret.class)) {
+			arret.nom = StringOperation.sansAccents(arret.nom.toUpperCase());
+			if (!mapArrets.containsKey(arret.nom)) {
+				mapArrets.put(arret.nom, arret);
+			}
+		}
+
+		arrets.addAll(mapArrets.values());
+	}
 
     private void terminer() {
         String adresseDepart = null;
@@ -208,17 +258,40 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                         getString(R.string.geocodageAdresseDepart), true);
             }
 
+			private GeocodeResponse arretToGeocodeResponse(Arret arret) {
+				GeocodeResponse response = new GeocodeResponse();
+				response.setStatus(GeocoderStatus.OK);
+				response.setResults(new ArrayList<GeocoderResult>());
+				GeocoderResult result = new GeocoderResult();
+				result.setGeometry(new GeocoderGeometry());
+				result.getGeometry().setLocation(
+						new LatLng(BigDecimal.valueOf(arret.getLatitude()), BigDecimal.valueOf(arret.getLongitude())));
+				response.getResults().add(result);
+				return response;
+			}
+
             @Override
             protected Void doInBackground(Void... voids) {
                 if (adresseDepart != null) {
-                    GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseDepart)
-                            .setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds())
-                            .getGeocoderRequest();
-                    reponseDepart = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
-                    if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
-                        erreur = true;
-                        return null;
-                    }
+					// Recherche arrêts
+					reponseDepart = null;
+					String adresseDepartUpper = StringOperation.sansAccents(adresseDepart.toUpperCase());
+					for (Arret arret : arrets) {
+						if (arret.nom.equals(adresseDepartUpper)) {
+							reponseDepart = arretToGeocodeResponse(arret);
+							break;
+						}
+					}
+					if (reponseDepart == null) {
+						GeocoderRequest geocoderRequest =
+								new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr")
+										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
+						reponseDepart = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
+						if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
+							erreur = true;
+							return null;
+						}
+					}
                 }
                 if (adresseArrivee != null) {
                     runOnUiThread(new Runnable() {
@@ -226,14 +299,24 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                             progressDialog.setMessage(getString(R.string.geocodageAdresseArrivee));
                         }
                     });
-                    GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(adresseArrivee)
-                            .setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds())
-                            .getGeocoderRequest();
-                    reponseArrivee = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
-                    if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
-                        erreur = true;
-                        return null;
-                    }
+					reponseArrivee = null;
+					String adresseArriveeUpper = StringOperation.sansAccents(adresseArrivee.toUpperCase());
+					for (Arret arret : arrets) {
+						if (arret.nom.equals(adresseArriveeUpper)) {
+							reponseArrivee = arretToGeocodeResponse(arret);
+							break;
+						}
+					}
+					if (reponseArrivee == null) {
+						GeocoderRequest geocoderRequest =
+								new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr")
+										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
+						reponseArrivee = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
+						if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
+							erreur = true;
+							return null;
+						}
+					}
                 }
                 return null;
             }
@@ -251,7 +334,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }.execute((Void) null);
     }
 
-    private void traiterReponseGeoCodage(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
+	private void traiterReponseGeoCodage(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
         StringBuilder stringBuilder = new StringBuilder();
         boolean erreur = false;
         if (reponseDepart != null && reponseDepart.getResults().isEmpty()) {

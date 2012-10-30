@@ -15,7 +15,9 @@ package fr.ybo.transportsbordeaux.activity.bus;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import android.os.Bundle;
 import android.widget.ListAdapter;
@@ -97,5 +99,19 @@ public class DetailArret extends AbstractDetailArret {
 
 		// Look up the AdView as a resource and load a request.
 		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+	}
+
+	private Set<Integer> secondsToUpdate = new HashSet<Integer>();
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#getSecondsToUpdate
+	 * ()
+	 */
+	@Override
+	protected Set<Integer> getSecondsToUpdate() {
+		return secondsToUpdate;
 	}
 }

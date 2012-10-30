@@ -29,7 +29,9 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.xml.sax.SAXException;
 
 import fr.ybo.transportsbordeaux.database.modele.Parking;
+import fr.ybo.transportsbordeaux.tbcapi.modele.Station;
 import fr.ybo.transportsbordeaux.tbcapi.sax.GetParkingHandler;
+import fr.ybo.transportsbordeaux.tbcapi.sax.GetStationHandler;
 import fr.ybo.transportsbordeaux.tbcapi.sax.KeolisHandler;
 import fr.ybo.transportsbordeaux.util.HttpUtils;
 import fr.ybo.transportscommun.util.ErreurReseau;
@@ -62,6 +64,11 @@ public final class Keolis {
      * Commande pour récupérer les stations.
      */
     private static final String COUCHE_PARKINGS = "CI_PARK_P";
+
+	/**
+	 * Commande pour les vélos
+	 */
+	private static final String COUCHE_VELO = "CI_VCUB_P";
 
     /**
      * Retourne l'instance du singletton.
@@ -131,6 +138,10 @@ public final class Keolis {
         return appelKeolis(getUrl(COUCHE_PARKINGS), new GetParkingHandler());
     }
 
+	public List<Station> getStationsVcub() throws KeolisException, ErreurReseau {
+		return appelKeolis(getUrl(COUCHE_VELO), new GetStationHandler());
+	}
+
     /**
      * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
      * commande à exécuter.
@@ -146,5 +157,7 @@ public final class Keolis {
         stringBuilder.append("&srsname=epsg:4326");
         return stringBuilder.toString();
     }
+
+	// http://data.lacub.fr/wfs?key=RAPJ1LVSXN&request=getfeature&service=wfs&version=1.1.0&typename=CI_VCUB_P&srsname=epsg:4326
 
 }
