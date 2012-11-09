@@ -87,7 +87,6 @@
                   android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
         <activity android:name=".activity.map.TrajetOnMap" android:configChanges="keyboardHidden"/>
-        <activity android:name=".activity.map.AllOnMap" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesBordeaux"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.parkrelais.ListParkings" android:configChanges="orientation|keyboardHidden">
