@@ -14,7 +14,10 @@
 package fr.ybo.transportsbordeaux.activity.bus;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,6 +51,8 @@ public class DetailArret extends AbstractDetailArret {
 	protected ListAdapter construireAdapter() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar);
+
+		
 		if (horaires.isEmpty()) {
 			String maxCalendrier = "00000000";
 			for (Calendrier calendrier : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
@@ -60,6 +65,28 @@ public class DetailArret extends AbstractDetailArret {
 				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageTbcEnRetard);
 			}
 		}
+
+        Calendar veille = Calendar.getInstance();
+        veille.setTime(calendar.getTime());
+        veille.add(Calendar.DAY_OF_MONTH, -1);
+        
+        for (DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille)) {
+        	if (horaireVeille.getHoraire() > 24*60) {
+        		horaireVeille.setHoraire(horaireVeille.getHoraire() - 24*60);
+        		horaires.add(horaireVeille);
+        	}
+        }
+        
+        Collections.sort(horaires, new Comparator<DetailArretConteneur>(){
+
+			@Override
+			public int compare(DetailArretConteneur lhs,
+					DetailArretConteneur rhs) {
+				return (lhs.getHoraire() < rhs.getHoraire()) ? -1 : ((lhs.getHoraire() == rhs.getHoraire()) ? 0 : 1);
+			}
+		});
+		
+		
 		return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction);
     }
 

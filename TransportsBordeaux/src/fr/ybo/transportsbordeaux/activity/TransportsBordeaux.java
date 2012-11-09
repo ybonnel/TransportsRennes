@@ -13,13 +13,20 @@
  */
 package fr.ybo.transportsbordeaux.activity;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -38,9 +45,9 @@ import fr.ybo.database.DataBaseException;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.bus.ListNotif;
 import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
-import fr.ybo.transportsbordeaux.activity.map.AllOnMap;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
+import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 import fr.ybo.transportsbordeaux.util.Version;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.AccueilActivity;
@@ -199,9 +206,11 @@ public class TransportsBordeaux extends AccueilActivity {
                 showDialog();
                 return true;
 			case R.id.menu_plan:
-                Intent intentMap = new Intent(this, AllOnMap.class);
-                startActivity(intentMap);
-                return true;
+				copieImageIfNotExists();
+				Intent intentMap = new Intent(Intent.ACTION_VIEW);
+				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "tbc_carte.jpg")), "image/*");
+				startActivity(intentMap);
+				return true;
             case MENU_LOAD_LINES:
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
                 alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
@@ -232,6 +241,47 @@ public class TransportsBordeaux extends AccueilActivity {
         }
         return false;
     }
+    
+
+
+	private void copieImageIfNotExists() {
+		boolean fichierExistant = false;
+		for (String nom : fileList()) {
+			if ("plan_2012_2013.jpg".equals(nom)) {
+				fichierExistant = true;
+			} else if ("rennes_urb_complet.jpg".equals(nom)) {
+				deleteFile(nom);
+			}
+		}
+		if (!fichierExistant) {
+			InputStream inputStream = getResources().openRawResource(R.raw.tbc_carte);
+			try {
+				OutputStream outputStream = openFileOutput("tbc_carte.jpg", Context.MODE_WORLD_READABLE);
+				try {
+					byte[] buffre = new byte[50 * 1024];
+					int result = inputStream.read(buffre);
+					while (result != -1) {
+						outputStream.write(buffre, 0, result);
+						result = inputStream.read(buffre);
+					}
+				} catch (IOException e) {
+					throw new TcbException("Erreur lors de la copie de l'image", e);
+				} finally {
+					try {
+						outputStream.close();
+					} catch (IOException ignore) {
+					}
+				}
+			} catch (FileNotFoundException e) {
+				throw new TcbException("Erreur lors de la copie de l'image", e);
+			} finally {
+				try {
+					inputStream.close();
+				} catch (IOException ignore) {
+				}
+			}
+		}
+	}
 
 	private void loadAllLines() {
 		Intent intent = new Intent(this, LoadingActivity.class);

@@ -194,7 +194,11 @@ public final class GestionnaireGtfs {
                         System.err.println("Premier : " + stops.get(stop.id).toString());
                         System.err.println("Deuxième : " + stop.toString());
                     }
-                    stops.put(stop.id, stop);
+                    if (stop.code == null || stop.code.length() == 0) {
+                    	System.err.println("Le stop " + stop.id + "(" + stop.nom + ") est écarté car il n'a pas de stop_code.");
+                    } else {
+                        stops.put(stop.id, stop);                    	
+                    }
                 }
             } catch (IOException e) {
                 throw new MoteurCsvException(e);
