@@ -351,7 +351,11 @@ public class Generateur {
                 for (Horaire horaire : mapHorairesByTrajetId.get(trajet.id)) {
                     horairesByLigneId.get(ligne.id).add(horaire);
                     if (!arretOfLigne.containsKey(horaire.arretId)) {
-                        arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
+                    	if (arrets.get(horaire.arretId) == null) {
+                    		System.err.println("L'horaire de l'arrêt " + horaire.arretId + " a été écarté");
+                    	} else {
+                    		arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
+                    	}
                     }
                     chaineBuilder.append(horaire.arretId);
                     chaineBuilder.append(',');
