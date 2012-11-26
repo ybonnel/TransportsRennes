@@ -55,7 +55,7 @@ public final class Main {
      * @throws IOException problème d'entrée/sortie.
      */
     public static void main(String[] args) throws IOException {
-		genereGtfs(false, "20121018");
+		genereGtfs(true, "20121018");
 		//genereParcoursBus("20120912");
     }
     

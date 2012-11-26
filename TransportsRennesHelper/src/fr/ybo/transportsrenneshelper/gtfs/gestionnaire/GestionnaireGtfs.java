@@ -222,7 +222,9 @@ public final class GestionnaireGtfs {
                         System.err.println("Premier : " + stopTimes.get(stopTime.getKey()).toString());
                         System.err.println("Deuxième : " + stopTime.toString());
                     }
-                    stopTimes.put(stopTime.getKey(), stopTime);
+                    if (getMapStops().containsKey(stopTime.stopId)) {
+                    	stopTimes.put(stopTime.getKey(), stopTime);
+                    }
                 }
             } catch (IOException e) {
                 throw new MoteurCsvException(e);
