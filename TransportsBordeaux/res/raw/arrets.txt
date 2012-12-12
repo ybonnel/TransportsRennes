@@ -1238,7 +1238,6 @@ id,nom,latitude,longitude
 3125b,Claudeville,44.87391,-0.57829
 36b,Russel,44.82862,-0.51838
 3324b,Mairie du Haillan,44.8721,-0.67722
-5557b,Terres Neuves,44.81509,-0.54985
 1711b,Chemin Bon Air,44.82433,-0.65029
 1629b,Résidences du Domaine,44.84961,-0.62332
 34b,Place des 2 Villes (vers Buttinière),44.86436,-0.5195
