@@ -15,15 +15,19 @@ package fr.ybo.transportsrenneshelper.gtfs.gestionnaire;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sun.util.resources.CalendarData;
+
 import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
+import fr.ybo.transportsrenneshelper.gtfs.modele.CalendarDates;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
 import fr.ybo.transportsrenneshelper.gtfs.modele.RouteExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
@@ -43,6 +47,7 @@ public final class GestionnaireGtfs {
 
     static {
         GTFS_CLASSES.add(Calendar.class);
+        GTFS_CLASSES.add(CalendarDates.class);
         GTFS_CLASSES.add(Route.class);
         GTFS_CLASSES.add(Stop.class);
         GTFS_CLASSES.add(StopTime.class);
@@ -114,6 +119,8 @@ public final class GestionnaireGtfs {
      * RouteExtension (par routeId).
      */
     private Map<String, RouteExtension> routeExtensions;
+    
+    private List<CalendarDates> calendarsDates;
 
     /**
      * @return les RouteExtensions (par routeId).
@@ -156,6 +163,17 @@ public final class GestionnaireGtfs {
         }
         return calendars;
     }
+    
+    public List<CalendarDates> getCalendarsDates() {
+    	if (calendarsDates == null) {
+    		try {
+				calendarsDates = getMoteurCsv().parseInputStream(new FileInputStream(new File(repertoire, "calendar_dates.txt")), CalendarDates.class);
+			} catch (FileNotFoundException e) {
+				throw new MoteurCsvException(e);
+			}
+    	}
+		return calendarsDates;
+	}
 
     /**
      * @return Les routes (par routeId).

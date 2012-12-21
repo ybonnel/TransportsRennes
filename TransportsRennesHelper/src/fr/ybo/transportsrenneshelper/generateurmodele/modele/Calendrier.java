@@ -46,6 +46,10 @@ public class Calendrier {
 	public boolean samedi;
 	@BaliseCsv(value = "dimanche", adapter = AdapterBoolean.class, ordre = 7)
 	public boolean dimanche;
+	@BaliseCsv(value = "dateDebut", ordre = 8)
+	public String dateDebut;
+	@BaliseCsv(value = "dateFin", ordre = 9)
+	public String dateFin;
 
 	public boolean isSemaine() {
 		return (lundi && mardi && mercredi && jeudi && vendredi && samedi && !dimanche);

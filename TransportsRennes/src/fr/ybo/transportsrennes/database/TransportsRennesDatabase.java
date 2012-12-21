@@ -44,7 +44,7 @@ import fr.ybo.transportsrennes.keolis.ConstantesKeolis;
 public class TransportsRennesDatabase extends DataBaseHelper {
 
     private static final String DATABASE_NAME = "keolis.db";
-	private static final int DATABASE_VERSION = 17;
+	private static final int DATABASE_VERSION = 18;
 
     private Context context;
 
@@ -71,7 +71,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 
     protected Map<Integer, UpgradeDatabase> getUpgrades() {
         if (mapUpgrades == null) {
-            mapUpgrades = new HashMap<Integer, UpgradeDatabase>(10);
+            mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
             mapUpgrades.put(2, new UpgradeDatabaseWithError() {
                 public void myUpgrade(SQLiteDatabase db) {
                     getBase().getTable(VeloFavori.class).createTable(db);
@@ -349,6 +349,11 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateDebut TEXT");
 					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateFin TEXT");
 					getBase().getTable(CalendrierException.class).createTable(db);
+				}
+			});
+			mapUpgrades.put(18, new UpgradeDatabaseWithError() {
+				public void myUpgrade(SQLiteDatabase db) {
+                    db.execSQL("DELETE FROM DernierMiseAJour");
 				}
 			});
         }

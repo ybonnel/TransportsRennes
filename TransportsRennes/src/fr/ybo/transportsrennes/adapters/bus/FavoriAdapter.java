@@ -179,8 +179,8 @@ public class FavoriAdapter extends BaseAdapter {
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
 
         try {
-            List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
-                    favori.macroDirection, 1, calendar);
+            List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId,
+                    favori.arretId, 1, calendar, favori.macroDirection);
 
             if (!prochainsDepart.isEmpty()) {
                 holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0).getHoraire(), now));

@@ -51,7 +51,7 @@ public class Widget11UpdateUtil {
             List<DetailArretConteneur> prochainsDeparts;
             do {
                 calendar.add(Calendar.MINUTE, 1);
-                prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 2, calendar);
+                prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 2, calendar, null);
             } while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1).getHoraire() < now);
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
             if (prochainsDeparts.size() > 0) {

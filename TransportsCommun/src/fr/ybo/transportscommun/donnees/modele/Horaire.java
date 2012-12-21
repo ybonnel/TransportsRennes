@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import fr.ybo.database.annotation.Column;
@@ -60,12 +61,13 @@ public class Horaire {
 
     private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
+	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
 
 	public static List<DetailArretConteneur> getProchainHorairesAsList(String ligneId, String arretId, Integer limit,
-			Calendar calendar) throws SQLiteException {
+			Calendar calendar, Integer macroDirection) throws SQLiteException {
 		List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
-		Cursor cursor = getProchainHorairesAsCursor(ligneId, arretId, calendar);
+		Cursor cursor = getProchainHorairesAsCursor(ligneId, arretId, calendar, macroDirection);
 		int heureDepartCol = cursor.getColumnIndex("_id");
 		int todayCol = cursor.getColumnIndex("today");
 		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
@@ -87,7 +89,7 @@ public class Horaire {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
 		for (Integer calendrierId : getExceptionsAjout(today)) {
-			cursor = getAllHorairesAsCursorForCalendrierId(ligneId, arretId, calendrierId);
+			cursor = getAllHorairesAsCursorForCalendrierId(ligneId, arretId, calendrierId, macroDirection);
 			heureDepartCol = cursor.getColumnIndex("_id");
 			trajetIdCol = cursor.getColumnIndex("trajetId");
 			stopSequenceCol = cursor.getColumnIndex("stopSequence");
@@ -115,10 +117,10 @@ public class Horaire {
 		return prochainsDeparts.subList(0, limit);
 	}
 
-	public static List<DetailArretConteneur> getAllHorairesAsList(String ligneId, String arretId, Calendar calendar)
+	public static List<DetailArretConteneur> getAllHorairesAsList(String ligneId, String arretId, Calendar calendar, Integer macroDirection)
 			throws SQLiteException {
 		List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
-		Cursor cursor = getAllHorairesAsCursor(ligneId, arretId, calendar);
+		Cursor cursor = getAllHorairesAsCursor(ligneId, arretId, calendar, macroDirection);
 		int heureDepartCol = cursor.getColumnIndex("_id");
 		int todayCol = cursor.getColumnIndex("today");
 		int calendrierIdCol = cursor.getColumnIndex("calendrierId");
@@ -139,7 +141,7 @@ public class Horaire {
 		cursor.close();
 		String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
 		for (Integer calendrierId : getExceptionsAjout(today)) {
-			cursor = getAllHorairesAsCursorForCalendrierId(ligneId, arretId, calendrierId);
+			cursor = getAllHorairesAsCursorForCalendrierId(ligneId, arretId, calendrierId, macroDirection);
 			heureDepartCol = cursor.getColumnIndex("_id");
 			trajetIdCol = cursor.getColumnIndex("trajetId");
 			stopSequenceCol = cursor.getColumnIndex("stopSequence");
@@ -162,105 +164,6 @@ public class Horaire {
 		});
 		return prochainsDeparts;
 	}
-
-    public static List<DetailArretConteneur> getProchainHorairesAsList(String ligneId, String arretId, int macroDirection,
-                                                                       Integer limit, Calendar calendar) throws SQLiteException {
-		return getListFromCursor(getProchainHorairesAsCursor(ligneId, arretId, macroDirection, limit, calendar, true));
-    }
-
-    public static List<DetailArretConteneur> getAllHorairesAsList(String ligneId, String arretId, int macroDirection, Calendar calendar) {
-		return getListFromCursor(getProchainHorairesAsCursor(ligneId, arretId, macroDirection, null, calendar, false));
-    }
-
-    private static List<DetailArretConteneur> getListFromCursor(Cursor cursor) {
-        List<DetailArretConteneur> prochainsDeparts = new ArrayList<DetailArretConteneur>();
-        int heureDepartCol = cursor.getColumnIndex("_id");
-        int trajetIdCol = cursor.getColumnIndex("trajetId");
-        int stopSequenceCol = cursor.getColumnIndex("sequence");
-		int directionCol = cursor.getColumnIndex("direction");
-        while (cursor.moveToNext()) {
-			prochainsDeparts.add(new DetailArretConteneur(cursor.getInt(heureDepartCol), cursor.getInt(trajetIdCol),
-					cursor.getInt(stopSequenceCol), cursor.getString(directionCol)));
-        }
-        cursor.close();
-        return prochainsDeparts;
-    }
-
-	private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, int macroDirection,
-			Integer limit, Calendar calendar, boolean withProchain) throws SQLiteException {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-        Calendar calendarLaVeille = Calendar.getInstance();
-        calendarLaVeille.add(Calendar.DATE, -1);
-
-        int uneJournee = 24 * 60;
-        // Réquète.
-        List<String> selectionArgs = new ArrayList<String>(7);
-        StringBuilder requete = new StringBuilder();
-        if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
-            requete.append("select (Horaire.heureDepart - :uneJournee) as _id,");
-			requete.append(" Trajet.id as trajetId, stopSequence as sequence, Direction.direction as direction ");
-            requete.append("from Calendrier,  Horaire_");
-            requete.append(ligneId);
-			requete.append(" as Horaire, Trajet, Direction ");
-            requete.append("where ");
-			requete.append(clauseWhereForCalendrier(calendarLaVeille));
-            requete.append(" and Trajet.id = Horaire.trajetId");
-            requete.append(" and Trajet.calendrierId = Calendrier.id");
-			requete.append(" and Trajet.directionId = Direction.id");
-            requete.append(" and Trajet.ligneId = :routeId1");
-            requete.append(" and Horaire.arretId = :arretId1");
-            requete.append(" and Trajet.macroDirection = :macroDirection1");
-			requete.append(" and Horaire.terminus = 0 ");
-			requete.append(" and Horaire.heureDepart >= :maintenantHier ");
-
-            selectionArgs.add(Integer.toString(uneJournee));
-            selectionArgs.add(ligneId);
-            selectionArgs.add(arretId);
-            selectionArgs.add(Integer.toString(macroDirection));
-			if (withProchain) {
-				selectionArgs.add(Integer.toString(now + uneJournee));
-			} else {
-				selectionArgs.add(Integer.toString(uneJournee));
-			}
-        }
-        if (!JoursFeries.is1erMai(calendar.getTime())) {
-            if (requete.length() > 0) {
-                requete.append("UNION ");
-            }
-            requete.append("select Horaire.heureDepart as _id,");
-			requete.append(" Trajet.id as trajetId, stopSequence as sequence, Direction.direction as direction ");
-            requete.append("from Calendrier,  Horaire_");
-            requete.append(ligneId);
-			requete.append(" as Horaire, Trajet, Direction ");
-            requete.append("where ");
-			requete.append(clauseWhereForCalendrier(calendar));
-            requete.append(" and Trajet.id = Horaire.trajetId");
-            requete.append(" and Trajet.calendrierId = Calendrier.id");
-			requete.append(" and Trajet.directionId = Direction.id");
-            requete.append(" and Trajet.ligneId = :routeId2");
-            requete.append(" and Horaire.arretId = :arretId2");
-            requete.append(" and Trajet.macroDirection = :macroDirection2");
-			requete.append(" and Horaire.terminus = 0 ");
-			if (withProchain) {
-				requete.append(" and Horaire.heureDepart >= :maintenant");
-			}
-
-            selectionArgs.add(ligneId);
-            selectionArgs.add(arretId);
-            selectionArgs.add(Integer.toString(macroDirection));
-			if (withProchain) {
-				selectionArgs.add(Integer.toString(now));
-			}
-        }
-        requete.append(" order by _id ");
-        if (limit != null) {
-            requete.append("limit ");
-            requete.append(limit);
-        }
-        LOG_YBO.debug("Requete : " + requete.toString());
-        LOG_YBO.debug("SelectionArgs : " + selectionArgs);
-		return AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
-    }
 
 	private static Map<String, Set<Integer>> mapCalendriersExceptionSuppr = new HashMap<String, Set<Integer>>();
 	private static Map<String, Set<Integer>> mapCalendriersExceptionAjout = new HashMap<String, Set<Integer>>();
@@ -318,7 +221,7 @@ public class Horaire {
         }
     }
 
-	private static Cursor getAllHorairesAsCursorForCalendrierId(String ligneId, String arretId, Integer calendarId) {
+	private static Cursor getAllHorairesAsCursorForCalendrierId(String ligneId, String arretId, Integer calendarId, Integer macroDirection) {
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId, ");
 		requete.append("Horaire.stopSequence as stopSequence, Direction.direction as direction ");
@@ -330,19 +233,25 @@ public class Horaire {
 		requete.append(" and Trajet.id = Horaire.trajetId");
 		requete.append(" and Trajet.directionId = Direction.id");
 		requete.append(" and Trajet.ligneId = :ligneId");
+		if (macroDirection != null) {
+			requete.append(" and Trajet.macroDirection = :macroDirection1");
+		}
 		requete.append(" and Horaire.arretId = :arretId");
 		requete.append(" and Horaire.terminus = 0");
 		requete.append(" order by Horaire.heureDepart;");
 		List<String> selectionArgs = new ArrayList<String>();
 		selectionArgs.add(calendarId.toString());
 		selectionArgs.add(ligneId);
+		if (macroDirection != null) {
+			selectionArgs.add(macroDirection.toString());
+		}
 		selectionArgs.add(arretId);
 		LOG_YBO.debug("Requete : " + requete.toString());
 		LOG_YBO.debug("SelectionArgs : " + selectionArgs);
 		return AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 	}
 
-	private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar) {
+	private static Cursor getAllHorairesAsCursor(String ligneId, String arretId, Calendar calendar, Integer macroDirection) {
 		StringBuilder requete = new StringBuilder();
 		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, ");
 		requete.append("Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction ");
@@ -358,6 +267,9 @@ public class Horaire {
 		requete.append(" and Trajet.id = Horaire.trajetId");
 		requete.append(" and Trajet.directionId = Direction.id");
 		requete.append(" and Trajet.ligneId = :ligneId");
+		if (macroDirection != null) {
+			requete.append(" and Trajet.macroDirection = :macroDirection1");
+		}
 		requete.append(" and Horaire.arretId = :arretId");
 
 		if (!JoursFeries.is1erMai(calendar.getTime())) {
@@ -372,13 +284,16 @@ public class Horaire {
 		selectionArgs.add(today);
 		selectionArgs.add(today);
 		selectionArgs.add(ligneId);
+		if (macroDirection != null) {
+			selectionArgs.add(macroDirection.toString());
+		}
 		selectionArgs.add(arretId);
 		LOG_YBO.debug("Requete : " + requete.toString());
 		LOG_YBO.debug("SelectionArgs : " + selectionArgs);
 		return AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
 	}
 
-	private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, Calendar calendar)
+	private static Cursor getProchainHorairesAsCursor(String ligneId, String arretId, Calendar calendar, Integer macroDirection)
 			throws SQLiteException {
 		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 		Calendar calendarLaVeille = Calendar.getInstance();
@@ -403,6 +318,9 @@ public class Horaire {
 			requete.append(" and Trajet.calendrierId = Calendrier.id");
 			requete.append(" and Trajet.directionId = Direction.id");
 			requete.append(" and Trajet.ligneId = :routeId1");
+			if (macroDirection != null) {
+				requete.append(" and Trajet.macroDirection = :macroDirection1");
+			}
 			requete.append(" and Horaire.arretId = :arretId1");
 			requete.append(" and Horaire.terminus = 0");
 			requete.append(" and Horaire.heureDepart >= :maintenantHier ");
@@ -413,6 +331,9 @@ public class Horaire {
 			selectionArgs.add(veille);
 			selectionArgs.add(veille);
 			selectionArgs.add(ligneId);
+			if (macroDirection != null) {
+				selectionArgs.add(macroDirection.toString());
+			}
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now + uneJournee));
 		}
@@ -435,6 +356,9 @@ public class Horaire {
 			requete.append(" and Trajet.calendrierId = Calendrier.id");
 			requete.append(" and Trajet.directionId = Direction.id");
 			requete.append(" and Trajet.ligneId = :routeId2");
+			if (macroDirection != null) {
+				requete.append(" and Trajet.macroDirection = :macroDirection2");
+			}
 			requete.append(" and Horaire.arretId = :arretId2");
 			requete.append(" and Horaire.terminus = 0");
 			requete.append(" and Horaire.heureDepart >= :maintenant");
@@ -444,6 +368,9 @@ public class Horaire {
 			selectionArgs.add(today);
 			selectionArgs.add(today);
 			selectionArgs.add(ligneId);
+			if (macroDirection != null) {
+				selectionArgs.add(macroDirection.toString());
+			}
 			selectionArgs.add(arretId);
 			selectionArgs.add(Integer.toString(now));
 		}

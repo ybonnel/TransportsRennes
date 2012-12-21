@@ -14,7 +14,6 @@
 package fr.ybo.transportsbordeaux.activity.bus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,7 +49,7 @@ public class DetailArret extends AbstractDetailArret {
 	@Override
 	protected ListAdapter construireAdapter() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar);
+		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, null);
 
 		
 		if (horaires.isEmpty()) {
@@ -70,7 +69,7 @@ public class DetailArret extends AbstractDetailArret {
         veille.setTime(calendar.getTime());
         veille.add(Calendar.DAY_OF_MONTH, -1);
         
-        for (DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille)) {
+        for (DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille, null)) {
         	if (horaireVeille.getHoraire() > 24*60) {
         		horaireVeille.setHoraire(horaireVeille.getHoraire() - 24*60);
         		horaires.add(horaireVeille);

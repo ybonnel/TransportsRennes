@@ -127,7 +127,7 @@ public class WidgetUpdateUtil {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         try {
             List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-                    favoris.get(0).arretId, favoris.get(0).macroDirection, 4, calendar);
+                    favoris.get(0).arretId, 4, calendar, favoris.get(0).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant1_1arret,
                     prochainsDeparts.size() < 1 ? "" : context.getString(R.string.dans) + ' '
@@ -155,7 +155,7 @@ public class WidgetUpdateUtil {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         try {
             List<DetailArretConteneur> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-                    favoris.get(0).arretId, favoris.get(0).macroDirection, 2, calendar);
+                    favoris.get(0).arretId, 2, calendar, favoris.get(0).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant11_2arret,
                     prochainsDeparts1.size() < 1 ? "" : context.getString(R.string.dans) + ' '
@@ -169,7 +169,7 @@ public class WidgetUpdateUtil {
         }
         try {
             List<DetailArretConteneur> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
-                    favoris.get(1).arretId, favoris.get(1).macroDirection, 2, calendar);
+                    favoris.get(1).arretId, 2, calendar, favoris.get(1).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant21_2arret,
                     prochainsDeparts2.size() < 1 ? "" : context.getString(R.string.dans) + ' '
@@ -188,7 +188,7 @@ public class WidgetUpdateUtil {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         try {
             List<DetailArretConteneur> prochainsDeparts1 = Horaire.getProchainHorairesAsList(favoris.get(0).ligneId,
-                    favoris.get(0).arretId, favoris.get(0).macroDirection, 1, calendar);
+                    favoris.get(0).arretId, 1, calendar, favoris.get(0).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant1_3arret,
                     prochainsDeparts1.isEmpty() ? "" : context.getString(R.string.dans) + ' '
@@ -199,7 +199,7 @@ public class WidgetUpdateUtil {
 
         try {
             List<DetailArretConteneur> prochainsDeparts2 = Horaire.getProchainHorairesAsList(favoris.get(1).ligneId,
-                    favoris.get(1).arretId, favoris.get(1).macroDirection, 1, calendar);
+                    favoris.get(1).arretId, 1, calendar, favoris.get(1).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant2_3arret,
                     prochainsDeparts2.isEmpty() ? "" : context.getString(R.string.dans) + ' '
@@ -209,7 +209,7 @@ public class WidgetUpdateUtil {
         }
         try {
             List<DetailArretConteneur> prochainsDeparts3 = Horaire.getProchainHorairesAsList(favoris.get(2).ligneId,
-                    favoris.get(2).arretId, favoris.get(2).macroDirection, 1, calendar);
+                    favoris.get(2).arretId, 1, calendar, favoris.get(2).macroDirection);
             remoteViews.setTextViewText(
                     R.id.tempsRestant3_3arret,
                     prochainsDeparts3.isEmpty() ? "" : context.getString(R.string.dans) + ' '
