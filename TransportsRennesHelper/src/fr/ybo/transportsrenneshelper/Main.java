@@ -192,10 +192,23 @@ public final class Main {
 		int semaineId = 0;
 		int dimancheId = 0;
 		int maxCalendarId = 0;
+		String minDate = null;
+		String maxDate = null;
 		// Ajout des calendrier.
 		for (Calendar calendar : calendars) {
 			if (Integer.parseInt(calendar.id) > maxCalendarId) {
 				maxCalendarId = Integer.parseInt(calendar.id);
+			}
+			if (minDate == null) {
+				minDate = calendar.startDate;
+				maxDate = calendar.endDate;
+			} else {
+				if (minDate.compareTo(calendar.startDate) > 0) {
+					minDate = calendar.startDate;
+				}
+				if (maxDate.compareTo(calendar.endDate) < 0) {
+					maxDate = calendar.endDate;
+				}
 			}
 		}
 		// Calendrier pour le métro.
@@ -209,8 +222,8 @@ public final class Main {
 		calendrier.vendredi = true;
 		calendrier.samedi = true;
 		calendrier.dimanche = false;
-		calendrier.startDate = calendars.get(0).startDate;
-		calendrier.endDate = calendars.get(0).endDate;
+		calendrier.startDate = minDate;
+		calendrier.endDate = maxDate;
 		calendars.add(calendrier);
 		semaineId = Integer.parseInt(calendrier.id);
 		calendrier = new Calendar();
@@ -222,8 +235,8 @@ public final class Main {
 		calendrier.vendredi = false;
 		calendrier.samedi = false;
 		calendrier.dimanche = true;
-		calendrier.startDate = calendars.get(0).startDate;
-		calendrier.endDate = calendars.get(0).endDate;
+		calendrier.startDate = minDate;
+		calendrier.endDate = maxDate;
 		calendars.add(calendrier);
 		dimancheId = Integer.parseInt(calendrier.id);
 		// Ajout de la Route
