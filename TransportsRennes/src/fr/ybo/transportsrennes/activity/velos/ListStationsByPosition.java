@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.location.Location;
@@ -55,6 +56,7 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
  * 
  * @author ybonnel
  */
+@SuppressLint("DefaultLocale")
 public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
 		Refreshable {
 

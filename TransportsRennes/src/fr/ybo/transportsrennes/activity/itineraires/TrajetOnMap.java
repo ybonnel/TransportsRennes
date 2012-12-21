@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ import fr.ybo.transportsrennes.map.MapItemizedOverlayTrajet;
 import fr.ybo.transportsrennes.util.Coordinate;
 import fr.ybo.transportsrennes.util.PolylineEncoder;
 
+@SuppressLint("SimpleDateFormat")
 public class TrajetOnMap extends BaseMapActivity {
 
     private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");

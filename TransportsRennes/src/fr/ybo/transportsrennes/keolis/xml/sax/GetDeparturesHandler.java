@@ -24,9 +24,11 @@ import java.util.Calendar;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
+import android.annotation.SuppressLint;
 import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
 
+@SuppressLint("SimpleDateFormat")
 public class GetDeparturesHandler extends KeolisHandler<Departure> {
 
 	private static final String DEPARTURE = "departure";

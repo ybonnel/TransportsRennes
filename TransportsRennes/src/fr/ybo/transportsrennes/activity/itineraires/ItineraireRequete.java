@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -75,6 +76,7 @@ import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 
+@SuppressLint({ "DefaultLocale", "SimpleDateFormat" })
 public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {
 
     private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);
@@ -438,17 +440,20 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 } else if (reponse.getError() != null) {
                     LOG_YBO.erreur(reponse.getError().getMsg());
                     int message = R.string.erreur_calculItineraires;
-                    switch (Message.findEnumById(reponse.getError().getId())) {
-                        case OUTSIDE_BOUNDS:
-                            message = R.string.erreur_outOfBounds;
-                            break;
-                        case NO_TRANSIT_TIMES:
-                            message = R.string.erreur_noTransitTimes;
-                            break;
-                        case PATH_NOT_FOUND:
-                            message = R.string.erreur_pathNotFound;
-                            break;
-                    }
+					switch (Message.findEnumById(reponse.getError().getId())) {
+					case OUTSIDE_BOUNDS:
+						message = R.string.erreur_outOfBounds;
+						break;
+					case NO_TRANSIT_TIMES:
+						message = R.string.erreur_noTransitTimes;
+						break;
+					case PATH_NOT_FOUND:
+						message = R.string.erreur_pathNotFound;
+						break;
+					default:
+						message = R.string.erreur_calculItineraires;
+						break;
+					}
                     Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
                 } else {
                     Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
