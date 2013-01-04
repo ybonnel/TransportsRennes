@@ -135,7 +135,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 		if (horaires.isEmpty()) {
 			String maxCalendrier = "00000000";
 			for (Calendrier calendrier : TransportsRennesApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
-				if (calendrier.dateFin.compareTo(maxCalendrier) > 0) {
+				if (calendrier.dateFin != null && calendrier.dateFin.compareTo(maxCalendrier) > 0) {
 					maxCalendrier = calendrier.dateFin;
 				}
 			}
