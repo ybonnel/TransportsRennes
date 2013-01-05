@@ -23,7 +23,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.util.IconeLigne;
@@ -34,8 +33,6 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
 
     private final List<ArretFavori> favoris;
 
-    private final Context mContext;
-
     private Integer favoriSelectionne = null;
 
     public ArretFavori getFavoriSelectionne() {
@@ -44,11 +41,14 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
         }
         return favoris.get(favoriSelectionne);
     }
+    
+    public void setFavoriSelectionne(Integer favoriSelectionne) {
+		this.favoriSelectionne = favoriSelectionne;
+	}
 
     public FavoriAdapterForWidget1(Context context, List<ArretFavori> favoris) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
-        mContext = context;
         this.favoris = favoris;
     }
 
@@ -94,23 +94,6 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
         holder.direction.setText(favori.direction);
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
         holder.checkBox.setChecked(Integer.valueOf(position).equals(favoriSelectionne));
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on clicks, depending on whether it's now checked
-                CheckBox checkBox = (CheckBox) v;
-                if (checkBox.isChecked()) {
-                    if (favoriSelectionne == null) {
-                        favoriSelectionne = position;
-                    } else {
-                        Toast.makeText(mContext, mContext.getString(R.string.justOneFavori), Toast.LENGTH_SHORT).show();
-                        checkBox.setChecked(false);
-                        checkBox.invalidate();
-                    }
-                } else {
-                    favoriSelectionne = null;
-                }
-            }
-        });
         return convertView1;
     }
 
