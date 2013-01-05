@@ -42,7 +42,7 @@ import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
  */
 public final class Main {
 
-	private static final boolean OPTIMIZE_CALENDARS = false;
+	private static final boolean OPTIMIZE_CALENDARS = true;
 
 	/**
 	 * Constructeur privé pour empécher l'instanciation.
@@ -59,7 +59,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException {
-		genereGtfs(false, OPTIMIZE_CALENDARS, "20121217");
+		genereGtfs(false, OPTIMIZE_CALENDARS, "20130103");
 		// genereParcoursBus("20120912");
 	}
 
