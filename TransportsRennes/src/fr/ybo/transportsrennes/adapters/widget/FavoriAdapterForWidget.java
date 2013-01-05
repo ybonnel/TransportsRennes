@@ -48,6 +48,19 @@ public class FavoriAdapterForWidget extends BaseAdapter {
         }
         return retour;
     }
+    
+    public void addFavoriSelectionne(Integer favoriSelectionne) {
+		favorisSelectionnes.add(favoriSelectionne);
+	}
+    
+    public void removeFavoriSelectionne(Integer favoriToRemove) {
+    	Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
+        while (positionActuels.hasNext()) {
+            if (positionActuels.next() == favoriToRemove) {
+                positionActuels.remove();
+            }
+        }
+    }
 
     public FavoriAdapterForWidget(Context context, List<ArretFavori> favoris) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
@@ -101,28 +114,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
         holder.direction.setText(favori.direction);
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
         holder.checkBox.setChecked(favorisSelectionnes.contains(Integer.valueOf(position)));
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on clicks, depending on whether it's now checked
-                CheckBox checkBox = (CheckBox) v;
-                if (checkBox.isChecked()) {
-                    if (favorisSelectionnes.size() < 3) {
-                        favorisSelectionnes.add(position);
-                    } else {
-                        Toast.makeText(mContext, mContext.getString(R.string.tooMuchFavoris), Toast.LENGTH_SHORT).show();
-                        checkBox.setChecked(false);
-                        checkBox.invalidate();
-                    }
-                } else {
-                    Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
-                    while (positionActuels.hasNext()) {
-                        if (positionActuels.next() == position) {
-                            positionActuels.remove();
-                        }
-                    }
-                }
-            }
-        });
+        
         return convertView1;
     }
 

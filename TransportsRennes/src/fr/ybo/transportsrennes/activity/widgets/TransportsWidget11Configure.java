@@ -26,6 +26,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class TransportsWidget11Configure extends CapptainListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;
+	private FavoriAdapterForWidget1 adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +79,29 @@ public class TransportsWidget11Configure extends CapptainListActivity {
     }
 
     private void construireListe() {
-        setListAdapter(new FavoriAdapterForWidget1(getApplicationContext(), favoris));
+    	adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
+        setListAdapter(adapter);
         ListView lv = getListView();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+                if (!checkBox.isChecked()) {
+                    if (adapter.getFavoriSelectionne() == null) {
+                    	adapter.setFavoriSelectionne(position);
+                    	checkBox.setChecked(true);
+                    } else {
+                    	
+                        Toast.makeText(TransportsWidget11Configure.this, getString(R.string.justOneFavori), Toast.LENGTH_SHORT).show();
+                        
+                    }
+                } else {
+                    adapter.setFavoriSelectionne(null);
+                    checkBox.setChecked(false);
+                }
+            }
+        });
         lv.setTextFilterEnabled(true);
         registerForContextMenu(lv);
         findViewById(R.id.terminerChoix).setOnClickListener(new View.OnClickListener() {

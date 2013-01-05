@@ -26,6 +26,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -42,6 +44,7 @@ public class TransportsWidgetConfigure extends CapptainListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;
+	private FavoriAdapterForWidget adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +79,27 @@ public class TransportsWidgetConfigure extends CapptainListActivity {
     }
 
     private void construireListe() {
-        setListAdapter(new FavoriAdapterForWidget(getApplicationContext(), favoris));
+    	adapter = new FavoriAdapterForWidget(getApplicationContext(), favoris);
+        setListAdapter(adapter);
         ListView lv = getListView();
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+                if (!checkBox.isChecked()) {
+                	if (adapter.getFavorisSelectionnes().size() < 3) {
+                		adapter.addFavoriSelectionne(position);
+                		checkBox.setChecked(true);
+                	} else {
+                		Toast.makeText(TransportsWidgetConfigure.this, getString(R.string.tooMuchFavoris), Toast.LENGTH_SHORT).show();
+                	}
+                } else {
+                    adapter.removeFavoriSelectionne(position);
+                    checkBox.setChecked(false);
+                }
+            }
+        });
         lv.setTextFilterEnabled(true);
         registerForContextMenu(lv);
         findViewById(R.id.terminerChoix).setOnClickListener(new View.OnClickListener() {
@@ -112,9 +134,9 @@ public class TransportsWidgetConfigure extends CapptainListActivity {
     }
 
     public static boolean isNotUsed(Context context, ArretFavori favori) {
-        Map<Integer, ArretFavori> favori1 = new HashMap<Integer, ArretFavori>(4);
-        Map<Integer, ArretFavori> favori2 = new HashMap<Integer, ArretFavori>(4);
-        Map<Integer, ArretFavori> favori3 = new HashMap<Integer, ArretFavori>(4);
+        Map<Integer, ArretFavori> favori1 = new HashMap<Integer, ArretFavori>();
+        Map<Integer, ArretFavori> favori2 = new HashMap<Integer, ArretFavori>();
+        Map<Integer, ArretFavori> favori3 = new HashMap<Integer, ArretFavori>();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         for (String key : sharedPreferences.getAll().keySet()) {
             if (key.startsWith("ArretId1_")) {
