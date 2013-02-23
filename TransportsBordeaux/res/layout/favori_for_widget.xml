@@ -55,6 +55,9 @@
               android:layout_alignParentRight="true"
               android:layout_height="wrap_content"
               android:layout_width="wrap_content"
-              android:layout_margin="5dip" />
+              android:layout_margin="5dip" 
+              android:focusable="false"
+              android:focusableInTouchMode="false"
+              android:clickable="false"/>
 
 </RelativeLayout>

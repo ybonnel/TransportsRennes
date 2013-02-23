@@ -161,7 +161,7 @@ public class FavoriAdapter extends BaseAdapter {
 
         try {
             List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId,
-                    favori.arretId, 1, calendar);
+                    favori.arretId, 1, calendar, null);
 
             if (!prochainsDepart.isEmpty()) {
                 holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0).getHoraire(), now));

@@ -145,4 +145,7 @@
         Error while address geocoding, quota is over (2500 by day).
     </string>
     
+    
+    <string name="messageStarEnRetard">Times data aren\'t up to date, you must update application.</string>
+    
 </resources>

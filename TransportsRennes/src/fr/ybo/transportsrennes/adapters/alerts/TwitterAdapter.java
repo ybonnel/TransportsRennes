@@ -16,6 +16,7 @@ package fr.ybo.transportsrennes.adapters.alerts;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import fr.ybo.transportsrennes.twitter.MessageTwitter;
 /**
  * Adapteur pour les alerts.
  */
+@SuppressLint("SimpleDateFormat")
 public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 
     private final List<MessageTwitter> messages;

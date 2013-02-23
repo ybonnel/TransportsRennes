@@ -25,7 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
-import fr.ybo.transportscommun.R;
+import fr.ybo.transportsrennes.R;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
@@ -95,8 +95,9 @@ public class TimeoAdapter extends ArrayAdapter<Arret> {
 
     private CharSequence getTempsRestant(Arret arret) {
         try {
-            List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(arret.favori.ligneId,
-                    arret.favori.arretId, arret.favori.macroDirection, 1, calendar);
+            List<DetailArretConteneur> prochainsDeparts =
+            		Horaire.getProchainHorairesAsList(arret.favori.ligneId,
+                    arret.favori.arretId, 1, calendar, arret.favori.macroDirection);
 			return prochainsDeparts.isEmpty() ? "" : Formatteur.formatterCalendar(myContext,
                     prochainsDeparts.get(0).getHoraire(), now);
         } catch (SQLiteException ignore) {

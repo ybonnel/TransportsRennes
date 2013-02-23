@@ -16,6 +16,7 @@ package fr.ybo.transportsrennes.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -46,7 +47,8 @@ public class AdresseAdapter extends ArrayAdapter<String> {
         return filter;
     }
 
-    private class MyFilter extends Filter {
+    @SuppressLint("DefaultLocale")
+	private class MyFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {

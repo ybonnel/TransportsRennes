@@ -13,22 +13,28 @@
  */
 package fr.ybo.transportsrennes.activity.bus;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.activity.bus.AbstractDetailArret;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
+import fr.ybo.transportscommun.donnees.modele.Calendrier;
 import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 import fr.ybo.transportscommun.donnees.modele.Horaire;
 import fr.ybo.transportscommun.util.ErreurReseau;
@@ -36,6 +42,7 @@ import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.alerts.ListAlertsForOneLine;
 import fr.ybo.transportsrennes.adapters.bus.DetailArretAdapter;
+import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 import fr.ybo.transportsrennes.keolis.Keolis;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
 import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
@@ -117,20 +124,55 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 		}
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	@Override
-    protected ListAdapter construireAdapter() {
-		int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		int secondesNow = calendar.get(Calendar.SECOND);
-		List<DetailArretConteneur> prochainsDeparts =
-				Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, favori.macroDirection, calendar);
-		if (isToday()) {
+	protected ListAdapter construireAdapter() {
+        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+        int secondesNow = calendar.get(Calendar.SECOND);
+		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, favori.macroDirection);
+
+		
+		if (horaires.isEmpty()) {
+			String maxCalendrier = "00000000";
+			for (Calendrier calendrier : TransportsRennesApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
+				if (calendrier.dateFin != null && calendrier.dateFin.compareTo(maxCalendrier) > 0) {
+					maxCalendrier = calendrier.dateFin;
+				}
+			}
+			String calendrierCourant = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+			if (maxCalendrier.compareTo(calendrierCourant) < 0) {
+				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageStarEnRetard);
+			}
+		}
+
+        Calendar veille = Calendar.getInstance();
+        veille.setTime(calendar.getTime());
+        veille.add(Calendar.DAY_OF_MONTH, -1);
+        
+        for (DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille, favori.macroDirection)) {
+        	if (horaireVeille.getHoraire() > 24*60) {
+        		horaireVeille.setHoraire(horaireVeille.getHoraire() - 24*60);
+        		horaires.add(horaireVeille);
+        	}
+        }
+        
+        Collections.sort(horaires, new Comparator<DetailArretConteneur>(){
+
+			@Override
+			public int compare(DetailArretConteneur lhs,
+					DetailArretConteneur rhs) {
+				return (lhs.getHoraire() < rhs.getHoraire()) ? -1 : ((lhs.getHoraire() == rhs.getHoraire()) ? 0 : 1);
+			}
+		});
+        
+        if (isToday()) {
 			synchronized (departures) {
 				// Pour chaque departure
 				for (Departure departure : departures) {
 					int diffCourante = -1;
 					DetailArretConteneur departProche = null;
 					// Trouve le prochain depart le plus près.
-					for (DetailArretConteneur depart : prochainsDeparts) {
+					for (DetailArretConteneur depart : horaires) {
 						if (diffCourante == -1
 								|| (Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante)) {
 							diffCourante = Math.abs(departure.getHoraire() - depart.getHoraire());
@@ -145,9 +187,10 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 				}
 			}
 		}
-		return new DetailArretAdapter(getApplicationContext(), prochainsDeparts, now, isToday(), favori.direction,
-				secondesNow);
-	}
+		
+		
+		return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction, secondesNow);
+    }
 
 	@Override
 	protected int getLayout() {

@@ -52,7 +52,7 @@ public class Widget21UpdateUtil {
             List<DetailArretConteneur> prochainsDeparts;
             do {
                 calendar.add(Calendar.MINUTE, 1);
-                prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 3, calendar);
+                prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 3, calendar, null);
             } while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1).getHoraire() < now);
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 

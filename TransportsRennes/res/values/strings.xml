@@ -152,4 +152,6 @@
     
     <string name="diffSecondsToHigh">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d secondes).</string>
     
+    
+    <string name="messageStarEnRetard">Les données des horaires ne sont plus valides, soit vous n\'avez pas mis à jour l\'application, soit le STAR n\'a pas encore fournit les horaires, et je n\'ai donc pas pu les intégrer…</string>
 </resources>

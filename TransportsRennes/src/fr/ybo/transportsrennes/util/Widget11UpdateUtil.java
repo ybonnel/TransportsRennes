@@ -49,7 +49,7 @@ public class Widget11UpdateUtil {
         calendar.add(Calendar.MINUTE, -3);
         try {
             List<DetailArretConteneur> prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId,
-                    favori.macroDirection, 2, calendar);
+                    2, calendar, favori.macroDirection);
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
             if (prochainsDeparts.size() > 0) {
                 int heureProchain = prochainsDeparts.get(0).getHoraire();
