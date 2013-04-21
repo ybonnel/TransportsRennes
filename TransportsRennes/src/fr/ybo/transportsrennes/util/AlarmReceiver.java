@@ -53,7 +53,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 		LOG_YBO.debug("Version Market : " + result);
 		LOG_YBO.debug("Version Courante : " + Version.getVersionCourante(context.getApplicationContext()));
-        if (result != null && !result.equals(Version.getVersionCourante(context.getApplicationContext()))) {
+        if (result != null && result.compareTo(Version.getVersionCourante(context.getApplicationContext())) > 0) {
             String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     "TransportsRennesVersion", null);
 			LOG_YBO.debug("Last Version : " + lastVersion);
