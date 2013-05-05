@@ -59,7 +59,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException {
-		genereGtfs(false, OPTIMIZE_CALENDARS, "20130415");
+		genereGtfs(true, OPTIMIZE_CALENDARS, "20130502");
 		// genereParcoursBus("20120912");
 	}
 

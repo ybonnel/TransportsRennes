@@ -390,6 +390,10 @@ public class Generateur {
 			Map<String, Arret> arretOfLigne = new HashMap<String, Arret>();
 			Map<String, Integer> macroDirectionsParChaine = new HashMap<String, Integer>();
 			// Parcours des trajets.
+			if (!trajets.containsKey(ligne.id)) {
+				System.err.println("Ligne sans trajets : " + ligne.id);
+				continue;
+			}
 			for (Trajet trajet : trajets.get(ligne.id)) {
 				StringBuilder chaineBuilder = new StringBuilder();
 				Horaire terminus = null;
