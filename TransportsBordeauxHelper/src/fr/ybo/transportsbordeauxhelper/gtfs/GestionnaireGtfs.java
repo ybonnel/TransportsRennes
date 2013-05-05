@@ -139,70 +139,91 @@ public final class GestionnaireGtfs {
 				if (calendars.containsKey(calendar.id)) {
 					System.err.println("Calendar en double " + calendar.id);
 				}
-				calendars.put(calendar.id, calendar);
+				if (calendar.id != null) {
+					calendars.put(calendar.id, calendar);
+				}
 			}
 			for (Calendar calendar : (List<Calendar>) mapBus.get(Calendar.class)) {
 				if (calendars.containsKey(calendar.id)) {
 					System.err.println("Calendar en double " + calendar.id);
 				}
-				calendars.put(calendar.id, calendar);
+				if (calendar.id != null) {
+					calendars.put(calendar.id, calendar);
+				}	
 			}
 			System.out.println("Merge calendarDates");
 			calendarsDates.addAll((List<CalendarDates>) mapTram.get(CalendarDates.class));
 			calendarsDates.addAll((List<CalendarDates>) mapBus.get(CalendarDates.class));
 			System.out.println("Merge routes");
 			for (Route route : (List<Route>) mapTram.get(Route.class)) {
-				routes.put(route.id, route);
+				if (route.id != null) {
+					routes.put(route.id, route);
+				}
 			}
 			for (Route route : (List<Route>) mapBus.get(Route.class)) {
-				routes.put(route.id, route);
+				if (route.id != null) {
+					routes.put(route.id, route);
+				}
 			}
 			System.out.println("Merge stops");
 			for (Stop stop : (List<Stop>) mapTram.get(Stop.class)) {
-				if (stops.containsKey(stop.id)) {
-					Stop autreStop = stops.get(stop.id);
-					if (!stop.equals(autreStop)) {
-						System.out.println("Stop déjà connu : " + autreStop + "\n" + stop);
+				if (stop.id != null) {
+					if (stops.containsKey(stop.id)) {
+						Stop autreStop = stops.get(stop.id);
+						if (!stop.equals(autreStop)) {
+							System.out.println("Stop déjà connu : " + autreStop + "\n" + stop);
+						}
 					}
+					stops.put(stop.id, stop);
 				}
-				stops.put(stop.id, stop);
 			}
 			for (Stop stop : (List<Stop>) mapBus.get(Stop.class)) {
-				stop.id = stop.id + "b";
-				if (stops.containsKey(stop.id)) {
-					Stop autreStop = stops.get(stop.id);
-					if (!stop.equals(autreStop)) {
-						System.err.println("Stop déjà connu : " + autreStop + "\n" + stop);
+				if (stop.id != null) {
+					stop.id = stop.id + "b";
+					if (stops.containsKey(stop.id)) {
+						Stop autreStop = stops.get(stop.id);
+						if (!stop.equals(autreStop)) {
+							System.err.println("Stop déjà connu : " + autreStop + "\n" + stop);
+						}
 					}
-				}
-				stops.put(stop.id, stop);
+					stops.put(stop.id, stop);
+				}	
 			}
 			System.out.println("Merge trips");
 			for (Trip trip : (List<Trip>) mapTram.get(Trip.class)) {
-				if (trips.containsKey(trip.id)) {
-					System.err.println("Trip déjà connu : " + trip.id);
-				}
-				trips.put(trip.id, trip);
+				if (trip.id != null) {
+					if (trips.containsKey(trip.id)) {
+						System.err.println("Trip déjà connu : " + trip.id);
+					}
+					trips.put(trip.id, trip);
+				}	
 			}
 			for (Trip trip : (List<Trip>) mapBus.get(Trip.class)) {
-				if (trips.containsKey(trip.id)) {
-					System.err.println("Trip déjà connu : " + trip.id);
+				if (trip.id != null) {
+					if (trips.containsKey(trip.id)) {
+						System.err.println("Trip déjà connu : " + trip.id);
+					}	
+					trips.put(trip.id, trip);
 				}
-				trips.put(trip.id, trip);
 			}
 			System.out.println("Merge stopTime");
 			for (StopTime stopTime : (List<StopTime>) mapTram.get(StopTime.class)) {
-				if (stopTimes.containsKey(stopTime.getKey())) {
-					System.err.println("StopTime déjà connu : " + stopTime.getKey());
+				if (stopTime.stopId != null) {
+					if (stopTimes.containsKey(stopTime.getKey())) {
+						System.err.println("StopTime déjà connu : " + stopTime.getKey());
+					}
+					stopTimes.put(stopTime.getKey(), stopTime);
 				}
-				stopTimes.put(stopTime.getKey(), stopTime);
 			}
 			for (StopTime stopTime : (List<StopTime>) mapBus.get(StopTime.class)) {
-				stopTime.stopId = stopTime.stopId + "b";
-				if (stopTimes.containsKey(stopTime.getKey())) {
-					System.err.println("StopTime déjà connu : " + stopTime.getKey());
+				if (stopTime.stopId != null) {
+					stopTime.stopId = stopTime.stopId + "b";
+					if (stopTimes.containsKey(stopTime.getKey())) {
+						System.err.println("StopTime déjà connu : "
+								+ stopTime.getKey());
+					}
+					stopTimes.put(stopTime.getKey(), stopTime);
 				}
-				stopTimes.put(stopTime.getKey(), stopTime);
 			}
 		} catch (IOException ioException) {
 			throw new TbcException(ioException);
