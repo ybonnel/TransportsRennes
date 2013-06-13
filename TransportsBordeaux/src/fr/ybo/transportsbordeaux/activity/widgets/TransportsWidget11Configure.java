@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -30,16 +31,13 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
-
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
 
-public class TransportsWidget11Configure extends CapptainListActivity {
+public class TransportsWidget11Configure extends ListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;

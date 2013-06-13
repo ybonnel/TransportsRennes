@@ -6,10 +6,13 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ListActivity;
+import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnMultiChoiceClickListener;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -25,12 +28,8 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
-import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
-import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
-import com.ubikod.capptain.android.sdk.activity.CapptainMapActivity;
-import com.ubikod.capptain.android.sdk.activity.CapptainPreferenceActivity;
-import com.ubikod.capptain.android.sdk.activity.CapptainTabActivity;
 
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
@@ -99,7 +98,7 @@ public class BaseActivity {
 		}
 	}
 
-	public static abstract class BaseFragmentActivity extends CapptainFragmentActivity {
+	public static abstract class BaseFragmentActivity extends FragmentActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -134,7 +133,8 @@ public class BaseActivity {
 
 	}
 
-	public static abstract class BaseTabActivity extends CapptainTabActivity {
+	@SuppressWarnings("deprecation")
+	public static abstract class BaseTabActivity extends TabActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -166,7 +166,7 @@ public class BaseActivity {
 
 	}
 
-	public static abstract class BaseSimpleActivity extends CapptainActivity {
+	public static abstract class BaseSimpleActivity extends Activity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -196,7 +196,7 @@ public class BaseActivity {
 		}
 	}
 
-	public static abstract class BasePreferenceActivity extends CapptainPreferenceActivity {
+	public static abstract class BasePreferenceActivity extends PreferenceActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -226,7 +226,7 @@ public class BaseActivity {
 		}
 	}
 
-	public static abstract class BaseListActivity extends CapptainListActivity {
+	public static abstract class BaseListActivity extends ListActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -256,7 +256,7 @@ public class BaseActivity {
 		}
 	}
 
-	public static abstract class BaseMapActivity extends CapptainMapActivity {
+	public static abstract class BaseMapActivity extends MapActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
