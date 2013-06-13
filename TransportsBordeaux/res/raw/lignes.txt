@@ -77,3 +77,4 @@ ordre,id,nom_court,nom_long
 76,94,94,Spécifique 94
 77,95,95,Spécifique 95
 78,96,96,Spécifique 96
+79,69,BatCUB,BatCUB

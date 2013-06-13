@@ -27,7 +27,6 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.google.code.geocoder.model.LatLngBounds;
-import com.ubikod.capptain.android.sdk.CapptainAgentUtils;
 
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
@@ -94,8 +93,6 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		if (CapptainAgentUtils.isInDedicatedCapptainProcess(this))
-			return;
 		initDonneesSpecifiques();
 		majTheme(this);
 		super.onCreate();

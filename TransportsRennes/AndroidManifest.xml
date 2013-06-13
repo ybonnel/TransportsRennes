@@ -15,8 +15,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
-          android:versionCode="339"
-          android:versionName="3.3.9">
+          android:versionCode="341"
+          android:versionName="3.4.1">
     
     <uses-sdk android:minSdkVersion="4"
               android:targetSdkVersion="11"/>
@@ -222,19 +222,5 @@
             </intent-filter>
         </activity>
 
-        <!-- Cappbrain -->
-        <meta-data android:name="capptain:reportLocation" android:value="true"/>
-
-        <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsRennesService" android:process=":Capptain">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="com.ubikod.capptain.ICapptainService"/>
-                <data android:scheme="capptain"/>
-            </intent-filter>
-            <meta-data android:name="capptain:api:level" android:value="11"/>
-            <meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84"/>
-        </service>
-        <!-- Cappbrain -->
     </application>
 </manifest>

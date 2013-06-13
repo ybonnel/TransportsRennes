@@ -423,6 +423,9 @@ public class Generateur {
 		routes.addAll(GestionnaireGtfs.getInstance().getRoutes().values());
 		// Recherche de la route avec le nom le plus long.
 		for (Route route : routes) {
+			if (route.nomLong == null || route.nomLong.length() == 0) {
+				route.nomLong = route.nomCourt;
+			}
 			if (route.nomLong.charAt(0) == '"') {
 				route.nomLong = route.nomLong.substring(1);
 			}

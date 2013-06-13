@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,9 +22,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.ubikod.capptain.android.sdk.activity.CapptainActivity;
-
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
@@ -36,7 +34,7 @@ import fr.ybo.transportscommun.util.LoadingInfo;
 import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
-public abstract class AbstractLoadingActivity extends CapptainActivity {
+public abstract class AbstractLoadingActivity extends Activity {
 
 	private static final LogYbo LOG_YBO = new LogYbo(AbstractLoadingActivity.class);
 
