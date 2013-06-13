@@ -21,7 +21,6 @@ import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.fragments.bus.ListArretFragment;
-import fr.ybo.transportscommun.activity.bus.AbstractArretOnMap;
 import fr.ybo.transportscommun.activity.bus.AbstractListArret;
 
 /**
@@ -44,11 +43,6 @@ public class ListArret extends AbstractListArret {
 	@Override
 	protected Class<? extends ListFragment> getListArretFragment() {
 		return ListArretFragment.class;
-	}
-
-	@Override
-	protected Class<? extends AbstractArretOnMap> getArretOnMap() {
-		return ArretsOnMap.class;
 	}
 
 	@Override

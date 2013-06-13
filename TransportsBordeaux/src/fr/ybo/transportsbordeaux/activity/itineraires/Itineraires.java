@@ -13,20 +13,15 @@
  */
 package fr.ybo.transportsbordeaux.activity.itineraires;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.map.TrajetOnMap;
 import fr.ybo.transportsbordeaux.adapters.itineraires.TrajetAdapter;
 import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
-import fr.ybo.transportsbordeaux.itineraires.Trajet;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 
 public class Itineraires extends BaseListActivity {
@@ -45,15 +40,6 @@ public class Itineraires extends BaseListActivity {
         setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
         ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Trajet trajet = (Trajet) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
-                intent.putExtra("trajet", trajet);
-                startActivity(intent);
-            }
-
-        });
         // Look up the AdView as a resource and load a request.
         ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
     }

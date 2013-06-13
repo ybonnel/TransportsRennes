@@ -23,7 +23,6 @@ import com.google.ads.AdView;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.tbcapi.Keolis;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.activity.parkings.AbstractListParkings;
 import fr.ybo.transportscommun.util.ErreurReseau;
 
@@ -48,11 +47,6 @@ public class ListParkings extends AbstractListParkings<Parking> {
 	@Override
 	protected List<Parking> getParkings() throws ErreurReseau {
 		return Keolis.getInstance().getParkings();
-	}
-
-	@Override
-	protected Class<? extends BaseMapActivity> getParkingsOnMap() {
-		return ParkingsOnMap.class;
 	}
 
 	@Override

@@ -74,10 +74,6 @@
         </activity>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.ListAlertsForOneLine" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.velos.StationsOnMap"
-                  android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.ArretsOnMap"
-                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.ItineraireRequete"
                   android:configChanges="orientation|keyboardHidden"
@@ -86,7 +82,6 @@
         <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"
                   android:label="@string/btn_itineraires"
                   android:theme="@android:style/Theme"/>
-        <activity android:name=".activity.map.TrajetOnMap" android:configChanges="keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesBordeaux"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.parkrelais.ListParkings" android:configChanges="orientation|keyboardHidden">
@@ -95,8 +90,6 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.parkrelais.ParkingsOnMap"
-                  android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
 
 
@@ -197,8 +190,6 @@
 
         <activity android:name="com.google.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation"/>
-
-        <uses-library android:name="com.google.android.maps" android:required="false"/>
 
     </application>
 
