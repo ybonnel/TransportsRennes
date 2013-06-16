@@ -24,7 +24,6 @@ import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.adapters.parkings.IParking;
 import fr.ybo.transportscommun.adapters.parkings.ParkingAdapter;
-import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
@@ -195,17 +194,15 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 		}.execute((Void) null);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void updateLocation(Location location) {
 		if (location == null) {
 			return;
 		}
 		synchronized (parkings) {
-			List<ObjetWithDistance> listDistance = (List<ObjetWithDistance>) parkings;
-			for (ObjetWithDistance parking : listDistance) {
+			for (T parking : parkings) {
 				parking.calculDistance(location);
 			}
-			Collections.sort(listDistance, new ObjetWithDistance.ComparatorDistance());
+			Collections.sort(parkings, new IParking.ComparatorDistance());
 		}
 		updateQuery(currentQuery);
 	}
