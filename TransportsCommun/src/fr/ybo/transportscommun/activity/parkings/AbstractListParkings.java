@@ -222,11 +222,10 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 			return;
 		}
 		synchronized (parkings) {
-			List<ObjetWithDistance> listDistance = (List<ObjetWithDistance>) parkings;
-			for (ObjetWithDistance parking : listDistance) {
+			for (T parking : parkings) {
 				parking.calculDistance(location);
 			}
-			Collections.sort(listDistance, new ObjetWithDistance.ComparatorDistance());
+			Collections.sort(parkings, new IParking.ComparatorDistance());
 		}
 		updateQuery(currentQuery);
 	}

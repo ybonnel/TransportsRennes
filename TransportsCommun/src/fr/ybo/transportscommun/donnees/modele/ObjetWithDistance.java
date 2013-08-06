@@ -22,6 +22,10 @@ public abstract class ObjetWithDistance {
 
     public Integer distance;
 
+    public Integer getDistance() {
+        return distance;
+    }
+
     public static class ComparatorDistance implements Comparator<ObjetWithDistance> {
 
         public int compare(ObjetWithDistance o1, ObjetWithDistance o2) {

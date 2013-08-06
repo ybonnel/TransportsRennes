@@ -23,3 +23,5 @@ TransportsRennes.iws
 out
 **/*.apk
 
+.gradle
+build
