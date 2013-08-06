@@ -395,7 +395,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arret);
 			String lat = Double.toString(arret.getLatitude());
 			String lon = Double.toString(arret.getLongitude());
-			Uri uri = Uri.parse("geo:0,0?q=" + favori.nomArret + "+@" + lat + ',' + lon);
+			Uri uri = Uri.parse("geo:" + lat + ',' + lon);
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			} catch (ActivityNotFoundException activityNotFound) {
