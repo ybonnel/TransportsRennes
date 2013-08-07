@@ -80,7 +80,7 @@ public class MapItemizedOverlayParking extends ItemizedOverlay<OverlayItem> {
                 Parking parkRelai = parkRelais.get(index);
                 String lat = Double.toString(parkRelai.getLatitude());
                 String lon = Double.toString(parkRelai.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(parkRelai.name) + "+@" + lat + ',' + lon);
+                Uri uri = Uri.parse("geo:" + lat + ',' + lon);
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });

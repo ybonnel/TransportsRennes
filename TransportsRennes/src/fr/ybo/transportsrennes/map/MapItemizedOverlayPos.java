@@ -77,7 +77,7 @@ public class MapItemizedOverlayPos extends ItemizedOverlay<OverlayItem> {
                 PointDeVente pointDeVente = pointDeVentes.get(index);
                 String lat = Double.toString(pointDeVente.getLatitude());
                 String lon = Double.toString(pointDeVente.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(pointDeVente.name) + "+@" + lat + ',' + lon);
+                Uri uri = Uri.parse("geo:" + lat + ',' + lon);
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });

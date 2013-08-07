@@ -102,7 +102,7 @@ public class MapItemizedOverlayVelo extends ItemizedOverlay<OverlayItem> {
                 String lat = Double.toString(station.getLatitude());
                 String lon = Double.toString(station.getLongitude());
 				Uri uri =
-						Uri.parse("geo:0,0?q=" + Formatteur.formatterChaine(station.getName()) + "+@" + lat + ',' + lon);
+						Uri.parse("geo:" + lat + ',' + lon);
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
