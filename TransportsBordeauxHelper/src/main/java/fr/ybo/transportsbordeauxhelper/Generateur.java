@@ -50,6 +50,7 @@ import fr.ybo.transportsbordeauxhelper.modele.Horaire;
 import fr.ybo.transportsbordeauxhelper.modele.Ligne;
 import fr.ybo.transportsbordeauxhelper.modele.Trajet;
 import fr.ybonnel.csvengine.CsvEngine;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Générateur.
@@ -127,7 +128,7 @@ public class Generateur {
 				System.err.println("Le répertoire " + repertoire.getName() + "n'a pas pu être créé");
 			}
 		}
-		CsvEngine moteurCsv = new CsvEngine(LIST_CLASSES);
+		CsvEngine moteurCsv = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), LIST_CLASSES);
 		System.out.println("Génération du fichier arrets.txt");
 		moteurCsv.writeFile(new FileWriter(new File(repertoire, "arrets.txt")), arrets.values(), Arret.class);
 		System.out.println("Génération du fichier arrets_routes.txt");

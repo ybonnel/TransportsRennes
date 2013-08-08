@@ -29,6 +29,7 @@ import fr.ybo.transportsbordeauxhelper.gtfs.modele.Stop;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.StopTime;
 import fr.ybo.transportsbordeauxhelper.gtfs.modele.Trip;
 import fr.ybonnel.csvengine.CsvEngine;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Classe réalisant l'enchènement des traitements.
@@ -148,7 +149,9 @@ public final class Main {
     private static void genereGtfsOptimises() throws IOException {
 
         File repertoireOut = new File(REPERTOIRE_OUT);
-        CsvEngine moteurCsv = new CsvEngine(Agency.class, Calendar.class, CalendarDates.class,
+
+
+        CsvEngine moteurCsv = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), Agency.class, Calendar.class, CalendarDates.class,
                 Route.class, Stop.class, Trip.class, StopTime.class);
         System.out.println("Génération de agency.txt");
         moteurCsv.writeFile(new FileWriter(new File(repertoireOut, "agency.txt")), GestionnaireGtfs.getInstance().getAgencies(),

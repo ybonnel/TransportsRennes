@@ -29,12 +29,12 @@ import fr.ybonnel.csvengine.annotation.CsvFile;
 @CsvFile
 public class Ligne {
 	// CHECKSTYLE:OFF
-	@CsvColumn("id")
-	public String id;
-	@CsvColumn("nom_court")
-	public String nomCourt;
-	@CsvColumn("nom_long")
-	public String nomLong;
-	@CsvColumn(value = "ordre", adapter = AdapterInteger.class)
+	@CsvColumn(value = "ordre", adapter = AdapterInteger.class, order=0)
 	public int ordre;
+	@CsvColumn(value="id", order=1)
+	public String id;
+	@CsvColumn(value="nom_court", order=2)
+	public String nomCourt;
+	@CsvColumn(value="nom_long", order=3)
+	public String nomLong;
 }
