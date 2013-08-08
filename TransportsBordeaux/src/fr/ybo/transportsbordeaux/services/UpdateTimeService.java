@@ -70,9 +70,11 @@ public class UpdateTimeService extends Service {
 		super.onCreate();
 		LOG_YBO.debug("onCreate");
 		PackageManager pm = getPackageManager();
-		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".services.UpdateTimeService"),
-				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-		registerReceiver(mTimeChangedReceiver, sIntentFilter);
+        if (pm != null) {
+            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
+        registerReceiver(mTimeChangedReceiver, sIntentFilter);
 	}
 
 	/**

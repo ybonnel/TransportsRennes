@@ -1,9 +1,8 @@
 package fr.ybo.transportscommun.adapters.parkings;
 
-import java.util.Comparator;
-
-import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 import android.location.Location;
+
+import java.util.Comparator;
 
 public interface IParking {
 
@@ -30,8 +29,9 @@ public interface IParking {
 	double getLatitude();
 
 	double getLongitude();
-	
+
 	void calculDistance(Location pCurrentLocation); 
 	
 	Integer getDistance();
+
 }

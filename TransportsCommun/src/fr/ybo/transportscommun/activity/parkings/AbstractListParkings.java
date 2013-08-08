@@ -96,7 +96,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 				T parking = adapter.getItem(position);
 				String lat = Double.toString(parking.getLatitude());
 				String lon = Double.toString(parking.getLongitude());
-				Uri uri = Uri.parse("geo:0,0?q=" + parking.getName() + "+@" + lat + ',' + lon);
+				Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (ActivityNotFoundException activityNotFound) {

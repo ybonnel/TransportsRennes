@@ -115,7 +115,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
                 PointDeVente pointDeVente = adapter.getItem(position);
                 String lat = Double.toString(pointDeVente.getLatitude());
                 String lon = Double.toString(pointDeVente.getLongitude());
-                Uri uri = Uri.parse("geo:0,0?q=" + pointDeVente.name + "+@" + lat + ',' + lon);
+                Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });

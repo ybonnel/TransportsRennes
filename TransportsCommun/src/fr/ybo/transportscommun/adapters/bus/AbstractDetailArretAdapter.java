@@ -101,8 +101,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 					prochainsDeparts.get(position).getSecondes(), prochainsDeparts.get(position).isAccurate()));
 			if (prochainsDeparts.get(position).getSecondes() != null) {
 				if (AbstractTransportsApplication.getTheme(myContext) == Theme.NOIR) {
-					holder.heureProchain.setTextColor(Color.rgb(0, 0, 255));
-					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 255));
+					holder.heureProchain.setTextColor(Color.rgb(150, 150, 255));
+					holder.tempsRestant.setTextColor(Color.rgb(150, 150, 255));
 				} else {
 					holder.tempsRestant.setTextColor(Color.rgb(0, 0, 125));
 					holder.heureProchain.setTextColor(Color.rgb(0, 0, 125));

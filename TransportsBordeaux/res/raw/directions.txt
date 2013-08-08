@@ -43,7 +43,6 @@ id,direction
 40,Le Bouscat Hôpital Suburbain
 41,Bordeaux Place Ravezies
 46,Gradignan Ornon
-47,Le Taillan Médoc Mairie / Lycée Sud Médoc
 44,Bordeaux Porte de Bourgogne
 45,Bordeaux Stalingrad
 51,Bruges Villabois/Bruges Zone de Frêt
@@ -89,27 +88,10 @@ id,direction
 92, Buttinière par Artigues Cimetière Intercommunal
 95,Artigues
 94,Saint-Médard/Saint-Aubin
-89,Eysines Le Vigean
 88,Martignas/5 Chemins/Beaudésert
-91,Bordeaux Paludate
-90,Bordeaux Lycée François Mauriac
-102,Gradignan Village 6 IUT
 103,Mérignac IMA
-100,Gradignan Stade Ornon/Malartic
 101,Mérignac Lycée Daguin
 98,Blanquefort Gare
 99,Cadaujac Le Bouscaut
-96,Bordeaux Roger Allo
 97,Bordeaux Grand Parc
-110,Ambès Fort Lajard
-111,Blanquefort Andrian
-108,Blanquefort Lyçée du Bâtiment
-109,Lormont Lycée E. Faure et les Iris
-106,Floirac Dravemont
-107,Gradignan Lycée des Graves
 104,Bordeaux Bassins à Flot
-105,Le Taillan Médoc Tanaïs
-115,Bordeaux Place Gabriel Fauré
-114,Lormont Lycée E.Faure
-113,Saint-Louis Belle Rive
-112,Lormont Allende
