@@ -14,10 +14,10 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsbordeaux" android:installLocation="auto"
-          android:versionCode="272" android:versionName="2.7.2">
+          android:versionCode="273" android:versionName="2.7.3">
 
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="18"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -206,9 +206,8 @@
             <meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84"/>
         </service>
         <!-- Cappbrain -->
-
         <activity android:name="com.google.ads.AdActivity"
-                  android:configChanges="keyboard|keyboardHidden|orientation"/>
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
         <uses-library android:name="com.google.android.maps" android:required="false"/>
 
