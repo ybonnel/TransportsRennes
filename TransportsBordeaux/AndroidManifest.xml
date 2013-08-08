@@ -17,7 +17,7 @@
           android:versionCode="272" android:versionName="2.7.2">
 
 
-    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
+    <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="18"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -27,7 +27,8 @@
 
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:name=".application.TransportsBordeauxApplication"
-                 android:theme="@style/Theme.Transports">
+                 android:theme="@style/Theme.Transports"
+                 android:allowBackup="false">
         <activity android:name=".activity.TransportsBordeaux"
                   android:launchMode="singleTop">
             <intent-filter>
@@ -146,7 +147,8 @@
 
         <service
                 android:name=".services.UpdateTimeService"
-                android:label="TransportsBordeauxUpdateTimeService">
+                android:label="TransportsBordeauxUpdateTimeService"
+                android:exported="false">
 
             <intent-filter>
                 <action android:name="fr.ybo.transportsbordeaux.action.UPDATE"/>
@@ -193,7 +195,8 @@
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 
         <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsBordeauxService" android:process=":Capptain">
+                 android:label="TransportsBordeauxService" android:process=":Capptain"
+                 android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="com.ubikod.capptain.ICapptainService"/>

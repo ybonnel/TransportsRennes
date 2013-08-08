@@ -111,10 +111,12 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
 		PackageManager pm = getPackageManager();
-		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),
-				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        if (pm != null) {
+            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
 
-		final String dateCourante = new SimpleDateFormat("ddMMyyyy").format(new Date());
+        final String dateCourante = new SimpleDateFormat("ddMMyyyy").format(new Date());
 		Bounds boundsBdd = getDataBaseHelper().selectSingle(new Bounds());
 		if (boundsBdd != null) {
 			if (!dateCourante.equals(boundsBdd.getDate())) {

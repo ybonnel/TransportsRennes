@@ -19,7 +19,7 @@
           android:versionName="3.4.4">
     
     <uses-sdk android:minSdkVersion="4"
-              android:targetSdkVersion="11"/>
+              android:targetSdkVersion="18"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -29,8 +29,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     
     <application android:icon="@drawable/icon" android:label="@string/app_name"
-                 android:debuggable="false" android:name=".application.TransportsRennesApplication"
-                 android:theme="@style/Theme.Transports">
+                 android:name=".application.TransportsRennesApplication"
+                 android:theme="@style/Theme.Transports"
+                 android:allowBackup="false">
         <activity android:name=".activity.TransportsRennes"
                   android:launchMode="singleTop">
             <intent-filter>
@@ -46,7 +47,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:scheme="http" 
                 	  android:host="m.starbusmetro.fr"
-                	  android:pathPattern="/arret/.*"></data>
+                	  android:pathPattern="/arret/.*"/>
             </intent-filter>
         </activity>
         <activity android:name=".activity.loading.LoadingActivity" android:configChanges="orientation|keyboardHidden"/>
@@ -163,7 +164,8 @@
 
         <service
                 android:name=".services.UpdateTimeService"
-                android:label="TransportsRennesUpdateTimeService">
+                android:label="TransportsRennesUpdateTimeService"
+                android:exported="false">
 
             <intent-filter>
                 <action android:name="fr.ybo.transportsrennes.action.UPDATE"/>
@@ -233,7 +235,8 @@
         <meta-data android:name="capptain:reportLocation" android:value="true"/>
 
         <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsRennesService" android:process=":Capptain">
+                 android:label="TransportsRennesService" android:process=":Capptain"
+                 android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="com.ubikod.capptain.ICapptainService"/>

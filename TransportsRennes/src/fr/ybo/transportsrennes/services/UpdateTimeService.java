@@ -73,8 +73,10 @@ public class UpdateTimeService extends Service {
     public void onCreate() {
         super.onCreate();
         PackageManager pm = getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        if (pm != null) {
+            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
         registerReceiver(mTimeChangedReceiver, sIntentFilter);
     }
 

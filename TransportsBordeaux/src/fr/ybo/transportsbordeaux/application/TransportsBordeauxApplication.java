@@ -141,10 +141,12 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
 		PackageManager pm = getPackageManager();
-		pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsbordeaux", ".services.UpdateTimeService"),
-				PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        if (pm != null) {
+            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
 
-		// Récupération des alertes
+        // Récupération des alertes
 		new AsyncTask<Void, Void, Void>() {
 			@Override
 			protected Void doInBackground(Void... voids) {
