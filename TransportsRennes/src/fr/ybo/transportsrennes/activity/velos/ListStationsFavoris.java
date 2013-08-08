@@ -74,7 +74,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                 Station station = veloAdapter.getItem(position);
                 String lat = Double.toString(station.getLatitude());
                 String lon = Double.toString(station.getLongitude());
-                Uri uri = Uri.parse("geo:" + lat + ',' + lon);
+                Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
