@@ -25,8 +25,10 @@ public class UpdateTimeServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
-        PackageManager pm = context.getPackageManager();
-        pm.setComponentEnabledSetting(new ComponentName("fr.ybo.transportsrennes", ".services.UpdateTimeService"),
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        try {
+            PackageManager pm = context.getPackageManager();
+            pm.setComponentEnabledSetting(new ComponentName(context, UpdateTimeService.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        } catch (Exception ignore) {}
     }
 }
