@@ -140,11 +140,13 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 						"trajets.txt"));
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
-		PackageManager pm = getPackageManager();
-        if (pm != null) {
-            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        }
+        try {
+            PackageManager pm = getPackageManager();
+            if (pm != null) {
+                pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+            }
+        } catch (Exception ignore) {}
 
         // Récupération des alertes
 		new AsyncTask<Void, Void, Void>() {

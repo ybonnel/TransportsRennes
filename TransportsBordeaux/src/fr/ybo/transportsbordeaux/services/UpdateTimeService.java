@@ -69,11 +69,13 @@ public class UpdateTimeService extends Service {
 	public void onCreate() {
 		super.onCreate();
 		LOG_YBO.debug("onCreate");
-		PackageManager pm = getPackageManager();
-        if (pm != null) {
-            pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        }
+        try {
+            PackageManager pm = getPackageManager();
+            if (pm != null) {
+                pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
+                        PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+            }
+        } catch (Exception ignore) {}
         registerReceiver(mTimeChangedReceiver, sIntentFilter);
 	}
 
