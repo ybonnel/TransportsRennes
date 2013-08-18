@@ -73,7 +73,7 @@ public final class Main {
      * @throws ParseException
      */
     public static void main(String[] args) throws IOException, ParseException {
-		genereGtfs(false, "20130807");
+		genereGtfs(true, "20130817");
     }
 
     /**
