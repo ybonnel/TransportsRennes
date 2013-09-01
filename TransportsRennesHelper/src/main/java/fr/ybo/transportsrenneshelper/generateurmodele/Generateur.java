@@ -50,6 +50,7 @@ import fr.ybo.transportsrenneshelper.keolis.modele.MetroStation;
 import fr.ybo.transportsrenneshelper.util.CalculDistance;
 import fr.ybonnel.csvengine.CsvEngine;
 import fr.ybonnel.csvengine.exception.CsvErrorsExceededException;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Générateur.
@@ -178,7 +179,7 @@ public class Generateur {
 						+ "n'a pas pu être créé");
 			}
 		}
-		CsvEngine moteurCsv = new CsvEngine(LIST_CLASSES);
+		CsvEngine moteurCsv = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), LIST_CLASSES);
 		System.out.println("Génération du fichier arrets.txt");
 		moteurCsv.writeFile(new FileWriter(new File(repertoire, "arrets.txt")),
 				arrets.values(), Arret.class);
@@ -850,7 +851,7 @@ public class Generateur {
 		}
 		trajetIdMax++;
 		Map<Integer, Trajet> trajetMetro = new HashMap<Integer, Trajet>();
-		CsvEngine moteurMetro = new CsvEngine(HoraireMetro.class);
+		CsvEngine moteurMetro = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), HoraireMetro.class);
 		List<Horaire> horairesMetro = new ArrayList<Horaire>();
 		for (HoraireMetro horaireMetro : moteurMetro
 				.parseInputStream(

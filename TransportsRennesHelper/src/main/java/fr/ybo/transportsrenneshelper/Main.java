@@ -37,6 +37,7 @@ import fr.ybo.transportsrenneshelper.parcours.GenerateurParcours;
 import fr.ybo.transportsrenneshelper.util.GetAndContructZip;
 import fr.ybonnel.csvengine.CsvEngine;
 import fr.ybonnel.csvengine.exception.CsvErrorsExceededException;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Classe réalisant l'enchènement des traitements.
@@ -62,7 +63,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException, CsvErrorsExceededException {
-		genereGtfs(true, OPTIMIZE_CALENDARS, "20130627");
+		genereGtfs(false, OPTIMIZE_CALENDARS, "20130827");
 		// genereParcoursBus("20120912");
 	}
 
@@ -261,7 +262,7 @@ public final class Main {
 		tripIdMax++;
 
 		Map<String, Trip> trajetMetro = new HashMap<String, Trip>();
-		CsvEngine moteurMetro = new CsvEngine(HoraireMetro.class);
+		CsvEngine moteurMetro = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), HoraireMetro.class);
 		List<StopTime> horairesMetro = new ArrayList<StopTime>();
 		for (HoraireMetro horaireMetro : moteurMetro
 				.parseInputStream(

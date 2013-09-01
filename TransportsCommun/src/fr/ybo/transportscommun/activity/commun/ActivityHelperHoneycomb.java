@@ -47,7 +47,7 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 			mActivity.getActionBar().setDisplayOptions(0, ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
 		} else {
 			mActivity.getActionBar().setDisplayOptions(ActionBar.DISPLAY_USE_LOGO,
-					ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
+                    ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_SHOW_TITLE);
 		}
 	}
 
@@ -98,4 +98,10 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 		}
 		return true;
 	}
+
+    @Override
+    public void setupActionBar(int resourceMenuNormal, int resourceMenuNoir) {
+        super.setupActionBar(resourceMenuNormal, resourceMenuNoir);
+        mActivity.getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 }

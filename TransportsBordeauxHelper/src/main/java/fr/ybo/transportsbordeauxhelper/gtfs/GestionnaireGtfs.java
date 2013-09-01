@@ -39,6 +39,7 @@ import fr.ybonnel.csvengine.exception.CsvErrorsExceededException;
 import fr.ybonnel.csvengine.factory.AbstractCsvReader;
 import fr.ybonnel.csvengine.factory.DefaultCsvManagerFactory;
 import fr.ybonnel.csvengine.factory.OpenCsvReader;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Gestionnaire des fichiers GTFS.
@@ -80,7 +81,7 @@ public final class GestionnaireGtfs {
 	public static synchronized GestionnaireGtfs getInstance() {
 		if (gestionnaire == null) {
 			gestionnaire = new GestionnaireGtfs();
-			gestionnaire.moteurCsv = new CsvEngine(GTFS_CLASSES);
+			gestionnaire.moteurCsv = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), GTFS_CLASSES);
             gestionnaire.moteurCsv.setFactory(new DefaultCsvManagerFactory(){
                 @Override
                 public AbstractCsvReader createReaderCsv(Reader reader, char separator) {

@@ -33,6 +33,7 @@ import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybonnel.csvengine.CsvEngine;
 import fr.ybonnel.csvengine.exception.CsvErrorsExceededException;
+import fr.ybonnel.csvengine.model.EngineParameters;
 
 /**
  * Gestionnaire des fichiers GTFS.
@@ -82,7 +83,7 @@ public final class GestionnaireGtfs {
     public static synchronized void initInstance(File repertoireGtfs) {
         gestionnaire = new GestionnaireGtfs();
         gestionnaire.repertoire = repertoireGtfs;
-        gestionnaire.moteurCsv = new CsvEngine(GTFS_CLASSES);
+        gestionnaire.moteurCsv = new CsvEngine(EngineParameters.createBuilder().setAddQuoteCar(false).build(), GTFS_CLASSES);
     }
 
     /**
