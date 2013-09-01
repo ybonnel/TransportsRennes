@@ -39,6 +39,10 @@ import fr.ybo.transportscommun.activity.AccueilActivity;
 public class BaseActivity {
 
 	private static boolean onOptionsItemSelected(MenuItem item, ActivityHelper helper, Activity activity) {
+        if (item.getItemId() == android.R.id.home) {
+            helper.goHome();
+            return true;
+        }
 		return ((AbstractTransportsApplication) activity.getApplication())
 				.onOptionsItemSelected(item, activity, helper);
 	}
