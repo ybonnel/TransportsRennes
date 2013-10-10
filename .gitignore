@@ -26,3 +26,4 @@ out
 .gradle
 build
 *.apk
+local.properties
