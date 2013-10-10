@@ -415,6 +415,7 @@ id,nom,latitude,longitude
 2735b,Pont de l'Orient,44.8049,-0.64899
 2610b,Marché de Brienne,44.82571,-0.54774
 3856b,Galgon,44.7751,-0.5389
+536b,Bricaud,44.89294,-0.56582
 6741b,Terres de Borde (rue d'Armagnac),44.82219,-0.55444
 6521b,Les Aubiers (station Tram),44.87383,-0.5742
 4220b,RN 215,44.90784,-0.72471
@@ -601,6 +602,7 @@ id,nom,latitude,longitude
 1193b,Saïgon,44.82682,-0.55055
 5801b,Stalingrad,44.83952,-0.5589
 3976b,Bois de Mont,44.89865,-0.70665
+2839b,Parc des Expositions (Porte C),44.8943,-0.56596
 3215b,Aristide Briand,44.82427,-0.62449
 5299b,Lycée Pape Clément,44.80831,-0.6494
 3211b,Passage à niveau,44.82201,-0.6244
@@ -849,6 +851,7 @@ id,nom,latitude,longitude
 1838b,La Baranquine,44.89929,-0.53235
 6942b,Les Pins,44.84453,-0.7954
 525b,Verts Coteaux,44.83439,-0.51301
+3866b,Bougnard (station Tram),44.79419,-0.63382
 5676b,Logey,44.83689,-0.66743
 2947b,La Boétie,44.90302,-0.70097
 2572b,La Hontan,44.76672,-0.54968
@@ -1005,6 +1008,7 @@ id,nom,latitude,longitude
 1332b,Dutertre,44.84066,-0.59377
 6366b,Tujean,44.92139,-0.62608
 5928b,Bouliac Centre Commercial,44.81608,-0.52855
+7001b,Les Aubiers,44.87425,-0.57637
 163b,Versant,44.83249,-0.51423
 3943b,St Vincent de Paul,44.95352,-0.46807
 626b,Les 3 Tours,44.78797,-0.60498
@@ -2469,7 +2473,6 @@ id,nom,latitude,longitude
 3184b,Thorez Goélands,44.80369,-0.55826
 716b,Fleuranceau,44.88547,-0.60988
 1049b,Parc de l'Etoile,44.82295,-0.49737
-3824b,Porte de Bourgogne,44.8364,-0.5658
 383b,Béchade,45.02309,-0.54528
 230b,Jean Jaurès,44.86302,-0.59985
 4178b,Jacques Brel,44.87819,-0.50002
@@ -2672,6 +2675,7 @@ id,nom,latitude,longitude
 3989b,Ecole d'horticulture,44.87208,-0.6637
 5525b,Aciéries,44.80256,-0.64378
 2754b,Charles Perrens,44.82327,-0.60073
+7051b,Bellonte,44.82858,-0.68966
 1392b,Marronniers,44.82422,-0.48044
 5263b,Pont de l'Orient,44.80477,-0.64881
 1661b,Solarium,44.78194,-0.62804
@@ -2918,8 +2922,8 @@ id,nom,latitude,longitude
 5407b,Piscine Grand Parc,44.85766,-0.57996
 5531,NEW YORK,44.87109,-0.54729
 5532,BRANDENBURG,44.87449,-0.54565
-5530,NEW YORK,44.87094,-0.54729
 6329b,G. Fauré,44.85302,-0.63408
+5530,NEW YORK,44.87094,-0.54729
 5529,RUE ACHARD,44.8666,-0.54873
 5528,RUE ACHARD,44.86667,-0.54866
 1212b,Labatut,44.83538,-0.63294
@@ -3044,6 +3048,7 @@ id,nom,latitude,longitude
 2812b,AFPA Pessac,44.79025,-0.64994
 1501b,Jean Moulin,44.91242,-0.63624
 2746b,Cursol,44.83486,-0.57527
+1435b,Parc des Expositions,44.89519,-0.56601
 1591b,Village 4,44.79168,-0.62293
 883b,La Campanie,44.92147,-0.50203
 3059b,Mairie de St Médard,44.89588,-0.7178
@@ -3198,6 +3203,7 @@ id,nom,latitude,longitude
 2031b,Les Echoppes,44.81044,-0.62078
 4204b,Pôle d'Echanges Quinconces,44.84407,-0.57171
 5494b,Joliot Curie,44.89521,-0.51378
+1432b,Bricaud,44.89331,-0.56575
 1253b,Monrabeau,44.83866,-0.62422
 1656b,Lycée Kastler,44.80144,-0.59733
 61b,Bernède,44.87826,-0.67791
