@@ -46,7 +46,7 @@ import fr.ybonnel.csvengine.model.EngineParameters;
  */
 public final class Main {
 
-	private static final boolean OPTIMIZE_CALENDARS = false;
+	private static final boolean OPTIMIZE_CALENDARS = true;
 
 	/**
 	 * Constructeur privé pour empécher l'instanciation.
@@ -63,7 +63,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException, CsvErrorsExceededException {
-		genereGtfs(false, OPTIMIZE_CALENDARS, "20131017");
+		genereGtfs(false, OPTIMIZE_CALENDARS, "20131022");
 		// genereParcoursBus("20120912");
 	}
 
@@ -100,7 +100,7 @@ public final class Main {
 			String date) throws IOException, CsvErrorsExceededException {
 		long startTime = System.currentTimeMillis();
 		GetAndContructZip getAndContructZip = new GetAndContructZip(date);
-		getAndContructZip.getZipKeolis();
+		//getAndContructZip.getZipKeolis();
 		GestionnaireGtfs.initInstance(new File(
 				GetAndContructZip.REPERTOIRE_GTFS));
 		System.out.println("Avant compression : ");

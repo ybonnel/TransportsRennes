@@ -503,6 +503,15 @@ public class Generateur {
 						System.err.println("Pas de direction trouvée!!!!!");
 					}
 					arretRoute.directionId = directionId;
+                    if (GestionnaireGtfs.getInstance()
+                            .getMapStops().get(arretRoute.arretId) == null) {
+                        System.err.println("Pas d'arrêt d'id : " + arretRoute.arretId);
+                    }
+                    if (GestionnaireGtfs.getInstance()
+                            .getRouteExtensions()
+                            .get(arretRoute.ligneId) == null) {
+                        System.err.println("Pas de ligne d'id : " + arretRoute.ligneId);
+                    }
 					arretRoute.accessible = GestionnaireGtfs.getInstance()
 							.getMapStops().get(arretRoute.arretId).accessible
 							&& GestionnaireGtfs.getInstance()
