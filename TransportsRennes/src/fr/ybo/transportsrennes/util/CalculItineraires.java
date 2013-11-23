@@ -20,7 +20,7 @@ import fr.ybo.opentripplanner.client.ClientOpenTripPlanner;
 
 public class CalculItineraires {
 
-	private static final String URL_OTP = "http://transports-rennes.ic-s.org/opentripplanner-api-webapp";
+	private static final String URL_OTP = "http://transports.ybonnel.fr/opentripplanner-api-webapp";
 
 	private static ClientOpenTripPlanner instance;
 
