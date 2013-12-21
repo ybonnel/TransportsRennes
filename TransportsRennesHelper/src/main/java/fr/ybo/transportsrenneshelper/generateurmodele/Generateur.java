@@ -767,6 +767,8 @@ public class Generateur {
 	 * Id du calendrier semaine.
 	 */
 	private int semaineId = 0;
+
+    private int jeudiVendrediId = 0;
 	/**
 	 * Id du calendrier dimanche.
 	 */
@@ -802,14 +804,28 @@ public class Generateur {
 		calendrierSemaine.lundi = true;
 		calendrierSemaine.mardi = true;
 		calendrierSemaine.mercredi = true;
-		calendrierSemaine.jeudi = true;
-		calendrierSemaine.vendredi = true;
-		calendrierSemaine.samedi = true;
+		calendrierSemaine.jeudi = false;
+		calendrierSemaine.vendredi = false;
+		calendrierSemaine.samedi = false;
 		calendrierSemaine.dimanche = false;
 		calendrierSemaine.dateDebut = minDate;
 		calendrierSemaine.dateFin = maxDate;
 		semaineId = calendrierSemaine.id;
 		calendriers.add(calendrierSemaine);
+
+        Calendrier calendrierJeudiVendredi = new Calendrier();
+        calendrierJeudiVendredi.id = (++maxCalendrierId);
+        calendrierJeudiVendredi.lundi = false;
+        calendrierJeudiVendredi.mardi = false;
+        calendrierJeudiVendredi.mercredi = false;
+        calendrierJeudiVendredi.jeudi = true;
+        calendrierJeudiVendredi.vendredi = true;
+        calendrierJeudiVendredi.samedi = true;
+        calendrierJeudiVendredi.dimanche = false;
+        calendrierJeudiVendredi.dateDebut = minDate;
+        calendrierJeudiVendredi.dateFin = maxDate;
+        jeudiVendrediId = calendrierJeudiVendredi.id;
+        calendriers.add(calendrierJeudiVendredi);
 
 		Calendrier calendrierDimanche = new Calendrier();
 		calendrierDimanche.id = (++maxCalendrierId);
@@ -876,6 +892,21 @@ public class Generateur {
 			}
 			trajetIdMax += 2;
 		}
+
+        for (HoraireMetro horaireMetro : moteurMetro
+                .parseInputStream(
+                        Generateur.class
+                                .getResourceAsStream("/fr/ybo/transportsrenneshelper/gtfs/horaires_metro_jeudi_vendredi.txt"),
+                        HoraireMetro.class).getObjects()) {
+            for (Horaire horaire : horaireMetro.getHoraires(trajetIdMax,
+                    jeudiVendrediId, indDirectionMetro1, indDirectionMetro2)) {
+                horairesMetro.add(horaire);
+                if (!trajetMetro.containsKey(horaire.trajetId)) {
+                    trajetMetro.put(horaire.trajetId, horaire.trajet);
+                }
+            }
+            trajetIdMax += 2;
+        }
 
 		for (HoraireMetro horaireMetro : moteurMetro
 				.parseInputStream(
