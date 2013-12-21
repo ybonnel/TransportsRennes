@@ -31,7 +31,8 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.Transports"
-                 android:allowBackup="false">
+                 android:allowBackup="false"
+                 android:debuggable="false">
         <activity android:name=".activity.TransportsRennes"
                   android:launchMode="singleTop">
             <intent-filter>

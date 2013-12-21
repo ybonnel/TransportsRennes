@@ -28,7 +28,8 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:name=".application.TransportsBordeauxApplication"
                  android:theme="@style/Theme.Transports"
-                 android:allowBackup="false">
+                 android:allowBackup="false"
+                 android:debuggable="false">
         <activity android:name=".activity.TransportsBordeaux"
                   android:launchMode="singleTop">
             <intent-filter>
