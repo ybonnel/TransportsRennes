@@ -224,7 +224,7 @@ public class TransportsRennes extends AccueilActivity {
 			}
 		}
 		if (!fichierExistant) {
-			InputStream inputStream = getResources().openRawResource(R.raw.plan_2012_2013);
+			InputStream inputStream = getResources().openRawResource(R.raw.plan_2013_2014);
 			try {
 				OutputStream outputStream = openFileOutput("plan_2012_2013.jpg", Context.MODE_WORLD_READABLE);
 				try {
