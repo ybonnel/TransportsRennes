@@ -27,3 +27,5 @@ out
 build
 *.apk
 local.properties
+ybonnel.keystore
+sign.properties

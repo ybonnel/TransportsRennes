@@ -31,8 +31,7 @@
     <application android:icon="@drawable/icon" android:label="@string/app_name"
                  android:name=".application.TransportsRennesApplication"
                  android:theme="@style/Theme.Transports"
-                 android:allowBackup="false"
-                 android:debuggable="false">
+                 android:allowBackup="false">
         <activity android:name=".activity.TransportsRennes"
                   android:launchMode="singleTop">
             <intent-filter>
@@ -243,11 +242,11 @@
                 <action android:name="com.ubikod.capptain.ICapptainService"/>
                 <data android:scheme="capptain"/>
             </intent-filter>
-            <meta-data android:name="capptain:api:level" android:value="11"/>
-            <meta-data android:name="capptain:api:id" android:value="b6a5b1113175bf391e442a8653876b84"/>
+            <meta-data android:name="capptain:api:level" android:value="21"/>
         </service>
         <!-- Cappbrain -->
 
         <uses-library android:name="com.google.android.maps" android:required="false"/>
+        <meta-data android:name="capptain:apiId" android:value="b6a5b1113175bf391e442a8653876b84"/>
     </application>
 </manifest>
