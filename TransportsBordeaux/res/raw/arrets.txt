@@ -361,6 +361,7 @@ id,nom,latitude,longitude
 5778b,Cailleau,44.90422,-0.518859
 1683b,Mirambeau,45.025051,-0.567011
 1090b,Montaigne,45.011042,-0.532638
+7101b,Treytins,44.879337,-0.634641
 6451b,Sangnier,44.811675,-0.552423
 468b,Cotor Laburthe,44.781841,-0.624046
 1011b,Rue de la Paix,44.850787,-0.522515
@@ -651,7 +652,7 @@ id,nom,latitude,longitude
 671b,Domaine du Gay,44.852408,-0.487471
 3612b,Dubedout,44.846975,-0.512268
 3979b,République (Boétie),44.895169,-0.713449
-175b,Rue du Médoc,44.885742,-0.675791
+175b,La Sablière,44.885742,-0.675791
 1348b,Primevères,44.765996,-0.639458
 7081b,Lénine,44.795967,-0.557733
 813b,Renaudel,44.869154,-0.615275
@@ -1526,7 +1527,7 @@ id,nom,latitude,longitude
 2183b,Maréchal Joffre,44.89968,-0.5134
 2850b,Bretagne,44.795037,-0.68249
 508b,Métairie,44.896828,-0.740012
-3001b,Rue du Médoc,44.885376,-0.675121
+3001b,La Sablière,44.885376,-0.675121
 1540b,Poincaré,44.859571,-0.598982
 2181b,Collège Manon Cormier,44.899917,-0.507899
 3098b,Tandonnet,44.817045,-0.546546
@@ -1621,7 +1622,6 @@ id,nom,latitude,longitude
 3889b,Belle Rive,44.960825,-0.533991
 472b,Maréchal Foch,44.769411,-0.544148
 149b,Pasteur,44.845745,-0.598716
-6811b,Place Mondésir,44.838129,-0.615354
 6694b,René Coty,44.840891,-0.653726
 2641b,Croustet,44.837176,-0.64639
 3095b,Moulin de Caupian,44.882555,-0.739606
@@ -3222,7 +3222,7 @@ id,nom,latitude,longitude
 64b,Durcy,44.79943,-0.544168
 2142b,Collège Manon Cormier,44.899983,-0.507789
 1965b,Journu Auber,44.859437,-0.569106
-6976b,Le Sulky,44.87367,-0.629597
+6976b,Le Sulky Terminus,44.87367,-0.629597
 5303b,Place du 11 Novembre,44.82847,-0.648573
 5607b,Camping International,44.898715,-0.579163
 5380b,Moulin Rouge,44.839608,-0.603415
