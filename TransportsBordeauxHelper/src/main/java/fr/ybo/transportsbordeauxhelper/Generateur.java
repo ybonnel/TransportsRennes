@@ -365,6 +365,9 @@ public class Generateur {
 			int directionId = 1;
 			for (Trip trip : GestionnaireGtfs.getInstance().getTrips().values()) {
 				if (!mapDirectionIds.containsKey(trip.headSign)) {
+                    if (trip.headSign == null) {
+                        trip.headSign = "inconnu";
+                    }
 					mapDirectionIds.put(trip.headSign, directionId++);
 				}
 

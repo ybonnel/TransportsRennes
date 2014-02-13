@@ -11,7 +11,7 @@ tasks.withType(Compile) {
 
 android {
     compileSdkVersion 13
-    buildToolsVersion "18.0.1"
+    buildToolsVersion "19.0.1"
 
     sourceSets {
         main {
@@ -35,5 +35,24 @@ android {
         // by a similar customization.
         debug.setRoot('build-types/debug')
         release.setRoot('build-types/release')
+    }
+
+    File signFile = rootProject.file('sign.properties');
+    if (signFile.exists()) {
+        Properties p = new Properties()
+        p.load(new FileInputStream(signFile))
+        signingConfigs {
+            release {
+                storeFile file("../ybonnel.keystore")
+                keyAlias p.keyAlias
+                storePassword p.storePassword
+                keyPassword p.keyPassword
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
     }
 }
