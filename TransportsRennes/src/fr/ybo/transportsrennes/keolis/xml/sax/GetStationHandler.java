@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
+import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 
 /**
@@ -93,11 +94,11 @@ public class GetStationHandler extends KeolisHandler<Station> {
 		} else if (baliseName.equals(ADRESSE)) {
 			currentObjectKeolis.adresse = contenuOfBalise;
 		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.state = Boolean.parseBoolean(contenuOfBalise);
+			currentObjectKeolis.state = "1".equals(contenuOfBalise);
 		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
+            currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise.replace(',', '.'));
 		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
+			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise.replace(',', '.'));
 		} else if (baliseName.equals(SLOTSAVAILABLE)) {
 			currentObjectKeolis.slotsavailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(BIKESAVAILABLE)) {
