@@ -81,7 +81,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         int placesTotales = station.bikesavailable + station.slotsavailable;
         double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
-        if (poucentageDispo < SEUIL_ROUGE) {
+        if (poucentageDispo < SEUIL_ROUGE || !station.state) {
 			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));
         } else if (poucentageDispo < SEUIL_ORANGE) {
 			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_orange));
