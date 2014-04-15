@@ -45,7 +45,7 @@ public final class Main {
     /**
      * Répertoire des datas par défaut.
      */
-    private static final String YBO_DEV_DATA_DEFAULT = "/Users/ybonnel/dev/data";
+    private static final String YBO_DEV_DATA_DEFAULT = "/home/ybonnel/dev/data";
 
     /**
      * Répertoire de travail.
@@ -73,7 +73,7 @@ public final class Main {
      * @throws ParseException
      */
     public static void main(String[] args) throws IOException, ParseException {
-		genereGtfs(false, "20140209");
+		genereGtfs(false, "20140413");
     }
 
     /**
