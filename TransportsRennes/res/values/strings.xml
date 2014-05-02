@@ -41,7 +41,7 @@
         L\'icône de l\'application a gracieusement été réalisée par &lt;a href=\'http://twitter.com/gregbzh35\'&gt;@gregbzh35&lt;/a&gt;.&lt;br/&gt;
         Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
     </string>
-    <string name="detailarret_empty">Pas de bus à la date sélectionnée, vous pouvez changer de date dans la bar d\'actions</string>
+    <string name="detailarret_empty">Pas de bus à la date sélectionnée, vous pouvez changer de date dans la barre d\'actions</string>
     <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>
     <string name="hint_rechercherarret">Recherche d\'arrêts</string>
     <string name="listfavori_empty">Aucun favori trouvé.</string>
