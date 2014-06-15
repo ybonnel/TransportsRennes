@@ -13,6 +13,10 @@ android {
     compileSdkVersion "Google Inc.:Google APIs:13"
     buildToolsVersion "19.1.0"
 
+    lintOptions {
+        abortOnError false
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
