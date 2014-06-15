@@ -11,7 +11,11 @@ tasks.withType(Compile) {
 
 android {
     compileSdkVersion 13
-    buildToolsVersion "19.0.1"
+    buildToolsVersion "19.1.0"
+
+    lintOptions {
+        abortOnError false
+    }
 
     sourceSets {
         main {
