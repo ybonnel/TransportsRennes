@@ -18,7 +18,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
@@ -48,7 +47,6 @@ import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
  *
  * @author ybonnel
  */
-@SuppressLint("DefaultLocale")
 public class ListPointsDeVente extends BaseListActivity implements UpdateLocationListenner, Searchable {
 
     private LocationUtil locationUtil;

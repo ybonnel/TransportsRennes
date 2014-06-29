@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -124,7 +123,6 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 		}
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	@Override
 	protected ListAdapter construireAdapter() {
         int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);

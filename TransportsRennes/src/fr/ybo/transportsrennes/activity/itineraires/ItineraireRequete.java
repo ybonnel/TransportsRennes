@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -76,7 +75,6 @@ import fr.ybo.transportsrennes.util.AdresseAdapter;
 import fr.ybo.transportsrennes.util.CalculItineraires;
 import fr.ybo.transportsrennes.util.TransportsRennesException;
 
-@SuppressLint({ "DefaultLocale", "SimpleDateFormat" })
 public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocationListenner {
 
     private static final LogYbo LOG_YBO = new LogYbo(ItineraireRequete.class);

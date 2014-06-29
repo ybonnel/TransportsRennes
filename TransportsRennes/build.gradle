@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -11,7 +11,7 @@ tasks.withType(Compile) {
 
 android {
     compileSdkVersion "Google Inc.:Google APIs:13"
-    buildToolsVersion "19.1.0"
+    buildToolsVersion "20.0.0"
 
     lintOptions {
         abortOnError false

@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -64,7 +63,6 @@ import fr.ybo.transportsrennes.util.CalculItineraires;
  * Classe de l'application permettant de stocker les attributs globaux à
  * l'application.
  */
-@SuppressLint("SimpleDateFormat")
 public class TransportsRennesApplication extends AbstractTransportsApplication {
 
 	@Override
