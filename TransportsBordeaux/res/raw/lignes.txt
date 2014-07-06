@@ -32,7 +32,6 @@ ordre,id,nom_court,nom_long
 31,36,36,Corol 36
 32,37,37,Corol 37
 33,38,38,Flexo 38
-34,39,39,Résago Le Taillan
 35,40,40,Citéis 40
 36,41,41,Citéis 41
 37,42,42,Citéis 42
@@ -51,7 +50,6 @@ ordre,id,nom_court,nom_long
 50,55,55,Flexo 55
 51,56,56,Ligne 56 Express
 52,57,57,Flexo 57
-53,58,58,Ligne 58
 54,62,62,Ligne 62
 55,64,64,Ligne 64
 57,67,67,Ligne 67
@@ -61,22 +59,12 @@ ordre,id,nom_court,nom_long
 61,71,71,Ligne 71
 62,72,72,Ligne 72
 63,73,73,Ligne 73
-64,74,74,Spécifique 74
 65,76,76,Ligne 76
-66,77,77,Ligne 77
-67,78,78,Spécifique 78
-68,79,79,Spécifique 79
 69,80,80,Spécifique 80
-70,81,81,Spécifique 81
 71,83,83,Ligne 83
 72,84,84,Ligne 84
-73,86,86,Spécifique 86
 74,87,87,Ligne 87
 75,89,89,Ligne 89
 76,90,90,Ligne 90
 77,91,91,Ligne 91
 78,92,92,Ligne 92
-79,93,93,Spécifique 93
-80,94,94,Spécifique 94
-81,95,95,Spécifique 95
-82,96,96,Spécifique 96
