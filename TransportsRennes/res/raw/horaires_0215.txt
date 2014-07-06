@@ -1,3 +1,0 @@
-arret_id,trajet_id,heure_depart,stop_sequence,terminus
-1619,23399,735,1,0
-1497,23399,750,2,1
