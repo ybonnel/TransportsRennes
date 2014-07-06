@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteException;
 import fr.ybo.database.annotation.Column;
@@ -61,7 +60,6 @@ public class Horaire {
 
     private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-	@SuppressLint("SimpleDateFormat")
 	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
 
 	public static List<DetailArretConteneur> getProchainHorairesAsList(String ligneId, String arretId, Integer limit,

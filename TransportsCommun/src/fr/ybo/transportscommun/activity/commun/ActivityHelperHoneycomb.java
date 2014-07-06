@@ -16,7 +16,6 @@
 
 package fr.ybo.transportscommun.activity.commun;
 
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Build;
@@ -29,7 +28,6 @@ import fr.ybo.transportscommun.R;
  * An extension of {@link ActivityHelper} that provides Android 3.0-specific
  * functionality for Honeycomb tablets. It thus requires API level 11.
  */
-@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class ActivityHelperHoneycomb extends ActivityHelper {
 
 	protected ActivityHelperHoneycomb(Activity activity) {

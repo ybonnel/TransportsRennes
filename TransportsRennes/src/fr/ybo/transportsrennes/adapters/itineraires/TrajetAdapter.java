@@ -13,7 +13,6 @@
  */
 package fr.ybo.transportsrennes.adapters.itineraires;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +30,6 @@ import fr.ybo.transportsrennes.itineraires.Trajet;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-@SuppressLint("SimpleDateFormat")
 public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
     private final LayoutInflater inflater;
