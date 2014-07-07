@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,12 +40,14 @@ import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
+import fr.ybo.transportsrennes.keolis.modele.bus.DepartureMetro;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetDeparturesHandler;
+import fr.ybo.transportsrennes.keolis.xml.sax.GetDeparturesMetroHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetParkRelaiHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetPointDeVenteHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetStationHandler;
@@ -98,7 +101,9 @@ public final class Keolis {
 
 	private static final String COMMANDE_DEPARTURE = "getbusnextdepartures";
 
-	private static final String VERSION_DEPARTURE = "2.1";
+    private static final String COMMANDE_DEPARTURE_METRO = "getmetronextdepartures";
+
+	private static final String VERSION_DEPARTURE = "2.2";
 
     /**
      * Retourne l'instance du singletton.
@@ -245,6 +250,9 @@ public final class Keolis {
     }
 
 	public ResultDeparture getDepartues(ArretFavori favori) throws ErreurReseau {
+        if (favori.ligneId.equals("a")) {
+            return getDeparturesForMetro(favori);
+        }
 		ParametreUrl[] params =
 				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
 						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
@@ -254,6 +262,36 @@ public final class Keolis {
 		List<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
 		return new ResultDeparture(departures, handler.getDateApi());
 	}
+
+    public ResultDeparture getDeparturesForMetro(ArretFavori favori) throws ErreurReseau {
+        String arretId  = favori.arretId.substring(0, favori.arretId.length() - 1);
+        ParametreUrl[] params =
+                { new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId) };
+
+        GetDeparturesMetroHandler handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
+        List<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
+
+        List<Departure> departures = new ArrayList<Departure>();
+
+        if (!departuresMetro.isEmpty()) {
+            DepartureMetro departureMetro = departuresMetro.get(0);
+            if (departureMetro.getTime1() != null) {
+                Departure departure = new Departure();
+                departure.setAccurate(true);
+                departure.setHeadSign(favori.direction);
+                departure.setTime(departureMetro.getTime1());
+                departures.add(departure);
+            }
+            if (departureMetro.getTime2() != null) {
+                Departure departure = new Departure();
+                departure.setAccurate(true);
+                departure.setHeadSign(favori.direction);
+                departure.setTime(departureMetro.getTime2());
+                departures.add(departure);
+            }
+        }
+        return new ResultDeparture(departures, Calendar.getInstance());
+    }
 
     /**
      * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
