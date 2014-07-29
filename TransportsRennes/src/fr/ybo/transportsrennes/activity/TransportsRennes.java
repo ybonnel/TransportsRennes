@@ -13,6 +13,25 @@
  */
 package fr.ybo.transportsrennes.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.format.DateFormat;
+import android.text.method.LinkMovementMethod;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,21 +39,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
@@ -84,7 +88,23 @@ public class TransportsRennes extends AccueilActivity {
 			if (UIUtils.isHoneycomb()) {
 				textView.setTextColor(TransportsRennesApplication.getTextColor(this));
 			}
-			Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
+            String dateGtfs = DateFormat.getDateFormat(this).format(
+                    GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update));
+			Spanned spanned = Html.fromHtml("<img src=\""
+                    + R.drawable.approuve
+                    + "\"/>" + getString(R.string.dialogAPropos).replace("%DATE_GTFS%", dateGtfs),
+                    new Html.ImageGetter() {
+                        @Override
+                        public Drawable getDrawable(String s) {
+                            Drawable approuve = TransportsRennes.this.getResources()
+                                    .getDrawable(Integer.parseInt(s));
+                            if (approuve != null) {
+                                approuve.setBounds(0, 0, approuve.getIntrinsicWidth()/2, approuve.getIntrinsicHeight()/2);
+                            }
+                            return approuve;
+                        }
+                    },null);
+
 			textView.setText(spanned, TextView.BufferType.SPANNABLE);
 			textView.setMovementMethod(LinkMovementMethod.getInstance());
 			builder.setView(view);
