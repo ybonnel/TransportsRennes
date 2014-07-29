@@ -32,14 +32,16 @@
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
     <string name="dialogRequeteParkRelais">Interrogation du STAR.</string>
     <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
-    <string name="dialogAPropos">Transports Rennes : application "Rennes Métropole en accès libre", sources des données
-        : Data Keolis Rennes (&lt;a
-        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;Cette application est
-        développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;N\'hésitez
-        pas à m\'envoyer
-        toute suggestion ou problème(&lt;a href=\'mailto:ybonnel@gmail.com?subject=Transports Rennes\'&gt;ybonnel@gmail.com&lt;/a&gt;).&lt;br/&gt;
-        L\'icône de l\'application a gracieusement été réalisée par &lt;a href=\'http://twitter.com/gregbzh35\'&gt;@gregbzh35&lt;/a&gt;.&lt;br/&gt;
-        Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
+    <string name="dialogAPropos">Transports Rennes est une application
+        &lt;a href="http://data.keolis-rennes.com/fr/le-projet/labellisation.html"&gt;approuvée STAR&lt;/a&gt;,
+        label qui garantit à l\'utilisateur la qualité et l\'exactitude de l\'information qu\'elle véhicule,
+        tel que décrit dans ce
+        &lt;a href="http://data.keolis-rennes.com/fileadmin/OpenDataFiles/Sources/Lab%C3%A9lisation%20des%20applications%20transport%20Rennes%20M%C3%A9tropole%20en%20acc%C3%A8s%20libre.pdf"&gt;document&lt;/a&gt;.&lt;br/&gt;
+        Date de dernière mise à jour des données : %DATE_GTFS%.&lt;br&gt;
+        &lt;br&gt;
+        &lt;i&gt;Cette application est développée et maintenue par une seule personne sur du temps personnel, merci donc de votre indulgence.&lt;br/&gt;
+        N\'hésitez pas à m\'envoyer
+        toute suggestion ou problème (&lt;a href=\'mailto:ybonnel@gmail.com?subject=Transports Rennes\'&gt;ybonnel@gmail.com&lt;/a&gt;).&lt;/i&gt;
     </string>
     <string name="detailarret_empty">Pas de bus à la date sélectionnée, vous pouvez changer de date dans la barre d\'actions</string>
     <string name="itineraires_empty">Aucun itinéraire n\'a été trouvé pour ces adresses.</string>

@@ -32,13 +32,15 @@
     <string name="dialogRequeteTwitter">Twitter query</string>
     <string name="dialogRequeteParkRelais">STAR query</string>
     <string name="dialogRequetePointsDeVente">STAR query</string>
-    <string name="dialogAPropos">The application Transports Rennes was developed in the context of open data from the
-        STAR and LE vélo STAR (&lt;a
-        href=\'http://data.keolis-rennes.com\'&gt;data.keolis-rennes.com&lt;/a&gt;).&lt;br/&gt;This application is
-        developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free
+    <string name="dialogAPropos">
+        Transports Rennes is a &lt;a href="http://data.keolis-rennes.com/fr/le-projet/labellisation.html"&gt;STAR approved&lt;/a&gt; application,
+        label that guarantees to the user the quality and accuracy of the information, as described in this
+        &lt;a href="http://data.keolis-rennes.com/fileadmin/OpenDataFiles/Sources/Lab%C3%A9lisation%20des%20applications%20transport%20Rennes%20M%C3%A9tropole%20en%20acc%C3%A8s%20libre.pdf"&gt;document&lt;/a&gt;.&lt;br/&gt;
+        Last data update : %DATE_GTFS%&lt;br&gt;
+        &lt;br&gt;
+        &lt;i&gt;This application is developed and maintained by one person on personal time, so thank you for your indulgence.&lt;br/&gt;Feel free
         to send me any suggestions or
-        problem.&lt;br/&gt;
-        Analytics, real-time monitoring and communications provided by Capptain (&lt;a href=\'http://www.capptain.com\'&gt;www.capptain.com&lt;/a&gt;).
+        problem (&lt;a href=\'mailto:ybonnel@gmail.com?subject=Transports Rennes\'&gt;ybonnel@gmail.com&lt;/a&gt;).&lt;/i&gt;
     </string>
     <string name="detailarret_empty">No buses at the selected date, you can choose a particular date the action bar.</string>
     <string name="itineraires_empty">No itinerary has been found for these addresses.</string>
