@@ -57,7 +57,7 @@ public final class Main {
      */
     public static final String REPERTOIRE_OUT = REPERTOIRE_SORTIE + "/OUT";
 
-    private static final int NB_JOURS_PREV = 60;
+    private static final int NB_JOURS_PREV = 90;
 
     /**
      * Constructeur privé pour empécher l'instanciation.
@@ -73,7 +73,7 @@ public final class Main {
      * @throws ParseException
      */
     public static void main(String[] args) throws IOException, ParseException {
-		genereGtfs(false, "20140706");
+		genereGtfs(false, "20140901");
     }
 
     /**
