@@ -153,13 +153,6 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 			@Override
 			protected Void doInBackground(Void... voids) {
 				try {
-					for (Alert alert : Alert.getAlertes()) {
-						getLignesWithAlerts().add(alert.ligne);
-					}
-				} catch (Exception ignored) {
-
-				}
-				try {
 					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
 					if (metadata != null) {
 						setBounds(new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()),
