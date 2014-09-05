@@ -40,36 +40,7 @@ public class GeocodeUtil {
     }
 
     public GeocodeResponse geocode(GeocoderRequest request) {
-        // Utilisation du geocoderAndroid
-        List<Address> adresses = null;
-        try {
-            if (request.getBounds() != null) {
-                adresses = geocoderAndroid.getFromLocationName(request.getAddress(), MAX_RESULTS, request.getBounds()
-                        .getSouthwest().getLat().doubleValue(), request.getBounds().getSouthwest().getLng()
-                        .doubleValue(), request.getBounds().getNortheast().getLat().doubleValue(), request.getBounds()
-                        .getNortheast().getLng().doubleValue());
-            } else {
-                adresses = geocoderAndroid.getFromLocationName(request.getAddress(), MAX_RESULTS);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (adresses == null || adresses.isEmpty()) {
-            return Geocoder.geocode(request);
-        }
-        GeocodeResponse response = new GeocodeResponse();
-        response.setStatus(GeocoderStatus.OK);
-        List<GeocoderResult> results = new ArrayList<GeocoderResult>();
-        for (Address address : adresses) {
-            GeocoderResult result = new GeocoderResult();
-            result.setFormattedAddress(address.getAddressLine(0) + ", " + address.getLocality());
-            result.setGeometry(new GeocoderGeometry());
-            result.getGeometry().setLocation(
-                    new LatLng(BigDecimal.valueOf(address.getLatitude()), BigDecimal.valueOf(address.getLongitude())));
-            results.add(result);
-        }
-        response.setResults(results);
-        return response;
+        return Geocoder.geocode(request);
     }
 
 }
