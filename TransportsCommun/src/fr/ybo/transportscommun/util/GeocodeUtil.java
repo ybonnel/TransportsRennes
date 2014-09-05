@@ -15,28 +15,14 @@
 package fr.ybo.transportscommun.util;
 
 import android.content.Context;
-import android.location.Address;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderGeometry;
 import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GeocodeUtil {
 
-    private static final int MAX_RESULTS = 5;
-
-    private android.location.Geocoder geocoderAndroid;
-
     public GeocodeUtil(Context context) {
-        geocoderAndroid = new android.location.Geocoder(context);
     }
 
     public GeocodeResponse geocode(GeocoderRequest request) {
