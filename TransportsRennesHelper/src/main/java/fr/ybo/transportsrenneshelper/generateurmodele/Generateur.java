@@ -659,12 +659,6 @@ public class Generateur {
 				route.nomCourtFormatte = '0' + route.nomCourtFormatte;
 			}
 		}
-		// Tri.
-		Collections.sort(routes, new Comparator<Route>() {
-			public int compare(Route o1, Route o2) {
-				return o1.nomCourtFormatte.compareTo(o2.nomCourtFormatte);
-			}
-		});
 
 		int ordre = 1;
 		for (Route route : routes) {

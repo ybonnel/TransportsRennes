@@ -17,10 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
@@ -184,7 +181,7 @@ public final class GestionnaireGtfs {
      */
     public Map<String, Route> getMapRoutes() {
         if (routes == null) {
-            routes = new HashMap<String, Route>();
+            routes = new LinkedHashMap<String, Route>();
             try {
                 for (Route route : getMoteurCsv()
                         .parseInputStream(new FileInputStream(new File(repertoire, "routes.txt")), Route.class).getObjects()) {

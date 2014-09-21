@@ -31,7 +31,7 @@ ordre,id,nom_court,nom_long
 30,35,35,Corol 35
 31,36,36,Corol 36
 32,37,37,Corol 37
-33,38,38,Flexo 38
+33,38,38,Flexo 38 / ResaGO Bouliac
 34,39,39,Résago Le Taillan
 35,40,40,Citéis 40
 36,41,41,Citéis 41
