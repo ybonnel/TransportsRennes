@@ -998,9 +998,9 @@ id,nom,latitude,longitude
 3946b,Gare de Parempuyre,44.944255,-0.618444
 2443b,Jardin Public,44.848021,-0.576298
 6832b,Place Ravezies (côté Parc Relais),44.867155,-0.575984
-6685b,Place Ravezies,44.867012,-0.575684
-1078b,Rue Richelieu,44.845511,-0.617274
 847b,Passage à Niveau,44.872083,-0.591394
+1078b,Rue Richelieu,44.845511,-0.617274
+6685b,Place Ravezies,44.867012,-0.575684
 2175b,La Lande,44.906311,-0.495452
 401b,Chevreuils,44.873865,-0.492671
 3220b,Chemin de Suzon,44.811793,-0.582361
@@ -1010,7 +1010,6 @@ id,nom,latitude,longitude
 952b,8 Mai,44.907435,-0.646609
 6366b,Tujean,44.921392,-0.62609
 5928b,Bouliac Centre Commercial,44.816078,-0.528556
-7001b,Les Aubiers,44.874244,-0.576386
 163b,Versant,44.832484,-0.514236
 3943b,St Vincent de Paul,44.95352,-0.468076
 400b,Hôpital Pellegrin (Grand Maurian),44.830794,-0.604243
@@ -1032,6 +1031,7 @@ id,nom,latitude,longitude
 341b,Stade Municipal,44.916404,-0.683447
 494b,Jean Prat,44.932457,-0.503452
 2177b,Collège Manon Cormier,44.901075,-0.510888
+6683b,Les Aubiers,44.87326,-0.576716
 849b,Libération,44.856134,-0.644644
 3550b,Victoire (Marne),44.830467,-0.571191
 5332b,Sieyès,44.860721,-0.723906
@@ -1453,7 +1453,7 @@ id,nom,latitude,longitude
 2186b,Mimosas,44.884584,-0.525626
 4009b,La Boétie,44.903638,-0.700884
 2432b,Place Mozart,44.814645,-0.60113
-7014b,La Morandière,44.859327,-0.677622
+7014b,La Morandière (rue de La Morandière),44.859327,-0.677622
 1065b,Vélodrome,44.852977,-0.609431
 5347b,Lamartine,44.806604,-0.623884
 3231b,Collège A. Mauguin,44.772526,-0.596799
@@ -1465,7 +1465,7 @@ id,nom,latitude,longitude
 940b,Grande Lande,44.775935,-0.636774
 835b,Boutaut,44.868578,-0.577419
 6354b,Boutaut,44.867975,-0.576569
-7013b,La Morandière,44.859607,-0.67759
+7013b,La Morandière (rue de La Morandière),44.859607,-0.67759
 206b,Germignan,44.907532,-0.696816
 4008b,Peixotto (station Tram),44.806827,-0.59321
 1066b,La Fontaine,44.892104,-0.66765
@@ -2031,8 +2031,8 @@ id,nom,latitude,longitude
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
-3719,Hôtel de Ville,44.837305,-0.577136
 928b,Place du 11 Novembre,44.829042,-0.64818
+3719,Hôtel de Ville,44.837305,-0.577136
 3173b,Camille Godard,44.855088,-0.574278
 3716,Sainte-Catherine,44.837635,-0.573332
 3715,Place du Palais,44.837901,-0.569257
@@ -2242,7 +2242,7 @@ id,nom,latitude,longitude
 3657b,Clémentel,44.916658,-0.518548
 635b,Jean Jaurès,44.873514,-0.590636
 2670b,France,44.793476,-0.670591
-16b,La Morandière,44.858065,-0.678173
+16b,La Morandière (av. de Magudas),44.858065,-0.678173
 6993b,Provinces,44.846965,-0.492619
 4334b,rue des Graves,44.881788,-0.659597
 3032b,Herriot (Centre Commercial),44.883983,-0.690763
@@ -3149,7 +3149,7 @@ id,nom,latitude,longitude
 1653b,Labottière,44.852577,-0.590095
 5490b,Capdeboscq,44.891941,-0.514158
 3273b,Dorgelès,44.843363,-0.543394
-312b,La Morandière,44.858188,-0.678536
+312b,La Morandière (av. de Magudas),44.858188,-0.678536
 767b,Avenue Ausone,44.872519,-0.599635
 6656b,Aimé Césaire,44.878102,-0.663958
 1967b,Louis Blanc,44.864397,-0.594691
@@ -3173,7 +3173,7 @@ id,nom,latitude,longitude
 398b,Jude,44.86638,-0.637541
 3638b,La Ferme,44.872304,-0.481522
 261b,Ateliers Municipaux,44.880889,-0.531846
-5686b,Mendes France,44.798873,-0.541854
+5686b,Mendès France,44.798873,-0.541854
 2966b,Montesquieu,44.906852,-0.639634
 2898b,Barrière du Médoc,44.854345,-0.594212
 3271b,Nénuphars,44.853481,-0.482572
@@ -3190,7 +3190,7 @@ id,nom,latitude,longitude
 2965b,Pericot,44.903247,-0.744778
 1654b,Pérès,44.859799,-0.608349
 2899b,Rigaillou,44.757662,-0.582706
-5685b,Mendes France,44.798748,-0.541821
+5685b,Mendès France,44.798748,-0.541821
 3991b,Lycée de la Plaine,44.875628,-0.664658
 1866b,Cité des Pins,44.85706,-0.657566
 2145b,Barre,44.931237,-0.480894
