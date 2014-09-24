@@ -208,7 +208,7 @@ public class TransportsBordeaux extends AccueilActivity {
 			case R.id.menu_plan:
 				copieImageIfNotExists();
 				Intent intentMap = new Intent(Intent.ACTION_VIEW);
-				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "tbc_carte.jpg")), "image/*");
+				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "tbc_carte_2014_2015.jpg")), "image/*");
 				startActivity(intentMap);
 				return true;
             case MENU_LOAD_LINES:
@@ -247,16 +247,16 @@ public class TransportsBordeaux extends AccueilActivity {
 	private void copieImageIfNotExists() {
 		boolean fichierExistant = false;
 		for (String nom : fileList()) {
-			if ("plan_2012_2013.jpg".equals(nom)) {
+			if ("tbc_carte_2014_2015.jpg".equals(nom)) {
 				fichierExistant = true;
-			} else if ("rennes_urb_complet.jpg".equals(nom)) {
+			} else if ("tbc_carte.jpg".equals(nom)) {
 				deleteFile(nom);
 			}
 		}
 		if (!fichierExistant) {
-			InputStream inputStream = getResources().openRawResource(R.raw.tbc_carte);
+			InputStream inputStream = getResources().openRawResource(R.raw.tbc_carte_2014_2015);
 			try {
-				OutputStream outputStream = openFileOutput("tbc_carte.jpg", Context.MODE_WORLD_READABLE);
+				OutputStream outputStream = openFileOutput("tbc_carte_2014_2015.jpg", Context.MODE_WORLD_READABLE);
 				try {
 					byte[] buffre = new byte[50 * 1024];
 					int result = inputStream.read(buffre);
