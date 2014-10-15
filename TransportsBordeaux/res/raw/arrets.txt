@@ -3372,7 +3372,6 @@ id,nom,latitude,longitude
 5279b,Dassault,44.783797,-0.652836
 2484b,Bénédigues,44.799129,-0.583503
 656b,Francisco Ferrer,44.825022,-0.612674
-4650b,Malartic,44.771318,-0.597924
 3051b,Espace Aquatique (devant la Piscine),44.893995,-0.75026
 2685b,Mansencal,44.782898,-0.576824
 3409b,Jacques,44.912985,-0.653781
