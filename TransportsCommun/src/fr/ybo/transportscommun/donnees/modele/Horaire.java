@@ -196,9 +196,6 @@ public class Horaire {
 	}
 
 	private static String clauseWhereForCalendrier(Calendar calendar) {
-        if (JoursFeries.isJourFerie(calendar.getTime())) {
-            return "Dimanche = 1";
-        }
         switch (calendar.get(Calendar.DAY_OF_WEEK)) {
             case Calendar.MONDAY:
                 return "Lundi = 1";

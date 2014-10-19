@@ -1,274 +1,182 @@
 id,direction
-1,ZA Saint-Sulpice
-2,Saint-Laurent
-3,Bruz Centre
-4,La Poterie
-5,Grand Quartier
-6,Vezin Hermitage Chapelle-Th.
-7,Pâtis Tatelin
-8,Saint-Laurent
-9,Henri Fréville
-10,Cesson-Sévigné Rigourdière
-11,ZI Ouest
-12,Vern-sur-Seiche
-13,Rennes République
-14,Mordelles
-15,Betton Champ Devant
-17,ZA Saint-Sulpice
-16,Rennes Villejean-Université
-19,Rennes Henri Fréville
-18,Lycée Bréquigny
-21,Cesson-Sévigné Champs Blancs
-20,Rennes Charles de Gaulle
-23,Beauregard
-22,Pacé Saint-Gilles
-25,Saint-Grégoire Champ Daguet
-24,Cesson-Sévigné Lycée Sévigné
-27,Stade Rennais
-26,Le Rheu Cintré
-29,Pacé Saint-Gilles Clayes Romillé
-28,Chantepie Cucé
-31,Rennes Hoche
-30,Bruz Cicé Blossac
-34,Rennes République
-35,Gévezé
-32,Bruz Lavoisier
-33,Beaulieu Atalante
-38,Rennes Charles de Gaulle
-39,Rennes Henri Fréville
-36,Cleunay
-37,Rennes Hoche
-42,Patton
-43,Rennes La Poterie
-40,Saint-Saëns
-41,Mordelles Le Verger
-46,Saint-Jacques Morinais
-47,Rennes République
-44,Rennes Gares
-45,Saint-Armel Corps-Nuds
-51,Rennes République
-50,Chartres Pont-Péan Laillé
-49,Beaulieu Atalante
-48,Haut Sancé
-55,Rennes Villejean-Université
-54,Bruz Pont-Réan
-53,Chavagne
-52,Gares
-59,Acigné
-58,Rennes La Poterie
-57,Clayes Romillé
-56,Saint-Jacques Gautrais
-63,Saint-Sulpice-la-Forêt
-62,Noyal-Châtillon-sur-Seiche
-61,Chevaigné Saint-Sulpice-la-F.
-60,Rennes Henri Fréville
-68,Rennes Villejean-Université
-69,Pacé Pâtis Roussel
-70,Beaulieu Atalante
-71,Rennes Henri Fréville
-64,Montgermont La Chapelle
-65,Bruz Centre
-66,Chantepie Rosa Parks
-67,Villejean Churchill
-76,La Poterie via ZI Sud-Est
-77,Noyal-Châtillon Saint-Erblon
-78,Le Rheu Mordelles Le Verger
-79,Rennes Villejean-Université
-72,Cesson-Sévigné Brécé
-73,Pont-Péan Laillé
-74,Rennes Villejean-Université
-75,Rennes République
-85,Stade Rennais
-84,Beaulieu Atalante
-87,Saint-Sulpice-la-Forêt
-86,Chavagne
-81,Montgermont Chapelle Gévezé
-80,Rennes Hoche
-83,Orgères Bourgbarré
-82,Orgères Collège Andrée Récipon
+1,Clayes Romillé
+2,ZA Saint-Sulpice
+3,Henri Fréville
+4,Rennes Villejean-Université
+5,Betton Champ Devant
+6,Rennes Hoche
+7,Betton Chevaigné Saint-Sulpice
+8,Betton Centre
+9,Beauregard
+10,Rennes Henri Fréville
+11,Saint-Laurent
+12,Rennes Henri Fréville via T. Tizon
+13,Chartres Pont-Péan
+14,Stade Rennais
+15,Cleunay
+17,Chartres Pont-Péan Laillé
+16,Saint-Laurent
+19,République
+18,Chartres Pont-Péan via T. Tizon
+21,Patton
+20,Lycée Bréquigny
+23,Vern-sur-Seiche
+22,Bruz Centre
+25,Pont-Péan Laillé
+24,Cesson-Sévigné Rigourdière
+27,Betton Chevaigné
+26,Chevaigné Saint-Sulpice-la-F.
+29,Rennes Hoche
+28,Rennes Henri Fréville
+31,Rennes Henri Fréville
+30,Chartres-de-Bretagne
+34,Saint-Sulpice-la-Forêt
+35,Saint-Jacques Gautrais
+32,Rennes Henri Fréville
+33,Chantepie Cucé
+38,Acigné
+39,Rennes République
+36,Rennes Hoche
+37,Saint-Jacques Morinais
+42,Ker-Lann
+43,Rennes Villejean-Université
+40,Rennes Lycée Basch
+41,Bruz Centre
+46,Saint-Saëns Monniais Brécé
+47,Chantepie Rosa Parks
+44,Rennes République
+45,Gévezé
+51,Bruz Centre
+50,Rennes République
+49,Cesson-Sévigné Champs Blancs
+48,Bruz Centre
+55,Brécé
+54,Rennes Bréquigny via H. Fréville
+53,Bourgbarré
+52,Rennes Henri Fréville
+59,Rennes République
+58,Saint-Grégoire Champ Daguet
+57,La Poterie
+56,Rennes République
+63,Cesson-Sévigné Brécé
+62,Saint-Grégoire via Pontay
+61,Saint-Grégoire Betton Centre
+60,Rennes Villejean-Université
+68,Beaulieu Atalante
+69,Pacé Saint-Gilles
+70,Rennes Villejean-Université
+71,Rennes Charles de Gaulle
+64,Cesson-Sévigné Rigourdière
+65,Rennes Charles de Gaulle
+66,Vezin Le Rheu Mordelles
+67,Triangle
+76,Rennes Villejean-Université
+77,Gévezé
+78,Rennes Villejean-Université
+79,Pacé Parthenay-de-B.
+72,Chavagne
+73,Romillé Chapelle-Ch.
+74,Beaulieu Atalante
+75,Romillé
+85,Rennes République
+84,Le Rheu Cintré
+87,Mordelles
+86,Mordelles Le Verger
+81,Chavagne
+80,Plaine de Baud
+83,Rennes République
+82,Rennes République
 93,Rennes République
-92,Rennes Henri Fréville
-95,Pacé Collège Saint-Gabriel
-94,Rennes La Poterie
-89,Rennes Lycée Basch
-88,Joliot-Curie
-91,Romillé Miniac
-90,Pacé Parthenay-de-B.
-102,Thorigné-Fouillard
-103,Betton Centre
-100,République
-101,Rennes Bréquigny via H. Fréville
-98,Villejean
-99,Orgères Bourgbarré
-96,Cesson-Sévigné Cormier
-97,Rennes République
-110,Cesson-Sévigné Base de Loisirs
-111,Noyal Saint-Erblon
-108,Chartres Vieux Bourg
-109,Rennes Villejean-Université
-106,Rennes Hoche
-107,Saint-Grégoire Lycée Jean-Paul II
-104,Bourgbarré
-105,République
-119,Saint-Grégoire Betton Centre
-118,Brécé
-117,Saint-Grégoire MFR Rabinardières
-116,Pont-Péan Mouton Blanc
-115,Rennes Charles de Gaulle
-114,Rennes Villejean-Université
-113,Cesson-Sévigné Champs Blancs
-112,Saint-Jacques Morinais
-127,Le Rheu
-126,Le Rheu Lycée Théodore Monod
-125,Vern Saint-Armel Corps-Nuds
-124,Rennes Lycée Basch
-123,Betton
-122,Bruz Centre
-121,Chartres-de-Bretagne
-120,Thorigné-Fouillard
-137,Villejean-Université
-136,Betton Chevaigné
-139,Chantepie Rosa Parks
-138,Bécherel Miniac
-141,Romillé Chapelle-Ch.
-140,Rennes République
-143,Rennes via Placis Vert
-142,Rennes Henri Fréville
-129,Rennes République
-128,Rennes via Porte de Ker-Lann
-131,Rennes République
-130,Chevaigné
-133,Vezin Le Rheu Mordelles
-132,Vern Nouvoitou
-135,Chartres Pont-Péan
-134,Mordelles
-152,Cesson-Sévigné Rigourdière
-153,Langan Chapelle-Ch.
-154,Rennes Henri Fréville
-155,Saint-Saëns Monniais Brécé
-156,Rennes République
-157,Acigné Timonière
-158,Ker-Lann
-159,Cesson-Sévigné Base de Loisirs
-144,Betton Chevaigné
-145,Rennes République
-146,Noyal Saint-Erblon Orgères Bourg.
-147,Rennes République
-148,Saint-Erblon Leuzières
-149,Bruz Centre
-150,République
-151,Le Rheu Mordelles Chavagne
-171,Rennes Collège Clotilde Vautier
-170,République
-169,Saint-Grégoire Champ Daguet
-168,Bourgbarré Centre de Loisirs
-175,Bruz via Porte de Ker-Lann
-174,Cesson-Sévigné Château de Vaux
-173,Vezin-le-Coquet Haie de Terre
-172,La Chapelle-Thouarault
-163,La Lande du Breil
-162,Pacé Collège Saint-Gabriel
-161,Gévezé
-160,Cesson-Sévigné Lycée Saint-Etienne
-167,Mordelles Pâtis
-166,Cesson-Sévigné Lycée Saint-Etienne
-165,Triangle
-164,Chavagne
-186,Bruz Centre
-187,Le Rheu Lycée Théodore Monod
-184,Betton Champ Devant
-185,Cesson-Sévigné Thorigné
-190,Betton Champ Devant
-191,Plaine de Baud
-188,Chevaigné
-189,Cesson-Sévigné Métairies Chalotais
-178,Romillé
-179,République
-176,Rennes Henri Fréville via T. Tizon
-177,Rennes Collège Cleunay
-182,L'Hermitage La Chapelle-Th.
-183,Betton Chevaigné Saint-Sulpice
-180,Cesson-Sévigné Lycée Saint-Etienne
-181,Rennes La Poterie
-205,Chavagne Croix Blanche
-204,Touche Tizon 3
-207,Vezin L'Hermitage
-206,Saint-Gilles
-201,L'Hermitage Saint-Gilles
-200,Bruz Lycée Anita Conti
-203,Montgermont La Chapelle
-202,Chartres Collège Pôle Sud
-197,Thorigné-Fouillard Portail
-196,Pacé Cimetière
-199,Orgères L'Hermitière Village
-198,Vern Nouvoitou Saint-A. Corps-N.
-193,Saint-Grégoire via Pontay
-192,Rennes République
-195,Pacé Parthenay-de-B.
-194,Orgères Moc Souris
-220,Rennes Henri Fréville
-221,Pacé Pie Neuve
-222,Vern Nouvoitou
-223,Rennes Villejean-Université
-216,Vezin Hermitage Chapelle Verger
-217,Touche Tizon 1
-218,Vezin-le-Coquet Vallée
-219,Saint-Grégoire Lycée Jean-Paul II
-212,Orgères Collège Andrée Récipon
-213,Rennes République
-214,Rennes La Poterie
-215,Vern Nouvoitou L'Ourmais
-208,Lycée Joliot-Curie
-209,Orgères
-210,Cesson-Sévigné Gare
-211,Acigné
-239,Villejean-Université
-238,Chartres Pont-Péan via T. Tizon
-237,Saint-Armel Corps-Nuds
-236,Pont-Péan Bois Esnault
-235,Rennes Lycée Mendès-France
-234,Montgermont La Chapelle
-233,Lycée Joliot-Curie
-232,Rennes Lycée Bréquigny
-231,Colin
-230,Rennes Gares
-229,Rennes Lycée Joliot-Curie
-228,Montgermont Chapelle Gévezé
-227,L'Hermitage
-226,Laillé Gingouillère
-225,Le Rheu Cintré
-224,Bruz Collège Saint-Joseph
-254,Rennes Lycée Assomption
-255,Rennes Henri Fréville
-252,Langan Chapelle Miniac Bécherel
-253,Rennes Lycée Assomption
-250,Nouvoitou Langlois
-251,Rennes Lycée Basch via V.-U.
-248,Orgères Collège Andrée Récipon
-249,Bruz Collège Saint-Joseph
-246,Cesson-Sévigné Saint-Etienne
-247,Pacé Collège Saint-Gabriel
-244,Montgermont Chapelle Gévezé
-245,Rennes Lycée Basch
-242,Betton Chevaigné
-243,Parthenay Clayes
-240,Cesson-Sévigné Acigné
-241,Saint-Gilles Île des Bois
-273,La Poterie
-272,J.F. Kennedy
-258,Touche Tizon 2
-259,Rennes Lycée Assomption
-256,Rennes Lycée Assomption
-257,Saint-Grégoire Lycée Jean-Paul II
-262,Collège Jean Moulin
-263,Rennes Henri Fréville
-260,Rennes Lycée Assomption
-261,Laillé Gingouillère
-266,Rennes Lycée Assomption
-267,Rennes Lycée Bréquigny
-264,Le Rheu Lycée Théodore Monod
-265,Betton Collège François Truffaut
-270,Saint-Grégoire Uttenreuth
-271,Rennes Collège Rosa Parks
-268,Bruz Lavoisier
-269,Thorigné via Placis Vert
+92,Thorigné-Fouillard
+95,Thorigné-Fouillard
+94,Rennes République
+89,Grand Quartier
+88,Mordelles
+91,Rennes Charles de Gaulle
+90,Haut Sancé
+102,Pacé Cimetière
+103,Le Rheu Mordelles Le Verger
+100,Rennes République
+101,Bruz Lavoisier
+98,Gares
+99,Le Rheu Mordelles Chavagne
+96,Rennes Henri Fréville
+97,Noyal-Châtillon Saint-Erblon
+110,République
+111,Beaulieu Atalante
+108,Pâtis Tatelin
+109,Villejean
+106,Pacé Saint-Gilles Clayes Romillé
+107,Saint-Saëns
+104,La Poterie via ZI Sud-Est
+105,ZI Ouest
+119,Noyal Saint-Erblon Orgères Bourg.
+118,Rennes Henri Fréville
+117,Vern Saint-Armel Corps-Nuds
+116,Rennes La Poterie
+115,Bruz Centre
+114,Le Rheu Cintré
+113,Rennes Hoche
+112,Rennes République
+127,Montgermont Chapelle Gévezé
+126,Pacé Pâtis Roussel
+125,Rennes Villejean-Université
+124,Rennes République
+123,Betton Champ Devant
+122,Vezin Hermitage Chapelle-Th.
+121,Rennes République
+120,Acigné
+137,République
+136,Rennes La Poterie
+139,Bruz Pont-Réan
+138,Noyal-Châtillon-sur-Seiche
+141,Saint-Armel Corps-Nuds
+140,Bruz Cicé Blossac
+143,Touche Tizon 3
+142,Touche Tizon 2
+129,Stade Rennais
+128,Le Rheu
+131,Rennes La Poterie
+130,Rennes via C. Martin
+133,Saint-A. Corps-N. via C. Martin
+132,Rennes Henri Fréville
+135,Saint-Jacques Morinais
+134,Saint-Armel Corps-Nuds
+152,Rennes Henri Fréville
+153,Orgères Moc Souris
+154,Orgères
+155,Saint-Gilles
+156,Rennes Lycée Basch
+157,Cesson-Sévigné Base de Loisirs
+158,Villejean Churchill
+159,Vern Nouvoitou Saint-A. Corps-N.
+144,Chartres Collège Pôle Sud
+145,Romillé Miniac
+146,Vern Nouvoitou
+147,Vern Nouvoitou L'Ourmais
+148,Bécherel Miniac
+149,Langan Chapelle-Ch.
+150,Rennes La Poterie
+151,Orgères Bourgbarré
+171,Thorigné via Placis Vert
+170,Colin
+169,La Chapelle-Thouarault
+168,ZA Saint-Sulpice
+175,Cesson-Sévigné Champs Blancs
+174,Rennes République
+173,L'Hermitage
+172,Pacé Parthenay-de-B.
+163,Rennes Henri Fréville
+162,Montgermont La Chapelle
+161,Beaulieu Atalante
+160,Vern Nouvoitou
+167,Rennes via Placis Vert
+166,République
+165,Chantepie Rosa Parks
+164,Touche Tizon 1
+178,Vezin Hermitage Chapelle Verger
+179,Bruz via Porte de Ker-Lann
+176,Cesson-Sévigné Gare
+177,Rennes via Porte de Ker-Lann
+180,J.F. Kennedy
+181,La Poterie
