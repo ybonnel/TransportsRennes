@@ -59,7 +59,7 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
 				calendar.setTime(dfm.parse(contenuOfBalise));
 				currentObjectKeolis.setTime1(calendar);
 			} catch (ParseException e) {
-				throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
+				//throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
 			}
 		} else if (baliseName.equals(NEXT_TRAIN_2 + plateform)) {
             Calendar calendar = Calendar.getInstance();
@@ -67,7 +67,7 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
                 calendar.setTime(dfm.parse(contenuOfBalise));
                 currentObjectKeolis.setTime2(calendar);
             } catch (ParseException e) {
-                throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
+                //throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
             }
         }
 	}

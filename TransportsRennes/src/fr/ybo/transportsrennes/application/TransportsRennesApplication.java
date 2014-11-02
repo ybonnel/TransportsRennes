@@ -105,7 +105,8 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 				new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
 						R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.directions,
 						"directions.txt"), new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
-				new CoupleResourceFichier(R.raw.trajets, "trajets.txt"));
+				new CoupleResourceFichier(R.raw.trajets, "trajets.txt"),
+                new CoupleResourceFichier(R.raw.calendriers_exceptions, "calendriers_exceptions.txt"));
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
         try {
