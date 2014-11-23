@@ -31,6 +31,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,61 +73,62 @@ public class Alert implements Serializable {
 
     public static List<Alert> getAlertes() throws TbcErreurReseaux {
         // Récupération sur la page internet du table d'horaire.
-        StringBuilder stringBuilder = new StringBuilder();
-        String url = TcbConstantes.URL_ALERTES;
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.setRequestMethod("GET");
-            connection.setDoOutput(true);
-            connection.setConnectTimeout(60000);
-            connection.connect();
-            BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            stringBuilder = new StringBuilder();
-            boolean tableEnCours = false;
-            try {
-                String ligne = bufReader.readLine();
-                while (ligne != null) {
-                    if (ligne.contains("<tbody")) {
-                        tableEnCours = true;
-                    }
-                    if (tableEnCours) {
-                        stringBuilder.append(ligne.replaceAll("&", "&#38;"));
-                        if (ligne.contains("</tbody>")) {
-                            break;
-                        }
-                    }
-                    ligne = bufReader.readLine();
-                }
-            } finally {
-                bufReader.close();
-            }
-
-            if (stringBuilder.length() == 0) {
-                throw new TbcErreurReseaux();
-            }
-
-            // Parsing SAX du tableau d'horaires.
-            GetAlertesHandler handler = new GetAlertesHandler();
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
-            return handler.getAlertes();
-        } catch (SocketTimeoutException erreurReseau) {
-            throw new TbcErreurReseaux(erreurReseau);
-        } catch (SAXParseException saxParseException) {
-            throw new TbcErreurReseaux(saxParseException);
-        } catch (TbcErreurReseaux tbcErreurReseaux) {
-            throw tbcErreurReseaux;
-        } catch (SocketException erreurReseau) {
-            throw new TbcErreurReseaux(erreurReseau);
-        } catch (FileNotFoundException erreurReseau) {
-            throw new TbcErreurReseaux(erreurReseau);
-        } catch (UnknownHostException erreurReseau) {
-            throw new TbcErreurReseaux(erreurReseau);
-        } catch (Exception exception) {
-            throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url
-                    + ", html récupéré : " + stringBuilder.toString(), exception);
-        }
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String url = TcbConstantes.URL_ALERTES;
+//        try {
+//            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+//            connection.setRequestMethod("GET");
+//            connection.setDoOutput(true);
+//            connection.setConnectTimeout(60000);
+//            connection.connect();
+//            BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//            stringBuilder = new StringBuilder();
+//            boolean tableEnCours = false;
+//            try {
+//                String ligne = bufReader.readLine();
+//                while (ligne != null) {
+//                    if (ligne.contains("<tbody")) {
+//                        tableEnCours = true;
+//                    }
+//                    if (tableEnCours) {
+//                        stringBuilder.append(ligne.replaceAll("&", "&#38;"));
+//                        if (ligne.contains("</tbody>")) {
+//                            break;
+//                        }
+//                    }
+//                    ligne = bufReader.readLine();
+//                }
+//            } finally {
+//                bufReader.close();
+//            }
+//
+//            if (stringBuilder.length() == 0) {
+//                throw new TbcErreurReseaux();
+//            }
+//
+//            // Parsing SAX du tableau d'horaires.
+//            GetAlertesHandler handler = new GetAlertesHandler();
+//            SAXParserFactory factory = SAXParserFactory.newInstance();
+//            SAXParser parser = factory.newSAXParser();
+//            parser.parse(new ByteArrayInputStream(stringBuilder.toString().getBytes()), handler);
+//            return handler.getAlertes();
+//        } catch (SocketTimeoutException erreurReseau) {
+//            throw new TbcErreurReseaux(erreurReseau);
+//        } catch (SAXParseException saxParseException) {
+//            throw new TbcErreurReseaux(saxParseException);
+//        } catch (TbcErreurReseaux tbcErreurReseaux) {
+//            throw tbcErreurReseaux;
+//        } catch (SocketException erreurReseau) {
+//            throw new TbcErreurReseaux(erreurReseau);
+//        } catch (FileNotFoundException erreurReseau) {
+//            throw new TbcErreurReseaux(erreurReseau);
+//        } catch (UnknownHostException erreurReseau) {
+//            throw new TbcErreurReseaux(erreurReseau);
+//        } catch (Exception exception) {
+//            throw new TcbException("Erreur lors de la récupération des alertes pour l'url " + url
+//                    + ", html récupéré : " + stringBuilder.toString(), exception);
+//        }
+        return new ArrayList<Alert>();
     }
 
 
