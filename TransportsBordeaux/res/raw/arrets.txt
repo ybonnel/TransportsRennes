@@ -715,6 +715,7 @@ id,nom,latitude,longitude
 5786b,Capeyron,44.852974,-0.646986
 2514b,Collège F. Mitterrand,44.793629,-0.647665
 1779b,Village de Magudas,44.864065,-0.728742
+7291b,Deveaux (rue Deveaux),44.848016,-0.62282
 3072b,Route de Picot,44.916876,-0.735425
 1837b,Jean Prat,44.932305,-0.503125
 3283b,Collège G.Rayet,44.842214,-0.515492
@@ -998,8 +999,8 @@ id,nom,latitude,longitude
 3946b,Gare de Parempuyre,44.944255,-0.618444
 2443b,Jardin Public,44.848021,-0.576298
 6832b,Place Ravezies (côté Parc Relais),44.867155,-0.575984
-1078b,Rue Richelieu,44.845511,-0.617274
 6685b,Place Ravezies,44.867012,-0.575684
+1078b,Rue Richelieu,44.845511,-0.617274
 847b,Passage à Niveau,44.872083,-0.591394
 2175b,La Lande,44.906311,-0.495452
 401b,Chevreuils,44.873865,-0.492671
@@ -2030,8 +2031,8 @@ id,nom,latitude,longitude
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
-928b,Place du 11 Novembre,44.829042,-0.64818
 3719,Hôtel de Ville,44.837305,-0.577136
+928b,Place du 11 Novembre,44.829042,-0.64818
 3173b,Camille Godard,44.855088,-0.574278
 3716,Sainte-Catherine,44.837635,-0.573332
 3715,Place du Palais,44.837901,-0.569257
