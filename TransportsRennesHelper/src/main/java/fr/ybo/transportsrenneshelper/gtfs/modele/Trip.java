@@ -17,6 +17,7 @@
 package fr.ybo.transportsrenneshelper.gtfs.modele;
 
 import fr.ybo.transportsrenneshelper.gtfs.gestionnaire.GestionnaireGtfs;
+import fr.ybonnel.csvengine.adapter.AdapterBoolean;
 import fr.ybonnel.csvengine.adapter.AdapterInteger;
 import fr.ybonnel.csvengine.annotation.CsvColumn;
 import fr.ybonnel.csvengine.annotation.CsvFile;
@@ -41,6 +42,9 @@ public class Trip {
 	public Integer directionId;
 	@CsvColumn(value = "block_id", order = 5)
 	public String blockId;
+
+	@CsvColumn(value = "wheelchair_accessible", order = 6, adapter = AdapterBoolean.class)
+	public boolean accessible;
 
 	public Calendar getCalendar() {
 		return GestionnaireGtfs.getInstance().getMapCalendars().get(serviceId);

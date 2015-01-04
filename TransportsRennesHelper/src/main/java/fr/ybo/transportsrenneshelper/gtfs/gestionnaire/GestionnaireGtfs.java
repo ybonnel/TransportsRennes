@@ -23,9 +23,7 @@ import java.util.*;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Calendar;
 import fr.ybo.transportsrenneshelper.gtfs.modele.CalendarDates;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Route;
-import fr.ybo.transportsrenneshelper.gtfs.modele.RouteExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Stop;
-import fr.ybo.transportsrenneshelper.gtfs.modele.StopExtension;
 import fr.ybo.transportsrenneshelper.gtfs.modele.StopTime;
 import fr.ybo.transportsrenneshelper.gtfs.modele.Trip;
 import fr.ybonnel.csvengine.CsvEngine;
@@ -46,9 +44,7 @@ public final class GestionnaireGtfs {
         Route.class,
         Stop.class,
         StopTime.class,
-        Trip.class,
-        StopExtension.class,
-        RouteExtension.class
+        Trip.class
     };
 
     /**
@@ -110,33 +106,8 @@ public final class GestionnaireGtfs {
      * Trips (par id).
      */
     private Map<String, Trip> trips;
-    /**
-     * RouteExtension (par routeId).
-     */
-    private Map<String, RouteExtension> routeExtensions;
     
     private List<CalendarDates> calendarsDates;
-
-    /**
-     * @return les RouteExtensions (par routeId).
-     */
-    public Map<String, RouteExtension> getRouteExtensions() {
-        if (routeExtensions == null) {
-            routeExtensions = new HashMap<String, RouteExtension>();
-            try {
-                for (RouteExtension routeExtension : getMoteurCsv()
-                        .parseInputStream(new FileInputStream(new File(repertoire, "routes_extensions.txt")),
-                                RouteExtension.class).getObjects()) {
-                    routeExtensions.put(routeExtension.routeId, routeExtension);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (CsvErrorsExceededException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return routeExtensions;
-    }
 
     /**
      * @return les calendars (par id).
