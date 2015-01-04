@@ -250,7 +250,7 @@ public final class Keolis {
     }
 
 	public ResultDeparture getDepartues(ArretFavori favori) throws ErreurReseau {
-        if (favori.ligneId.equals("a")) {
+        if (favori.nomCourt.equals("a")) {
             return getDeparturesForMetro(favori);
         }
 		ParametreUrl[] params =
