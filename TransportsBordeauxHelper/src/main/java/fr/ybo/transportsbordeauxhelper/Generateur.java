@@ -276,15 +276,15 @@ public class Generateur {
 				arretRoute.sequence = sequence;
 				Map<Integer, Integer> countDirectionIds = new HashMap<Integer, Integer>();
 				for (Trajet trajet : mapTrajetChaine.get(chaine)) {
-					if (!countDirectionIds.containsKey(trajet.directionId)) {
-						countDirectionIds.put(trajet.directionId, 0);
-					}
+						if (!countDirectionIds.containsKey(trajet.directionId)) {
+							countDirectionIds.put(trajet.directionId, 0);
+						}
 					countDirectionIds.put(trajet.directionId, countDirectionIds.get(trajet.directionId) + 1);
 				}
 				int directionId = -1;
 				max = 0;
 				for (Map.Entry<Integer, Integer> entryDirectionIdCount : countDirectionIds.entrySet()) {
-					if (entryDirectionIdCount.getValue() > max) {
+					if (entryDirectionIdCount.getValue() > max && !directions.get(entryDirectionIdCount.getKey()).direction.equals("inconnu")) {
 						directionId = entryDirectionIdCount.getKey();
 						max = entryDirectionIdCount.getValue();
 					}
