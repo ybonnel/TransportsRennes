@@ -14,7 +14,7 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsbordeaux" android:installLocation="auto"
-          android:versionCode="293" android:versionName="2.9.3">
+          android:versionCode="294" android:versionName="2.9.4">
 
 
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="11"/>
