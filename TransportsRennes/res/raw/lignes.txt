@@ -101,6 +101,7 @@ id,nom_court,nom_long,ordre
 0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),100
 0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),101
 0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),102
-0804,TTZ,Rennes <> Touche Tizon,103
-0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,104
+0803,API,Rennes (République) <> Etangs d'Apigné,103
+0804,TTZ,Rennes <> Touche Tizon,104
+0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,105
 1001,a,La Poterie <> J.F. Kennedy,0
