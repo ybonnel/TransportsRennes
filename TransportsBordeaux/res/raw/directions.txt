@@ -1,148 +1,156 @@
 id,direction
-1,BORDEAUX Brandenburg
-2,La Gardette
-3,MERIGNAC Soleil
-4,Parc des Expos
-5,BORDEAUX Quinconces
-6,BOULIAC Centre Commercial
-7,BORDEAUX Les Aubiers
-8,VILLENAVE Piscine Chambéry
+1,Pin Galant
+2,BORDEAUX  les Aubiers
+3,GRADIGNAN Malartic
+4,ST MEDARD Gare Routière
+5,BOULIAC Centre Commercial
+6,LE HAILLAN 5 Chemins
+7,BORDEAUX Stalingrad
+8,BORDEAUX Gare St Jean
 9,MERIGNAC Les Pins
-10,PESSAC Magonty
-11,Pessac Centre
-12,PESSAC Bougnard
-13,MERIGNAC Aéroport
-14,Vaclav Havel
-15,GRADIGNAN Beausoleil
-17,Pin Galant
-16,BORDEAUX  les Aubiers
-19,Carle Vernet
-21,MERIGNAC Place Mondésir
-23,BORDEAUX Stalingrad
-22,BORDEAUX Porte de Bourgogne
-25,BORDEAUX Gare Saint-Jean
-24,LORMONT Buttinière
-27,Bassins à Flot
-26,GRADIGNAN Malartic
-29,Bordeaux Quai de Brienne
-28,BEGLES César Franck
-31,MERIGNAC Centre
-30,Berges de Garonne
-34,AMBARES Collège C. Massé
-35,BORDEAUX Gare St Jean
-32,BEGLES Rives d'Arcins
-33,BORDEAUX Palais de Justice
-38,AMBARES Parabelle
-39,Cracovie
-36,Floirac Dravemont
-37,BORDEAUX Hôpital Pellegrin
-42,TALENCE Peixotto
-43,EYSINES Sirtema
-40,Parc des Expositions
-41,PESSAC Candau
-46,BORDEAUX St Louis
-47,Le Haillan Rostand
-44,GRADIGNAN Ornon
-45,MERIGNAC Fontaine d'Arlac
+10,Bassins à Flot
+11,BEGLES Rives d'Arcins
+12,BORDEAUX Gare Saint-Jean
+13,GRADIGNAN Village 6
+14,Montaigne Montesquieu
+15,La Gardette
+17,BORDEAUX Brandenburg
+16,Thiers Benauge
+19,MARTIGNAS Les Pins
+18,BORDEAUX Les Aubiers
+21,Floirac Dravemont
+20,Vaclav Havel
+23,VILLENAVE Bourg
+22,BORDEAUX Quinconces
+25,TALENCE Peixotto
+24,VILLENAVE Piscine Chambéry
+27,Cracovie
+26,Carle Vernet
+29,MERIGNAC Aéroport
+28,LORMONT Buttinière
+31,Bordeaux Quai de Brienne
+30,BORDEAUX Hôpital Pellegrin
+34,PESSAC Unitec
+35,PESSAC Bougnard
+32,Hôpital Pellegrin
+33,BORDEAUX Porte de Bourgogne
+38,PESSAC Toctoucau
+39,LE BOUSCAT Place Ravezies
+36,VILLENAVE Courréjean
+37,Le Haillan Rostand
+42,MERIGNAC Centre
+43,LORMONT Bas
+40,BORDEAUX Victoire
+41,Quinconces Fleuve
+46,GRADIGNAN Beausoleil
+47,EYSINES Sirtema
+44,Pessac Centre
+45,Berges de Garonne
 51,LE TAILLAN La Boétie
-50,EYSINES Place Florale
-49,CARBON BLANC Mouline
-48,MERIGNAC Beaudésert
-55,Quinconces Fleuve
-54,Thiers Benauge
-53,Lycée Sud Médoc
-52,PAREMPUYRE Lisière du Vignoble
-59,AMBES Fort Lajard
-58,VILLENAVE Pont de la Maye
-57,LE HAILLAN Rostand
-56,AMBARES Du Roy
-62,TALENCE Thouars
-61,ST AUBIN Villepreux
-68,Bordeaux Brandenburg
-69,BASSENS La Chênaie
-70,ST MEDARD Gare Routière
-71,ST MEDARD Issac
-64,BLANQUEFORT Caychac
-65,PESSAC Romainville
-66,BORDEAUX Galin
-67,BORDEAUX Barrière d'Ornano
-76,Mérignac Les Pins
-77,BRUGES Camping International
-78,EYSINES Le Sulky
-79,BORDEAUX Hangars
-72,LE HAILLAN 5 Chemins
-73,PESSAC Unitec
-74,BORDEAUX Victoire
-75,MARTIGNAS Les Pins
-85,EYSINES Le Plateau
-87,ST AUBIN Pinsoles
-86,SAINT AUBIN DU MEDOC Lycée Sud Médoc
-81,BORDEAUX Martinique
-80,Hôpital Pellegrin
-83,LE BOUSCAT Hôpital Suburbain
-93,AMBARES René Coty
-92,MARTIGNAS Souge
-95,Bordeaux Parc des Expositions
-94,BLANQUEFORT Ecoparc
-89,MERIGNAC  Cimetière Intercommunal
-88,GRADIGNAN Village 6
-91,ARTIGUES Fontderode
-90,VILLENAVE Bourg
-102,BEGLES Terres Neuves
-103,LE BOUSCAT Place Ravezies
-100,BORDEAUX Place Ravezies
-101,AMBES Escarraguel
-98,CENON Gare
-99,PAREMPUYRE Libération
-97,ARTIGUES Virecourt
-110,LE TAILLAN MEDOC Mairie du Taillan Médoc
+50,PESSAC Candau
+49,BORDEAUX Palais de Justice
+48,EYSINES Le Plateau
+55,MERIGNAC Place Mondésir
+54,ST AUBIN Villepreux
+53,BASSENS La Chênaie
+52,BORDEAUX Place Ravezies
+59,VILLENAVE Pont de la Maye
+58,Parc des Expositions
+57,BEGLES Lycée Vaclav Havel
+56,LE HAILLAN Rostand
+63,BLANQUEFORT Caychac
+62,MERIGNAC Fontaine d'Arlac
+61,Quinconces
+60,LORMONT Lauriers
+68,AMBES Escarraguel
+69,EYSINES Le Sulky
+70,ARTIGUES Fontderode
+71,BORDEAUX Galin
+64,Bordeaux Brandenburg
+65,BORDEAUX St Louis
+66,Gare Saint Jean
+67,Terres Neuves
+76,BRUGES Camping International
+77,CENON Gare
+78,AMBARES Du Roy
+79,PAREMPUYRE Lisière du Vignoble
+72,Bordeaux Parc des Expositions
+73,MERIGNAC Beaudésert
+74,PESSAC Gare
+75,AMBARES Collège C. Massé
+85,GRADIGNAN Ornon
+87,Saint Nicolas
+86,ST MEDARD Issac
+81,LE HAILLAN Parc Ste Christine
+83,PESSAC Magonty
+82,BOULIAC Fayzeau
+93,BORDEAUX Bassins à Flot
+92,MERIGNAC Soleil
+94,CARBON BLANC Mouline
+89,AMBARES Parabelle
+88,SAINT AUBIN DU MEDOC Lycée Sud Médoc
+91,BORDEAUX Martinique
+90,BEGLES César Franck
+102,Bordeaux Stalingrad
+103,Lycée Sud Médoc
+100,BOULIAC C Commercial
+101,MERIGNAC  Cimetière Intercommunal
+98,Cenon Gare
+99,BORDEAUX Pelouse de Douet
+96,BORDEAUX Barrière d'Ornano
+97,BEGLES Terres Neuves
+110,LE TAILLAN MEDOC Tanaïs
 111,BLANQUEFORT Parc de Majolan
-108,BORDEAUX Pelouse de Douet
-109,LE HAILLAN Parc Ste Christine
-106,PESSAC Toctoucau
-107,PESSAC Gare
-104,BORDEAUX Gare Saint Jean
-105,BORDEAUX Grand Parc
-119,LE TAILLAN MEDOC Tanaïs
-118,VILLENAVE Courréjean
-117,BOULIAC Vettiner
-115,GRADIGNAN Stade Ornon
-114,BOULIAC C Commercial
-113,LORMONT Bas
-112,BEGLES Lycée Vaclav Havel
-127,ARTIGUES Provinces
-126,PESSAC Centre
+108,BORDEAUX Gare Saint Jean
+109,BORDEAUX Hangars
+106,PESSAC Romainville
+107,BORDEAUX Grand Parc
+104,TALENCE Thouars
+105,BRUGES Zone de Fret
+119,Meriadeck
+118,AMBARES René Coty
+117,CENON Beausite
+116, Navette Centre Commercial du Lac
+115,PESSAC Centre
+114,VILLENAVE Anatole France
+113,LE TAILLAN MEDOC Mairie du Taillan Médoc
+127,Saint-Médard République
+126,Parc des Expos
+125,PAREMPUYRE Libération
 124,SAINT AUBIN Lycée Sud Médoc
 123,MERIGNAC IMA
-122,BOULIAC Fayzeau
-121,ST MEDARD Collège F. Mauriac
-120,BLANQUEFORT Lycée du Bâtiment
-137,LORMONT Lauriers
-136,ST MEDARD  Collège F.Mauriac
-139,ST LOUIS DE MONTFERRAND  Belle Rive
-138, Navette Centre Commercial du Lac
-140,VILLENAVE Anatole France
-143,LORMONT Iris
-142,Saint-Médard République
-129,BORDEAUX Gambetta
-131,MARTIGNAS Mairie
-130,BORDEAUX Bassins à Flot
+122,ST MEDARD  Collège F.Mauriac
+121,EYSINES Place Florale
+120,ST AUBIN Pinsoles
+137,GRADIGNAN Lycée des Graves
+136,BLANQUEFORT Ecoparc
+139,BORDEAUX Roger Allo
+138,EYSINES Le Vigean
+141,MERIGNAC Lycée Daguin
+140,BOULIAC Vettiner
+143,BRUGES Zone de Fret(Milan)
+142,LORMONT Iris
+129,BORDEAUX Paludate
+128,Mérignac Les Pins
+131,Bouliac Centre Commercial
+130,ST LOUIS DE MONTFERRAND  Belle Rive
 133,EYSINES Lycée Charles Péguy
-132,BORDEAUX Paludate
-135,Cenon Gare
-134,CADAUJAC Le Bouscaut
-152,BRUGES Zone de Fret
-153,CENON Beausite
-154,EYSINES Le Vigean
-156,BLANQUEFORT Andrian
-157,Lycée Ph. de Gerde
-158,BORDEAUX Gabriel Fauré
-159,GRADIGNAN Lycée des Graves
-144,Bouliac Centre Commercial
-145,BRUGES Zone de Fret(Milan)
-146,MARTIGNAS Centre
-147,MERIGNAC Lycée Daguin
-149,BLANQUEFORT Gare de Blanquefort
-151,LE TAILLAN Lycée Sud Médoc (Bois de Mont)
-162,ST LOUIS DE MONTFERRAND Belle Rive
-161,BORDEAUX Roger Allo
+132,LE BOUSCAT Hôpital Suburbain
+134,ST MEDARD Collège F. Mauriac
+152,MARTIGNAS Centre
+153,ARTIGUES Virecourt
+154,AMBES Fort Lajard
+155,Lycée Ph. de Gerde
+156,BLANQUEFORT Lycée du Bâtiment
+157,ARTIGUES Provinces
+158,MARTIGNAS Mairie
+159,GRADIGNAN Stade Ornon
+144,Ste Catherine
+145,LE TAILLAN Lycée Sud Médoc (Bois de Mont)
+146,MARTIGNAS Souge
+147,CADAUJAC Le Bouscaut
+148,BORDEAUX Gambetta
+150,ST LOUIS DE MONTFERRAND Belle Rive
+151,BLANQUEFORT Gare de Blanquefort
+162,BLANQUEFORT Andrian
+160,BORDEAUX Gabriel Fauré
