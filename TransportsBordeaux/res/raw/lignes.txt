@@ -53,7 +53,6 @@ ordre,id,nom_court,nom_long
 53,58,58,Ligne 58
 54,62,62,Ligne 62
 55,64,64,Ligne 64
-57,66,66,Navette Centre Commercial du Lac
 58,67,67,Ligne 67
 59,68,68,Flexo 68
 60,69,69,BatCUB
