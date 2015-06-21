@@ -71,34 +71,30 @@ id,nom_court,nom_long,ordre
 0209,209,Vezin-le-Coquet (Vallée) <> Rennes (Collège Rosa Parks),70
 0210,210,L'Hermitage (Centre) <> Rennes (Lycée V.H. Basch),71
 0211,211,Chavagne (Croix Blanche) <> Rennes (Collège Cleunay),72
-0212,212,Saint-Erblon (Orgerblon) <> Rennes (Lycée Bréquigny),73
-0213,213,Bourgbarré (Moc Souris) <> Rennes (Lycée Bréquigny),74
-0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Saint-Etienne),75
-0215,215,Villejean-Université <> Lycée Joliot-Curie,76
-0216,216,Cesson-Sévigné (Base de Loisirs) <> Rennes (Lycée Assomption),77
-0217,217,Cesson-Sévigné (Cormiers) <> Rennes (Lycée Assomption),78
-0220,220,Acigné (Timonière) <> Cesson-Sévigné (Lycée Sévigné),79
-0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne),80
-0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),81
-0223,223,Chevaigné (Pommiers) <> Saint-Grégoire (Lycée Jean-Paul II),82
-0224,224,Gévezé (Cheval Blanc) <> Saint-Grégoire (Lycée Jean-Paul II),83
-0225,225,Pacé (Pie Neuve) <> Saint-Grégoire (Lycée Jean-Paul II),84
-0226,226,Gévezé (Cheval Blanc) <> Pacé (Collège Saint-Gabriel),85
-0227,227,Saint-Gilles (Île des Bois) <> Pacé (Collège Saint-Gabriel),86
-0228,228,La Chapelle-des-Fougeretz (Besneraie) <> Rennes (Lycée Mendès-France),87
-0229,229,Chavagne (Croix Blanche) <> Bruz (Lycée Anita Conti),88
-0230,230,Chartres-de-Bretagne (Vieux Bourg) <> Bruz (Collège Saint-Joseph),89
-0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),90
-0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),91
-0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),92
-0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),93
-0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),94
-0236,236,Clayes (Clairville) <> Pacé (Collège Saint-Gabriel),95
-0237,237,Bécherel (Centre) <> Rennes (Villejean-Université),96
-0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),97
-0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),98
-0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),99
-0803,API,Rennes (République) <> Etangs d'Apigné,100
-0804,TTZ,Rennes <> Touche Tizon,101
-0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,102
+0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Saint-Etienne),73
+0216,216,Cesson-Sévigné (Base de Loisirs) <> Rennes (Lycée Assomption),74
+0217,217,Cesson-Sévigné (Cormiers) <> Rennes (Lycée Assomption),75
+0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne),76
+0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),77
+0223,223,Chevaigné (Pommiers) <> Saint-Grégoire (Lycée Jean-Paul II),78
+0224,224,Gévezé (Cheval Blanc) <> Saint-Grégoire (Lycée Jean-Paul II),79
+0225,225,Pacé (Pie Neuve) <> Saint-Grégoire (Lycée Jean-Paul II),80
+0226,226,Gévezé (Cheval Blanc) <> Pacé (Collège Saint-Gabriel),81
+0227,227,Saint-Gilles (Île des Bois) <> Pacé (Collège Saint-Gabriel),82
+0228,228,La Chapelle-des-Fougeretz (Besneraie) <> Rennes (Lycée Mendès-France),83
+0229,229,Chavagne (Croix Blanche) <> Bruz (Lycée Anita Conti),84
+0230,230,Chartres-de-Bretagne (Vieux Bourg) <> Bruz (Collège Saint-Joseph),85
+0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),86
+0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),87
+0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),88
+0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),89
+0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),90
+0236,236,Clayes (Clairville) <> Pacé (Collège Saint-Gabriel),91
+0237,237,Bécherel (Centre) <> Rennes (Villejean-Université),92
+0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),93
+0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),94
+0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),95
+0803,API,Rennes (République) <> Etangs d'Apigné,96
+0804,TTZ,Rennes <> Touche Tizon,97
+0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,98
 1001,a,La Poterie <> J.F. Kennedy,0
