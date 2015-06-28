@@ -445,7 +445,6 @@ id,nom,latitude,longitude
 2563b,Brisson,44.945202,-0.539224
 5808b,Paul Montagne,44.806813,-0.643356
 5293b,Pessac Centre (station Tram),44.804364,-0.632563
-6446b,Dassault,44.783753,-0.651719
 5229,François Mitterrand,44.827163,-0.61418
 810b,Dotézac,44.807763,-0.556645
 5228,François Mitterrand,44.827151,-0.614267
@@ -465,7 +464,6 @@ id,nom,latitude,longitude
 676b,Guyon,44.851127,-0.528554
 5211b,Pôle Universitaire de Gestion,44.844639,-0.558145
 2562b,St Bruno - Hôtel de Région,44.837482,-0.590055
-6445b,Dassault,44.783788,-0.651747
 5294b,Pessac Centre (station Tram),44.804804,-0.631515
 5214,Jean Zay,44.854136,-0.513235
 5215,La Marègue,44.850778,-0.50887
@@ -1153,7 +1151,6 @@ id,nom,latitude,longitude
 1551b,Le Télégraphe,44.784213,-0.606305
 7233b,Margaux,44.846531,-0.792106
 3017b,Maréchal Foch,44.855236,-0.534806
-2864b,Pessac Gare (station Tram),44.803765,-0.631322
 3216b,Galerie des Beaux Arts,44.838788,-0.581715
 5449b,Villabois,44.885219,-0.587367
 2227b,Lormont Village,44.881585,-0.497068
@@ -1166,7 +1163,6 @@ id,nom,latitude,longitude
 3086b,Le Bichou,44.918156,-0.743173
 6506b,Professeur Arnozan,44.807798,-0.588575
 3609b,Collège L. Lenoir,44.840507,-0.553779
-2863b,Cardinal,44.80413,-0.626484
 6827b,Bassins à Flot,44.86053,-0.554134
 3219b,Duplantier,44.814668,-0.58067
 3547b,République,44.834072,-0.580134
@@ -1226,7 +1222,6 @@ id,nom,latitude,longitude
 5010b,Manaud,44.876199,-0.582835
 3081b,Jean Jaurès (av. République),44.871807,-0.678238
 1822b,Ausone,44.801017,-0.616941
-485b,Pessac Gare (station Tram),44.803387,-0.632133
 2939b,Sirtema Terminus,44.885824,-0.656932
 3947b,Peybois,44.939916,-0.632898
 2229b,Le Tillac,44.91989,-0.494409
@@ -1408,7 +1403,6 @@ id,nom,latitude,longitude
 3107b,Résidence Beausite,44.83019,-0.648077
 4084b,Pont de la Maye,44.780608,-0.565935
 591b,Roger Allo,44.844309,-0.589364
-5349b,Pessac Gare,44.801467,-0.635414
 2077b,Poirson,44.857426,-0.587035
 7151b,Van Gogh,44.910598,-0.714332
 725b,Président Wilson,44.839272,-0.63334

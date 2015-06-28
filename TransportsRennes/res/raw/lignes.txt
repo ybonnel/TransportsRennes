@@ -60,41 +60,29 @@ id,nom_court,nom_long,ordre
 0168,168,Rennes (République) <> Gévezé,59
 0172,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne / Pont-Péan,60
 0173,173,Rennes (La Poterie) <> Saint-Armel / Corps-Nuds,61
-0200,200,Acigné (Timonière) <> Rennes (Lycée Assomption),62
-0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Lycée Assomption),63
-0202,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption),64
-0204,204,Saint-Grégoire (Champ Daguet) <> Rennes (Collège Clotilde Vautier),65
-0205,205,Villejean-Université <> Lande du Breil,66
-0206,206,Cesson-Sévigné (Métairies Chalotais) <> Rennes (Lycée Assomption),67
-0207,207,Rennes (Gares) <> Cesson-Sévigné (Lycée Saint-Etienne),68
-0208,208,Rennes (Gares) <> Saint-Grégoire (MFR Rabinardières),69
-0209,209,Vezin-le-Coquet (Vallée) <> Rennes (Collège Rosa Parks),70
-0210,210,L'Hermitage (Centre) <> Rennes (Lycée V.H. Basch),71
-0211,211,Chavagne (Croix Blanche) <> Rennes (Collège Cleunay),72
-0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Saint-Etienne),73
-0216,216,Cesson-Sévigné (Base de Loisirs) <> Rennes (Lycée Assomption),74
-0217,217,Cesson-Sévigné (Cormiers) <> Rennes (Lycée Assomption),75
-0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne),76
-0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),77
-0223,223,Chevaigné (Pommiers) <> Saint-Grégoire (Lycée Jean-Paul II),78
-0224,224,Gévezé (Cheval Blanc) <> Saint-Grégoire (Lycée Jean-Paul II),79
-0225,225,Pacé (Pie Neuve) <> Saint-Grégoire (Lycée Jean-Paul II),80
-0226,226,Gévezé (Cheval Blanc) <> Pacé (Collège Saint-Gabriel),81
-0227,227,Saint-Gilles (Île des Bois) <> Pacé (Collège Saint-Gabriel),82
-0228,228,La Chapelle-des-Fougeretz (Besneraie) <> Rennes (Lycée Mendès-France),83
-0229,229,Chavagne (Croix Blanche) <> Bruz (Lycée Anita Conti),84
-0230,230,Chartres-de-Bretagne (Vieux Bourg) <> Bruz (Collège Saint-Joseph),85
-0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),86
-0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),87
-0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),88
-0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),89
-0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),90
-0236,236,Clayes (Clairville) <> Pacé (Collège Saint-Gabriel),91
-0237,237,Bécherel (Centre) <> Rennes (Villejean-Université),92
-0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),93
-0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),94
-0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),95
-0803,API,Rennes (République) <> Etangs d'Apigné,96
-0804,TTZ,Rennes <> Touche Tizon,97
-0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,98
+0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Lycée Assomption),62
+0202,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption),63
+0204,204,Saint-Grégoire (Champ Daguet) <> Rennes (Collège Clotilde Vautier),64
+0205,205,Villejean-Université <> Lande du Breil,65
+0207,207,Rennes (Gares) <> Cesson-Sévigné (Lycée Saint-Etienne),66
+0208,208,Rennes (Gares) <> Saint-Grégoire (MFR Rabinardières),67
+0209,209,Vezin-le-Coquet (Vallée) <> Rennes (Collège Rosa Parks),68
+0211,211,Chavagne (Croix Blanche) <> Rennes (Collège Cleunay),69
+0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Saint-Etienne),70
+0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Saint-Etienne),71
+0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),72
+0226,226,Gévezé (Cheval Blanc) <> Pacé (Collège Saint-Gabriel),73
+0227,227,Saint-Gilles (Île des Bois) <> Pacé (Collège Saint-Gabriel),74
+0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),75
+0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),76
+0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),77
+0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),78
+0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),79
+0236,236,Clayes (Clairville) <> Pacé (Collège Saint-Gabriel),80
+0237,237,Bécherel (Centre) <> Rennes (Villejean-Université),81
+0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),82
+0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),83
+0803,API,Rennes (République) <> Etangs d'Apigné,84
+0804,TTZ,Rennes <> Touche Tizon,85
+0805,STN,STAR de Nuit - Beaulieu Atalante <> J.F. Kennedy,86
 1001,a,La Poterie <> J.F. Kennedy,0
