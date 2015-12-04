@@ -41,13 +41,13 @@ import fr.ybo.transportsrennes.adapters.timeo.TimeoAdapter;
 public class TimeoActivity extends BaseListActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		setContentView(R.layout.timeo);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
 
-		Uri uri = getIntent().getData();
-		List<Arret> arrets = construireListeArrets(uri.getLastPathSegment());
+		final Uri uri = getIntent().getData();
+		final List<Arret> arrets = construireListeArrets(uri.getLastPathSegment());
 		
 		if (arrets.isEmpty()) {
 			// Erreur
@@ -55,19 +55,20 @@ public class TimeoActivity extends BaseListActivity {
 			finish();
 		} else if (arrets.size() == 1) {
 			// Lancer detailArret
-			Intent intent = new Intent(this, DetailArret.class);
+			final Intent intent = new Intent(this, DetailArret.class);
 			intent.putExtra("favori", arrets.get(0).favori);
 			startActivity(intent);
 			finish();
 		} else {
 			// Construire adapter
 			setListAdapter(new TimeoAdapter(this, arrets));
-			ListView listView = getListView();
+			final ListView listView = getListView();
 			listView.setFastScrollEnabled(true);
 			listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-				public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-					Arret arret = (Arret) getListAdapter().getItem(position);
-					Intent intent = new Intent(TimeoActivity.this, DetailArret.class);
+				@Override
+				public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+					final Arret arret = (Arret) getListAdapter().getItem(position);
+					final Intent intent = new Intent(TimeoActivity.this, DetailArret.class);
 					intent.putExtra("favori", arret.favori);
 					startActivity(intent);
 				}
@@ -78,39 +79,23 @@ public class TimeoActivity extends BaseListActivity {
 		}
     }
 
-	private List<Arret> construireListeArrets(String idTimeo) {
-		StringBuilder requete = new StringBuilder();
-		requete.append("SELECT");
-		requete.append(" Arret.id as arretId,");
-		requete.append(" Arret.nom as arretNom,");
-		requete.append(" Arret.latitude as arretLatitude,");
-		requete.append(" Arret.longitude as arretLongitude,");
-		requete.append(" Direction.direction as favoriDirection,");
-		requete.append(" Ligne.id as ligneId,");
-		requete.append(" Ligne.nomCourt as nomCourt,");
-		requete.append(" Ligne.nomLong as nomLong, ");
-		requete.append(" ArretRoute.macroDirection as macroDirection ");
-		requete.append("FROM Arret, ArretRoute, Ligne, Direction ");
-		requete.append("WHERE Arret.id = ArretRoute.arretId");
-		requete.append(" AND ArretRoute.ligneId = Ligne.id");
-		requete.append(" AND ArretRoute.directionId = Direction.id");
-		requete.append(" AND Arret.id = :idTimeo");
-		Cursor cursor =
-				AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+	private static List<Arret> construireListeArrets(final String idTimeo) {
+		final Cursor cursor =
+				AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery("SELECT" + " Arret.id as arretId," + " Arret.nom as arretNom," + " Arret.latitude as arretLatitude," + " Arret.longitude as arretLongitude," + " Direction.direction as favoriDirection," + " Ligne.id as ligneId," + " Ligne.nomCourt as nomCourt," + " Ligne.nomLong as nomLong, " + " ArretRoute.macroDirection as macroDirection " + "FROM Arret, ArretRoute, Ligne, Direction " + "WHERE Arret.id = ArretRoute.arretId" + " AND ArretRoute.ligneId = Ligne.id" + " AND ArretRoute.directionId = Direction.id" + " AND Arret.id = :idTimeo",
 						Collections.singletonList(idTimeo));
 
-		int arretIdIndex = cursor.getColumnIndex("arretId");
-		int arretNomIndex = cursor.getColumnIndex("arretNom");
-		int latitudeIndex = cursor.getColumnIndex("arretLatitude");
-		int longitudeIndex = cursor.getColumnIndex("arretLongitude");
-		int directionIndex = cursor.getColumnIndex("favoriDirection");
-		int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-		int nomLongIndex = cursor.getColumnIndex("nomLong");
-		int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
-		List<Arret> arrets = new ArrayList<Arret>();
+		final int arretIdIndex = cursor.getColumnIndex("arretId");
+		final int arretNomIndex = cursor.getColumnIndex("arretNom");
+		final int latitudeIndex = cursor.getColumnIndex("arretLatitude");
+		final int longitudeIndex = cursor.getColumnIndex("arretLongitude");
+		final int directionIndex = cursor.getColumnIndex("favoriDirection");
+		final int ligneIdIndex = cursor.getColumnIndex("ligneId");
+		final int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+		final int nomLongIndex = cursor.getColumnIndex("nomLong");
+		final int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
+		final List<Arret> arrets = new ArrayList<Arret>();
 		while (cursor.moveToNext()) {
-			Arret arret = new Arret();
+			final Arret arret = new Arret();
 			arret.id = cursor.getString(arretIdIndex);
 			arret.nom = cursor.getString(arretNomIndex);
 			arret.latitude = cursor.getDouble(latitudeIndex);

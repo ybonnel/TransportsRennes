@@ -35,21 +35,21 @@ import fr.ybo.transportsrennes.fragments.bus.ListFavoris;
 public class TabFavoris extends AbstractTabFavoris {
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		verifierUpgrade();
 	}
 	
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+		final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = null;
 		try {
 			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		} catch (DataBaseException exception) {
+		} catch (final DataBaseException exception) {
 			dataBaseHelper.deleteAll(DernierMiseAJour.class);
 		}
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
+		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
 			upgradeDatabase();
 		} else if (dernierMiseAJour.derniereMiseAJour == null
@@ -60,7 +60,7 @@ public class TabFavoris extends AbstractTabFavoris {
 
 
 	private void upgradeDatabase() {
-		Intent intent = new Intent(this, LoadingActivity.class);
+		final Intent intent = new Intent(this, LoadingActivity.class);
 		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
@@ -68,22 +68,19 @@ public class TabFavoris extends AbstractTabFavoris {
 	private static final int DIALOG_UPGRADE = 2;
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(final int id) {
 		if (id == DIALOG_UPGRADE) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(R.string.majDispo));
 			builder.setCancelable(false);
 			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
+				@Override
+				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
 			});
-			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
+			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
 			return builder.create();
 		}
 		return super.onCreateDialog(id);
@@ -112,8 +109,15 @@ public class TabFavoris extends AbstractTabFavoris {
 
 	@Override
 	protected void loadFavoris() {
-		Intent intent = new Intent(this, LoadingActivity.class);
+		final Intent intent = new Intent(this, LoadingActivity.class);
 		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
 		startActivity(intent);
+	}
+
+	private static class MyOnClickListener implements Dialog.OnClickListener {
+		@Override
+        public void onClick(final DialogInterface dialog, final int id) {
+            dialog.cancel();
+        }
 	}
 }

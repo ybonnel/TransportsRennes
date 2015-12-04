@@ -21,7 +21,7 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 	protected abstract Class<? extends ListFragment> getListArretFragment();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getLayout());
 		setupActionBar();
@@ -32,8 +32,8 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 			myLigne.id = getIntent().getStringExtra("ligneId");
 		}
 
-		for (Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().selectAll(Ligne.class)) {
-			Bundle args = new Bundle();
+		for (final Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().selectAll(Ligne.class)) {
+			final Bundle args = new Bundle();
 			args.putSerializable("ligne", ligne);
 			if (myLigne.id.equals(ligne.id)) {
 				myLigne = ligne;
@@ -58,7 +58,7 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 	}
 
 	@Override
-	public void changeIconActionBar(ImageButton imageButton) {
+	public void changeIconActionBar(final ImageButton imageButton) {
 		if (imageButton.getId() == R.id.menu_order) {
 			imageButton.setImageResource(orderDirection ? android.R.drawable.ic_menu_sort_alphabetically
 					: android.R.drawable.ic_menu_sort_by_size);
@@ -66,7 +66,7 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+	public boolean onPrepareOptionsMenu(final Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		if (menu.findItem(R.id.menu_order) != null) {
 			menu.findItem(R.id.menu_order).setTitle(
@@ -79,12 +79,12 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == R.id.menu_order) {
 			orderDirection = !orderDirection;
-			AbstractListArretFragment fragment = (AbstractListArretFragment) getCurrentFragment();
+			final AbstractListArretFragment fragment = (AbstractListArretFragment) getCurrentFragment();
 			fragment.construireListe();
 			getActivityHelper().invalidateOptionsMenu();
 			return true;

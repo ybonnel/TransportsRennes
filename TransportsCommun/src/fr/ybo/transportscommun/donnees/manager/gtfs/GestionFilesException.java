@@ -16,14 +16,13 @@
  */
 package fr.ybo.transportscommun.donnees.manager.gtfs;
 
-@SuppressWarnings("serial")
 class GestionFilesException extends RuntimeException {
 
-	GestionFilesException(Throwable throwable) {
+	GestionFilesException(final Throwable throwable) {
 		super(throwable);
 	}
 
-	public GestionFilesException(String string, Exception exception) {
+	public GestionFilesException(final String string, final Exception exception) {
 		super(string, exception);
 	}
 }

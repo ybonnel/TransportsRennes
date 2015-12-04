@@ -44,10 +44,10 @@ public class TransportsWidget21Configure extends ListActivity {
 	private FavoriAdapterForWidget1 adapter;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Intent launchIntent = getIntent();
-		Bundle extras = launchIntent.getExtras();
+		final Intent launchIntent = getIntent();
+		final Bundle extras = launchIntent.getExtras();
 		appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				AppWidgetManager.INVALID_APPWIDGET_ID);
 		// If they gave us an intent without the widget id, just bail.
@@ -55,7 +55,7 @@ public class TransportsWidget21Configure extends ListActivity {
 			finish();
 		}
 
-		Intent cancelResultValue = new Intent();
+		final Intent cancelResultValue = new Intent();
 		cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				appWidgetId);
 		setResult(RESULT_CANCELED, cancelResultValue);
@@ -83,14 +83,17 @@ public class TransportsWidget21Configure extends ListActivity {
 	private void construireListe() {
 		adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
 		setListAdapter(adapter);
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(final AdapterView<?> parent, final View view,
+					final int position, final long id) {
 
-				CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
-				if (!checkBox.isChecked()) {
+				final CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+				if (checkBox.isChecked()) {
+					adapter.setFavoriSelectionne(null);
+					checkBox.setChecked(false);
+				} else {
 					if (adapter.getFavoriSelectionne() == null) {
 						adapter.setFavoriSelectionne(position);
 						checkBox.setChecked(true);
@@ -101,9 +104,6 @@ public class TransportsWidget21Configure extends ListActivity {
 								Toast.LENGTH_SHORT).show();
 
 					}
-				} else {
-					adapter.setFavoriSelectionne(null);
-					checkBox.setChecked(false);
 				}
 			}
 		});
@@ -111,9 +111,10 @@ public class TransportsWidget21Configure extends ListActivity {
 		registerForContextMenu(lv);
 		findViewById(R.id.terminerChoix).setOnClickListener(
 				new View.OnClickListener() {
-					public void onClick(View view) {
-						FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
-						ArretFavori favoriSelectionne = favoriAdapter
+					@Override
+					public void onClick(final View view) {
+						final FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
+						final ArretFavori favoriSelectionne = favoriAdapter
 								.getFavoriSelectionne();
 						if (favoriSelectionne == null) {
 							Toast.makeText(TransportsWidget21Configure.this,
@@ -122,12 +123,12 @@ public class TransportsWidget21Configure extends ListActivity {
 						} else {
 							saveSettings(TransportsWidget21Configure.this,
 									appWidgetId, favoriSelectionne);
-							AppWidgetManager appWidgetManager = AppWidgetManager
+							final AppWidgetManager appWidgetManager = AppWidgetManager
 									.getInstance(TransportsWidget21Configure.this);
 							TransportsWidget21.updateAppWidget(
 									TransportsWidget21Configure.this,
 									appWidgetManager, appWidgetId);
-							Intent resultValue = new Intent();
+							final Intent resultValue = new Intent();
 							resultValue.putExtra(
 									AppWidgetManager.EXTRA_APPWIDGET_ID,
 									appWidgetId);
@@ -138,24 +139,24 @@ public class TransportsWidget21Configure extends ListActivity {
 				});
 	}
 
-	private static void saveSettings(Context context, int appWidgetId,
-			ArretFavori favori) {
-		SharedPreferences sharedPreferences = PreferenceManager
+	private static void saveSettings(final Context context, final int appWidgetId,
+			final ArretFavori favori) {
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor edit = sharedPreferences.edit();
+		final SharedPreferences.Editor edit = sharedPreferences.edit();
 		edit.putString("21ArretId_" + appWidgetId, favori.arretId);
 		edit.putString("21LigneId_" + appWidgetId, favori.ligneId);
 
 		edit.commit();
 	}
 
-	public static boolean isNotUsed(Context context, ArretFavori favori) {
-		SharedPreferences sharedPreferences = PreferenceManager
+	public static boolean isNotUsed(final Context context, final ArretFavori favori) {
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		Map<Integer, ArretFavori> favorisWidget = new HashMap<Integer, ArretFavori>();
-		for (String key : sharedPreferences.getAll().keySet()) {
+		final Map<Integer, ArretFavori> favorisWidget = new HashMap<Integer, ArretFavori>();
+		for (final String key : sharedPreferences.getAll().keySet()) {
 			if (key.startsWith("21ArretId_")) {
-				int widgetId = Integer.parseInt(key.split("_")[1]);
+				final int widgetId = Integer.parseInt(key.split("_")[1]);
 				if (!favorisWidget.containsKey(widgetId)) {
 					favorisWidget.put(widgetId, new ArretFavori());
 				}
@@ -163,7 +164,7 @@ public class TransportsWidget21Configure extends ListActivity {
 						.getString(key, null);
 			}
 			if (key.startsWith("21LigneId_")) {
-				int widgetId = Integer.parseInt(key.split("_")[1]);
+				final int widgetId = Integer.parseInt(key.split("_")[1]);
 				if (!favorisWidget.containsKey(widgetId)) {
 					favorisWidget.put(widgetId, new ArretFavori());
 				}
@@ -171,7 +172,7 @@ public class TransportsWidget21Configure extends ListActivity {
 						.getString(key, null);
 			}
 		}
-		for (ArretFavori favoriWidget : favorisWidget.values()) {
+		for (final ArretFavori favoriWidget : favorisWidget.values()) {
 			if (favori.arretId.equals(favoriWidget.arretId)
 					&& favori.ligneId.equals(favoriWidget.ligneId)) {
 				return false;
@@ -180,11 +181,11 @@ public class TransportsWidget21Configure extends ListActivity {
 		return true;
 	}
 
-	public static Iterable<Integer> getWidgetIds(Context context) {
-		Collection<Integer> widgetIds = new ArrayList<Integer>(4);
-		SharedPreferences sharedPreferences = PreferenceManager
+	public static Iterable<Integer> getWidgetIds(final Context context) {
+		final Collection<Integer> widgetIds = new ArrayList<Integer>(4);
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		for (String key : sharedPreferences.getAll().keySet()) {
+		for (final String key : sharedPreferences.getAll().keySet()) {
 			if (key.startsWith("21ArretId_")) {
 				widgetIds.add(Integer.parseInt(key.split("_")[1]));
 			}
@@ -192,10 +193,10 @@ public class TransportsWidget21Configure extends ListActivity {
 		return widgetIds;
 	}
 
-	static ArretFavori loadSettings(Context context, int appWidgetId) {
-		SharedPreferences sharedPreferences = PreferenceManager
+	static ArretFavori loadSettings(final Context context, final int appWidgetId) {
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		ArretFavori favori = new ArretFavori();
+		final ArretFavori favori = new ArretFavori();
 		favori.arretId = sharedPreferences.getString(
 				"21ArretId_" + appWidgetId, null);
 		favori.ligneId = sharedPreferences.getString(
@@ -206,22 +207,22 @@ public class TransportsWidget21Configure extends ListActivity {
 		return favori;
 	}
 
-	static void deleteSettings(Context context, int appWidgetId) {
-		SharedPreferences sharedPreferences = PreferenceManager
+	static void deleteSettings(final Context context, final int appWidgetId) {
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor edit = sharedPreferences.edit();
+		final SharedPreferences.Editor edit = sharedPreferences.edit();
 		edit.remove("21ArretId_" + appWidgetId);
 		edit.remove("21LigneId_" + appWidgetId);
 
 		edit.commit();
 	}
 
-	static void deleteAllSettings(Context context) {
-		SharedPreferences sharedPreferences = PreferenceManager
+	static void deleteAllSettings(final Context context) {
+		final SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		Map<String, ?> allPrefs = sharedPreferences.getAll();
-		SharedPreferences.Editor edit = sharedPreferences.edit();
-		for (String key : allPrefs.keySet()) {
+		final Map<String, ?> allPrefs = sharedPreferences.getAll();
+		final SharedPreferences.Editor edit = sharedPreferences.edit();
+		for (final String key : allPrefs.keySet()) {
 			if (key.startsWith("21ArretId") || key.startsWith("21LigneId")) {
 				edit.remove(key);
 			}

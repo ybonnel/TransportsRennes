@@ -28,15 +28,14 @@ import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.UIUtils;
 import fr.ybo.transportscommun.activity.preferences.AbstractPreferences;
-import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.TacheAvecProgressDialog;
 
 public class PreferencesBordeaux extends AbstractPreferences {
 
-	private boolean fermetureEnCours = false;
+	private boolean fermetureEnCours;
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
 		super.onSharedPreferenceChanged(sharedPreferences, key);
 		if (fermetureEnCours) {
 			return;
@@ -47,14 +46,14 @@ public class PreferencesBordeaux extends AbstractPreferences {
 					"TransportsBordeaux_sdCard", false);
 			if (dbOnSdCard && !Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 				Toast.makeText(PreferencesBordeaux.this, R.string.sdCardInaccessbile, Toast.LENGTH_LONG).show();
-				SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+				final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
 						PreferencesBordeaux.this).edit();
 				editor.putBoolean("TransportsBordeaux_sdCard", false);
 				editor.commit();
 			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesBordeaux.this);
-				View alertView = LayoutInflater.from(PreferencesBordeaux.this).inflate(R.layout.infoapropos, null);
-				TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
+				final AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesBordeaux.this);
+				final View alertView = LayoutInflater.from(PreferencesBordeaux.this).inflate(R.layout.infoapropos, null);
+				final TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
 				if (UIUtils.isHoneycomb()) {
 					textView.setTextColor(AbstractTransportsApplication.getTextColor(this));
 				}
@@ -62,9 +61,10 @@ public class PreferencesBordeaux extends AbstractPreferences {
 				builder.setView(alertView);
 				builder.setCancelable(false);
 				builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
+					@Override
+					public void onClick(final DialogInterface dialog, final int which) {
 						fermetureEnCours = true;
-						SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+						final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								PreferencesBordeaux.this).edit();
 						editor.putBoolean("TransportsBordeaux_sdCard", !dbOnSdCard);
 						editor.commit();
@@ -72,22 +72,22 @@ public class PreferencesBordeaux extends AbstractPreferences {
 					}
 				});
 				builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
+					@Override
+					public void onClick(final DialogInterface dialog, final int which) {
 						new TacheAvecProgressDialog<Void, Void, Void>(PreferencesBordeaux.this,
-								PreferencesBordeaux.this.getString(R.string.suppressionDB), false) {
+								getString(R.string.suppressionDB), false) {
 
 							@Override
-							protected void myDoBackground() throws ErreurReseau {
-								PreferencesBordeaux.this.deleteDatabase(TransportsBordeauxDatabase.DATABASE_NAME);
+							protected void myDoBackground() {
+								deleteDatabase(TransportsBordeauxDatabase.DATABASE_NAME);
 							}
 
 							@Override
-							protected void onPostExecute(Void result) {
+							protected void onPostExecute(final Void result) {
 								super.onPostExecute(result);
-								TransportsBordeauxApplication.constructDatabase(PreferencesBordeaux.this
-										.getApplicationContext());
+								TransportsBordeauxApplication.constructDatabase(getApplicationContext());
 								TransportsBordeauxApplication.setBaseNeuve(true);
-								PreferencesBordeaux.this.finish();
+								finish();
 							}
 						}.execute((Void) null);
 					}

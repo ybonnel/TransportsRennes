@@ -25,70 +25,80 @@ import android.view.View;
 
 /**
  * A <em>really</em> dumb implementation of the {@link MenuItem} interface, that's only useful for
- * our old-actionbar purposes. See <code>com.android.internal.view.menu.MenuItemImpl</code> in
+ * our old-actionbar purposes. See {@code com.android.internal.view.menu.MenuItemImpl} in
  * AOSP for a more complete implementation.
  */
-public class SimpleMenuItem implements MenuItem {
+class SimpleMenuItem implements MenuItem {
 
-    private SimpleMenu mMenu;
+    private final SimpleMenu mMenu;
 
     private final int mId;
     private final int mOrder;
     private CharSequence mTitle;
     private CharSequence mTitleCondensed;
     private Drawable mIconDrawable;
-    private int mIconResId = 0;
+    private int mIconResId;
     private boolean mEnabled = true;
 
-    public SimpleMenuItem(SimpleMenu menu, int id, int order, CharSequence title) {
+    public SimpleMenuItem(final SimpleMenu menu, final int id, final int order, final CharSequence title) {
         mMenu = menu;
         mId = id;
         mOrder = order;
         mTitle = title;
     }
 
+    @Override
     public int getItemId() {
         return mId;
     }
 
+    @Override
     public int getOrder() {
         return mOrder;
     }
 
-    public MenuItem setTitle(CharSequence title) {
+    @Override
+    public MenuItem setTitle(final CharSequence title) {
         mTitle = title;
         return this;
     }
 
-    public MenuItem setTitle(int titleRes) {
+    @Override
+    public MenuItem setTitle(final int titleRes) {
         return setTitle(mMenu.getContext().getString(titleRes));
     }
 
+    @Override
     public CharSequence getTitle() {
         return mTitle;
     }
 
-    public MenuItem setTitleCondensed(CharSequence title) {
+    @Override
+    public MenuItem setTitleCondensed(final CharSequence title) {
         mTitleCondensed = title;
         return this;
     }
 
+    @Override
     public CharSequence getTitleCondensed() {
         return mTitleCondensed != null ? mTitleCondensed : mTitle;
     }
 
-   public MenuItem setIcon(Drawable icon) {
+   @Override
+   public MenuItem setIcon(final Drawable icon) {
         mIconResId = 0;
         mIconDrawable = icon;
         return this;
     }
 
-    public MenuItem setIcon(int iconResId) {
+    @Override
+    public MenuItem setIcon(final int iconResId) {
         mIconDrawable = null;
         mIconResId = iconResId;
         return this;
     }
 
+    @Override
     public Drawable getIcon() {
         if (mIconDrawable != null) {
             return mIconDrawable;
@@ -101,112 +111,136 @@ public class SimpleMenuItem implements MenuItem {
         return null;
     }
 
-    public MenuItem setEnabled(boolean enabled) {
+    @Override
+    public MenuItem setEnabled(final boolean enabled) {
         mEnabled = enabled;
         return this;
     }
 
+    @Override
     public boolean isEnabled() {
         return mEnabled;
     }
 
     // No-op operations. We use no-ops to allow inflation from menu XML.
 
+    @Override
     public int getGroupId() {
         return 0;
     }
 
+    @Override
     public View getActionView() {
         return null;
     }
 
-    public MenuItem setIntent(Intent intent) {
+    @Override
+    public MenuItem setIntent(final Intent intent) {
         // Noop
         return this;
     }
 
+    @Override
     public Intent getIntent() {
         return null;
     }
 
-    public MenuItem setShortcut(char c, char c1) {
+    @Override
+    public MenuItem setShortcut(final char c, final char c1) {
         // Noop
         return this;
     }
 
-    public MenuItem setNumericShortcut(char c) {
+    @Override
+    public MenuItem setNumericShortcut(final char c) {
         // Noop
         return this;
     }
 
+    @Override
     public char getNumericShortcut() {
         return 0;
     }
 
-    public MenuItem setAlphabeticShortcut(char c) {
+    @Override
+    public MenuItem setAlphabeticShortcut(final char c) {
         // Noop
         return this;
     }
 
+    @Override
     public char getAlphabeticShortcut() {
         return 0;
     }
 
-    public MenuItem setCheckable(boolean b) {
+    @Override
+    public MenuItem setCheckable(final boolean b) {
         // Noop
         return this;
     }
 
+    @Override
     public boolean isCheckable() {
         return false;
     }
 
-    public MenuItem setChecked(boolean b) {
+    @Override
+    public MenuItem setChecked(final boolean b) {
         // Noop
         return this;
     }
 
+    @Override
     public boolean isChecked() {
         return false;
     }
 
-    public MenuItem setVisible(boolean b) {
+    @Override
+    public MenuItem setVisible(final boolean b) {
         // Noop
         return this;
     }
 
+    @Override
     public boolean isVisible() {
         return true;
     }
 
+    @Override
     public boolean hasSubMenu() {
         return false;
     }
 
+    @Override
     public SubMenu getSubMenu() {
         return null;
     }
 
+    @Override
     public MenuItem setOnMenuItemClickListener(
-            OnMenuItemClickListener onMenuItemClickListener) {
+            final OnMenuItemClickListener onMenuItemClickListener) {
         // Noop
         return this;
     }
 
+    @Override
     public ContextMenu.ContextMenuInfo getMenuInfo() {
         return null;
     }
 
-    public void setShowAsAction(int i) {
+    @Override
+    public void setShowAsAction(final int i) {
         // Noop
     }
 
-    public MenuItem setActionView(View view) {
+    @Override
+    public MenuItem setActionView(final View view) {
         // Noop
         return this;
     }
 
-    public MenuItem setActionView(int i) {
+    @Override
+    public MenuItem setActionView(final int i) {
         // Noop
         return this;
     }

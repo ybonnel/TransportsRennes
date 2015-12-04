@@ -32,33 +32,27 @@ public class AlarmReceiver extends BroadcastReceiver {
     private static final LogYbo LOG_YBO = new LogYbo(AlarmReceiver.class);
 
     @Override
-    public void onReceive(Context context, Intent intent) {
-        boolean notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
+    public void onReceive(final Context context, final Intent intent) {
+        final boolean notifUpdateOn = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(
                 "TransportsRennes_notifUpdate", true);
 		LOG_YBO.debug("Notif : " + notifUpdateOn);
         if (!notifUpdateOn) {
             return;
         }
-		new AsyncTask<Context, Void, Void>() {
-			@Override
-			protected Void doInBackground(Context... params) {
-				verifVersion(params[0]);
-				return null;
-			}
-		}.execute(context);
+		new ContextVoidVoidAsyncTask().execute(context);
     }
 
-	private void verifVersion(Context context) {
-		String result = Version.getMarketVersion();
+	private static void verifVersion(final Context context) {
+		final String result = Version.getMarketVersion();
 
 		LOG_YBO.debug("Version Market : " + result);
 		LOG_YBO.debug("Version Courante : " + Version.getVersionCourante(context.getApplicationContext()));
         if (result != null && result.length() == 5 && result.compareTo(Version.getVersionCourante(context.getApplicationContext())) > 0) {
-            String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
+            final String lastVersion = PreferenceManager.getDefaultSharedPreferences(context).getString(
                     "TransportsRennesVersion", null);
 			LOG_YBO.debug("Last Version : " + lastVersion);
             if (!result.equals(lastVersion)) {
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
                 editor.putString("TransportsRennesVersion", result);
                 editor.commit();
                 createNotification(context, result);
@@ -68,27 +62,34 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private static final int NOTIFICATION_VERSION_ID = 1;
 
-    private void createNotification(Context context, String nouvelleVersion) {
-        int icon = R.drawable.icon;
-        CharSequence tickerText = context.getString(R.string.nouvelleVersion);
-        long when = System.currentTimeMillis();
-        CharSequence contentTitle = context.getString(R.string.nouvelleVersion);
-        CharSequence contentText = context.getString(R.string.versionDisponible, nouvelleVersion);
+    private static void createNotification(final Context context, final String nouvelleVersion) {
+        final int icon = R.drawable.icon;
+        final CharSequence tickerText = context.getString(R.string.nouvelleVersion);
+        final long when = System.currentTimeMillis();
+        final CharSequence contentTitle = context.getString(R.string.nouvelleVersion);
+        final CharSequence contentText = context.getString(R.string.versionDisponible, nouvelleVersion);
 
-        Uri uri = Uri.parse("market://details?id=fr.ybo.transportsrennes");
-        Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        final Uri uri = Uri.parse("market://details?id=fr.ybo.transportsrennes");
+        final Intent notificationIntent = new Intent(Intent.ACTION_VIEW, uri);
+        final PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
 
         // the next two lines initialize the Notification, using the
         // configurations above
-        Notification notification = new Notification(icon, tickerText, when);
+        final Notification notification = new Notification(icon, tickerText, when);
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
         notification.defaults |= android.app.Notification.DEFAULT_ALL;
         notification.flags |= android.app.Notification.FLAG_AUTO_CANCEL;
 
-        NotificationManager mNotificationManager = (NotificationManager) context
+        final NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_VERSION_ID, notification);
     }
 
+    private static class ContextVoidVoidAsyncTask extends AsyncTask<Context, Void, Void> {
+        @Override
+        protected Void doInBackground(final Context... params) {
+            verifVersion(params[0]);
+            return null;
+        }
+    }
 }

@@ -77,12 +77,12 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 	private String currentQuery = "";
 
 	@Override
-	public void updateQuery(String newQuery) {
+	public void updateQuery(final String newQuery) {
 		currentQuery = newQuery;
-		String query = newQuery.toUpperCase();
+		final String query = newQuery.toUpperCase();
 		pointsDeVenteFiltres.clear();
 		synchronized (pointsDeVente) {
-			for (PointDeVente pointDeVente : pointsDeVente) {
+			for (final PointDeVente pointDeVente : pointsDeVente) {
 				if (pointDeVente.name.toUpperCase().contains(query)) {
 					pointsDeVenteFiltres.add(pointDeVente);
 				}
@@ -94,8 +94,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
     private ListView listView;
 
     @Override
-    @SuppressWarnings("unchecked")
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listpointsdevente);
 		getActivityHelper().setupActionBar(R.menu.listpdv_menu_items, R.menu.holo_listpdv_menu_items);
@@ -107,13 +106,14 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
         listView = getListView();
         listView.setFastScrollEnabled(true);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
                         .getAdapter();
-                PointDeVente pointDeVente = adapter.getItem(position);
-                String lat = Double.toString(pointDeVente.getLatitude());
-                String lon = Double.toString(pointDeVente.getLongitude());
-                Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
+                final PointDeVente pointDeVente = adapter.getItem(position);
+                final String lat = Double.toString(pointDeVente.getLatitude());
+                final String lon = Double.toString(pointDeVente.getLongitude());
+                final Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + ',' + lon);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
@@ -124,7 +124,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
             @Override
             protected void myDoBackground() throws ErreurReseau {
-                List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
+                final List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
                         : pointsDeVenteIntent);
 				if (isCancelled()) {
 					return;
@@ -132,18 +132,14 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
                 synchronized (pointsDeVente) {
                     pointsDeVente.clear();
                     pointsDeVente.addAll(listPdvTmp);
-                    Collections.sort(pointsDeVente, new Comparator<PointDeVente>() {
-                        public int compare(PointDeVente o1, PointDeVente o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
+                    Collections.sort(pointsDeVente, new PointDeVenteComparator());
                     pointsDeVenteFiltres.clear();
                     pointsDeVenteFiltres.addAll(pointsDeVente);
                 }
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
 				if (!isCancelled()) {
 					updateLocation(locationUtil.getCurrentLocation());
@@ -156,16 +152,24 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
         }
     }
 
-    public void updateLocation(Location location) {
+    @Override
+    public void updateLocation(final Location location) {
         if (location == null) {
             return;
         }
         synchronized (pointsDeVente) {
-            for (PointDeVente pointDeVente : pointsDeVente) {
+            for (final PointDeVente pointDeVente : pointsDeVente) {
                 pointDeVente.calculDistance(location);
             }
             Collections.sort(pointsDeVente, new PointDeVente.ComparatorDistance());
         }
 		updateQuery(currentQuery);
+    }
+
+    private static class PointDeVenteComparator implements Comparator<PointDeVente> {
+        @Override
+        public int compare(final PointDeVente o1, final PointDeVente o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
+        }
     }
 }

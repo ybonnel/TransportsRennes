@@ -22,8 +22,8 @@ import fr.ybo.transportscommun.donnees.modele.DetailArretConteneur;
 
 public class DetailArretAdapter extends AbstractDetailArretAdapter {
 
-	public DetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now, boolean isToday,
-			String currentDirection) {
+	public DetailArretAdapter(final Context context, final List<DetailArretConteneur> prochainsDeparts, final int now, final boolean isToday,
+			final String currentDirection) {
 		super(context, prochainsDeparts, now, isToday, currentDirection, 0);
 	}
 

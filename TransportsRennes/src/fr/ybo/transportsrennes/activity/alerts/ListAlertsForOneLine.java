@@ -21,15 +21,13 @@ import fr.ybo.transportsrennes.fragments.alerts.ListAlerts;
 
 public class ListAlertsForOneLine extends BaseFragmentActivity {
 
-    private Ligne ligne;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	@Override
+    protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+		final Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		setContentView(R.layout.listalert);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
+		final ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
 		fragmentAlert.setLigne(ligne);
     }
 

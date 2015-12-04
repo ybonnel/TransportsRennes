@@ -24,7 +24,7 @@ public class ParkingAdapter<T extends IParking> extends ArrayAdapter<T> {
 
 	private final LayoutInflater inflater;
 
-	public ParkingAdapter(Context context, List<T> objects) {
+	public ParkingAdapter(final Context context, final List<T> objects) {
 		super(context, R.layout.dispoparkrelai, objects);
 		if (MAP_STATES.isEmpty()) {
 			MAP_STATES.put(1, context.getString(R.string.ferme));
@@ -43,26 +43,26 @@ public class ParkingAdapter<T extends IParking> extends ArrayAdapter<T> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View convertView1 = convertView;
-		ParkingAdapter.ViewHolder holder;
+		final ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(R.layout.dispoparkrelai, null);
-			holder = new ParkingAdapter.ViewHolder();
+			holder = new ViewHolder();
 			holder.dispoParkRelaiNom = (TextView) convertView1.findViewById(R.id.dispoparkrelai_nom);
 			holder.dispoParkRelaiDistance = (TextView) convertView1.findViewById(R.id.dispoparkrelai_distance);
 			holder.dispoParkRelaiText = (TextView) convertView1.findViewById(R.id.dispoparkrelai_text);
 			holder.icone = (TextView) convertView1.findViewById(R.id.itemSymbole);
 			convertView1.setTag(holder);
 		} else {
-			holder = (ParkingAdapter.ViewHolder) convertView1.getTag();
+			holder = (ViewHolder) convertView1.getTag();
 		}
-		T parkRelai = parkings.get(position);
+		final T parkRelai = parkings.get(position);
 		holder.dispoParkRelaiNom.setText(parkRelai.getName());
 		holder.dispoParkRelaiDistance.setText(parkRelai.formatDistance());
 		// Parc Relai ouvert.
 		if (parkRelai.getState() == 0) {
-			double poucentageDispo = (double) parkRelai.getCarParkAvailable() / (double) parkRelai.getCarParkCapacity();
+			final double poucentageDispo = (double) parkRelai.getCarParkAvailable() / (double) parkRelai.getCarParkCapacity();
 
 			if (poucentageDispo < SEUIL_ROUGE) {
 				holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));

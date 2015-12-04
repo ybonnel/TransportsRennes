@@ -12,18 +12,18 @@ import fr.ybo.transportscommun.donnees.modele.GroupeFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.LogYbo;
 
-public class InsertArretFavori implements InsertObject<ArretFavori> {
+class InsertArretFavori implements InsertObject<ArretFavori> {
 	private static final LogYbo LOG_YBO = new LogYbo(FavorisManager.class);
 
-	private Ligne ligneSelect = new Ligne();
-	private Arret arretSelect = new Arret();
-	private ArretRoute arretRouteSelect = new ArretRoute();
-	private Direction directionSelect = new Direction();
-	private ArretFavori favoriSelect = new ArretFavori();
-	private GroupeFavori groupeSelect = new GroupeFavori();
+	private final Ligne ligneSelect = new Ligne();
+	private final Arret arretSelect = new Arret();
+	private final ArretRoute arretRouteSelect = new ArretRoute();
+	private final Direction directionSelect = new Direction();
+	private final ArretFavori favoriSelect = new ArretFavori();
+	private final GroupeFavori groupeSelect = new GroupeFavori();
 
 	@Override
-	public void insertObject(ArretFavori favori) {
+	public void insertObject(final ArretFavori favori) {
 		favoriSelect.ligneId = favori.ligneId;
 		favoriSelect.arretId = favori.arretId;
 		favoriSelect.macroDirection = favori.macroDirection;
@@ -32,13 +32,13 @@ public class InsertArretFavori implements InsertObject<ArretFavori> {
 			return;
 		}
 		ligneSelect.id = favori.ligneId;
-		Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
+		final Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
 		arretSelect.id = favori.arretId;
-		Arret arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretSelect);
+		final Arret arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretSelect);
 		arretRouteSelect.ligneId = favori.ligneId;
 		arretRouteSelect.arretId = favori.arretId;
 		arretRouteSelect.macroDirection = favori.macroDirection;
-		ArretRoute arretRoute = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
+		final ArretRoute arretRoute = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretRouteSelect);
 		if (ligne == null || arret == null || arretRoute == null) {
 			LOG_YBO.debug("Le favori avec arretId = " + favori.arretId + ", ligneId = " + favori.ligneId
 					+ " n'a plus de correspondances dans la base -> on l'insert pas");

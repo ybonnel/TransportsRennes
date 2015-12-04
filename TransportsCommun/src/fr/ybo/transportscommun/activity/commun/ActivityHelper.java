@@ -41,38 +41,37 @@ import fr.ybo.transportscommun.util.CompatUtil;
  * features.
  */
 public class ActivityHelper {
-	protected Activity mActivity;
+	final Activity mActivity;
 
 	/**
 	 * Factory method for creating {@link ActivityHelper} objects for a given
 	 * activity. Depending on which device the app is running, either a basic
 	 * helper or Honeycomb-specific helper will be returned.
 	 */
-	public static ActivityHelper createInstance(Activity activity) {
+	public static ActivityHelper createInstance(final Activity activity) {
 		return UIUtils.isHoneycomb() ? new ActivityHelperHoneycomb(activity) : new ActivityHelper(activity);
 	}
 
-	protected ActivityHelper(Activity activity) {
+	ActivityHelper(final Activity activity) {
 		mActivity = activity;
 	}
 
 	/**
-	 * Method, to be called in <code>onPostCreate</code>, that sets up this
+	 * Method, to be called in {@code onPostCreate}, that sets up this
 	 * activity as the home activity for the app.
 	 */
 	public void setupHomeActivity() {
 	}
 
 	/**
-	 * Method, to be called in <code>onPostCreate</code>, that sets up this
+	 * Method, to be called in {@code onPostCreate}, that sets up this
 	 * activity as a sub-activity in the app.
 	 */
 	public void setupSubActivity() {
 	}
 
 	/**
-	 * Invoke "home" action, returning to
-	 * {@link com.google.android.apps.iosched.ui.HomeActivity}.
+	 * Invoke "home" action, returning to HomeActivity.
 	 */
 	public void goHome() {
 		if (mActivity instanceof AccueilActivity) {
@@ -91,7 +90,7 @@ public class ActivityHelper {
 	 * home button and title are visible. If color is null, then the default
 	 * colorstrip is visible.
 	 */
-	public void setupActionBar(int resourceMenuNormal, int resourceMenuNoir) {
+	public void setupActionBar(final int resourceMenuNormal, final int resourceMenuNoir) {
 		int resourceMenu = resourceMenuNormal;
 		if (((AbstractTransportsApplication) mActivity.getApplication()).isThemeNoir()) {
 			resourceMenu = resourceMenuNoir;
@@ -103,59 +102,60 @@ public class ActivityHelper {
 		}
 		actionBarCompat.setBackgroundResource(((AbstractTransportsApplication) mActivity.getApplication())
 				.getActionBarBackground());
-		LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0,
+		final LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0,
 				ViewGroup.LayoutParams.FILL_PARENT);
 		springLayoutParams.weight = 1;
 
-		View.OnClickListener homeClickListener = new View.OnClickListener() {
-			public void onClick(View view) {
+		final View.OnClickListener homeClickListener = new View.OnClickListener() {
+			@Override
+			public void onClick(final View view) {
 				goHome();
 			}
 		};
 
 		// Add logo
-		ImageButton logo = new ImageButton(mActivity, null, R.attr.actionbarCompatLogoStyle);
+		final ImageButton logo = new ImageButton(mActivity, null, R.attr.actionbarCompatLogoStyle);
 		logo.setImageResource(AbstractTransportsApplication.getDonnesSpecifiques().getCompactLogo());
 		logo.setOnClickListener(homeClickListener);
 		actionBarCompat.addView(logo);
 
 		// Add spring (dummy view to align future children to the right)
-		View spring = new View(mActivity);
+		final View spring = new View(mActivity);
 		spring.setLayoutParams(springLayoutParams);
 		actionBarCompat.addView(spring);
 		addMenus(resourceMenu);
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		return false;
 	}
 
-	protected void addMenus(int resourceMenu) {
-		SimpleMenu simpleMenu = new SimpleMenu(mActivity);
+	void addMenus(final int resourceMenu) {
+		final SimpleMenu simpleMenu = new SimpleMenu(mActivity);
 		mActivity.getMenuInflater().inflate(resourceMenu, simpleMenu);
 		for (int i = 0; i < simpleMenu.size(); i++) {
 			final MenuItem item = simpleMenu.getItem(i);
 			if (item.getItemId() == R.id.menu_search && mActivity instanceof Searchable) {
 				addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
 
-					private boolean visible = false;
+					private boolean visible;
 
 					@Override
-					public void onClick(View v) {
-						if (!visible) {
+					public void onClick(final View v) {
+						if (visible) {
+							mActivity.findViewById(R.id.edittext_search).setVisibility(View.GONE);
+							visible = false;
+						} else {
 							mActivity.findViewById(R.id.edittext_search).setVisibility(View.VISIBLE);
 							mActivity.findViewById(R.id.edittext_search).requestFocus();
 							visible = true;
-						} else {
-							mActivity.findViewById(R.id.edittext_search).setVisibility(View.GONE);
-							visible = false;
 						}
 					}
 				}, false);
 			} else {
 				addActionButtonCompat(item.getItemId(), item.getIcon(), item.getTitle(), new View.OnClickListener() {
 					@Override
-					public void onClick(View v) {
+					public void onClick(final View v) {
 						mActivity.onOptionsItemSelected(item);
 					}
 				}, false);
@@ -164,13 +164,16 @@ public class ActivityHelper {
 		if (mActivity instanceof Searchable) {
 			final EditText editText = (EditText) mActivity.findViewById(R.id.edittext_search);
 			editText.addTextChangedListener(new TextWatcher() {
-				public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				@Override
+				public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 				}
 
-				public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				@Override
+				public void onTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
 				}
 
-				public void afterTextChanged(Editable editable) {
+				@Override
+				public void afterTextChanged(final Editable editable) {
 					((Searchable) mActivity).updateQuery(editText.getText().toString());
 				}
 			});
@@ -186,7 +189,7 @@ public class ActivityHelper {
 				return;
 			}
 			for (int i = 0; i < actionBar.getChildCount(); i++) {
-				View view = actionBar.getChildAt(i);
+				final View view = actionBar.getChildAt(i);
 				if (view instanceof ImageButton) {
 					((ChangeIconActionBar) mActivity).changeIconActionBar((ImageButton) view);
 				}
@@ -199,26 +202,26 @@ public class ActivityHelper {
 	 * Returns the {@link ViewGroup} for the action bar on phones (compatibility
 	 * action bar). Can return null, and will return null on Honeycomb.
 	 */
-	public ViewGroup getActionBarCompat() {
+	private ViewGroup getActionBarCompat() {
 		return (ViewGroup) mActivity.findViewById(R.id.actionbar_compat);
 	}
 
 	/**
 	 * Adds an action bar button to the compatibility action bar (on phones).
 	 */
-	public View addActionButtonCompat(int id, Drawable icon, CharSequence title, View.OnClickListener clickListener,
-			boolean separatorAfter) {
+	private View addActionButtonCompat(final int id, final Drawable icon, final CharSequence title, final View.OnClickListener clickListener,
+									   final boolean separatorAfter) {
 		final ViewGroup actionBar = getActionBarCompat();
 		if (actionBar == null) {
 			return null;
 		}
 
 		// Create the separator
-		ImageView separator = new ImageView(mActivity, null, R.attr.actionbarCompatSeparatorStyle);
+		final ImageView separator = new ImageView(mActivity, null, R.attr.actionbarCompatSeparatorStyle);
 		separator.setLayoutParams(new ViewGroup.LayoutParams(2, ViewGroup.LayoutParams.FILL_PARENT));
 
 		// Create the button
-		ImageButton actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
+		final ImageButton actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
 		actionButton.setId(id);
 		actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources().getDimension(
 				R.dimen.actionbar_compat_height), ViewGroup.LayoutParams.FILL_PARENT));

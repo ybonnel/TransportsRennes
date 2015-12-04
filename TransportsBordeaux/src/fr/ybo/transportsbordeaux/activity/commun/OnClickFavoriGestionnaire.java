@@ -37,7 +37,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
     private final ArretFavori myFavori = new ArretFavori();
 	private final Activity activity;
 
-    public OnClickFavoriGestionnaire(Activity activity, Ligne ligne, String arretId, String nomArret, String direction) {
+    public OnClickFavoriGestionnaire(final Activity activity, final Ligne ligne, final String arretId, final String nomArret, final String direction) {
         this.ligne = ligne;
         this.nomArret = nomArret;
         this.direction = direction;
@@ -56,8 +56,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
         new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurLigneNonTrouvee = false;
-            private boolean erreurNoSpaceLeft = false;
+			private boolean erreurLigneNonTrouvee;
+            private boolean erreurNoSpaceLeft;
 
             @Override
             protected void onPreExecute() {
@@ -65,19 +65,19 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             }
 
             @Override
-            protected Void doInBackground(Void... pParams) {
+            protected Void doInBackground(final Void... pParams) {
                 try {
 					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
-                } catch (NoSpaceLeftException e) {
+                } catch (final NoSpaceLeftException e) {
                     erreurNoSpaceLeft = true;
-				} catch (LigneInexistanteException e) {
+				} catch (final LigneInexistanteException e) {
 					erreurLigneNonTrouvee = true;
                 }
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 myProgressDialog.dismiss();
 				if (erreurLigneNonTrouvee) {
@@ -94,8 +94,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
     }
 
-    public void onClick(View view) {
-        ImageView imageView = (ImageView) view;
+    @Override
+    public void onClick(final View view) {
+        final ImageView imageView = (ImageView) view;
         if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
             ligne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligne);
             if (!ligne.isChargee()) {

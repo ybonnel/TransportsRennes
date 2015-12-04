@@ -3,17 +3,17 @@
     <item android:id="@id/menu_search"
           android:title="@string/hint_rechercherarret"
           android:icon="@drawable/ic_title_search"
-          android:showAsAction="always"
+          android:showAsAction="ifRoom"
           android:actionViewClass="android.widget.SearchView" />
     
     <item android:id="@+id/menu_bus_favoris"
         android:icon="@drawable/actionbar_bus_favoris"
           android:title="@string/btn_bus_favori"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom" />
     
     <item android:id="@+id/menu_velo_favoris"
         android:icon="@drawable/actionbar_velo_favoris"
           android:title="@string/btn_velo_favori"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom" />
 
 </menu>

@@ -17,22 +17,19 @@
 package fr.ybo.transportscommun.util;
 
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Gestion des jours fériés.
  */
-public class JoursFeries {
+public final class JoursFeries {
 
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM");
 
 	private JoursFeries() {
 	}
 
-	public static boolean is1erMai(Date date) {
+	public static boolean is1erMai(final Date date) {
 		return "0105".equals(SIMPLE_DATE_FORMAT_1ER_MAI.format(date));
 	}
 

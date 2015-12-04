@@ -29,7 +29,7 @@ public class ResultDeparture {
 
 	private final Calendar apiTime;
 
-	public ResultDeparture(List<Departure> departures, Calendar apiTime) {
+	public ResultDeparture(final List<Departure> departures, final Calendar apiTime) {
 		super();
 		this.departures = departures;
 		this.apiTime = apiTime;

@@ -31,7 +31,7 @@ import com.google.gson.reflect.TypeToken;
 import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 
-public class GetTwitters {
+public final class GetTwitters {
 
     private static GetTwitters instance;
 
@@ -45,26 +45,26 @@ public class GetTwitters {
         return instance;
     }
 
-    public Collection<MessageTwitter> getMessages() throws TbcErreurReseaux {
+    public static Collection<MessageTwitter> getMessages() throws TbcErreurReseaux {
         try {
-			URL myUrl = new URL("http://support-twitter.herokuapp.com/tbc");
-			URLConnection connection = myUrl.openConnection();
+			final URL myUrl = new URL("http://support-twitter.herokuapp.com/tbc");
+			final URLConnection connection = myUrl.openConnection();
             connection.setConnectTimeout(20000);
             connection.setReadTimeout(20000);
 			connection.addRequestProperty("Accept", "application/json");
-            Gson gson = new GsonBuilder().create();
-            Type listType = new TypeToken<List<MessageTwitter>>() {
+            final Gson gson = new GsonBuilder().create();
+            final Type listType = new TypeToken<List<MessageTwitter>>() {
             }.getType();
             return gson.fromJson(new InputStreamReader(connection.getInputStream()), listType);
-        } catch (SocketTimeoutException timeoutException) {
+        } catch (final SocketTimeoutException timeoutException) {
             throw new TbcErreurReseaux(timeoutException);
-        } catch (UnknownHostException erreurReseau) {
+        } catch (final UnknownHostException erreurReseau) {
             throw new TbcErreurReseaux(erreurReseau);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new TbcErreurReseaux(exception);
-		} catch (JsonParseException exception) {
+		} catch (final JsonParseException exception) {
 			throw new TbcErreurReseaux(exception);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new TcbException("Erreur lors de l'interrogation de twitter", e);
         }
     }

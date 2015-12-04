@@ -38,22 +38,22 @@ public final class UpdateDataBase {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateDataBase.class);
 
-	private static boolean majDatabaseEncours = false;
+	private static boolean majDatabaseEncours;
 
 	public static boolean isMajDatabaseEncours() {
 		return majDatabaseEncours;
 	}
 
-	public static void setMajDatabaseEncours(boolean majDatabaseEncours) {
+	public static void setMajDatabaseEncours(final boolean majDatabaseEncours) {
 		UpdateDataBase.majDatabaseEncours = majDatabaseEncours;
 	}
 
-	public static void updateIfNecessaryDatabase(int lastUpdate, Resources resources, LoadingInfo loadingInfo)
+	public static void updateIfNecessaryDatabase(final int lastUpdate, final Resources resources, final LoadingInfo loadingInfo)
 			throws GestionFilesException, MoteurCsvException, DataBaseException, NoSpaceLeftException {
 		LOG_YBO.debug("Mise à jour des données Keolis...");
-		DernierMiseAJour dernierMiseAJour = AbstractTransportsApplication.getDataBaseHelper().selectSingle(
+		final DernierMiseAJour dernierMiseAJour = AbstractTransportsApplication.getDataBaseHelper().selectSingle(
 				new DernierMiseAJour());
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(resources, lastUpdate);
+		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(resources, lastUpdate);
 		if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			majDatabaseEncours = true;
@@ -61,18 +61,18 @@ public final class UpdateDataBase {
 				LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 				LOG_YBO.debug("Suppression des lignes chargées");
 				loadingInfo.setNbEtape(9);
-				for (Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().select(new Ligne())) {
+				for (final Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().select(new Ligne())) {
 					if (ligne.isChargee()) {
 						try {
 							AbstractTransportsApplication.getDataBaseHelper().getWritableDatabase()
 									.execSQL("DROP TABLE Horaire_" + ligne.id);
-						} catch (SQLiteException ignored) {
+						} catch (final SQLiteException ignored) {
 						}
 					}
 				}
 				loadingInfo.etapeSuivante();
 				LOG_YBO.debug("Suppression de toutes les tables sauf les tables de favoris.");
-				for (Class<?> clazz : Constantes.CLASSES_DB_TO_DELETE_ON_UPDATE) {
+				for (final Class<?> clazz : Constantes.CLASSES_DB_TO_DELETE_ON_UPDATE) {
 					AbstractTransportsApplication.getDataBaseHelper().deleteAll(clazz);
 				}
 				loadingInfo.etapeSuivante();
@@ -80,21 +80,21 @@ public final class UpdateDataBase {
 				GestionZipKeolis.getAndParseZipKeolis(new MoteurCsv(Constantes.LIST_CLASSES_GTFS), resources,
 						loadingInfo);
 				LOG_YBO.debug("Mise à jour des arrêts favoris suite à la mise à jour.");
-				Ligne ligneSelect = new Ligne();
-				Arret arretSelect = new Arret();
-				ArretRoute arretRouteSelect = new ArretRoute();
-				Direction directionSelect = new Direction();
-				List<ArretFavori> favoris = AbstractTransportsApplication.getDataBaseHelper().select(new ArretFavori());
+				final Ligne ligneSelect = new Ligne();
+				final Arret arretSelect = new Arret();
+				final ArretRoute arretRouteSelect = new ArretRoute();
+				final Direction directionSelect = new Direction();
+				final List<ArretFavori> favoris = AbstractTransportsApplication.getDataBaseHelper().select(new ArretFavori());
 				AbstractTransportsApplication.getDataBaseHelper().deleteAll(ArretFavori.class);
-				for (ArretFavori favori : favoris) {
+				for (final ArretFavori favori : favoris) {
 					ligneSelect.id = favori.ligneId;
-					Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
+					final Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
 					arretSelect.id = favori.arretId;
-					Arret arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretSelect);
+					final Arret arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretSelect);
 					arretRouteSelect.ligneId = favori.ligneId;
 					arretRouteSelect.arretId = favori.arretId;
 					arretRouteSelect.macroDirection = favori.macroDirection;
-					ArretRoute arretRoute = AbstractTransportsApplication.getDataBaseHelper().selectSingle(
+					final ArretRoute arretRoute = AbstractTransportsApplication.getDataBaseHelper().selectSingle(
 							arretRouteSelect);
 					if (ligne == null || arret == null || arretRoute == null) {
 						LOG_YBO.debug("Le favori avec arretId = " + favori.arretId + ", ligneId = " + favori.ligneId
@@ -110,7 +110,7 @@ public final class UpdateDataBase {
 						AbstractTransportsApplication.getDataBaseHelper().insert(favori);
 					}
 				}
-				DernierMiseAJour miseAJour = new DernierMiseAJour();
+				final DernierMiseAJour miseAJour = new DernierMiseAJour();
 				miseAJour.derniereMiseAJour = dateDernierFichierKeolis;
 				AbstractTransportsApplication.getDataBaseHelper().insert(miseAJour);
 				loadingInfo.etapeSuivante();
@@ -122,7 +122,7 @@ public final class UpdateDataBase {
 		AbstractTransportsApplication.getDataBaseHelper().close();
 	}
 
-	public static void chargeDetailLigne(Class<?> rawClass, Ligne ligne, Resources resources)
+	public static void chargeDetailLigne(final Class<?> rawClass, final Ligne ligne, final Resources resources)
 			throws LigneInexistanteException, NoSpaceLeftException {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {

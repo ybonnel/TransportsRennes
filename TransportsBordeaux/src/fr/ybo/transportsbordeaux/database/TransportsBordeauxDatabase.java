@@ -43,7 +43,6 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
     public static final String DATABASE_NAME = "transportsbordeaux.db";
 	private static final int DATABASE_VERSION = 9;
 
-    @SuppressWarnings("unchecked")
     private static final List<Class<?>> DATABASE_ENTITITES =
             Arrays.asList(
                     Arret.class,
@@ -60,30 +59,33 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
                     Trajet.class,
                     VeloFavori.class);
 
-    public TransportsBordeauxDatabase(Context context) {
+    public TransportsBordeauxDatabase(final Context context) {
         super(context, DATABASE_ENTITITES, DATABASE_NAME, DATABASE_VERSION);
     }
 
     private Map<Integer, UpgradeDatabase> mapUpgrades;
 
+    @Override
     protected Map<Integer, UpgradeDatabase> getUpgrades() {
         if (mapUpgrades == null) {
             mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
             mapUpgrades.put(3, new UpgradeDatabase() {
 
-                public void upgrade(SQLiteDatabase db) {
+                @Override
+                public void upgrade(final SQLiteDatabase db) {
                     getBase().dropDataBase(db);
                     getBase().createDataBase(db);
                 }
             });
             mapUpgrades.put(4, new UpgradeDatabase() {
 
-                public void upgrade(SQLiteDatabase db) {
+                @Override
+                public void upgrade(final SQLiteDatabase db) {
 
-                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                    final Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
-                        String tableName = cursor.getString(0);
+                        final String tableName = cursor.getString(0);
                         if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName)
                                 && !"ArretFavori".equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
@@ -101,23 +103,27 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
                 }
             });
             mapUpgrades.put(5, new UpgradeDatabase() {
-                public void upgrade(SQLiteDatabase db) {
+                @Override
+                public void upgrade(final SQLiteDatabase db) {
                     db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
                     getBase().getTable(GroupeFavori.class).createTable(db);
                 }
             });
             mapUpgrades.put(6, new UpgradeDatabase() {
-                public void upgrade(SQLiteDatabase db) {
+                @Override
+                public void upgrade(final SQLiteDatabase db) {
                     getBase().deleteAll(db, DernierMiseAJour.class);
                 }
             });
             mapUpgrades.put(7, new UpgradeDatabase() {
-                public void upgrade(SQLiteDatabase db) {
+                @Override
+                public void upgrade(final SQLiteDatabase db) {
                     getBase().getTable(Notification.class).createTable(db);
                 }
             });
 			mapUpgrades.put(8, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+				@Override
+                public void upgrade(final SQLiteDatabase db) {
 					getBase().getTable(Trajet.class).dropTable(db);
 					getBase().getTable(ArretRoute.class).dropTable(db);
 					getBase().getTable(DernierMiseAJour.class).dropTable(db);
@@ -131,7 +137,7 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 
 					db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
 					getBase().getTable(ArretFavori.class).createTable(db);
-					List<String> columns = new ArrayList<String>(7);
+					final List<String> columns = new ArrayList<String>(7);
 					columns.add("arretId");
 					columns.add("ligneId");
 					columns.add("nomArret");
@@ -140,17 +146,17 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 					columns.add("nomLong");
 					columns.add("ordre");
 					columns.add("groupe");
-					Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null,
+					final Cursor arretFavoriTmp = db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null,
 							null, null, null);
-					int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
-					int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
-					int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
-					int directionIndex = arretFavoriTmp.getColumnIndex("direction");
-					int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
-					int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
-					int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
-					int groupeIndex = arretFavoriTmp.getColumnIndex("groupe");
-					ArretFavori favori = new ArretFavori();
+					final int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
+					final int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
+					final int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+					final int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+					final int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
+					final int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
+					final int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+					final int groupeIndex = arretFavoriTmp.getColumnIndex("groupe");
+					final ArretFavori favori = new ArretFavori();
 					int count = 1;
 					while (arretFavoriTmp.moveToNext()) {
 						favori.arretId = arretFavoriTmp.getString(arretIdIndex);
@@ -170,7 +176,8 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 				}
 			});
 			mapUpgrades.put(9, new UpgradeDatabase() {
-				public void upgrade(SQLiteDatabase db) {
+				@Override
+                public void upgrade(final SQLiteDatabase db) {
 					getBase().getTable(VeloFavori.class).dropTable(db);
 					getBase().getTable(VeloFavori.class).createTable(db);
 				}

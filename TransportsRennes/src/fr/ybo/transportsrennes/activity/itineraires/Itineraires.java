@@ -26,15 +26,15 @@ public class Itineraires extends BaseListActivity {
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-        ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
+        final ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
                 "itinerairesReponse");
-        int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-        setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
-        ListView lv = getListView();
+        final int heureDepart = getIntent().getIntExtra("heureDepart", 0);
+        setListAdapter(new TrajetAdapter(this, itineraireReponse != null ? itineraireReponse.getTrajets() : null, heureDepart));
+        final ListView lv = getListView();
         lv.setTextFilterEnabled(true);
     }
 }

@@ -35,40 +35,42 @@ import fr.ybo.transportscommun.util.Theme;
 public class DashboardFragment extends Fragment {
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View root;
-		if (TransportsBordeauxApplication.getTheme(getActivity()) == Theme.NOIR) {
-			root = inflater.inflate(R.layout.fragment_dashboard_noir, container);
-		} else {
-			root = inflater.inflate(R.layout.fragment_dashboard, container);
-		}
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
+		final View root;
+		root = TransportsBordeauxApplication.getTheme(getActivity()) == Theme.NOIR ? inflater.inflate(R.layout.fragment_dashboard_noir, container) : inflater.inflate(R.layout.fragment_dashboard, container);
 		root.findViewById(R.id.home_btn_bus).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), ListeBus.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_bus_gps).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), ListArretByPosition.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_alert).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), TabAlertes.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_velo).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), ListStationsByPosition.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_parking).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), ListParkings.class));
 			}
 		});
 		root.findViewById(R.id.home_btn_itineraires).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				startActivity(new Intent(getActivity(), ItineraireRequete.class));
 			}
 		});

@@ -22,11 +22,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-@SuppressWarnings("serial")
 public class PortionTrajet implements Serializable {
 
-    public static PortionTrajet convert(Leg leg) {
-        PortionTrajet portionTrajet = new PortionTrajet();
+    public static PortionTrajet convert(final Leg leg) {
+        final PortionTrajet portionTrajet = new PortionTrajet();
         portionTrajet.mode = TraverseMode.valueOf(leg.mode);
         portionTrajet.ligneId = leg.route;
         portionTrajet.startTime = leg.startTime;

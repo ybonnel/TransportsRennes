@@ -25,41 +25,41 @@ public class ListAlerts extends ListFragment {
 
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
-	private Ligne ligne = null;
+	private Ligne ligne;
 
-	public void setLigne(Ligne ligne) {
+	public void setLigne(final Ligne ligne) {
 		this.ligne = ligne;
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
-		Alert alert = (Alert) l.getItemAtPosition(position);
-		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TcbConstantes.URL_MOBILE_TBC + alert.url));
+		final Alert alert = (Alert) l.getItemAtPosition(position);
+		final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(TcbConstantes.URL_MOBILE_TBC + alert.url));
 		startActivity(intent);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		lv.setCacheColorHint(Color.TRANSPARENT);
 		setListAdapter(new AlertAdapter(getActivity(), alerts));
-		Alert alertChargement = new Alert();
+		final Alert alertChargement = new Alert();
 		alertChargement.title = getString(R.string.dialogRequeteAlerts);
 		alerts.add(alertChargement);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurReseau = false;
+			private boolean erreurReseau;
 
-			private List<Alert> alertsTmp = new ArrayList<Alert>();
+			private final List<Alert> alertsTmp = new ArrayList<Alert>();
 
 			@Override
-			protected Void doInBackground(Void... params) {
+			protected Void doInBackground(final Void... params) {
 				try {
-					for (Alert alerte : Alert.getAlertes()) {
+					for (final Alert alerte : Alert.getAlertes()) {
 						if (ligne != null) {
 							if (ligne.nomLong.equals(alerte.ligne)) {
 								alertsTmp.add(alerte);
@@ -68,18 +68,18 @@ public class ListAlerts extends ListFragment {
 							alertsTmp.add(alerte);
 						}
 					}
-				} catch (TbcErreurReseaux e) {
+				} catch (final TbcErreurReseaux e) {
 					erreurReseau = true;
 				}
 				return null;
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				if (erreurReseau) {
 					try {
 						Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
-					} catch (Exception ignore) {
+					} catch (final Exception ignore) {
 
 					}
 				} else {

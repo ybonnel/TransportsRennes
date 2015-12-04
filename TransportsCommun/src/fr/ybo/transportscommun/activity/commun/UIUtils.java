@@ -32,13 +32,13 @@ public class UIUtils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
-    public static boolean isTablet(Context context) {
+    public static boolean isTablet(final Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public static boolean isHoneycombTablet(Context context) {
+    public static boolean isHoneycombTablet(final Context context) {
         return isHoneycomb() && isTablet(context);
     }
 }

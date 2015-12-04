@@ -3,12 +3,12 @@
     <item
         android:id="@+id/menu_bus_favoris"
         android:icon="@drawable/actionbar_bus_favoris"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/btn_bus_favori"/>
     <item
         android:id="@+id/menu_refresh"
         android:icon="@drawable/ic_title_refresh"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:title="@string/menu_refresh"/>
 
 </menu>

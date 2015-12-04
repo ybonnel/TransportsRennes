@@ -16,7 +16,6 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
-import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 
 /**
@@ -86,7 +85,7 @@ public class GetStationHandler extends KeolisHandler<Station> {
 	}
 
 	@Override
-	protected void remplirObjectKeolis(Station currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NUMBER)) {
 			currentObjectKeolis.number = contenuOfBalise;
 		} else if (baliseName.equals(NAME)) {

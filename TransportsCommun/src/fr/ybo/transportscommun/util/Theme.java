@@ -8,11 +8,11 @@ public enum Theme {
 
 	BLANC(Color.BLACK, R.style.Theme_Transports, R.drawable.actionbar_compat_background);
 
-	private int textColor;
-	private int theme;
-	private int actionBarBackground;
+	private final int textColor;
+	private final int theme;
+	private final int actionBarBackground;
 
-	private Theme(int textColor, int theme, int actionBarBackground) {
+	Theme(final int textColor, final int theme, final int actionBarBackground) {
 		this.textColor = textColor;
 		this.theme = theme;
 		this.actionBarBackground = actionBarBackground;

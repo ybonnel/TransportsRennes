@@ -19,17 +19,16 @@ import java.util.Calendar;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class DepartureMetro implements Serializable {
 
 	private Calendar time1;
     private Calendar time2;
 
-    public void setTime1(Calendar time1) {
+    public void setTime1(final Calendar time1) {
         this.time1 = time1;
     }
 
-    public void setTime2(Calendar time2) {
+    public void setTime2(final Calendar time2) {
         this.time2 = time2;
     }
 

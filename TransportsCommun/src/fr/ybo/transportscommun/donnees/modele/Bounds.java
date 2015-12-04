@@ -37,7 +37,7 @@ public class Bounds {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
@@ -45,7 +45,7 @@ public class Bounds {
         return minLatitude;
     }
 
-    public void setMinLatitude(Double minLatitude) {
+    public void setMinLatitude(final Double minLatitude) {
         this.minLatitude = minLatitude;
     }
 
@@ -53,7 +53,7 @@ public class Bounds {
         return maxLatitude;
     }
 
-    public void setMaxLatitude(Double maxLatitude) {
+    public void setMaxLatitude(final Double maxLatitude) {
         this.maxLatitude = maxLatitude;
     }
 
@@ -61,7 +61,7 @@ public class Bounds {
         return minLongitude;
     }
 
-    public void setMinLongitude(Double minLongitude) {
+    public void setMinLongitude(final Double minLongitude) {
         this.minLongitude = minLongitude;
     }
 
@@ -69,7 +69,7 @@ public class Bounds {
         return maxLongitude;
     }
 
-    public void setMaxLongitude(Double maxLongitude) {
+    public void setMaxLongitude(final Double maxLongitude) {
         this.maxLongitude = maxLongitude;
     }
 }

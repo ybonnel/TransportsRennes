@@ -46,21 +46,22 @@ public class TransportsRennesDatabase extends DataBaseHelper {
     private static final String DATABASE_NAME = "keolis.db";
 	private static final int DATABASE_VERSION = 18;
 
-    private Context context;
+    private final Context context;
 
-    public TransportsRennesDatabase(Context context) {
+    public TransportsRennesDatabase(final Context context) {
         super(context, ConstantesKeolis.LIST_CLASSES_DATABASE, DATABASE_NAME, DATABASE_VERSION);
         this.context = context;
     }
 
     private Map<Integer, UpgradeDatabase> mapUpgrades;
 
-    private static abstract class UpgradeDatabaseWithError implements UpgradeDatabase {
+    private abstract static class UpgradeDatabaseWithError implements UpgradeDatabase {
 
-        final public void upgrade(SQLiteDatabase arg0) {
+        @Override
+        public final void upgrade(final SQLiteDatabase arg0) {
             try {
                 myUpgrade(arg0);
-            } catch (Exception exception) {
+            } catch (final Exception exception) {
                 throw new RuntimeException(exception);
             }
         }
@@ -69,31 +70,36 @@ public class TransportsRennesDatabase extends DataBaseHelper {
 
     }
 
+    @Override
     protected Map<Integer, UpgradeDatabase> getUpgrades() {
         if (mapUpgrades == null) {
             mapUpgrades = new HashMap<Integer, UpgradeDatabase>();
             mapUpgrades.put(2, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     getBase().getTable(VeloFavori.class).createTable(db);
                 }
             });
             mapUpgrades.put(3, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     getBase().dropDataBase(db);
                     getBase().createDataBase(db);
                 }
             });
             mapUpgrades.put(4, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
                 }
             });
             mapUpgrades.put(5, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
-                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
+                    final Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
-                        String tableName = cursor.getString(0);
+                        final String tableName = cursor.getString(0);
                         if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
                                 .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
@@ -110,7 +116,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     // Gestion des favoris.
                     db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
                     getBase().getTable(ArretFavori.class).createTable(db);
-                    List<String> columns = new ArrayList<String>(7);
+                    final List<String> columns = new ArrayList<String>(7);
                     columns.add("stopId");
                     columns.add("routeId");
                     columns.add("nomArret");
@@ -118,16 +124,16 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("routeNomCourt");
                     columns.add("routeNomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp =
+                    final Cursor arretFavoriTmp =
                             db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
-                    int arretIdIndex = arretFavoriTmp.getColumnIndex("stopId");
-                    int ligneIdIndex = arretFavoriTmp.getColumnIndex("routeId");
-                    int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
-                    int directionIndex = arretFavoriTmp.getColumnIndex("direction");
-                    int nomCourtIndex = arretFavoriTmp.getColumnIndex("routeNomCourt");
-                    int nomLongIndex = arretFavoriTmp.getColumnIndex("routeNomLong");
-                    int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
-                    ArretFavori favori = new ArretFavori();
+                    final int arretIdIndex = arretFavoriTmp.getColumnIndex("stopId");
+                    final int ligneIdIndex = arretFavoriTmp.getColumnIndex("routeId");
+                    final int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+                    final int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+                    final int nomCourtIndex = arretFavoriTmp.getColumnIndex("routeNomCourt");
+                    final int nomLongIndex = arretFavoriTmp.getColumnIndex("routeNomLong");
+                    final int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+                    final ArretFavori favori = new ArretFavori();
                     int count = 1;
                     while (arretFavoriTmp.moveToNext()) {
                         favori.arretId = arretFavoriTmp.getString(arretIdIndex);
@@ -144,11 +150,12 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                 }
             });
             mapUpgrades.put(6, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
-                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
+                    final Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
-                        String tableName = cursor.getString(0);
+                        final String tableName = cursor.getString(0);
                         if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
                                 .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
@@ -165,16 +172,18 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                 }
             });
             mapUpgrades.put(7, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     db.execSQL("DELETE FROM DernierMiseAJour");
                 }
             });
             mapUpgrades.put(9, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     // Gestion des favoris.
                     db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
                     getBase().getTable(ArretFavori.class).createTable(db);
-                    List<String> columns = new ArrayList<String>(7);
+                    final List<String> columns = new ArrayList<String>(7);
                     columns.add("arretId");
                     columns.add("ligneId");
                     columns.add("nomArret");
@@ -182,16 +191,16 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("nomCourt");
                     columns.add("nomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp =
+                    final Cursor arretFavoriTmp =
                             db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
-                    int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
-                    int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
-                    int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
-                    int directionIndex = arretFavoriTmp.getColumnIndex("direction");
-                    int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
-                    int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
-                    int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
-                    ArretFavori favori = new ArretFavori();
+                    final int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
+                    final int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
+                    final int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+                    final int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+                    final int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
+                    final int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
+                    final int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+                    final ArretFavori favori = new ArretFavori();
                     while (arretFavoriTmp.moveToNext()) {
                         favori.arretId = arretFavoriTmp.getString(arretIdIndex);
                         favori.ligneId = arretFavoriTmp.getString(ligneIdIndex);
@@ -204,18 +213,19 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     }
                     db.execSQL("DROP TABLE ArretFavori_tmp");
                     // Verrue pour la ligne 67 et sa boucle.
-                    Cursor ligne67 = db.query("Ligne", new String[]{"Chargee"}, "id = 67", null, null, null, null);
+                    final Cursor ligne67 = db.query("Ligne", new String[]{"Chargee"}, "id = 67", null, null, null, null);
                     if (ligne67.moveToFirst() && !ligne67.isNull(0) && ligne67.getInt(0) == 1) {
                         db.execSQL("UPDATE Horaire_67 SET terminus = 1 WHERE arretId = 'repto1' AND stopSequence > 3");
                     }
                 }
             });
             mapUpgrades.put(10, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
-                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
+                    final Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
-                        String tableName = cursor.getString(0);
+                        final String tableName = cursor.getString(0);
                         if (!"android_metadata".equals(tableName) && !"VeloFavori".equals(tableName) && !"ArretFavori"
                                 .equals(tableName)) {
                             db.execSQL("DROP TABLE " + tableName);
@@ -232,7 +242,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     // Gestion des favoris.
                     db.execSQL("ALTER TABLE ArretFavori RENAME TO ArretFavori_tmp");
                     getBase().getTable(ArretFavori.class).createTable(db);
-                    List<String> columns = new ArrayList<String>(7);
+                    final List<String> columns = new ArrayList<String>(7);
                     columns.add("arretId");
                     columns.add("ligneId");
                     columns.add("nomArret");
@@ -240,23 +250,23 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     columns.add("nomCourt");
                     columns.add("nomLong");
                     columns.add("ordre");
-                    Cursor arretFavoriTmp =
+                    final Cursor arretFavoriTmp =
                             db.query("ArretFavori_tmp", columns.toArray(new String[7]), null, null, null, null, null);
-                    int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
-                    int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
-                    int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
-                    int directionIndex = arretFavoriTmp.getColumnIndex("direction");
-                    int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
-                    int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
-                    int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
-                    ArretFavori favori = new ArretFavori();
-                    List<Class<?>> classCsv = new ArrayList<Class<?>>();
+                    final int arretIdIndex = arretFavoriTmp.getColumnIndex("arretId");
+                    final int ligneIdIndex = arretFavoriTmp.getColumnIndex("ligneId");
+                    final int nomArretIndex = arretFavoriTmp.getColumnIndex("nomArret");
+                    final int directionIndex = arretFavoriTmp.getColumnIndex("direction");
+                    final int nomCourtIndex = arretFavoriTmp.getColumnIndex("nomCourt");
+                    final int nomLongIndex = arretFavoriTmp.getColumnIndex("nomLong");
+                    final int ordreIndex = arretFavoriTmp.getColumnIndex("ordre");
+                    final ArretFavori favori = new ArretFavori();
+                    final List<Class<?>> classCsv = new ArrayList<Class<?>>();
                     classCsv.add(ArretRoute.class);
                     classCsv.add(Direction.class);
-                    MoteurCsv moteur = new MoteurCsv(classCsv);
-                    Map<String, Map<String, List<ArretRoute>>> mapArretsRoutes =
+                    final MoteurCsv moteur = new MoteurCsv(classCsv);
+                    final Map<String, Map<String, List<ArretRoute>>> mapArretsRoutes =
                             new HashMap<String, Map<String, List<ArretRoute>>>();
-                    for (ArretRoute arretRoute : moteur
+                    for (final ArretRoute arretRoute : moteur
                             .parseInputStream(context.getResources().openRawResource(R.raw.arrets_routes),
                                     ArretRoute.class)) {
                         if (!mapArretsRoutes.containsKey(arretRoute.ligneId)) {
@@ -278,7 +288,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                         favori.ordre = arretFavoriTmp.getInt(ordreIndex);
                         if (mapArretsRoutes.containsKey(favori.ligneId) && mapArretsRoutes.get(favori.ligneId)
                                 .containsKey(favori.arretId)) {
-                            for (ArretRoute arretRoute : mapArretsRoutes.get(favori.ligneId).get(favori.arretId)) {
+                            for (final ArretRoute arretRoute : mapArretsRoutes.get(favori.ligneId).get(favori.arretId)) {
                                 favori.macroDirection = arretRoute.macroDirection;
                             }
                         }
@@ -290,22 +300,24 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                 }
             });
             mapUpgrades.put(11, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     try {
                         db.execSQL("ALTER TABLE ArretFavori ADD COLUMN groupe TEXT");
-                    } catch (Exception ignore) {
+                    } catch (final Exception ignore) {
 
                     }
                     getBase().getTable(GroupeFavori.class).createTable(db);
                 }
             });
             mapUpgrades.put(12, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     boolean tableTrouve = false;
-                    Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
+                    final Cursor cursor = db.query("sqlite_master", Collections.singleton("name").toArray(new String[1]),
                             " type = 'table'", null, null, null, null);
                     while (cursor.moveToNext()) {
-                        String tableName = cursor.getString(0);
+                        final String tableName = cursor.getString(0);
                         if ("GroupeFavori".equals(tableName)) {
                             tableTrouve = true;
                         }
@@ -317,46 +329,54 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                 }
             });
             mapUpgrades.put(13, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     getBase().getTable(Notification.class).createTable(db);
                 }
             });
             mapUpgrades.put(14, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
                     getBase().getTable(AlertBdd.class).createTable(db);
                     getBase().getTable(Bounds.class).createTable(db);
                 }
             });
             mapUpgrades.put(15, new UpgradeDatabaseWithError() {
-                public void myUpgrade(SQLiteDatabase db) {
-                    Ligne ligneA = new Ligne();
+                @Override
+                public void myUpgrade(final SQLiteDatabase db) {
+                    final Ligne ligneA = new Ligne();
                     ligneA.id = "a";
-                    List<Ligne> result = getBase().select(db, ligneA, null, null, null);
+                    final List<Ligne> result = getBase().select(db, ligneA, null, null, null);
                     if (result != null && !result.isEmpty()) {
-                        ligneA = result.get(0);
-                        ligneA.ordre = 0;
-                        getBase().update(db, ligneA);
+                        final Ligne ligneA2 = result.get(0);
+                        ligneA2.ordre = 0;
+                        getBase().update(db, ligneA2);
                     }
                 }
             });
 			mapUpgrades.put(16, new UpgradeDatabaseWithError() {
-				public void myUpgrade(SQLiteDatabase db) {
+				@Override
+                public void myUpgrade(final SQLiteDatabase db) {
 					db.execSQL("CREATE INDEX ArretRoute_directionId ON ArretRoute(directionId)");
 				}
 			});
 			mapUpgrades.put(17, new UpgradeDatabaseWithError() {
-				public void myUpgrade(SQLiteDatabase db) {
+				@Override
+                public void myUpgrade(final SQLiteDatabase db) {
 					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateDebut TEXT");
 					db.execSQL("ALTER TABLE Calendrier ADD COLUMN dateFin TEXT");
 					getBase().getTable(CalendrierException.class).createTable(db);
 				}
 			});
-			mapUpgrades.put(18, new UpgradeDatabaseWithError() {
-				public void myUpgrade(SQLiteDatabase db) {
-                    db.execSQL("DELETE FROM DernierMiseAJour");
-				}
-			});
+			mapUpgrades.put(18, new MyUpgradeDatabaseWithError());
         }
         return mapUpgrades;
+    }
+
+    private static class MyUpgradeDatabaseWithError extends UpgradeDatabaseWithError {
+        @Override
+public void myUpgrade(final SQLiteDatabase db) {
+db.execSQL("DELETE FROM DernierMiseAJour");
+        }
     }
 }

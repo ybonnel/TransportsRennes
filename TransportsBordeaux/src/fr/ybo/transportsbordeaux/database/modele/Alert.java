@@ -13,24 +13,7 @@
  */
 package fr.ybo.transportsbordeaux.database.modele;
 
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
-import fr.ybo.transportsbordeaux.tbcapi.TcbConstantes;
-import fr.ybo.transportsbordeaux.tbcapi.TcbException;
-import fr.ybo.transportsbordeaux.tbcapi.sax.GetAlertesHandler;
-import org.xml.sax.SAXParseException;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,13 +27,12 @@ import java.util.List;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Alert implements Serializable {
 
     public Alert() {
     }
 
-    public Alert(String title, String ligne, String url) {
+    public Alert(final String title, final String ligne, final String url) {
         super();
         this.title = title;
         this.ligne = ligne;
@@ -71,7 +53,7 @@ public class Alert implements Serializable {
      */
     public String url;
 
-    public static List<Alert> getAlertes() throws TbcErreurReseaux {
+    public static List<Alert> getAlertes() {
         // Récupération sur la page internet du table d'horaire.
 //        StringBuilder stringBuilder = new StringBuilder();
 //        String url = TcbConstantes.URL_ALERTES;

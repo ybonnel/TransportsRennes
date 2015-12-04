@@ -49,7 +49,7 @@ public class ListArretByPosition extends AbstractListArretByPosition {
 	}
 
 	@Override
-	protected void deleteFavori(ArretFavori favori) {
+	protected void deleteFavori(final ArretFavori favori) {
 		if (TransportsWidgetConfigure.isNotUsed(this, favori) && TransportsWidget11Configure.isNotUsed(this, favori)
 				&& TransportsWidget21Configure.isNotUsed(this, favori)
 				&& TransportsWidgetLowResConfigure.isNotUsed(this, favori)) {

@@ -45,7 +45,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
 
     private final LayoutInflater inflater;
 
-    public VeloAdapter(Context context, List<Station> objects) {
+    public VeloAdapter(final Context context, final List<Station> objects) {
         super(context, R.layout.dispovelo, objects);
         stations = objects;
         inflater = LayoutInflater.from(getContext());
@@ -60,12 +60,12 @@ public class VeloAdapter extends ArrayAdapter<Station> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        VeloAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.dispovelo, null);
-            holder = new VeloAdapter.ViewHolder();
+            holder = new ViewHolder();
 			holder.icone = (TextView) convertView1.findViewById(R.id.itemSymbole);
             holder.dispoVeloText = (TextView) convertView1.findViewById(R.id.dispovelo_text);
             holder.dispoVeloStation = (TextView) convertView1.findViewById(R.id.dispovelo_station);
@@ -73,13 +73,13 @@ public class VeloAdapter extends ArrayAdapter<Station> {
             holder.iconeCb = (ImageView) convertView1.findViewById(R.id.dispovelo_cb);
             convertView1.setTag(holder);
         } else {
-            holder = (VeloAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 		holder.dispoVeloStation.setTextColor(TransportsRennesApplication.getTextColor(getContext()));
 		holder.dispoVeloDistance.setTextColor(TransportsRennesApplication.getTextColor(getContext()));
-        Station station = stations.get(position);
-        int placesTotales = station.bikesavailable + station.slotsavailable;
-        double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
+        final Station station = stations.get(position);
+        final int placesTotales = station.bikesavailable + station.slotsavailable;
+        final double poucentageDispo = (double) station.bikesavailable / (double) placesTotales;
 
         if (poucentageDispo < SEUIL_ROUGE || !station.state) {
 			holder.icone.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.item_symbol_red));

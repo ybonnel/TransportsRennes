@@ -19,7 +19,6 @@ import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 
-@SuppressWarnings("serial")
 public class Station extends ObjetWithDistance implements Serializable, IStation {
 	public int id;
     public String name;

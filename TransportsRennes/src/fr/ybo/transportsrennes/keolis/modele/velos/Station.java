@@ -23,7 +23,6 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
  *
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Station extends ObjetWithDistance implements Serializable, IStation {
     /**
      * Numéro de la station.

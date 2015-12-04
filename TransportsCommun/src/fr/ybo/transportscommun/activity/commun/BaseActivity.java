@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.TabActivity;
 import android.content.Context;
@@ -31,7 +30,7 @@ import fr.ybo.transportscommun.activity.AccueilActivity;
 
 public class BaseActivity {
 
-	private static boolean onOptionsItemSelected(MenuItem item, ActivityHelper helper, Activity activity) {
+	private static boolean onOptionsItemSelected(final MenuItem item, final ActivityHelper helper, final Activity activity) {
         if (item.getItemId() == android.R.id.home) {
             helper.goHome();
             return true;
@@ -40,7 +39,7 @@ public class BaseActivity {
 				.onOptionsItemSelected(item, activity, helper);
 	}
 
-	public static abstract class BaseTabFragmentActivity extends BaseFragmentActivity {
+	public abstract static class BaseTabFragmentActivity extends BaseFragmentActivity {
 		private TabHost mTabHost;
 		private ViewPager mViewPager;
 		private TabsAdapter mTabsAdapter;
@@ -54,19 +53,19 @@ public class BaseActivity {
 			mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 		}
 
-		protected void addTab(String id, String title, Class<? extends Fragment> fragment) {
+		protected void addTab(final String id, final String title, final Class<? extends Fragment> fragment) {
 			addTab(id, title, fragment, null);
 		}
 
-		protected void addTab(String id, String title, Class<? extends Fragment> fragment, Bundle args) {
+		protected void addTab(final String id, final String title, final Class<? extends Fragment> fragment, final Bundle args) {
 			mTabsAdapter.addTab(mTabHost.newTabSpec(id), fragment, args, title);
 		}
 
-		protected void setCurrentTab(String tag) {
+		protected void setCurrentTab(final String tag) {
 			mTabHost.setCurrentTabByTag(tag);
 		}
 
-		protected void setCurrentTab(Bundle savedInstanceState) {
+		protected void setCurrentTab(final Bundle savedInstanceState) {
 			if (savedInstanceState != null) {
 				mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
 			} else {
@@ -74,7 +73,7 @@ public class BaseActivity {
 			}
 		}
 
-		protected void setOnFragmentChange(OnFragmentChange onFragmentChange) {
+		protected void setOnFragmentChange(final OnFragmentChange onFragmentChange) {
 			mTabsAdapter.setOnFragmentChange(onFragmentChange);
 		}
 
@@ -90,13 +89,13 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onSaveInstanceState(Bundle outState) {
+		protected void onSaveInstanceState(final Bundle outState) {
 			super.onSaveInstanceState(outState);
 			outState.putString("tab", mTabHost.getCurrentTabTag());
 		}
 	}
 
-	public static abstract class BaseFragmentActivity extends FragmentActivity {
+	public abstract static class BaseFragmentActivity extends FragmentActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -104,35 +103,34 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			AbstractTransportsApplication.majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
+		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
 			if (this instanceof AccueilActivity) {
-				getActivityHelper().setupHomeActivity();
+				mActivityHelper.setupHomeActivity();
 			} else {
-				getActivityHelper().setupSubActivity();
+				mActivityHelper.setupSubActivity();
 			}
 		}
 
 	}
 
-	@SuppressWarnings("deprecation")
-	public static abstract class BaseTabActivity extends TabActivity {
+	public abstract static class BaseTabActivity extends TabActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -140,31 +138,30 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			AbstractTransportsApplication.majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
-		@SuppressWarnings("deprecation")
 		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
+		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			getActivityHelper().setupSubActivity();
+			mActivityHelper.setupSubActivity();
 		}
 
 	}
 
-	public static abstract class BaseSimpleActivity extends Activity {
+	public abstract static class BaseSimpleActivity extends Activity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -172,29 +169,29 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			AbstractTransportsApplication.majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
+		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			getActivityHelper().setupSubActivity();
+			mActivityHelper.setupSubActivity();
 		}
 	}
 
-	public static abstract class BasePreferenceActivity extends PreferenceActivity {
+	public abstract static class BasePreferenceActivity extends PreferenceActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -202,29 +199,29 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			AbstractTransportsApplication.majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
+		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			getActivityHelper().setupSubActivity();
+			mActivityHelper.setupSubActivity();
 		}
 	}
 
-	public static abstract class BaseListActivity extends ListActivity {
+	public abstract static class BaseListActivity extends ListActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
 		public ActivityHelper getActivityHelper() {
@@ -232,30 +229,30 @@ public class BaseActivity {
 		}
 
 		@Override
-		protected void onCreate(Bundle savedInstanceState) {
+		protected void onCreate(final Bundle savedInstanceState) {
 			AbstractTransportsApplication.majTheme(this);
 			super.onCreate(savedInstanceState);
 		}
 
 		@Override
-		public boolean onOptionsItemSelected(MenuItem item) {
+		public boolean onOptionsItemSelected(final MenuItem item) {
 			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
-		public boolean onCreateOptionsMenu(Menu menu) {
+		public boolean onCreateOptionsMenu(final Menu menu) {
 			return mActivityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
-		protected void onPostCreate(Bundle savedInstanceState) {
+		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			getActivityHelper().setupSubActivity();
+			mActivityHelper.setupSubActivity();
 		}
 	}
 
-	public static interface OnFragmentChange {
-		public void onFragmentChanged(Fragment currentFragment);
+	public interface OnFragmentChange {
+		void onFragmentChanged(Fragment currentFragment);
 	}
 
 	/**
@@ -269,7 +266,7 @@ public class BaseActivity {
 	 * switch to the correct paged in the ViewPager whenever the selected tab
 	 * changes.
 	 */
-	protected static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener,
+	static class TabsAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener,
 			ViewPager.OnPageChangeListener {
 		private final FragmentActivity mContext;
 		private final TabHost mTabHost;
@@ -281,7 +278,7 @@ public class BaseActivity {
 			private final Class<?> clss;
 			private final Bundle args;
 
-			TabInfo(Class<?> _class, Bundle _args) {
+			TabInfo(final Class<?> _class, final Bundle _args) {
 				clss = _class;
 				args = _args;
 			}
@@ -290,20 +287,20 @@ public class BaseActivity {
 		static class DummyTabFactory implements TabHost.TabContentFactory {
 			private final Context mContext;
 
-			public DummyTabFactory(Context context) {
+			public DummyTabFactory(final Context context) {
 				mContext = context;
 			}
 
 			@Override
-			public View createTabContent(String tag) {
-				View v = new View(mContext);
+			public View createTabContent(final String tag) {
+				final View v = new View(mContext);
 				v.setMinimumWidth(0);
 				v.setMinimumHeight(0);
 				return v;
 			}
 		}
 
-		public TabsAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
+		public TabsAdapter(final FragmentActivity activity, final TabHost tabHost, final ViewPager pager) {
 			super(activity.getSupportFragmentManager());
 			mContext = activity;
 			mTabHost = tabHost;
@@ -314,19 +311,19 @@ public class BaseActivity {
 			dummyTabFactory = new DummyTabFactory(activity);
 		}
 
-		public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args, String title) {
+		public void addTab(final TabHost.TabSpec tabSpec, final Class<?> clss, final Bundle args, final String title) {
 			if (UIUtils.isHoneycomb()) {
 				tabSpec.setIndicator(title);
 			} else {
-				View view = LayoutInflater.from(mContext).inflate(R.layout.tabs_bg, null);
-				TextView tv = (TextView) view.findViewById(R.id.tabsText);
+				final View view = LayoutInflater.from(mContext).inflate(R.layout.tabs_bg, null);
+				final TextView tv = (TextView) view.findViewById(R.id.tabsText);
 				tv.setText(title);
 				tv.setTextColor(AbstractTransportsApplication.getTextColor(mContext));
 				tabSpec.setIndicator(view);
 			}
 			tabSpec.setContent(dummyTabFactory);
 
-			TabInfo info = new TabInfo(clss, args);
+			final TabInfo info = new TabInfo(clss, args);
 			mTabs.add(info);
 			mTabHost.addTab(tabSpec);
 			notifyDataSetChanged();
@@ -337,56 +334,56 @@ public class BaseActivity {
 			return mTabs.size();
 		}
 
-		private Map<Integer, Fragment> mapFragments = new HashMap<Integer, Fragment>();
+		private final Map<Integer, Fragment> mapFragments = new HashMap<Integer, Fragment>();
 
 		@Override
-		public Fragment getItem(int position) {
+		public Fragment getItem(final int position) {
 			if (!mapFragments.containsKey(position)) {
-				TabInfo info = mTabs.get(position);
+				final TabInfo info = mTabs.get(position);
 				mapFragments.put(position, Fragment.instantiate(mContext, info.clss.getName(), info.args));
 			}
 			return mapFragments.get(position);
 		}
 
 		@Override
-		public void onTabChanged(String tabId) {
-			int position = mTabHost.getCurrentTab();
+		public void onTabChanged(final String tabId) {
+			final int position = mTabHost.getCurrentTab();
 			mViewPager.setCurrentItem(position);
 			onFragmentChange(position);
 		}
 
-		public void onFragmentChange(int position) {
+		public void onFragmentChange(final int position) {
 			if (onFragmentChange != null) {
 				onFragmentChange.onFragmentChanged(getItem(position));
 			}
 		}
 
-		private OnFragmentChange onFragmentChange = null;
+		private OnFragmentChange onFragmentChange;
 
-		public void setOnFragmentChange(OnFragmentChange onFragmentChange) {
+		public void setOnFragmentChange(final OnFragmentChange onFragmentChange) {
 			this.onFragmentChange = onFragmentChange;
 		}
 
 		@Override
-		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+		public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {
 		}
 
 		@Override
-		public void onPageSelected(int position) {
+		public void onPageSelected(final int position) {
 			// Unfortunately when TabHost changes the current tab, it kindly
 			// also takes care of putting focus on it when not in touch mode.
 			// The jerk.
 			// This hack tries to prevent this from pulling focus out of our
 			// ViewPager.
-			TabWidget widget = mTabHost.getTabWidget();
-			int oldFocusability = widget.getDescendantFocusability();
+			final TabWidget widget = mTabHost.getTabWidget();
+			final int oldFocusability = widget.getDescendantFocusability();
 			widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
 			mTabHost.setCurrentTab(position);
 			widget.setDescendantFocusability(oldFocusability);
 		}
 
 		@Override
-		public void onPageScrollStateChanged(int state) {
+		public void onPageScrollStateChanged(final int state) {
 		}
 	}
 }

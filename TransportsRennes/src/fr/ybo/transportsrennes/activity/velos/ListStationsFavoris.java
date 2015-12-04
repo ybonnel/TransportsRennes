@@ -60,21 +60,21 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(10));
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listvelofavoris);
 		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
 				R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
-        ListView listView = getListView();
+        final ListView listView = getListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressWarnings({"unchecked"})
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-                Station station = veloAdapter.getItem(position);
-                String lat = Double.toString(station.getLatitude());
-                String lon = Double.toString(station.getLongitude());
-                Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+                final Station station = veloAdapter.getItem(position);
+                final String lat = Double.toString(station.getLatitude());
+                final String lon = Double.toString(station.getLongitude());
+                final Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + ',' + lon);
                 startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
@@ -84,29 +84,25 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
             @Override
             protected void myDoBackground() throws ErreurReseau {
-                List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
+                final List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
                         .select(new VeloFavori());
-                Collection<String> numbers = new ArrayList<String>(10);
-                for (VeloFavori favori : velosFavoris) {
+                final Collection<String> numbers = new ArrayList<String>(10);
+                for (final VeloFavori favori : velosFavoris) {
                     numbers.add(favori.number);
                 }
-                Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+                final Collection<Station> stationsTmp = Keolis.getStationByNumbers(numbers);
 				if (isCancelled()) {
 					return;
 				}
                 synchronized (stations) {
                     stations.clear();
                     stations.addAll(stationsTmp);
-                    Collections.sort(stations, new Comparator<Station>() {
-                        public int compare(Station o1, Station o2) {
-                            return o1.name.compareToIgnoreCase(o2.name);
-                        }
-                    });
+                    Collections.sort(stations, new StationComparator2());
                 }
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
@@ -120,29 +116,25 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
+				final List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
 						.select(new VeloFavori());
-				Collection<String> numbers = new ArrayList<String>(10);
-				for (VeloFavori favori : velosFavoris) {
+				final Collection<String> numbers = new ArrayList<String>(10);
+				for (final VeloFavori favori : velosFavoris) {
 					numbers.add(favori.number);
 				}
-				Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
+				final Collection<Station> stationsTmp = Keolis.getStationByNumbers(numbers);
 				if (isCancelled()) {
 					return;
 				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
+					Collections.sort(stations, new StationComparator());
 				}
 			}
 
             @Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
@@ -152,21 +144,21 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 	}
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == android.R.id.list) {
-            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-            Station station = (Station) getListAdapter().getItem(info.position);
+            final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            final Station station = (Station) getListAdapter().getItem(info.position);
             menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
             menu.add(Menu.NONE, R.id.supprimerFavori, 0, getString(R.string.suprimerFavori));
         }
     }
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Station station;
-        VeloFavori veloFavori;
+    public boolean onContextItemSelected(final MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final Station station;
+        final VeloFavori veloFavori;
         switch (item.getItemId()) {
             case R.id.supprimerFavori:
                 station = (Station) getListAdapter().getItem(info.position);
@@ -177,7 +169,21 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 return true;
             default:
-                return super.onOptionsItemSelected(item);
+                return onOptionsItemSelected(item);
+        }
+    }
+
+    private static class StationComparator implements Comparator<Station> {
+        @Override
+public int compare(final Station o1, final Station o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
+        }
+    }
+
+    private static class StationComparator2 implements Comparator<Station> {
+        @Override
+        public int compare(final Station o1, final Station o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
         }
     }
 }

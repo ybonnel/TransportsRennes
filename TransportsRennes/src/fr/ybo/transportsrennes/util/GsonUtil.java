@@ -19,7 +19,7 @@ import fr.ybo.opentripplanner.client.Constantes;
 
 class GsonUtil {
 
-    private static Gson gson = null;
+    private static Gson gson;
 
     public static synchronized Gson getGson() {
         if (gson == null) {

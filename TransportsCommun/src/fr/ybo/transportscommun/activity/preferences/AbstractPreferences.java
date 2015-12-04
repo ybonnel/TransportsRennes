@@ -16,7 +16,7 @@ public abstract class AbstractPreferences extends BasePreferenceActivity impleme
 	protected abstract void setupActionBar();
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.preferences);
@@ -26,7 +26,7 @@ public abstract class AbstractPreferences extends BasePreferenceActivity impleme
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+	public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
 		if ((AbstractTransportsApplication.getDonnesSpecifiques().getApplicationName() + "_choixTheme").equals(key)) {
 			restart();
 		} else if ((AbstractTransportsApplication.getDonnesSpecifiques().getApplicationName() + "_debug").equals(key)) {
@@ -41,8 +41,8 @@ public abstract class AbstractPreferences extends BasePreferenceActivity impleme
 		super.onDestroy();
 	}
 
-	public void restart() {
-		startActivity(new Intent(this, this.getClass()));
+	private void restart() {
+		startActivity(new Intent(this, getClass()));
 		finish();
 	}
 

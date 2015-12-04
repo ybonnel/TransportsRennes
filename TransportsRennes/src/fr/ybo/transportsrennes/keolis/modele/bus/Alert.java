@@ -31,13 +31,12 @@ import fr.ybo.transportscommun.util.Formatteur;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Alert implements Serializable {
 
     public Alert() {
     }
 
-    public Alert(Alert alert) {
+    public Alert(final Alert alert) {
         title = alert.title;
         starttime = alert.starttime;
         endtime = alert.endtime;
@@ -78,17 +77,16 @@ public class Alert implements Serializable {
      */
     public String link;
 
-    public String getDetailFormatte(Iterable<String> arrets) {
+    public String getDetailFormatte(final Iterable<String> arrets) {
 		if (detail == null) {
 			return "";
 		}
-        String detailFormatte =
+        final String detailFormatte =
                 detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
                         .replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
-        StringBuilder resultat = new StringBuilder();
+        final StringBuilder resultat = new StringBuilder();
         char carOld = '\0';
-        for (char car : detailFormatte.toCharArray()) {
-            //noinspection OverlyComplexBooleanExpression
+        for (final char car : detailFormatte.toCharArray()) {
             if ((carOld >= '0' && carOld <= '9' || carOld >= 'a' && carOld <= 'z' || carOld == 'é') && car >= 'A' && car <= 'Z') {
                 // Minuscule suivie d'une majuscule, ça doit être un retour à la ligne qui manque.
                 resultat.append(".\n");
@@ -98,14 +96,14 @@ public class Alert implements Serializable {
         }
 
         String resultatChaine = resultat.toString();
-        for (String arretToBold : arrets) {
+        for (final String arretToBold : arrets) {
             resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>" + arretToBold + "</b>");
         }
 
         // recherche des lignes à mettre en gras.
-        String[] champs = resultatChaine.split("\n");
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String champ : champs) {
+        final String[] champs = resultatChaine.split("\n");
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final String champ : champs) {
             if (champ.startsWith("Ligne")) {
                 stringBuilder.append("<br/><b>");
             }
@@ -136,7 +134,7 @@ public class Alert implements Serializable {
 
     public CharSequence getTitleFormate() {
         String titleFormate = title;
-        while (titleFormate.length() > 0 && CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {
+        while (!titleFormate.isEmpty() && CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {
             titleFormate = titleFormate.substring(1);
             if (titleFormate.startsWith("TTZ")) {
                 titleFormate = titleFormate.substring(3);

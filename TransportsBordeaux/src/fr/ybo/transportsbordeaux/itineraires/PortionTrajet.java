@@ -8,11 +8,10 @@ import fr.ybo.opentripplanner.client.modele.Leg;
 import fr.ybo.opentripplanner.client.modele.TraverseMode;
 
 
-@SuppressWarnings("serial")
 public class PortionTrajet implements Serializable {
 
-	public static PortionTrajet convert(Leg leg) {
-		PortionTrajet portionTrajet = new PortionTrajet();
+	public static PortionTrajet convert(final Leg leg) {
+		final PortionTrajet portionTrajet = new PortionTrajet();
 		portionTrajet.mode = TraverseMode.valueOf(leg.mode);
 		portionTrajet.ligneId = leg.route;
 		portionTrajet.startTime = leg.startTime;

@@ -31,7 +31,7 @@ public class AlertBdd {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
@@ -39,7 +39,7 @@ public class AlertBdd {
         return lignes;
     }
 
-    public void setLignes(String lignes) {
+    public void setLignes(final String lignes) {
         this.lignes = lignes;
     }
 }

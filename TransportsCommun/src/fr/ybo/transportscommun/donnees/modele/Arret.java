@@ -23,7 +23,6 @@ import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 
-@SuppressWarnings({"serial"})
 @FichierCsv("arrets.txt")
 @Entity
 public class Arret extends ObjetWithDistance implements Serializable {
@@ -53,8 +52,8 @@ public class Arret extends ObjetWithDistance implements Serializable {
         return longitude;
     }
 
-    public static Arret getArret(String arretId) {
-        Arret arret = new Arret();
+    public static Arret getArret(final String arretId) {
+        final Arret arret = new Arret();
         arret.id = arretId;
 		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(arret);
     }

@@ -19,26 +19,26 @@ package fr.ybo.transportscommun.util;
 
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 
-public class IconeLigne {
+public final class IconeLigne {
 
 	private IconeLigne() {
 	}
 
-	public static int getIconeResource(String nomCourt) {
+	public static int getIconeResource(final String nomCourt) {
 		try {
 			return AbstractTransportsApplication.getDonnesSpecifiques().getDrawableClass()
 					.getDeclaredField('i' + nomCourt.toLowerCase()).getInt(null);
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 			return AbstractTransportsApplication.getDonnesSpecifiques().getIconeLigne();
 		}
 	}
 
 
-	public static int getMarkeeResource(String nomCourt) {
+	public static int getMarkeeResource(final String nomCourt) {
 		try {
 			return AbstractTransportsApplication.getDonnesSpecifiques().getDrawableClass()
 					.getDeclaredField('m' + nomCourt.toLowerCase()).getInt(null);
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 			return AbstractTransportsApplication.getDonnesSpecifiques().getIconeLigne();
 		}
 	}

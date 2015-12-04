@@ -43,21 +43,19 @@ public abstract class AbstractLoadingActivity extends Activity {
 
 	private ImageView iconeLigne;
 
-	private Handler handler = new Handler();
+	private final Handler handler = new Handler();
 
-	private int operation;
-
-	private boolean arretDemande = false;
+	private boolean arretDemande;
 
 	@Override
-	protected void onCreate(Bundle bundle) {
+	protected void onCreate(final Bundle bundle) {
 		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(bundle);
 		setContentView(R.layout.loading);
 		message = (TextView) findViewById(R.id.messageLoading);
 		loadingBar = (ProgressBar) findViewById(R.id.loadingBar);
 		iconeLigne = (ImageView) findViewById(R.id.iconeLigne);
-		operation = getIntent().getIntExtra("operation", 1);
+		final int operation = getIntent().getIntExtra("operation", 1);
 		switch (operation) {
 			case OPERATION_UPGRADE_DATABASE:
 				upgradeDatabase();
@@ -76,7 +74,7 @@ public abstract class AbstractLoadingActivity extends Activity {
 
 	// Verrue pour faire marcher en 1.6.
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if ((!(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.DONUT)
 				&& keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)) {
 			onBackPressed();
@@ -108,9 +106,9 @@ public abstract class AbstractLoadingActivity extends Activity {
 		new AsyncTask<Void, Void, Void>() {
 
 			@Override
-			protected Void doInBackground(Void... pParams) {
-				Collection<String> ligneIds = new HashSet<String>();
-				for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper()
+			protected Void doInBackground(final Void... pParams) {
+				final Collection<String> ligneIds = new HashSet<String>();
+				for (final ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper()
 						.selectAll(ArretFavori.class)) {
 					if (!ligneIds.contains(favori.ligneId)) {
 						ligneIds.add(favori.ligneId);
@@ -119,12 +117,13 @@ public abstract class AbstractLoadingActivity extends Activity {
 
 				if (!ligneIds.isEmpty()) {
 					int count = 0;
-					Ligne ligneSelect = new Ligne();
-					for (String ligneId : ligneIds) {
+					final Ligne ligneSelect = new Ligne();
+					for (final String ligneId : ligneIds) {
 						ligneSelect.id = ligneId;
-						Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
+						final Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
 						final String nomLigne = ligne.nomCourt;
 						runOnUiThread(new Runnable() {
+							@Override
 							public void run() {
 								message.setText(getString(getInfoChangementGtfs())
 										+ getString(getChargementLigneFavori(), nomLigne));
@@ -132,8 +131,8 @@ public abstract class AbstractLoadingActivity extends Activity {
 						});
 						try {
 							UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-						} catch (LigneInexistanteException ignore) {
-						} catch (NoSpaceLeftException e) {
+						} catch (final LigneInexistanteException ignore) {
+						} catch (final NoSpaceLeftException e) {
 							Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG)
 									.show();
 						}
@@ -152,9 +151,9 @@ public abstract class AbstractLoadingActivity extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
-				AbstractLoadingActivity.this.finish();
+				finish();
 			}
 		}.execute((Void[]) null);
 	}
@@ -164,7 +163,7 @@ public abstract class AbstractLoadingActivity extends Activity {
 		new AsyncTask<Void, Void, Void>() {
 
 			@Override
-			protected Void doInBackground(Void... pParams) {
+			protected Void doInBackground(final Void... pParams) {
 				try {
 					UpdateDataBase.updateIfNecessaryDatabase(getLastUpdate(), getResources(), new LoadingInfo() {
 						@Override
@@ -180,7 +179,7 @@ public abstract class AbstractLoadingActivity extends Activity {
 							});
 						}
 					});
-				} catch (NoSpaceLeftException e) {
+				} catch (final NoSpaceLeftException e) {
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -191,25 +190,26 @@ public abstract class AbstractLoadingActivity extends Activity {
 					AbstractTransportsApplication.getDataBaseHelper().deleteAll(DernierMiseAJour.class);
 					return null;
 				}
-				Collection<String> ligneIds = new HashSet<String>();
-				for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().select(new ArretFavori())) {
+				final Collection<String> ligneIds = new HashSet<String>();
+				for (final ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().select(new ArretFavori())) {
 					if (!ligneIds.contains(favori.ligneId)) {
 						ligneIds.add(favori.ligneId);
 					}
 				}
-				Ligne ligneSelect = new Ligne();
-				for (String ligneId : ligneIds) {
+				final Ligne ligneSelect = new Ligne();
+				for (final String ligneId : ligneIds) {
 					ligneSelect.id = ligneId;
-					Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
+					final Ligne ligne = AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligneSelect);
 					if (ligne == null) {
 						LOG_YBO.debug("La ligne " + ligneId + " n'existe plus, suppression des favoris associés");
-						ArretFavori favori = new ArretFavori();
+						final ArretFavori favori = new ArretFavori();
 						favori.ligneId = ligneId;
 						AbstractTransportsApplication.getDataBaseHelper().delete(favori);
 						continue;
 					}
 					final String nomLigne = ligne.nomCourt;
 					runOnUiThread(new Runnable() {
+						@Override
 						public void run() {
 							message.setText(getString(getInfoChangementGtfs())
 									+ getString(getChargementLigneFavori(), nomLigne));
@@ -217,8 +217,8 @@ public abstract class AbstractLoadingActivity extends Activity {
 					});
 					try {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-					} catch (LigneInexistanteException ignore) {
-					} catch (NoSpaceLeftException e) {
+					} catch (final LigneInexistanteException ignore) {
+					} catch (final NoSpaceLeftException e) {
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
@@ -232,15 +232,15 @@ public abstract class AbstractLoadingActivity extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
-				AbstractLoadingActivity.this.finish();
+				finish();
 			}
 		}.execute((Void[]) null);
 	}
 
 	private int nbLignesToLoad;
-	private int ligneCourante = 0;
+	private int ligneCourante;
 
 	private void loadAllLines() {
 		message.setText(getInfoChangementGtfs());
@@ -248,43 +248,29 @@ public abstract class AbstractLoadingActivity extends Activity {
 		new AsyncTask<Void, Void, Void>() {
 
 			@Override
-			protected Void doInBackground(Void... pParams) {
-				List<Ligne> allLines = AbstractTransportsApplication.getDataBaseHelper().select(new Ligne());
-				Iterator<Ligne> itLignes = allLines.iterator();
+			protected Void doInBackground(final Void... pParams) {
+				final List<Ligne> allLines = AbstractTransportsApplication.getDataBaseHelper().select(new Ligne());
+				final Iterator<Ligne> itLignes = allLines.iterator();
 				while (itLignes.hasNext()) {
 					if (itLignes.next().isChargee()) {
 						itLignes.remove();
 					}
 				}
-				Collections.sort(allLines, new Comparator<Ligne>() {
-
-					private Map<String, Double> mapScores = new HashMap<String, Double>();
-					private Random random = new Random();
-
-					@Override
-					public int compare(Ligne lhs, Ligne rhs) {
-						if (!mapScores.containsKey(lhs.id)) {
-							mapScores.put(lhs.id, random.nextDouble());
-						}
-						if (!mapScores.containsKey(rhs.id)) {
-							mapScores.put(rhs.id, random.nextDouble());
-						}
-						return mapScores.get(lhs.id).compareTo(mapScores.get(rhs.id));
-					}
-				});
+				Collections.sort(allLines, new LigneComparator());
 				nbLignesToLoad = allLines.size();
-				for (Ligne ligne : allLines) {
+				for (final Ligne ligne : allLines) {
 					if (arretDemande) {
 						break;
 					}
 					final String nomLigne = ligne.nomCourt;
 					handler.post(new Runnable() {
+						@Override
 						public void run() {
 							message.setText(getString(getInfoChangementGtfs()) + '\n'
 									+ getString(getPremierAccesLigne(), nomLigne));
 							iconeLigne.setVisibility(View.VISIBLE);
 							iconeLigne.setImageResource(IconeLigne.getIconeResource(nomLigne));
-							Animation rotation = new RotateAnimation(0, 360);
+							final Animation rotation = new RotateAnimation(0, 360);
 							rotation.setDuration(500);
 							rotation.setRepeatCount(Animation.INFINITE);
 							rotation.setRepeatMode(Animation.RESTART);
@@ -293,8 +279,8 @@ public abstract class AbstractLoadingActivity extends Activity {
 					});
 					try {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-					} catch (LigneInexistanteException ignore) {
-					} catch (NoSpaceLeftException e) {
+					} catch (final LigneInexistanteException ignore) {
+					} catch (final NoSpaceLeftException e) {
 						handler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -315,9 +301,9 @@ public abstract class AbstractLoadingActivity extends Activity {
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
-				AbstractLoadingActivity.this.finish();
+				finish();
 			}
 		}.execute((Void[]) null);
 	}
@@ -325,4 +311,21 @@ public abstract class AbstractLoadingActivity extends Activity {
 	public static final int OPERATION_UPGRADE_DATABASE = 1;
 	public static final int OPERATION_LOAD_ALL_LINES = 2;
 	public static final int OPERATION_LOAD_FAVORIS = 3;
+
+	private static class LigneComparator implements Comparator<Ligne> {
+
+		private final Map<String, Double> mapScores = new HashMap<String, Double>();
+		private final Random random = new Random();
+
+		@Override
+        public int compare(final Ligne lhs, final Ligne rhs) {
+            if (!mapScores.containsKey(lhs.id)) {
+                mapScores.put(lhs.id, random.nextDouble());
+            }
+            if (!mapScores.containsKey(rhs.id)) {
+                mapScores.put(rhs.id, random.nextDouble());
+            }
+            return mapScores.get(lhs.id).compareTo(mapScores.get(rhs.id));
+        }
+	}
 }

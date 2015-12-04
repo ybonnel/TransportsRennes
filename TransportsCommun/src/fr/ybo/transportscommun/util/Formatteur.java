@@ -24,11 +24,11 @@ public final class Formatteur {
 	private Formatteur() {
 	}
 
-	public static String formatterChaine(String chaine) {
-		StringBuilder nomLongFormateBuilder = new StringBuilder();
-		for (String champ : chaine.replaceAll("/", "-").split(" ")) {
-			for (String champ2 : champ.split("\\(")) {
-				if (champ2.length() > 0) {
+	public static String formatterChaine(final String chaine) {
+		final StringBuilder nomLongFormateBuilder = new StringBuilder();
+		for (final String champ : chaine.replaceAll("/", "-").split(" ")) {
+			for (final String champ2 : champ.split("\\(")) {
+				if (!champ2.isEmpty()) {
 					nomLongFormateBuilder.append(champ2.substring(0, 1).toUpperCase());
 					nomLongFormateBuilder.append(champ2.substring(1, champ2.length()).toLowerCase());
 				}
@@ -44,20 +44,20 @@ public final class Formatteur {
 		while (nomLongFormate.contains("  ")) {
 			nomLongFormate = nomLongFormate.replaceAll("  ", " ");
 		}
-		while (nomLongFormate.length() > 0 && nomLongFormate.charAt(0) == ' ') {
+		while (!nomLongFormate.isEmpty() && nomLongFormate.charAt(0) == ' ') {
 			nomLongFormate = nomLongFormate.substring(1);
 		}
 		return nomLongFormate;
 	}
 
-	public static String formatterCalendar(Context context, int prochainDepart, int now) {
-		StringBuilder stringBuilder = new StringBuilder();
-		int tempsEnMinutes = prochainDepart - now;
+	public static String formatterCalendar(final Context context, final int prochainDepart, final int now) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {
 			stringBuilder.append(context.getString(R.string.tropTard));
 		} else {
-			int heures = tempsEnMinutes / 60;
-			int minutes = tempsEnMinutes - heures * 60;
+			final int heures = tempsEnMinutes / 60;
+			final int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);

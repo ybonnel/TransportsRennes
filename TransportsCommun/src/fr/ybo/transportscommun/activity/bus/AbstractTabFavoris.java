@@ -31,26 +31,14 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 
 	protected abstract void loadFavoris();
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.ybo.transportscommun.activity.commun.CapptainFragmentActivity#onResume
-	 * ()
-	 */
 	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getLayout());
 		setupActionBar();
-		List<GroupeFavori> groupes = AbstractTransportsApplication.getDataBaseHelper().selectAll(GroupeFavori.class);
+		final List<GroupeFavori> groupes = AbstractTransportsApplication.getDataBaseHelper().selectAll(GroupeFavori.class);
 		if (groupes.isEmpty()) {
-			Intent intent = new Intent(this, getListFavorisForNoGroupClass());
+			final Intent intent = new Intent(this, getListFavorisForNoGroupClass());
 			startActivity(intent);
 			finish();
 			return;
@@ -59,14 +47,14 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 		configureTabs();
 
 		addTab("all", getString(R.string.all), getListFavoris());
-		for (GroupeFavori groupe : groupes) {
-			Bundle args = new Bundle();
+		for (final GroupeFavori groupe : groupes) {
+			final Bundle args = new Bundle();
 			args.putString("groupe", groupe.name);
 			addTab(groupe.name, groupe.name, getListFavoris(), args);
 		}
 
 		setCurrentTab(savedInstanceState);
-		if (FavorisManager.getInstance().hasFavorisToLoad()) {
+		if (FavorisManager.hasFavorisToLoad()) {
 			loadFavoris();
 		}
 	}
@@ -76,17 +64,17 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 	private static final int MENU_SUPPRIMER = 2;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem itemAjout = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
+		final MenuItem itemAjout = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
 		itemAjout.setIcon(android.R.drawable.ic_menu_add);
-		MenuItem itemSupp = menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe);
+		final MenuItem itemSupp = menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe);
 		itemSupp.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 
 	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+	public boolean onPrepareOptionsMenu(final Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		if ("all".equals(getCurrentTab())) {
 			menu.findItem(MENU_SUPPRIMER).setVisible(false);
@@ -97,7 +85,7 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 		if (item.getItemId() == R.id.menu_export) {
 			FavorisManager.getInstance().export(this);
@@ -106,13 +94,13 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 			startActivity(new Intent(this, getClass()));
 			finish();
 		} else if (item.getItemId() == MENU_SUPPRIMER) {
-			ArretFavori arretFavori = new ArretFavori();
+			final ArretFavori arretFavori = new ArretFavori();
 			arretFavori.groupe = getCurrentTab();
-			for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().select(arretFavori)) {
+			for (final ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().select(arretFavori)) {
 				favori.groupe = "";
 				AbstractTransportsApplication.getDataBaseHelper().update(favori);
 			}
-			GroupeFavori groupeFavori = new GroupeFavori();
+			final GroupeFavori groupeFavori = new GroupeFavori();
 			groupeFavori.name = getCurrentTab();
 			AbstractTransportsApplication.getDataBaseHelper().delete(groupeFavori);
 			startActivity(new Intent(this, getClass()));
@@ -130,14 +118,15 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 		final EditText input = new EditText(this);
 		alert.setView(input);
 		alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				String value = input.getText().toString().trim();
-				if (value == null || value.length() == 0) {
+			@Override
+			public void onClick(final DialogInterface dialog, final int whichButton) {
+				final String value = input.getText().toString().trim();
+				if (value.isEmpty()) {
 					Toast.makeText(AbstractTabFavoris.this, getString(R.string.groupeObligatoire), Toast.LENGTH_LONG)
 							.show();
 					return;
 				}
-				GroupeFavori groupeFavori = new GroupeFavori();
+				final GroupeFavori groupeFavori = new GroupeFavori();
 				groupeFavori.name = value;
 				if (!AbstractTransportsApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
 						|| value.equals(getString(R.string.all))) {
@@ -151,12 +140,14 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 			}
 		});
 
-		alert.setNegativeButton(getString(R.string.annuler), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				dialog.cancel();
-			}
-		});
+		alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener());
 		alert.create().show();
 	}
 
+	private static class MyOnClickListener implements DialogInterface.OnClickListener {
+		@Override
+        public void onClick(final DialogInterface dialog, final int whichButton) {
+            dialog.cancel();
+        }
+	}
 }

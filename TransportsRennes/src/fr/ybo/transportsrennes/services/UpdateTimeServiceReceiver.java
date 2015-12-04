@@ -23,12 +23,12 @@ import android.content.pm.PackageManager;
 
 public class UpdateTimeServiceReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
         try {
-            PackageManager pm = context.getPackageManager();
+            final PackageManager pm = context.getPackageManager();
             pm.setComponentEnabledSetting(new ComponentName(context, UpdateTimeService.class),
                     PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-        } catch (Exception ignore) {}
+        } catch (final Exception ignore) {}
     }
 }

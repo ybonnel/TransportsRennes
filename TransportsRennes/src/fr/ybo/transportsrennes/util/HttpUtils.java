@@ -27,7 +27,7 @@ public class HttpUtils {
     private static final int CONNECTION_TIMEOUT = 20000;
 
     public static HttpClient getHttpClient() {
-        HttpParams myHttpParams = new BasicHttpParams();
+        final HttpParams myHttpParams = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(myHttpParams,
                 CONNECTION_TIMEOUT);
         HttpConnectionParams.setSoTimeout(myHttpParams, CONNECTION_TIMEOUT);

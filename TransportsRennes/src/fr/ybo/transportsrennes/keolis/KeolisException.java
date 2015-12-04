@@ -33,7 +33,7 @@ public class KeolisException extends RuntimeException {
 	 *
 	 * @param message message.
 	 */
-	public KeolisException(String message) {
+	public KeolisException(final String message) {
 		super(message);
 	}
 
@@ -43,7 +43,7 @@ public class KeolisException extends RuntimeException {
 	 * @param message message.
 	 * @param cause   exception.
 	 */
-	public KeolisException(String message, Throwable cause) {
+	public KeolisException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
 

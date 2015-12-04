@@ -64,9 +64,9 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 				&& calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR);
 	}
 
-	protected Calendar today = Calendar.getInstance();
+	private Calendar today = Calendar.getInstance();
 	protected Calendar calendar = Calendar.getInstance();
-	protected Calendar calendarLaVeille = Calendar.getInstance();
+	private Calendar calendarLaVeille = Calendar.getInstance();
 
 	protected ArretFavori favori;
 
@@ -78,7 +78,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			favori.nomArret = getIntent().getExtras().getString("nomArret");
 			favori.direction = getIntent().getExtras().getString("direction");
 			favori.macroDirection = getIntent().getExtras().getInt("macroDirection", 0);
-			Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+			final Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 			if (ligne == null) {
 				finish();
 				return;
@@ -117,13 +117,13 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
 	protected UpdateTime updateTime;
 
-	private boolean firstUpdate = false;
+	private boolean firstUpdate;
 
 	protected abstract Set<Integer> getSecondsToUpdate();
 
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mInflater = LayoutInflater.from(this);
 		calendar = Calendar.getInstance();
@@ -147,7 +147,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		}
 		updateTime = new UpdateTime() {
 
-			public void update(Calendar calendar) {
+			@Override
+			public void update(final Calendar calendar) {
 				if (isToday()) {
 					AbstractDetailArret.this.calendar = Calendar.getInstance();
 					today = Calendar.getInstance();
@@ -168,28 +169,28 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
 			@Override
 			public Set<Integer> secondesToUpdate() {
-				return AbstractDetailArret.this.getSecondsToUpdate();
+				return getSecondsToUpdate();
 			}
 		};
 		updateTimeUtil = new UpdateTimeUtil(updateTime, this);
-		if (!myLigne.isChargee()) {
-			chargerLigne();
-		} else {
+		if (myLigne.isChargee()) {
 			setListAdapter(construireAdapter());
 			if (getListAdapter().getCount() != 0) {
 				setSelection(((AbstractDetailArretAdapter) getListAdapter()).getPositionToMove());
 			}
 			updateTimeUtil.start();
 			firstUpdate = true;
+		} else {
+			chargerLigne();
 		}
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({ "unchecked" })
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				DetailArretConteneur detailArretConteneur = (DetailArretConteneur) arretAdapter.getItem(position);
-				Intent intent = new Intent(AbstractDetailArret.this, getDetailTrajetClass());
+			@Override
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) arretAdapter.getItem(position);
+				final Intent intent = new Intent(AbstractDetailArret.this, getDetailTrajetClass());
 				intent.putExtra("trajetId", detailArretConteneur.getTrajetId());
 				intent.putExtra("sequence", detailArretConteneur.getSequence());
 				startActivity(intent);
@@ -203,7 +204,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		detailCorrespondance.removeAllViews();
 		detailCorrespondance.setVisibility(View.INVISIBLE);
 		correspondance.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				if (detailCorrespondance.getVisibility() == View.VISIBLE) {
 					correspondance.setImageResource(R.drawable.arrow_right_float);
 					detailCorrespondance.removeAllViews();
@@ -219,8 +221,9 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		if (AbstractTransportsApplication.hasAlert(myLigne.nomCourt)) {
 			findViewById(R.id.alerte).setVisibility(View.VISIBLE);
 			findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent intent = new Intent(AbstractDetailArret.this, getListAlertsForOneLineClass());
+				@Override
+				public void onClick(final View view) {
+					final Intent intent = new Intent(AbstractDetailArret.this, getListAlertsForOneLineClass());
 					intent.putExtra("ligne", myLigne);
 					startActivity(intent);
 				}
@@ -245,54 +248,46 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		super.onPause();
 	}
 
-	private void construireCorrespondance(LinearLayout detailCorrespondance) {
+	private void construireCorrespondance(final LinearLayout detailCorrespondance) {
 		/* Recuperation de l'arretCourant */
 		Arret arretCourant = new Arret();
 		arretCourant.id = favori.arretId;
 		arretCourant = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arretCourant);
-		Location locationArret = new Location("myProvider");
+		final Location locationArret = new Location("myProvider");
 		locationArret.setLatitude(arretCourant.latitude);
 		locationArret.setLongitude(arretCourant.longitude);
 
 		/** Construction requête. */
-		StringBuilder requete = new StringBuilder();
-		requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-		requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
-		requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection ");
-		requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
-		requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
-		requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
-		requete.append(" AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude");
 
 		/** Paramètres de la requête */
-		double minLatitude = arretCourant.latitude - DISTANCE_LAT_IN_DEGREE;
-		double maxLatitude = arretCourant.latitude + DISTANCE_LAT_IN_DEGREE;
-		double minLongitude = arretCourant.longitude - DISTANCE_LNG_IN_DEGREE;
-		double maxLongitude = arretCourant.longitude + DISTANCE_LNG_IN_DEGREE;
-		List<String> selectionArgs = new ArrayList<String>(4);
+		final double minLatitude = arretCourant.latitude - DISTANCE_LAT_IN_DEGREE;
+		final double maxLatitude = arretCourant.latitude + DISTANCE_LAT_IN_DEGREE;
+		final double minLongitude = arretCourant.longitude - DISTANCE_LNG_IN_DEGREE;
+		final double maxLongitude = arretCourant.longitude + DISTANCE_LNG_IN_DEGREE;
+		final List<String> selectionArgs = new ArrayList<String>(4);
 		selectionArgs.add(String.valueOf(minLatitude));
 		selectionArgs.add(String.valueOf(maxLatitude));
 		selectionArgs.add(String.valueOf(minLongitude));
 		selectionArgs.add(String.valueOf(maxLongitude));
 
-		Cursor cursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+		final Cursor cursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction," + " Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude," + " Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection " + "FROM Arret, ArretRoute, Direction, Ligne " + "WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId" + " AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude" + " AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude",
 				selectionArgs);
 
 		/** Recuperation des index dans le cussor */
-		int arretIdIndex = cursor.getColumnIndex("arretId");
-		int ligneIdIndex = cursor.getColumnIndex("ligneId");
-		int directionIndex = cursor.getColumnIndex("direction");
-		int arretNomIndex = cursor.getColumnIndex("arretNom");
-		int latitudeIndex = cursor.getColumnIndex("latitude");
-		int longitudeIndex = cursor.getColumnIndex("longitude");
-		int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-		int nomLongIndex = cursor.getColumnIndex("nomLong");
-		int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
+		final int arretIdIndex = cursor.getColumnIndex("arretId");
+		final int ligneIdIndex = cursor.getColumnIndex("ligneId");
+		final int directionIndex = cursor.getColumnIndex("direction");
+		final int arretNomIndex = cursor.getColumnIndex("arretNom");
+		final int latitudeIndex = cursor.getColumnIndex("latitude");
+		final int longitudeIndex = cursor.getColumnIndex("longitude");
+		final int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+		final int nomLongIndex = cursor.getColumnIndex("nomLong");
+		final int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 
-		List<Arret> arrets = new ArrayList<Arret>(20);
+		final List<Arret> arrets = new ArrayList<Arret>(20);
 
 		while (cursor.moveToNext()) {
-			Arret arret = new Arret();
+			final Arret arret = new Arret();
 			arret.id = cursor.getString(arretIdIndex);
 			arret.favori = new ArretFavori();
 			arret.favori.arretId = arret.id;
@@ -317,18 +312,19 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		Collections.sort(arrets, new Arret.ComparatorDistance());
 
 		for (final Arret arret : arrets) {
-			RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(getLayoutArretGps(), null);
-			ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
+			final RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(getLayoutArretGps(), null);
+			final ImageView iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
 			iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
-			TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
+			final TextView arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
 			arretDirection.setText(arret.favori.direction);
-			TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
+			final TextView nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);
 			nomArret.setText(arret.nom);
-			TextView distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
+			final TextView distance = (TextView) relativeLayout.findViewById(R.id.arretgps_distance);
 			distance.setText(arret.formatDistance());
 			relativeLayout.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent intent = new Intent(AbstractDetailArret.this, AbstractDetailArret.this.getClass());
+				@Override
+				public void onClick(final View view) {
+					final Intent intent = new Intent(AbstractDetailArret.this, AbstractDetailArret.this.getClass());
 					intent.putExtra("favori", arret.favori);
 					startActivity(intent);
 				}
@@ -341,22 +337,22 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.premierAccesLigne, myLigne.nomCourt),
 				false) {
 
-			private boolean erreurLigneNonTrouvee = false;
-			private boolean erreurNoSpaceLeft = false;
+			private boolean erreurLigneNonTrouvee;
+			private boolean erreurNoSpaceLeft;
 
 			@Override
 			protected void myDoBackground() {
 				try {
 					UpdateDataBase.chargeDetailLigne(getRawClass(), myLigne, getResources());
-				} catch (LigneInexistanteException e) {
+				} catch (final LigneInexistanteException e) {
 					erreurLigneNonTrouvee = true;
-				} catch (NoSpaceLeftException e) {
+				} catch (final NoSpaceLeftException e) {
 					erreurNoSpaceLeft = true;
 				}
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
 				if (erreurLigneNonTrouvee) {
 					Toast.makeText(AbstractDetailArret.this, getString(R.string.erreurLigneInconue, myLigne.nomCourt),
@@ -381,28 +377,24 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 
 		if (item.getItemId() == R.id.menu_google_map) {
 			Arret arret = new Arret();
 			arret.id = favori.arretId;
 			arret = AbstractTransportsApplication.getDataBaseHelper().selectSingle(arret);
-			String lat = Double.toString(arret.getLatitude());
-			String lon = Double.toString(arret.getLongitude());
-			Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
+			final String lat = Double.toString(arret.getLatitude());
+			final String lon = Double.toString(arret.getLongitude());
+			final Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + ',' + lon);
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
-			} catch (ActivityNotFoundException activityNotFound) {
+			} catch (final ActivityNotFoundException activityNotFound) {
 				Toast.makeText(AbstractDetailArret.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
 			}
 			return true;
-		} else if (item.getItemId() == R.id.menu_choix_date) {
+		}
+		if (item.getItemId() == R.id.menu_choix_date) {
 			showDialog(DATE_DIALOG_ID);
 			return true;
 		}
@@ -413,7 +405,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 
 	private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-		public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		@Override
+		public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
 			calendar.set(Calendar.YEAR, year);
 			calendar.set(Calendar.MONTH, monthOfYear);
 			calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -430,7 +423,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 	};
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(final int id) {
 		if (id == DATE_DIALOG_ID) {
 			return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -439,29 +432,30 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(info.position);
+			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(info.position);
 			menu.setHeaderTitle(formatterCalendarHeure(detailArretConteneur.getHoraire()));
 			menu.add(Menu.NONE, R.id.creerNotif, 0, getString(R.string.creerNotif));
 		}
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+	public boolean onContextItemSelected(final MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 		if (item.getItemId() == R.id.creerNotif) {
 			final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(
 					info.position);
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(formatterCalendarHeure(detailArretConteneur.getHoraire()));
 			builder.setItems(getResources().getStringArray(R.array.choixTemps), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int item) {
-					int minutes = getResources().getIntArray(R.array.choixTempInt)[item];
-					String ligneId = favori.ligneId;
-					String arretId = favori.arretId;
+				@Override
+				public void onClick(final DialogInterface dialog, final int item) {
+					final int minutes = getResources().getIntArray(R.array.choixTempInt)[item];
+					final String ligneId = favori.ligneId;
+					final String arretId = favori.arretId;
 					int heure = detailArretConteneur.getHoraire();
 					if (heure >= 24 * 60) {
 						heure -= (24 * 60);
@@ -470,7 +464,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 					if (heureNotif < 0) {
 						heureNotif += (24 * 60);
 					}
-					Notification notification = new Notification();
+					final Notification notification = new Notification();
 					notification.setLigneId(ligneId);
 					notification.setArretId(arretId);
 					notification.setHeure(heureNotif);
@@ -479,8 +473,8 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 					notification.setMacroDirection(favori.macroDirection);
 					AbstractTransportsApplication.getDataBaseHelper().delete(notification);
 					AbstractTransportsApplication.getDataBaseHelper().insert(notification);
-					Calendar calendar = Calendar.getInstance();
-					int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+					final Calendar calendar = Calendar.getInstance();
+					final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 					int tempsRestant = (heureNotif) - now;
 					if (tempsRestant <= 0) {
 						tempsRestant += (24 * 60);
@@ -498,15 +492,15 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		}
 	}
 
-	private CharSequence formatterCalendarHeure(int prochainDepart) {
-		StringBuilder stringBuilder = new StringBuilder();
+	private static CharSequence formatterCalendarHeure(final int prochainDepart) {
+		final StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;
-		int minutes = prochainDepart - heures * 60;
+		final int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
 			heures -= 24;
 		}
-		String heuresChaine = Integer.toString(heures);
-		String minutesChaine = Integer.toString(minutes);
+		final String heuresChaine = Integer.toString(heures);
+		final String minutesChaine = Integer.toString(minutes);
 		if (heuresChaine.length() < 2) {
 			stringBuilder.append('0');
 		}
@@ -519,29 +513,29 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 		return stringBuilder.toString();
 	}
 
-    private CharSequence formatterCalendar(int tempsRestant) {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(this.getString(R.string.dans));
+    private CharSequence formatterCalendar(final int tempsRestant) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(getString(R.string.dans));
 		stringBuilder.append(' ');
-		int heures = tempsRestant / 60;
-		int minutes = tempsRestant - heures * 60;
+		final int heures = tempsRestant / 60;
+		final int minutes = tempsRestant - heures * 60;
 		boolean tempsAjoute = false;
 		if (heures > 0) {
 			stringBuilder.append(heures);
 			stringBuilder.append(' ');
-			stringBuilder.append(this.getString(R.string.heures));
+			stringBuilder.append(getString(R.string.heures));
 			stringBuilder.append(' ');
 			tempsAjoute = true;
 		}
 		if (minutes > 0) {
 			stringBuilder.append(minutes);
 			stringBuilder.append(' ');
-			stringBuilder.append(this.getString(R.string.minutes));
+			stringBuilder.append(getString(R.string.minutes));
 			tempsAjoute = true;
 		}
 		if (!tempsAjoute) {
 			stringBuilder.append("0 ");
-			stringBuilder.append(this.getString(R.string.minutes));
+			stringBuilder.append(getString(R.string.minutes));
 		}
 		return stringBuilder.toString();
 	}

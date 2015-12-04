@@ -23,22 +23,22 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 	private final int secondesNow;
 
 	private final LayoutInflater inflater;
-	private List<DetailArretConteneur> prochainsDeparts;
+	private final List<DetailArretConteneur> prochainsDeparts;
 
 	private final Context myContext;
 
-	private boolean isToday;
+	private final boolean isToday;
 
 	private int positionToMove;
 
-	private String currentDirection;
+	private final String currentDirection;
 
 	public int getPositionToMove() {
 		return positionToMove;
 	}
 
-	public AbstractDetailArretAdapter(Context context, List<DetailArretConteneur> prochainsDeparts, int now,
-			boolean isToday, String currentDirection, int secondesNow) {
+	protected AbstractDetailArretAdapter(final Context context, final List<DetailArretConteneur> prochainsDeparts, final int now,
+										 final boolean isToday, final String currentDirection, final int secondesNow) {
 		this.isToday = isToday;
 		this.currentDirection = currentDirection;
 		myContext = context;
@@ -48,7 +48,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		this.prochainsDeparts = prochainsDeparts;
 		if (isToday) {
 			positionToMove = 0;
-			for (DetailArretConteneur horaire : prochainsDeparts) {
+			for (final DetailArretConteneur horaire : prochainsDeparts) {
 				if (horaire.getHoraire() < now) {
 					positionToMove++;
 				}
@@ -64,33 +64,36 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		TextView direction;
 	}
 
+	@Override
 	public int getCount() {
 		return prochainsDeparts.size();
 	}
 
-	public DetailArretConteneur getItem(int position) {
+	@Override
+	public DetailArretConteneur getItem(final int position) {
 		return prochainsDeparts.get(position);
 	}
 
-	public long getItemId(int position) {
+	@Override
+	public long getItemId(final int position) {
 		return position;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View convertView1 = convertView;
-		AbstractDetailArretAdapter.ViewHolder holder;
+		final ViewHolder holder;
 		if (convertView1 == null) {
 			convertView1 = inflater.inflate(getLayout(), parent, false);
-			holder = new AbstractDetailArretAdapter.ViewHolder();
+			holder = new ViewHolder();
 			holder.heureProchain = (TextView) convertView1.findViewById(R.id.detailArret_heureProchain);
 			holder.tempsRestant = (TextView) convertView1.findViewById(R.id.detailArret_tempsRestant);
 			holder.direction = (TextView) convertView1.findViewById(R.id.detailArret_directionTrajet);
 			convertView1.setTag(holder);
 		} else {
-			holder = (AbstractDetailArretAdapter.ViewHolder) convertView1.getTag();
+			holder = (ViewHolder) convertView1.getTag();
 		}
-		int prochainDepart = prochainsDeparts.get(position).getHoraire();
+		final int prochainDepart = prochainsDeparts.get(position).getHoraire();
 		holder.heureProchain.setText(formatterCalendarHeure(prochainDepart, prochainsDeparts.get(position)
 				.getSecondes()));
 		holder.heureProchain.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
@@ -120,10 +123,10 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private String formatterCalendar(int prochainDepart, int now, int secondesNow, Integer secondes, boolean accurate) {
-		StringBuilder stringBuilder = new StringBuilder();
-		int secondesNullSafe = secondes == null ? 0 : secondes.intValue();
-		int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);
+	private String formatterCalendar(final int prochainDepart, final int now, final int secondesNow, final Integer secondes, final boolean accurate) {
+		final StringBuilder stringBuilder = new StringBuilder();
+		final int secondesNullSafe = secondes == null ? 0 : secondes;
+		final int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);
 		int tempsEnMinutes = (tempsEnSecondes / 60);
 		if (tempsEnSecondes == tempsEnMinutes * 60) {
 			tempsEnMinutes--;
@@ -131,8 +134,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		if (tempsEnMinutes > 0) {
 			stringBuilder.append(myContext.getString(R.string.dans));
 			stringBuilder.append(' ');
-			int heures = tempsEnMinutes / 60;
-			int minutes = tempsEnMinutes - heures * 60;
+			final int heures = tempsEnMinutes / 60;
+			final int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
 				stringBuilder.append(heures);
@@ -156,20 +159,20 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			stringBuilder.append(myContext.getString(R.string.miniMinutes));
 		}
 		if (secondes != null && !accurate) {
-			stringBuilder.append("*");
+			stringBuilder.append('*');
 		}
 		return stringBuilder.toString();
 	}
 
-	private CharSequence formatterCalendarHeure(int prochainDepart, Integer secondes) {
-		StringBuilder stringBuilder = new StringBuilder();
+	private static CharSequence formatterCalendarHeure(final int prochainDepart, final Integer secondes) {
+		final StringBuilder stringBuilder = new StringBuilder();
 		int heures = prochainDepart / 60;
-		int minutes = prochainDepart - heures * 60;
+		final int minutes = prochainDepart - heures * 60;
 		if (heures >= 24) {
 			heures -= 24;
 		}
-		String heuresChaine = Integer.toString(heures);
-		String minutesChaine = Integer.toString(minutes);
+		final String heuresChaine = Integer.toString(heures);
+		final String minutesChaine = Integer.toString(minutes);
 		if (heuresChaine.length() < 2) {
 			stringBuilder.append('0');
 		}
@@ -182,7 +185,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 
 		if (secondes != null) {
 			stringBuilder.append(':');
-			String secondesChaine = secondes.toString();
+			final String secondesChaine = secondes.toString();
 			if (secondesChaine.length() < 2) {
 				stringBuilder.append('0');
 			}

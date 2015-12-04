@@ -36,23 +36,19 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 public class DetailAlert extends BaseSimpleActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailalert);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-        Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
+        final Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
-        ((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());
-        if (!alert.lines.isEmpty()) {
+        ((TextView) findViewById(R.id.titreAlert)).setText(alert != null ? alert.getTitleFormate() : null);
+        if (!(alert != null ? alert.lines.isEmpty() : false)) {
             ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
         }
-        Collection<String> arretsToBold = new HashSet<String>(20);
-        for (String line : alert.lines) {
-            StringBuilder requete = new StringBuilder();
-            requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
-            requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
-            requete.append("and Arret.id = ArretRoute.arretId");
-            Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
+        final Collection<String> arretsToBold = new HashSet<String>(20);
+        for (final String line : alert.lines) {
+            final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery("select Arret.nom from Arret, Ligne, ArretRoute " + "where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id " + "and Arret.id = ArretRoute.arretId", Collections.singletonList(line));
             while (cursor.moveToNext()) {
                 arretsToBold.add(cursor.getString(0));
             }

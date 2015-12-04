@@ -45,13 +45,13 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	protected abstract void initDonneesSpecifiques();
 
-	private static boolean debug = false;
+	private static boolean debug;
 
 	public static boolean isDebug() {
 		return debug;
 	}
 
-	public static void setDebug(boolean debug) {
+	public static void setDebug(final boolean debug) {
 		AbstractTransportsApplication.debug = debug;
 	}
 
@@ -62,15 +62,15 @@ public abstract class AbstractTransportsApplication extends Application {
 	}
 
 	private boolean isInPrincipalProcess() {
-		PackageInfo packageinfo;
+		final PackageInfo packageinfo;
 		try {
 			packageinfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES);
-		} catch (android.content.pm.PackageManager.NameNotFoundException ex) {
+		} catch (final android.content.pm.PackageManager.NameNotFoundException ex) {
 			return false;
 		}
-		String processName = packageinfo.applicationInfo.processName;
+		final String processName = packageinfo.applicationInfo.processName;
 
-		for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE))
+		for (final ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE))
 				.getRunningAppProcesses()) {
 			if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
 				return runningAppProcessInfo.processName.equals(processName);
@@ -97,29 +97,29 @@ public abstract class AbstractTransportsApplication extends Application {
 		majTheme(this);
 		super.onCreate();
 		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				getDonnesSpecifiques().getApplicationName() + "_debug", false);
+				donnesSpecifiques.getApplicationName() + "_debug", false);
 		constructDatabase();
 		if (!isInPrincipalProcess()) {
 			return;
 		}
-		geocodeUtil = new GeocodeUtil(this);
+		geocodeUtil = new GeocodeUtil();
 		postCreate();
 	}
 
-	public static Theme getTheme(Context context) {
+	public static Theme getTheme(final Context context) {
 		return Theme.valueOf(PreferenceManager.getDefaultSharedPreferences(context).getString(
-				getDonnesSpecifiques().getApplicationName() + "_choixTheme", Theme.BLANC.name()));
+				donnesSpecifiques.getApplicationName() + "_choixTheme", Theme.BLANC.name()));
 	}
 
-	public static int getTextColor(Context context) {
+	public static int getTextColor(final Context context) {
 		return getTheme(context).getTextColor();
 	}
 
-	public static void majTheme(Context context) {
+	public static void majTheme(final Context context) {
 		context.setTheme(getTheme(context).getTheme());
 	}
 
-	public abstract void constructDatabase();
+	protected abstract void constructDatabase();
 
 	public abstract Class<? extends AccueilActivity> getAccueilActivity();
 
@@ -135,21 +135,21 @@ public abstract class AbstractTransportsApplication extends Application {
 		return getTheme(this).getActionBarBackground();
 	}
 
-	public abstract void postCreate();
+	protected abstract void postCreate();
 
-	private static Set<String> lignesWithAlerts = new HashSet<String>();
+	private static final Set<String> lignesWithAlerts = new HashSet<String>();
 
-	public static Set<String> getLignesWithAlerts() {
+	protected static Set<String> getLignesWithAlerts() {
 		return lignesWithAlerts;
 	}
 
-	public static boolean hasAlert(String ligneNomCourt) {
+	public static boolean hasAlert(final String ligneNomCourt) {
 		return lignesWithAlerts.contains(ligneNomCourt);
 	}
 
 	private static LatLngBounds bounds;
 
-	public static void setBounds(LatLngBounds bounds) {
+	protected static void setBounds(final LatLngBounds bounds) {
 		AbstractTransportsApplication.bounds = bounds;
 	}
 
