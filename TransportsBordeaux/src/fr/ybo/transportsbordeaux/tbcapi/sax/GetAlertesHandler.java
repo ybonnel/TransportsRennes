@@ -74,11 +74,11 @@ class GetAlertesHandler extends DefaultHandler {
             alertCourante = null;
         }
         if (ligneEncours && qName.equals(BALISE_TD)) {
-            alertCourante != null ? alertCourante.ligne : null = StringUtils.doubleTrim(contenu.toString());
+            alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
             ligneEncours = false;
         }
         if (qName.equals(BALISE_A)) {
-            alertCourante != null ? alertCourante.title : null = contenu.toString();
+            alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
         }
         contenu.setLength(0);
     }
