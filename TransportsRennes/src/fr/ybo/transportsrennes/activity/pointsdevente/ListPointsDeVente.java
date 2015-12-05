@@ -51,11 +51,6 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
     private LocationUtil locationUtil;
 
     /**
-     * Permet d'accéder aux apis keolis.
-     */
-    private final Keolis keolis = Keolis.getInstance();
-
-    /**
      * Liste des points de vente.
      */
     private List<PointDeVente> pointsDeVenteIntent;
@@ -124,7 +119,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
             @Override
             protected void myDoBackground() throws ErreurReseau {
-                final List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? keolis.getPointDeVente()
+                final List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? Keolis.getPointDeVente()
                         : pointsDeVenteIntent);
 				if (isCancelled()) {
 					return;

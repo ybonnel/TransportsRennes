@@ -40,7 +40,7 @@ class SimpleMenuItem implements MenuItem {
     private int mIconResId;
     private boolean mEnabled = true;
 
-    public SimpleMenuItem(final SimpleMenu menu, final int id, final int order, final CharSequence title) {
+    SimpleMenuItem(final SimpleMenu menu, final int id, final int order, final CharSequence title) {
         mMenu = menu;
         mId = id;
         mOrder = order;

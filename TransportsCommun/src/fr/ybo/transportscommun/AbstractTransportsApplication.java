@@ -32,7 +32,6 @@ import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
-import fr.ybo.transportscommun.util.GeocodeUtil;
 import fr.ybo.transportscommun.util.Theme;
 
 public abstract class AbstractTransportsApplication extends Application {
@@ -53,12 +52,6 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	public static void setDebug(final boolean debug) {
 		AbstractTransportsApplication.debug = debug;
-	}
-
-	private static GeocodeUtil geocodeUtil;
-
-	public static GeocodeUtil getGeocodeUtil() {
-		return geocodeUtil;
 	}
 
 	private boolean isInPrincipalProcess() {
@@ -102,7 +95,6 @@ public abstract class AbstractTransportsApplication extends Application {
 		if (!isInPrincipalProcess()) {
 			return;
 		}
-		geocodeUtil = new GeocodeUtil();
 		postCreate();
 	}
 

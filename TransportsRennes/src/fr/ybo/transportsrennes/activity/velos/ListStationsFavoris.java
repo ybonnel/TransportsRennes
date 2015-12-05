@@ -50,11 +50,6 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 public class ListStationsFavoris extends BaseListActivity implements Refreshable {
 
     /**
-     * Permet d'accéder aux apis keolis.
-     */
-    private final Keolis keolis = Keolis.getInstance();
-
-    /**
      * Liste des stations.
      */
     private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(10));

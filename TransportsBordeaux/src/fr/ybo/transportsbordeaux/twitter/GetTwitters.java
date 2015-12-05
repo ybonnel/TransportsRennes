@@ -33,16 +33,7 @@ import fr.ybo.transportsbordeaux.tbcapi.TcbException;
 
 public final class GetTwitters {
 
-    private static GetTwitters instance;
-
     private GetTwitters() {
-    }
-
-    public static synchronized GetTwitters getInstance() {
-        if (instance == null) {
-            instance = new GetTwitters();
-        }
-        return instance;
     }
 
     public static Collection<MessageTwitter> getMessages() throws TbcErreurReseaux {

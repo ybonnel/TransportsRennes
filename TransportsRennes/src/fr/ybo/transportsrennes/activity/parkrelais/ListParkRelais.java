@@ -29,7 +29,6 @@ import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
  */
 public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 
-	private final Keolis keolis = Keolis.getInstance();
 
 	@Override
 	protected int getDialogueRequete() {
@@ -43,7 +42,7 @@ public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 
 	@Override
 	protected List<ParkRelai> getParkings() throws ErreurReseau {
-		return keolis.getParkRelais();
+		return Keolis.getParkRelais();
 	}
 
 	@Override

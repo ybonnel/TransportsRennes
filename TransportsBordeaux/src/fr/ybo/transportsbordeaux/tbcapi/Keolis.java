@@ -47,11 +47,6 @@ public final class Keolis {
     private static final LogYbo LOG_YBO = new LogYbo(Keolis.class);
 
     /**
-     * Instance du singletton.
-     */
-    private static Keolis instance;
-
-    /**
      * URL d'accés au API Keolis.
      */
     private static final String URL = "http://data.lacub.fr/wfs?";
@@ -69,18 +64,6 @@ public final class Keolis {
 	 * Commande pour les vélos
 	 */
 	private static final String COUCHE_VELO = "CI_VCUB_P";
-
-    /**
-     * Retourne l'instance du singletton.
-     *
-     * @return l'instance du singletton.
-     */
-    public static synchronized Keolis getInstance() {
-        if (instance == null) {
-            instance = new Keolis();
-        }
-        return instance;
-    }
 
     /**
      * Constructeur privé.
@@ -119,7 +102,7 @@ public final class Keolis {
         } catch (final SAXException saxException) {
 			throw new ErreurReseau(saxException);
         } catch (final ParserConfigurationException exception) {
-            throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
+            throw new KeolisException(exception);
         }
         if (answer == null) {
 			throw new ErreurReseau("Erreur dans la réponse données par Keolis.");

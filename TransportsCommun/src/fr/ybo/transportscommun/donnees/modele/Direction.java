@@ -33,7 +33,7 @@ public class Direction {
     public String direction;
 
 
-    private static class DirectionSelectHolder {
+    private static final class DirectionSelectHolder {
         private static final Direction directionSelect = new Direction();
     }
 

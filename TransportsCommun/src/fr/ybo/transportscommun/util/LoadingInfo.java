@@ -5,8 +5,8 @@ public abstract class LoadingInfo {
 	private int nbEtape;
 	private int etapeCourante;
 
-	public void setNbEtape(final int nbEtape) {
-		this.nbEtape = nbEtape;
+	public void setNbEtape() {
+		nbEtape = 9;
 	}
 
 	public int getNbEtape() {

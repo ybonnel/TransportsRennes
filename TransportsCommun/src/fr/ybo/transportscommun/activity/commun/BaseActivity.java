@@ -98,7 +98,7 @@ public class BaseActivity {
 	public abstract static class BaseFragmentActivity extends FragmentActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
-		public ActivityHelper getActivityHelper() {
+		protected ActivityHelper getActivityHelper() {
 			return mActivityHelper;
 		}
 
@@ -164,7 +164,7 @@ public class BaseActivity {
 	public abstract static class BaseSimpleActivity extends Activity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
-		public ActivityHelper getActivityHelper() {
+		protected ActivityHelper getActivityHelper() {
 			return mActivityHelper;
 		}
 
@@ -194,7 +194,7 @@ public class BaseActivity {
 	public abstract static class BasePreferenceActivity extends PreferenceActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
-		public ActivityHelper getActivityHelper() {
+		protected ActivityHelper getActivityHelper() {
 			return mActivityHelper;
 		}
 
@@ -224,7 +224,7 @@ public class BaseActivity {
 	public abstract static class BaseListActivity extends ListActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
 
-		public ActivityHelper getActivityHelper() {
+		protected ActivityHelper getActivityHelper() {
 			return mActivityHelper;
 		}
 
@@ -287,7 +287,7 @@ public class BaseActivity {
 		static class DummyTabFactory implements TabHost.TabContentFactory {
 			private final Context mContext;
 
-			public DummyTabFactory(final Context context) {
+			DummyTabFactory(final Context context) {
 				mContext = context;
 			}
 
@@ -300,7 +300,7 @@ public class BaseActivity {
 			}
 		}
 
-		public TabsAdapter(final FragmentActivity activity, final TabHost tabHost, final ViewPager pager) {
+		TabsAdapter(final FragmentActivity activity, final TabHost tabHost, final ViewPager pager) {
 			super(activity.getSupportFragmentManager());
 			mContext = activity;
 			mTabHost = tabHost;

@@ -16,7 +16,10 @@
  */
 package fr.ybo.transportsbordeaux.util;
 
-public class StringUtils {
+public final class StringUtils {
+
+	private StringUtils() {
+	}
 
 	public static String doubleTrim(final String string) {
 		String retour = string;

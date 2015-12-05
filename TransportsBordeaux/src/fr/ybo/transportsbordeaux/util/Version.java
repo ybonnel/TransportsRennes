@@ -26,9 +26,12 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-public class Version {
+public final class Version {
 
 	private static final String URL_VERSION = "http://transports.ybonnel.fr/version/transports-bordeaux.version";
+
+	private Version() {
+	}
 
 	/**
 	 * Nom de la version disponible sur le market

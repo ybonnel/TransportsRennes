@@ -19,9 +19,9 @@ import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 
 
-public class GeocodeUtil {
+public final class GeocodeUtil {
 
-    public GeocodeUtil() {
+    private GeocodeUtil() {
     }
 
     public static GeocodeResponse geocode(final GeocoderRequest request) {

@@ -29,7 +29,7 @@ public class TcbException extends RuntimeException {
     }
 
     public TcbException(final String pArg0) {
-        super(pArg0);
+        super("Impossible de créer la base sur la carte.");
     }
 
     public TcbException(final Throwable pArg0) {

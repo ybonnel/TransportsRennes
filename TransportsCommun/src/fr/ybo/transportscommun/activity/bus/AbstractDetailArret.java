@@ -36,7 +36,6 @@ import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.adapters.bus.AbstractDetailArretAdapter;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
@@ -344,9 +343,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			protected void myDoBackground() {
 				try {
 					UpdateDataBase.chargeDetailLigne(getRawClass(), myLigne, getResources());
-				} catch (final LigneInexistanteException e) {
-					erreurLigneNonTrouvee = true;
-				} catch (final NoSpaceLeftException e) {
+				}catch (final NoSpaceLeftException e) {
 					erreurNoSpaceLeft = true;
 				}
 			}
@@ -390,7 +387,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
 			try {
 				startActivity(new Intent(Intent.ACTION_VIEW, uri));
 			} catch (final ActivityNotFoundException activityNotFound) {
-				Toast.makeText(AbstractDetailArret.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
 			}
 			return true;
 		}

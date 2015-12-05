@@ -13,9 +13,12 @@
  */
 package fr.ybo.transportsbordeaux.tbcapi;
 
-public class TcbConstantes {
+public final class TcbConstantes {
 
     public static final String URL_ALERTES = "http://www.mobilinfotbc.com/traffic-info?origin=transports-bdx";
 
     public static final String URL_MOBILE_TBC = "http://www.mobilinfotbc.com";
+
+    private TcbConstantes() {
+    }
 }

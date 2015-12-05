@@ -19,7 +19,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
@@ -73,8 +73,6 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
 				} catch (final NoSpaceLeftException e) {
 					erreurNoSpaceLeft = true;
-                } catch (final LigneInexistanteException e) {
-                    erreurLigneNonTrouvee = true;
                 }
                 return null;
             }

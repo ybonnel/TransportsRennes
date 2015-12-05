@@ -22,7 +22,7 @@ class GestionFilesException extends RuntimeException {
 		super(throwable);
 	}
 
-	public GestionFilesException(final String string, final Exception exception) {
-		super(string, exception);
+	GestionFilesException(final Exception exception) {
+		super("Erreur lors de la récupération du fichier last_update", exception);
 	}
 }

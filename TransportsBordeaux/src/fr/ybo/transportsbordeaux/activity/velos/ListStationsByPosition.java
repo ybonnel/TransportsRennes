@@ -150,7 +150,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	}
 
 	private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
-		public GetStations() {
+		private GetStations() {
 			super(ListStationsByPosition.this, getString(R.string.dialogRequeteVcub), true);
 		}
 
@@ -170,7 +170,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		 */
 		@Override
 		protected void myDoBackground() throws ErreurReseau {
-			final List<Station> stationsTmp = Keolis.getInstance().getStationsVcub();
+			final List<Station> stationsTmp = Keolis.getStationsVcub();
 			if (isCancelled()) {
 				return;
 			}

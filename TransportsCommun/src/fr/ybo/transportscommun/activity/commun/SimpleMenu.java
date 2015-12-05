@@ -39,7 +39,7 @@ class SimpleMenu implements Menu {
 
     private final ArrayList<SimpleMenuItem> mItems;
 
-    public SimpleMenu(final Context context) {
+    SimpleMenu(final Context context) {
         mContext = context;
         mResources = context.getResources();
         mItems = new ArrayList<SimpleMenuItem>();

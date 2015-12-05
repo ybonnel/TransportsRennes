@@ -18,7 +18,6 @@ import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.alerts.AlertAdapter;
 import fr.ybo.transportsbordeaux.database.modele.Alert;
-import fr.ybo.transportsbordeaux.tbcapi.TbcErreurReseaux;
 import fr.ybo.transportsbordeaux.tbcapi.TcbConstantes;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 

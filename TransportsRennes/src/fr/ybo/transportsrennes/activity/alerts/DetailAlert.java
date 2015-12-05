@@ -43,8 +43,8 @@ public class DetailAlert extends BaseSimpleActivity {
         final Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
         ((TextView) findViewById(R.id.titreAlert)).setText(alert != null ? alert.getTitleFormate() : null);
-        if (!(alert != null ? alert.lines.isEmpty() : false)) {
-            ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
+        if (!(alert != null && alert.lines.isEmpty())) {
+            ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert != null ? alert.lines.iterator().next() : null));
         }
         final Collection<String> arretsToBold = new HashSet<String>(20);
         for (final String line : alert.lines) {

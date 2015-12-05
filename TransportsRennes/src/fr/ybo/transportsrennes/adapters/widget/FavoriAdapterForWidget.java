@@ -56,7 +56,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
     public void removeFavoriSelectionne(final Integer favoriToRemove) {
     	final Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
         while (positionActuels.hasNext()) {
-            if (positionActuels.next() == favoriToRemove) {
+            if (positionActuels.next().equals(favoriToRemove)) {
                 positionActuels.remove();
             }
         }

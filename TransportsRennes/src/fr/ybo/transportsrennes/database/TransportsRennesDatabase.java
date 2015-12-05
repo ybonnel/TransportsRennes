@@ -87,12 +87,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     getBase().createDataBase(db);
                 }
             });
-            mapUpgrades.put(4, new UpgradeDatabaseWithError() {
-                @Override
-                public void myUpgrade(final SQLiteDatabase db) {
-                    db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
-                }
-            });
+            mapUpgrades.put(4, new MyUpgradeDatabaseWithError4());
             mapUpgrades.put(5, new UpgradeDatabaseWithError() {
                 @Override
                 public void myUpgrade(final SQLiteDatabase db) {
@@ -171,12 +166,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     getBase().getTable(Trajet.class).createTable(db);
                 }
             });
-            mapUpgrades.put(7, new UpgradeDatabaseWithError() {
-                @Override
-                public void myUpgrade(final SQLiteDatabase db) {
-                    db.execSQL("DELETE FROM DernierMiseAJour");
-                }
-            });
+            mapUpgrades.put(7, new MyUpgradeDatabaseWithError3());
             mapUpgrades.put(9, new UpgradeDatabaseWithError() {
                 @Override
                 public void myUpgrade(final SQLiteDatabase db) {
@@ -354,12 +344,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                     }
                 }
             });
-			mapUpgrades.put(16, new UpgradeDatabaseWithError() {
-				@Override
-                public void myUpgrade(final SQLiteDatabase db) {
-					db.execSQL("CREATE INDEX ArretRoute_directionId ON ArretRoute(directionId)");
-				}
-			});
+			mapUpgrades.put(16, new MyUpgradeDatabaseWithError2());
 			mapUpgrades.put(17, new UpgradeDatabaseWithError() {
 				@Override
                 public void myUpgrade(final SQLiteDatabase db) {
@@ -377,6 +362,27 @@ public class TransportsRennesDatabase extends DataBaseHelper {
         @Override
 public void myUpgrade(final SQLiteDatabase db) {
 db.execSQL("DELETE FROM DernierMiseAJour");
+        }
+    }
+
+    private static class MyUpgradeDatabaseWithError2 extends UpgradeDatabaseWithError {
+        @Override
+public void myUpgrade(final SQLiteDatabase db) {
+            db.execSQL("CREATE INDEX ArretRoute_directionId ON ArretRoute(directionId)");
+        }
+    }
+
+    private static class MyUpgradeDatabaseWithError3 extends UpgradeDatabaseWithError {
+        @Override
+        public void myUpgrade(final SQLiteDatabase db) {
+            db.execSQL("DELETE FROM DernierMiseAJour");
+        }
+    }
+
+    private static class MyUpgradeDatabaseWithError4 extends UpgradeDatabaseWithError {
+        @Override
+        public void myUpgrade(final SQLiteDatabase db) {
+            db.execSQL("ALTER TABLE ArretFavori ADD COLUMN ordre INTEGER");
         }
     }
 }

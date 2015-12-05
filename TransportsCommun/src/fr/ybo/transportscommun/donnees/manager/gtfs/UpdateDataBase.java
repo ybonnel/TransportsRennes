@@ -23,7 +23,6 @@ import fr.ybo.moteurcsv.MoteurCsv;
 import fr.ybo.moteurcsv.exception.MoteurCsvException;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.Constantes;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.ArretRoute;
@@ -40,8 +39,8 @@ public final class UpdateDataBase {
 
 	private static boolean majDatabaseEncours;
 
-	public static boolean isMajDatabaseEncours() {
-		return majDatabaseEncours;
+	public static boolean isMajDatabasePasEncours() {
+		return !majDatabaseEncours;
 	}
 
 	public static void setMajDatabaseEncours(final boolean majDatabaseEncours) {
@@ -60,7 +59,7 @@ public final class UpdateDataBase {
 			try {
 				LOG_YBO.debug("Mise à jour disponible, lancement de la mise à jour");
 				LOG_YBO.debug("Suppression des lignes chargées");
-				loadingInfo.setNbEtape(9);
+				loadingInfo.setNbEtape();
 				for (final Ligne ligne : AbstractTransportsApplication.getDataBaseHelper().select(new Ligne())) {
 					if (ligne.isChargee()) {
 						try {
@@ -123,7 +122,7 @@ public final class UpdateDataBase {
 	}
 
 	public static void chargeDetailLigne(final Class<?> rawClass, final Ligne ligne, final Resources resources)
-			throws LigneInexistanteException, NoSpaceLeftException {
+			throws NoSpaceLeftException {
 		LOG_YBO.debug("Chargement en base de la ligne : " + ligne.nomCourt);
 		try {
 			AbstractTransportsApplication.getDataBaseHelper().beginTransaction();

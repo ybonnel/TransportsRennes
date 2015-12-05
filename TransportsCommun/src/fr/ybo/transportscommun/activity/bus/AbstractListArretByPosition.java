@@ -27,7 +27,6 @@ import fr.ybo.transportscommun.R;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Searchable;
 import fr.ybo.transportscommun.adapters.bus.ArretGpsAdapter;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.Arret;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
@@ -279,8 +278,6 @@ public abstract class AbstractListArretByPosition extends BaseListActivity imple
 			protected Void doInBackground(final Void... pParams) {
 				try {
 					UpdateDataBase.chargeDetailLigne(getRawClass(), myLigne, getResources());
-				} catch (final LigneInexistanteException e) {
-					erreurLigneNonTrouvee = true;
 				} catch (final NoSpaceLeftException e) {
 					erreurNoSpaceLeft = true;
 				}

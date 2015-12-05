@@ -199,10 +199,10 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		super.onDestroy();
 	}
 
-	private static class StringComparator implements Comparator<String> {
+	private static final class StringComparator implements Comparator<String> {
 		private final String toutes;
 
-		public StringComparator(String toutes) {
+		private StringComparator(final String toutes) {
 			this.toutes = toutes;
 		}
 

@@ -32,17 +32,9 @@ import fr.ybo.transportscommun.util.ErreurReseau;
 
 public final class GetTwitters {
 
-    private static GetTwitters instance;
-
     private GetTwitters() {
     }
 
-    public static synchronized GetTwitters getInstance() {
-        if (instance == null) {
-            instance = new GetTwitters();
-        }
-        return instance;
-    }
 
     public static Collection<MessageTwitter> getMessages() throws ErreurReseau {
         try {

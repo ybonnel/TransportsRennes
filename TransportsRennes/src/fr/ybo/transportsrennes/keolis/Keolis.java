@@ -64,11 +64,6 @@ public final class Keolis {
     private static final LogYbo LOG_YBO = new LogYbo(Keolis.class);
 
     /**
-     * Instance du singletton.
-     */
-    private static Keolis instance;
-
-    /**
      * URL d'accés au API Keolis.
      */
     private static final String URL = "http://data.keolis-rennes.com/xml/";
@@ -104,18 +99,6 @@ public final class Keolis {
     private static final String COMMANDE_DEPARTURE_METRO = "getmetronextdepartures";
 
 	private static final String VERSION_DEPARTURE = "2.2";
-
-    /**
-     * Retourne l'instance du singletton.
-     *
-     * @return l'instance du singletton.
-     */
-    public static synchronized Keolis getInstance() {
-        if (instance == null) {
-            instance = new Keolis();
-        }
-        return instance;
-    }
 
     /**
      * Constructeur privé.
@@ -191,7 +174,7 @@ public final class Keolis {
      */
     private static Station getStationByNumber(final String number) throws ErreurReseau {
         final ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
-        final List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
+        final List<Station> stations = getStation(getUrl(params));
         if (stations.isEmpty()) {
             return null;
         }
@@ -319,12 +302,11 @@ public final class Keolis {
      * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
      * commande à exécuter et d'un paramètre.
      *
-     * @param commande commande à exécuter.
      * @param params   liste de paramètres de l'url.
      * @return l'url.
      */
-    private static String getUrl(final String commande, final ParametreUrl[] params) {
-		return getUrl(commande, params, VERSION);
+    private static String getUrl(final ParametreUrl[] params) {
+		return getUrl(COMMANDE_STATIONS, params, VERSION);
 	}
 
 	/**

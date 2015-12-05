@@ -157,10 +157,10 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 
 	}
 
-	private static class VoidVoidVoidAsyncTask extends AsyncTask<Void, Void, Void> {
+	private static final class VoidVoidVoidAsyncTask extends AsyncTask<Void, Void, Void> {
 		private final String dateCourante;
 
-		public VoidVoidVoidAsyncTask(String dateCourante) {
+		private VoidVoidVoidAsyncTask(final String dateCourante) {
 			this.dateCourante = dateCourante;
 		}
 
@@ -172,7 +172,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
                     alertBdd = new AlertBdd();
                     alertBdd.setDate(dateCourante);
                     final Set<String> lignes = new HashSet<String>();
-                    for (final Alert alert : Keolis.getInstance().getAlerts()) {
+                    for (final Alert alert : Keolis.getAlerts()) {
                         lignes.addAll(alert.lines);
                     }
                     final StringBuilder stringBuilder = new StringBuilder();

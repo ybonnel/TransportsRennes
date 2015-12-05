@@ -181,7 +181,7 @@ public class UpdateTimeService extends Service {
 			if (Intent.ACTION_SCREEN_OFF.equals(action)) {
 				screenOn = false;
 			}
-			if (!UpdateDataBase.isMajDatabaseEncours()) {
+			if (UpdateDataBase.isMajDatabasePasEncours()) {
 				if (screenOn) {
 					update();
 				}

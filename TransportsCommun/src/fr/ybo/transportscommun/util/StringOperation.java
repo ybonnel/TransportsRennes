@@ -19,10 +19,10 @@ package fr.ybo.transportscommun.util;
 /**
  * Classe complementaire du J2SDK sur la manipulation de chaines de caractéres
  * Permet nottament de supprimer les accents d'une chaine de caractères
- * 
+ *
  * @author André Sébastien
  **/
-public class StringOperation {
+public final class StringOperation {
 	/** Mise en minuscule **/
 	private static final int LOWER_CASE = 4;
 
@@ -40,6 +40,9 @@ public class StringOperation {
 
 	/** Vecteur de correspondance entre accent / sans accent **/
 	private static final char[] map = initMap();
+
+	private StringOperation() {
+	}
 
 	/**
 	 * Initialisation du tableau de correspondance entre les caractéres
@@ -296,27 +299,14 @@ public class StringOperation {
 	/**
 	 * Transforme une chaine de caractères selon differents critères (paramètre
 	 * mode),
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine sur laquelle on veut effectuer une transformation
-	 * @param mode
-	 *            Mode de transformation, plusieurs mode sont accessibles,
-	 *            ceux-ci peuvent être combiné - LOWER_CASE : Mise en minuscule
-	 *            - UPPER_CASE : Mise en majuscule - WITHOUT_ACCENTS : Remplace
-	 *            les caractères accentués par leur version sans accent La
-	 *            combinaision de mode se fait de la sorte LOWER_CASE |
-	 *            WITHOUT_ACCENTS
 	 * @return Chain transformée
 	 **/
-	private static java.lang.String transform(final java.lang.String chaine, final int mode) {
-		if (mode == UPPER_CASE) {
-			return chaine.toUpperCase();
-		}
-		if (mode == LOWER_CASE) {
-			return chaine.toLowerCase();
-		}
+	private static java.lang.String transform(final String chaine) {
 
-		final int firstReplacement = scan(chaine, mode);
+		final int firstReplacement = scan(chaine);
 
 		if (firstReplacement == -1) {
 			return chaine;
@@ -324,10 +314,6 @@ public class StringOperation {
 
 		final char[] result = chaine.toCharArray();
 		int offset = firstReplacement;
-
-		final boolean toUpper = (mode & UPPER_CASE) > 0;
-		final boolean toLower = (mode & LOWER_CASE) > 0;
-		final boolean withoutAccents = (mode & WITHOUT_ACCENTS) > 0;
 
 		for (int bcl = firstReplacement; bcl < chaine.length(); bcl++) {
 			final char c = result[bcl];
@@ -347,13 +333,8 @@ public class StringOperation {
 														// Character.OTHER_PUNCTUATION
 														// )
 			{
-				if (toUpper && (type == Character.LOWERCASE_LETTER)) {
-					r = Character.toUpperCase(c);
-				} else if (toLower && (type == Character.UPPERCASE_LETTER)) {
-					r = Character.toLowerCase(c);
-				}
 
-				if (withoutAccents && r >= MIN && r <= MAX
+				if (r >= MIN && r <= MAX
 						&& (r != 198 && r != 230 && r != 306 && r != 307 && r != 339 && r != 340)) {
 					r = map[(int) r - MIN];
 				}
@@ -369,15 +350,13 @@ public class StringOperation {
 	/**
 	 * Donne l'index du 1er caractère donnant lieu a une transformation selon le
 	 * mode donné
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine à tester
-	 * @param mode
-	 *            Mode pilotant la future transformation de la chaine
 	 * @return index du 1er caractère à transformer, -1 si aucun caractère n'est
 	 *         a transformer
 	 */
-	private static int scan(final java.lang.String chaine, final int mode) {
+	private static int scan(final String chaine) {
 		/**
 		 * ALPHA_NUM WITHOUT_SPECIALS_CHARS LOWER_CASE UPPER_CASE
 		 * WITHOUT_ACCENTS
@@ -407,7 +386,7 @@ public class StringOperation {
 				}
 			}
 
-			if ((computedMode & mode) > 0) {
+			if ((computedMode & WITHOUT_ACCENTS) > 0) {
 				return bcl;
 			}
 		}
@@ -418,12 +397,12 @@ public class StringOperation {
 	/**
 	 * Transforme une chaine pouvant contenir des accents dans une version sans
 	 * accent
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine a convertir sans accent
 	 * @return Chaine dont les accents ont été supprimé
 	 **/
 	public static java.lang.String sansAccents(final java.lang.String chaine) {
-		return transform(chaine, WITHOUT_ACCENTS);
+		return transform(chaine);
 	}
 }

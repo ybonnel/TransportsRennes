@@ -54,7 +54,9 @@ public final class Widget11UpdateUtil {
                 prochainsDeparts = Horaire.getProchainHorairesAsList(favori.ligneId, favori.arretId, 2, calendar, null);
             } while (prochainsDeparts.size() >= 2 && prochainsDeparts.get(1).getHoraire() < now);
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
-            if (!prochainsDeparts.isEmpty()) {
+            if (prochainsDeparts.isEmpty()) {
+                views.setTextViewText(R.id.tempsRestant, "");
+            } else {
                 int heureProchain = prochainsDeparts.get(0).getHoraire();
                 if (heureProchain >= 24 * 60) {
                     heureProchain -= 24 * 60;
@@ -70,8 +72,6 @@ public final class Widget11UpdateUtil {
                 views.setTextViewText(R.id.tempsRestant,
                         formatterCalendar(prochainsDeparts.get(0).getHoraire()));
 
-            } else {
-                views.setTextViewText(R.id.tempsRestant, "");
             }
             views.setTextViewText(
                     R.id.tempsRestantFutur,

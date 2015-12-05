@@ -58,11 +58,6 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
 		Refreshable {
 
-	/**
-	 * Permet d'accéder aux apis keolis.
-	 */
-	private final Keolis keolis = Keolis.getInstance();
-
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
 	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
 
@@ -135,7 +130,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				final List<Station> stationsTmp = keolis.getStations();
+				final List<Station> stationsTmp = Keolis.getStations();
 				if (isCancelled()) {
 					return;
 				}
@@ -168,7 +163,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				final Collection<Station> stationsTmp = keolis.getStations();
+				final Collection<Station> stationsTmp = Keolis.getStations();
 				if (isCancelled()) {
 					return;
 				}

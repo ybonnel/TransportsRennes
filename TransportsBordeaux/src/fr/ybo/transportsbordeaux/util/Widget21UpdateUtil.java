@@ -57,7 +57,9 @@ public final class Widget21UpdateUtil {
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 
             Integer prochainDepart = null;
-            if (!prochainsDeparts.isEmpty()) {
+            if (prochainsDeparts.isEmpty()) {
+                views.setTextViewText(R.id.tempsRestantPasse, "");
+            } else {
                 int heureProchain = prochainsDeparts.get(0).getHoraire();
                 if (heureProchain >= 24 * 60) {
                     heureProchain -= 24 * 60;
@@ -74,8 +76,6 @@ public final class Widget21UpdateUtil {
                 views.setTextViewText(R.id.tempsRestantPasse,
                         formatterCalendar(prochainsDeparts.get(0).getHoraire()));
 
-            } else {
-                views.setTextViewText(R.id.tempsRestantPasse, "");
             }
             if (prochainsDeparts.size() > 1) {
                 views.setTextViewText(R.id.tempsRestant,

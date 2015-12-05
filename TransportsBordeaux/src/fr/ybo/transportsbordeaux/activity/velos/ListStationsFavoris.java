@@ -86,8 +86,8 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
         ((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 
-    private class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
-        public GetStations() {
+    private final class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
+        private GetStations() {
             super(ListStationsFavoris.this,
  getString(R.string.dialogRequeteVcub), true);
         }
@@ -113,7 +113,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 			for (final VeloFavori favori : velosFavoris) {
 				ids.add(favori.number);
 			}
-			final Collection<Station> stationsTmp = Keolis.getInstance().getStationsVcub();
+			final Collection<Station> stationsTmp = Keolis.getStationsVcub();
 			if (isCancelled()) {
 				return;
 			}

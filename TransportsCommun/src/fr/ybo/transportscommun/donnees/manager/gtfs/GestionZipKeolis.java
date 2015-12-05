@@ -190,7 +190,7 @@ public final class GestionZipKeolis {
                 bufReader.close();
             }
         } catch (final Exception exception) {
-			throw new GestionFilesException("Erreur lors de la récupération du fichier last_update", exception);
+			throw new GestionFilesException(exception);
         }
     }
 

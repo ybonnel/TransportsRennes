@@ -16,6 +16,7 @@ package fr.ybo.transportsbordeaux.tbcapi.sax;
 
 import fr.ybo.transportsbordeaux.database.modele.Alert;
 import fr.ybo.transportsbordeaux.util.StringUtils;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -32,10 +33,6 @@ class GetAlertesHandler extends DefaultHandler {
     private static final String ATTRIBUT_HREF = "href";
     private static final String ATTRIBUT_CLASS = "class";
 
-
-    public GetAlertesHandler() {
-        super();
-    }
 
     private Alert alertCourante;
 
@@ -73,11 +70,11 @@ class GetAlertesHandler extends DefaultHandler {
             alertes.add(alertCourante);
             alertCourante = null;
         }
-        if (ligneEncours && qName.equals(BALISE_TD)) {
+        if (ligneEncours && qName.equals(BALISE_TD) && alertCourante != null) {
             alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
             ligneEncours = false;
         }
-        if (qName.equals(BALISE_A)) {
+        if (qName.equals(BALISE_A) && alertCourante != null) {
             alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
         }
         contenu.setLength(0);

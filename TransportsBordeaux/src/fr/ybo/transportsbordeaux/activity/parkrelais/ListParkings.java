@@ -46,7 +46,7 @@ public class ListParkings extends AbstractListParkings<Parking> {
 
 	@Override
 	protected List<Parking> getParkings() throws ErreurReseau {
-		return Keolis.getInstance().getParkings();
+		return Keolis.getParkings();
 	}
 
 	@Override

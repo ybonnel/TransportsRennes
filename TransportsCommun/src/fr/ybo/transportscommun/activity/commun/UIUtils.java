@@ -23,8 +23,11 @@ import android.os.Build;
 /**
  * An assortment of UI helpers.
  */
-public class UIUtils {
+public final class UIUtils {
 
+
+    private UIUtils() {
+    }
 
     public static boolean isHoneycomb() {
         // Can use static final constants like HONEYCOMB, declared in later versions

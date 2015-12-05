@@ -169,7 +169,8 @@ public class LocationUtil implements LocationListener {
             LOG_YBO.debug("BestLocation : true (plus récente et pas moins précise)");
             currentBestLocation = location;
             return true;
-        } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+        }
+        if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
             LOG_YBO.debug("BestLocation : true (plus récente et pas vraiement moins précise et du même provider)");
             currentBestLocation = location;
             return true;

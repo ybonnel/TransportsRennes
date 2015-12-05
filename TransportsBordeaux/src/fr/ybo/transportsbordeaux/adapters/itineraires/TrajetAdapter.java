@@ -78,11 +78,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
             } else {
                 directionTrajet.setVisibility(View.VISIBLE);
                 final String ligneId = portion.getLigneId();
-                if (ligneId.length() == 1 && ligneId.charAt(0) >= '1' && ligneId.charAt(0) <= '9') {
-                    icone = IconeLigne.getIconeResource('0' + ligneId);
-                } else {
-                    icone = IconeLigne.getIconeResource(ligneId);
-                }
+                icone = ligneId.length() == 1 && ligneId.charAt(0) >= '1' && ligneId.charAt(0) <= '9' ? IconeLigne.getIconeResource('0' + ligneId) : IconeLigne.getIconeResource(ligneId);
                 directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + portion.getDirection());
             }
             ((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);

@@ -24,11 +24,6 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 public class ListAlerts extends ListFragment {
 
-	/**
-	 * Permet d'accéder aux apis keolis.
-	 */
-	private final Keolis keolis = Keolis.getInstance();
-
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
 	private Ligne ligne;
@@ -66,7 +61,7 @@ public class ListAlerts extends ListFragment {
 			@Override
 			protected Void doInBackground(final Void... params) {
 				try {
-					for (final Alert alerte : keolis.getAlerts()) {
+					for (final Alert alerte : Keolis.getAlerts()) {
 						while (alerte.lines.size() > 1) {
 							final Alert newAlerte = new Alert(alerte);
 							newAlerte.lines.add(alerte.lines.remove(0));

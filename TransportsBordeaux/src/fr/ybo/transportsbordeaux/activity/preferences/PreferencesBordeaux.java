@@ -41,18 +41,18 @@ public class PreferencesBordeaux extends AbstractPreferences {
 			return;
 		}
 		if ("TransportsBordeaux_sdCard".equals(key)) {
-			final boolean dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(PreferencesBordeaux.this)
+			final boolean dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(this)
 					.getBoolean(
 					"TransportsBordeaux_sdCard", false);
 			if (dbOnSdCard && !Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-				Toast.makeText(PreferencesBordeaux.this, R.string.sdCardInaccessbile, Toast.LENGTH_LONG).show();
+				Toast.makeText(this, R.string.sdCardInaccessbile, Toast.LENGTH_LONG).show();
 				final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-						PreferencesBordeaux.this).edit();
+						this).edit();
 				editor.putBoolean("TransportsBordeaux_sdCard", false);
 				editor.commit();
 			} else {
-				final AlertDialog.Builder builder = new AlertDialog.Builder(PreferencesBordeaux.this);
-				final View alertView = LayoutInflater.from(PreferencesBordeaux.this).inflate(R.layout.infoapropos, null);
+				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				final View alertView = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
 				final TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
 				if (UIUtils.isHoneycomb()) {
 					textView.setTextColor(AbstractTransportsApplication.getTextColor(this));

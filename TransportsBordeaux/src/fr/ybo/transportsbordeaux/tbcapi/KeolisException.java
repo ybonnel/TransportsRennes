@@ -30,18 +30,17 @@ class KeolisException extends RuntimeException {
      *
      * @param message message.
      */
-    public KeolisException(final String message) {
+    KeolisException(final String message) {
         super(message);
     }
 
     /**
      * Constructeur avec message et exception.
      *
-     * @param message message.
      * @param cause   exception.
      */
-    public KeolisException(final String message, final Throwable cause) {
-        super(message, cause);
+    KeolisException(final Throwable cause) {
+        super("Erreur lors de l'appel à l'API keolis", cause);
     }
 
 }

@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
@@ -131,7 +130,6 @@ public abstract class AbstractLoadingActivity extends Activity {
 						});
 						try {
 							UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-						} catch (final LigneInexistanteException ignore) {
 						} catch (final NoSpaceLeftException e) {
 							Toast.makeText(AbstractLoadingActivity.this, getErreurNoSpaceLeft(), Toast.LENGTH_LONG)
 									.show();
@@ -217,7 +215,6 @@ public abstract class AbstractLoadingActivity extends Activity {
 					});
 					try {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-					} catch (final LigneInexistanteException ignore) {
 					} catch (final NoSpaceLeftException e) {
 						runOnUiThread(new Runnable() {
 							@Override
@@ -279,7 +276,6 @@ public abstract class AbstractLoadingActivity extends Activity {
 					});
 					try {
 						UpdateDataBase.chargeDetailLigne(getRawClass(), ligne, getResources());
-					} catch (final LigneInexistanteException ignore) {
 					} catch (final NoSpaceLeftException e) {
 						handler.post(new Runnable() {
 							@Override
