@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.activity.velos;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import android.content.ActivityNotFoundException;
@@ -137,7 +136,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
-					Collections.sort(stations, new StationComparator2());
+					Collections.sort(stations, new Station.StationComparator());
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				}
@@ -170,7 +169,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
-					Collections.sort(stations, new StationComparator());
+					Collections.sort(stations, new Station.StationComparator());
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				}
@@ -241,17 +240,4 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 	}
 
-	private static class StationComparator implements Comparator<Station> {
-		@Override
-        public int compare(final Station o1, final Station o2) {
-            return o1.name.compareToIgnoreCase(o2.name);
-        }
-	}
-
-	private static class StationComparator2 implements Comparator<Station> {
-		@Override
-        public int compare(final Station o1, final Station o2) {
-            return o1.name.compareToIgnoreCase(o2.name);
-        }
-	}
 }

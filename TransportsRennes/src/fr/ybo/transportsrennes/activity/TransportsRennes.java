@@ -124,7 +124,7 @@ public class TransportsRennes extends AccueilActivity {
 					upgradeDatabase();
 				}
 			});
-			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener2());
+			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
 			return builder.create();
 		}
 		return super.onCreateDialog(id);
@@ -275,13 +275,6 @@ public class TransportsRennes extends AccueilActivity {
 	}
 
 	private static class MyOnClickListener implements Dialog.OnClickListener {
-		@Override
-        public void onClick(final DialogInterface dialog, final int id) {
-            dialog.cancel();
-        }
-	}
-
-	private static class MyOnClickListener2 implements Dialog.OnClickListener {
 		@Override
         public void onClick(final DialogInterface dialog, final int id) {
             dialog.cancel();

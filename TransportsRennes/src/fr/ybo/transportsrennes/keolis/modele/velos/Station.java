@@ -14,6 +14,7 @@
 package fr.ybo.transportsrennes.keolis.modele.velos;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
@@ -121,4 +122,11 @@ public class Station extends ObjetWithDistance implements Serializable, IStation
 	public String getName() {
 		return name;
 	}
+
+    public static class StationComparator implements Comparator<Station> {
+        @Override
+        public int compare(final Station o1, final Station o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
+        }
+    }
 }

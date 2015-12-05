@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.activity.velos;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import android.content.Intent;
@@ -30,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.modele.VeloFavori;
@@ -58,8 +58,8 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listvelofavoris);
-		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
-				R.menu.holo_liststation_favoris_menu_items);
+        getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
+                R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
         final ListView listView = getListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,7 +76,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 
         listView.setTextFilterEnabled(true);
         registerForContextMenu(listView);
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
+        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
             @Override
             protected void myDoBackground() throws ErreurReseau {
                 final List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
@@ -86,57 +86,57 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
                     numbers.add(favori.number);
                 }
                 final Collection<Station> stationsTmp = Keolis.getStationByNumbers(numbers);
-				if (isCancelled()) {
-					return;
-				}
+                if (isCancelled()) {
+                    return;
+                }
                 synchronized (stations) {
                     stations.clear();
                     stations.addAll(stationsTmp);
-                    Collections.sort(stations, new StationComparator2());
+                    Collections.sort(stations, new Station.StationComparator());
                 }
             }
 
             @Override
             protected void onPostExecute(final Void result) {
-				if (!isCancelled()) {
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				}
+                if (!isCancelled()) {
+                    ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+                }
                 super.onPostExecute(result);
             }
         }.execute((Void) null);
     }
 
-	@Override
-	public void refresh() {
-		new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
-			@Override
-			protected void myDoBackground() throws ErreurReseau {
-				final List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
-						.select(new VeloFavori());
-				final Collection<String> numbers = new ArrayList<String>(10);
-				for (final VeloFavori favori : velosFavoris) {
-					numbers.add(favori.number);
-				}
-				final Collection<Station> stationsTmp = Keolis.getStationByNumbers(numbers);
-				if (isCancelled()) {
-					return;
-				}
-				synchronized (stations) {
-					stations.clear();
-					stations.addAll(stationsTmp);
-					Collections.sort(stations, new StationComparator());
-				}
-			}
+    @Override
+    public void refresh() {
+        new TacheAvecProgressDialog<Void, Void, Void>(this, getString(R.string.dialogRequeteVeloStar), true) {
+            @Override
+            protected void myDoBackground() throws ErreurReseau {
+                final List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
+                        .select(new VeloFavori());
+                final Collection<String> numbers = new ArrayList<String>(10);
+                for (final VeloFavori favori : velosFavoris) {
+                    numbers.add(favori.number);
+                }
+                final Collection<Station> stationsTmp = Keolis.getStationByNumbers(numbers);
+                if (isCancelled()) {
+                    return;
+                }
+                synchronized (stations) {
+                    stations.clear();
+                    stations.addAll(stationsTmp);
+                    Collections.sort(stations, new Station.StationComparator());
+                }
+            }
 
             @Override
-			protected void onPostExecute(final Void result) {
-				if (!isCancelled()) {
-					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-				}
-				super.onPostExecute(result);
-			}
-		}.execute((Void) null);
-	}
+            protected void onPostExecute(final Void result) {
+                if (!isCancelled()) {
+                    ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+                }
+                super.onPostExecute(result);
+            }
+        }.execute((Void) null);
+    }
 
     @Override
     public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
@@ -168,17 +168,5 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
         }
     }
 
-    private static class StationComparator implements Comparator<Station> {
-        @Override
-public int compare(final Station o1, final Station o2) {
-            return o1.name.compareToIgnoreCase(o2.name);
-        }
-    }
 
-    private static class StationComparator2 implements Comparator<Station> {
-        @Override
-        public int compare(final Station o1, final Station o2) {
-            return o1.name.compareToIgnoreCase(o2.name);
-        }
-    }
 }

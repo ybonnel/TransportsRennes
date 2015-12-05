@@ -164,7 +164,7 @@ public class TransportsBordeaux extends AccueilActivity {
                     }
                 });
             } else {
-                builder.setNegativeButton(getString(R.string.non), new MyOnClickListener2());
+                builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
             }
             runOnUiThread(new Runnable() {
                 @Override
@@ -293,10 +293,4 @@ public class TransportsBordeaux extends AccueilActivity {
         }
     }
 
-    private static class MyOnClickListener2 implements Dialog.OnClickListener {
-        @Override
-        public void onClick(final DialogInterface dialog, final int id) {
-            dialog.cancel();
-        }
-    }
 }

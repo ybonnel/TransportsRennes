@@ -115,7 +115,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 				}
 			});
 
-			alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener2());
+			alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener());
 			return alert.create();
 		}
 
@@ -171,10 +171,4 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
         }
 	}
 
-	private static class MyOnClickListener2 implements DialogInterface.OnClickListener {
-		@Override
-        public void onClick(final DialogInterface dialog, final int whichButton) {
-            dialog.cancel();
-        }
-	}
 }
