@@ -33,13 +33,12 @@ public class Direction {
     public String direction;
 
 
-    private static Direction directionSelect = null;
+    private static final class DirectionSelectHolder {
+        private static final Direction directionSelect = new Direction();
+    }
 
-    public static String getDirectionById(int id) {
-        if (directionSelect == null) {
-            directionSelect = new Direction();
-        }
-        directionSelect.id = id;
-		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(directionSelect).direction;
+    public static String getDirectionById(final int id) {
+        DirectionSelectHolder.directionSelect.id = id;
+		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(DirectionSelectHolder.directionSelect).direction;
     }
 }

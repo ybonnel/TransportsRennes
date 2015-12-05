@@ -19,43 +19,43 @@ import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
 import fr.ybo.transportscommun.util.LogYbo;
 
-public class FavorisManager {
+public final class FavorisManager {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ArretFavori.class);
 
-	private static FavorisManager instance = null;
+	private static FavorisManager instance;
 
 	private static final String FILE_NAME = "arrets_favoris.txt";
 
 	private final MoteurCsv moteurCsv;
 
 	private FavorisManager() {
-		List<Class<?>> classes = new ArrayList<Class<?>>();
+		final List<Class<?>> classes = new ArrayList<Class<?>>();
 		classes.add(ArretFavori.class);
 		moteurCsv = new MoteurCsv(classes);
 	}
 
-	synchronized public static FavorisManager getInstance() {
+	public static synchronized FavorisManager getInstance() {
 		if (instance == null) {
 			instance = new FavorisManager();
 		}
 		return instance;
 	}
 
-	public void export(Context context) {
+	public void export(final Context context) {
 		if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 			Toast.makeText(context, R.string.exportErreurSd, Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		File outputFile = openCsvFile();
+		final File outputFile = openCsvFile();
 		if (outputFile.exists()) {
 			outputFile.delete();
 		}
 		try {
 			moteurCsv.writeFile(outputFile,
 					AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class), ArretFavori.class);
-		} catch (MoteurCsvException erreurEcriture) {
+		} catch (final MoteurCsvException erreurEcriture) {
 			LOG_YBO.erreur("Erreur à l'écriture du fichier", erreurEcriture);
 			Toast.makeText(context, R.string.exportErreurSd, Toast.LENGTH_LONG).show();
 			return;
@@ -72,14 +72,14 @@ public class FavorisManager {
 			return;
 		}
 
-		BufferedReader bufReader = openCsvFileAsBufReader(context);
+		final BufferedReader bufReader = openCsvFileAsBufReader(context);
 		if (bufReader == null) {
 			return;
 		}
 		try {
 			moteurCsv.parseFileAndInsert(bufReader, ArretFavori.class, new InsertArretFavori());
 			Toast.makeText(context, R.string.importResult, Toast.LENGTH_SHORT).show();
-		} catch (Exception exception) {
+		} catch (final Exception exception) {
 			LOG_YBO.erreur("Une erreur pendant l'import : ", exception);
 			Toast.makeText(context, context.getString(R.string.importErreurGenerique, exception.getMessage()),
 					Toast.LENGTH_LONG).show();
@@ -88,17 +88,17 @@ public class FavorisManager {
 		}
 	}
 
-	private void closeBufReader(BufferedReader bufReader) {
+	private static void closeBufReader(final BufferedReader bufReader) {
 		try {
 			bufReader.close();
-		} catch (IOException ignore) {
+		} catch (final IOException ignore) {
 		}
 	}
 
-	private BufferedReader openCsvFileAsBufReader(Context context) {
+	private static BufferedReader openCsvFileAsBufReader(final Context context) {
 		try {
 			return new BufferedReader(new FileReader(openCsvFile()));
-		} catch (FileNotFoundException e) {
+		} catch (final FileNotFoundException e) {
 			Toast.makeText(
 					context,
 					context.getString(R.string.importErreurFichierNonPresent, AbstractTransportsApplication
@@ -107,18 +107,18 @@ public class FavorisManager {
 		}
 	}
 
-	private File openCsvFile() {
-		File root = Environment.getExternalStorageDirectory();
-		File repertoire = new File(root, AbstractTransportsApplication.getDonnesSpecifiques().getApplicationName());
+	private static File openCsvFile() {
+		final File root = Environment.getExternalStorageDirectory();
+		final File repertoire = new File(root, AbstractTransportsApplication.getDonnesSpecifiques().getApplicationName());
 		if (!repertoire.exists()) {
 			repertoire.mkdir();
 		}
 		return new File(repertoire, FILE_NAME);
 	}
 
-	public boolean hasFavorisToLoad() {
-		for (ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
-			Ligne ligne = Ligne.getLigne(favori.ligneId);
+	public static boolean hasFavorisToLoad() {
+		for (final ArretFavori favori : AbstractTransportsApplication.getDataBaseHelper().selectAll(ArretFavori.class)) {
+			final Ligne ligne = Ligne.getLigne(favori.ligneId);
 			if (ligne != null && !ligne.isChargee()) {
 				return true;
 			}

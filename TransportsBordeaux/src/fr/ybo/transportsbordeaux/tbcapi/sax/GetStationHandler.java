@@ -35,7 +35,7 @@ public class GetStationHandler extends KeolisHandler<Station> {
     }
 
     @Override
-	protected void remplirObjectKeolis(Station currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final Station currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
         if (baliseName.equals(GID)) {
 			currentObjectKeolis.id = Integer.parseInt(contenuOfBalise);
         } else if (baliseName.equals(NOM)) {

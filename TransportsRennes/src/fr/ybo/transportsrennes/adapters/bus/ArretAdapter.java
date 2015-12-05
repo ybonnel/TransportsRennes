@@ -62,7 +62,7 @@ public class ArretAdapter extends CursorAdapter {
     private final Collection<String> setCorrespondances = new HashSet<String>(20);
 
 
-    public ArretAdapter(Activity activity, Cursor cursor, Ligne ligne) {
+    public ArretAdapter(final Activity activity, final Cursor cursor, final Ligne ligne) {
         super(activity, cursor);
         this.ligne = ligne;
         favori = new ArretFavori();
@@ -94,10 +94,10 @@ public class ArretAdapter extends CursorAdapter {
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.arret, parent, false);
-        ArretAdapter.ViewHolder holder = new ArretAdapter.ViewHolder();
+    public View newView(final Context context, final Cursor cursor, final ViewGroup parent) {
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final View view = inflater.inflate(R.layout.arret, parent, false);
+        final ViewHolder holder = new ViewHolder();
         holder.nomArret = (TextView) view.findViewById(R.id.nomArret);
         holder.directionArret = (TextView) view.findViewById(R.id.directionArret);
         holder.isFavori = (ImageView) view.findViewById(R.id.isfavori);
@@ -110,14 +110,14 @@ public class ArretAdapter extends CursorAdapter {
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        String name = cursor.getString(nameCol);
-        String direction = cursor.getString(directionCol);
-        boolean accessible = (cursor.getInt(accessibleCol) == 1);
+    public void bindView(final View view, final Context context, final Cursor cursor) {
+        final String name = cursor.getString(nameCol);
+        final String direction = cursor.getString(directionCol);
+        final boolean accessible = (cursor.getInt(accessibleCol) == 1);
         favori.arretId = cursor.getString(arretIdCol);
         favori.macroDirection = cursor.getInt(macroDirectionCol);
         final String arretId = favori.arretId;
-        final ArretAdapter.ViewHolder holder = (ArretAdapter.ViewHolder) view.getTag();
+        final ViewHolder holder = (ViewHolder) view.getTag();
         holder.nomArret.setText(name);
         holder.directionArret.setText(context.getString(R.string.vers) + ' ' + direction);
         holder.isFavori.setImageResource(
@@ -131,7 +131,8 @@ public class ArretAdapter extends CursorAdapter {
             correspondancesNoDetail(holder);
         }
         holder.correspondance.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View myView) {
+            @Override
+            public void onClick(final View myView) {
                 if (setCorrespondances.contains(arretId)) {
                     setCorrespondances.remove(arretId);
                     correspondancesNoDetail(holder);
@@ -144,13 +145,13 @@ public class ArretAdapter extends CursorAdapter {
         holder.iconeHandicap.setVisibility(accessible ? View.VISIBLE : View.GONE);
     }
 
-    private void correspondancesNoDetail(ArretAdapter.ViewHolder holder) {
+    private static void correspondancesNoDetail(final ViewHolder holder) {
         holder.detailCorrespondance.removeAllViews();
         holder.detailCorrespondance.setVisibility(View.INVISIBLE);
         holder.correspondance.setImageResource(R.drawable.arrow_right_float);
     }
 
-    private void correspondancesWithDetail(ArretAdapter.ViewHolder holder, String arretId) {
+    private void correspondancesWithDetail(final ViewHolder holder, final String arretId) {
         holder.detailCorrespondance.setVisibility(View.VISIBLE);
         holder.detailCorrespondance.removeAllViews();
         construireCorrespondance(holder.detailCorrespondance, arretId);
@@ -159,17 +160,18 @@ public class ArretAdapter extends CursorAdapter {
 
     private final Map<String, List<Arret>> mapDetailCorrespondances = new HashMap<String, List<Arret>>();
 
-    private void construireRelativeLayouts(List<Arret> arrets, LinearLayout detailCorrespondance) {
+    private void construireRelativeLayouts(final List<Arret> arrets, final LinearLayout detailCorrespondance) {
         for (final Arret arret : arrets) {
-            RelativeLayout relativeLayout = getRelativeLayout();
-            ArretAdapter.RelativeLayoutHolder holder = (ArretAdapter.RelativeLayoutHolder) relativeLayout.getTag();
+            final RelativeLayout relativeLayout = getRelativeLayout();
+            final RelativeLayoutHolder holder = (RelativeLayoutHolder) relativeLayout.getTag();
             holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(arret.favori.nomCourt));
             holder.arretDirection.setText(arret.favori.direction);
             holder.nomArret.setText(arret.nom);
             holder.distance.setText(arret.formatDistance());
             relativeLayout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    Intent intent = new Intent(activity, DetailArret.class);
+                @Override
+                public void onClick(final View view) {
+                    final Intent intent = new Intent(activity, DetailArret.class);
                     intent.putExtra("favori", arret.favori);
                     activity.startActivity(intent);
                 }
@@ -178,7 +180,7 @@ public class ArretAdapter extends CursorAdapter {
         }
     }
 
-    private void construireCorrespondance(LinearLayout detailCorrespondance, String arretId) {
+    private void construireCorrespondance(final LinearLayout detailCorrespondance, final String arretId) {
         if (mapDetailCorrespondances.containsKey(arretId)) {
             construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);
         } else {
@@ -186,48 +188,40 @@ public class ArretAdapter extends CursorAdapter {
             Arret arretCourant = new Arret();
             arretCourant.id = arretId;
             arretCourant = TransportsRennesApplication.getDataBaseHelper().selectSingle(arretCourant);
-            Location locationArret = new Location("myProvider");
+            final Location locationArret = new Location("myProvider");
             locationArret.setLatitude(arretCourant.latitude);
             locationArret.setLongitude(arretCourant.longitude);
 
             /** Construction requête. */
-            StringBuilder requete = new StringBuilder();
-            requete.append("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction,");
-            requete.append(" Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude,");
-            requete.append(" Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection ");
-            requete.append("FROM Arret, ArretRoute, Direction, Ligne ");
-            requete.append("WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId");
-            requete.append(" AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude");
-            requete.append(" AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude");
 
             /** Paramètres de la requête */
-            double minLatitude = arretCourant.latitude - DISTANCE_LAT_IN_DEGREE;
-            double maxLatitude = arretCourant.latitude + DISTANCE_LAT_IN_DEGREE;
-            double minLongitude = arretCourant.longitude - DISTANCE_LNG_IN_DEGREE;
-            double maxLongitude = arretCourant.longitude + DISTANCE_LNG_IN_DEGREE;
-            List<String> selectionArgs = new ArrayList<String>(4);
+            final double minLatitude = arretCourant.latitude - DISTANCE_LAT_IN_DEGREE;
+            final double maxLatitude = arretCourant.latitude + DISTANCE_LAT_IN_DEGREE;
+            final double minLongitude = arretCourant.longitude - DISTANCE_LNG_IN_DEGREE;
+            final double maxLongitude = arretCourant.longitude + DISTANCE_LNG_IN_DEGREE;
+            final List<String> selectionArgs = new ArrayList<String>(4);
             selectionArgs.add(String.valueOf(minLatitude));
             selectionArgs.add(String.valueOf(maxLatitude));
             selectionArgs.add(String.valueOf(minLongitude));
             selectionArgs.add(String.valueOf(maxLongitude));
 
-            Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), selectionArgs);
+            final Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery("SELECT Arret.id as arretId, ArretRoute.ligneId as ligneId, Direction.direction as direction," + " Arret.nom as arretNom, Arret.latitude as latitude, Arret.longitude as longitude," + " Ligne.nomCourt as nomCourt, Ligne.nomLong as nomLong, ArretRoute.macroDirection as macroDirection " + "FROM Arret, ArretRoute, Direction, Ligne " + "WHERE Arret.id = ArretRoute.arretId and Direction.id = ArretRoute.directionId AND Ligne.id = ArretRoute.ligneId" + " AND Arret.latitude > :minLatitude AND Arret.latitude < :maxLatitude" + " AND Arret.longitude > :minLongitude AND Arret.longitude < :maxLongitude", selectionArgs);
 
             /** Recuperation des index dans le cussor */
-            int arretIdIndex = cursor.getColumnIndex("arretId");
-            int ligneIdIndex = cursor.getColumnIndex("ligneId");
-            int directionIndex = cursor.getColumnIndex("direction");
-            int arretNomIndex = cursor.getColumnIndex("arretNom");
-            int latitudeIndex = cursor.getColumnIndex("latitude");
-            int longitudeIndex = cursor.getColumnIndex("longitude");
-            int nomCourtIndex = cursor.getColumnIndex("nomCourt");
-            int nomLongIndex = cursor.getColumnIndex("nomLong");
-            int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
+            final int arretIdIndex = cursor.getColumnIndex("arretId");
+            final int ligneIdIndex = cursor.getColumnIndex("ligneId");
+            final int directionIndex = cursor.getColumnIndex("direction");
+            final int arretNomIndex = cursor.getColumnIndex("arretNom");
+            final int latitudeIndex = cursor.getColumnIndex("latitude");
+            final int longitudeIndex = cursor.getColumnIndex("longitude");
+            final int nomCourtIndex = cursor.getColumnIndex("nomCourt");
+            final int nomLongIndex = cursor.getColumnIndex("nomLong");
+            final int macroDirectionIndex = cursor.getColumnIndex("macroDirection");
 
-            List<Arret> arrets = new ArrayList<Arret>(cursor.getCount());
+            final List<Arret> arrets = new ArrayList<Arret>(cursor.getCount());
 
             while (cursor.moveToNext()) {
-                Arret arret = new Arret();
+                final Arret arret = new Arret();
                 arret.id = cursor.getString(arretIdIndex);
                 arret.favori = new ArretFavori();
                 arret.favori.arretId = arret.id;
@@ -263,8 +257,8 @@ public class ArretAdapter extends CursorAdapter {
     }
 
     private RelativeLayout getRelativeLayout() {
-        RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
-        ArretAdapter.RelativeLayoutHolder holder = new ArretAdapter.RelativeLayoutHolder();
+        final RelativeLayout relativeLayout = (RelativeLayout) mInflater.inflate(R.layout.arretgps, null);
+        final RelativeLayoutHolder holder = new RelativeLayoutHolder();
         holder.iconeLigne = (ImageView) relativeLayout.findViewById(R.id.iconeLigne);
         holder.arretDirection = (TextView) relativeLayout.findViewById(R.id.arretgps_direction);
         holder.nomArret = (TextView) relativeLayout.findViewById(R.id.arretgps_nomArret);

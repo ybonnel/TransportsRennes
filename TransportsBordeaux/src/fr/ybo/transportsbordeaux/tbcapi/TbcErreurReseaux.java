@@ -24,15 +24,15 @@ public class TbcErreurReseaux extends Exception {
         super();
     }
 
-    public TbcErreurReseaux(String pArg0, Throwable pArg1) {
+    public TbcErreurReseaux(final String pArg0, final Throwable pArg1) {
         super(pArg0, pArg1);
     }
 
-    public TbcErreurReseaux(String pArg0) {
+    public TbcErreurReseaux(final String pArg0) {
         super(pArg0);
     }
 
-    public TbcErreurReseaux(Throwable pArg0) {
+    public TbcErreurReseaux(final Throwable pArg0) {
         super(pArg0);
     }
 

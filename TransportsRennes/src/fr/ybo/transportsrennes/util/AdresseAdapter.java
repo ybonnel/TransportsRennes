@@ -27,14 +27,15 @@ import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.GeocoderStatus;
 
 import fr.ybo.transportscommun.donnees.modele.Arret;
+import fr.ybo.transportscommun.util.GeocodeUtil;
 import fr.ybo.transportscommun.util.StringOperation;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
 
-	private List<Arret> arrets;
+	private final List<Arret> arrets;
 
-	public AdresseAdapter(Context context, List<Arret> arrets) {
+	public AdresseAdapter(final Context context, final List<Arret> arrets) {
 		super(context, android.R.layout.simple_spinner_item);
 		this.arrets = arrets;
     }
@@ -49,30 +50,30 @@ public class AdresseAdapter extends ArrayAdapter<String> {
 	private class MyFilter extends Filter {
 
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
+        protected FilterResults performFiltering(final CharSequence constraint) {
 
-            FilterResults fr = new FilterResults();
+            final FilterResults fr = new FilterResults();
             if (constraint != null && constraint.length() > 5) {
-                GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(constraint.toString())
+                final GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(constraint.toString())
                         .setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
                 GeocodeResponse reponseResult = null;
                 try {
-                    reponseResult = TransportsRennesApplication.getGeocodeUtil().geocode(geocoderRequest);
-                } catch (Exception ignore) {
+                    reponseResult = GeocodeUtil.geocode(geocoderRequest);
+                } catch (final Exception ignore) {
                 }
 
-				List<String> results = new ArrayList<String>();
+				final List<String> results = new ArrayList<String>();
 
-				String upper = StringOperation.sansAccents(constraint.toString().toUpperCase());
+				final String upper = StringOperation.sansAccents(constraint.toString().toUpperCase());
 
-				for (Arret arret : arrets) {
+				for (final Arret arret : arrets) {
 					if (arret.nom.contains(upper)) {
 						results.add(arret.nom);
 					}
 				}
 
-                if (reponseResult != null && reponseResult.getStatus().equals(GeocoderStatus.OK)) {
-					for (GeocoderResult oneResult : reponseResult.getResults()) {
+                if (reponseResult != null && reponseResult.getStatus() == GeocoderStatus.OK) {
+					for (final GeocoderResult oneResult : reponseResult.getResults()) {
 						results.add(oneResult.getFormattedAddress());
 					}
 				}
@@ -83,14 +84,14 @@ public class AdresseAdapter extends ArrayAdapter<String> {
             return fr;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
+        protected void publishResults(final CharSequence constraint, final FilterResults results) {
             if (results.count > 0) {
                 clear();
 
-				for (String result : ((List<String>) results.values))
-					add(result);
+				for (final String result : ((Iterable<String>) results.values)) {
+                    add(result);
+                }
 
                 notifyDataSetChanged();
             } else {

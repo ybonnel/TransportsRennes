@@ -35,15 +35,16 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 public class BusRennes extends BaseListActivity {
 
     private void constructionListe() {
-        List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
+        final List<Ligne> lignes = TransportsRennesApplication.getDataBaseHelper().select(new Ligne(), "ordre");
         setListAdapter(new LigneAdapter(this, lignes));
-        ListView lv = getListView();
+        final ListView lv = getListView();
         lv.setFastScrollEnabled(true);
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(BusRennes.this, ListArret.class);
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
+                final Intent intent = new Intent(BusRennes.this, ListArret.class);
                 intent.putExtra("ligne", ligne);
                 startActivity(intent);
             }
@@ -52,7 +53,7 @@ public class BusRennes extends BaseListActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);

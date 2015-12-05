@@ -69,7 +69,7 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	}
 
 	@Override
-	protected void remplirObjectKeolis(ParkRelai currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(LATITUDE)) {

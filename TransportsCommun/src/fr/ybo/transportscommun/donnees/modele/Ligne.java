@@ -30,12 +30,10 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.GestionZipKeolis;
 import fr.ybo.transportscommun.util.LogYbo;
 import fr.ybo.transportscommun.util.NoSpaceLeftException;
 
-@SuppressWarnings({"serial"})
 @FichierCsv("lignes.txt")
 @Entity
 public class Ligne implements Serializable {
@@ -58,18 +56,18 @@ public class Ligne implements Serializable {
     @Column(type = Column.TypeColumn.BOOLEAN)
     public Boolean chargee;
 
-	public void chargerHeuresArrets(Class<?> rawClass, DataBaseHelper dataBaseHelper, Resources resources)
-			throws LigneInexistanteException, NoSpaceLeftException {
+	public void chargerHeuresArrets(final Class<?> rawClass, final DataBaseHelper dataBaseHelper, final Resources resources)
+			throws NoSpaceLeftException {
         LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt);
-        List<Class<?>> classes = new ArrayList<Class<?>>(1000);
+        final List<Class<?>> classes = new ArrayList<Class<?>>(1000);
         classes.add(Horaire.class);
-        MoteurCsv moteur = new MoteurCsv(classes);
+        final MoteurCsv moteur = new MoteurCsv(classes);
 		GestionZipKeolis.chargeLigne(rawClass, moteur, id, dataBaseHelper, resources);
         LOG_YBO.debug("Chargement des horaires de la ligne " + nomCourt + " terminé.");
     }
 
-    public static Ligne getLigne(String ligneId) {
-        Ligne ligne = new Ligne();
+    public static Ligne getLigne(final String ligneId) {
+        final Ligne ligne = new Ligne();
         ligne.id = ligneId;
 		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(ligne);
     }
@@ -79,16 +77,16 @@ public class Ligne implements Serializable {
             return false;
         }
         // On regarde si la table existe.
-		Table table = AbstractTransportsApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
+		final Table table = AbstractTransportsApplication.getDataBaseHelper().getBase().getTable(Horaire.class);
         table.addSuffixeToTableName(id);
-		Cursor cursor = AbstractTransportsApplication
+		final Cursor cursor = AbstractTransportsApplication
                 .getDataBaseHelper()
                 .getReadableDatabase()
                 .query("sqlite_master",
                         Collections.singleton("name").toArray(new String[1]),
-                        " type = 'table' and name='" + table.getName() + "'",
+                        " type = 'table' and name='" + table.getName() + '\'',
                         null, null, null, null);
-        boolean retour = cursor.getCount() > 0;
+        final boolean retour = cursor.getCount() > 0;
         cursor.close();
         return retour;
     }

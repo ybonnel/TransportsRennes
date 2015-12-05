@@ -29,7 +29,7 @@ public class CalendrierException {
     @Column(type = TypeColumn.INTEGER)
     @PrimaryKey
     public Integer calendrierId;
-    @BaliseCsv(value = "date")
+    @BaliseCsv("date")
     @Column
     @PrimaryKey
     public String date;

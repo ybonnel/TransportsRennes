@@ -41,12 +41,12 @@ import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 public class ListFavorisForNoGroup extends BaseFragmentActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listfavoris);
 		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
-		if (FavorisManager.getInstance().hasFavorisToLoad()) {
-			Intent intent = new Intent(this, LoadingActivity.class);
+		if (FavorisManager.hasFavorisToLoad()) {
+			final Intent intent = new Intent(this, LoadingActivity.class);
 			intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
 			startActivity(intent);
 		} else {
@@ -58,15 +58,15 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
     private static final int MENU_AJOUTER = 1;
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         super.onCreateOptionsMenu(menu);
-        MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
+        final MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
         item.setIcon(android.R.drawable.ic_menu_add);
         return true;
     }
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case R.id.menu_export:
@@ -87,20 +87,21 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
 
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(final int id) {
 		if (id == AJOUTER_GROUPE_DIALOG_ID) {
 			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			final EditText input = new EditText(this);
 			alert.setView(input);
 			alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					String value = input.getText().toString().trim();
-					if (value == null || value.length() == 0) {
+				@Override
+				public void onClick(final DialogInterface dialog, final int whichButton) {
+					final String value = input.getText().toString().trim();
+					if (value.isEmpty()) {
 						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeObligatoire),
 								Toast.LENGTH_LONG).show();
 						return;
 					}
-					GroupeFavori groupeFavori = new GroupeFavori();
+					final GroupeFavori groupeFavori = new GroupeFavori();
 					groupeFavori.name = value;
 					if (!TransportsRennesApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
 							|| value.equals(getString(R.string.all))) {
@@ -110,33 +111,26 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 					}
 					TransportsRennesApplication.getDataBaseHelper().insert(groupeFavori);
 					startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
-					ListFavorisForNoGroup.this.finish();
+					finish();
 				}
 			});
 
-			alert.setNegativeButton(getString(R.string.annuler), new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int whichButton) {
-					dialog.cancel();
-				}
-			});
+			alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener2());
 			return alert.create();
 		}
 
 		if (id == DIALOG_UPGRADE) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(R.string.majDispo));
 			builder.setCancelable(false);
 			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
+				@Override
+				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
 			});
-			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
+			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
 			return builder.create();
 		}
 		return super.onCreateDialog(id);
@@ -145,14 +139,14 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 	
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+		final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = null;
 		try {
 			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		} catch (DataBaseException exception) {
+		} catch (final DataBaseException exception) {
 			dataBaseHelper.deleteAll(DernierMiseAJour.class);
 		}
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
+		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
 			upgradeDatabase();
 		} else if (dernierMiseAJour.derniereMiseAJour == null
@@ -163,10 +157,24 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 
 
 	private void upgradeDatabase() {
-		Intent intent = new Intent(this, LoadingActivity.class);
+		final Intent intent = new Intent(this, LoadingActivity.class);
 		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
 	
 	private static final int DIALOG_UPGRADE = 2;
+
+	private static class MyOnClickListener implements Dialog.OnClickListener {
+		@Override
+        public void onClick(final DialogInterface dialog, final int id) {
+            dialog.cancel();
+        }
+	}
+
+	private static class MyOnClickListener2 implements DialogInterface.OnClickListener {
+		@Override
+        public void onClick(final DialogInterface dialog, final int whichButton) {
+            dialog.cancel();
+        }
+	}
 }

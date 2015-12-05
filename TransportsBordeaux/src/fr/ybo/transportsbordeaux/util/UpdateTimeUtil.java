@@ -6,25 +6,25 @@ import android.app.Activity;
 
 public class UpdateTimeUtil {
 
-	private UpdateTime update;
-	private Activity activity;
+	private final UpdateTime update;
+	private final Activity activity;
 
 	private int oldNow;
 
-	public UpdateTimeUtil(UpdateTime update, Activity activity, int now) {
+	public UpdateTimeUtil(final UpdateTime update, final Activity activity, final int now) {
 		this.update = update;
 		this.activity = activity;
 		oldNow = now;
 	}
 
-	public UpdateTimeUtil(UpdateTime update, Activity activity) {
+	public UpdateTimeUtil(final UpdateTime update, final Activity activity) {
 		this.update = update;
 		this.activity = activity;
-		Calendar calendar = Calendar.getInstance();
+		final Calendar calendar = Calendar.getInstance();
 		oldNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 	}
 
-	private UpdateTimeThread updateTime = null;
+	private UpdateTimeThread updateTime;
 
 	public void start() {
 		if (updateTime == null) {
@@ -40,29 +40,29 @@ public class UpdateTimeUtil {
 		}
 	}
 
-	public static interface UpdateTime {
-		public void update(Calendar calendar);
+	public interface UpdateTime {
+		void update();
 	}
 
-	public class UpdateTimeThread extends Thread {
+	private class UpdateTimeThread extends Thread {
 		@Override
 		public void run() {
 			while (true) {
 				final Calendar calendar = Calendar.getInstance();
-				int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+				final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 				if (now > oldNow) {
 					oldNow = now;
 					activity.runOnUiThread(new Runnable() {
 
 						@Override
 						public void run() {
-							update.update(calendar);
+							update.update();
 						}
 					});
 				}
 				try {
 					sleep(500);
-				} catch (InterruptedException e) {
+				} catch (final InterruptedException e) {
 					break;
 				}
 			}

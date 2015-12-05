@@ -21,7 +21,6 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class ParkRelai extends ObjetWithDistance implements Serializable, IParking {
 
     /**

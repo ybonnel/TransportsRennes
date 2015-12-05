@@ -4,6 +4,6 @@ import android.widget.ImageButton;
 
 public interface ChangeIconActionBar {
 
-	public void changeIconActionBar(ImageButton imageButton);
+	void changeIconActionBar(ImageButton imageButton);
 
 }

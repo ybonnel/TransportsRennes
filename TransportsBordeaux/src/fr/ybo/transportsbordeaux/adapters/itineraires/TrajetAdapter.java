@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.itineraires.PortionTrajet;
 import fr.ybo.transportsbordeaux.itineraires.Trajet;
@@ -33,10 +34,10 @@ import fr.ybo.transportscommun.util.IconeLigne;
 public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
     private final LayoutInflater inflater;
-    private int heureDepart;
-    private Context context;
+    private final int heureDepart;
+    private final Context context;
 
-    public TrajetAdapter(Context context, List<Trajet> trajets, int heureDepart) {
+    public TrajetAdapter(final Context context, final List<Trajet> trajets, final int heureDepart) {
         super(context, R.layout.trajet, trajets);
         this.heureDepart = heureDepart;
         this.context = context;
@@ -50,37 +51,34 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertViewLocal = convertView;
-        TrajetAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertViewLocal == null) {
             convertViewLocal = inflater.inflate(R.layout.trajet, null);
-            holder = new TrajetAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.departPieton = (TextView) convertViewLocal.findViewById(R.id.departPieton);
             holder.arriveePieton = (TextView) convertViewLocal.findViewById(R.id.arriveePieton);
             holder.layoutTrajets = (LinearLayout) convertViewLocal.findViewById(R.id.layoutTrajets);
             convertViewLocal.setTag(holder);
         } else {
-            holder = (TrajetAdapter.ViewHolder) convertViewLocal.getTag();
+            holder = (ViewHolder) convertViewLocal.getTag();
         }
-        Trajet trajet = getItem(position);
+        final Trajet trajet = getItem(position);
         holder.departPieton.setText(context.getString(R.string.depart, formatHeure(heureDepart)));
         holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.getEndTime())));
         holder.layoutTrajets.removeAllViews();
-        for (PortionTrajet portion : trajet.getPortions()) {
-            RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
-            int icone;
-            TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
+        for (final PortionTrajet portion : trajet.getPortions()) {
+            final RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+            final int icone;
+            final TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
             if (portion.getMode().isOnStreetNonTransit()) {
                 icone = R.drawable.ipieton;
                 directionTrajet.setVisibility(View.GONE);
             } else {
                 directionTrajet.setVisibility(View.VISIBLE);
-                String route = portion.getLigneId();
-                if (route.length() == 1 && route.charAt(0) >= '1' && route.charAt(0) <= '9') {
-                    route = "0" + route;
-                }
-                icone = IconeLigne.getIconeResource(route);
+                final String ligneId = portion.getLigneId();
+                icone = ligneId.length() == 1 && ligneId.charAt(0) >= '1' && ligneId.charAt(0) <= '9' ? IconeLigne.getIconeResource('0' + ligneId) : IconeLigne.getIconeResource(ligneId);
                 directionTrajet.setText(context.getString(R.string.directionEntete) + ' ' + portion.getDirection());
             }
             ((ImageView) portionLayout.findViewById(R.id.iconePortion)).setImageResource(icone);
@@ -95,10 +93,10 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
     private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 
-    private String formatHeure(int time) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int heure = time / 60;
-        int minutes = time - heure * 60;
+    private static String formatHeure(final int time) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        final int heure = time / 60;
+        final int minutes = time - heure * 60;
         if (heure < 10) {
             stringBuilder.append('0');
         }

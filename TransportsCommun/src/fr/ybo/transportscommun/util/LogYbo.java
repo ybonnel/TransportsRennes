@@ -24,25 +24,25 @@ public class LogYbo {
     private static final String PREFIX_TAG = "YBO";
     private final String tag;
 
-    public LogYbo(Class<?> clazz) {
+    public LogYbo(final Class<?> clazz) {
         tag = clazz.getSimpleName();
     }
 
-    public void debug(String message) {
+    public void debug(final String message) {
 		if (AbstractTransportsApplication.isDebug()) {
             Log.d(PREFIX_TAG, tag + " : " + message);
         }
     }
 
-    public void erreur(String message, Throwable throwable) {
+    public void erreur(final String message, final Throwable throwable) {
         Log.e(PREFIX_TAG, tag + " : " + message, throwable);
     }
 
-    public void erreur(String message) {
+    public void erreur(final String message) {
         Log.e(PREFIX_TAG, tag + " : " + message);
     }
 
-    public void warn(String message) {
+    public void warn(final String message) {
         Log.w(PREFIX_TAG, tag + " : " + message);
     }
 
@@ -55,17 +55,17 @@ public class LogYbo {
         return mapStartTimes;
     }
 
-    public void startChrono(String message) {
+    public void startChrono(final String message) {
 		if (AbstractTransportsApplication.isDebug()) {
             getMapStartTimes().put(message, System.nanoTime());
         }
     }
 
-    public void stopChrono(String message) {
+    public void stopChrono(final String message) {
 		if (AbstractTransportsApplication.isDebug()) {
-            long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
+            final long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
             Log.d(PREFIX_TAG, tag + " : "
-                    + new StringBuilder(message).append('\t').append(elapsedTime).append("\tus").toString());
+                    + message + '\t' + elapsedTime + "\tus");
         }
     }
 

@@ -25,18 +25,18 @@ import java.util.List;
 
 public class LocationUtil implements LocationListener {
 
-    private final static LogYbo LOG_YBO = new LogYbo(LocationUtil.class);
+    private static final LogYbo LOG_YBO = new LogYbo(LocationUtil.class);
 
     /**
      * Le locationManager permet d'accéder au GPS du téléphone.
      */
-    private LocationManager locationManager;
+    private final LocationManager locationManager;
 
-    private UpdateLocationListenner listenner;
+    private final UpdateLocationListenner listenner;
 
-    private Location currentBestLocation = null;
+    private Location currentBestLocation;
 
-    public LocationUtil(UpdateLocationListenner listenner, Context context) {
+    public LocationUtil(final UpdateLocationListenner listenner, final Context context) {
         super();
         this.listenner = listenner;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -46,7 +46,7 @@ public class LocationUtil implements LocationListener {
         return currentBestLocation;
     }
 
-    private boolean activeGps = false;
+    private boolean activeGps;
 
     /**
      * Active le GPS.
@@ -57,11 +57,11 @@ public class LocationUtil implements LocationListener {
         if (activeGps) {
             return true;
         }
-        List<String> providers = locationManager.getProviders(true);
+        final List<String> providers = locationManager.getProviders(true);
         LOG_YBO.debug("Providers courants : " + providers);
         boolean gpsTrouve = false;
         boolean hasBetter = false;
-        for (String providerName : providers) {
+        for (final String providerName : providers) {
             hasBetter |= isBetterLocation(locationManager.getLastKnownLocation(providerName));
             locationManager.requestLocationUpdates(providerName, 60000L, 20L, this);
             if (providerName.equals(LocationManager.GPS_PROVIDER)) {
@@ -83,24 +83,28 @@ public class LocationUtil implements LocationListener {
         activeGps = false;
     }
 
-    public static interface UpdateLocationListenner {
+    public interface UpdateLocationListenner {
         void updateLocation(Location location);
     }
 
-    public void onLocationChanged(Location location) {
+    @Override
+    public void onLocationChanged(final Location location) {
         if (isBetterLocation(location)) {
             LOG_YBO.debug("Mise à jour de la loc : " + currentBestLocation);
             listenner.updateLocation(currentBestLocation);
         }
     }
 
-    public void onProviderDisabled(String provider) {
+    @Override
+    public void onProviderDisabled(final String provider) {
     }
 
-    public void onProviderEnabled(String provider) {
+    @Override
+    public void onProviderEnabled(final String provider) {
     }
 
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    @Override
+    public void onStatusChanged(final String provider, final int status, final Bundle extras) {
     }
 
     private static final long FIVE_MINUTES = 1000 * 60 * 5;
@@ -112,7 +116,7 @@ public class LocationUtil implements LocationListener {
      * @param location The new Location that you want to evaluate
      * @return true is location is best than the location receive before.
      */
-    private boolean isBetterLocation(Location location) {
+    private boolean isBetterLocation(final Location location) {
         if (location == null) {
             return false;
         }
@@ -125,10 +129,10 @@ public class LocationUtil implements LocationListener {
         }
 
         // Check whether the new location fix is newer or older
-        long timeDelta = location.getTime() - currentBestLocation.getTime();
-        boolean isSignificantlyNewer = timeDelta > FIVE_MINUTES;
-        boolean isSignificantlyOlder = timeDelta < -FIVE_MINUTES;
-        boolean isNewer = timeDelta > 0;
+        final long timeDelta = location.getTime() - currentBestLocation.getTime();
+        final boolean isSignificantlyNewer = timeDelta > FIVE_MINUTES;
+        final boolean isSignificantlyOlder = timeDelta < -FIVE_MINUTES;
+        final boolean isNewer = timeDelta > 0;
 
         // If it's been more than two minutes since the current location, use
         // the new location
@@ -139,19 +143,20 @@ public class LocationUtil implements LocationListener {
             return true;
             // If the new location is more than two minutes older, it must be
             // worse
-        } else if (isSignificantlyOlder) {
+        }
+        if (isSignificantlyOlder) {
             LOG_YBO.debug("BestLocation : false (trop vieille)");
             return false;
         }
 
         // Check whether the new location fix is more or less accurate
-        int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
-        boolean isLessAccurate = accuracyDelta > 0;
-        boolean isMoreAccurate = accuracyDelta < 0;
-        boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+        final int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
+        final boolean isLessAccurate = accuracyDelta > 0;
+        final boolean isMoreAccurate = accuracyDelta < 0;
+        final boolean isSignificantlyLessAccurate = accuracyDelta > 200;
 
         // Check if the old and new location are from the same provider
-        boolean isFromSameProvider = isSameProvider(location.getProvider(), currentBestLocation.getProvider());
+        final boolean isFromSameProvider = isSameProvider(location.getProvider(), currentBestLocation.getProvider());
 
         // Determine location quality using a combination of timeliness and
         // accuracy
@@ -159,11 +164,13 @@ public class LocationUtil implements LocationListener {
             currentBestLocation = location;
             LOG_YBO.debug("BestLocation : true (plus précise)");
             return true;
-        } else if (isNewer && !isLessAccurate) {
+        }
+        if (isNewer && !isLessAccurate) {
             LOG_YBO.debug("BestLocation : true (plus récente et pas moins précise)");
             currentBestLocation = location;
             return true;
-        } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+        }
+        if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
             LOG_YBO.debug("BestLocation : true (plus récente et pas vraiement moins précise et du même provider)");
             currentBestLocation = location;
             return true;
@@ -178,7 +185,7 @@ public class LocationUtil implements LocationListener {
      * @param provider2 second provider.
      * @return true si les deux provider sont identiques.
      */
-    private boolean isSameProvider(String provider1, String provider2) {
+    private static boolean isSameProvider(final String provider1, final String provider2) {
         if (provider1 == null) {
             return provider2 == null;
         }

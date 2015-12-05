@@ -35,36 +35,36 @@ public class TransportsWidget extends AppWidgetProvider {
     private static final LogYbo LOG_YBO = new LogYbo(TransportsWidget.class);
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+    public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
         LOG_YBO.debug("onUpdate");
         context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
     @Override
-    public void onDeleted(Context context, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
+    public void onDeleted(final Context context, final int[] appWidgetIds) {
+        for (final int appWidgetId : appWidgetIds) {
             TransportsWidgetConfigure.deleteSettings(context, appWidgetId);
         }
         super.onDeleted(context, appWidgetIds);
     }
 
     @Override
-    public void onEnabled(Context context) {
+    public void onEnabled(final Context context) {
         LOG_YBO.debug("onEnable");
         super.onEnabled(context);
     }
 
     @Override
-    public void onDisabled(Context context) {
+    public void onDisabled(final Context context) {
         LOG_YBO.debug("onDisable");
         TransportsWidgetConfigure.deleteAllSettings(context);
         super.onDisabled(context);
     }
 
-    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+    public static void updateAppWidget(final Context context, final AppWidgetManager appWidgetManager, final int appWidgetId) {
         LOG_YBO.debug("UpdateAppWidget : " + appWidgetId);
-        List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
+        final List<ArretFavori> favorisSelects = TransportsWidgetConfigure.loadSettings(context, appWidgetId);
         if (favorisSelects.isEmpty()) {
             LOG_YBO.debug("Pas de favoris trouvés dans la conf.");
             return;
@@ -72,10 +72,10 @@ public class TransportsWidget extends AppWidgetProvider {
         if (TransportsRennesApplication.getDataBaseHelper() == null) {
             return;
         }
-        ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
-        for (ArretFavori favoriSelect : favorisSelects) {
-            ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
+        final ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
+        final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
+        for (final ArretFavori favoriSelect : favorisSelects) {
+            final ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);
             if (favoriBdd == null) {
                 LOG_YBO.debug("FavoriBdd null");
                 return;
@@ -93,11 +93,11 @@ public class TransportsWidget extends AppWidgetProvider {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         // v1.5 fix that doesn't call onDelete Action
-        String action = intent.getAction();
+        final String action = intent.getAction();
         if (AppWidgetManager.ACTION_APPWIDGET_DELETED.equals(action)) {
-            int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            final int appWidgetId = intent.getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
             if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
                 super.onReceive(context, intent);
@@ -105,14 +105,14 @@ public class TransportsWidget extends AppWidgetProvider {
                 onDeleted(context, new int[]{appWidgetId});
             }
         } else if (action.startsWith("YboClick")) {
-            String[] champs = action.split("_");
+            final String[] champs = action.split("_");
             if (champs.length == 3) {
                 ArretFavori favori = new ArretFavori();
                 favori.arretId = champs[1];
                 favori.ligneId = champs[2];
                 favori = TransportsRennesApplication.getDataBaseHelper().selectSingle(favori);
                 if (favori != null) {
-                    Intent startIntent = new Intent(context, DetailArret.class);
+                    final Intent startIntent = new Intent(context, DetailArret.class);
                     startIntent.putExtra("favori", favori);
                     startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

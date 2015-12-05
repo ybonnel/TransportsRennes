@@ -24,51 +24,46 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 public class ListAlerts extends ListFragment {
 
-	/**
-	 * Permet d'accéder aux apis keolis.
-	 */
-	private final Keolis keolis = Keolis.getInstance();
-
 	private final List<Alert> alerts = Collections.synchronizedList(new ArrayList<Alert>(50));
 
-	private Ligne ligne = null;
+	private Ligne ligne;
 
-	public void setLigne(Ligne ligne) {
+	public void setLigne(final Ligne ligne) {
 		this.ligne = ligne;
 	}
 
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
+	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
-		Serializable alert = (Serializable) l.getItemAtPosition(position);
-		Intent intent = new Intent(getActivity(), DetailAlert.class);
+		final Serializable alert = (Serializable) l.getItemAtPosition(position);
+		final Intent intent = new Intent(getActivity(), DetailAlert.class);
 		intent.putExtra("alert", alert);
 		startActivity(intent);
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		lv.setCacheColorHint(Color.TRANSPARENT);
 		setListAdapter(new AlertAdapter(getActivity(), alerts));
-		Alert alertChargement = new Alert();
+		final Alert alertChargement = new Alert();
 		alertChargement.title = getString(R.string.dialogRequeteAlerts);
 		alerts.add(alertChargement);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurReseau = false;
+			private boolean erreurReseau;
 
-			private List<Alert> alertsTmp = new ArrayList<Alert>();
+			private final List<Alert> alertsTmp = new ArrayList<Alert>();
 
 			@Override
-			protected Void doInBackground(Void... params) {
+			protected Void doInBackground(final Void... params) {
 				try {
-					for (Alert alerte : keolis.getAlerts()) {
+					for (final Alert alerte : Keolis.getAlerts()) {
 						while (alerte.lines.size() > 1) {
-							Alert newAlerte = new Alert(alerte);
+							final Alert newAlerte = new Alert(alerte);
 							newAlerte.lines.add(alerte.lines.remove(0));
 							if (ligne != null) {
 								if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
@@ -86,18 +81,18 @@ public class ListAlerts extends ListFragment {
 							alertsTmp.add(alerte);
 						}
 					}
-				} catch (ErreurReseau e) {
+				} catch (final ErreurReseau e) {
 					erreurReseau = true;
 				}
 				return null;
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				if (erreurReseau) {
 					try {
 						Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
-					} catch (Exception ignore) {
+					} catch (final Exception ignore) {
 
 					}
 				} else {

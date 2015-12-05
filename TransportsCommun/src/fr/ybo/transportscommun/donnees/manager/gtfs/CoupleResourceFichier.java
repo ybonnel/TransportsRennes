@@ -4,7 +4,7 @@ public class CoupleResourceFichier {
     final int resourceId;
     final String fichier;
 
-	public CoupleResourceFichier(int resourceId, String fichier) {
+	public CoupleResourceFichier(final int resourceId, final String fichier) {
         this.resourceId = resourceId;
         this.fichier = fichier;
     }

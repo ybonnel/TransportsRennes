@@ -14,7 +14,6 @@
 package fr.ybo.transportsrennes.activity.bus;
 
 import android.support.v4.app.ListFragment;
-import fr.ybo.transportscommun.activity.bus.AbstractArretOnMap;
 import fr.ybo.transportscommun.activity.bus.AbstractListArret;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.fragments.bus.ListArretFragment;
@@ -39,10 +38,5 @@ public class ListArret extends AbstractListArret {
 	@Override
 	protected Class<? extends ListFragment> getListArretFragment() {
 		return ListArretFragment.class;
-	}
-
-	@Override
-	protected Class<? extends AbstractArretOnMap> getArretOnMap() {
-		return ArretsOnMap.class;
 	}
 }

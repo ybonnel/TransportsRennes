@@ -22,7 +22,7 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseTabFragmentActiv
 public abstract class AbstractTabAlertes extends BaseTabFragmentActivity {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		AbstractTransportsApplication.majTheme(this);
 		super.onCreate(savedInstanceState);
 		setContentView(getLayout());

@@ -3,15 +3,15 @@
     <item android:id="@id/menu_export"
         android:icon="@drawable/actionbar_export"
           android:title="@string/exportFavoris"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom" />
     <item android:id="@id/menu_import"
         android:icon="@drawable/actionbar_import"
           android:title="@string/importFavoris"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom" />
     
     <item android:id="@+id/menu_velo_favoris"
         android:icon="@drawable/actionbar_velo_favoris_clair"
           android:title="@string/btn_velo_favori"
-          android:showAsAction="always" />
+          android:showAsAction="ifRoom" />
 
 </menu>

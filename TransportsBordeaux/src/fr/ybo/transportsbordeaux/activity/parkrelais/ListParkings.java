@@ -17,13 +17,12 @@ import java.util.List;
 
 import android.os.Bundle;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
 import fr.ybo.transportsbordeaux.tbcapi.Keolis;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseMapActivity;
 import fr.ybo.transportscommun.activity.parkings.AbstractListParkings;
 import fr.ybo.transportscommun.util.ErreurReseau;
 
@@ -47,12 +46,7 @@ public class ListParkings extends AbstractListParkings<Parking> {
 
 	@Override
 	protected List<Parking> getParkings() throws ErreurReseau {
-		return Keolis.getInstance().getParkings();
-	}
-
-	@Override
-	protected Class<? extends BaseMapActivity> getParkingsOnMap() {
-		return ParkingsOnMap.class;
+		return Keolis.getParkings();
 	}
 
 	@Override
@@ -61,10 +55,10 @@ public class ListParkings extends AbstractListParkings<Parking> {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

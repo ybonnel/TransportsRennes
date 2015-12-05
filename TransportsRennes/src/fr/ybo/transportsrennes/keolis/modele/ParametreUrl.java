@@ -36,7 +36,7 @@ public class ParametreUrl {
 	 * @param pName  name.
 	 * @param pValue value.
 	 */
-	public ParametreUrl(String pName, String pValue) {
+	public ParametreUrl(final String pName, final String pValue) {
 		name = pName;
 		value = pValue;
 	}

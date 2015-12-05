@@ -47,11 +47,6 @@ public final class Keolis {
     private static final LogYbo LOG_YBO = new LogYbo(Keolis.class);
 
     /**
-     * Instance du singletton.
-     */
-    private static Keolis instance;
-
-    /**
      * URL d'accés au API Keolis.
      */
     private static final String URL = "http://data.lacub.fr/wfs?";
@@ -71,18 +66,6 @@ public final class Keolis {
 	private static final String COUCHE_VELO = "CI_VCUB_P";
 
     /**
-     * Retourne l'instance du singletton.
-     *
-     * @return l'instance du singletton.
-     */
-    public static synchronized Keolis getInstance() {
-        if (instance == null) {
-            instance = new Keolis();
-        }
-        return instance;
-    }
-
-    /**
      * Constructeur privé.
      */
     private Keolis() {
@@ -93,38 +76,38 @@ public final class Keolis {
      * @param url           url.
      * @param handler       handler.
      * @return liste d'objets Keolis.
-     * @throws TbcErreurReseaux en cas d'erreur réseau.
+     * @throws ErreurReseau en cas d'erreur réseau.
      */
-    private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler)
+    private static <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler)
 			throws ErreurReseau {
         LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
-        long startTime = System.nanoTime() / 1000;
-        HttpClient httpClient = HttpUtils.getHttpClient();
-        HttpUriRequest httpPost = new HttpPost(url);
-        List<ObjetKeolis> answer;
+        final long startTime = System.nanoTime() / 1000;
+        final HttpClient httpClient = HttpUtils.getHttpClient();
+        final HttpUriRequest httpPost = new HttpPost(url);
+        final List<ObjetKeolis> answer;
         try {
-            HttpResponse reponse = httpClient.execute(httpPost);
-            ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+            final HttpResponse reponse = httpClient.execute(httpPost);
+            final ByteArrayOutputStream ostream = new ByteArrayOutputStream();
 			if (reponse == null || reponse.getEntity() == null) {
 				throw new ErreurReseau("Erreur lors de la récupération de la réponse http");
 			}
             reponse.getEntity().writeTo(ostream);
-            String contenu = new String(ostream.toByteArray(), "ISO-8859-1");
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
+            final String contenu = new String(ostream.toByteArray(), "ISO-8859-1");
+            final SAXParserFactory factory = SAXParserFactory.newInstance();
+            final SAXParser parser = factory.newSAXParser();
             parser.parse(new ByteArrayInputStream(contenu.getBytes("UTF-8")), handler);
             answer = handler.getObjets();
-        } catch (IOException socketException) {
+        } catch (final IOException socketException) {
 			throw new ErreurReseau(socketException);
-        } catch (SAXException saxException) {
+        } catch (final SAXException saxException) {
 			throw new ErreurReseau(saxException);
-        } catch (ParserConfigurationException exception) {
-            throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
+        } catch (final ParserConfigurationException exception) {
+            throw new KeolisException(exception);
         }
         if (answer == null) {
 			throw new ErreurReseau("Erreur dans la réponse données par Keolis.");
         }
-        long elapsedTime = System.nanoTime() / 1000 - startTime;
+        final long elapsedTime = System.nanoTime() / 1000 - startTime;
         LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
         return answer;
     }
@@ -132,13 +115,13 @@ public final class Keolis {
     /**
      * @return les parks relais.
      * @throws KeolisException  en cas d'erreur lors de l'appel aux API Keolis.
-     * @throws TbcErreurReseaux erreur réseaux.
+     * @throws ErreurReseau erreur réseaux.
      */
-	public List<Parking> getParkings() throws KeolisException, ErreurReseau {
+	public static List<Parking> getParkings() throws KeolisException, ErreurReseau {
         return appelKeolis(getUrl(COUCHE_PARKINGS), new GetParkingHandler());
     }
 
-	public List<Station> getStationsVcub() throws KeolisException, ErreurReseau {
+	public static List<Station> getStationsVcub() throws KeolisException, ErreurReseau {
 		return appelKeolis(getUrl(COUCHE_VELO), new GetStationHandler());
 	}
 
@@ -149,13 +132,8 @@ public final class Keolis {
      * @param couche couche à requêter.
      * @return l'url.
      */
-    private String getUrl(String couche) {
-        StringBuilder stringBuilder = new StringBuilder(URL);
-        stringBuilder.append("key=").append(KEY);
-        stringBuilder.append("&request=getfeature&service=wfs&version=1.1.0");
-        stringBuilder.append("&typename=").append(couche);
-        stringBuilder.append("&srsname=epsg:4326");
-        return stringBuilder.toString();
+    private static String getUrl(final String couche) {
+        return URL + "key=" + KEY + "&request=getfeature&service=wfs&version=1.1.0" + "&typename=" + couche + "&srsname=epsg:4326";
     }
 
 	// http://data.lacub.fr/wfs?key=RAPJ1LVSXN&request=getfeature&service=wfs&version=1.1.0&typename=CI_VCUB_P&srsname=epsg:4326

@@ -44,36 +44,36 @@ public final class GestionZipKeolis {
 
     private static final String URL_STOP_TIMES = "horaires_";
 
-	private static List<CoupleResourceFichier> getResourceForStopTime(Class<?> rawClass, String ligneId)
+	private static List<CoupleResourceFichier> getResourceForStopTime(final Class<?> rawClass, final String ligneId)
 			throws LigneInexistanteException {
 
         try {
-			List<CoupleResourceFichier> retour = new ArrayList<CoupleResourceFichier>();
-            String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
-			int resourceId = rawClass.getDeclaredField(nomResource).getInt(null);
+			final List<CoupleResourceFichier> retour = new ArrayList<CoupleResourceFichier>();
+            final String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
+			final int resourceId = rawClass.getDeclaredField(nomResource).getInt(null);
 			retour.add(new CoupleResourceFichier(resourceId, nomResource + ".txt"));
 			int count = 1;
 			boolean continu = true;
 			while (continu) {
-				String nomResourceAlternatif = new StringBuilder(nomResource).append('_').append(count).toString();
+				final String nomResourceAlternatif = nomResource + '_' + count;
 				try {
-					int resourceAlternatifId = rawClass.getDeclaredField(nomResourceAlternatif).getInt(null);
+					final int resourceAlternatifId = rawClass.getDeclaredField(nomResourceAlternatif).getInt(null);
 					retour.add(new CoupleResourceFichier(resourceAlternatifId, nomResourceAlternatif + ".txt"));
-				} catch (NoSuchFieldException noSuchField) {
+				} catch (final NoSuchFieldException noSuchField) {
 					continu = false;
 				}
 				count++;
 			}
 			return retour;
-        } catch (NoSuchFieldException noSuchFieldException) {
+        } catch (final NoSuchFieldException noSuchFieldException) {
             throw new LigneInexistanteException();
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             throw new GestionFilesException(exception);
         }
     }
 
-	public static void chargeLigne(Class<?> rawClass, MoteurCsv moteurCsv, String ligneId,
-			final DataBaseHelper dataBaseHelper, Resources resources) throws LigneInexistanteException,
+	public static void chargeLigne(final Class<?> rawClass, final MoteurCsv moteurCsv, final String ligneId,
+			final DataBaseHelper dataBaseHelper, final Resources resources) throws
 			NoSpaceLeftException {
 		try {
 			UpdateDataBase.setMajDatabaseEncours(true);
@@ -85,9 +85,9 @@ public final class GestionZipKeolis {
 			table.dropTable(db);
 			LOG_YBO.debug("Création de la table");
 			table.createTable(db);
-			for (CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(rawClass, ligneId)) {
+			for (final CoupleResourceFichier coupleResourceFichier : getResourceForStopTime(rawClass, ligneId)) {
 				LOG_YBO.debug("Mise en base du fichier " + coupleResourceFichier.resourceId);
-				BufferedReader bufReader = new BufferedReader(new InputStreamReader(
+				final BufferedReader bufReader = new BufferedReader(new InputStreamReader(
 						resources.openRawResource(coupleResourceFichier.resourceId)), 8 << 10);
 				dataBaseHelper.beginTransaction();
 				final InsertHelper ih = new InsertHelper(db, table.getName());
@@ -104,9 +104,10 @@ public final class GestionZipKeolis {
                     LOG_YBO.debug("Début du parse du fichier");
 					moteurCsv.parseFileAndInsert(bufReader, Horaire.class, new MoteurCsv.InsertObject<Horaire>() {
 
-                        private int countLigne = 0;
+                        private int countLigne;
 
-                        public void insertObject(Horaire objet) {
+                        @Override
+						public void insertObject(final Horaire objet) {
 							countLigne++;
 							// Get the InsertHelper ready to insert a
 							// single row
@@ -138,9 +139,9 @@ public final class GestionZipKeolis {
 				}
             }
 			LOG_YBO.debug("Fin chargeLigne");
-		} catch (SQLiteDiskIOException ioException) {
+		} catch (final SQLiteDiskIOException ioException) {
 			throw new NoSpaceLeftException();
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             throw new GestionFilesException(exception);
 		} finally {
 			UpdateDataBase.setMajDatabaseEncours(false);
@@ -148,12 +149,12 @@ public final class GestionZipKeolis {
 
     }
 
-    public static void getAndParseZipKeolis(MoteurCsv moteur, Resources resources, LoadingInfo info)
+    public static void getAndParseZipKeolis(final MoteurCsv moteur, final Resources resources, final LoadingInfo info)
 			throws GestionFilesException, MoteurCsvException, DataBaseException, NoSpaceLeftException {
         try {
-			for (CoupleResourceFichier resource : AbstractTransportsApplication.getResourcesPrincipale()) {
+			for (final CoupleResourceFichier resource : AbstractTransportsApplication.getResourcesPrincipale()) {
                 LOG_YBO.debug("Début du traitement du fichier " + resource.fichier);
-                BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(resource.resourceId)), 8 << 10);
+                final BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(resource.resourceId)), 8 << 10);
                 try {
                     moteur.nouveauFichier(resource.fichier, bufReader.readLine());
 					AbstractTransportsApplication.getDataBaseHelper().beginTransaction();
@@ -171,25 +172,25 @@ public final class GestionZipKeolis {
             }
 			AbstractTransportsApplication.getDataBaseHelper().close();
             LOG_YBO.debug("Fin getAndParseZipKeolis.");
-		} catch (SQLiteDiskIOException diskException) {
+		} catch (final SQLiteDiskIOException diskException) {
 			throw new NoSpaceLeftException();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new GestionFilesException(e);
         }
     }
 
 
-	public static Date getLastUpdate(Resources resources, int lastUpdate) {
+	public static Date getLastUpdate(final Resources resources, final int lastUpdate) {
         try {
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(lastUpdate)),
+			final BufferedReader bufReader = new BufferedReader(new InputStreamReader(resources.openRawResource(lastUpdate)),
 					100);
             try {
                 return SDF.parse(bufReader.readLine());
             } finally {
                 bufReader.close();
             }
-        } catch (Exception exception) {
-			throw new GestionFilesException("Erreur lors de la récupération du fichier last_update", exception);
+        } catch (final Exception exception) {
+			throw new GestionFilesException(exception);
         }
     }
 

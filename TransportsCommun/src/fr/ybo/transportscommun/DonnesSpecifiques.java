@@ -4,14 +4,14 @@ import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 
 public interface DonnesSpecifiques {
 
-	public String getApplicationName();
+	String getApplicationName();
 
-	public int getCompactLogo();
+	int getCompactLogo();
 
-	public Class<?> getDrawableClass();
+	Class<?> getDrawableClass();
 
-	public int getIconeLigne();
+	int getIconeLigne();
 
-	public Class<? extends BaseListActivity> getDetailArretClass();
+	Class<? extends BaseListActivity> getDetailArretClass();
 
 }

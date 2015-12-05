@@ -21,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import fr.ybo.transportsrennes.keolis.KeolisException;
 import fr.ybo.transportsrennes.keolis.modele.bus.DepartureMetro;
 
 public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
@@ -34,9 +33,9 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
 
 	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
 
-    private int plateform;
+    private final int plateform;
 
-    public GetDeparturesMetroHandler(int plateform) {
+    public GetDeparturesMetroHandler(final int plateform) {
         this.plateform = plateform;
     }
 
@@ -52,21 +51,21 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
 
 
 	@Override
-	protected void remplirObjectKeolis(DepartureMetro currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final DepartureMetro currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NEXT_TRAIN_1 + plateform)) {
-			Calendar calendar = Calendar.getInstance();
+			final Calendar calendar = Calendar.getInstance();
 			try {
 				calendar.setTime(dfm.parse(contenuOfBalise));
 				currentObjectKeolis.setTime1(calendar);
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				//throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
 			}
 		} else if (baliseName.equals(NEXT_TRAIN_2 + plateform)) {
-            Calendar calendar = Calendar.getInstance();
+            final Calendar calendar = Calendar.getInstance();
             try {
                 calendar.setTime(dfm.parse(contenuOfBalise));
                 currentObjectKeolis.setTime2(calendar);
-            } catch (ParseException e) {
+            } catch (final ParseException e) {
                 //throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
             }
         }

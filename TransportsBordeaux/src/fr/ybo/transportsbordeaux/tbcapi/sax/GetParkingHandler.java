@@ -33,7 +33,7 @@ public class GetParkingHandler extends KeolisHandler<Parking> {
     }
 
     @Override
-    protected void remplirObjectKeolis(Parking currentObjectKeolis, String baliseName, String contenuOfBalise) {
+    protected void remplirObjectKeolis(final Parking currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
         if (baliseName.equals(GID)) {
             currentObjectKeolis.id = contenuOfBalise;
         } else if (baliseName.equals(NOM)) {

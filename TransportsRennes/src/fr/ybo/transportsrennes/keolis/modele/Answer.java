@@ -61,7 +61,7 @@ public class Answer<ObjectKeolis> {
 	 *
 	 * @param pStatus le status.
 	 */
-	public void setStatus(StatusKeolis pStatus) {
+	public void setStatus(final StatusKeolis pStatus) {
 		status = pStatus;
 	}
 }

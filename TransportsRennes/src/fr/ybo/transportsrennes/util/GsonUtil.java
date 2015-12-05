@@ -17,9 +17,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.ybo.opentripplanner.client.Constantes;
 
-class GsonUtil {
+final class GsonUtil {
 
-    private static Gson gson = null;
+    private static Gson gson;
+
+    private GsonUtil() {
+    }
 
     public static synchronized Gson getGson() {
         if (gson == null) {

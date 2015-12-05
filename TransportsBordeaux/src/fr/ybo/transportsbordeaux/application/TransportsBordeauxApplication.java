@@ -41,7 +41,6 @@ import fr.ybo.transportsbordeaux.activity.bus.TabFavoris;
 import fr.ybo.transportsbordeaux.activity.preferences.PreferencesBordeaux;
 import fr.ybo.transportsbordeaux.activity.velos.ListStationsFavoris;
 import fr.ybo.transportsbordeaux.database.TransportsBordeauxDatabase;
-import fr.ybo.transportsbordeaux.database.modele.Alert;
 import fr.ybo.transportsbordeaux.services.UpdateTimeService;
 import fr.ybo.transportsbordeaux.util.AlarmReceiver;
 import fr.ybo.transportsbordeaux.util.CalculItineraires;
@@ -60,32 +59,32 @@ import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
  */
 public class TransportsBordeauxApplication extends AbstractTransportsApplication {
 
-	private static boolean baseNeuve = false;
+	private static boolean baseNeuve;
 
 	public static boolean isBaseNeuve() {
 		return baseNeuve;
 	}
 
-	public static void setBaseNeuve(boolean baseNeuve) {
+	public static void setBaseNeuve(final boolean baseNeuve) {
 		TransportsBordeauxApplication.baseNeuve = baseNeuve;
 	}
 
-	public static void constructDatabase(Context pContext) {
+	public static void constructDatabase(final Context pContext) {
 		Context context = pContext;
-		boolean databaseOnSDCard = PreferenceManager.getDefaultSharedPreferences(pContext).getBoolean(
+		final boolean databaseOnSDCard = PreferenceManager.getDefaultSharedPreferences(pContext).getBoolean(
 				"TransportsBordeaux_sdCard", false);
 
 		if (databaseOnSDCard) {
-			ContextWithDatabasePath contextWithDatabasePath = new ContextWithDatabasePath(pContext);
+			final ContextWithDatabasePath contextWithDatabasePath = new ContextWithDatabasePath(pContext);
 			try {
 				contextWithDatabasePath.getDatabasePath(TransportsBordeauxDatabase.DATABASE_NAME);
 				context = contextWithDatabasePath;
-			} catch (Exception exception) {
+			} catch (final Exception exception) {
 				Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
 				try {
-					ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
+					final ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
 					am.restartPackage(pContext.getPackageName());
-				} catch (Exception ignore) {
+				} catch (final Exception ignore) {
 
 				}
 				return;
@@ -101,33 +100,7 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 
 	@Override
 	protected void initDonneesSpecifiques() {
-		donnesSpecifiques = new DonnesSpecifiques() {
-
-			@Override
-			public int getCompactLogo() {
-				return R.drawable.compact_icon;
-			}
-
-			@Override
-			public String getApplicationName() {
-				return "TransportsBordeaux";
-			}
-
-			@Override
-			public Class<?> getDrawableClass() {
-				return R.drawable.class;
-			}
-
-			@Override
-			public int getIconeLigne() {
-				return R.drawable.icone_bus;
-			}
-
-			@Override
-			public Class<? extends BaseListActivity> getDetailArretClass() {
-				return DetailArret.class;
-			}
-		};
+		donnesSpecifiques = new MyDonnesSpecifiques();
 	}
 
 	@Override
@@ -141,39 +114,25 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 
 		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
         try {
-            PackageManager pm = getPackageManager();
+            final PackageManager pm = getPackageManager();
             if (pm != null) {
                 pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
                         PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
             }
-        } catch (Exception ignore) {}
+        } catch (final Exception ignore) {}
 
         // Récupération des alertes
-		new AsyncTask<Void, Void, Void>() {
-			@Override
-			protected Void doInBackground(Void... voids) {
-				try {
-					GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
-					if (metadata != null) {
-						setBounds(new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()),
-								new BigDecimal(metadata.getMinLongitude())), new LatLng(new BigDecimal(
-								metadata.getMaxLatitude()), new BigDecimal(metadata.getMaxLongitude()))));
-					}
-				} catch (OpenTripPlannerException ignore) {
-				}
-				return null;
-			}
-		}.execute((Void) null);
+		new VoidVoidVoidAsyncTask().execute((Void) null);
 
 		setRecurringAlarm(this);
 	}
 
 	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
 
-	private void setRecurringAlarm(Context context) {
-		Intent alarm = new Intent(context, AlarmReceiver.class);
-		PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
-		AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+	private void setRecurringAlarm(final Context context) {
+		final Intent alarm = new Intent(context, AlarmReceiver.class);
+		final PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
+		final AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
 	}
@@ -183,7 +142,8 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 		return TransportsBordeaux.class;
 	}
 
-	public boolean onOptionsItemSelected(MenuItem item, Activity activity, ActivityHelper helper) {
+	@Override
+	public boolean onOptionsItemSelected(final MenuItem item, final Activity activity, final ActivityHelper helper) {
 
 		switch (item.getItemId()) {
 			case android.R.id.home:
@@ -210,4 +170,47 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 
 	}
 
+	private static class VoidVoidVoidAsyncTask extends AsyncTask<Void, Void, Void> {
+		@Override
+        protected Void doInBackground(final Void... voids) {
+            try {
+                final GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+                if (metadata != null) {
+                    setBounds(new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()),
+                            new BigDecimal(metadata.getMinLongitude())), new LatLng(new BigDecimal(
+                            metadata.getMaxLatitude()), new BigDecimal(metadata.getMaxLongitude()))));
+                }
+            } catch (final OpenTripPlannerException ignore) {
+            }
+            return null;
+        }
+	}
+
+	private static class MyDonnesSpecifiques implements DonnesSpecifiques {
+
+		@Override
+        public int getCompactLogo() {
+            return R.drawable.compact_icon;
+        }
+
+		@Override
+        public String getApplicationName() {
+            return "TransportsBordeaux";
+        }
+
+		@Override
+        public Class<?> getDrawableClass() {
+            return R.drawable.class;
+        }
+
+		@Override
+        public int getIconeLigne() {
+            return R.drawable.icone_bus;
+        }
+
+		@Override
+        public Class<? extends BaseListActivity> getDetailArretClass() {
+            return DetailArret.class;
+        }
+	}
 }

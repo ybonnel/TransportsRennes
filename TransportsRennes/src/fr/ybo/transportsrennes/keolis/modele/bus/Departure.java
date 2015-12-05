@@ -19,7 +19,6 @@ import java.util.Calendar;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Departure implements Serializable {
 
 
@@ -31,7 +30,7 @@ public class Departure implements Serializable {
 		return accurate;
 	}
 
-	public void setAccurate(boolean accurate) {
+	public void setAccurate(final boolean accurate) {
 		this.accurate = accurate;
 	}
 
@@ -39,7 +38,7 @@ public class Departure implements Serializable {
 		return headSign;
 	}
 
-	public void setHeadSign(String headSign) {
+	public void setHeadSign(final String headSign) {
 		this.headSign = headSign;
 	}
 
@@ -47,7 +46,7 @@ public class Departure implements Serializable {
 		return time;
 	}
 
-	public void setTime(Calendar time) {
+	public void setTime(final Calendar time) {
 		this.time = time;
 	}
 
@@ -62,7 +61,7 @@ public class Departure implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Departure [accurate=" + accurate + ", headSign=" + headSign + ", time=" + time.getTime() + "]";
+		return "Departure [accurate=" + accurate + ", headSign=" + headSign + ", time=" + time.getTime() + ']';
 	}
 
 

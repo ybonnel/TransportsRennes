@@ -81,7 +81,7 @@ public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 	}
 
 	@Override
-	protected void remplirObjectKeolis(PointDeVente currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(TYPE)) {

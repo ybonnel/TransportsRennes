@@ -16,14 +16,13 @@
  */
 package fr.ybo.transportscommun.donnees.manager.gtfs;
 
-@SuppressWarnings("serial")
 class GestionFilesException extends RuntimeException {
 
-	GestionFilesException(Throwable throwable) {
+	GestionFilesException(final Throwable throwable) {
 		super(throwable);
 	}
 
-	public GestionFilesException(String string, Exception exception) {
-		super(string, exception);
+	GestionFilesException(final Exception exception) {
+		super("Erreur lors de la récupération du fichier last_update", exception);
 	}
 }

@@ -16,6 +16,7 @@ package fr.ybo.transportsbordeaux.tbcapi.sax;
 
 import fr.ybo.transportsbordeaux.database.modele.Alert;
 import fr.ybo.transportsbordeaux.util.StringUtils;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -23,7 +24,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetAlertesHandler extends DefaultHandler {
+class GetAlertesHandler extends DefaultHandler {
 
     private static final String BALISE_TR = "tr";
     private static final String BALISE_TD = "td";
@@ -32,10 +33,6 @@ public class GetAlertesHandler extends DefaultHandler {
     private static final String ATTRIBUT_HREF = "href";
     private static final String ATTRIBUT_CLASS = "class";
 
-
-    public GetAlertesHandler() {
-        super();
-    }
 
     private Alert alertCourante;
 
@@ -51,7 +48,7 @@ public class GetAlertesHandler extends DefaultHandler {
     private StringBuilder contenu;
 
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) throws SAXException {
         super.characters(ch, start, length);
         contenu.append(ch, start, length);
     }
@@ -63,29 +60,29 @@ public class GetAlertesHandler extends DefaultHandler {
         contenu = new StringBuilder();
     }
 
-    private boolean ligneEncours = false;
+    private boolean ligneEncours;
 
     @Override
-    public void endElement(String pUri, String pLocalName, String qName)
+    public void endElement(final String pUri, final String pLocalName, final String qName)
             throws SAXException {
         super.endElement(pUri, pLocalName, qName);
         if (qName.equals(BALISE_TR)) {
             alertes.add(alertCourante);
             alertCourante = null;
         }
-        if (ligneEncours && qName.equals(BALISE_TD)) {
+        if (ligneEncours && qName.equals(BALISE_TD) && alertCourante != null) {
             alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
             ligneEncours = false;
         }
-        if (qName.equals(BALISE_A)) {
-            alertCourante.title = contenu.toString();
+        if (qName.equals(BALISE_A) && alertCourante != null) {
+            alertCourante.ligne = StringUtils.doubleTrim(contenu.toString());
         }
         contenu.setLength(0);
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName,
-                             Attributes attributes) throws SAXException {
+    public void startElement(final String uri, final String localName, final String qName,
+                             final Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
         if (qName.equals(BALISE_TR)) {
             alertCourante = new Alert();

@@ -25,7 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportsrennes.R;
@@ -42,42 +42,45 @@ public class FavoriAdapterForWidget extends BaseAdapter {
     private final List<Integer> favorisSelectionnes = new ArrayList<Integer>(3);
 
     public List<ArretFavori> getFavorisSelectionnes() {
-        List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
-        for (int position : favorisSelectionnes) {
+        final List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
+        for (final int position : favorisSelectionnes) {
             retour.add(favoris.get(position));
         }
         return retour;
     }
     
-    public void addFavoriSelectionne(Integer favoriSelectionne) {
+    public void addFavoriSelectionne(final Integer favoriSelectionne) {
 		favorisSelectionnes.add(favoriSelectionne);
 	}
     
-    public void removeFavoriSelectionne(Integer favoriToRemove) {
-    	Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
+    public void removeFavoriSelectionne(final Integer favoriToRemove) {
+    	final Iterator<Integer> positionActuels = favorisSelectionnes.iterator();
         while (positionActuels.hasNext()) {
-            if (positionActuels.next() == favoriToRemove) {
+            if (positionActuels.next().equals(favoriToRemove)) {
                 positionActuels.remove();
             }
         }
     }
 
-    public FavoriAdapterForWidget(Context context, List<ArretFavori> favoris) {
+    public FavoriAdapterForWidget(final Context context, final List<ArretFavori> favoris) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
         mContext = context;
         this.favoris = favoris;
     }
 
+    @Override
     public int getCount() {
         return favoris.size();
     }
 
-    public ArretFavori getItem(int position) {
+    @Override
+    public ArretFavori getItem(final int position) {
         return favoris.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(final int position) {
         return position;
     }
 
@@ -88,13 +91,14 @@ public class FavoriAdapterForWidget extends BaseAdapter {
         CheckBox checkBox;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        FavoriAdapterForWidget.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = mInflater.inflate(R.layout.favori_for_widget, null);
 
-            holder = new FavoriAdapterForWidget.ViewHolder();
+            holder = new ViewHolder();
             holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
             holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
             holder.direction = (TextView) convertView1.findViewById(R.id.directionArret);
@@ -102,13 +106,13 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 
             convertView1.setTag(holder);
         } else {
-            holder = (FavoriAdapterForWidget.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 
 		holder.arret.setTextColor(TransportsRennesApplication.getTextColor(mContext));
 		holder.direction.setTextColor(TransportsRennesApplication.getTextColor(mContext));
 
-        ArretFavori favori = favoris.get(position);
+        final ArretFavori favori = favoris.get(position);
 
         holder.arret.setText(favori.nomArret);
         holder.direction.setText(favori.direction);

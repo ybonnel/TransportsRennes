@@ -13,20 +13,15 @@
  */
 package fr.ybo.transportsbordeaux.activity.itineraires;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
-import fr.ybo.transportsbordeaux.activity.map.TrajetOnMap;
 import fr.ybo.transportsbordeaux.adapters.itineraires.TrajetAdapter;
 import fr.ybo.transportsbordeaux.itineraires.ItineraireReponse;
-import fr.ybo.transportsbordeaux.itineraires.Trajet;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 
 public class Itineraires extends BaseListActivity {
@@ -35,26 +30,17 @@ public class Itineraires extends BaseListActivity {
      * Called when the activity is first created.
      */
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itineraires);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-        ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
+        final ItineraireReponse itineraireReponse = (ItineraireReponse) getIntent().getExtras().getSerializable(
                 "itineraireReponse");
-        int heureDepart = getIntent().getIntExtra("heureDepart", 0);
-        setListAdapter(new TrajetAdapter(this, itineraireReponse.getTrajets(), heureDepart));
-        ListView lv = getListView();
+        final int heureDepart = getIntent().getIntExtra("heureDepart", 0);
+        setListAdapter(new TrajetAdapter(this, itineraireReponse != null ? itineraireReponse.getTrajets() : null, heureDepart));
+        final ListView lv = getListView();
         lv.setTextFilterEnabled(true);
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Trajet trajet = (Trajet) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(Itineraires.this, TrajetOnMap.class);
-                intent.putExtra("trajet", trajet);
-                startActivity(intent);
-            }
-
-        });
         // Look up the AdView as a resource and load a request.
-        ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+        ((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 }

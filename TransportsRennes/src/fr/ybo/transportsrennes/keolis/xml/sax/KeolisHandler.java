@@ -54,7 +54,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
     /**
      * Objet Keolis courant.
      */
-	protected ObjetKeolis currentObjetKeolis;
+    ObjetKeolis currentObjetKeolis;
 
     /**
      * StringBuilder servant au parsing xml.
@@ -62,13 +62,13 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
     private StringBuilder contenu;
 
     @Override
-    public void characters(char[] ch, int start, int length) throws SAXException {
+    public void characters(final char[] ch, final int start, final int length) throws SAXException {
         super.characters(ch, start, length);
         contenu.append(ch, start, length);
     }
 
     @Override
-    public void endElement(String uri, String localName, String qName) throws SAXException {
+    public void endElement(final String uri, final String localName, final String qName) throws SAXException {
         super.endElement(uri, localName, qName);
         if (answer != null) {
 			remplirObjectKeolis(currentObjetKeolis, localName, contenu.toString());
@@ -118,7 +118,7 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
     }
 
     @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+    public void startElement(final String uri, final String localName, final String qName, final Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
         if (localName.equals(ANSWER)) {
             answer = new Answer<ObjetKeolis>();

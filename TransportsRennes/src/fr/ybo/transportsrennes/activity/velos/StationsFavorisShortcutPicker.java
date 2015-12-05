@@ -24,7 +24,7 @@ public class StationsFavorisShortcutPicker extends BaseSimpleActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupShortcut();
         finish();
@@ -33,13 +33,13 @@ public class StationsFavorisShortcutPicker extends BaseSimpleActivity {
 
     private void setupShortcut() {
         // First, set up the shortcut intent.
-        Intent shortcutIntent = new Intent(this, ListStationsFavoris.class);
+        final Intent shortcutIntent = new Intent(this, ListStationsFavoris.class);
 
         // Then, set up the container intent (the response to the caller)
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
         intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_velo_favori));
-		Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_star_default);
+		final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_star_default);
         intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher

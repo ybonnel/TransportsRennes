@@ -58,11 +58,6 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 public class ListStationsByPosition extends BaseListActivity implements UpdateLocationListenner, Searchable,
 		Refreshable {
 
-	/**
-	 * Permet d'accéder aux apis keolis.
-	 */
-	private final Keolis keolis = Keolis.getInstance();
-
 	private final List<Station> stations = Collections.synchronizedList(new ArrayList<Station>(100));
 	private final List<Station> stationsFiltrees = Collections.synchronizedList(new ArrayList<Station>(100));
 
@@ -83,12 +78,12 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	private String currentQuery = "";
 
 	@Override
-	public void updateQuery(String newQuery) {
+	public void updateQuery(final String newQuery) {
 		currentQuery = newQuery;
-		String query = newQuery.toUpperCase();
+		final String query = newQuery.toUpperCase();
 		stationsFiltrees.clear();
 		synchronized (stations) {
-			for (Station station : stations) {
+			for (final Station station : stations) {
 				if (station.name.toUpperCase().contains(query.toUpperCase())) {
 					stationsFiltrees.add(station);
 				}
@@ -100,9 +95,8 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 	private ListView listView;
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.liststations);
 		getActivityHelper().setupActionBar(R.menu.liststation_menu_items, R.menu.holo_liststation_menu_items);
@@ -114,15 +108,16 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		listView.setFastScrollEnabled(true);
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				Station station = veloAdapter.getItem(position);
-				String lat = Double.toString(station.getLatitude());
-				String lon = Double.toString(station.getLongitude());
-				Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + "," + lon);
+			@Override
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final Station station = veloAdapter.getItem(position);
+				final String lat = Double.toString(station.getLatitude());
+				final String lon = Double.toString(station.getLongitude());
+				final Uri uri = Uri.parse("geo:" + lat + ',' + lon + "?q=" + lat + ',' + lon);
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
-				} catch (ActivityNotFoundException activityNotFound) {
+				} catch (final ActivityNotFoundException activityNotFound) {
 					Toast.makeText(ListStationsByPosition.this, R.string.noGoogleMap, Toast.LENGTH_LONG).show();
 				}
 			}
@@ -135,25 +130,21 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				List<Station> stationsTmp = keolis.getStations();
+				final List<Station> stationsTmp = Keolis.getStations();
 				if (isCancelled()) {
 					return;
 				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
+					Collections.sort(stations, new StationComparator2());
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				}
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
 					updateLocation(locationUtil.getCurrentLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
@@ -172,25 +163,21 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				Collection<Station> stationsTmp = keolis.getStations();
+				final Collection<Station> stationsTmp = Keolis.getStations();
 				if (isCancelled()) {
 					return;
 				}
 				synchronized (stations) {
 					stations.clear();
 					stations.addAll(stationsTmp);
-					Collections.sort(stations, new Comparator<Station>() {
-						public int compare(Station o1, Station o2) {
-							return o1.name.compareToIgnoreCase(o2.name);
-						}
-					});
+					Collections.sort(stations, new StationComparator());
 					stationsFiltrees.clear();
 					stationsFiltrees.addAll(stations);
 				}
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
 				if (!isCancelled()) {
 					updateQuery(currentQuery);
@@ -202,26 +189,11 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		super.onOptionsItemSelected(item);
-		if (item.getItemId() == R.id.menu_google_map) {
-			if (!stationsFiltrees.isEmpty()) {
-				Intent intent = new Intent(ListStationsByPosition.this, StationsOnMap.class);
-				ArrayList<Station> stationsSerializable = new ArrayList<Station>(stationsFiltrees.size());
-				stationsSerializable.addAll(stationsFiltrees);
-				intent.putExtra("stations", stationsSerializable);
-				startActivity(intent);
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+	public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		if (v.getId() == android.R.id.list) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			Station station = (Station) getListAdapter().getItem(info.position);
+			final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+			final Station station = (Station) getListAdapter().getItem(info.position);
 			VeloFavori veloFavori = new VeloFavori();
 			veloFavori.number = station.number;
 			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
@@ -232,10 +204,10 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 	}
 
 	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-		Station station;
-		VeloFavori veloFavori;
+	public boolean onContextItemSelected(final MenuItem item) {
+		final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+		final Station station;
+		final VeloFavori veloFavori;
 		switch (item.getItemId()) {
 			case R.id.ajoutFavori:
 				station = (Station) getListAdapter().getItem(info.position);
@@ -250,21 +222,36 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				return true;
 			default:
-				return super.onOptionsItemSelected(item);
+				return onOptionsItemSelected(item);
 		}
 	}
 
-	public void updateLocation(Location location) {
+	@Override
+	public void updateLocation(final Location location) {
 		if (location == null) {
 			return;
 		}
 		synchronized (stations) {
-			for (Station station : stations) {
+			for (final Station station : stations) {
 				station.calculDistance(location);
 			}
 			Collections.sort(stations, new Station.ComparatorDistance());
 		}
 		updateQuery(currentQuery);
 		((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+	}
+
+	private static class StationComparator implements Comparator<Station> {
+		@Override
+        public int compare(final Station o1, final Station o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
+        }
+	}
+
+	private static class StationComparator2 implements Comparator<Station> {
+		@Override
+        public int compare(final Station o1, final Station o2) {
+            return o1.name.compareToIgnoreCase(o2.name);
+        }
 	}
 }

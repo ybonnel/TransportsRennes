@@ -16,8 +16,8 @@ package fr.ybo.transportsbordeaux.activity.bus;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
@@ -52,7 +52,7 @@ public class ListArretByPosition extends AbstractListArretByPosition {
 	}
 
 	@Override
-	protected void deleteFavori(ArretFavori favori) {
+	protected void deleteFavori(final ArretFavori favori) {
 		if (TransportsWidget11Configure.isNotUsed(this, favori) && TransportsWidget21Configure.isNotUsed(this, favori)) {
 			AbstractTransportsApplication.getDataBaseHelper().delete(favori);
 		} else {
@@ -66,10 +66,10 @@ public class ListArretByPosition extends AbstractListArretByPosition {
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

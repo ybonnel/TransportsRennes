@@ -50,14 +50,14 @@ public class StatusKeolis {
 	/**
 	 * @param pCode the code to set
 	 */
-	public void setCode(String pCode) {
+	public void setCode(final String pCode) {
 		code = pCode;
 	}
 
 	/**
 	 * @param pMessage the message to set
 	 */
-	public void setMessage(String pMessage) {
+	public void setMessage(final String pMessage) {
 		message = pMessage;
 	}
 }

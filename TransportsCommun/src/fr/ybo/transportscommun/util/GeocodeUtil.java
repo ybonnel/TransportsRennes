@@ -14,18 +14,17 @@
 
 package fr.ybo.transportscommun.util;
 
-import android.content.Context;
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
 
 
-public class GeocodeUtil {
+public final class GeocodeUtil {
 
-    public GeocodeUtil(Context context) {
+    private GeocodeUtil() {
     }
 
-    public GeocodeResponse geocode(GeocoderRequest request) {
+    public static GeocodeResponse geocode(final GeocoderRequest request) {
         return Geocoder.geocode(request);
     }
 

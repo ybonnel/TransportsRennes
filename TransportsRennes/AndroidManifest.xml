@@ -19,7 +19,7 @@
           android:versionName="3.9.3">
     
     <uses-sdk android:minSdkVersion="4"
-              android:targetSdkVersion="18"/>
+              android:targetSdkVersion="11"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
@@ -96,18 +96,11 @@
         <activity android:name=".activity.pointsdevente.ListPointsDeVente"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.alerts.TabAlertes" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.bus.ArretsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.velos.StationsOnMap" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.parkrelais.ParkRelaisOnMap"
-                  android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.pointsdevente.PointsDeVentesOnMap"
-                  android:configChanges="orientation|keyboardHidden"/>
         
         <activity android:name=".activity.bus.DetailTrajet" android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.ItineraireRequete"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.itineraires.Itineraires" android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".activity.itineraires.TrajetOnMap" android:configChanges="keyboardHidden"/>
         <activity android:name=".activity.preferences.PreferencesRennes"
                   android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".activity.bus.ListNotif" android:configChanges="orientation|keyboardHidden"/>
@@ -231,22 +224,5 @@
             </intent-filter>
         </activity>
 
-        <!-- Cappbrain -->
-        <meta-data android:name="capptain:reportLocation" android:value="true"/>
-
-        <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsRennesService" android:process=":Capptain"
-                 android:exported="false">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="com.ubikod.capptain.ICapptainService"/>
-                <data android:scheme="capptain"/>
-            </intent-filter>
-            <meta-data android:name="capptain:api:level" android:value="21"/>
-        </service>
-        <!-- Cappbrain -->
-
-        <uses-library android:name="com.google.android.maps" android:required="false"/>
-        <meta-data android:name="capptain:apiId" android:value="b6a5b1113175bf391e442a8653876b84"/>
     </application>
 </manifest>

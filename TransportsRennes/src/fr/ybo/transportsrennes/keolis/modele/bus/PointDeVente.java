@@ -22,7 +22,6 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
  *
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class PointDeVente extends ObjetWithDistance implements Serializable {
     /**
      * Nom du point de vente.

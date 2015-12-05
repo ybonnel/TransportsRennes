@@ -57,20 +57,21 @@ public abstract class AbstractDetailTrajet extends BaseListActivity {
 	protected abstract Class<? extends AbstractDetailArret> getDetailArretClass();
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(getLayout());
 		setupActionBar();
 		recuperationDonneesIntent();
 		gestionViewsTitle();
 		construireListe();
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = adapterView.getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				Intent intent = new Intent(AbstractDetailTrajet.this, getDetailArretClass());
+			@Override
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Adapter arretAdapter = adapterView.getAdapter();
+				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				final Intent intent = new Intent(AbstractDetailTrajet.this, getDetailArretClass());
 				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
 				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
 				intent.putExtra("direction", direction.direction);
@@ -83,20 +84,11 @@ public abstract class AbstractDetailTrajet extends BaseListActivity {
 	}
 
 	private void construireListe() {
-		StringBuilder requete = new StringBuilder();
-		requete.append("SELECT Arret.id as _id, Horaire.heureDepart as heureDepart, Arret.nom as nom ");
-		requete.append("FROM Arret, Horaire_");
-		requete.append(ligne.id);
-		requete.append(" as Horaire ");
-		requete.append("WHERE Arret.id = Horaire.arretId");
-		requete.append(" AND Horaire.trajetId = :trajetId");
-		requete.append(" AND Horaire.stopSequence > :sequence ");
-		requete.append("ORDER BY stopSequence;");
-		List<String> selectionArgs = new ArrayList<String>(2);
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(String.valueOf(trajet.id));
 		selectionArgs.add(String.valueOf(sequence));
 
-		currentCursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+		currentCursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery("SELECT Arret.id as _id, Horaire.heureDepart as heureDepart, Arret.nom as nom " + "FROM Arret, Horaire_" + ligne.id + " as Horaire " + "WHERE Arret.id = Horaire.arretId" + " AND Horaire.trajetId = :trajetId" + " AND Horaire.stopSequence > :sequence " + "ORDER BY stopSequence;",
 				selectionArgs);
 
 		setListAdapter(new DetailTrajetAdapter(this, currentCursor));

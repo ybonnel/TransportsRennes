@@ -19,18 +19,18 @@ package fr.ybo.transportscommun.util;
 /**
  * Classe complementaire du J2SDK sur la manipulation de chaines de caractéres
  * Permet nottament de supprimer les accents d'une chaine de caractères
- * 
+ *
  * @author André Sébastien
  **/
-public class StringOperation {
+public final class StringOperation {
 	/** Mise en minuscule **/
-	public static final int LOWER_CASE = 4;
+	private static final int LOWER_CASE = 4;
 
 	/** Mise en majuscule **/
-	public static final int UPPER_CASE = 8;
+	private static final int UPPER_CASE = 8;
 
 	/** Remplacement des caractères accentués par leur versions sans accents **/
-	public static final int WITHOUT_ACCENTS = 16;
+	private static final int WITHOUT_ACCENTS = 16;
 
 	/** Index du 1er caractere accentué **/
 	private static final int MIN = 192;
@@ -41,25 +41,28 @@ public class StringOperation {
 	/** Vecteur de correspondance entre accent / sans accent **/
 	private static final char[] map = initMap();
 
+	private StringOperation() {
+	}
+
 	/**
 	 * Initialisation du tableau de correspondance entre les caractéres
 	 * accentués et leur homologues non accentués
 	 **/
 	private static char[] initMap() {
-		char[] result = new char[MAX - MIN + 1];
-		char car = ' ';
+		final char[] result = new char[MAX - MIN + 1];
+		char car;
 
 		car = 'A';
-		result[00] = car; /* '\u00C0' À alt-0192 */
-		result[01] = car; /* '\u00C1' Á alt-0193 */
-		result[02] = car; /* '\u00C2' Â alt-0194 */
-		result[03] = car; /* '\u00C3' Ã alt-0195 */
-		result[04] = car; /* '\u00C4' Ä alt-0196 */
-		result[05] = car; /* '\u00C5' Å alt-0197 */
+		result[0] = car; /* '\u00C0' À alt-0192 */
+		result[1] = car; /* '\u00C1' Á alt-0193 */
+		result[2] = car; /* '\u00C2' Â alt-0194 */
+		result[3] = car; /* '\u00C3' Ã alt-0195 */
+		result[4] = car; /* '\u00C4' Ä alt-0196 */
+		result[5] = car; /* '\u00C5' Å alt-0197 */
 		car = ' ';
-		result[06] = car; /* '\u00C6' Æ alt-0198 ********* BI-CARACTERE ******** */
+		result[6] = car; /* '\u00C6' Æ alt-0198 ********* BI-CARACTERE ******** */
 		car = 'C';
-		result[07] = car; /* '\u00C7' Ç alt-0199 */
+		result[7] = car; /* '\u00C7' Ç alt-0199 */
 		car = 'E';
 		result[8] = car; /* '\u00C8' È alt-0200 */
 		result[9] = car; /* '\u00C9' É alt-0201 */
@@ -296,39 +299,25 @@ public class StringOperation {
 	/**
 	 * Transforme une chaine de caractères selon differents critères (paramètre
 	 * mode),
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine sur laquelle on veut effectuer une transformation
-	 * @param mode
-	 *            Mode de transformation, plusieurs mode sont accessibles,
-	 *            ceux-ci peuvent être combiné - LOWER_CASE : Mise en minuscule
-	 *            - UPPER_CASE : Mise en majuscule - WITHOUT_ACCENTS : Remplace
-	 *            les caractères accentués par leur version sans accent La
-	 *            combinaision de mode se fait de la sorte LOWER_CASE |
-	 *            WITHOUT_ACCENTS
 	 * @return Chain transformée
 	 **/
-	public static java.lang.String transform(java.lang.String chaine, int mode) {
-		if (mode == UPPER_CASE)
-			return chaine.toUpperCase();
-		if (mode == LOWER_CASE)
-			return chaine.toLowerCase();
+	private static java.lang.String transform(final String chaine) {
 
-		int firstReplacement = scan(chaine, mode);
+		final int firstReplacement = scan(chaine);
 
-		if (firstReplacement == -1)
+		if (firstReplacement == -1) {
 			return chaine;
+		}
 
-		char[] result = chaine.toCharArray();
+		final char[] result = chaine.toCharArray();
 		int offset = firstReplacement;
 
-		boolean toUpper = (mode & UPPER_CASE) > 0;
-		boolean toLower = (mode & LOWER_CASE) > 0;
-		boolean withoutAccents = (mode & WITHOUT_ACCENTS) > 0;
-
 		for (int bcl = firstReplacement; bcl < chaine.length(); bcl++) {
-			char c = result[bcl];
-			int type = Character.getType(c);
+			final char c = result[bcl];
+			final int type = Character.getType(c);
 
 			/**
 			 * Remplacement
@@ -344,12 +333,8 @@ public class StringOperation {
 														// Character.OTHER_PUNCTUATION
 														// )
 			{
-				if (toUpper && (type == Character.LOWERCASE_LETTER || type == Character.OTHER_PUNCTUATION)) {
-					r = Character.toUpperCase(c);
-				} else if (toLower && (type == Character.UPPERCASE_LETTER || type == Character.OTHER_PUNCTUATION))
-					r = Character.toLowerCase(c);
 
-				if (withoutAccents && r >= MIN && r <= MAX
+				if (r >= MIN && r <= MAX
 						&& (r != 198 && r != 230 && r != 306 && r != 307 && r != 339 && r != 340)) {
 					r = map[(int) r - MIN];
 				}
@@ -365,23 +350,21 @@ public class StringOperation {
 	/**
 	 * Donne l'index du 1er caractère donnant lieu a une transformation selon le
 	 * mode donné
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine à tester
-	 * @param mode
-	 *            Mode pilotant la future transformation de la chaine
 	 * @return index du 1er caractère à transformer, -1 si aucun caractère n'est
 	 *         a transformer
 	 */
-	private static int scan(java.lang.String chaine, int mode) {
+	private static int scan(final String chaine) {
 		/**
 		 * ALPHA_NUM WITHOUT_SPECIALS_CHARS LOWER_CASE UPPER_CASE
 		 * WITHOUT_ACCENTS
 		 */
 		int computedMode = 0;
 		for (int bcl = 0; bcl < chaine.length(); bcl++) {
-			char c = chaine.charAt(bcl);
-			int type = Character.getType(c);
+			final char c = chaine.charAt(bcl);
+			final int type = Character.getType(c);
 
 			/**
 			 * isLetter()
@@ -392,18 +375,20 @@ public class StringOperation {
 														// Character.OTHER_PUNCTUATION
 														// )
 			{
-				if (type == Character.LOWERCASE_LETTER)
-					computedMode = computedMode | UPPER_CASE;
-				else if (type == Character.UPPERCASE_LETTER)
-					computedMode = computedMode | LOWER_CASE;
+				if (type == Character.LOWERCASE_LETTER) {
+					computedMode |= UPPER_CASE;
+				} else if (type == Character.UPPERCASE_LETTER) {
+					computedMode |= LOWER_CASE;
+				}
 
 				if (c >= MIN && c <= MAX) {
-					computedMode = computedMode | WITHOUT_ACCENTS;
+					computedMode |= WITHOUT_ACCENTS;
 				}
 			}
 
-			if ((computedMode & mode) > 0)
+			if ((computedMode & WITHOUT_ACCENTS) > 0) {
 				return bcl;
+			}
 		}
 
 		return -1;
@@ -412,12 +397,12 @@ public class StringOperation {
 	/**
 	 * Transforme une chaine pouvant contenir des accents dans une version sans
 	 * accent
-	 * 
+	 *
 	 * @param chaine
 	 *            Chaine a convertir sans accent
 	 * @return Chaine dont les accents ont été supprimé
 	 **/
-	public static java.lang.String sansAccents(java.lang.String chaine) {
-		return transform(chaine, WITHOUT_ACCENTS);
+	public static java.lang.String sansAccents(final java.lang.String chaine) {
+		return transform(chaine);
 	}
 }
