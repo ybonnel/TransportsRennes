@@ -34,10 +34,6 @@ public class Departure implements Serializable {
 		this.accurate = accurate;
 	}
 
-	public String getHeadSign() {
-		return headSign;
-	}
-
 	public void setHeadSign(final String headSign) {
 		this.headSign = headSign;
 	}

@@ -16,10 +16,11 @@ package fr.ybo.transportscommun.donnees.manager.gtfs;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import android.content.res.Resources;
 import android.database.DatabaseUtils.InsertHelper;
@@ -40,15 +41,15 @@ import fr.ybo.transportscommun.util.NoSpaceLeftException;
 public final class GestionZipKeolis {
 
     private static final LogYbo LOG_YBO = new LogYbo(GestionZipKeolis.class);
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
+    private static final DateFormat SDF = new SimpleDateFormat("yyyyMMdd");
 
     private static final String URL_STOP_TIMES = "horaires_";
 
-	private static List<CoupleResourceFichier> getResourceForStopTime(final Class<?> rawClass, final String ligneId)
+	private static Iterable<CoupleResourceFichier> getResourceForStopTime(final Class<?> rawClass, final String ligneId)
 			throws LigneInexistanteException {
 
         try {
-			final List<CoupleResourceFichier> retour = new ArrayList<CoupleResourceFichier>();
+			final Collection<CoupleResourceFichier> retour = new ArrayList<CoupleResourceFichier>();
             final String nomResource = URL_STOP_TIMES + ligneId.toLowerCase();
 			final int resourceId = rawClass.getDeclaredField(nomResource).getInt(null);
 			retour.add(new CoupleResourceFichier(resourceId, nomResource + ".txt"));

@@ -25,10 +25,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
@@ -115,7 +115,7 @@ public class ActivityHelper {
         };
 
         // Add logo
-        final ImageButton logo = new ImageButton(mActivity, null, R.attr.actionbarCompatLogoStyle);
+        final ImageView logo = new ImageButton(mActivity, null, R.attr.actionbarCompatLogoStyle);
         logo.setImageResource(AbstractTransportsApplication.getDonnesSpecifiques().getCompactLogo());
         logo.setOnClickListener(homeClickListener);
         actionBarCompat.addView(logo);
@@ -132,7 +132,7 @@ public class ActivityHelper {
     }
 
     void addMenus(final int resourceMenu) {
-        final SimpleMenu simpleMenu = new SimpleMenu(mActivity);
+        final Menu simpleMenu = new SimpleMenu(mActivity);
         mActivity.getMenuInflater().inflate(resourceMenu, simpleMenu);
         for (int i = 0; i < simpleMenu.size(); i++) {
             final MenuItem item = simpleMenu.getItem(i);
@@ -163,7 +163,7 @@ public class ActivityHelper {
             }
         }
         if (mActivity instanceof Searchable) {
-            final EditText editText = (EditText) mActivity.findViewById(R.id.edittext_search);
+            final TextView editText = (TextView) mActivity.findViewById(R.id.edittext_search);
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(final CharSequence charSequence, final int i, final int i1, final int i2) {
@@ -217,11 +217,11 @@ public class ActivityHelper {
         }
 
         // Create the separator
-        final ImageView separator = new ImageView(mActivity, null, R.attr.actionbarCompatSeparatorStyle);
+        final View separator = new ImageView(mActivity, null, R.attr.actionbarCompatSeparatorStyle);
         separator.setLayoutParams(new ViewGroup.LayoutParams(2, ViewGroup.LayoutParams.FILL_PARENT));
 
         // Create the button
-        final ImageButton actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
+        final ImageView actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
         actionButton.setId(id);
         actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources().getDimension(
                 R.dimen.actionbar_compat_height), ViewGroup.LayoutParams.FILL_PARENT));

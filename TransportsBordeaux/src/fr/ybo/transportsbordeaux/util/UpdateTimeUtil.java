@@ -11,12 +11,6 @@ public class UpdateTimeUtil {
 
 	private int oldNow;
 
-	public UpdateTimeUtil(final UpdateTime update, final Activity activity, final int now) {
-		this.update = update;
-		this.activity = activity;
-		oldNow = now;
-	}
-
 	public UpdateTimeUtil(final UpdateTime update, final Activity activity) {
 		this.update = update;
 		this.activity = activity;

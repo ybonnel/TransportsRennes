@@ -19,6 +19,7 @@ import fr.ybo.opentripplanner.client.modele.Leg;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Trajet implements Serializable {
     private List<PortionTrajet> portions;
     private Date endTime;
 
-    public List<PortionTrajet> getPortions() {
+    public Collection<PortionTrajet> getPortions() {
         if (portions == null) {
             portions = new ArrayList<PortionTrajet>();
         }

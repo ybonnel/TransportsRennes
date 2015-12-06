@@ -31,7 +31,7 @@ public class ItineraireReponse implements Serializable {
         return trajets;
     }
 
-    public static ItineraireReponse convert(final TripPlan tripPlan) {
+    public static Serializable convert(final TripPlan tripPlan) {
         if (tripPlan == null) {
             return null;
         }

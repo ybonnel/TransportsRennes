@@ -22,14 +22,4 @@ package fr.ybo.transportscommun.donnees.modele;
  */
 public interface IStation {
 
-	int getBikesAvailables();
-
-	int getSlotsAvailables();
-
-	double getLatitude();
-
-	double getLongitude();
-
-	String getName();
-
 }

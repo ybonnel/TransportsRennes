@@ -13,9 +13,11 @@
  */
 package fr.ybo.transportscommun.donnees.modele;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class Horaire {
 
     private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-	private static final SimpleDateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
+	private static final DateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
 
 	public static List<DetailArretConteneur> getProchainHorairesAsList(final String ligneId, final String arretId, final Integer limit,
 			final Calendar calendar, final Integer macroDirection) throws SQLiteException {
@@ -72,7 +74,7 @@ public class Horaire {
 		int trajetIdCol = cursor.getColumnIndex("trajetId");
 		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
 		int directionCol = cursor.getColumnIndex("direction");
-		final Set<Integer> horairesDejaAjoutes = new HashSet<Integer>();
+		final Collection<Integer> horairesDejaAjoutes = new HashSet<Integer>();
 		while (cursor.moveToNext()) {
 			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
 				final int heureDepart = cursor.getInt(heureDepartCol);
@@ -126,7 +128,7 @@ public class Horaire {
 		int trajetIdCol = cursor.getColumnIndex("trajetId");
 		int stopSequenceCol = cursor.getColumnIndex("stopSequence");
 		int directionCol = cursor.getColumnIndex("direction");
-		final Set<Integer> horairesDejaAjoutes = new HashSet<Integer>();
+		final Collection<Integer> horairesDejaAjoutes = new HashSet<Integer>();
 		while (cursor.moveToNext()) {
 			if (!getExceptionsSuppr(cursor.getString(todayCol)).contains(cursor.getInt(calendrierIdCol))) {
 				final int heureDepart = cursor.getInt(heureDepartCol);
@@ -187,12 +189,12 @@ public class Horaire {
 		}
 	}
 
-	private static Set<Integer> getExceptionsSuppr(final String date) {
+	private static Collection<Integer> getExceptionsSuppr(final String date) {
 		remplirException(date);
 		return mapCalendriersExceptionSuppr.get(date);
 	}
 
-	private static Set<Integer> getExceptionsAjout(final String date) {
+	private static Iterable<Integer> getExceptionsAjout(final String date) {
 		remplirException(date);
 		return mapCalendriersExceptionAjout.get(date);
 	}

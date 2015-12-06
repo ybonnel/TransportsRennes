@@ -16,6 +16,7 @@
  */
 package fr.ybo.transportscommun.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,7 +25,7 @@ import java.util.Date;
  */
 public final class JoursFeries {
 
-	private static final SimpleDateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM");
+	private static final DateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM");
 
 	private JoursFeries() {
 	}

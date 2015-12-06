@@ -250,7 +250,7 @@ public final class Keolis {
         final ParametreUrl[] params =
                 { new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId) };
 
-        final GetDeparturesMetroHandler handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
+        final KeolisHandler handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
         final List<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
 
         final List<Departure> departures = new ArrayList<Departure>();

@@ -38,10 +38,6 @@ public class GetStationHandler extends KeolisHandler<Station> {
 	 */
 	private static final String NAME = "name";
 	/**
-	 * Nom de la balise address.
-	 */
-	private static final String ADRESSE = "address";
-	/**
 	 * Nom de la balise state.
 	 */
 	private static final String STATE = "state";
@@ -65,14 +61,6 @@ public class GetStationHandler extends KeolisHandler<Station> {
 	 * Nom de la balise pos.
 	 */
 	private static final String POS = "pos";
-	/**
-	 * Nom de la balise district.
-	 */
-	private static final String DISTRICT = "district";
-	/**
-	 * Nom de la balise lastupdate.
-	 */
-	private static final String LASTUPDATE = "lastupdate";
 
 	@Override
 	protected String getBaliseData() {
@@ -90,8 +78,6 @@ public class GetStationHandler extends KeolisHandler<Station> {
 			currentObjectKeolis.number = contenuOfBalise;
 		} else if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
-		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenuOfBalise;
 		} else if (baliseName.equals(STATE)) {
 			currentObjectKeolis.state = "1".equals(contenuOfBalise);
 		} else if (baliseName.equals(LATITUDE)) {
@@ -104,10 +90,6 @@ public class GetStationHandler extends KeolisHandler<Station> {
 			currentObjectKeolis.bikesavailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(POS)) {
 			currentObjectKeolis.pos = "1".equals(contenuOfBalise);
-		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenuOfBalise;
-		} else if (baliseName.equals(LASTUPDATE)) {
-			currentObjectKeolis.lastupdate = contenuOfBalise;
 		}
 	}
 }

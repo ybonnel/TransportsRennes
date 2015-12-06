@@ -53,11 +53,11 @@ public class BaseActivity {
 			mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 		}
 
-		protected void addTab(final String id, final String title, final Class<? extends Fragment> fragment) {
+		protected void addTab(final String id, final CharSequence title, final Class<? extends Fragment> fragment) {
 			addTab(id, title, fragment, null);
 		}
 
-		protected void addTab(final String id, final String title, final Class<? extends Fragment> fragment, final Bundle args) {
+		protected void addTab(final String id, final CharSequence title, final Class<? extends Fragment> fragment, final Bundle args) {
 			mTabsAdapter.addTab(mTabHost.newTabSpec(id), fragment, args, title);
 		}
 
@@ -71,10 +71,6 @@ public class BaseActivity {
 			} else {
 				mTabHost.setCurrentTab(0);
 			}
-		}
-
-		protected void setOnFragmentChange(final OnFragmentChange onFragmentChange) {
-			mTabsAdapter.setOnFragmentChange(onFragmentChange);
 		}
 
 		protected Fragment getCurrentFragment() {
@@ -132,10 +128,6 @@ public class BaseActivity {
 
 	public abstract static class BaseTabActivity extends TabActivity {
 		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
-
-		public ActivityHelper getActivityHelper() {
-			return mActivityHelper;
-		}
 
 		@Override
 		protected void onCreate(final Bundle savedInstanceState) {
@@ -311,7 +303,7 @@ public class BaseActivity {
 			dummyTabFactory = new DummyTabFactory(activity);
 		}
 
-		public void addTab(final TabHost.TabSpec tabSpec, final Class<?> clss, final Bundle args, final String title) {
+		public void addTab(final TabHost.TabSpec tabSpec, final Class<?> clss, final Bundle args, final CharSequence title) {
 			if (UIUtils.isHoneycomb()) {
 				tabSpec.setIndicator(title);
 			} else {
@@ -359,10 +351,6 @@ public class BaseActivity {
 		}
 
 		private OnFragmentChange onFragmentChange;
-
-		public void setOnFragmentChange(final OnFragmentChange onFragmentChange) {
-			this.onFragmentChange = onFragmentChange;
-		}
 
 		@Override
 		public void onPageScrolled(final int position, final float positionOffset, final int positionOffsetPixels) {

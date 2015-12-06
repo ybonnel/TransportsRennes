@@ -41,10 +41,6 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
      * Nom de la balise code.
      */
     private static final String CODE = "code";
-    /**
-     * Nom de la balise message.
-     */
-    private static final String MESSAGE = "message";
 
     /**
      * Réponse de l'API getdistrict.
@@ -125,7 +121,6 @@ public abstract class KeolisHandler<ObjetKeolis> extends DefaultHandler {
         } else if (localName.equals(STATUS)) {
             answer.setStatus(new StatusKeolis());
             answer.getStatus().setCode(attributes.getValue(attributes.getIndex(CODE)));
-            answer.getStatus().setMessage(attributes.getValue(attributes.getIndex(MESSAGE)));
         } else if (localName.equals(getBaliseData())) {
             currentObjetKeolis = getNewObjetKeolis();
         }

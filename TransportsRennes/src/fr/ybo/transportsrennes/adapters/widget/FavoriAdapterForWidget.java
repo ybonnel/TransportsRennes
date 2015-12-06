@@ -14,6 +14,7 @@
 package fr.ybo.transportsrennes.adapters.widget;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
 
     private final Context mContext;
 
-    private final List<Integer> favorisSelectionnes = new ArrayList<Integer>(3);
+    private final Collection<Integer> favorisSelectionnes = new ArrayList<Integer>(3);
 
     public List<ArretFavori> getFavorisSelectionnes() {
         final List<ArretFavori> retour = new ArrayList<ArretFavori>(3);
@@ -117,7 +118,7 @@ public class FavoriAdapterForWidget extends BaseAdapter {
         holder.arret.setText(favori.nomArret);
         holder.direction.setText(favori.direction);
         holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(favori.nomCourt));
-        holder.checkBox.setChecked(favorisSelectionnes.contains(Integer.valueOf(position)));
+        holder.checkBox.setChecked(favorisSelectionnes.contains(position));
         
         return convertView1;
     }

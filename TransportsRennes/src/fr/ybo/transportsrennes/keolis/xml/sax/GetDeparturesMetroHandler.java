@@ -53,20 +53,18 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
 	@Override
 	protected void remplirObjectKeolis(final DepartureMetro currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NEXT_TRAIN_1 + plateform)) {
-			final Calendar calendar = Calendar.getInstance();
 			try {
+				final Calendar calendar = Calendar.getInstance();
 				calendar.setTime(dfm.parse(contenuOfBalise));
 				currentObjectKeolis.setTime1(calendar);
 			} catch (final ParseException e) {
-				//throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
 			}
 		} else if (baliseName.equals(NEXT_TRAIN_2 + plateform)) {
-            final Calendar calendar = Calendar.getInstance();
             try {
-                calendar.setTime(dfm.parse(contenuOfBalise));
+				final Calendar calendar = Calendar.getInstance();
+				calendar.setTime(dfm.parse(contenuOfBalise));
                 currentObjectKeolis.setTime2(calendar);
             } catch (final ParseException e) {
-                //throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
             }
         }
 	}

@@ -64,7 +64,7 @@ public class DetailArretConteneur {
         return sequence;
     }
 
-	public String getDirection() {
+	public CharSequence getDirection() {
 		return direction;
 	}
 }

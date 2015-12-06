@@ -35,10 +35,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 
 	protected Ligne myLigne;
 
-	public Ligne getMyLigne() {
-		return myLigne;
-	}
-
 	protected Cursor currentCursor;
 
 	private void closeCurrentCursor() {
@@ -48,10 +44,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 	}
 
 	private String currentDirection;
-
-	public String getCurrentDirection() {
-		return currentDirection;
-	}
 
 	private void onDirectionClick() {
 		final Cursor cursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery("SELECT Direction.id as directionId, Direction.direction as direction " + "FROM Direction, ArretRoute " + "WHERE Direction.id = ArretRoute.directionId" + " AND ArretRoute.ligneId = :ligneId " + "GROUP BY Direction.id, Direction.direction",
@@ -84,12 +76,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		builder.create().show();
 	}
 
-	private boolean lastOrderDirection;
-
-	public boolean isLastOrderDirection() {
-		return lastOrderDirection;
-	}
-
 	private void construireCursor() {
 		closeCurrentCursor();
 		final List<String> selectionArgs = new ArrayList<String>(2);
@@ -107,7 +93,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 			selectionArgs.add(currentDirection);
 		}
 		requete.append(" order by Direction.direction, ");
-		lastOrderDirection = ((AbstractListArret) getActivity()).isOrderDirection();
+		final boolean lastOrderDirection = ((AbstractListArret) getActivity()).isOrderDirection();
 		if (lastOrderDirection) {
 			requete.append("ArretRoute.sequence");
 		} else {

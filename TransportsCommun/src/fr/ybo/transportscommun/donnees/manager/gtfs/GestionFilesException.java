@@ -18,11 +18,7 @@ package fr.ybo.transportscommun.donnees.manager.gtfs;
 
 class GestionFilesException extends RuntimeException {
 
-	GestionFilesException(final Throwable throwable) {
-		super(throwable);
-	}
-
-	GestionFilesException(final Exception exception) {
+	GestionFilesException(final Throwable exception) {
 		super("Erreur lors de la récupération du fichier last_update", exception);
 	}
 }

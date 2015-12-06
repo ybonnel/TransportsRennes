@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsbordeaux.adapters.alerts;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.twitter.MessageTwitter;
 
@@ -31,7 +33,6 @@ import fr.ybo.transportsbordeaux.twitter.MessageTwitter;
 public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 
     private final List<MessageTwitter> messages;
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
     private final LayoutInflater inflater;
 
     public TwitterAdapter(final Context context, final List<MessageTwitter> objects) {
@@ -57,11 +58,7 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
             holder = (ViewHolder) convertView1.getTag();
         }
         final MessageTwitter message = messages.get(position);
-		if (message.dateCreation != null) {
-			holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
-		} else {
-			holder.twitter.setText(message.texte);
-		}
+        holder.twitter.setText(message.texte);
         return convertView1;
     }
 }

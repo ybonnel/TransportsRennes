@@ -33,7 +33,7 @@ public class ParkRelaisShortcutPicker extends BaseSimpleActivity {
 
     private void setupShortcut() {
         // First, set up the shortcut intent.
-        final Intent shortcutIntent = new Intent(this, ListParkings.class);
+        final Parcelable shortcutIntent = new Intent(this, ListParkings.class);
 
         // Then, set up the container intent (the response to the caller)
         final Intent intent = new Intent();

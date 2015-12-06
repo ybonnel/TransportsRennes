@@ -14,6 +14,7 @@
 package fr.ybo.transportsbordeaux.adapters.bus;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
@@ -68,7 +69,7 @@ public class NotifAdapter extends BaseAdapter {
         return position;
     }
 
-    public List<Notification> getNotifications() {
+    public Collection<Notification> getNotifications() {
         return notifications;
     }
 

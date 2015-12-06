@@ -28,33 +28,9 @@ public class PointDeVente extends ObjetWithDistance implements Serializable {
      */
     public String name;
     /**
-     * Type du point de vente.
-     */
-    public String type;
-    /**
-     * Adresse du point de vente.
-     */
-    public String adresse;
-    /**
-     * Code postal du point de vente.
-     */
-    public String codePostal;
-    /**
-     * Ville du point de vente.
-     */
-    public String ville;
-    /**
-     * District du point de vente.
-     */
-    public String district;
-    /**
      * Téléphone du point de vente.
      */
     public String telephone;
-    /**
-     * Schedule du point de vente.
-     */
-    public String schedule;
     /**
      * Latitude du point de vente.
      */

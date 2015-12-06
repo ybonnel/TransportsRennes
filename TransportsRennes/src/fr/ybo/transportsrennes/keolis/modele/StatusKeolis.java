@@ -29,22 +29,10 @@ public class StatusKeolis {
 	private String code;
 
 	/**
-	 * Message associé au status.
-	 */
-	private String message;
-
-	/**
 	 * @return the code
 	 */
 	public String getCode() {
 		return code;
-	}
-
-	/**
-	 * @return the message
-	 */
-	public String getMessage() {
-		return message;
 	}
 
 	/**
@@ -54,10 +42,4 @@ public class StatusKeolis {
 		code = pCode;
 	}
 
-	/**
-	 * @param pMessage the message to set
-	 */
-	public void setMessage(final String pMessage) {
-		message = pMessage;
-	}
 }

@@ -1,6 +1,7 @@
 package fr.ybo.transportsbordeaux.fragments.alerts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +14,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.alerts.AlertAdapter;
@@ -52,9 +52,7 @@ public class ListAlerts extends ListFragment {
         alerts.add(alertChargement);
         new AsyncTask<Void, Void, Void>() {
 
-            private boolean erreurReseau;
-
-            private final List<Alert> alertsTmp = new ArrayList<Alert>();
+            private final Collection<Alert> alertsTmp = new ArrayList<Alert>();
 
             @Override
             protected Void doInBackground(final Void... params) {
@@ -72,17 +70,9 @@ public class ListAlerts extends ListFragment {
 
             @Override
             protected void onPostExecute(final Void result) {
-                if (erreurReseau) {
-                    try {
-                        Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
-                    } catch (final Exception ignore) {
-
-                    }
-                } else {
-                    alerts.clear();
-                    alerts.addAll(alertsTmp);
-                    ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-                }
+                alerts.clear();
+                alerts.addAll(alertsTmp);
+                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 super.onPostExecute(result);
             }
 

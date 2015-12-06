@@ -47,10 +47,6 @@ public abstract class AbstractListArret extends BaseTabFragmentActivity implemen
 		}
 	}
 
-	public String getCurrrentTabTag() {
-		return getCurrentTab();
-	}
-
 	private boolean orderDirection = true;
 
 	public boolean isOrderDirection() {

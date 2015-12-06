@@ -16,10 +16,10 @@ package fr.ybo.transportsrennes.application;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -40,14 +40,12 @@ import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.DonnesSpecifiques;
 import fr.ybo.transportscommun.activity.AccueilActivity;
 import fr.ybo.transportscommun.activity.commun.ActivityHelper;
-import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
 import fr.ybo.transportscommun.activity.commun.Refreshable;
 import fr.ybo.transportscommun.donnees.manager.gtfs.CoupleResourceFichier;
 import fr.ybo.transportscommun.donnees.modele.Bounds;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.activity.TransportsRennes;
-import fr.ybo.transportsrennes.activity.bus.DetailArret;
 import fr.ybo.transportsrennes.activity.bus.TabFavoris;
 import fr.ybo.transportsrennes.activity.preferences.PreferencesRennes;
 import fr.ybo.transportsrennes.activity.velos.ListStationsFavoris;
@@ -171,7 +169,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
                 if (alertBdd == null) {
                     alertBdd = new AlertBdd();
                     alertBdd.setDate(dateCourante);
-                    final Set<String> lignes = new HashSet<String>();
+                    final Collection<String> lignes = new HashSet<String>();
                     for (final Alert alert : Keolis.getAlerts()) {
                         lignes.addAll(alert.lines);
                     }
@@ -234,9 +232,5 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
             return R.drawable.icone_bus;
         }
 
-		@Override
-        public Class<? extends BaseListActivity> getDetailArretClass() {
-            return DetailArret.class;
-        }
 	}
 }

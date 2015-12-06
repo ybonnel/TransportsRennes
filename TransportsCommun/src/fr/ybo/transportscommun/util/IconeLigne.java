@@ -34,12 +34,4 @@ public final class IconeLigne {
 	}
 
 
-	public static int getMarkeeResource(final String nomCourt) {
-		try {
-			return AbstractTransportsApplication.getDonnesSpecifiques().getDrawableClass()
-					.getDeclaredField('m' + nomCourt.toLowerCase()).getInt(null);
-		} catch (final Exception ignore) {
-			return AbstractTransportsApplication.getDonnesSpecifiques().getIconeLigne();
-		}
-	}
 }

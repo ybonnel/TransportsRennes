@@ -59,8 +59,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
         new AsyncTask<Void, Void, Void>() {
 
-            private boolean erreurLigneNonTrouvee;
-			private boolean erreurNoSpaceLeft;
+            private boolean erreurNoSpaceLeft;
 
             @Override
             protected void onPreExecute() {
@@ -70,9 +69,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             @Override
             protected Void doInBackground(final Void... pParams) {
                 try {
-					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
-				} catch (final NoSpaceLeftException e) {
-					erreurNoSpaceLeft = true;
+                    UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
+                } catch (final NoSpaceLeftException e) {
+                    erreurNoSpaceLeft = true;
                 }
                 return null;
             }
@@ -85,13 +84,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
                 } catch (final IllegalArgumentException ignore) {
 
                 }
-                if (erreurLigneNonTrouvee) {
-                    Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
-                            Toast.LENGTH_LONG).show();
+                if (erreurNoSpaceLeft) {
+                    Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
                     activity.finish();
-				} else if (erreurNoSpaceLeft) {
-					Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
-					activity.finish();
                 }
             }
 
@@ -119,8 +114,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             // Supression d'un favori.
             if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)
                     && TransportsWidget11Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidget21Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidgetLowResConfigure.isNotUsed(activity, myFavori)) {
+                    && TransportsWidget21Configure.isNotUsed(activity, myFavori)
+                    && TransportsWidgetLowResConfigure.isNotUsed(activity, myFavori)) {
                 TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();

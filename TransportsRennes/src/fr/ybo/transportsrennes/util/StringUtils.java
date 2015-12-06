@@ -21,8 +21,4 @@ final class StringUtils {
 	private StringUtils() {
 	}
 
-	public static boolean isNotBlank(final CharSequence string) {
-		return string != null && string.length() > 0;
-	}
-
 }

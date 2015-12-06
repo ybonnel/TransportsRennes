@@ -77,8 +77,6 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 		super.onPostExecute(result);
 	}
 
-	boolean isCancelled;
-
 	/*
 	 * (non-Javadoc)
 	 * 

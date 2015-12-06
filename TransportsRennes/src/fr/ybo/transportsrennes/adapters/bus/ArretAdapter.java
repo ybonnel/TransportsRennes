@@ -160,7 +160,7 @@ public class ArretAdapter extends CursorAdapter {
 
     private final Map<String, List<Arret>> mapDetailCorrespondances = new HashMap<String, List<Arret>>();
 
-    private void construireRelativeLayouts(final List<Arret> arrets, final LinearLayout detailCorrespondance) {
+    private void construireRelativeLayouts(final Iterable<Arret> arrets, final ViewGroup detailCorrespondance) {
         for (final Arret arret : arrets) {
             final RelativeLayout relativeLayout = getRelativeLayout();
             final RelativeLayoutHolder holder = (RelativeLayoutHolder) relativeLayout.getTag();
@@ -180,7 +180,7 @@ public class ArretAdapter extends CursorAdapter {
         }
     }
 
-    private void construireCorrespondance(final LinearLayout detailCorrespondance, final String arretId) {
+    private void construireCorrespondance(final ViewGroup detailCorrespondance, final String arretId) {
         if (mapDetailCorrespondances.containsKey(arretId)) {
             construireRelativeLayouts(mapDetailCorrespondances.get(arretId), detailCorrespondance);
         } else {

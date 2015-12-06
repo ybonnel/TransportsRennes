@@ -13,9 +13,6 @@
  */
 package fr.ybo.transportscommun.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import android.util.Log;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 
@@ -40,33 +37,6 @@ public class LogYbo {
 
     public void erreur(final String message) {
         Log.e(PREFIX_TAG, tag + " : " + message);
-    }
-
-    public void warn(final String message) {
-        Log.w(PREFIX_TAG, tag + " : " + message);
-    }
-
-    private Map<String, Long> mapStartTimes;
-
-    private Map<String, Long> getMapStartTimes() {
-        if (mapStartTimes == null) {
-            mapStartTimes = new HashMap<String, Long>(5);
-        }
-        return mapStartTimes;
-    }
-
-    public void startChrono(final String message) {
-		if (AbstractTransportsApplication.isDebug()) {
-            getMapStartTimes().put(message, System.nanoTime());
-        }
-    }
-
-    public void stopChrono(final String message) {
-		if (AbstractTransportsApplication.isDebug()) {
-            final long elapsedTime = (System.nanoTime() - getMapStartTimes().remove(message)) / 1000;
-            Log.d(PREFIX_TAG, tag + " : "
-                    + message + '\t' + elapsedTime + "\tus");
-        }
     }
 
 

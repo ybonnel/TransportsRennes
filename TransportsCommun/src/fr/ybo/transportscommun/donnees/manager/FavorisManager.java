@@ -1,6 +1,7 @@
 package fr.ybo.transportscommun.donnees.manager;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -88,7 +89,7 @@ public final class FavorisManager {
 		}
 	}
 
-	private static void closeBufReader(final BufferedReader bufReader) {
+	private static void closeBufReader(final Closeable bufReader) {
 		try {
 			bufReader.close();
 		} catch (final IOException ignore) {

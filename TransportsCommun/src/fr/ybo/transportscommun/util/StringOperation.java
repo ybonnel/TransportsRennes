@@ -356,7 +356,7 @@ public final class StringOperation {
 	 * @return index du 1er caractère à transformer, -1 si aucun caractère n'est
 	 *         a transformer
 	 */
-	private static int scan(final String chaine) {
+	private static int scan(final CharSequence chaine) {
 		/**
 		 * ALPHA_NUM WITHOUT_SPECIALS_CHARS LOWER_CASE UPPER_CASE
 		 * WITHOUT_ACCENTS

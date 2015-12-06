@@ -37,7 +37,7 @@ public class ListTwitter extends ListFragment {
 
 			private boolean erreurReseau;
 
-			private final List<MessageTwitter> messagesTmp = new ArrayList<MessageTwitter>();
+			private final Collection<MessageTwitter> messagesTmp = new ArrayList<MessageTwitter>();
 
 			@Override
 			protected Void doInBackground(final Void... params) {

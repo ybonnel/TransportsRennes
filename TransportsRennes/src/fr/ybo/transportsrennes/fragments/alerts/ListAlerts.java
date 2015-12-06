@@ -2,6 +2,7 @@ package fr.ybo.transportsrennes.fragments.alerts;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class ListAlerts extends ListFragment {
 
 			private boolean erreurReseau;
 
-			private final List<Alert> alertsTmp = new ArrayList<Alert>();
+			private final Collection<Alert> alertsTmp = new ArrayList<Alert>();
 
 			@Override
 			protected Void doInBackground(final Void... params) {

@@ -17,8 +17,8 @@
 package fr.ybo.transportsbordeaux.util;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -63,7 +63,7 @@ public final class Version {
 	 * @param reader
 	 *            Reader
 	 */
-	private static void closeReader(final Reader reader) {
+	private static void closeReader(final Closeable reader) {
 		if (reader != null) {
 			try {
 				reader.close();

@@ -26,15 +26,6 @@ class KeolisException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Constructeur avec message.
-     *
-     * @param message message.
-     */
-    KeolisException(final String message) {
-        super(message);
-    }
-
-    /**
      * Constructeur avec message et exception.
      *
      * @param cause   exception.

@@ -24,7 +24,7 @@ public final class Formatteur {
 	private Formatteur() {
 	}
 
-	public static String formatterChaine(final String chaine) {
+	public static CharSequence formatterChaine(final String chaine) {
 		final StringBuilder nomLongFormateBuilder = new StringBuilder();
 		for (final String champ : chaine.replaceAll("/", "-").split(" ")) {
 			for (final String champ2 : champ.split("\\(")) {
@@ -50,7 +50,7 @@ public final class Formatteur {
 		return nomLongFormate;
 	}
 
-	public static String formatterCalendar(final Context context, final int prochainDepart, final int now) {
+	public static CharSequence formatterCalendar(final Context context, final int prochainDepart, final int now) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		final int tempsEnMinutes = prochainDepart - now;
 		if (tempsEnMinutes < 0) {

@@ -19,7 +19,6 @@ import fr.ybo.database.annotation.PrimaryKey;
 import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
-import fr.ybo.transportscommun.AbstractTransportsApplication;
 
 @FichierCsv("directions.txt")
 @Entity
@@ -33,12 +32,4 @@ public class Direction {
     public String direction;
 
 
-    private static final class DirectionSelectHolder {
-        private static final Direction directionSelect = new Direction();
-    }
-
-    public static String getDirectionById(final int id) {
-        DirectionSelectHolder.directionSelect.id = id;
-		return AbstractTransportsApplication.getDataBaseHelper().selectSingle(DirectionSelectHolder.directionSelect).direction;
-    }
 }

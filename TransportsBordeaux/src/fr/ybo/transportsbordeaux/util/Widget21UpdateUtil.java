@@ -99,7 +99,7 @@ public final class Widget21UpdateUtil {
         }
     }
 
-    private static String formatterCalendar(final int prochainDepart) {
+    private static CharSequence formatterCalendar(final int prochainDepart) {
         final StringBuilder stringBuilder = new StringBuilder();
 
         int heures = prochainDepart / 60;

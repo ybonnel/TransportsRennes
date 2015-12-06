@@ -123,7 +123,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		return convertView1;
 	}
 
-	private String formatterCalendar(final int prochainDepart, final int now, final int secondesNow, final Integer secondes, final boolean accurate) {
+	private CharSequence formatterCalendar(final int prochainDepart, final int now, final int secondesNow, final Integer secondes, final boolean accurate) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		final int secondesNullSafe = secondes == null ? 0 : secondes;
 		final int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);

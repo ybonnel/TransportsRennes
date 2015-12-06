@@ -28,7 +28,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.ListView;
 import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
@@ -89,7 +89,7 @@ public class TransportsWidget21Configure extends ListActivity {
 			public void onItemClick(final AdapterView<?> parent, final View view,
 					final int position, final long id) {
 
-				final CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
+				final Checkable checkBox = (Checkable) view.findViewById(R.id.checkbox);
 				if (checkBox.isChecked()) {
 					adapter.setFavoriSelectionne(null);
 					checkBox.setChecked(false);

@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A <em>really</em> dumb implementation of the {@link Menu} interface, that's only useful for our
@@ -82,7 +83,7 @@ class SimpleMenu implements Menu {
         return item;
     }
 
-    private static int findInsertIndex(final ArrayList<? extends MenuItem> items, final int order) {
+    private static int findInsertIndex(final List<? extends MenuItem> items, final int order) {
         for (int i = items.size() - 1; i >= 0; i--) {
             final MenuItem item = items.get(i);
             if (item.getOrder() <= order) {

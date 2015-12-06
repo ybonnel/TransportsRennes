@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
@@ -82,7 +83,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 	protected Dialog onCreateDialog(final int id) {
 		if (id == AJOUTER_GROUPE_DIALOG_ID) {
 			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-			final EditText input = new EditText(this);
+			final TextView input = new EditText(this);
 			alert.setView(input);
 			alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
 				@Override

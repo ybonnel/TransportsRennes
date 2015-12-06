@@ -20,16 +20,12 @@ public class TcbException extends RuntimeException {
      */
     private static final long serialVersionUID = 1L;
 
-    public TcbException() {
-        super();
-    }
-
     public TcbException(final String pArg0, final Throwable pArg1) {
         super(pArg0, pArg1);
     }
 
     public TcbException(final String pArg0) {
-        super("Impossible de créer la base sur la carte.");
+        super(pArg0);
     }
 
     public TcbException(final Throwable pArg0) {

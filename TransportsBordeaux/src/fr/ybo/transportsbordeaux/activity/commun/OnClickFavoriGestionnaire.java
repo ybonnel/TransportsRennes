@@ -19,6 +19,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21Configure;
@@ -34,7 +35,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
     private final String nomArret;
     private final String direction;
     private final ArretFavori myFavori = new ArretFavori();
-	private final Activity activity;
+    private final Activity activity;
 
     public OnClickFavoriGestionnaire(final Activity activity, final Ligne ligne, final String arretId, final String nomArret, final String direction) {
         this.ligne = ligne;
@@ -42,7 +43,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
         this.direction = direction;
         myFavori.arretId = arretId;
         myFavori.ligneId = ligne.id;
-		this.activity = activity;
+        this.activity = activity;
     }
 
 
@@ -50,12 +51,11 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
     private void chargerLigne() {
 
-		myProgressDialog = ProgressDialog.show(activity, "",
-				activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
+        myProgressDialog = ProgressDialog.show(activity, "",
+                activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
         new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurLigneNonTrouvee;
             private boolean erreurNoSpaceLeft;
 
             @Override
@@ -66,10 +66,10 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             @Override
             protected Void doInBackground(final Void... pParams) {
                 try {
-					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
+                    UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
                 } catch (final NoSpaceLeftException e) {
                     erreurNoSpaceLeft = true;
-				}
+                }
                 return null;
             }
 
@@ -77,13 +77,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 myProgressDialog.dismiss();
-				if (erreurLigneNonTrouvee) {
-					Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
-							Toast.LENGTH_LONG).show();
-					activity.finish();
-				} else if (erreurNoSpaceLeft) {
-					Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
-					activity.finish();
+                if (erreurNoSpaceLeft) {
+                    Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+                    activity.finish();
                 }
             }
 
@@ -104,21 +100,21 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             myFavori.nomLong = ligne.nomLong;
             myFavori.direction = direction;
             myFavori.nomArret = nomArret;
-			myFavori.macroDirection = 0;
-			myFavori.macroDirection = 0;
+            myFavori.macroDirection = 0;
+            myFavori.macroDirection = 0;
             TransportsBordeauxApplication.getDataBaseHelper().insert(myFavori);
             imageView.setImageResource(android.R.drawable.btn_star_big_on);
             imageView.invalidate();
         } else {
 
             // Supression d'un favori.
-			if (TransportsWidget11Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidget21Configure.isNotUsed(activity, myFavori)) {
+            if (TransportsWidget11Configure.isNotUsed(activity, myFavori)
+                    && TransportsWidget21Configure.isNotUsed(activity, myFavori)) {
                 TransportsBordeauxApplication.getDataBaseHelper().delete(myFavori);
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();
             } else {
-				Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
             }
 
             // Supression d'un favori.

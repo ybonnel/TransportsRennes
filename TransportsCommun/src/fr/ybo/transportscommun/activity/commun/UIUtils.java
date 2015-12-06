@@ -41,7 +41,4 @@ public final class UIUtils {
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public static boolean isHoneycombTablet(final Context context) {
-        return isHoneycomb() && isTablet(context);
-    }
 }

@@ -33,7 +33,7 @@ public class StationsFavorisShortcutPicker extends BaseSimpleActivity {
 
     private void setupShortcut() {
         // First, set up the shortcut intent.
-        final Intent shortcutIntent = new Intent(this, ListStationsFavoris.class);
+        final Parcelable shortcutIntent = new Intent(this, ListStationsFavoris.class);
 
         // Then, set up the container intent (the response to the caller)
         final Intent intent = new Intent();

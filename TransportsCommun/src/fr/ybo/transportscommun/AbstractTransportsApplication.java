@@ -13,9 +13,9 @@
  */
 package fr.ybo.transportscommun;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -80,7 +80,7 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	protected static List<CoupleResourceFichier> RESOURCES_PRINCIPALE;
 
-	public static List<CoupleResourceFichier> getResourcesPrincipale() {
+	public static Iterable<CoupleResourceFichier> getResourcesPrincipale() {
 		return RESOURCES_PRINCIPALE;
 	}
 
@@ -129,9 +129,9 @@ public abstract class AbstractTransportsApplication extends Application {
 
 	protected abstract void postCreate();
 
-	private static final Set<String> lignesWithAlerts = new HashSet<String>();
+	private static final Collection<String> lignesWithAlerts = new HashSet<String>();
 
-	protected static Set<String> getLignesWithAlerts() {
+	protected static Collection<String> getLignesWithAlerts() {
 		return lignesWithAlerts;
 	}
 

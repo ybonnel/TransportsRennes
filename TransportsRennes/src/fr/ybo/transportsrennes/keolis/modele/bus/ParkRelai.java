@@ -44,10 +44,6 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
      */
     public Integer carParkCapacity;
     /**
-     * lastupdate.
-     */
-    public String lastupdate;
-    /**
      * state.
      */
     public Integer state;
@@ -87,4 +83,9 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
 	public int getState() {
 		return state;
 	}
+
+    @Override
+    public Integer getDistance() {
+        return distance;
+    }
 }

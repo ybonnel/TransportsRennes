@@ -158,7 +158,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 				}
 			}
 
-			private void majParkings(final List<T> parkingsTmp) {
+			private void majParkings(final Collection<T> parkingsTmp) {
 				parkings.clear();
 				if (parkingsIntent == null) {
 					parkings.addAll(parkingsTmp);

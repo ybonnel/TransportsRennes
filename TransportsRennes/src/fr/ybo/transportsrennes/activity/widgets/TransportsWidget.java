@@ -72,7 +72,7 @@ public class TransportsWidget extends AppWidgetProvider {
         if (TransportsRennesApplication.getDataBaseHelper() == null) {
             return;
         }
-        final ArrayList<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
+        final List<ArretFavori> favorisBdd = new ArrayList<ArretFavori>(favorisSelects.size());
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_arrets);
         for (final ArretFavori favoriSelect : favorisSelects) {
             final ArretFavori favoriBdd = TransportsRennesApplication.getDataBaseHelper().selectSingle(favoriSelect);

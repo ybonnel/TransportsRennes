@@ -14,6 +14,7 @@
 package fr.ybo.transportsbordeaux.util;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
@@ -40,7 +41,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
 		this.arrets = arrets;
     }
 
-    private final MyFilter filter = new MyFilter();
+    private final Filter filter = new MyFilter();
 
     @Override
     public Filter getFilter() {
@@ -62,7 +63,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
                 } catch (final Exception ignore) {
                 }
 
-				final List<String> results = new ArrayList<String>();
+				final Collection<String> results = new ArrayList<String>();
 				
 				final String upper = StringOperation.sansAccents(constraint.toString().toUpperCase());
 				

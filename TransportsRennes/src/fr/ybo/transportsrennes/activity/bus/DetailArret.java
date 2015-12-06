@@ -16,6 +16,7 @@ package fr.ybo.transportsrennes.activity.bus;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -57,7 +58,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 
 	private LinearLayout infoBar;
 
-	private final List<Departure> departures = new ArrayList<Departure>();
+	private final Collection<Departure> departures = new ArrayList<Departure>();
 
 	private static class DetailArretConteneurComparator implements Comparator<DetailArretConteneur> {
 
@@ -89,7 +90,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 			if (result == null) {
 				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
 			} else {
-				final Set<Integer> secondsToUpdateTmp = new HashSet<Integer>();
+				final Collection<Integer> secondsToUpdateTmp = new HashSet<Integer>();
 				synchronized (departures) {
 					departures.clear();
 					for (final Departure departure : result.getDepartures()) {

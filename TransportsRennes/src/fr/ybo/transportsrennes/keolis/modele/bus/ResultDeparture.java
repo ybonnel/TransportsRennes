@@ -35,7 +35,7 @@ public class ResultDeparture {
 		this.apiTime = apiTime;
 	}
 
-	public List<Departure> getDepartures() {
+	public Iterable<Departure> getDepartures() {
 		return departures;
 	}
 

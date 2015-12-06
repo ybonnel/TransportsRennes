@@ -13,7 +13,6 @@
  */
 package fr.ybo.transportsrennes.util;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public final class WidgetUpdateUtil {
     private WidgetUpdateUtil() {
     }
 
-    public static void updateAppWidget(final Context context, final RemoteViews views, final ArrayList<ArretFavori> favoris,
+    public static void updateAppWidget(final Context context, final RemoteViews views, final List<ArretFavori> favoris,
                                        final Calendar calendar) {
 
         switch (favoris.size()) {

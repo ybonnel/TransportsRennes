@@ -72,4 +72,9 @@ public class Parking extends ObjetWithDistance implements Serializable, IParking
 		return 0;
 	}
 
+    @Override
+    public Integer getDistance() {
+        return distance;
+    }
+
 }

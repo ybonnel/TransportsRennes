@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsbordeaux.adapters.itineraires;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -23,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import fr.ybo.transportsbordeaux.R;
@@ -69,7 +69,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
         holder.arriveePieton.setText(context.getString(R.string.arrivee, SDF_HEURE.format(trajet.getEndTime())));
         holder.layoutTrajets.removeAllViews();
         for (final PortionTrajet portion : trajet.getPortions()) {
-            final RelativeLayout portionLayout = (RelativeLayout) inflater.inflate(R.layout.portion_trajet, null);
+            final View portionLayout = inflater.inflate(R.layout.portion_trajet, null);
             final int icone;
             final TextView directionTrajet = (TextView) portionLayout.findViewById(R.id.directionTrajet);
             if (portion.getMode().isOnStreetNonTransit()) {
@@ -91,7 +91,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
         return convertViewLocal;
     }
 
-    private static final SimpleDateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
+    private static final DateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 
     private static String formatHeure(final int time) {
         final StringBuilder stringBuilder = new StringBuilder();

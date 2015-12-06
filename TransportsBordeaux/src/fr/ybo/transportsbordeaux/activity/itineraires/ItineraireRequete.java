@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,8 +42,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
@@ -154,7 +153,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 showDialog(TIME_DIALOG_ID);
             }
         });
-        final Button boutonTerminer = (Button) findViewById(R.id.itineraireTermine);
+        final View boutonTerminer = findViewById(R.id.itineraireTermine);
         boutonTerminer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -164,7 +163,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         if (!locationUtil.activeGps()) {
             Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
         }
-        final CheckBox busCheckBox = (CheckBox) findViewById(R.id.busCheckBox);
+        final CompoundButton busCheckBox = (CompoundButton) findViewById(R.id.busCheckBox);
         busCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
@@ -175,7 +174,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 }
             }
         });
-        final CheckBox tramCheckBox = (CheckBox) findViewById(R.id.tramCheckBox);
+        final CompoundButton tramCheckBox = (CompoundButton) findViewById(R.id.tramCheckBox);
         tramCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
@@ -506,8 +505,8 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }.execute((Void) null);
     }
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     private void majTextViews() {
         dateItineraire.setText(DATE_FORMAT.format(calendar.getTime()));

@@ -10,6 +10,7 @@ import android.support.v4.app.ListFragment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.R;
@@ -115,7 +116,7 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 
 	private void createDialogAjoutGroupe() {
 		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		final EditText input = new EditText(this);
+		final TextView input = new EditText(this);
 		alert.setView(input);
 		alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
 			@Override

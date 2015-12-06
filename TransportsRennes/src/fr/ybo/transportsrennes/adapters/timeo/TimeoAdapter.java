@@ -39,14 +39,9 @@ public class TimeoAdapter extends ArrayAdapter<Arret> {
 
     private final List<Arret> arrets;
     private final LayoutInflater inflater;
-    private Calendar calendar;
-    private int now;
+    private final Calendar calendar;
+    private final int now;
     private final Context myContext;
-
-    public void setCalendar(final Calendar calendar) {
-        this.calendar = calendar;
-        now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-    }
 
     public TimeoAdapter(final Context context, final List<Arret> objects) {
 		super(context, R.layout.arrettimeo, objects);
