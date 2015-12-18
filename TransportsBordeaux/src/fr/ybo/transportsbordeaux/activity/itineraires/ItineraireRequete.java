@@ -243,7 +243,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             adresseArrivee = textArrivee.toString();
         }
         if ((adresseDepart == null || adresseArrivee == null)
-                && (locationUtil.getCurrentLocation() == null || locationUtil.getCurrentLocation().getAccuracy() > 50)) {
+                && (locationUtil.getCurrentBestLocation() == null || locationUtil.getCurrentBestLocation().getAccuracy() > 50)) {
             Toast.makeText(this, R.string.erreur_gpsPasPret, Toast.LENGTH_LONG).show();
         } else {
             geoCoderAdresse(adresseDepart, adresseArrivee);
@@ -418,15 +418,15 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             latitudeDepart = resultDepart.getGeometry().getLocation().getLat().doubleValue();
             longitudeDepart = resultDepart.getGeometry().getLocation().getLng().doubleValue();
         } else {
-            latitudeDepart = locationUtil.getCurrentLocation().getLatitude();
-            longitudeDepart = locationUtil.getCurrentLocation().getLongitude();
+            latitudeDepart = locationUtil.getCurrentBestLocation().getLatitude();
+            longitudeDepart = locationUtil.getCurrentBestLocation().getLongitude();
         }
         if (resultArrivee != null) {
             latitudeArrivee = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
             longitudeArrivee = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
         } else {
-            latitudeArrivee = locationUtil.getCurrentLocation().getLatitude();
-            longitudeArrivee = locationUtil.getCurrentLocation().getLongitude();
+            latitudeArrivee = locationUtil.getCurrentBestLocation().getLatitude();
+            longitudeArrivee = locationUtil.getCurrentBestLocation().getLongitude();
         }
         final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
                 calendar.getTime());

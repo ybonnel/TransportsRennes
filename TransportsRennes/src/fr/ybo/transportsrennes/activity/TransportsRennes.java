@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
@@ -77,7 +78,7 @@ public class TransportsRennes extends AccueilActivity {
 
 	private static final int DIALOG_A_PROPOS = 1;
 	private static final int DIALOG_UPGRADE = 2;
-
+	private static final Pattern DATE_GTFS = Pattern.compile("%DATE_GTFS%");
 	@Override
 	protected Dialog onCreateDialog(final int id) {
 		if (id == DIALOG_A_PROPOS) {
@@ -91,7 +92,7 @@ public class TransportsRennes extends AccueilActivity {
                     GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update));
 			final Spanned spanned = Html.fromHtml("<img src=\""
                     + R.drawable.approuve
-                    + "\"/>" + getString(R.string.dialogAPropos).replace("%DATE_GTFS%", dateGtfs),
+                    + "\"/>" + DATE_GTFS.matcher(getString(R.string.dialogAPropos)).replaceFirst(dateGtfs),
                     new Html.ImageGetter() {
                         @Override
                         public Drawable getDrawable(final String s) {

@@ -13,8 +13,6 @@
  */
 package fr.ybo.transportsbordeaux.adapters.alerts;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;

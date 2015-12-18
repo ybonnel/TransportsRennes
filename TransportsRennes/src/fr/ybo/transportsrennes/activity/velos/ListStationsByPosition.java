@@ -145,7 +145,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			@Override
 			protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
-					updateLocation(locationUtil.getCurrentLocation());
+					updateLocation(locationUtil.getCurrentBestLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 				super.onPostExecute(result);
@@ -180,7 +180,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				super.onPostExecute(result);
 				if (!isCancelled()) {
 					updateQuery(currentQuery);
-					updateLocation(locationUtil.getCurrentLocation());
+					updateLocation(locationUtil.getCurrentBestLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 			}

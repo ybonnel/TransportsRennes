@@ -502,7 +502,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
             stringBuilder.append('0');
         }
         stringBuilder.append(minutesChaine);
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
     private CharSequence formatterCalendar(final int tempsRestant) {
@@ -529,6 +529,6 @@ public abstract class AbstractDetailArret extends BaseListActivity {
             stringBuilder.append("0 ");
             stringBuilder.append(getString(R.string.minutes));
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 }

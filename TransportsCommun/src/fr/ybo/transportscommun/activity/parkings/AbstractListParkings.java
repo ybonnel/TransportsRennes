@@ -132,7 +132,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 			@Override
 			protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
-					updateLocation(locationUtil.getCurrentLocation());
+					updateLocation(locationUtil.getCurrentBestLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 				super.onPostExecute(result);
@@ -188,7 +188,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 			protected void onPostExecute(final Void result) {
 				if (!isCancelled()) {
 					updateQuery(currentQuery);
-					updateLocation(locationUtil.getCurrentLocation());
+					updateLocation(locationUtil.getCurrentBestLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
 				super.onPostExecute(result);

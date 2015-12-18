@@ -167,7 +167,7 @@ public abstract class AbstractListArretByPosition extends BaseListActivity imple
             @Override
             protected void onPostExecute(final Void result) {
                 metterAJourListeArrets(currentQuery);
-                updateLocation(locationUtil.getCurrentLocation());
+                updateLocation(locationUtil.getCurrentBestLocation());
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
                 try {
                     myProgressDialog.dismiss();

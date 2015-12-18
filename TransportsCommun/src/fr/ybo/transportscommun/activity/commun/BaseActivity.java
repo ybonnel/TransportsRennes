@@ -92,10 +92,10 @@ public class BaseActivity {
 	}
 
 	public abstract static class BaseFragmentActivity extends FragmentActivity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+		final ActivityHelper activityHelper = ActivityHelper.createInstance(this);
 
 		protected ActivityHelper getActivityHelper() {
-			return mActivityHelper;
+			return activityHelper;
 		}
 
 		@Override
@@ -106,28 +106,28 @@ public class BaseActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(final MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+			return BaseActivity.onOptionsItemSelected(item, activityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(final Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
+			return activityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
 		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
 			if (this instanceof AccueilActivity) {
-				mActivityHelper.setupHomeActivity();
+				activityHelper.setupHomeActivity();
 			} else {
-				mActivityHelper.setupSubActivity();
+				activityHelper.setupSubActivity();
 			}
 		}
 
 	}
 
 	public abstract static class BaseTabActivity extends TabActivity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+		final ActivityHelper activityHelper = ActivityHelper.createInstance(this);
 
 		@Override
 		protected void onCreate(final Bundle savedInstanceState) {
@@ -137,27 +137,27 @@ public class BaseActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(final MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+			return BaseActivity.onOptionsItemSelected(item, activityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(final Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
+			return activityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
 		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			mActivityHelper.setupSubActivity();
+			activityHelper.setupSubActivity();
 		}
 
 	}
 
 	public abstract static class BaseSimpleActivity extends Activity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+		final ActivityHelper activityHelper = ActivityHelper.createInstance(this);
 
 		protected ActivityHelper getActivityHelper() {
-			return mActivityHelper;
+			return activityHelper;
 		}
 
 		@Override
@@ -168,26 +168,26 @@ public class BaseActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(final MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+			return BaseActivity.onOptionsItemSelected(item, activityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(final Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
+			return activityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
 		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			mActivityHelper.setupSubActivity();
+			activityHelper.setupSubActivity();
 		}
 	}
 
 	public abstract static class BasePreferenceActivity extends PreferenceActivity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+		final ActivityHelper activityHelper = ActivityHelper.createInstance(this);
 
 		protected ActivityHelper getActivityHelper() {
-			return mActivityHelper;
+			return activityHelper;
 		}
 
 		@Override
@@ -198,26 +198,26 @@ public class BaseActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(final MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+			return BaseActivity.onOptionsItemSelected(item, activityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(final Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
+			return activityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
 		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			mActivityHelper.setupSubActivity();
+			activityHelper.setupSubActivity();
 		}
 	}
 
 	public abstract static class BaseListActivity extends ListActivity {
-		final ActivityHelper mActivityHelper = ActivityHelper.createInstance(this);
+		final ActivityHelper activityHelper = ActivityHelper.createInstance(this);
 
 		protected ActivityHelper getActivityHelper() {
-			return mActivityHelper;
+			return activityHelper;
 		}
 
 		@Override
@@ -228,18 +228,18 @@ public class BaseActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(final MenuItem item) {
-			return BaseActivity.onOptionsItemSelected(item, mActivityHelper, this) || super.onOptionsItemSelected(item);
+			return BaseActivity.onOptionsItemSelected(item, activityHelper, this) || super.onOptionsItemSelected(item);
 		}
 
 		@Override
 		public boolean onCreateOptionsMenu(final Menu menu) {
-			return mActivityHelper.onCreateOptionsMenu(menu);
+			return activityHelper.onCreateOptionsMenu(menu);
 		}
 
 		@Override
 		protected void onPostCreate(final Bundle savedInstanceState) {
 			super.onPostCreate(savedInstanceState);
-			mActivityHelper.setupSubActivity();
+			activityHelper.setupSubActivity();
 		}
 	}
 

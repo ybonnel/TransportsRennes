@@ -137,7 +137,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
             protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
 				if (!isCancelled()) {
-					updateLocation(locationUtil.getCurrentLocation());
+					updateLocation(locationUtil.getCurrentBestLocation());
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				}
             }

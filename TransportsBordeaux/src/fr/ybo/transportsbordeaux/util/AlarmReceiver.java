@@ -42,23 +42,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		new ContextVoidVoidAsyncTask().execute(context);
     }
 
-	private static void verifVersion(final Context context) {
-		final String result = Version.getMarketVersion();
 
-		LOG_YBO.debug("Version Market : " + result);
-		LOG_YBO.debug("Version Courante : " + Version.getVersionCourante(context.getApplicationContext()));
-		if (result != null && result.length() == 5 && result.compareTo(Version.getVersionCourante(context.getApplicationContext())) > 0) {
-			final String lastVersion =
-					PreferenceManager.getDefaultSharedPreferences(context).getString("TransportsBordeauxVersion", null);
-			LOG_YBO.debug("Last Version : " + lastVersion);
-			if (!result.equals(lastVersion)) {
-				final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-				editor.putString("TransportsBordeauxVersion", result);
-				editor.commit();
-				createNotification(context, result);
-			}
-		}
-	}
 
     private static void createNotification(final Context context, final String nouvelleVersion) {
         final int icon = R.drawable.icon;
@@ -90,6 +74,24 @@ public class AlarmReceiver extends BroadcastReceiver {
         protected Void doInBackground(final Context... params) {
             verifVersion(params[0]);
             return null;
+        }
+
+        private static void verifVersion(final Context context) {
+            final String result = Version.getMarketVersion();
+
+            LOG_YBO.debug("Version Market : " + result);
+            LOG_YBO.debug("Version Courante : " + Version.getVersionCourante(context.getApplicationContext()));
+            if (result != null && result.length() == 5 && result.compareTo(Version.getVersionCourante(context.getApplicationContext())) > 0) {
+                final String lastVersion =
+                        PreferenceManager.getDefaultSharedPreferences(context).getString("TransportsBordeauxVersion", null);
+                LOG_YBO.debug("Last Version : " + lastVersion);
+                if (!result.equals(lastVersion)) {
+                    final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+                    editor.putString("TransportsBordeauxVersion", result);
+                    editor.commit();
+                    createNotification(context, result);
+                }
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import fr.ybo.transportscommun.util.Formatteur;
 
@@ -32,6 +33,15 @@ import fr.ybo.transportscommun.util.Formatteur;
  * @author ybonnel
  */
 public class Alert implements Serializable {
+
+
+    private static final Pattern NSBP1 = Pattern.compile(" &nbsp;");
+    private static final Pattern NSBP2 = Pattern.compile("&nbsp; ");
+    private static final Pattern NSBP3 = Pattern.compile(" &nbsp;");
+    private static final Pattern NSBP4 = Pattern.compile("&nbsp; ");
+    private static final Pattern NSBP5 = Pattern.compile("&nbsp;&nbsp;");
+    private static final Pattern NSBP6 = Pattern.compile("&nbsp;");
+
 
     public Alert() {
     }
@@ -81,9 +91,12 @@ public class Alert implements Serializable {
 		if (detail == null) {
 			return "";
 		}
-        final String detailFormatte =
-                detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
-                        .replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
+        final String detail1 = NSBP1.matcher(detail).replaceAll("&nbsp;");
+        final String detail2 = NSBP2.matcher(detail1).replaceAll("&nbsp;");
+        final String detail3 = NSBP3.matcher(detail2).replaceAll("&nbsp;");
+        final String detail4 = NSBP4.matcher(detail3).replaceAll("&nbsp;");
+        final String detail5 = NSBP5.matcher(detail4).replaceAll("&nbsp;");
+        final String detailFormatte = NSBP6.matcher(detail5).replaceAll("&nbsp;");
         final StringBuilder resultat = new StringBuilder();
         char carOld = '\0';
         for (final char car : detailFormatte.toCharArray()) {

@@ -32,34 +32,34 @@ class SimpleMenuItem implements MenuItem {
 
     private final SimpleMenu mMenu;
 
-    private final int mId;
-    private final int mOrder;
-    private CharSequence mTitle;
+    private final int itemId;
+    private final int order;
+    private CharSequence title;
     private CharSequence mTitleCondensed;
     private Drawable mIconDrawable;
     private int mIconResId;
-    private boolean mEnabled = true;
+    private boolean enabled = true;
 
     SimpleMenuItem(final SimpleMenu menu, final int id, final int order, final CharSequence title) {
         mMenu = menu;
-        mId = id;
-        mOrder = order;
-        mTitle = title;
+        itemId = id;
+        this.order = order;
+        this.title = title;
     }
 
     @Override
     public int getItemId() {
-        return mId;
+        return itemId;
     }
 
     @Override
     public int getOrder() {
-        return mOrder;
+        return order;
     }
 
     @Override
     public MenuItem setTitle(final CharSequence title) {
-        mTitle = title;
+        this.title = title;
         return this;
     }
 
@@ -70,7 +70,7 @@ class SimpleMenuItem implements MenuItem {
 
     @Override
     public CharSequence getTitle() {
-        return mTitle;
+        return title;
     }
 
     @Override
@@ -81,7 +81,7 @@ class SimpleMenuItem implements MenuItem {
 
     @Override
     public CharSequence getTitleCondensed() {
-        return mTitleCondensed != null ? mTitleCondensed : mTitle;
+        return mTitleCondensed != null ? mTitleCondensed : title;
     }
 
    @Override
@@ -113,13 +113,13 @@ class SimpleMenuItem implements MenuItem {
 
     @Override
     public MenuItem setEnabled(final boolean enabled) {
-        mEnabled = enabled;
+        this.enabled = enabled;
         return this;
     }
 
     @Override
     public boolean isEnabled() {
-        return mEnabled;
+        return enabled;
     }
 
     // No-op operations. We use no-ops to allow inflation from menu XML.

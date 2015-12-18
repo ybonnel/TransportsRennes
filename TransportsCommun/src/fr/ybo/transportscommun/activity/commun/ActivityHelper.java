@@ -210,10 +210,10 @@ public class ActivityHelper {
     /**
      * Adds an action bar button to the compatibility action bar (on phones).
      */
-    private View addActionButtonCompat(final int id, final Drawable icon, final CharSequence title, final View.OnClickListener clickListener) {
+    private void addActionButtonCompat(final int id, final Drawable icon, final CharSequence title, final View.OnClickListener clickListener) {
         final ViewGroup actionBar = getActionBarCompat();
         if (actionBar == null) {
-            return null;
+            return ;
         }
 
         // Create the separator
@@ -235,7 +235,5 @@ public class ActivityHelper {
         actionBar.addView(separator);
 
         actionBar.addView(actionButton);
-
-        return actionButton;
     }
 }

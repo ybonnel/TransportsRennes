@@ -35,23 +35,23 @@ import java.util.List;
  */
 class SimpleMenu implements Menu {
 
-    private final Context mContext;
-    private final Resources mResources;
+    private final Context context;
+    private final Resources resources;
 
     private final ArrayList<SimpleMenuItem> mItems;
 
     SimpleMenu(final Context context) {
-        mContext = context;
-        mResources = context.getResources();
+        this.context = context;
+        resources = context.getResources();
         mItems = new ArrayList<SimpleMenuItem>();
     }
 
     public Context getContext() {
-        return mContext;
+        return context;
     }
 
     public Resources getResources() {
-        return mResources;
+        return resources;
     }
 
     @Override
@@ -61,7 +61,7 @@ class SimpleMenu implements Menu {
 
     @Override
     public MenuItem add(final int titleRes) {
-        return addInternal(0, 0, mResources.getString(titleRes));
+        return addInternal(0, 0, resources.getString(titleRes));
     }
 
     @Override
@@ -71,7 +71,7 @@ class SimpleMenu implements Menu {
 
     @Override
     public MenuItem add(final int groupId, final int itemId, final int order, final int titleRes) {
-        return addInternal(itemId, order, mResources.getString(titleRes));
+        return addInternal(itemId, order, resources.getString(titleRes));
     }
 
     /**

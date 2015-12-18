@@ -13,6 +13,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
   -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge >
     <LinearLayout style="@style/ActionBarCompat" />
 </merge>

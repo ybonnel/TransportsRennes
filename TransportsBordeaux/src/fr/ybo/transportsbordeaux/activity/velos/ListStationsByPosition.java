@@ -137,7 +137,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			@Override
 			protected void onPostExecute(final Void result) {
 				super.onPostExecute(result);
-				updateLocation(locationUtil.getCurrentLocation());
+				updateLocation(locationUtil.getCurrentBestLocation());
 			}
 		}.execute();
 		if (!locationUtil.activeGps()) {
@@ -189,7 +189,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			@Override
 			protected void onPostExecute(final Void result) {
 				updateQuery(currentQuery);
-				updateLocation(locationUtil.getCurrentLocation());
+				updateLocation(locationUtil.getCurrentBestLocation());
 				super.onPostExecute(result);
 			}
 		}.execute();

@@ -42,7 +42,7 @@ public class LocationUtil implements LocationListener {
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public Location getCurrentLocation() {
+    public Location getCurrentBestLocation() {
         return currentBestLocation;
     }
 
