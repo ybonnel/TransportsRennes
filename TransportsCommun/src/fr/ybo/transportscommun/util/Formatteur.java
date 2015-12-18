@@ -27,11 +27,11 @@ public final class Formatteur {
 	private Formatteur() {
 	}
 
-	private static Pattern SLASH = Pattern.compile("/");
-	private static Pattern PIPE = Pattern.compile("\\|");
-	private static Pattern DOUBLE_SPACE = Pattern.compile("  ");
+	private static final Pattern SLASH = Pattern.compile("/");
+	private static final Pattern PIPE = Pattern.compile("\\|");
+	private static final Pattern DOUBLE_SPACE = Pattern.compile("  ");
 
-	public static CharSequence formatterChaine(final String chaine) {
+	public static CharSequence formatterChaine(final CharSequence chaine) {
 		final StringBuilder nomLongFormateBuilder = new StringBuilder();
 		for (final String champ : SLASH.matcher(chaine).replaceAll("-").split(" ")) {
 			for (final String champ2 : champ.split("\\(")) {

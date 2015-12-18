@@ -200,9 +200,8 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
                     }
                 }
                 if (boundsBdd != null) {
-                    setBounds(new LatLngBounds(new LatLng(new BigDecimal(boundsBdd.getMinLatitude()),
-                            new BigDecimal(boundsBdd.getMinLongitude())), new LatLng(new BigDecimal(
-                            boundsBdd.getMaxLatitude()), new BigDecimal(boundsBdd.getMaxLongitude()))));
+                    setBounds(new LatLngBounds(new LatLng(BigDecimal.valueOf(boundsBdd.getMinLatitude()),
+							BigDecimal.valueOf(boundsBdd.getMinLongitude())), new LatLng(BigDecimal.valueOf(boundsBdd.getMaxLatitude()), BigDecimal.valueOf(boundsBdd.getMaxLongitude()))));
                 }
             } catch (final OpenTripPlannerException ignore) {
             }

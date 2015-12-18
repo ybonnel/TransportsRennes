@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -109,7 +110,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final VeloAdapter veloAdapter = (VeloAdapter) ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final ArrayAdapter<Station> veloAdapter = (ArrayAdapter<Station>) ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				final Station station = veloAdapter.getItem(position);
 				final String lat = Double.toString(station.getLatitude());
 				final String lon = Double.toString(station.getLongitude());
@@ -129,7 +130,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				final List<Station> stationsTmp = Keolis.getStations();
+				final Collection<Station> stationsTmp = Keolis.getStations();
 				if (isCancelled()) {
 					return;
 				}

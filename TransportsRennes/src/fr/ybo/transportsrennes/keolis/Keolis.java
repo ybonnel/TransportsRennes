@@ -114,13 +114,13 @@ public final class Keolis {
      * @throws ErreurReseau    en cas d'erreur réseau.
      * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
      */
-    private static <ObjetKeolis> List<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler)
+    private static <ObjetKeolis> Collection<ObjetKeolis> appelKeolis(final String url, final KeolisHandler<ObjetKeolis> handler)
             throws ErreurReseau {
         LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
         final long startTime = System.nanoTime() / 1000;
         final HttpClient httpClient = HttpUtils.getHttpClient();
         final HttpUriRequest httpPost = new HttpPost(url);
-        final Answer<?> answer;
+        final Answer<ObjetKeolis> answer;
         try {
             final HttpResponse reponse = httpClient.execute(httpPost);
             final ByteArrayOutputStream ostream = new ByteArrayOutputStream();
@@ -141,7 +141,7 @@ public final class Keolis {
         }
         final long elapsedTime = System.nanoTime() / 1000 - startTime;
         LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
-        return (List<ObjetKeolis>) answer.getData();
+        return answer.getData();
     }
 
     /**
@@ -161,7 +161,7 @@ public final class Keolis {
      * @return la liste des stations.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    private static List<Station> getStation(final String url) throws ErreurReseau {
+    private static Collection<Station> getStation(final String url) throws ErreurReseau {
         return appelKeolis(url, new GetStationHandler());
     }
 
@@ -174,11 +174,11 @@ public final class Keolis {
      */
     private static Station getStationByNumber(final String number) throws ErreurReseau {
         final ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
-        final List<Station> stations = getStation(getUrl(params));
+        final Collection<Station> stations = getStation(getUrl(params));
         if (stations.isEmpty()) {
             return null;
         }
-        return stations.get(0);
+        return stations.iterator().next();
     }
 
     /**
@@ -211,7 +211,7 @@ public final class Keolis {
      * @return la listes des stations.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    public static List<Station> getStations() throws ErreurReseau {
+    public static Collection<Station> getStations() throws ErreurReseau {
         return getStation(getUrl(COMMANDE_STATIONS));
     }
 
@@ -219,7 +219,7 @@ public final class Keolis {
      * @return les parks relais.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    public static List<ParkRelai> getParkRelais() throws ErreurReseau {
+    public static Collection<ParkRelai> getParkRelais() throws ErreurReseau {
         return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
     }
 
@@ -227,7 +227,7 @@ public final class Keolis {
      * @return les points de ventes.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    public static List<PointDeVente> getPointDeVente() throws ErreurReseau {
+    public static Collection<PointDeVente> getPointDeVente() throws ErreurReseau {
         return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
     }
 
@@ -241,7 +241,7 @@ public final class Keolis {
 						new ParametreUrl("stop][", favori.arretId) };
 
 		final GetDeparturesHandler handler = new GetDeparturesHandler();
-		final List<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
+		final Collection<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
 		return new ResultDeparture(departures, handler.getDateApi());
 	}
 
@@ -250,24 +250,22 @@ public final class Keolis {
         final ParametreUrl[] params =
                 { new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId) };
 
-        final KeolisHandler handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
-        final List<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
+        final KeolisHandler<DepartureMetro> handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
+        final Collection<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
 
         final List<Departure> departures = new ArrayList<Departure>();
 
         if (!departuresMetro.isEmpty()) {
-            final DepartureMetro departureMetro = departuresMetro.get(0);
+            final DepartureMetro departureMetro = departuresMetro.iterator().next();
             if (departureMetro.getTime1() != null) {
                 final Departure departure = new Departure();
                 departure.setAccurate(true);
-                departure.setHeadSign(favori.direction);
                 departure.setTime(departureMetro.getTime1());
                 departures.add(departure);
             }
             if (departureMetro.getTime2() != null) {
                 final Departure departure = new Departure();
                 departure.setAccurate(true);
-                departure.setHeadSign(favori.direction);
                 departure.setTime(departureMetro.getTime2());
                 departures.add(departure);
             }

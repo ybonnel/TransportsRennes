@@ -81,7 +81,6 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 		super.startElement(uri, localName, qName, attributes);
 		if (DEPARTURE.equals(localName)) {
 			currentObjetKeolis.setAccurate("1".equals(attributes.getValue("accurate")));
-			currentObjetKeolis.setHeadSign(attributes.getValue("headsign"));
 		}
 		if (DATA.equals(localName)) {
 			dateApi = Calendar.getInstance();

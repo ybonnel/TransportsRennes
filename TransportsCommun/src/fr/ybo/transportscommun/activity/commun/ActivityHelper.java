@@ -45,7 +45,7 @@ public class ActivityHelper {
     final Activity mActivity;
 
     /**
-     * Factory method for creating {@link ActivityHelper} objects for a given
+     * Factory method for creating  objects for a given
      * activity. Depending on which device the app is running, either a basic
      * helper or Honeycomb-specific helper will be returned.
      */

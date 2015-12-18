@@ -14,6 +14,7 @@
 package fr.ybo.transportsrennes.activity.pointsdevente;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +26,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -103,7 +105,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-                final PointDeVenteAdapter adapter = (PointDeVenteAdapter) ((AdapterView<ListAdapter>) adapterView)
+                final ArrayAdapter<PointDeVente> adapter = (ArrayAdapter<PointDeVente>) ((AdapterView<ListAdapter>) adapterView)
                         .getAdapter();
                 final PointDeVente pointDeVente = adapter.getItem(position);
                 final String lat = Double.toString(pointDeVente.getLatitude());
@@ -119,7 +121,7 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
             @Override
             protected void myDoBackground() throws ErreurReseau {
-                final List<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? Keolis.getPointDeVente()
+                final Collection<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? Keolis.getPointDeVente()
                         : pointsDeVenteIntent);
 				if (isCancelled()) {
 					return;

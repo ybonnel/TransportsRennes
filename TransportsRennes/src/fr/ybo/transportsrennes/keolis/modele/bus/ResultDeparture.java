@@ -17,6 +17,7 @@
 package fr.ybo.transportsrennes.keolis.modele.bus;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -25,11 +26,11 @@ import java.util.List;
  */
 public class ResultDeparture {
 
-	private final List<Departure> departures;
+	private final Collection<Departure> departures;
 
 	private final Calendar apiTime;
 
-	public ResultDeparture(final List<Departure> departures, final Calendar apiTime) {
+	public ResultDeparture(final Collection<Departure> departures, final Calendar apiTime) {
 		super();
 		this.departures = departures;
 		this.apiTime = apiTime;

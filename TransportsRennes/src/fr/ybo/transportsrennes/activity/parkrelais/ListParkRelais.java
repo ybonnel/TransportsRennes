@@ -13,6 +13,7 @@
  */
 package fr.ybo.transportsrennes.activity.parkrelais;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.ybo.transportscommun.activity.parkings.AbstractListParkings;
@@ -42,7 +43,7 @@ public class ListParkRelais extends AbstractListParkings<ParkRelai> {
 
 	@Override
 	protected List<ParkRelai> getParkings() throws ErreurReseau {
-		return Keolis.getParkRelais();
+		return new ArrayList<ParkRelai>(Keolis.getParkRelais());
 	}
 
 	@Override

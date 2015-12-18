@@ -22,43 +22,41 @@ import java.util.Calendar;
 public class Departure implements Serializable {
 
 
-	private boolean accurate;
-	private String headSign;
-	private Calendar time;
+    private boolean accurate;
+    private Calendar time;
 
-	public boolean isAccurate() {
-		return accurate;
-	}
+    public boolean isAccurate() {
+        return accurate;
+    }
 
-	public void setAccurate(final boolean accurate) {
-		this.accurate = accurate;
-	}
+    public void setAccurate(final boolean accurate) {
+        this.accurate = accurate;
+    }
 
-	public void setHeadSign(final String headSign) {
-		this.headSign = headSign;
-	}
+    public Calendar getTime() {
+        return time;
+    }
 
-	public Calendar getTime() {
-		return time;
-	}
+    public void setTime(final Calendar time) {
+        this.time = time;
+    }
 
-	public void setTime(final Calendar time) {
-		this.time = time;
-	}
+    private int horaire = -1;
 
-	private int horaire = -1;
-
-	public int getHoraire() {
-		if (horaire == -1) {
-			horaire = time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
-		}
-		return horaire;
-	}
-
-	@Override
-	public String toString() {
-		return "Departure [accurate=" + accurate + ", headSign=" + headSign + ", time=" + time.getTime() + ']';
-	}
+    public int getHoraire() {
+        if (horaire == -1) {
+            horaire = time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
+        }
+        return horaire;
+    }
 
 
+    @Override
+    public String toString() {
+        return "Departure{" +
+                "accurate=" + accurate +
+                ", time=" + time +
+                ", horaire=" + horaire +
+                '}';
+    }
 }

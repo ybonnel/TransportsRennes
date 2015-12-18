@@ -289,7 +289,8 @@ public abstract class AbstractLoadingActivity extends Activity {
 
 						@Override
 						public void run() {
-							loadingBar.setProgress((++ligneCourante) * 100 / nbLignesToLoad);
+							++ligneCourante;
+							loadingBar.setProgress((ligneCourante) * 100 / nbLignesToLoad);
 						}
 					});
 				}

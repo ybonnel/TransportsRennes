@@ -174,9 +174,8 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
             try {
                 final GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
                 if (metadata != null) {
-                    setBounds(new LatLngBounds(new LatLng(new BigDecimal(metadata.getMinLatitude()),
-                            new BigDecimal(metadata.getMinLongitude())), new LatLng(new BigDecimal(
-                            metadata.getMaxLatitude()), new BigDecimal(metadata.getMaxLongitude()))));
+                    setBounds(new LatLngBounds(new LatLng(BigDecimal.valueOf(metadata.getMinLatitude()),
+							BigDecimal.valueOf(metadata.getMinLongitude())), new LatLng(BigDecimal.valueOf(metadata.getMaxLatitude()), BigDecimal.valueOf(metadata.getMaxLongitude()))));
                 }
             } catch (final OpenTripPlannerException ignore) {
             }
