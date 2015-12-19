@@ -16,7 +16,6 @@ package fr.ybo.transportsrennes.keolis.modele.velos;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 /**
@@ -24,7 +23,7 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
  *
  * @author ybonnel
  */
-public class Station extends ObjetWithDistance implements Serializable, IStation {
+public class Station extends ObjetWithDistance implements Serializable {
     /**
      * Numéro de la station.
      */

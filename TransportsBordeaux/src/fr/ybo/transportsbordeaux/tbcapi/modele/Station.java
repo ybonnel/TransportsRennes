@@ -16,11 +16,10 @@ package fr.ybo.transportsbordeaux.tbcapi.modele;
 import java.io.Serializable;
 import java.util.Comparator;
 
-import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 
-public class Station extends ObjetWithDistance implements Serializable, IStation {
+public class Station extends ObjetWithDistance implements Serializable {
 	public int id;
     public String name;
     public double longitude;
