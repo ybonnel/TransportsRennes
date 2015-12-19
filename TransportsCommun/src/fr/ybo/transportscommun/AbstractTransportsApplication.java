@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.view.MenuItem;
@@ -55,19 +54,15 @@ public abstract class AbstractTransportsApplication extends Application {
 	}
 
 	private boolean isInPrincipalProcess() {
-		final PackageInfo packageinfo;
 		try {
-			packageinfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES);
-		} catch (final PackageManager.NameNotFoundException ex) {
-			return false;
-		}
-		final String processName = packageinfo.applicationInfo.processName;
-
-		for (final ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE))
-				.getRunningAppProcesses()) {
-			if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
-				return runningAppProcessInfo.processName.equals(processName);
+			final String processName = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES).applicationInfo.processName;
+			for (final ActivityManager.RunningAppProcessInfo runningAppProcessInfo : ((ActivityManager) getSystemService(ACTIVITY_SERVICE))
+					.getRunningAppProcesses()) {
+				if (runningAppProcessInfo.pid == android.os.Process.myPid()) {
+					return runningAppProcessInfo.processName.equals(processName);
+				}
 			}
+		} catch (final PackageManager.NameNotFoundException ex) {
 		}
 		return false;
 	}
@@ -92,10 +87,9 @@ public abstract class AbstractTransportsApplication extends Application {
 		debug = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
 				donnesSpecifiques.getApplicationName() + "_debug", false);
 		constructDatabase();
-		if (!isInPrincipalProcess()) {
-			return;
+		if (isInPrincipalProcess()) {
+			postCreate();
 		}
-		postCreate();
 	}
 
 	public static Theme getTheme(final Context context) {
