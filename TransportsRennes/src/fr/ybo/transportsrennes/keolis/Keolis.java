@@ -94,11 +94,11 @@ public final class Keolis {
      */
     private static final String COMMANDE_POS = "getpos";
 
-	private static final String COMMANDE_DEPARTURE = "getbusnextdepartures";
+    private static final String COMMANDE_DEPARTURE = "getbusnextdepartures";
 
     private static final String COMMANDE_DEPARTURE_METRO = "getmetronextdepartures";
 
-	private static final String VERSION_DEPARTURE = "2.2";
+    private static final String VERSION_DEPARTURE = "2.2";
 
     /**
      * Constructeur privé.
@@ -173,8 +173,7 @@ public final class Keolis {
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
     private static Station getStationByNumber(final String number) throws ErreurReseau {
-        final ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
-        final Collection<Station> stations = getStation(getUrl(params));
+        final Collection<Station> stations = getStation(getUrl(new ParametreUrl("station", "number"), new ParametreUrl("value", number)));
         if (stations.isEmpty()) {
             return null;
         }
@@ -231,24 +230,24 @@ public final class Keolis {
         return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
     }
 
-	public static ResultDeparture getDepartues(final ArretFavori favori) throws ErreurReseau {
+    public static ResultDeparture getDepartues(final ArretFavori favori) throws ErreurReseau {
         if ("a".equals(favori.nomCourt)) {
             return getDeparturesForMetro(favori);
         }
-		final ParametreUrl[] params =
-				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
-						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
-						new ParametreUrl("stop][", favori.arretId) };
+        final ParametreUrl[] params =
+                {new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
+                        new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
+                        new ParametreUrl("stop][", favori.arretId)};
 
-		final GetDeparturesHandler handler = new GetDeparturesHandler();
-		final Collection<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
-		return new ResultDeparture(departures, handler.getDateApi());
-	}
+        final GetDeparturesHandler handler = new GetDeparturesHandler();
+        final Collection<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
+        return new ResultDeparture(departures, handler.getDateApi());
+    }
 
     private static ResultDeparture getDeparturesForMetro(final ArretFavori favori) throws ErreurReseau {
-        final String arretId  = favori.arretId.substring(0, favori.arretId.length() - 1);
+        final String arretId = favori.arretId.substring(0, favori.arretId.length() - 1);
         final ParametreUrl[] params =
-                { new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId) };
+                {new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId)};
 
         final KeolisHandler<DepartureMetro> handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
         final Collection<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
@@ -281,18 +280,17 @@ public final class Keolis {
      * @return l'url.
      */
     private static String getUrl(final String commande) {
-		return getUrl(commande, VERSION);
-	}
+        return getUrl(commande, VERSION);
+    }
 
-	/**
-	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-	 * commande à exécuter.
-	 * 
-	 * @param commande
-	 *            commande à exécuter.
-	 * @return l'url.
-	 */
-	private static String getUrl(final String commande, final String version) {
+    /**
+     * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+     * commande à exécuter.
+     *
+     * @param commande commande à exécuter.
+     * @return l'url.
+     */
+    private static String getUrl(final String commande, final String version) {
         return URL + "?version=" + version + "&key=" + KEY + "&cmd=" + commande;
     }
 
@@ -300,25 +298,23 @@ public final class Keolis {
      * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
      * commande à exécuter et d'un paramètre.
      *
+     * @param params liste de paramètres de l'url.
+     * @return l'url.
+     */
+    private static String getUrl(final ParametreUrl... params) {
+        return getUrl(COMMANDE_STATIONS, params, VERSION);
+    }
+
+    /**
+     * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
+     * commande à exécuter et d'un paramètre.
+     *
+     * @param commande commande à exécuter.
      * @param params   liste de paramètres de l'url.
      * @return l'url.
      */
-    private static String getUrl(final ParametreUrl[] params) {
-		return getUrl(COMMANDE_STATIONS, params, VERSION);
-	}
-
-	/**
-	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-	 * commande à exécuter et d'un paramètre.
-	 * 
-	 * @param commande
-	 *            commande à exécuter.
-	 * @param params
-	 *            liste de paramètres de l'url.
-	 * @return l'url.
-	 */
-	private static String getUrl(final String commande, final ParametreUrl[] params, final String version) {
-		final StringBuilder stringBuilder = new StringBuilder(getUrl(commande, version));
+    private static String getUrl(final String commande, final ParametreUrl[] params, final String version) {
+        final StringBuilder stringBuilder = new StringBuilder(getUrl(commande, version));
         for (final ParametreUrl param : params) {
 
             try {
