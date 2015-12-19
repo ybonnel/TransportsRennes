@@ -57,12 +57,10 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		cursor.close();
 		final long elapsedTime = System.currentTimeMillis() - startTime;
 		LOG_YBO.debug("Temps requete récupération des directions : " + elapsedTime);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(getString(R.string.chooseDirection));
 		final String toutes = getString(R.string.Toutes);
 		items.add(toutes);
 		Collections.sort(items, new StringComparator(toutes));
-		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.chooseDirection)).setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialogInterface, final int item) {
 				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
@@ -72,8 +70,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 				getListView().invalidate();
 				dialogInterface.dismiss();
 			}
-		});
-		builder.create().show();
+		}).show();
 	}
 
 	private void construireCursor() {

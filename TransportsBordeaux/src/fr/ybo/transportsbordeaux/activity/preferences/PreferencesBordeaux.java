@@ -51,16 +51,13 @@ public class PreferencesBordeaux extends AbstractPreferences {
 				editor.putBoolean("TransportsBordeaux_sdCard", false);
 				editor.commit();
 			} else {
-				final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				final View alertView = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
 				final TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
 				if (UIUtils.isHoneycomb()) {
 					textView.setTextColor(AbstractTransportsApplication.getTextColor(this));
 				}
 				textView.setText(R.string.changeDbOnSdCard);
-				builder.setView(alertView);
-				builder.setCancelable(false);
-				builder.setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
+				new AlertDialog.Builder(this).setView(alertView).setCancelable(false).setNegativeButton(R.string.non, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						fermetureEnCours = true;
@@ -70,8 +67,7 @@ public class PreferencesBordeaux extends AbstractPreferences {
 						editor.commit();
 						finish();
 					}
-				});
-				builder.setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
+				}).setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						new TacheAvecProgressDialog<Void, Void, Void>(PreferencesBordeaux.this,
@@ -91,8 +87,7 @@ public class PreferencesBordeaux extends AbstractPreferences {
 							}
 						}.execute((Void) null);
 					}
-				});
-				builder.create().show();
+				}).show();
 			}
 		}
 	}

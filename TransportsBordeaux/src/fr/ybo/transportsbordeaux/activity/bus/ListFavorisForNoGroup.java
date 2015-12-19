@@ -81,10 +81,8 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 	@Override
 	protected Dialog onCreateDialog(final int id) {
 		if (id == AJOUTER_GROUPE_DIALOG_ID) {
-			final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 			final TextView input = new EditText(this);
-			alert.setView(input);
-			alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
+			return new AlertDialog.Builder(this).setView(input).setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog, final int whichButton) {
 					final String value = input.getText().toString().trim();
@@ -105,10 +103,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 					startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
 					finish();
 				}
-			});
-
-			alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener());
-			return alert.create();
+			}).setNegativeButton(getString(R.string.annuler), new MyOnClickListener()).create();
 		}
 		return super.onCreateDialog(id);
 	}

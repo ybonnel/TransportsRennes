@@ -169,9 +169,7 @@ public class ListFavoris extends ListFragment {
 						.selectAll(GroupeFavori.class)) {
 					groupes.add(groupe.name);
 				}
-				final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle(getString(R.string.chooseGroupe));
-				builder.setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
+				new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.chooseGroupe)).setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialogInterface, final int item) {
 						favori.groupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes.get(item);
@@ -180,8 +178,7 @@ public class ListFavoris extends ListFragment {
 						startActivity(new Intent(getActivity(), TabFavoris.class));
 						getActivity().finish();
 					}
-				});
-				builder.create().show();
+				}).show();
 				return true;
 			default:
 				return super.onContextItemSelected(item);

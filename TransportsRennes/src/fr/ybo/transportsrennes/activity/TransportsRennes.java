@@ -82,7 +82,6 @@ public class TransportsRennes extends AccueilActivity {
 	@Override
 	protected Dialog onCreateDialog(final int id) {
 		if (id == DIALOG_A_PROPOS) {
-			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			final View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
 			final TextView textView = (TextView) view.findViewById(R.id.textAPropos);
 			if (UIUtils.isHoneycomb()) {
@@ -107,26 +106,17 @@ public class TransportsRennes extends AccueilActivity {
 
 			textView.setText(spanned, TextView.BufferType.SPANNABLE);
 			textView.setMovementMethod(LinkMovementMethod.getInstance());
-			builder.setView(view);
-			builder.setTitle(getString(R.string.titleTransportsRennes,
-					Version.getVersionCourante(getApplicationContext())));
-			builder.setCancelable(false);
-			builder.setNeutralButton(getString(R.string.Terminer), new TerminerClickListener());
-			return builder.create();
+			return new AlertDialog.Builder(this).setView(view).setTitle(getString(R.string.titleTransportsRennes,
+					Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(getString(R.string.Terminer), new TerminerClickListener()).create();
 		}
 		if (id == DIALOG_UPGRADE) {
-			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.majDispo));
-			builder.setCancelable(false);
-			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+			return new AlertDialog.Builder(this).setMessage(getString(R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
-			});
-			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
-			return builder.create();
+			}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).create();
 		}
 		return super.onCreateDialog(id);
 	}
@@ -201,18 +191,13 @@ public class TransportsRennes extends AccueilActivity {
 				startActivity(intentTickets);
 				return true;
 			case MENU_LOAD_LINES:
-				final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
-				alertBuilder.setCancelable(false);
-				alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+				new AlertDialog.Builder(this).setMessage(getString(R.string.loadAllLineAlert)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.dismiss();
 						loadAllLines();
 					}
-				});
-				alertBuilder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
-				alertBuilder.show();
+				}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).show();
 				return true;
 			case MENU_SHARE:
 				final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));

@@ -373,9 +373,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             for (final GeocoderResult result : reponseDepart.getResults()) {
                 adresses.add(result.getFormattedAddress());
             }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.textAdresseArrivee);
-            builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setTitle(R.string.textAdresseArrivee).setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, final int item) {
                     if (reponseArrivee != null && reponseArrivee.getResults().size() > 1) {
@@ -388,24 +386,20 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                                 : reponseArrivee.getResults().get(0));
                     }
                 }
-            });
-            builder.create().show();
+            }).show();
         } else {
             // Choix de l'adresse de destination
             final List<String> adresses = new ArrayList<String>(reponseArrivee.getResults().size());
             for (final GeocoderResult result : reponseArrivee.getResults()) {
                 adresses.add(result.getFormattedAddress());
             }
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.textAdresseArrivee);
-            builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setTitle(R.string.textAdresseArrivee).setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, final int item) {
                     calculItineraire(reponseDepart == null ? null : reponseDepart.getResults().get(0),
                             reponseArrivee.getResults().get(item));
                 }
-            });
-            builder.create().show();
+            }).show();
         }
     }
 

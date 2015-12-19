@@ -97,7 +97,6 @@ public class TransportsBordeaux extends AccueilActivity {
     }
 
     private void showDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
         final TextView textView = (TextView) view.findViewById(R.id.textAPropos);
         final Spanned spanned = Html.fromHtml(getString(R.string.dialogAPropos));
@@ -106,12 +105,8 @@ public class TransportsBordeaux extends AccueilActivity {
 		}
         textView.setText(spanned, TextView.BufferType.SPANNABLE);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-        builder.setView(view);
-		builder.setTitle(getString(R.string.titleTransportsBordeaux,
-				Version.getVersionCourante(getApplicationContext())));
-        builder.setCancelable(false);
-        builder.setNeutralButton(getString(R.string.Terminer), new TerminerClickListener());
-        builder.create().show();
+        new AlertDialog.Builder(this).setView(view).setTitle(getString(R.string.titleTransportsBordeaux,
+				Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(getString(R.string.Terminer), new TerminerClickListener()).show();
     }
 
     private static class TerminerClickListener implements DialogInterface.OnClickListener {
@@ -144,10 +139,7 @@ public class TransportsBordeaux extends AccueilActivity {
 		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
         if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
                 || dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo));
-            builder.setCancelable(false);
-            builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, final int id) {
                     dialog.dismiss();
@@ -169,8 +161,7 @@ public class TransportsBordeaux extends AccueilActivity {
                 @Override
                 public void run() {
                     if (!isFinishing()) {
-                        final AlertDialog alert = builder.create();
-                        alert.show();
+                        builder.show();
                     }
                 }
             });
@@ -210,18 +201,13 @@ public class TransportsBordeaux extends AccueilActivity {
 				startActivity(intentMap);
 				return true;
             case MENU_LOAD_LINES:
-                final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-                alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
-                alertBuilder.setCancelable(false);
-                alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+                new AlertDialog.Builder(this).setMessage(getString(R.string.loadAllLineAlert)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.dismiss();
                         loadAllLines();
                     }
-                });
-                alertBuilder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
-                alertBuilder.show();
+                }).setNegativeButton(getString(R.string.non), new MyOnClickListener()).show();
                 return true;
             case MENU_SHARE:
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));

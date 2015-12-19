@@ -69,18 +69,13 @@ public class TabFavoris extends AbstractTabFavoris {
 	@Override
 	protected Dialog onCreateDialog(final int id) {
 		if (id == DIALOG_UPGRADE) {
-			final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.majDispo));
-			builder.setCancelable(false);
-			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+			return new AlertDialog.Builder(this).setMessage(getString(R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
-			});
-			builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
-			return builder.create();
+			}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).create();
 		}
 		return super.onCreateDialog(id);
 	}

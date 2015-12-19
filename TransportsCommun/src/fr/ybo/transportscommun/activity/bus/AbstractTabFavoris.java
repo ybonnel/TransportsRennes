@@ -115,10 +115,8 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 	}
 
 	private void createDialogAjoutGroupe() {
-		final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		final TextView input = new EditText(this);
-		alert.setView(input);
-		alert.setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(this).setView(input).setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int whichButton) {
 				final String value = input.getText().toString().trim();
@@ -139,10 +137,7 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 				startActivity(new Intent(AbstractTabFavoris.this, AbstractTabFavoris.this.getClass()));
 				finish();
 			}
-		});
-
-		alert.setNegativeButton(getString(R.string.annuler), new MyOnClickListener());
-		alert.create().show();
+		}).setNegativeButton(getString(R.string.annuler), new MyOnClickListener()).show();
 	}
 
 	private static class MyOnClickListener implements DialogInterface.OnClickListener {

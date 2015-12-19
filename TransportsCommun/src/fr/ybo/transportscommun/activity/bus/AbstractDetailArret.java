@@ -436,9 +436,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
         if (item.getItemId() == R.id.creerNotif) {
             final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) getListAdapter().getItem(
                     info.position);
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(formatterCalendarHeure(detailArretConteneur.getHoraire()));
-            builder.setItems(getResources().getStringArray(R.array.choixTemps), new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(this).setTitle(formatterCalendarHeure(detailArretConteneur.getHoraire())).setItems(getResources().getStringArray(R.array.choixTemps), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, final int item) {
                     final int minutes = getResources().getIntArray(R.array.choixTempInt)[item];
@@ -471,9 +469,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
                             getResources().getString(R.string.tempsRestant, formatterCalendar(tempsRestant)),
                             Toast.LENGTH_SHORT).show();
                 }
-            });
-            builder.setCancelable(true);
-            builder.create().show();
+            }).setCancelable(true).show();
             return true;
         } else {
             return super.onContextItemSelected(item);
