@@ -21,19 +21,19 @@ import android.app.Activity;
 
 public class UpdateTimeUtil {
 
-	private final LogYbo LOG = new LogYbo(UpdateTimeUtil.class);
+    private static final LogYbo LOG = new LogYbo(UpdateTimeUtil.class);
 
     private final UpdateTime update;
     private final Activity activity;
 
     private int oldNow;
-	private int oldSecond;
+    private int oldSecond;
 
     private UpdateTimeUtil(final UpdateTime update, final Activity activity, final int now) {
         this.update = update;
         this.activity = activity;
         oldNow = now;
-		oldSecond = 0;
+        oldSecond = 0;
     }
 
     public UpdateTimeUtil(final UpdateTime update, final Activity activity) {
@@ -41,8 +41,8 @@ public class UpdateTimeUtil {
         this.activity = activity;
         final Calendar calendar = Calendar.getInstance();
         oldNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		oldSecond = calendar.get(Calendar.SECOND);
-	}
+        oldSecond = calendar.get(Calendar.SECOND);
+    }
 
     private UpdateTimeThread updateTime;
 
@@ -63,9 +63,9 @@ public class UpdateTimeUtil {
     public interface UpdateTime {
         void update(Calendar calendar);
 
-		boolean updateSecond();
+        boolean updateSecond();
 
-		Set<Integer> secondesToUpdate();
+        Set<Integer> secondesToUpdate();
     }
 
     private class UpdateTimeThread extends Thread {
@@ -74,30 +74,30 @@ public class UpdateTimeUtil {
             while (true) {
                 final Calendar calendar = Calendar.getInstance();
                 final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-				final int second = calendar.get(Calendar.SECOND);
+                final int second = calendar.get(Calendar.SECOND);
 
-				boolean mustUpdate = false;
-				if (now != oldNow) {
-					// changement de minute.
-					LOG.debug("now != oldNow : update");
-					LOG.debug("now : " + now);
-					LOG.debug("oldNow : " + oldNow);
-					mustUpdate = true;
-				}
-				if (!mustUpdate && update.updateSecond()) {
-					for (final int secondToUpdate : update.secondesToUpdate()) {
-						if (oldSecond < secondToUpdate && secondToUpdate <= second) {
-							LOG.debug("Update for seconds");
-							LOG.debug("secondToUpdate : " + secondToUpdate);
-							LOG.debug("second : " + second);
-							LOG.debug("oldSecond : " + oldSecond);
-							mustUpdate = true;
-						}
-					}
-				}
-				if (mustUpdate) {
+                boolean mustUpdate = false;
+                if (now != oldNow) {
+                    // changement de minute.
+                    LOG.debug("now != oldNow : update");
+                    LOG.debug("now : " + now);
+                    LOG.debug("oldNow : " + oldNow);
+                    mustUpdate = true;
+                }
+                if (!mustUpdate && update.updateSecond()) {
+                    for (final int secondToUpdate : update.secondesToUpdate()) {
+                        if (oldSecond < secondToUpdate && secondToUpdate <= second) {
+                            LOG.debug("Update for seconds");
+                            LOG.debug("secondToUpdate : " + secondToUpdate);
+                            LOG.debug("second : " + second);
+                            LOG.debug("oldSecond : " + oldSecond);
+                            mustUpdate = true;
+                        }
+                    }
+                }
+                if (mustUpdate) {
                     oldNow = now;
-					oldSecond = second;
+                    oldSecond = second;
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
