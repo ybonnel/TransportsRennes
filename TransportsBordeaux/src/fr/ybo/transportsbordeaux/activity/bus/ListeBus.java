@@ -48,8 +48,7 @@ public class ListeBus extends BaseListActivity {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
                 final Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
-                final Intent intent = new Intent(ListeBus.this, ListArret.class);
-                intent.putExtra("ligne", ligne);
+                final Intent intent = new Intent(ListeBus.this, ListArret.class).putExtra("ligne", ligne);
                 startActivity(intent);
             }
 

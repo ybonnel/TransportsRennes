@@ -80,8 +80,7 @@ public class ActivityHelper {
         }
 
         final Intent intent = new Intent(mActivity,
-                ((AbstractTransportsApplication) mActivity.getApplication()).getAccueilActivity());
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                ((AbstractTransportsApplication) mActivity.getApplication()).getAccueilActivity()).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         mActivity.startActivity(intent);
     }
 

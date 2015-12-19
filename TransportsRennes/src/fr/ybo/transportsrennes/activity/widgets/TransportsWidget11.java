@@ -106,11 +106,7 @@ public class TransportsWidget11 extends AppWidgetProvider {
                 favori.ligneId = champs[2];
                 favori = TransportsRennesApplication.getDataBaseHelper().selectSingle(favori);
                 if (favori != null) {
-                    final Intent startIntent = new Intent(context, DetailArret.class);
-                    startIntent.putExtra("favori", favori);
-                    startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startIntent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                    final Intent startIntent = new Intent(context, DetailArret.class).putExtra("favori", favori).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY).addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
 
                     context.startActivity(startIntent);
                 }

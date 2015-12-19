@@ -58,8 +58,7 @@ public final class WidgetUpdateUtil {
         views.setTextViewText(R.id.nomArret_1arret, favori.nomArret);
         views.setTextViewText(R.id.direction_1arret, "-> " + favori.direction);
         views.setImageViewResource(R.id.iconeLigne_1arret, IconeLigne.getIconeResource(favori.nomCourt));
-        final Intent intent = new Intent(context, TransportsWidget.class);
-        intent.setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
+        final Intent intent = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
         views.setViewVisibility(R.id.layout_1arret, View.VISIBLE);
@@ -75,13 +74,11 @@ public final class WidgetUpdateUtil {
         views.setTextViewText(R.id.nomArret2_2arret, favori2.nomArret);
         views.setTextViewText(R.id.direction2_2arret, "-> " + favori2.direction);
         views.setImageViewResource(R.id.iconeLigne2_2arret, IconeLigne.getIconeResource(favori2.nomCourt));
-        final Intent intent1 = new Intent(context, TransportsWidget.class);
-        intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
+        final Intent intent1 = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
         final PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.layout_2arret_1, pendingIntent1);
-        final Intent intent2 = new Intent(context, TransportsWidget.class);
-        intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
+        final Intent intent2 = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
         final PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.layout_2arret_2, pendingIntent2);
@@ -101,18 +98,15 @@ public final class WidgetUpdateUtil {
         views.setTextViewText(R.id.nomArret3_3arret, favori3.nomArret);
         views.setTextViewText(R.id.direction3_3arret, "-> " + favori3.direction);
         views.setImageViewResource(R.id.iconeLigne3_3arret, IconeLigne.getIconeResource(favori3.nomCourt));
-        final Intent intent1 = new Intent(context, TransportsWidget.class);
-        intent1.setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
+        final Intent intent1 = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori1.arretId + '_' + favori1.ligneId);
         final PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent1,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.layout_3arret_1, pendingIntent1);
-        final Intent intent2 = new Intent(context, TransportsWidget.class);
-        intent2.setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
+        final Intent intent2 = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori2.arretId + '_' + favori2.ligneId);
         final PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 0, intent2,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.layout_3arret_2, pendingIntent2);
-        final Intent intent3 = new Intent(context, TransportsWidget.class);
-        intent3.setAction("YboClick_" + favori3.arretId + '_' + favori3.ligneId);
+        final Intent intent3 = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori3.arretId + '_' + favori3.ligneId);
         final PendingIntent pendingIntent3 = PendingIntent.getBroadcast(context, 0, intent3,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.layout_3arret_3, pendingIntent3);

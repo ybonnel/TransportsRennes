@@ -128,8 +128,7 @@ public class TransportsBordeaux extends AccueilActivity {
     }
 
     private void upgradeDatabase() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
     }
 
@@ -207,8 +206,7 @@ public class TransportsBordeaux extends AccueilActivity {
                 return true;
 			case R.id.menu_plan:
 				copieImageIfNotExists();
-				final Intent intentMap = new Intent(Intent.ACTION_VIEW);
-				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "tbc_carte_2014_2015.jpg")), "image/*");
+				final Intent intentMap = new Intent(Intent.ACTION_VIEW).setDataAndType(Uri.fromFile(new File(getFilesDir(), "tbc_carte_2014_2015.jpg")), "image/*");
 				startActivity(intentMap);
 				return true;
             case MENU_LOAD_LINES:
@@ -226,10 +224,7 @@ public class TransportsBordeaux extends AccueilActivity {
                 alertBuilder.show();
                 return true;
             case MENU_SHARE:
-                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
+                final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
                 return true;
             case MENU_NOTIF:
@@ -281,8 +276,7 @@ public class TransportsBordeaux extends AccueilActivity {
 	}
 
 	private void loadAllLines() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
 		startActivity(intent);
 	}
 

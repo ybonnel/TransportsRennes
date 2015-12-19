@@ -56,8 +56,7 @@ public class TransportsWidget11Configure extends ListActivity {
             finish();
         }
 
-        final Intent cancelResultValue = new Intent();
-        cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        final Intent cancelResultValue = new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         setResult(RESULT_CANCELED, cancelResultValue);
 
         setContentView(R.layout.configurewidget11);
@@ -114,8 +113,7 @@ public class TransportsWidget11Configure extends ListActivity {
                     saveSettings(TransportsWidget11Configure.this, appWidgetId, favoriSelectionne);
                     final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidget11Configure.this);
                     TransportsWidget11.updateAppWidget(TransportsWidget11Configure.this, appWidgetManager, appWidgetId);
-                    final Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                    final Intent resultValue = new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
                     setResult(RESULT_OK, resultValue);
                     finish();
                 }

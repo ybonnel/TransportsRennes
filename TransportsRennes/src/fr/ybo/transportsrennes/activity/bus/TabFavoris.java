@@ -60,8 +60,7 @@ public class TabFavoris extends AbstractTabFavoris {
 
 
 	private void upgradeDatabase() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
 	
@@ -109,8 +108,7 @@ public class TabFavoris extends AbstractTabFavoris {
 
 	@Override
 	protected void loadFavoris() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
 		startActivity(intent);
 	}
 

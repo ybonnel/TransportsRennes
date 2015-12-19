@@ -36,11 +36,8 @@ public class StationsShortcutPicker extends BaseSimpleActivity {
         final Parcelable shortcutIntent = new Intent(this, ListStationsByPosition.class);
 
         // Then, set up the container intent (the response to the caller)
-        final Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_velo));
-		final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_default);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_velo_default);
+        final Intent intent = new Intent().putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent).putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_velo)).putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
         setResult(RESULT_OK, intent);

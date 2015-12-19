@@ -47,8 +47,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
         setContentView(R.layout.listfavoris);
 		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
 		if (FavorisManager.hasFavorisToLoad()) {
-			final Intent intent = new Intent(this, LoadingActivity.class);
-			intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+			final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
 			startActivity(intent);
 		} else {
 			verifierUpgrade();
@@ -158,8 +157,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 
 
 	private void upgradeDatabase() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
 	

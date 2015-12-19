@@ -62,15 +62,11 @@ public class BusShortcutPicker extends BaseListActivity {
 
     private void setupShortcut(final Ligne ligne) {
         // First, set up the shortcut intent.
-        final Intent shortcutIntent = new Intent(this, ListArret.class);
-        shortcutIntent.putExtra("ligneId", ligne.id);
+        final Intent shortcutIntent = new Intent(this, ListArret.class).putExtra("ligneId", ligne.id);
 
         // Then, set up the container intent (the response to the caller)
-        final Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.lineName, ligne.nomCourt));
         final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, IconeLigne.getIconeResource(ligne.nomCourt));
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        final Intent intent = new Intent().putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent).putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.lineName, ligne.nomCourt)).putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
         setResult(RESULT_OK, intent);

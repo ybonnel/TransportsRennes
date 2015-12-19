@@ -37,8 +37,7 @@ public class ListAlerts extends ListFragment {
 	public void onListItemClick(final ListView l, final View v, final int position, final long id) {
 		super.onListItemClick(l, v, position, id);
 		final Serializable alert = (Serializable) l.getItemAtPosition(position);
-		final Intent intent = new Intent(getActivity(), DetailAlert.class);
-		intent.putExtra("alert", alert);
+		final Intent intent = new Intent(getActivity(), DetailAlert.class).putExtra("alert", alert);
 		startActivity(intent);
 	}
 

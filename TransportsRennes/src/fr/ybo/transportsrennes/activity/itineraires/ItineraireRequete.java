@@ -460,10 +460,8 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 					}
                     Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
                 } else {
-                    final Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-                    intent.putExtra("itinerairesReponse", ItineraireReponse.convert(reponse.getPlan()));
                     final int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                    intent.putExtra("heureDepart", heureDepart);
+                    final Intent intent = new Intent(ItineraireRequete.this, Itineraires.class).putExtra("itinerairesReponse", ItineraireReponse.convert(reponse.getPlan())).putExtra("heureDepart", heureDepart);
                     startActivity(intent);
                 }
             }

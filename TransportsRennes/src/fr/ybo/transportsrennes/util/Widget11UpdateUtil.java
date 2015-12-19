@@ -40,8 +40,7 @@ public final class Widget11UpdateUtil {
         views.setTextViewText(R.id.nomArret, favori.nomArret);
         views.setTextViewText(R.id.directionArret, "-> " + favori.direction);
         views.setImageViewResource(R.id.iconeLigne, IconeLigne.getIconeResource(favori.nomCourt));
-        final Intent intent = new Intent(context, TransportsWidget.class);
-        intent.setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
+        final Intent intent = new Intent(context, TransportsWidget.class).setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
         final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
 

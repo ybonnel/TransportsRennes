@@ -55,8 +55,7 @@ public class TransportsWidget21Configure extends ListActivity {
 			finish();
 		}
 
-		final Intent cancelResultValue = new Intent();
-		cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+		final Intent cancelResultValue = new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
 				appWidgetId);
 		setResult(RESULT_CANCELED, cancelResultValue);
 
@@ -128,8 +127,7 @@ public class TransportsWidget21Configure extends ListActivity {
 							TransportsWidget21.updateAppWidget(
 									TransportsWidget21Configure.this,
 									appWidgetManager, appWidgetId);
-							final Intent resultValue = new Intent();
-							resultValue.putExtra(
+							final Intent resultValue = new Intent().putExtra(
 									AppWidgetManager.EXTRA_APPWIDGET_ID,
 									appWidgetId);
 							setResult(RESULT_OK, resultValue);

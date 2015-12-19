@@ -71,12 +71,7 @@ public abstract class AbstractDetailTrajet extends BaseListActivity {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
 				final Adapter arretAdapter = adapterView.getAdapter();
 				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				final Intent intent = new Intent(AbstractDetailTrajet.this, getDetailArretClass());
-				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
-				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom")));
-				intent.putExtra("direction", direction.direction);
-				intent.putExtra("macroDirection", trajet.macroDirection);
-				intent.putExtra("ligne", ligne);
+				final Intent intent = new Intent(AbstractDetailTrajet.this, getDetailArretClass()).putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id"))).putExtra("nomArret", cursor.getString(cursor.getColumnIndex("nom"))).putExtra("direction", direction.direction).putExtra("macroDirection", trajet.macroDirection).putExtra("ligne", ligne);
 				startActivity(intent);
 			}
 		});

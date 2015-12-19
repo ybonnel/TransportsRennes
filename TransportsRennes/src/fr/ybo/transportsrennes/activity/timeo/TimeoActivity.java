@@ -55,8 +55,7 @@ public class TimeoActivity extends BaseListActivity {
 			finish();
 		} else if (arrets.size() == 1) {
 			// Lancer detailArret
-			final Intent intent = new Intent(this, DetailArret.class);
-			intent.putExtra("favori", arrets.get(0).favori);
+			final Intent intent = new Intent(this, DetailArret.class).putExtra("favori", arrets.get(0).favori);
 			startActivity(intent);
 			finish();
 		} else {
@@ -68,8 +67,7 @@ public class TimeoActivity extends BaseListActivity {
 				@Override
 				public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
 					final Arret arret = (Arret) getListAdapter().getItem(position);
-					final Intent intent = new Intent(TimeoActivity.this, DetailArret.class);
-					intent.putExtra("favori", arret.favori);
+					final Intent intent = new Intent(TimeoActivity.this, DetailArret.class).putExtra("favori", arret.favori);
 					startActivity(intent);
 				}
 			});

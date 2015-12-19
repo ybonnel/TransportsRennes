@@ -138,8 +138,7 @@ public abstract class AbstractListArretByPosition extends BaseListActivity imple
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
                 final Arret arret = (Arret) getListAdapter().getItem(position);
-                final Intent intent = new Intent(AbstractListArretByPosition.this, getDetailArret());
-                intent.putExtra("favori", arret.favori);
+                final Intent intent = new Intent(AbstractListArretByPosition.this, getDetailArret()).putExtra("favori", arret.favori);
                 startActivity(intent);
             }
         });

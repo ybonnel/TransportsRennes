@@ -40,11 +40,8 @@ public class BusFavorisShortcutPicker extends BaseSimpleActivity {
         final Parcelable shortcutIntent = new Intent(this, TabFavoris.class);
 
         // Then, set up the container intent (the response to the caller)
-        final Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_bus_favori));
-		final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_star_default);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.btn_bus_star_default);
+        final Intent intent = new Intent().putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent).putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_bus_favori)).putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
         setResult(RESULT_OK, intent);

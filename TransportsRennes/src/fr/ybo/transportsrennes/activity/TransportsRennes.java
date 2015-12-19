@@ -139,8 +139,7 @@ public class TransportsRennes extends AccueilActivity {
 	}
 
 	private void upgradeDatabase() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
 
@@ -216,10 +215,7 @@ public class TransportsRennes extends AccueilActivity {
 				alertBuilder.show();
 				return true;
 			case MENU_SHARE:
-				final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-				shareIntent.setType("text/plain");
-				shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-				shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
+				final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
 				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
 				return true;
 			case MENU_NOTIF:
@@ -270,8 +266,7 @@ public class TransportsRennes extends AccueilActivity {
 	}
 
 	private void loadAllLines() {
-		final Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
 		startActivity(intent);
 	}
 

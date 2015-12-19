@@ -36,11 +36,8 @@ public class ParkRelaisShortcutPicker extends BaseSimpleActivity {
         final Parcelable shortcutIntent = new Intent(this, ListParkings.class);
 
         // Then, set up the container intent (the response to the caller)
-        final Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_parking));
         final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, R.drawable.ic_menu_parking);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        final Intent intent = new Intent().putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent).putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.btn_parking)).putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
         setResult(RESULT_OK, intent);

@@ -147,11 +147,7 @@ public class UpdateTimeService extends Service {
 		final String shortText = getResources().getString(R.string.notifShortText, ligne.nomCourt, arret.nom);
 		final String descriptionText = getResources()
 				.getString(R.string.notifDescriptionText, notification.getTempsAttente());
-		final Intent notificationIntent = new Intent(this, DetailArret.class);
-		notificationIntent.putExtra("ligne", ligne);
-		notificationIntent.putExtra("idArret", notification.getArretId());
-		notificationIntent.putExtra("nomArret", arret.nom);
-		notificationIntent.putExtra("direction", notification.getDirection());
+		final Intent notificationIntent = new Intent(this, DetailArret.class).putExtra("ligne", ligne).putExtra("idArret", notification.getArretId()).putExtra("nomArret", arret.nom).putExtra("direction", notification.getDirection());
 
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 		final android.app.Notification notif = new android.app.Notification(icon, texte, System.currentTimeMillis());

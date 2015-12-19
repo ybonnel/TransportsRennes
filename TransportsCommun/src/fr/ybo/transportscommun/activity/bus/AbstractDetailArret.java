@@ -189,9 +189,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
                 final Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
                 final DetailArretConteneur detailArretConteneur = (DetailArretConteneur) arretAdapter.getItem(position);
-                final Intent intent = new Intent(AbstractDetailArret.this, getDetailTrajetClass());
-                intent.putExtra("trajetId", detailArretConteneur.getTrajetId());
-                intent.putExtra("sequence", detailArretConteneur.getSequence());
+                final Intent intent = new Intent(AbstractDetailArret.this, getDetailTrajetClass()).putExtra("trajetId", detailArretConteneur.getTrajetId()).putExtra("sequence", detailArretConteneur.getSequence());
                 startActivity(intent);
             }
         });
@@ -222,8 +220,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
             findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    final Intent intent = new Intent(AbstractDetailArret.this, getListAlertsForOneLineClass());
-                    intent.putExtra("ligne", myLigne);
+                    final Intent intent = new Intent(AbstractDetailArret.this, getListAlertsForOneLineClass()).putExtra("ligne", myLigne);
                     startActivity(intent);
                 }
             });
@@ -323,8 +320,7 @@ public abstract class AbstractDetailArret extends BaseListActivity {
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    final Intent intent = new Intent(AbstractDetailArret.this, AbstractDetailArret.this.getClass());
-                    intent.putExtra("favori", arret.favori);
+                    final Intent intent = new Intent(AbstractDetailArret.this, AbstractDetailArret.this.getClass()).putExtra("favori", arret.favori);
                     startActivity(intent);
                 }
             });

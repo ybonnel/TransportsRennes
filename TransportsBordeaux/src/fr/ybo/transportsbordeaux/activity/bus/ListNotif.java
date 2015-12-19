@@ -47,13 +47,9 @@ public class ListNotif extends BaseListActivity {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
                 final Notification notification = (Notification) adapterView.getItemAtPosition(i);
-                final Intent intent = new Intent(ListNotif.this, DetailArret.class);
                 final Ligne ligne = Ligne.getLigne(notification.getLigneId());
                 final Arret arret = Arret.getArret(notification.getArretId());
-                intent.putExtra("ligne", ligne);
-                intent.putExtra("idArret", notification.getArretId());
-                intent.putExtra("nomArret", arret.nom);
-                intent.putExtra("direction", notification.getDirection());
+                final Intent intent = new Intent(ListNotif.this, DetailArret.class).putExtra("ligne", ligne).putExtra("nomArret", arret.nom).putExtra("direction", notification.getDirection());
                 startActivity(intent);
             }
         });

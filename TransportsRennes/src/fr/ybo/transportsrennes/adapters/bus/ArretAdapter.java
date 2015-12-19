@@ -171,8 +171,7 @@ public class ArretAdapter extends CursorAdapter {
             relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    final Intent intent = new Intent(activity, DetailArret.class);
-                    intent.putExtra("favori", arret.favori);
+                    final Intent intent = new Intent(activity, DetailArret.class).putExtra("favori", arret.favori);
                     activity.startActivity(intent);
                 }
             });

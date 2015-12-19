@@ -113,8 +113,7 @@ public class ListFavoris extends ListFragment {
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
-				final Intent intent = new Intent(getActivity(), DetailArret.class);
-				intent.putExtra("favori", (Serializable) adapterView.getAdapter().getItem(position));
+				final Intent intent = new Intent(getActivity(), DetailArret.class).putExtra("favori", (Serializable) adapterView.getAdapter().getItem(position));
 				startActivity(intent);
 			}
 		});

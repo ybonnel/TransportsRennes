@@ -129,12 +129,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
 				final Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
 				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				final Intent intent = new Intent(getActivity(), getDetailArret());
-				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
-				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
-				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
-				intent.putExtra("macroDirection", cursor.getInt(cursor.getColumnIndex("macroDirection")));
-				intent.putExtra("ligne", myLigne);
+				final Intent intent = new Intent(getActivity(), getDetailArret()).putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id"))).putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName"))).putExtra("direction", cursor.getString(cursor.getColumnIndex("direction"))).putExtra("macroDirection", cursor.getInt(cursor.getColumnIndex("macroDirection"))).putExtra("ligne", myLigne);
 				startActivity(intent);
 			}
 		});
@@ -163,8 +158,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 			getView().findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(final View view) {
-					final Intent intent = new Intent(getActivity(), getListAlertsForOneLine());
-					intent.putExtra("ligne", myLigne);
+					final Intent intent = new Intent(getActivity(), getListAlertsForOneLine()).putExtra("ligne", myLigne);
 					startActivity(intent);
 				}
 			});
