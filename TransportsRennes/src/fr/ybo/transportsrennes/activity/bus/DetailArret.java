@@ -65,7 +65,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 		@Override
         public int compare(final DetailArretConteneur lhs,
                 final DetailArretConteneur rhs) {
-            return (lhs.getHoraire() < rhs.getHoraire()) ? -1 : ((lhs.getHoraire() == rhs.getHoraire()) ? 0 : 1);
+            return lhs.getHoraire() < rhs.getHoraire() ? -1 : lhs.getHoraire() == rhs.getHoraire() ? 0 : 1;
         }
 	}
 
@@ -177,7 +177,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 					// Trouve le prochain depart le plus près.
 					for (final DetailArretConteneur depart : horaires) {
 						if (diffCourante == -1
-								|| (Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante)) {
+								|| Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante) {
 							diffCourante = Math.abs(departure.getHoraire() - depart.getHoraire());
 							departProche = depart;
 						}

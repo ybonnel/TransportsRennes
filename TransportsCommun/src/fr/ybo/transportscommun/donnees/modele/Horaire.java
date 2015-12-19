@@ -108,7 +108,7 @@ public class Horaire {
 			public int compare(final DetailArretConteneur detailArretConteneur1, final DetailArretConteneur detailArretConteneur2) {
 				final int x = detailArretConteneur1.getHoraire();
 				final int y = detailArretConteneur2.getHoraire();
-				return (x < y) ? -1 : ((x == y) ? 0 : 1);
+				return x < y ? -1 : x == y ? 0 : 1;
 			}
 		});
 
@@ -161,7 +161,7 @@ public class Horaire {
 			public int compare(final DetailArretConteneur detailArretConteneur1, final DetailArretConteneur detailArretConteneur2) {
 				final int x = detailArretConteneur1.getHoraire();
 				final int y = detailArretConteneur2.getHoraire();
-				return (x < y) ? -1 : ((x == y) ? 0 : 1);
+				return x < y ? -1 : x == y ? 0 : 1;
 			}
 		});
 		return prochainsDeparts;

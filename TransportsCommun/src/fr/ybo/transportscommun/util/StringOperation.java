@@ -335,7 +335,7 @@ public final class StringOperation {
 			{
 
 				if (r >= MIN && r <= MAX
-						&& (r != 198 && r != 230 && r != 306 && r != 307 && r != 339 && r != 340)) {
+						&& r != 198 && r != 230 && r != 306 && r != 307 && r != 339 && r != 340) {
 					r = map[(int) r - MIN];
 				}
 			}

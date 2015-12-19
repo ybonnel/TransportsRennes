@@ -111,7 +111,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 
 			@Override
 			protected void myDoBackground() throws ErreurReseau {
-				final List<T> parkRelaisTmp = (parkingsIntent == null ? getParkings() : parkingsIntent);
+				final List<T> parkRelaisTmp = parkingsIntent == null ? getParkings() : parkingsIntent;
 				if (isCancelled()) {
 					return;
 				}

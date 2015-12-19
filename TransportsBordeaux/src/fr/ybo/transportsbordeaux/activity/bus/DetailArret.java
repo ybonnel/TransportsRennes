@@ -139,7 +139,7 @@ public class DetailArret extends AbstractDetailArret {
 		@Override
         public int compare(final DetailArretConteneur lhs,
                 final DetailArretConteneur rhs) {
-            return (lhs.getHoraire() < rhs.getHoraire()) ? -1 : ((lhs.getHoraire() == rhs.getHoraire()) ? 0 : 1);
+            return lhs.getHoraire() < rhs.getHoraire() ? -1 : lhs.getHoraire() == rhs.getHoraire() ? 0 : 1;
         }
 	}
 }

@@ -450,11 +450,11 @@ public abstract class AbstractDetailArret extends BaseListActivity {
                     final String arretId = favori.arretId;
                     int heure = detailArretConteneur.getHoraire();
                     if (heure >= 24 * 60) {
-                        heure -= (24 * 60);
+                        heure -= 24 * 60;
                     }
                     int heureNotif = heure - minutes;
                     if (heureNotif < 0) {
-                        heureNotif += (24 * 60);
+                        heureNotif += 24 * 60;
                     }
                     final Notification notification = new Notification();
                     notification.setLigneId(ligneId);
@@ -467,9 +467,9 @@ public abstract class AbstractDetailArret extends BaseListActivity {
                     AbstractTransportsApplication.getDataBaseHelper().insert(notification);
                     final Calendar calendar = Calendar.getInstance();
                     final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                    int tempsRestant = (heureNotif) - now;
+                    int tempsRestant = heureNotif - now;
                     if (tempsRestant <= 0) {
-                        tempsRestant += (24 * 60);
+                        tempsRestant += 24 * 60;
                     }
                     Toast.makeText(AbstractDetailArret.this,
                             getResources().getString(R.string.tempsRestant, formatterCalendar(tempsRestant)),

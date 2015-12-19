@@ -113,7 +113,7 @@ public class ArretAdapter extends CursorAdapter {
     public void bindView(final View view, final Context context, final Cursor cursor) {
         final String name = cursor.getString(nameCol);
         final String direction = cursor.getString(directionCol);
-        final boolean accessible = (cursor.getInt(accessibleCol) == 1);
+        final boolean accessible = cursor.getInt(accessibleCol) == 1;
         favori.arretId = cursor.getString(arretIdCol);
         favori.macroDirection = cursor.getInt(macroDirectionCol);
         final String arretId = favori.arretId;

@@ -113,7 +113,7 @@ class SimpleMenu implements Menu {
     }
 
     private void removeItemAtInt(final int index) {
-        if ((index < 0) || (index >= mItems.size())) {
+        if (index < 0 || index >= mItems.size()) {
             return;
         }
         mItems.remove(index);

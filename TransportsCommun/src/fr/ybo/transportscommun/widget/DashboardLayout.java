@@ -125,8 +125,8 @@ public class DashboardLayout extends ViewGroup {
 		while (true) {
 			rows = (visibleCount - 1) / cols + 1;
 
-			hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-			vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+			hSpace = (width - mMaxChildWidth * cols) / (cols + 1);
+			vSpace = (height - mMaxChildHeight * rows) / (rows + 1);
 
 			spaceDifference = Math.abs(vSpace - hSpace);
 			if (rows * cols != visibleCount) {
@@ -148,8 +148,8 @@ public class DashboardLayout extends ViewGroup {
 				// of cols and exit.
 				--cols;
 				rows = (visibleCount - 1) / cols + 1;
-				hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-				vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+				hSpace = (width - mMaxChildWidth * cols) / (cols + 1);
+				vSpace = (height - mMaxChildHeight * rows) / (rows + 1);
 				break;
 			}
 
@@ -181,8 +181,8 @@ public class DashboardLayout extends ViewGroup {
 			final int left = hSpace * (col + 1) + width * col;
 			final int top = vSpace * (row + 1) + height * row;
 
-			child.layout(left, top, (hSpace == 0 && col == cols - 1) ? r : (left + width),
-					(vSpace == 0 && row == rows - 1) ? b : (top + height));
+			child.layout(left, top, hSpace == 0 && col == cols - 1 ? r : left + width,
+					vSpace == 0 && row == rows - 1 ? b : top + height);
 			++visibleIndex;
 		}
 	}

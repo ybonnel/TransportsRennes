@@ -64,7 +64,7 @@ public final class Widget11UpdateUtil {
 
                 LOG_YBO.debug("heureProchain : " + heureProchain);
                 LOG_YBO.debug("now : " + now);
-                if ((now - heureProchain) >= 0 && (now - heureProchain) < 30) {
+                if (now - heureProchain >= 0 && now - heureProchain < 30) {
                     views.setTextColor(R.id.tempsRestant, context.getResources().getColor(R.color.red));
                 } else {
                     views.setTextColor(R.id.tempsRestant, context.getResources().getColor(R.color.blanc));

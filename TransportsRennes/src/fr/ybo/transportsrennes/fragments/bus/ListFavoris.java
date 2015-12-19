@@ -188,7 +188,7 @@ public class ListFavoris extends ListFragment {
 					groupes.add(groupe.name);
 				}
 				final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-				builder.setTitle(getString(fr.ybo.transportsrennes.R.string.chooseGroupe));
+				builder.setTitle(getString(R.string.chooseGroupe));
 				builder.setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialogInterface, final int item) {

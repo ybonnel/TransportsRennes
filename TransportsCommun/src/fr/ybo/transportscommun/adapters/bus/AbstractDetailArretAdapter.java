@@ -126,8 +126,8 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 	private CharSequence formatterCalendar(final int prochainDepart, final int now, final int secondesNow, final Integer secondes, final boolean accurate) {
 		final StringBuilder stringBuilder = new StringBuilder();
 		final int secondesNullSafe = secondes == null ? 0 : secondes;
-		final int tempsEnSecondes = (prochainDepart * 60 + secondesNullSafe) - (now * 60 + secondesNow);
-		int tempsEnMinutes = (tempsEnSecondes / 60);
+		final int tempsEnSecondes = prochainDepart * 60 + secondesNullSafe - (now * 60 + secondesNow);
+		int tempsEnMinutes = tempsEnSecondes / 60;
 		if (tempsEnSecondes == tempsEnMinutes * 60) {
 			tempsEnMinutes--;
 		}

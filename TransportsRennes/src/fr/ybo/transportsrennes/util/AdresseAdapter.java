@@ -91,7 +91,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
             if (results.count > 0) {
                 clear();
 
-				for (final String result : ((Iterable<String>) results.values)) {
+				for (final String result : (Iterable<String>) results.values) {
                     add(result);
                 }
 

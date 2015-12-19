@@ -63,7 +63,7 @@ public final class Widget21UpdateUtil {
 
                 LOG_YBO.debug("heureProchain : " + heureProchain);
                 LOG_YBO.debug("now : " + now);
-                if ((now - heureProchain) >= 0 && (now - heureProchain) < 30) {
+                if (now - heureProchain >= 0 && now - heureProchain < 30) {
                     views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.red));
                 } else {
                     prochainDepart = prochainsDeparts.get(0).getHoraire();
@@ -86,8 +86,8 @@ public final class Widget21UpdateUtil {
             views.setTextViewText(R.id.tempsRestantFutur,
                     prochainsDeparts.size() < 3 ? "" : formatterCalendar(prochainsDeparts.get(2).getHoraire()));
 
-            views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : (context.getString(R.string.prochain)
-                    + ' ' + formatterTempsRestant(context, prochainDepart, now)));
+            views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : context.getString(R.string.prochain)
+                    + ' ' + formatterTempsRestant(context, prochainDepart, now));
         } catch (final SQLiteException ignore) {
 
         }

@@ -121,8 +121,8 @@ public class ListPointsDeVente extends BaseListActivity implements UpdateLocatio
 
             @Override
             protected void myDoBackground() throws ErreurReseau {
-                final Collection<PointDeVente> listPdvTmp = (pointsDeVenteIntent == null ? Keolis.getPointDeVente()
-                        : pointsDeVenteIntent);
+                final Collection<PointDeVente> listPdvTmp = pointsDeVenteIntent == null ? Keolis.getPointDeVente()
+                        : pointsDeVenteIntent;
 				if (isCancelled()) {
 					return;
 				}

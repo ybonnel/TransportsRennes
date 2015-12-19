@@ -75,8 +75,8 @@ public abstract class AbstractLoadingActivity extends Activity {
 	// Verrue pour faire marcher en 1.6.
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-		if ((!(Build.VERSION.SDK_INT > Build.VERSION_CODES.DONUT)
-				&& keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)) {
+		if (!(Build.VERSION.SDK_INT > Build.VERSION_CODES.DONUT)
+				&& keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
 			onBackPressed();
 			return true;
 		}
@@ -291,7 +291,7 @@ public abstract class AbstractLoadingActivity extends Activity {
 						@Override
 						public void run() {
 							++ligneCourante;
-							loadingBar.setProgress((ligneCourante) * 100 / nbLignesToLoad);
+							loadingBar.setProgress(ligneCourante * 100 / nbLignesToLoad);
 						}
 					});
 				}
