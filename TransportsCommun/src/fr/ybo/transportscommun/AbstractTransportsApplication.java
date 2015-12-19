@@ -58,7 +58,7 @@ public abstract class AbstractTransportsApplication extends Application {
 		final PackageInfo packageinfo;
 		try {
 			packageinfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SERVICES);
-		} catch (final android.content.pm.PackageManager.NameNotFoundException ex) {
+		} catch (final PackageManager.NameNotFoundException ex) {
 			return false;
 		}
 		final String processName = packageinfo.applicationInfo.processName;

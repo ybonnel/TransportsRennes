@@ -188,7 +188,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
             try {
                 Bounds boundsBdd = getDataBaseHelper().selectSingle(new Bounds());
                 if (boundsBdd == null) {
-                    final GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+                    final GraphMetadata metadata = CalculItineraires.INSTANCE.getMetadata();
                     if (metadata != null) {
                         boundsBdd = new Bounds();
                         boundsBdd.setDate(dateCourante);

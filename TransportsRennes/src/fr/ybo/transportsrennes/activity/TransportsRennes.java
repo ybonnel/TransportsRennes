@@ -216,10 +216,10 @@ public class TransportsRennes extends AccueilActivity {
 				alertBuilder.show();
 				return true;
 			case MENU_SHARE:
-				final Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+				final Intent shareIntent = new Intent(Intent.ACTION_SEND);
 				shareIntent.setType("text/plain");
-				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
+				shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
+				shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
 				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
 				return true;
 			case MENU_NOTIF:

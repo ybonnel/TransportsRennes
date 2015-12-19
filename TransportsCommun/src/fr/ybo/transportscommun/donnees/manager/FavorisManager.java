@@ -24,7 +24,7 @@ public final class FavorisManager {
 
 	private static final LogYbo LOG_YBO = new LogYbo(ArretFavori.class);
 
-	private static FavorisManager instance;
+	public static final FavorisManager INSTANCE = new FavorisManager();
 
 	private static final String FILE_NAME = "arrets_favoris.txt";
 
@@ -34,13 +34,6 @@ public final class FavorisManager {
 		final List<Class<?>> classes = new ArrayList<Class<?>>();
 		classes.add(ArretFavori.class);
 		moteurCsv = new MoteurCsv(classes);
-	}
-
-	public static synchronized FavorisManager getInstance() {
-		if (instance == null) {
-			instance = new FavorisManager();
-		}
-		return instance;
 	}
 
 	public void export(final Context context) {

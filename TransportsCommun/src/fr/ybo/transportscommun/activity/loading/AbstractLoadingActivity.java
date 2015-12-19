@@ -12,6 +12,7 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.KeyEvent;
@@ -74,7 +75,7 @@ public abstract class AbstractLoadingActivity extends Activity {
 	// Verrue pour faire marcher en 1.6.
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
-		if ((!(android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.DONUT)
+		if ((!(Build.VERSION.SDK_INT > Build.VERSION_CODES.DONUT)
 				&& keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)) {
 			onBackPressed();
 			return true;

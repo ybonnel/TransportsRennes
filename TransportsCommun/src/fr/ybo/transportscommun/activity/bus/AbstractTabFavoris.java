@@ -89,9 +89,9 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 		if (item.getItemId() == R.id.menu_export) {
-			FavorisManager.getInstance().export(this);
+			FavorisManager.INSTANCE.export(this);
 		} else if (item.getItemId() == R.id.menu_import) {
-			FavorisManager.getInstance().load(this);
+			FavorisManager.INSTANCE.load(this);
 			startActivity(new Intent(this, getClass()));
 			finish();
 		} else if (item.getItemId() == MENU_SUPPRIMER) {

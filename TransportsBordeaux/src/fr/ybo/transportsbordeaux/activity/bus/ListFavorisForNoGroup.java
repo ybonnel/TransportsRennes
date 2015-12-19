@@ -63,10 +63,10 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case R.id.menu_export:
-				FavorisManager.getInstance().export(this);
+				FavorisManager.INSTANCE.export(this);
 				break;
 			case R.id.menu_import:
-				FavorisManager.getInstance().load(this);
+				FavorisManager.INSTANCE.load(this);
 				startActivity(new Intent(this, TabFavoris.class));
 				finish();
 				break;

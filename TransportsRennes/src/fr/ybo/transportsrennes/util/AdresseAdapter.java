@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import android.R;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -37,7 +38,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
 	private final List<Arret> arrets;
 
 	public AdresseAdapter(final Context context, final List<Arret> arrets) {
-		super(context, android.R.layout.simple_spinner_item);
+		super(context, R.layout.simple_spinner_item);
 		this.arrets = arrets;
     }
 

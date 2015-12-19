@@ -20,17 +20,8 @@ import fr.ybo.opentripplanner.client.ClientOpenTripPlanner;
 
 public final class CalculItineraires {
 
-	private static final String URL_OTP = "http://transports.ybonnel.fr/opentripplanner-api-webapp";
+    public static final ClientOpenTripPlanner INSTANCE = new ClientOpenTripPlanner("http://transports.ybonnel.fr/opentripplanner-api-webapp");
 
-	private static ClientOpenTripPlanner instance;
-
-	public static synchronized ClientOpenTripPlanner getInstance() {
-		if (instance == null) {
-			instance = new ClientOpenTripPlanner(URL_OTP);
-		}
-		return instance;
-	}
-
-	private CalculItineraires() {
-	}
+    private CalculItineraires() {
+    }
 }

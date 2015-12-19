@@ -172,7 +172,7 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 		@Override
         protected Void doInBackground(final Void... voids) {
             try {
-                final GraphMetadata metadata = CalculItineraires.getInstance().getMetadata();
+                final GraphMetadata metadata = CalculItineraires.INSTANCE.getMetadata();
                 if (metadata != null) {
                     setBounds(new LatLngBounds(new LatLng(BigDecimal.valueOf(metadata.getMinLatitude()),
 							BigDecimal.valueOf(metadata.getMinLongitude())), new LatLng(BigDecimal.valueOf(metadata.getMaxLatitude()), BigDecimal.valueOf(metadata.getMaxLongitude()))));

@@ -37,7 +37,6 @@ public class LocationUtil implements LocationListener {
     private Location currentBestLocation;
 
     public LocationUtil(final UpdateLocationListenner listenner, final Context context) {
-        super();
         this.listenner = listenner;
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }

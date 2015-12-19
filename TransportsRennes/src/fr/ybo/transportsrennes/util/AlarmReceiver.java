@@ -61,8 +61,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         // configurations above
         final Notification notification = new Notification(icon, tickerText, when);
         notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
-        notification.defaults |= android.app.Notification.DEFAULT_ALL;
-        notification.flags |= android.app.Notification.FLAG_AUTO_CANCEL;
+        notification.defaults |= Notification.DEFAULT_ALL;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         final NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);

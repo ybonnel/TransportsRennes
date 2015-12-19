@@ -304,7 +304,7 @@ public final class StringOperation {
 	 *            Chaine sur laquelle on veut effectuer une transformation
 	 * @return Chain transformée
 	 **/
-	private static java.lang.String transform(final String chaine) {
+	private static String transform(final String chaine) {
 
 		final int firstReplacement = scan(chaine);
 
@@ -402,7 +402,7 @@ public final class StringOperation {
 	 *            Chaine a convertir sans accent
 	 * @return Chaine dont les accents ont été supprimé
 	 **/
-	public static java.lang.String sansAccents(final java.lang.String chaine) {
+	public static String sansAccents(final String chaine) {
 		return transform(chaine);
 	}
 }

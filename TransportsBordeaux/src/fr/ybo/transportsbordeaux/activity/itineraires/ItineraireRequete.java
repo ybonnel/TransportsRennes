@@ -456,7 +456,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             @Override
             protected Void doInBackground(final Void... voids) {
                 try {
-                    reponse = CalculItineraires.getInstance().getItineraries(request);
+                    reponse = CalculItineraires.INSTANCE.getItineraries(request);
                 } catch (final OpenTripPlannerException e) {
                     if (e.getCause() != null
                             && (e.getCause() instanceof SocketException

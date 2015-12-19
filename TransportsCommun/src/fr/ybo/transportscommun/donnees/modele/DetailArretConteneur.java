@@ -23,8 +23,7 @@ public class DetailArretConteneur {
 	private final String direction;
 
 	public DetailArretConteneur(final int horaire, final int trajetId, final int sequence, final String direction) {
-        super();
-        this.horaire = horaire;
+		this.horaire = horaire;
         this.trajetId = trajetId;
         this.sequence = sequence;
 		this.direction = direction;
