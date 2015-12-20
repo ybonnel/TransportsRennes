@@ -41,15 +41,10 @@ public class PreferencesBordeaux extends AbstractPreferences {
 			return;
 		}
 		if ("TransportsBordeaux_sdCard".equals(key)) {
-			final boolean dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(this)
-					.getBoolean(
-					"TransportsBordeaux_sdCard", false);
+			final boolean dbOnSdCard = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("TransportsBordeaux_sdCard", false);
 			if (dbOnSdCard && !Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
 				Toast.makeText(this, R.string.sdCardInaccessbile, Toast.LENGTH_LONG).show();
-				final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-						this).edit();
-				editor.putBoolean("TransportsBordeaux_sdCard", false);
-				editor.commit();
+				PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("TransportsBordeaux_sdCard", false).commit();
 			} else {
 				final View alertView = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
 				final TextView textView = (TextView) alertView.findViewById(R.id.textAPropos);
@@ -61,10 +56,7 @@ public class PreferencesBordeaux extends AbstractPreferences {
 					@Override
 					public void onClick(final DialogInterface dialog, final int which) {
 						fermetureEnCours = true;
-						final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-								PreferencesBordeaux.this).edit();
-						editor.putBoolean("TransportsBordeaux_sdCard", !dbOnSdCard);
-						editor.commit();
+						PreferenceManager.getDefaultSharedPreferences(PreferencesBordeaux.this).edit().putBoolean("TransportsBordeaux_sdCard", !dbOnSdCard).commit();
 						finish();
 					}
 				}).setPositiveButton(R.string.oui, new DialogInterface.OnClickListener() {

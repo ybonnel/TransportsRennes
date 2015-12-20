@@ -123,8 +123,7 @@ public class TransportsWidgetConfigure extends ListActivity {
         final SharedPreferences.Editor edit = sharedPreferences.edit();
         int count = 1;
         for (final ArretFavori favori : favoris) {
-            edit.putString("ArretId" + count + '_' + appWidgetId, favori.arretId);
-            edit.putString("LigneId" + count + '_' + appWidgetId, favori.ligneId);
+            edit.putString("ArretId" + count + '_' + appWidgetId, favori.arretId).putString("LigneId" + count + '_' + appWidgetId, favori.ligneId);
             count++;
         }
         edit.commit();
@@ -230,8 +229,7 @@ public class TransportsWidgetConfigure extends ListActivity {
         final SharedPreferences.Editor edit = sharedPreferences.edit();
         int count = 1;
         while (sharedPreferences.getString("ArretId" + count + '_' + appWidgetId, null) != null) {
-            edit.remove("ArretId" + count + '_' + appWidgetId);
-            edit.remove("LigneId" + count + '_' + appWidgetId);
+            edit.remove("ArretId" + count + '_' + appWidgetId).remove("LigneId" + count + '_' + appWidgetId);
             count++;
         }
         edit.commit();

@@ -117,9 +117,7 @@ public class TransportsBordeaux extends AccueilActivity {
     }
 
     private void saveAfficheMessage() {
-        final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
-        editor.putBoolean("TransportsBordeaux_dialog", false);
-        editor.commit();
+        PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean("TransportsBordeaux_dialog", false).commit();
     }
 
     private void upgradeDatabase() {

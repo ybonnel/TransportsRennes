@@ -123,12 +123,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
     }
 
     private static void saveSettings(final Context context, final int appWidgetId, final ArretFavori favori) {
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
-		edit.putString("LowResArretId_" + appWidgetId, favori.arretId);
-		edit.putString("LowResLigneId_" + appWidgetId, favori.ligneId);
-
-        edit.commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("LowResArretId_" + appWidgetId, favori.arretId).putString("LowResLigneId_" + appWidgetId, favori.ligneId).commit();
     }
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
@@ -181,12 +176,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
     }
 
     static void deleteSettings(final Context context, final int appWidgetId) {
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
-		edit.remove("LowResArretId_" + appWidgetId);
-		edit.remove("LowResLigneId_" + appWidgetId);
-
-        edit.commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("LowResArretId_" + appWidgetId).remove("LowResLigneId_" + appWidgetId).commit();
     }
 
     static void deleteAllSettings(final Context context) {

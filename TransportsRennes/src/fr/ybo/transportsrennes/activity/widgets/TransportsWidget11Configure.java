@@ -122,12 +122,7 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     private static void saveSettings(final Context context, final int appWidgetId, final ArretFavori favori) {
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("11ArretId_" + appWidgetId, favori.arretId);
-        edit.putString("11LigneId_" + appWidgetId, favori.ligneId);
-
-        edit.commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("11ArretId_" + appWidgetId, favori.arretId).putString("11LigneId_" + appWidgetId, favori.ligneId).commit();
     }
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
@@ -180,12 +175,7 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     static void deleteSettings(final Context context, final int appWidgetId) {
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.remove("11ArretId_" + appWidgetId);
-        edit.remove("11LigneId_" + appWidgetId);
-
-        edit.commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("11ArretId_" + appWidgetId).remove("11LigneId_" + appWidgetId).commit();
     }
 
     static void deleteAllSettings(final Context context) {
