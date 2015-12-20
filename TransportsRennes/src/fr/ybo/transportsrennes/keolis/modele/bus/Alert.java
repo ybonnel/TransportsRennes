@@ -87,7 +87,7 @@ public class Alert implements Serializable {
      */
     public String link;
 
-    public String getDetailFormatte(final Iterable<String> arrets) {
+    public CharSequence getDetailFormatte(final Iterable<String> arrets) {
 		if (detail == null) {
 			return "";
 		}
@@ -126,7 +126,7 @@ public class Alert implements Serializable {
             }
             stringBuilder.append("<br/>");
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
     private static final Collection<Character> CARAC_TO_DELETE = new HashSet<Character>(11);

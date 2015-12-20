@@ -93,19 +93,17 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
     private static final DateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
 
-    private static String formatHeure(final int time) {
+    private static CharSequence formatHeure(final int time) {
         final StringBuilder stringBuilder = new StringBuilder();
         final int heure = time / 60;
         final int minutes = time - heure * 60;
         if (heure < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heure);
-        stringBuilder.append(':');
+        stringBuilder.append(heure).append(':');
         if (minutes < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutes);
-        return stringBuilder.toString();
+        return stringBuilder.append(minutes);
     }
 }

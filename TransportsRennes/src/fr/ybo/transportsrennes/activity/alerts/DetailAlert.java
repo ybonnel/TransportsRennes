@@ -54,7 +54,7 @@ public class DetailAlert extends BaseSimpleActivity {
             }
             cursor.close();
         }
-        ((TextView) findViewById(R.id.detailAlert_Detail)).setText(Html.fromHtml(alert.getDetailFormatte(arretsToBold)));
+        ((TextView) findViewById(R.id.detailAlert_Detail)).setText(Html.fromHtml(alert.getDetailFormatte(arretsToBold).toString()));
     }
 
 }

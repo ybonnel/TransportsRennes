@@ -132,36 +132,28 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			tempsEnMinutes--;
 		}
 		if (tempsEnMinutes > 0) {
-			stringBuilder.append(myContext.getString(R.string.dans));
-			stringBuilder.append(' ');
+			stringBuilder.append(myContext.getString(R.string.dans)).append(' ');
 			final int heures = tempsEnMinutes / 60;
 			final int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
-				stringBuilder.append(heures);
-				stringBuilder.append(' ');
-				stringBuilder.append(myContext.getString(R.string.heures));
-				stringBuilder.append(' ');
+				stringBuilder.append(heures).append(' ').append(myContext.getString(R.string.heures)).append(' ');
 				tempsAjoute = true;
 			}
 			if (minutes > 0) {
-				stringBuilder.append(minutes);
-				stringBuilder.append(' ');
-				stringBuilder.append(myContext.getString(R.string.minutes));
+				stringBuilder.append(minutes).append(' ').append(myContext.getString(R.string.minutes));
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
-				stringBuilder.append("0 ");
-				stringBuilder.append(myContext.getString(R.string.minutes));
+				stringBuilder.append("0 ").append(myContext.getString(R.string.minutes));
 			}
 		} else if (tempsEnMinutes == 0) {
-			stringBuilder.append("< 1 ");
-			stringBuilder.append(myContext.getString(R.string.miniMinutes));
+			stringBuilder.append("< 1 ").append(myContext.getString(R.string.miniMinutes));
 		}
 		if (secondes != null && !accurate) {
 			stringBuilder.append('*');
 		}
-		return stringBuilder.toString();
+		return stringBuilder;
 	}
 
 	private static CharSequence formatterCalendarHeure(final int prochainDepart, final Integer secondes) {
@@ -176,8 +168,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 		if (heuresChaine.length() < 2) {
 			stringBuilder.append('0');
 		}
-		stringBuilder.append(heuresChaine);
-		stringBuilder.append(':');
+		stringBuilder.append(heuresChaine).append(':');
 		if (minutesChaine.length() < 2) {
 			stringBuilder.append('0');
 		}
@@ -191,7 +182,7 @@ public abstract class AbstractDetailArretAdapter extends BaseAdapter {
 			}
 			stringBuilder.append(secondesChaine);
 		}
-		return stringBuilder.toString();
+		return stringBuilder;
 	}
 
 }

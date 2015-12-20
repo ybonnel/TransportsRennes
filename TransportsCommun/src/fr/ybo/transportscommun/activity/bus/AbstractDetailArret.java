@@ -488,13 +488,11 @@ public abstract class AbstractDetailArret extends BaseListActivity {
         if (heuresChaine.length() < 2) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heuresChaine);
-        stringBuilder.append(':');
+        stringBuilder.append(heuresChaine).append(':');
         if (minutesChaine.length() < 2) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutesChaine);
-        return stringBuilder;
+        return stringBuilder.append(minutesChaine);
     }
 
     private CharSequence formatterCalendar(final int tempsRestant) {

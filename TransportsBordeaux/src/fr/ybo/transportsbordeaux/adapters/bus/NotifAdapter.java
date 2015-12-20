@@ -121,17 +121,12 @@ public class NotifAdapter extends BaseAdapter {
         final int minutes = tempsEnMinutes - heures * 60;
         boolean tempsAjoute = false;
         if (heures > 0) {
-            stringBuilder.append(heures);
-            stringBuilder.append(' ');
-            stringBuilder.append(myContext.getString(R.string.miniHeures));
-            stringBuilder.append(' ');
+            stringBuilder.append(heures).append(' ').append(myContext.getString(R.string.miniHeures)).append(' ');
             tempsAjoute = true;
         }
         if (minutes > 0) {
             if (heures <= 0) {
-                stringBuilder.append(minutes);
-                stringBuilder.append(' ');
-                stringBuilder.append(myContext.getString(R.string.miniMinutes));
+                stringBuilder.append(minutes).append(' ').append(myContext.getString(R.string.miniMinutes));
             } else {
                 if (minutes < 10) {
                     stringBuilder.append('0');
@@ -141,10 +136,9 @@ public class NotifAdapter extends BaseAdapter {
             tempsAjoute = true;
         }
         if (!tempsAjoute) {
-            stringBuilder.append("0 ");
-            stringBuilder.append(myContext.getString(R.string.miniMinutes));
+            stringBuilder.append("0 ").append(myContext.getString(R.string.miniMinutes));
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
 }

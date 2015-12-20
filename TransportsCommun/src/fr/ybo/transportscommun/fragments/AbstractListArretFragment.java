@@ -77,14 +77,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		closeCurrentCursor();
 		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
-		final StringBuilder requete = new StringBuilder();
-		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible, ArretRoute.macroDirection as macroDirection ");
-		requete.append("from ArretRoute, Arret, Direction ");
-		requete.append("where");
-		requete.append(" ArretRoute.ligneId = :ligneId");
-		requete.append(" and ArretRoute.arretId = Arret.id");
-		requete.append(" and Direction.id = ArretRoute.directionId");
+		final StringBuilder requete = new StringBuilder("select Arret.id as _id, Arret.nom as arretName, Direction.direction as direction, ArretRoute.accessible as accessible, ArretRoute.macroDirection as macroDirection from ArretRoute, Arret, Direction where  ArretRoute.ligneId = :ligneId and ArretRoute.arretId = Arret.id and Direction.id = ArretRoute.directionId");
 		if (currentDirection != null) {
 			requete.append(" and Direction.direction = :direction");
 			selectionArgs.add(currentDirection);

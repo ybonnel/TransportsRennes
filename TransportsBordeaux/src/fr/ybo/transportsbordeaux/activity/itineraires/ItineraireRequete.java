@@ -345,8 +345,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         final StringBuilder stringBuilder = new StringBuilder();
         boolean erreur = false;
         if (reponseDepart != null && reponseDepart.getResults().isEmpty()) {
-            stringBuilder.append(getString(R.string.erreur_pasAdresseDepart));
-            stringBuilder.append('\n');
+            stringBuilder.append(getString(R.string.erreur_pasAdresseDepart)).append('\n');
             erreur = true;
         }
         if (reponseArrivee != null && reponseArrivee.getResults().isEmpty()) {
@@ -354,7 +353,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             erreur = true;
         }
         if (erreur) {
-            Toast.makeText(this, stringBuilder.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, stringBuilder, Toast.LENGTH_LONG).show();
         } else {
             if (reponseDepart != null && reponseDepart.getResults().size() > 1 || reponseArrivee != null
                     && reponseArrivee.getResults().size() > 1) {

@@ -103,17 +103,14 @@ public final class Widget21UpdateUtil {
         if (heures < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heures);
-        stringBuilder.append(':');
+        stringBuilder.append(heures).append(':');
         if (minutes < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutes);
-
-        return stringBuilder.toString();
+        return stringBuilder.append(minutes);
     }
 
-    private static String formatterTempsRestant(final Context context, final int prochainDepart, final int now) {
+    private static CharSequence formatterTempsRestant(final Context context, final int prochainDepart, final int now) {
         final StringBuilder stringBuilder = new StringBuilder();
         final int tempsEnMinutes = prochainDepart - now;
         if (tempsEnMinutes < 0) {
@@ -123,17 +120,12 @@ public final class Widget21UpdateUtil {
             final int minutes = tempsEnMinutes - heures * 60;
             boolean tempsAjoute = false;
             if (heures > 0) {
-                stringBuilder.append(heures);
-                stringBuilder.append(' ');
-                stringBuilder.append(context.getString(R.string.miniHeures));
-                stringBuilder.append(' ');
+                stringBuilder.append(heures).append(' ').append(context.getString(R.string.miniHeures)).append(' ');
                 tempsAjoute = true;
             }
             if (minutes > 0) {
                 if (heures <= 0) {
-                    stringBuilder.append(minutes);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(context.getString(R.string.miniMinutes));
+                    stringBuilder.append(minutes).append(' ').append(context.getString(R.string.miniMinutes));
                 } else {
                     if (minutes < 10) {
                         stringBuilder.append('0');
@@ -143,10 +135,9 @@ public final class Widget21UpdateUtil {
                 tempsAjoute = true;
             }
             if (!tempsAjoute) {
-                stringBuilder.append("0 ");
-                stringBuilder.append(context.getString(R.string.miniMinutes));
+                stringBuilder.append("0 ").append(context.getString(R.string.miniMinutes));
             }
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 }

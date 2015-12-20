@@ -230,17 +230,17 @@ public class Generateur {
 							}
 							arretOfLigne.put(horaire.arretId, arrets.get(horaire.arretId));
 						}
-						chaineBuilder.append(horaire.arretId);
-						chaineBuilder.append(',');
+						chaineBuilder.append(horaire.arretId).append(',');
 						terminus = horaire;
 					}
 					terminus.terminus = true;
-					if (!countByChaine.containsKey(chaineBuilder.toString())) {
-						countByChaine.put(chaineBuilder.toString(), 0);
-						mapTrajetChaine.put(chaineBuilder.toString(), new ArrayList<Trajet>());
+					final String chaine = chaineBuilder.toString();
+					if (!countByChaine.containsKey(chaine)) {
+						countByChaine.put(chaine, 0);
+						mapTrajetChaine.put(chaine, new ArrayList<Trajet>());
 					}
-					countByChaine.put(chaineBuilder.toString(), countByChaine.get(chaineBuilder.toString()) + 1);
-					mapTrajetChaine.get(chaineBuilder.toString()).add(trajet);
+					countByChaine.put(chaine, countByChaine.get(chaine) + 1);
+					mapTrajetChaine.get(chaine).add(trajet);
 				}
 			}
 			// parcours des arrêts

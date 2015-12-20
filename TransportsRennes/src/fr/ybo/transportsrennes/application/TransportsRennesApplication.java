@@ -175,8 +175,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
                     }
                     final StringBuilder stringBuilder = new StringBuilder();
                     for (final String ligne : lignes) {
-                        stringBuilder.append(ligne);
-                        stringBuilder.append(',');
+                        stringBuilder.append(ligne).append(',');
                     }
                     alertBdd.setLignes(stringBuilder.toString());
                     getDataBaseHelper().insert(alertBdd);

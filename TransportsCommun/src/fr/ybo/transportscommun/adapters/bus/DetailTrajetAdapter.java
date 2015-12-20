@@ -69,13 +69,11 @@ public class DetailTrajetAdapter extends CursorAdapter {
         if (heuresChaine.length() < 2) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heuresChaine);
-        stringBuilder.append(':');
+        stringBuilder.append(heuresChaine).append(':');
         if (minutesChaine.length() < 2) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutesChaine);
-        return stringBuilder.toString();
+        return stringBuilder.append(minutesChaine);
     }
 
 }

@@ -222,22 +222,13 @@ public class Horaire {
 
 	private static Cursor getAllHorairesAsCursorForCalendrierId(final String ligneId, final String arretId, final Integer calendarId, final Integer macroDirection) {
 		final StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId, ");
-		requete.append("Horaire.stopSequence as stopSequence, Direction.direction as direction ");
-		requete.append("from Horaire_");
+		requete.append("select Horaire.heureDepart as _id, Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction as direction from Horaire_");
 		requete.append(ligneId);
-		requete.append(" as Horaire, Trajet, Direction ");
-		requete.append("where ");
-		requete.append(" Trajet.calendrierId = :calendrierId");
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.directionId = Direction.id");
-		requete.append(" and Trajet.ligneId = :ligneId");
+		requete.append(" as Horaire, Trajet, Direction where  Trajet.calendrierId = :calendrierId and Trajet.id = Horaire.trajetId and Trajet.directionId = Direction.id and Trajet.ligneId = :ligneId");
 		if (macroDirection != null) {
 			requete.append(" and Trajet.macroDirection = :macroDirection1");
 		}
-		requete.append(" and Horaire.arretId = :arretId");
-		requete.append(" and Horaire.terminus = 0");
-		requete.append(" order by Horaire.heureDepart;");
+		requete.append(" and Horaire.arretId = :arretId and Horaire.terminus = 0 order by Horaire.heureDepart;");
 		final List<String> selectionArgs = new ArrayList<String>();
 		selectionArgs.add(calendarId.toString());
 		selectionArgs.add(ligneId);
@@ -252,20 +243,11 @@ public class Horaire {
 
 	private static Cursor getAllHorairesAsCursor(final String ligneId, final String arretId, final Calendar calendar, final Integer macroDirection) {
 		final StringBuilder requete = new StringBuilder();
-		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, ");
-		requete.append("Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction ");
-		requete.append("from Calendrier,  Horaire_");
+		requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction from Calendrier,  Horaire_");
 		requete.append(ligneId);
-		requete.append(" as Horaire, Trajet, Direction ");
-		requete.append("where ");
-		requete.append(" Calendrier.dateDebut <= :today1");
-		requete.append(" and Calendrier.dateFin >= :today2");
-		requete.append(" and ");
+		requete.append(" as Horaire, Trajet, Direction where  Calendrier.dateDebut <= :today1 and Calendrier.dateFin >= :today2 and ");
 		requete.append(clauseWhereForCalendrier(calendar));
-		requete.append(" and Trajet.calendrierId = Calendrier.id");
-		requete.append(" and Trajet.id = Horaire.trajetId");
-		requete.append(" and Trajet.directionId = Direction.id");
-		requete.append(" and Trajet.ligneId = :ligneId");
+		requete.append(" and Trajet.calendrierId = Calendrier.id and Trajet.id = Horaire.trajetId and Trajet.directionId = Direction.id and Trajet.ligneId = :ligneId");
 		if (macroDirection != null) {
 			requete.append(" and Trajet.macroDirection = :macroDirection1");
 		}
@@ -303,26 +285,15 @@ public class Horaire {
 		final List<String> selectionArgs = new ArrayList<String>(7);
 		final StringBuilder requete = new StringBuilder();
 		if (!JoursFeries.is1erMai(calendarLaVeille.getTime())) {
-			requete.append("select (Horaire.heureDepart - :uneJournee) as _id, :veille0 as today, Calendrier.id as calendrierId, ");
-			requete.append("Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction as direction ");
-			requete.append("from Calendrier, Horaire_");
+			requete.append("select (Horaire.heureDepart - :uneJournee) as _id, :veille0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction as direction from Calendrier, Horaire_");
 			requete.append(ligneId);
-			requete.append(" as Horaire, Trajet, Direction ");
-			requete.append("where ");
-			requete.append(" Calendrier.dateDebut <= :veille1");
-			requete.append(" and Calendrier.dateFin >= :veille2");
-			requete.append(" and ");
+			requete.append(" as Horaire, Trajet, Direction where  Calendrier.dateDebut <= :veille1 and Calendrier.dateFin >= :veille2 and ");
 			requete.append(clauseWhereForCalendrier(calendarLaVeille));
-			requete.append(" and Trajet.id = Horaire.trajetId");
-			requete.append(" and Trajet.calendrierId = Calendrier.id");
-			requete.append(" and Trajet.directionId = Direction.id");
-			requete.append(" and Trajet.ligneId = :routeId1");
+			requete.append(" and Trajet.id = Horaire.trajetId and Trajet.calendrierId = Calendrier.id and Trajet.directionId = Direction.id and Trajet.ligneId = :routeId1");
 			if (macroDirection != null) {
 				requete.append(" and Trajet.macroDirection = :macroDirection1");
 			}
-			requete.append(" and Horaire.arretId = :arretId1");
-			requete.append(" and Horaire.terminus = 0");
-			requete.append(" and Horaire.heureDepart >= :maintenantHier ");
+			requete.append(" and Horaire.arretId = :arretId1 and Horaire.terminus = 0 and Horaire.heureDepart >= :maintenantHier ");
 
 			final String veille = FORMAT_DATE_CALENDRIER.format(calendarLaVeille.getTime());
 			selectionArgs.add(Integer.toString(uneJournee));
@@ -340,27 +311,15 @@ public class Horaire {
 			if (requete.length() > 0) {
 				requete.append("UNION ");
 			}
-			requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, ");
-			requete.append("Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction as direction ");
-			requete.append("from Calendrier,  Horaire_");
+			requete.append("select Horaire.heureDepart as _id, :today0 as today, Calendrier.id as calendrierId, Trajet.id as trajetId, Horaire.stopSequence as stopSequence, Direction.direction as direction from Calendrier,  Horaire_");
 			requete.append(ligneId);
-			requete.append(" as Horaire, Trajet, Direction ");
-			requete.append("where ");
-
-			requete.append(" Calendrier.dateDebut <= :today1");
-			requete.append(" and Calendrier.dateFin >= :today2");
-			requete.append(" and ");
+			requete.append(" as Horaire, Trajet, Direction where Calendrier.dateDebut <= :today1 and Calendrier.dateFin >= :today2 and ");
 			requete.append(clauseWhereForCalendrier(calendar));
-			requete.append(" and Trajet.id = Horaire.trajetId");
-			requete.append(" and Trajet.calendrierId = Calendrier.id");
-			requete.append(" and Trajet.directionId = Direction.id");
-			requete.append(" and Trajet.ligneId = :routeId2");
+			requete.append(" and Trajet.id = Horaire.trajetId and Trajet.calendrierId = Calendrier.id and Trajet.directionId = Direction.id and Trajet.ligneId = :routeId2");
 			if (macroDirection != null) {
 				requete.append(" and Trajet.macroDirection = :macroDirection2");
 			}
-			requete.append(" and Horaire.arretId = :arretId2");
-			requete.append(" and Horaire.terminus = 0");
-			requete.append(" and Horaire.heureDepart >= :maintenant");
+			requete.append(" and Horaire.arretId = :arretId2 and Horaire.terminus = 0 and Horaire.heureDepart >= :maintenant");
 
 			final String today = FORMAT_DATE_CALENDRIER.format(calendar.getTime());
 			selectionArgs.add(today);

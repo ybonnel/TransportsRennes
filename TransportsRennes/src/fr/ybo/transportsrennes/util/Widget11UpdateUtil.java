@@ -87,13 +87,10 @@ public final class Widget11UpdateUtil {
         if (heures < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heures);
-        stringBuilder.append(':');
+        stringBuilder.append(heures).append(':');
         if (minutes < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutes);
-
-        return stringBuilder.toString();
+        return stringBuilder.append(minutes);
     }
 }

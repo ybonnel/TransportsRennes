@@ -36,14 +36,12 @@ public final class Formatteur {
 		for (final String champ : SLASH.matcher(chaine).replaceAll("-").split(" ")) {
 			for (final String champ2 : champ.split("\\(")) {
 				if (!champ2.isEmpty()) {
-					nomLongFormateBuilder.append(champ2.substring(0, 1).toUpperCase());
-					nomLongFormateBuilder.append(champ2.substring(1, champ2.length()).toLowerCase());
+					nomLongFormateBuilder.append(champ2.substring(0, 1).toUpperCase()).append(champ2.substring(1, champ2.length()).toLowerCase());
 				}
 				nomLongFormateBuilder.append('(');
 			}
 			// on enleve le dernier tiret.
-			nomLongFormateBuilder.deleteCharAt(nomLongFormateBuilder.length() - 1);
-			nomLongFormateBuilder.append(' ');
+			nomLongFormateBuilder.deleteCharAt(nomLongFormateBuilder.length() - 1).append(' ');
 		}
 		// on enleve le dernier espace.
 		nomLongFormateBuilder.deleteCharAt(nomLongFormateBuilder.length() - 1);
@@ -67,17 +65,12 @@ public final class Formatteur {
 			final int minutes = tempsEnMinutes - heures * 60;
 			boolean tempsAjoute = false;
 			if (heures > 0) {
-				stringBuilder.append(heures);
-				stringBuilder.append(' ');
-				stringBuilder.append(context.getString(R.string.miniHeures));
-				stringBuilder.append(' ');
+				stringBuilder.append(heures).append(' ').append(context.getString(R.string.miniHeures)).append(' ');
 				tempsAjoute = true;
 			}
 			if (minutes > 0) {
 				if (heures <= 0) {
-					stringBuilder.append(minutes);
-					stringBuilder.append(' ');
-					stringBuilder.append(context.getString(R.string.miniMinutes));
+					stringBuilder.append(minutes).append(' ').append(context.getString(R.string.miniMinutes));
 				} else {
 					if (minutes < 10) {
 						stringBuilder.append('0');
@@ -87,10 +80,9 @@ public final class Formatteur {
 				tempsAjoute = true;
 			}
 			if (!tempsAjoute) {
-				stringBuilder.append("0 ");
-				stringBuilder.append(context.getString(R.string.miniMinutes));
+				stringBuilder.append("0 ").append(context.getString(R.string.miniMinutes));
 			}
 		}
-		return stringBuilder.toString();
+		return stringBuilder;
 	}
 }
