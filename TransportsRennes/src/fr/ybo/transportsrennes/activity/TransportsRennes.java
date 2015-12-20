@@ -160,16 +160,11 @@ public class TransportsRennes extends AccueilActivity {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
-		item.setIcon(android.R.drawable.ic_menu_info_details);
-		final MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
-		itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
-		final MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
-		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
-		final MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
-		itemShare.setIcon(android.R.drawable.ic_menu_share);
-		final MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
-		itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
+		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos).setIcon(android.R.drawable.ic_menu_info_details);
+		menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif).setIcon(android.R.drawable.ic_menu_agenda);
+		menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines).setIcon(android.R.drawable.ic_menu_save);
+		menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share).setIcon(android.R.drawable.ic_menu_share);
+		menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets).setIcon(R.drawable.ic_menu_tickets);
 		return true;
 	}
 

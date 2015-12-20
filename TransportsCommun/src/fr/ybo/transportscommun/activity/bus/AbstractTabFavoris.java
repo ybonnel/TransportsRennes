@@ -67,10 +67,8 @@ public abstract class AbstractTabFavoris extends BaseTabFragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		final MenuItem itemAjout = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
-		itemAjout.setIcon(android.R.drawable.ic_menu_add);
-		final MenuItem itemSupp = menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe);
-		itemSupp.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
+		menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(GROUP_ID, MENU_SUPPRIMER, Menu.NONE, R.string.suprimerGroupe).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
 		return true;
 	}
 

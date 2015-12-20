@@ -52,8 +52,7 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         super.onCreateOptionsMenu(menu);
-        final MenuItem item = menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe);
-        item.setIcon(android.R.drawable.ic_menu_add);
+        menu.add(GROUP_ID, MENU_AJOUTER, Menu.NONE, R.string.ajouterGroupe).setIcon(android.R.drawable.ic_menu_add);
         return true;
     }
 
