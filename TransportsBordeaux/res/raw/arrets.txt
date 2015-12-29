@@ -37,7 +37,7 @@ id,nom,latitude,longitude
 296b,Pagneau,44.814128,-0.700317
 5886b,Tassigny,44.854824,-0.614149
 2737b,Pont de l'Orient,44.805605,-0.64857
-7555b,Floirac Dravemont,44.845862,-0.510133
+7555b,Floirac Dravemont,44.846017,-0.510092
 606b,Chantiers de la Garonne,44.859678,-0.543601
 5281b,Cazalet,44.799241,-0.670145
 533b,Procession,44.815024,-0.694525
@@ -852,6 +852,7 @@ id,nom,latitude,longitude
 2572b,La Hontan,44.76671,-0.549695
 6731b,Paludate,44.827447,-0.55128
 526b,Racine,44.792859,-0.584824
+7681b,Général de Gaulle,44.910087,-0.641048
 3869b,Barrière du Médoc,44.853256,-0.594447
 5677b,Mérignac Soleil,44.831208,-0.656288
 7565b,Europe,44.9247,-0.497931
@@ -885,6 +886,7 @@ id,nom,latitude,longitude
 1485b,Bazin,44.826684,-0.652447
 5638b,8 Mai 1945,44.867342,-0.603105
 1284b,Ruet,44.870164,-0.674251
+2062b,Luxembourg,44.908535,-0.643548
 7337,Le Haillan Rostand,44.858517,-0.668319
 7346,Quinconces Fleuve,44.844496,-0.570715
 1499b,Carnot,44.79575,-0.67241
@@ -1810,6 +1812,7 @@ id,nom,latitude,longitude
 2884b,Le Trinquet,44.801903,-0.66352
 1726b,André Ricard,44.85955,-0.539703
 646b,Place Meignan,44.902313,-0.505919
+2003b,Luxembourg,44.908702,-0.644231
 7594b,Jean Moulin,45.007188,-0.530261
 6914b,Bellevue,44.845564,-0.726208
 143b,Erables,44.82612,-0.481723
@@ -2929,6 +2932,7 @@ id,nom,latitude,longitude
 1034b,INRA,44.787314,-0.580724
 1211b,Jamois,44.991362,-0.543273
 775b,14 Juillet,44.822572,-0.593508
+7672b,Centre Commercial Mériadeck,44.838713,-0.582938
 5378b,François Mitterrand,44.828043,-0.613742
 268b,Cornier,44.843202,-0.51302
 907b,Galgon (chem. de Leyran),44.775098,-0.538762
