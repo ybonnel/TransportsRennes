@@ -10,7 +10,7 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-    compileSdkVersion 13
+    compileSdkVersion 19
     buildToolsVersion "23.0.2"
 
     lintOptions {
