@@ -13,6 +13,11 @@ android {
     compileSdkVersion 19
     buildToolsVersion "23.0.2"
 
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+    }
+
     lintOptions {
         abortOnError false
     }

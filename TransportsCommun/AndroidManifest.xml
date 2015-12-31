@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="fr.ybo.transportscommun" >
 
-    <uses-sdk android:minSdkVersion="9"
-              android:targetSdkVersion="19"/>
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>
