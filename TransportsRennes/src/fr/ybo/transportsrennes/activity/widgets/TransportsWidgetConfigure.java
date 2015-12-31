@@ -62,13 +62,13 @@ public class TransportsWidgetConfigure extends ListActivity {
         setContentView(R.layout.configurewidget);
 
         if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-            Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetBeforeLaunch, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
         if (favoris.isEmpty()) {
-            Toast.makeText(this, getString(R.string.erreur_widgetWithNoFavori), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetWithNoFavori, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -92,7 +92,7 @@ public class TransportsWidgetConfigure extends ListActivity {
                         adapter.addFavoriSelectionne(position);
                         checkBox.setChecked(true);
                     } else {
-                        Toast.makeText(TransportsWidgetConfigure.this, getString(R.string.tooMuchFavoris), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransportsWidgetConfigure.this, R.string.tooMuchFavoris, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -105,7 +105,7 @@ public class TransportsWidgetConfigure extends ListActivity {
                 final FavoriAdapterForWidget favoriAdapter = (FavoriAdapterForWidget) getListAdapter();
                 final List<ArretFavori> favorisSelectionnes = favoriAdapter.getFavorisSelectionnes();
                 if (favorisSelectionnes.isEmpty()) {
-                    Toast.makeText(TransportsWidgetConfigure.this, getString(R.string.erreur_auMoinsUnFavori), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransportsWidgetConfigure.this, R.string.erreur_auMoinsUnFavori, Toast.LENGTH_SHORT).show();
                 } else {
                     saveSettings(TransportsWidgetConfigure.this, appWidgetId, favorisSelectionnes);
                     final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidgetConfigure.this);

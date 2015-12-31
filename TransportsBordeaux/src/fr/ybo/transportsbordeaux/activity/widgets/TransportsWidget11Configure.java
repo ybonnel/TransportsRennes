@@ -31,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
@@ -41,7 +42,7 @@ public class TransportsWidget11Configure extends ListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;
-	private FavoriAdapterForWidget1 adapter;
+    private FavoriAdapterForWidget1 adapter;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -61,13 +62,13 @@ public class TransportsWidget11Configure extends ListActivity {
 
         if (TransportsBordeauxApplication.getDataBaseHelper() == null
                 || TransportsBordeauxApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-            Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetBeforeLaunch, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         favoris = TransportsBordeauxApplication.getDataBaseHelper().select(new ArretFavori());
         if (favoris.isEmpty()) {
-            Toast.makeText(this, getString(R.string.erreur_widgetWithNoFavori), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetWithNoFavori, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -75,7 +76,7 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     private void construireListe() {
-    	adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
+        adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
         setListAdapter(adapter);
         final ListView lv = getListView();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,7 +93,7 @@ public class TransportsWidget11Configure extends ListActivity {
                         checkBox.setChecked(true);
                     } else {
 
-                        Toast.makeText(TransportsWidget11Configure.this, getString(R.string.justOneFavori), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(TransportsWidget11Configure.this, R.string.justOneFavori, Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -106,8 +107,7 @@ public class TransportsWidget11Configure extends ListActivity {
                 final FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
                 final ArretFavori favoriSelectionne = favoriAdapter.getFavoriSelectionne();
                 if (favoriSelectionne == null) {
-                    Toast.makeText(TransportsWidget11Configure.this, getString(R.string.erreur_auMoinsUnFavori),
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransportsWidget11Configure.this, R.string.erreur_auMoinsUnFavori, Toast.LENGTH_SHORT).show();
                 } else {
                     saveSettings(TransportsWidget11Configure.this, appWidgetId, favoriSelectionne);
                     final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidget11Configure.this);

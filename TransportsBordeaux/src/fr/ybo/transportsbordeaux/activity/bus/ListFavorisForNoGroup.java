@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.loading.LoadingActivity;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
@@ -39,11 +40,11 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listfavoris);
-		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
-		if (FavorisManager.hasFavorisToLoad()) {
-			final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
-			startActivity(intent);
-		}
+        getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
+        if (FavorisManager.hasFavorisToLoad()) {
+            final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+            startActivity(intent);
+        }
     }
 
     private static final int GROUP_ID = 0;
@@ -56,61 +57,59 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
         return true;
     }
 
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-			case R.id.menu_export:
-				FavorisManager.INSTANCE.export(this);
-				break;
-			case R.id.menu_import:
-				FavorisManager.INSTANCE.load(this);
-				startActivity(new Intent(this, TabFavoris.class));
-				finish();
-				break;
-			case MENU_AJOUTER:
-				showDialog(AJOUTER_GROUPE_DIALOG_ID);
-				return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.menu_export:
+                FavorisManager.INSTANCE.export(this);
+                break;
+            case R.id.menu_import:
+                FavorisManager.INSTANCE.load(this);
+                startActivity(new Intent(this, TabFavoris.class));
+                finish();
+                break;
+            case MENU_AJOUTER:
+                showDialog(AJOUTER_GROUPE_DIALOG_ID);
+                return true;
+        }
+        return false;
+    }
 
-	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
+    private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
 
-	@Override
-	protected Dialog onCreateDialog(final int id) {
-		if (id == AJOUTER_GROUPE_DIALOG_ID) {
-			final TextView input = new EditText(this);
-			return new AlertDialog.Builder(this).setView(input).setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog, final int whichButton) {
-					final String value = input.getText().toString().trim();
-					if (value.isEmpty()) {
-						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeObligatoire),
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					final GroupeFavori groupeFavori = new GroupeFavori();
-					groupeFavori.name = value;
-					if (!AbstractTransportsApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
-							|| value.equals(getString(R.string.all))) {
-						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeExistant),
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					AbstractTransportsApplication.getDataBaseHelper().insert(groupeFavori);
-					startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
-					finish();
-				}
-			}).setNegativeButton(getString(R.string.annuler), new MyOnClickListener()).create();
-		}
-		return super.onCreateDialog(id);
-	}
+    @Override
+    protected Dialog onCreateDialog(final int id) {
+        if (id == AJOUTER_GROUPE_DIALOG_ID) {
+            final TextView input = new EditText(this);
+            return new AlertDialog.Builder(this).setView(input).setPositiveButton(R.string.ajouter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int whichButton) {
+                    final String value = input.getText().toString().trim();
+                    if (value.isEmpty()) {
+                        Toast.makeText(ListFavorisForNoGroup.this, R.string.groupeObligatoire, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    final GroupeFavori groupeFavori = new GroupeFavori();
+                    groupeFavori.name = value;
+                    if (!AbstractTransportsApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
+                            || value.equals(getString(R.string.all))) {
+                        Toast.makeText(ListFavorisForNoGroup.this, R.string.groupeExistant, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    AbstractTransportsApplication.getDataBaseHelper().insert(groupeFavori);
+                    startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
+                    finish();
+                }
+            }).setNegativeButton(R.string.annuler, new MyOnClickListener()).create();
+        }
+        return super.onCreateDialog(id);
+    }
 
-	private static class MyOnClickListener implements DialogInterface.OnClickListener {
-		@Override
+    private static class MyOnClickListener implements DialogInterface.OnClickListener {
+        @Override
         public void onClick(final DialogInterface dialog, final int whichButton) {
             dialog.cancel();
         }
-	}
+    }
 }

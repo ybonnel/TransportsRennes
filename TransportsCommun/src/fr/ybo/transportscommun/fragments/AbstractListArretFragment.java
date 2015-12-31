@@ -60,7 +60,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		final String toutes = getString(R.string.Toutes);
 		items.add(toutes);
 		Collections.sort(items, new StringComparator(toutes));
-		new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.chooseDirection)).setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
+		new AlertDialog.Builder(getActivity()).setTitle(R.string.chooseDirection).setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialogInterface, final int item) {
 				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);

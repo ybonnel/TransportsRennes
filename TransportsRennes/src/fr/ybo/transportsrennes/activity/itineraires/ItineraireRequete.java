@@ -151,7 +151,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             }
         });
         if (!locationUtil.activeGps()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.activeGps, Toast.LENGTH_SHORT).show();
         }
         new AsyncTask<Void, Void, Void>() {
 
@@ -427,7 +427,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 super.onPostExecute(reponse);
                 progressDialog.dismiss();
                 if (reponse == null) {
-                    Toast.makeText(ItineraireRequete.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItineraireRequete.this, R.string.erreurReseau, Toast.LENGTH_LONG).show();
                 } else if (reponse.getError() != null) {
                     LOG_YBO.erreur(reponse.getError().getMsg());
                     final int message;

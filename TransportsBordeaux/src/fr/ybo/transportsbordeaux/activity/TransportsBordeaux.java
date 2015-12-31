@@ -105,7 +105,7 @@ public class TransportsBordeaux extends AccueilActivity {
         textView.setText(spanned, TextView.BufferType.SPANNABLE);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         new AlertDialog.Builder(this).setView(view).setTitle(getString(R.string.titleTransportsBordeaux,
-				Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(getString(R.string.Terminer), new TerminerClickListener()).show();
+				Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(R.string.Terminer, new TerminerClickListener()).show();
     }
 
     private static class TerminerClickListener implements DialogInterface.OnClickListener {
@@ -136,7 +136,7 @@ public class TransportsBordeaux extends AccueilActivity {
 		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
         if (dernierMiseAJour == null || dernierMiseAJour.derniereMiseAJour == null
                 || dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
-            final AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(getString(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this).setMessage(dernierMiseAJour == null ? R.string.premierLancement : R.string.majDispo).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
                 @Override
                 public void onClick(final DialogInterface dialog, final int id) {
                     dialog.dismiss();
@@ -144,7 +144,7 @@ public class TransportsBordeaux extends AccueilActivity {
                 }
             });
             if (dernierMiseAJour == null) {
-                builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
+                builder.setNegativeButton(R.string.non, new Dialog.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.cancel();
@@ -152,7 +152,7 @@ public class TransportsBordeaux extends AccueilActivity {
                     }
                 });
             } else {
-                builder.setNegativeButton(getString(R.string.non), new MyOnClickListener());
+                builder.setNegativeButton(R.string.non, new MyOnClickListener());
             }
             runOnUiThread(new Runnable() {
                 @Override
@@ -194,13 +194,13 @@ public class TransportsBordeaux extends AccueilActivity {
 				startActivity(intentMap);
 				return true;
             case MENU_LOAD_LINES:
-                new AlertDialog.Builder(this).setMessage(getString(R.string.loadAllLineAlert)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+                new AlertDialog.Builder(this).setMessage(R.string.loadAllLineAlert).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
                     @Override
                     public void onClick(final DialogInterface dialog, final int id) {
                         dialog.dismiss();
                         loadAllLines();
                     }
-                }).setNegativeButton(getString(R.string.non), new MyOnClickListener()).show();
+                }).setNegativeButton(R.string.non, new MyOnClickListener()).show();
                 return true;
             case MENU_SHARE:
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));

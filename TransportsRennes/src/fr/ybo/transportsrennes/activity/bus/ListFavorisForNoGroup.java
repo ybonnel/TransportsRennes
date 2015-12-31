@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
@@ -45,13 +46,13 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listfavoris);
-		getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
-		if (FavorisManager.hasFavorisToLoad()) {
-			final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
-			startActivity(intent);
-		} else {
-			verifierUpgrade();
-		}
+        getActivityHelper().setupActionBar(R.menu.bus_favoris_menu_items, R.menu.holo_bus_favoris_menu_items);
+        if (FavorisManager.hasFavorisToLoad()) {
+            final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_FAVORIS);
+            startActivity(intent);
+        } else {
+            verifierUpgrade();
+        }
     }
 
     private static final int GROUP_ID = 0;
@@ -65,99 +66,96 @@ public class ListFavorisForNoGroup extends BaseFragmentActivity {
         return true;
     }
 
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item) {
-		super.onOptionsItemSelected(item);
-		switch (item.getItemId()) {
-			case R.id.menu_export:
-				FavorisManager.INSTANCE.export(this);
-				break;
-			case R.id.menu_import:
-				FavorisManager.INSTANCE.load(this);
-				startActivity(new Intent(this, TabFavoris.class));
-				finish();
-				break;
-			case MENU_AJOUTER:
-				showDialog(AJOUTER_GROUPE_DIALOG_ID);
-				return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.menu_export:
+                FavorisManager.INSTANCE.export(this);
+                break;
+            case R.id.menu_import:
+                FavorisManager.INSTANCE.load(this);
+                startActivity(new Intent(this, TabFavoris.class));
+                finish();
+                break;
+            case MENU_AJOUTER:
+                showDialog(AJOUTER_GROUPE_DIALOG_ID);
+                return true;
+        }
+        return false;
+    }
 
-	private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
+    private static final int AJOUTER_GROUPE_DIALOG_ID = 0;
 
-	@Override
-	protected Dialog onCreateDialog(final int id) {
-		if (id == AJOUTER_GROUPE_DIALOG_ID) {
-			final TextView input = new EditText(this);
-			return new AlertDialog.Builder(this).setView(input).setPositiveButton(getString(R.string.ajouter), new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog, final int whichButton) {
-					final String value = input.getText().toString().trim();
-					if (value.isEmpty()) {
-						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeObligatoire),
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					final GroupeFavori groupeFavori = new GroupeFavori();
-					groupeFavori.name = value;
-					if (!TransportsRennesApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
-							|| value.equals(getString(R.string.all))) {
-						Toast.makeText(ListFavorisForNoGroup.this, getString(R.string.groupeExistant),
-								Toast.LENGTH_LONG).show();
-						return;
-					}
-					TransportsRennesApplication.getDataBaseHelper().insert(groupeFavori);
-					startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
-					finish();
-				}
-			}).setNegativeButton(getString(R.string.annuler), new MyOnClickListener()).create();
-		}
+    @Override
+    protected Dialog onCreateDialog(final int id) {
+        if (id == AJOUTER_GROUPE_DIALOG_ID) {
+            final TextView input = new EditText(this);
+            return new AlertDialog.Builder(this).setView(input).setPositiveButton(R.string.ajouter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int whichButton) {
+                    final String value = input.getText().toString().trim();
+                    if (value.isEmpty()) {
+                        Toast.makeText(ListFavorisForNoGroup.this, R.string.groupeObligatoire, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    final GroupeFavori groupeFavori = new GroupeFavori();
+                    groupeFavori.name = value;
+                    if (!TransportsRennesApplication.getDataBaseHelper().select(groupeFavori).isEmpty()
+                            || value.equals(getString(R.string.all))) {
+                        Toast.makeText(ListFavorisForNoGroup.this, R.string.groupeExistant, Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    TransportsRennesApplication.getDataBaseHelper().insert(groupeFavori);
+                    startActivity(new Intent(ListFavorisForNoGroup.this, TabFavoris.class));
+                    finish();
+                }
+            }).setNegativeButton(R.string.annuler, new MyOnClickListener()).create();
+        }
 
-		if (id == DIALOG_UPGRADE) {
-			return new AlertDialog.Builder(this).setMessage(getString(R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				@Override
-				public void onClick(final DialogInterface dialog, final int id) {
-					dialog.dismiss();
-					upgradeDatabase();
-				}
-			}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).create();
-		}
-		return super.onCreateDialog(id);
-	}
-
-	
-
-	private void verifierUpgrade() {
-		final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
-		DernierMiseAJour dernierMiseAJour = null;
-		try {
-			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		} catch (final DataBaseException exception) {
-			dataBaseHelper.deleteAll(DernierMiseAJour.class);
-		}
-		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
-		if (dernierMiseAJour == null) {
-			upgradeDatabase();
-		} else if (dernierMiseAJour.derniereMiseAJour == null
-				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
-			showDialog(DIALOG_UPGRADE);
-		}
-	}
+        if (id == DIALOG_UPGRADE) {
+            return new AlertDialog.Builder(this).setMessage(R.string.majDispo).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int id) {
+                    dialog.dismiss();
+                    upgradeDatabase();
+                }
+            }).setNegativeButton(R.string.non, new MyOnClickListener()).create();
+        }
+        return super.onCreateDialog(id);
+    }
 
 
-	private void upgradeDatabase() {
-		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
-		startActivity(intent);
-	}
-	
-	private static final int DIALOG_UPGRADE = 2;
+    private void verifierUpgrade() {
+        final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+        DernierMiseAJour dernierMiseAJour = null;
+        try {
+            dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
+        } catch (final DataBaseException exception) {
+            dataBaseHelper.deleteAll(DernierMiseAJour.class);
+        }
+        final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
+        if (dernierMiseAJour == null) {
+            upgradeDatabase();
+        } else if (dernierMiseAJour.derniereMiseAJour == null
+                || dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
+            showDialog(DIALOG_UPGRADE);
+        }
+    }
 
-	private static class MyOnClickListener implements Dialog.OnClickListener {
-		@Override
+
+    private void upgradeDatabase() {
+        final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+        startActivity(intent);
+    }
+
+    private static final int DIALOG_UPGRADE = 2;
+
+    private static class MyOnClickListener implements Dialog.OnClickListener {
+        @Override
         public void onClick(final DialogInterface dialog, final int id) {
             dialog.cancel();
         }
-	}
+    }
 
 }

@@ -56,7 +56,7 @@ public class ListArretByPosition extends AbstractListArretByPosition {
 		if (TransportsWidget11Configure.isNotUsed(this, favori) && TransportsWidget21Configure.isNotUsed(this, favori)) {
 			AbstractTransportsApplication.getDataBaseHelper().delete(favori);
 		} else {
-			Toast.makeText(this, getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.favoriUsedByWidget, Toast.LENGTH_LONG).show();
 		}
 	}
 

@@ -78,7 +78,7 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 				contextWithDatabasePath.getDatabasePath(TransportsBordeauxDatabase.DATABASE_NAME);
 				context = contextWithDatabasePath;
 			} catch (final Exception exception) {
-				Toast.makeText(pContext, pContext.getString(R.string.erreurDBOnSdCard), Toast.LENGTH_LONG).show();
+				Toast.makeText(pContext, R.string.erreurDBOnSdCard, Toast.LENGTH_LONG).show();
 				try {
 					final ActivityManager am = (ActivityManager) pContext.getSystemService(ACTIVITY_SERVICE);
 					am.restartPackage(pContext.getPackageName());

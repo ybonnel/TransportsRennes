@@ -72,7 +72,7 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 		} catch (final IllegalArgumentException ignore) {
 		}
 		if (erreur) {
-			Toast.makeText(context, context.getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+			Toast.makeText(context, R.string.erreurReseau, Toast.LENGTH_LONG).show();
 		}
 		super.onPostExecute(result);
 	}

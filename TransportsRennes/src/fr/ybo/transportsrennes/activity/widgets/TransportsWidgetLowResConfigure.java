@@ -62,13 +62,13 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
         setContentView(R.layout.configurewidget11);
 
         if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-            Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetBeforeLaunch, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
         if (favoris.isEmpty()) {
-            Toast.makeText(this, getString(R.string.erreur_widgetWithNoFavori), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetWithNoFavori, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -92,9 +92,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
                         adapter.setFavoriSelectionne(position);
                         checkBox.setChecked(true);
                     } else {
-
-                        Toast.makeText(TransportsWidgetLowResConfigure.this, getString(R.string.justOneFavori), Toast.LENGTH_SHORT).show();
-
+                        Toast.makeText(TransportsWidgetLowResConfigure.this, R.string.justOneFavori, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -107,8 +105,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
                 final FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
                 final ArretFavori favoriSelectionne = favoriAdapter.getFavoriSelectionne();
                 if (favoriSelectionne == null) {
-                    Toast.makeText(TransportsWidgetLowResConfigure.this, getString(R.string.erreur_auMoinsUnFavori),
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransportsWidgetLowResConfigure.this, R.string.erreur_auMoinsUnFavori, Toast.LENGTH_SHORT).show();
                 } else {
                     saveSettings(TransportsWidgetLowResConfigure.this, appWidgetId, favoriSelectionne);
                     final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidgetLowResConfigure.this);

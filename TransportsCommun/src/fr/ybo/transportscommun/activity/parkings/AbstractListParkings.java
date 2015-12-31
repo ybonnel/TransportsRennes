@@ -139,7 +139,7 @@ public abstract class AbstractListParkings<T extends IParking> extends BaseListA
 			}
 		}.execute();
 		if (!locationUtil.activeGps()) {
-			Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), R.string.activeGps, Toast.LENGTH_SHORT).show();
 		}
 	}
 

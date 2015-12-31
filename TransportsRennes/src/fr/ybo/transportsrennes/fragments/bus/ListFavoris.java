@@ -175,7 +175,7 @@ public class ListFavoris extends ListFragment {
 							TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori()));
 					((BaseAdapter) getListAdapter()).notifyDataSetChanged();
 				} else {
-					Toast.makeText(getActivity(), getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+					Toast.makeText(getActivity(), R.string.favoriUsedByWidget, Toast.LENGTH_LONG).show();
 				}
 				return true;
 			case R.id.deplacerGroupe:
@@ -186,7 +186,7 @@ public class ListFavoris extends ListFragment {
 						.selectAll(GroupeFavori.class)) {
 					groupes.add(groupe.name);
 				}
-				new AlertDialog.Builder(getActivity()).setTitle(getString(R.string.chooseGroupe)).setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
+				new AlertDialog.Builder(getActivity()).setTitle(R.string.chooseGroupe).setItems(groupes.toArray(new String[groupes.size()]), new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialogInterface, final int item) {
 						favori.groupe = groupes.get(item).equals(getString(R.string.all)) ? null : groupes.get(item);

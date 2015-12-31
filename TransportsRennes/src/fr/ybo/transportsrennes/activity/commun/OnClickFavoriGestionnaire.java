@@ -120,7 +120,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();
             } else {
-                Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, R.string.favoriUsedByWidget, Toast.LENGTH_LONG).show();
             }
         }
     }

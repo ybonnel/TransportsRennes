@@ -62,8 +62,8 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listvelofavoris);
-		getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
-				R.menu.holo_liststation_favoris_menu_items);
+        getActivityHelper().setupActionBar(R.menu.liststation_favoris_menu_items,
+                R.menu.holo_liststation_favoris_menu_items);
         setListAdapter(new VeloAdapter(getApplicationContext(), stations));
         final ListView listView = getListView();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -89,50 +89,50 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
     private final class GetStations extends TacheAvecProgressDialog<Void, Void, Void> {
         private GetStations() {
             super(ListStationsFavoris.this,
- getString(R.string.dialogRequeteVcub), true);
+                    getString(R.string.dialogRequeteVcub), true);
         }
 
-		@Override
-		protected void onPostExecute(final Void result) {
-			super.onPostExecute(result);
-			if (!isCancelled()) {
-				((BaseAdapter) getListAdapter()).notifyDataSetChanged();
-			}
-		}
+        @Override
+        protected void onPostExecute(final Void result) {
+            super.onPostExecute(result);
+            if (!isCancelled()) {
+                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
+            }
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see
-		 * fr.ybo.transportscommun.util.TacheAvecProgressDialog#myDoBackground()
-		 */
-		@Override
-		protected void myDoBackground() throws ErreurReseau {
-			final List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(new VeloFavori());
-			final Collection<String> ids = new ArrayList<String>();
-			for (final VeloFavori favori : velosFavoris) {
-				ids.add(favori.number);
-			}
-			final Collection<Station> stationsTmp = Keolis.getStationsVcub();
-			if (isCancelled()) {
-				return;
-			}
-			synchronized (stations) {
-				stations.clear();
-				for (final Station station : stationsTmp) {
-					if (ids.contains(Integer.toString(station.id))) {
-						stations.add(station);
-					}
-				}
-				Collections.sort(stations, new Station.StationComparator());
-			}
-		}
+        /*
+         * (non-Javadoc)
+         *
+         * @see
+         * fr.ybo.transportscommun.util.TacheAvecProgressDialog#myDoBackground()
+         */
+        @Override
+        protected void myDoBackground() throws ErreurReseau {
+            final List<VeloFavori> velosFavoris = TransportsBordeauxApplication.getDataBaseHelper().select(new VeloFavori());
+            final Collection<String> ids = new ArrayList<String>();
+            for (final VeloFavori favori : velosFavoris) {
+                ids.add(favori.number);
+            }
+            final Collection<Station> stationsTmp = Keolis.getStationsVcub();
+            if (isCancelled()) {
+                return;
+            }
+            synchronized (stations) {
+                stations.clear();
+                for (final Station station : stationsTmp) {
+                    if (ids.contains(Integer.toString(station.id))) {
+                        stations.add(station);
+                    }
+                }
+                Collections.sort(stations, new Station.StationComparator());
+            }
+        }
     }
 
-	@Override
-	public void refresh() {
-		new GetStations().execute((Void) null);
-	}
+    @Override
+    public void refresh() {
+        new GetStations().execute((Void) null);
+    }
 
     @Override
     public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
@@ -154,7 +154,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
             case R.id.supprimerFavori:
                 station = (Station) getListAdapter().getItem(info.position);
                 veloFavori = new VeloFavori();
-				veloFavori.number = Integer.toString(station.id);
+                veloFavori.number = Integer.toString(station.id);
                 TransportsBordeauxApplication.getDataBaseHelper().delete(veloFavori);
                 ((VeloAdapter) getListAdapter()).getStations().remove(station);
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();

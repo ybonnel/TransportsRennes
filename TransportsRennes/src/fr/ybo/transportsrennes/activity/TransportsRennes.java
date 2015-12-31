@@ -107,16 +107,16 @@ public class TransportsRennes extends AccueilActivity {
 			textView.setText(spanned, TextView.BufferType.SPANNABLE);
 			textView.setMovementMethod(LinkMovementMethod.getInstance());
 			return new AlertDialog.Builder(this).setView(view).setTitle(getString(R.string.titleTransportsRennes,
-					Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(getString(R.string.Terminer), new TerminerClickListener()).create();
+					Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(R.string.Terminer, new TerminerClickListener()).create();
 		}
 		if (id == DIALOG_UPGRADE) {
-			return new AlertDialog.Builder(this).setMessage(getString(R.string.majDispo)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+			return new AlertDialog.Builder(this).setMessage(R.string.majDispo).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
 				@Override
 				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
-			}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).create();
+			}).setNegativeButton(R.string.non, new MyOnClickListener()).create();
 		}
 		return super.onCreateDialog(id);
 	}
@@ -186,13 +186,13 @@ public class TransportsRennes extends AccueilActivity {
 				startActivity(intentTickets);
 				return true;
 			case MENU_LOAD_LINES:
-				new AlertDialog.Builder(this).setMessage(getString(R.string.loadAllLineAlert)).setCancelable(false).setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
+				new AlertDialog.Builder(this).setMessage(R.string.loadAllLineAlert).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
 					@Override
 					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.dismiss();
 						loadAllLines();
 					}
-				}).setNegativeButton(getString(R.string.non), new MyOnClickListener()).show();
+				}).setNegativeButton(R.string.non, new MyOnClickListener()).show();
 				return true;
 			case MENU_SHARE:
 				final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
