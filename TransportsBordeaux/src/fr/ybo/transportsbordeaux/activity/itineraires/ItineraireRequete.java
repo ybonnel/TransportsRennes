@@ -52,6 +52,7 @@ import android.widget.Toast;
 
 import com.google.ads.Ad;
 import com.google.ads.AdRequest;
+import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderGeometry;
@@ -77,7 +78,6 @@ import fr.ybo.transportsbordeaux.util.CalculItineraires;
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
-import fr.ybo.transportscommun.util.GeocodeUtil;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportscommun.util.LogYbo;
@@ -292,7 +292,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 						final GeocoderRequest geocoderRequest =
 								new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr")
 										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
-						reponseDepart = GeocodeUtil.geocode(geocoderRequest);
+						reponseDepart = Geocoder.geocode(geocoderRequest);
 						if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 							erreur = true;
 							return null;
@@ -318,7 +318,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 						final GeocoderRequest geocoderRequest =
 								new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr")
 										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
-						reponseArrivee = GeocodeUtil.geocode(geocoderRequest);
+						reponseArrivee = Geocoder.geocode(geocoderRequest);
 						if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 							erreur = true;
 							return null;

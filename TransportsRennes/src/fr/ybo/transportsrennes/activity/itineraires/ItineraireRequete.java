@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -36,18 +37,17 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderGeometry;
@@ -64,7 +64,6 @@ import fr.ybo.opentripplanner.client.modele.Request;
 import fr.ybo.opentripplanner.client.modele.Response;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseSimpleActivity;
 import fr.ybo.transportscommun.donnees.modele.Arret;
-import fr.ybo.transportscommun.util.GeocodeUtil;
 import fr.ybo.transportscommun.util.LocationUtil;
 import fr.ybo.transportscommun.util.LocationUtil.UpdateLocationListenner;
 import fr.ybo.transportscommun.util.LogYbo;
@@ -103,26 +102,24 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     private TextView dateItineraire;
     private TextView heureItineraire;
 
-	private final List<Arret> arrets = new ArrayList<Arret>();
+    private final List<Arret> arrets = new ArrayList<Arret>();
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itinerairerequete);
-		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
+        getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         locationUtil = new LocationUtil(this, this);
         calendar = Calendar.getInstance();
         dateItineraire = (TextView) findViewById(R.id.dateItineraire);
         heureItineraire = (TextView) findViewById(R.id.heureItineraire);
         final AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
-		final AdresseAdapter adapterDepart = new AdresseAdapter(this, arrets);
-        adresseDepart.setAdapter(adapterDepart);
-		adresseDepart.setTextColor(TransportsRennesApplication.getTextColor(this));
+        adresseDepart.setAdapter(new AdresseAdapter(this, arrets));
+        adresseDepart.setTextColor(TransportsRennesApplication.getTextColor(this));
         final AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
-		final AdresseAdapter adapterArrivee = new AdresseAdapter(this, arrets);
-        adresseArrivee.setAdapter(adapterArrivee);
-		adresseArrivee.setTextColor(TransportsRennesApplication.getTextColor(this));
+        adresseArrivee.setAdapter(new AdresseAdapter(this, arrets));
+        adresseArrivee.setTextColor(TransportsRennesApplication.getTextColor(this));
         adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
@@ -147,8 +144,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 showDialog(TIME_DIALOG_ID);
             }
         });
-        final View boutonTerminer = findViewById(R.id.itineraireTermine);
-        boutonTerminer.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.itineraireTermine).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 terminer();
@@ -157,59 +153,52 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         if (!locationUtil.activeGps()) {
             Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
         }
-		new AsyncTask<Void, Void, Void>() {
+        new AsyncTask<Void, Void, Void>() {
 
-			ProgressDialog myProgressDialog;
+            ProgressDialog myProgressDialog;
 
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				myProgressDialog =
-						ProgressDialog.show(ItineraireRequete.this, "", getString(R.string.rechercheArrets), true);
-			}
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                myProgressDialog = ProgressDialog.show(ItineraireRequete.this, "", getString(R.string.rechercheArrets), true);
+            }
 
-			@Override
-			protected Void doInBackground(final Void... voids) {
-				construireListeArrets();
-				return null;
-			}
+            @Override
+            protected Void doInBackground(final Void... voids) {
+                construireListeArrets();
+                return null;
+            }
 
-			@Override
-			protected void onPostExecute(final Void result) {
-				try {
-					myProgressDialog.dismiss();
-				} catch (final IllegalArgumentException ignore) {
-				}
-				super.onPostExecute(result);
-			}
-		}.execute();
+            @Override
+            protected void onPostExecute(final Void result) {
+                try {
+                    myProgressDialog.dismiss();
+                } catch (final IllegalArgumentException ignore) {
+                }
+                super.onPostExecute(result);
+            }
+        }.execute();
     }
 
-	private void construireListeArrets() {
-		arrets.clear();
+    private void construireListeArrets() {
+        arrets.clear();
 
-		final Map<String, Arret> mapArrets = new HashMap<String, Arret>();
-		for (final Arret arret : TransportsRennesApplication.getDataBaseHelper().selectAll(Arret.class)) {
-			arret.nom = StringOperation.sansAccents(arret.nom.toUpperCase());
-			if (!mapArrets.containsKey(arret.nom)) {
-				mapArrets.put(arret.nom, arret);
-			}
-		}
+        final Map<String, Arret> mapArrets = new HashMap<String, Arret>();
+        for (final Arret arret : TransportsRennesApplication.getDataBaseHelper().selectAll(Arret.class)) {
+            arret.nom = StringOperation.sansAccents(arret.nom.toUpperCase());
+            if (!mapArrets.containsKey(arret.nom)) {
+                mapArrets.put(arret.nom, arret);
+            }
+        }
 
-		arrets.addAll(mapArrets.values());
-	}
+        arrets.addAll(mapArrets.values());
+    }
 
     private void terminer() {
-        String adresseDepart = null;
-        final Editable textDepart = ((EditText) findViewById(R.id.adresseDepart)).getText();
-        if (textDepart.length() > 0) {
-            adresseDepart = textDepart.toString();
-        }
-        final Editable textArrivee = ((EditText) findViewById(R.id.adresseArrivee)).getText();
-        String adresseArrivee = null;
-        if (textArrivee.length() > 0) {
-            adresseArrivee = textArrivee.toString();
-        }
+        final CharSequence textDepart = ((TextView) findViewById(R.id.adresseDepart)).getText();
+        final String adresseDepart = textDepart.length() > 0 ? textDepart.toString() : null;
+        final CharSequence textArrivee = ((TextView) findViewById(R.id.adresseArrivee)).getText();
+        final String adresseArrivee = textArrivee.length() > 0 ? textArrivee.toString() : null;
         if ((adresseDepart == null || adresseArrivee == null)
                 && (locationUtil.getCurrentBestLocation() == null || locationUtil.getCurrentBestLocation().getAccuracy() > 50)) {
             Toast.makeText(this, R.string.erreur_gpsPasPret, Toast.LENGTH_LONG).show();
@@ -233,43 +222,43 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                         getString(R.string.geocodageAdresseDepart), true);
             }
 
-			private GeocodeResponse arretToGeocodeResponse(final Arret arret) {
-				final GeocodeResponse response = new GeocodeResponse();
-				response.setStatus(GeocoderStatus.OK);
-				response.setResults(new ArrayList<GeocoderResult>());
-				final GeocoderResult result = new GeocoderResult();
-				result.setGeometry(new GeocoderGeometry());
-				result.getGeometry().setLocation(
-						new LatLng(BigDecimal.valueOf(arret.getLatitude()), BigDecimal.valueOf(arret.getLongitude())));
-				response.getResults().add(result);
-				return response;
-			}
+            private GeocodeResponse arretToGeocodeResponse(final Arret arret) {
+                final GeocodeResponse response = new GeocodeResponse();
+                response.setStatus(GeocoderStatus.OK);
+                response.setResults(new ArrayList<GeocoderResult>());
+                final GeocoderResult result = new GeocoderResult();
+                result.setGeometry(new GeocoderGeometry());
+                result.getGeometry().setLocation(
+                        new LatLng(BigDecimal.valueOf(arret.getLatitude()), BigDecimal.valueOf(arret.getLongitude())));
+                response.getResults().add(result);
+                return response;
+            }
 
             @Override
             protected Void doInBackground(final Void... voids) {
                 if (adresseDepart != null) {
-					// Recherche arrêts
-					reponseDepart = null;
-					final String adresseDepartUpper = StringOperation.sansAccents(adresseDepart.toUpperCase());
-					for (final Arret arret : arrets) {
-						if (arret.nom.equals(adresseDepartUpper)) {
-							reponseDepart = arretToGeocodeResponse(arret);
-							break;
-						}
-					}
-					if (reponseDepart == null) {
-						final GeocoderRequest geocoderRequest =
-								new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr")
-										.setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
-						reponseDepart = GeocodeUtil.geocode(geocoderRequest);
-						if (reponseDepart != null && reponseDepart.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
-							erreurQuota = true;
-						} else if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
+                    // Recherche arrêts
+                    reponseDepart = null;
+                    final String adresseDepartUpper = StringOperation.sansAccents(adresseDepart.toUpperCase());
+                    for (final Arret arret : arrets) {
+                        if (arret.nom.equals(adresseDepartUpper)) {
+                            reponseDepart = arretToGeocodeResponse(arret);
+                            break;
+                        }
+                    }
+                    if (reponseDepart == null) {
+                        final GeocoderRequest geocoderRequest =
+                                new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr")
+                                        .setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
+                        reponseDepart = Geocoder.geocode(geocoderRequest);
+                        if (reponseDepart != null && reponseDepart.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
+                            erreurQuota = true;
+                        } else if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 
-							erreur = true;
-							return null;
-						}
-					}
+                            erreur = true;
+                            return null;
+                        }
+                    }
                 }
                 if (adresseArrivee != null) {
                     runOnUiThread(new Runnable() {
@@ -278,26 +267,26 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                             progressDialog.setMessage(getString(R.string.geocodageAdresseArrivee));
                         }
                     });
-					reponseArrivee = null;
-					final String adresseArriveeUpper = StringOperation.sansAccents(adresseArrivee.toUpperCase());
-					for (final Arret arret : arrets) {
-						if (arret.nom.equals(adresseArriveeUpper)) {
-							reponseArrivee = arretToGeocodeResponse(arret);
-							break;
-						}
-					}
-					if (reponseArrivee == null) {
-						final GeocoderRequest geocoderRequest =
-								new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr")
-										.setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
-						reponseArrivee = GeocodeUtil.geocode(geocoderRequest);
-						if (reponseArrivee != null && reponseArrivee.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
-							erreurQuota = true;
-						} else if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
-							erreur = true;
-							return null;
-						}
-					}
+                    reponseArrivee = null;
+                    final String adresseArriveeUpper = StringOperation.sansAccents(adresseArrivee.toUpperCase());
+                    for (final Arret arret : arrets) {
+                        if (arret.nom.equals(adresseArriveeUpper)) {
+                            reponseArrivee = arretToGeocodeResponse(arret);
+                            break;
+                        }
+                    }
+                    if (reponseArrivee == null) {
+                        final GeocoderRequest geocoderRequest =
+                                new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr")
+                                        .setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
+                        reponseArrivee = Geocoder.geocode(geocoderRequest);
+                        if (reponseArrivee != null && reponseArrivee.getStatus() == GeocoderStatus.OVER_QUERY_LIMIT) {
+                            erreurQuota = true;
+                        } else if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
+                            erreur = true;
+                            return null;
+                        }
+                    }
                 }
                 return null;
             }
@@ -379,23 +368,27 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     }
 
     private void calculItineraire(final GeocoderResult resultDepart, final GeocoderResult resultArrivee) {
-        final double latitudeDepart;
-        final double longitudeDepart;
-        final double latitudeArrivee;
-        final double longitudeArrivee;
-        if (resultDepart != null) {
-            latitudeDepart = resultDepart.getGeometry().getLocation().getLat().doubleValue();
-            longitudeDepart = resultDepart.getGeometry().getLocation().getLng().doubleValue();
+        final Double latitudeDepart;
+        final Double longitudeDepart;
+        final Double latitudeArrivee;
+        final Double longitudeArrivee;
+        if (resultDepart == null) {
+            final Location locationDepart = locationUtil.getCurrentBestLocation();
+            latitudeDepart = locationDepart.getLatitude();
+            longitudeDepart = locationDepart.getLongitude();
         } else {
-            latitudeDepart = locationUtil.getCurrentBestLocation().getLatitude();
-            longitudeDepart = locationUtil.getCurrentBestLocation().getLongitude();
+            final LatLng locationDepart = resultDepart.getGeometry().getLocation();
+            latitudeDepart = locationDepart.getLat().doubleValue();
+            longitudeDepart = locationDepart.getLng().doubleValue();
         }
-        if (resultArrivee != null) {
-            latitudeArrivee = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
-            longitudeArrivee = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
+        if (resultArrivee == null) {
+            final LatLng locationArrivee = resultArrivee.getGeometry().getLocation();
+            latitudeArrivee = locationArrivee.getLat().doubleValue();
+            longitudeArrivee = locationArrivee.getLng().doubleValue();
         } else {
-            latitudeArrivee = locationUtil.getCurrentBestLocation().getLatitude();
-            longitudeArrivee = locationUtil.getCurrentBestLocation().getLongitude();
+            final Location locationArrivee = locationUtil.getCurrentBestLocation();
+            latitudeArrivee = locationArrivee.getLatitude();
+            longitudeArrivee = locationArrivee.getLongitude();
         }
         final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
                 calendar.getTime());
@@ -415,12 +408,13 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 try {
                     return CalculItineraires.INSTANCE.getItineraries(request);
                 } catch (final OpenTripPlannerException e) {
-                    if (e.getCause() != null
-                            && (e.getCause() instanceof SocketException
-                            || e.getCause() instanceof FileNotFoundException
-                            || e.getCause() instanceof UnknownHostException
-                            || e.getCause() instanceof JsonIOException
-                            || e.getCause() instanceof SocketTimeoutException || e.getCause() instanceof JsonParseException)) {
+                    final Throwable cause = e.getCause();
+                    if (cause != null
+                            && (cause instanceof SocketException
+                            || cause instanceof FileNotFoundException
+                            || cause instanceof UnknownHostException
+                            || cause instanceof JsonIOException
+                            || cause instanceof SocketTimeoutException || cause instanceof JsonParseException)) {
                         return null;
                     } else {
                         throw new TransportsRennesException(e);
@@ -437,25 +431,24 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 } else if (reponse.getError() != null) {
                     LOG_YBO.erreur(reponse.getError().getMsg());
                     final int message;
-					switch (Message.findEnumById(reponse.getError().getId())) {
-					case OUTSIDE_BOUNDS:
-						message = R.string.erreur_outOfBounds;
-						break;
-					case NO_TRANSIT_TIMES:
-						message = R.string.erreur_noTransitTimes;
-						break;
-					case PATH_NOT_FOUND:
-						message = R.string.erreur_pathNotFound;
-						break;
-					default:
-						message = R.string.erreur_calculItineraires;
-						break;
-					}
+                    switch (Message.findEnumById(reponse.getError().getId())) {
+                        case OUTSIDE_BOUNDS:
+                            message = R.string.erreur_outOfBounds;
+                            break;
+                        case NO_TRANSIT_TIMES:
+                            message = R.string.erreur_noTransitTimes;
+                            break;
+                        case PATH_NOT_FOUND:
+                            message = R.string.erreur_pathNotFound;
+                            break;
+                        default:
+                            message = R.string.erreur_calculItineraires;
+                            break;
+                    }
                     Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
                 } else {
-                    final int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                    final Intent intent = new Intent(ItineraireRequete.this, Itineraires.class).putExtra("itinerairesReponse", ItineraireReponse.convert(reponse.getPlan())).putExtra("heureDepart", heureDepart);
-                    startActivity(intent);
+                    final long heureDepart = TimeUnit.HOURS.toMinutes(calendar.get(Calendar.HOUR_OF_DAY)) + calendar.get(Calendar.MINUTE);
+                    startActivity(new Intent(ItineraireRequete.this, Itineraires.class).putExtra("itinerairesReponse", ItineraireReponse.convert(reponse.getPlan())).putExtra("heureDepart", heureDepart));
                 }
             }
         }.execute((Void) null);

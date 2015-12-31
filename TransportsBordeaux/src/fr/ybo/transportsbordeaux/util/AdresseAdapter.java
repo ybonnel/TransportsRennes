@@ -22,6 +22,7 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
+import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderRequest;
@@ -30,7 +31,6 @@ import com.google.code.geocoder.model.GeocoderStatus;
 
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
 import fr.ybo.transportscommun.donnees.modele.Arret;
-import fr.ybo.transportscommun.util.GeocodeUtil;
 import fr.ybo.transportscommun.util.StringOperation;
 
 public class AdresseAdapter extends ArrayAdapter<String> {
@@ -60,7 +60,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
                         .setLanguage("fr").setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
                 GeocodeResponse reponseResult = null;
                 try {
-                    reponseResult = GeocodeUtil.geocode(geocoderRequest);
+                    reponseResult = Geocoder.geocode(geocoderRequest);
                 } catch (final Exception ignore) {
                 }
 

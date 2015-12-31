@@ -124,8 +124,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 				try {
 					startActivity(new Intent(Intent.ACTION_VIEW, uri));
 				} catch (final ActivityNotFoundException activityNotFound) {
-					Toast.makeText(ListStationsByPosition.this, getString(R.string.noGoogleMap), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(ListStationsByPosition.this, getString(R.string.noGoogleMap), Toast.LENGTH_LONG).show();
 				}
 			}
 		});
