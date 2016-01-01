@@ -10,12 +10,12 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-    compileSdkVersion 19
+    compileSdkVersion 22
     buildToolsVersion "23.0.2"
 
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 19
+        targetSdkVersion 22
     }
 
     lintOptions {
