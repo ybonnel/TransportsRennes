@@ -141,6 +141,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                         count++;
                         getBase().insert(db, favori);
                     }
+                    arretFavoriTmp.close();
                     db.execSQL("DROP TABLE ArretFavori_tmp");
                 }
             });
@@ -201,12 +202,14 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                         favori.ordre = arretFavoriTmp.getInt(ordreIndex);
                         getBase().insert(db, favori);
                     }
+                    arretFavoriTmp.close();
                     db.execSQL("DROP TABLE ArretFavori_tmp");
                     // Verrue pour la ligne 67 et sa boucle.
                     final Cursor ligne67 = db.query("Ligne", new String[]{"Chargee"}, "id = 67", null, null, null, null);
                     if (ligne67.moveToFirst() && !ligne67.isNull(0) && ligne67.getInt(0) == 1) {
                         db.execSQL("UPDATE Horaire_67 SET terminus = 1 WHERE arretId = 'repto1' AND stopSequence > 3");
                     }
+                    ligne67.close();
                 }
             });
             mapUpgrades.put(10, new UpgradeDatabaseWithError() {
@@ -286,6 +289,7 @@ public class TransportsRennesDatabase extends DataBaseHelper {
                             getBase().insert(db, favori);
                         }
                     }
+                    arretFavoriTmp.close();
                     db.execSQL("DROP TABLE ArretFavori_tmp");
                 }
             });

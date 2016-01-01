@@ -171,6 +171,7 @@ public class TransportsBordeauxDatabase extends DataBaseHelper {
 						count++;
 						getBase().insert(db, favori);
 					}
+                    arretFavoriTmp.close();
 					db.execSQL("DROP TABLE ArretFavori_tmp");
 
 				}
