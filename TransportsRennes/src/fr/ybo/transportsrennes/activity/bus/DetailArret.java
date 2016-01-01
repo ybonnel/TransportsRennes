@@ -31,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import fr.ybo.transportscommun.activity.bus.AbstractDetailArret;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseFragmentActivity;
 import fr.ybo.transportscommun.activity.commun.BaseActivity.BaseListActivity;
@@ -55,199 +56,199 @@ import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
  */
 public class DetailArret extends AbstractDetailArret implements Refreshable {
 
-	private static final LogYbo LOG = new LogYbo(DetailArret.class);
+    private static final LogYbo LOG = new LogYbo(DetailArret.class);
 
-	private LinearLayout infoBar;
+    private LinearLayout infoBar;
 
-	private final Collection<Departure> departures = new ArrayList<Departure>();
+    private final Collection<Departure> departures = new ArrayList<Departure>();
 
-	private static class DetailArretConteneurComparator implements Comparator<DetailArretConteneur> {
+    private static class DetailArretConteneurComparator implements Comparator<DetailArretConteneur> {
 
-		@Override
+        @Override
         public int compare(final DetailArretConteneur lhs,
-                final DetailArretConteneur rhs) {
+                           final DetailArretConteneur rhs) {
             return lhs.getHoraire() < rhs.getHoraire() ? -1 : lhs.getHoraire() == rhs.getHoraire() ? 0 : 1;
         }
-	}
+    }
 
-	private class GetDeparture extends AsyncTask<Void, Void, ResultDeparture> {
-		@Override
-		protected void onPreExecute() {
-			infoBar.setVisibility(View.VISIBLE);
-		}
+    private class GetDeparture extends AsyncTask<Void, Void, ResultDeparture> {
+        @Override
+        protected void onPreExecute() {
+            infoBar.setVisibility(View.VISIBLE);
+        }
 
-		@Override
-		protected ResultDeparture doInBackground(final Void... params) {
-			try {
-				return Keolis.getDepartues(favori);
-			} catch (final ErreurReseau e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
+        @Override
+        protected ResultDeparture doInBackground(final Void... params) {
+            try {
+                return Keolis.getDepartues(favori);
+            } catch (final ErreurReseau e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
-		@Override
-		protected void onPostExecute(final ResultDeparture result) {
-			if (result == null) {
-				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
-			} else {
-				final Collection<Integer> secondsToUpdateTmp = new HashSet<Integer>();
-				synchronized (departures) {
-					departures.clear();
-					for (final Departure departure : result.getDepartures()) {
-						LOG.debug(departure.toString());
-						departures.add(departure);
-						secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
-					}
-				}
+        @Override
+        protected void onPostExecute(final ResultDeparture result) {
+            if (result == null) {
+                Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
+            } else {
+                final Collection<Integer> secondsToUpdateTmp = new HashSet<Integer>();
+                synchronized (departures) {
+                    departures.clear();
+                    for (final Departure departure : result.getDepartures()) {
+                        LOG.debug(departure.toString());
+                        departures.add(departure);
+                        secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
+                    }
+                }
 
-				synchronized (secondsToUpdate) {
-					secondsToUpdate.clear();
-					secondsToUpdate.addAll(secondsToUpdateTmp);
-				}
-				updateTime.update(Calendar.getInstance());
-				final long apiTime = result.getApiTime().getTimeInMillis();
-				final long currentTime = Calendar.getInstance().getTimeInMillis();
-				final long diffMs = Math.abs(apiTime - currentTime);
-				final int diffSeconds = (int) (diffMs / 1000);
-				if (diffSeconds > 30) {
-					Toast.makeText(getApplicationContext(),getResources().getQuantityString(R.plurals.diffSecondsToHigh, diffSeconds), Toast.LENGTH_LONG).show();
-				}
-			}
-			infoBar.setVisibility(View.INVISIBLE);
-		}
-	}
+                synchronized (secondsToUpdate) {
+                    secondsToUpdate.clear();
+                    secondsToUpdate.addAll(secondsToUpdateTmp);
+                }
+                updateTime.update(Calendar.getInstance());
+                final long apiTime = result.getApiTime().getTimeInMillis();
+                final long currentTime = Calendar.getInstance().getTimeInMillis();
+                final long diffMs = Math.abs(apiTime - currentTime);
+                final long diffSeconds = diffMs / 1000;
+                if (diffSeconds > 30) {
+                    Toast.makeText(getApplicationContext(), getResources().getQuantityString(R.plurals.diffSecondsToHigh, (int) diffSeconds), Toast.LENGTH_LONG).show();
+                }
+            }
+            infoBar.setVisibility(View.INVISIBLE);
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#onCreate(android
-	 * .os.Bundle)
-	 */
-	@Override
-	protected void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		if (isToday()) {
-			infoBar = (LinearLayout) findViewById(R.id.infobar);
-			new GetDeparture().execute();
-		}
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#onCreate(android
+     * .os.Bundle)
+     */
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (isToday()) {
+            infoBar = (LinearLayout) findViewById(R.id.infobar);
+            new GetDeparture().execute();
+        }
+    }
 
-	@Override
-	protected ListAdapter construireAdapter() {
+    @Override
+    protected ListAdapter construireAdapter() {
         final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         final int secondesNow = calendar.get(Calendar.SECOND);
-		final List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, favori.macroDirection);
+        final List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, favori.macroDirection);
 
-		
-		if (horaires.isEmpty()) {
-			String maxCalendrier = "00000000";
-			for (final Calendrier calendrier : TransportsRennesApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
-				if (calendrier.dateFin != null && calendrier.dateFin.compareTo(maxCalendrier) > 0) {
-					maxCalendrier = calendrier.dateFin;
-				}
-			}
-			final String calendrierCourant = new SimpleDateFormat("yyyyMMdd", Locale.FRANCE).format(calendar.getTime());
-			if (maxCalendrier.compareTo(calendrierCourant) < 0) {
-				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageStarEnRetard);
-			}
-		}
+
+        if (horaires.isEmpty()) {
+            String maxCalendrier = "00000000";
+            for (final Calendrier calendrier : TransportsRennesApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
+                if (calendrier.dateFin != null && calendrier.dateFin.compareTo(maxCalendrier) > 0) {
+                    maxCalendrier = calendrier.dateFin;
+                }
+            }
+            final String calendrierCourant = new SimpleDateFormat("yyyyMMdd", Locale.FRANCE).format(calendar.getTime());
+            if (maxCalendrier.compareTo(calendrierCourant) < 0) {
+                ((TextView) findViewById(android.R.id.empty)).setText(R.string.messageStarEnRetard);
+            }
+        }
 
         final Calendar veille = Calendar.getInstance();
         veille.setTime(calendar.getTime());
         veille.add(Calendar.DAY_OF_MONTH, -1);
-        
+
         for (final DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille, favori.macroDirection)) {
-        	if (horaireVeille.getHoraire() > 24*60) {
-        		horaireVeille.setHoraire(horaireVeille.getHoraire() - 24*60);
-        		horaires.add(horaireVeille);
-        	}
+            if (horaireVeille.getHoraire() > 24 * 60) {
+                horaireVeille.setHoraire(horaireVeille.getHoraire() - 24 * 60);
+                horaires.add(horaireVeille);
+            }
         }
-        
+
         Collections.sort(horaires, new DetailArretConteneurComparator());
-        
+
         if (isToday()) {
-			synchronized (departures) {
-				// Pour chaque departure
-				for (final Departure departure : departures) {
-					int diffCourante = -1;
-					DetailArretConteneur departProche = null;
-					// Trouve le prochain depart le plus près.
-					for (final DetailArretConteneur depart : horaires) {
-						if (diffCourante == -1
-								|| Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante) {
-							diffCourante = Math.abs(departure.getHoraire() - depart.getHoraire());
-							departProche = depart;
-						}
-					}
-					if (departProche != null) {
-						departProche.setAccurate(departure.isAccurate());
-						departProche.setHoraire(departure.getHoraire());
-						departProche.setSecondes(departure.getTime().get(Calendar.SECOND));
-					}
-				}
-			}
-		}
-		
-		
-		return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction, secondesNow);
+            synchronized (departures) {
+                // Pour chaque departure
+                for (final Departure departure : departures) {
+                    int diffCourante = -1;
+                    DetailArretConteneur departProche = null;
+                    // Trouve le prochain depart le plus près.
+                    for (final DetailArretConteneur depart : horaires) {
+                        if (diffCourante == -1
+                                || Math.abs(departure.getHoraire() - depart.getHoraire()) < diffCourante) {
+                            diffCourante = Math.abs(departure.getHoraire() - depart.getHoraire());
+                            departProche = depart;
+                        }
+                    }
+                    if (departProche != null) {
+                        departProche.setAccurate(departure.isAccurate());
+                        departProche.setHoraire(departure.getHoraire());
+                        departProche.setSecondes(departure.getTime().get(Calendar.SECOND));
+                    }
+                }
+            }
+        }
+
+
+        return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction, secondesNow);
     }
 
-	@Override
-	protected int getLayout() {
-		return R.layout.detailarret;
-	}
-
-	@Override
-	protected void setupActionBar() {
-		getActivityHelper().setupActionBar(R.menu.detailarret_menu_items, R.menu.holo_detailarret_menu_items);
+    @Override
+    protected int getLayout() {
+        return R.layout.detailarret;
     }
 
-	@Override
-	protected Class<? extends BaseListActivity> getDetailTrajetClass() {
-		return DetailTrajet.class;
+    @Override
+    protected void setupActionBar() {
+        getActivityHelper().setupActionBar(R.menu.detailarret_menu_items, R.menu.holo_detailarret_menu_items);
     }
 
-	@Override
-	protected Class<? extends BaseFragmentActivity> getListAlertsForOneLineClass() {
-		return ListAlertsForOneLine.class;
+    @Override
+    protected Class<? extends BaseListActivity> getDetailTrajetClass() {
+        return DetailTrajet.class;
     }
 
-	@Override
-	protected int getLayoutArretGps() {
-		return R.layout.arretgps;
+    @Override
+    protected Class<? extends BaseFragmentActivity> getListAlertsForOneLineClass() {
+        return ListAlertsForOneLine.class;
     }
 
-	@Override
-	protected Class<?> getRawClass() {
-		return R.raw.class;
-	}
+    @Override
+    protected int getLayoutArretGps() {
+        return R.layout.arretgps;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.ybo.transportscommun.activity.commun.Refreshable#refresh()
-	 */
-	@Override
-	public void refresh() {
-		new GetDeparture().execute();
-	}
+    @Override
+    protected Class<?> getRawClass() {
+        return R.raw.class;
+    }
 
-	private final Set<Integer> secondsToUpdate = new HashSet<Integer>();
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.ybo.transportscommun.activity.commun.Refreshable#refresh()
+     */
+    @Override
+    public void refresh() {
+        new GetDeparture().execute();
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#getSecondsToUpdate
-	 * ()
-	 */
-	@Override
-	protected Set<Integer> getSecondsToUpdate() {
-		synchronized (secondsToUpdate) {
-			return new HashSet<Integer>(secondsToUpdate);
-		}
-	}
+    private final Set<Integer> secondsToUpdate = new HashSet<Integer>();
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see
+     * fr.ybo.transportscommun.activity.bus.AbstractDetailArret#getSecondsToUpdate
+     * ()
+     */
+    @Override
+    protected Set<Integer> getSecondsToUpdate() {
+        synchronized (secondsToUpdate) {
+            return new HashSet<Integer>(secondsToUpdate);
+        }
+    }
 
 }
