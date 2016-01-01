@@ -22,7 +22,6 @@ import fr.ybo.moteurcsv.adapter.AdapterInteger;
 import fr.ybo.moteurcsv.annotation.BaliseCsv;
 import fr.ybo.moteurcsv.annotation.FichierCsv;
 
-@SuppressWarnings("serial")
 @Entity
 @FichierCsv("arrets_favoris.txt")
 public class ArretFavori implements Serializable {
@@ -49,6 +48,6 @@ public class ArretFavori implements Serializable {
 	@Column(type = Column.TypeColumn.INTEGER)
 	public Integer ordre;
 	@Column
-	@BaliseCsv(value = "groupe")
+	@BaliseCsv("groupe")
 	public String groupe;
 }

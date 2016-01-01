@@ -13,7 +13,6 @@
  */
 package fr.ybo.transportsrennes.adapters.alerts;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.content.Context;
@@ -22,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.twitter.MessageTwitter;
 
@@ -31,10 +31,9 @@ import fr.ybo.transportsrennes.twitter.MessageTwitter;
 public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
 
     private final List<MessageTwitter> messages;
-    private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy à HH:mm : ");
     private final LayoutInflater inflater;
 
-    public TwitterAdapter(Context context, List<MessageTwitter> objects) {
+    public TwitterAdapter(final Context context, final List<MessageTwitter> objects) {
         super(context, R.layout.onetwitter, objects);
         messages = objects;
         inflater = LayoutInflater.from(context);
@@ -45,23 +44,19 @@ public class TwitterAdapter extends ArrayAdapter<MessageTwitter> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        TwitterAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.onetwitter, null);
-            holder = new TwitterAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.twitter = (TextView) convertView1.findViewById(R.id.twitter);
             convertView1.setTag(holder);
         } else {
-            holder = (TwitterAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
-        MessageTwitter message = messages.get(position);
-		if (message.dateCreation != null) {
-			holder.twitter.setText(SDF.format(message.dateCreation) + message.texte);
-		} else {
-			holder.twitter.setText(message.texte);
-		}
+        final MessageTwitter message = messages.get(position);
+        holder.twitter.setText(message.texte);
         return convertView1;
     }
 }

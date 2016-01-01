@@ -23,43 +23,43 @@ public class ListTwitter extends ListFragment {
 	private final List<MessageTwitter> messages = Collections.synchronizedList(new ArrayList<MessageTwitter>());
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		setListAdapter(new TwitterAdapter(getActivity(), messages));
-		MessageTwitter messageChargement = new MessageTwitter();
+		final MessageTwitter messageChargement = new MessageTwitter();
 		messageChargement.texte = getString(R.string.dialogRequeteTwitter);
 		messages.add(messageChargement);
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setTextFilterEnabled(true);
 		lv.setCacheColorHint(Color.TRANSPARENT);
 		new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurReseau = false;
+			private boolean erreurReseau;
 
-			private List<MessageTwitter> messagesTmp = new ArrayList<MessageTwitter>();
+			private final Collection<MessageTwitter> messagesTmp = new ArrayList<MessageTwitter>();
 
 			@Override
-			protected Void doInBackground(Void... params) {
+			protected Void doInBackground(final Void... params) {
 				try {
-					Collection<MessageTwitter> messagesReponse = GetTwitters.getInstance().getMessages();
+					final Collection<MessageTwitter> messagesReponse = GetTwitters.getMessages();
 					if (messagesReponse != null) {
 						messagesTmp.addAll(messagesReponse);
 					} else {
 						erreurReseau = true;
 					}
-				} catch (ErreurReseau e) {
+				} catch (final ErreurReseau e) {
 					erreurReseau = true;
 				}
 				return null;
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				if (erreurReseau) {
 					try {
-						Toast.makeText(getActivity(), getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
-					} catch (Exception ignore) {
+						Toast.makeText(getActivity(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
+					} catch (final Exception ignore) {
 
 					}
 				} else {

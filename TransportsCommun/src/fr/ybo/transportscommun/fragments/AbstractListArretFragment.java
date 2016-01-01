@@ -35,10 +35,6 @@ public abstract class AbstractListArretFragment extends ListFragment {
 
 	protected Ligne myLigne;
 
-	public Ligne getMyLigne() {
-		return myLigne;
-	}
-
 	protected Cursor currentCursor;
 
 	private void closeCurrentCursor() {
@@ -47,47 +43,26 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		}
 	}
 
-	protected String currentDirection;
-
-	public String getCurrentDirection() {
-		return currentDirection;
-	}
+	private String currentDirection;
 
 	private void onDirectionClick() {
-		StringBuilder requete = new StringBuilder();
-		requete.append("SELECT Direction.id as directionId, Direction.direction as direction ");
-		requete.append("FROM Direction, ArretRoute ");
-		requete.append("WHERE Direction.id = ArretRoute.directionId");
-		requete.append(" AND ArretRoute.ligneId = :ligneId ");
-		requete.append("GROUP BY Direction.id, Direction.direction");
-		Cursor cursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery(requete.toString(),
+		final Cursor cursor = AbstractTransportsApplication.getDataBaseHelper().executeSelectQuery("SELECT Direction.id as directionId, Direction.direction as direction " + "FROM Direction, ArretRoute " + "WHERE Direction.id = ArretRoute.directionId" + " AND ArretRoute.ligneId = :ligneId " + "GROUP BY Direction.id, Direction.direction",
 				Collections.singletonList(myLigne.id));
-		int directionIndex = cursor.getColumnIndex("direction");
+		final int directionIndex = cursor.getColumnIndex("direction");
 		final List<String> items = new ArrayList<String>(5);
-		long startTime = System.currentTimeMillis();
+		final long startTime = System.currentTimeMillis();
 		while (cursor.moveToNext()) {
 			items.add(cursor.getString(directionIndex));
 		}
 		cursor.close();
-		long elapsedTime = System.currentTimeMillis() - startTime;
+		final long elapsedTime = System.currentTimeMillis() - startTime;
 		LOG_YBO.debug("Temps requete récupération des directions : " + elapsedTime);
-		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(getString(R.string.chooseDirection));
 		final String toutes = getString(R.string.Toutes);
 		items.add(toutes);
-		Collections.sort(items, new Comparator<String>() {
-			public int compare(String o1, String o2) {
-				if (toutes.equals(o1)) {
-					return -1;
-				}
-				if (toutes.equals(o2)) {
-					return 1;
-				}
-				return o1.compareToIgnoreCase(o2);
-			}
-		});
-		builder.setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int item) {
+		Collections.sort(items, new StringComparator(toutes));
+		new AlertDialog.Builder(getActivity()).setTitle(R.string.chooseDirection).setItems(items.toArray(new String[items.size()]), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialogInterface, final int item) {
 				currentDirection = items.get(item).equals(toutes) ? null : items.get(item);
 				construireListe();
 				((TextView) getView().findViewById(R.id.directionArretCourante)).setText(items.get(item));
@@ -95,34 +70,20 @@ public abstract class AbstractListArretFragment extends ListFragment {
 				getListView().invalidate();
 				dialogInterface.dismiss();
 			}
-		});
-		builder.create().show();
-	}
-
-	private boolean lastOrderDirection;
-
-	public boolean isLastOrderDirection() {
-		return lastOrderDirection;
+		}).show();
 	}
 
 	private void construireCursor() {
 		closeCurrentCursor();
-		List<String> selectionArgs = new ArrayList<String>(2);
+		final List<String> selectionArgs = new ArrayList<String>(2);
 		selectionArgs.add(myLigne.id);
-		StringBuilder requete = new StringBuilder();
-		requete.append("select Arret.id as _id, Arret.nom as arretName,");
-		requete.append(" Direction.direction as direction, ArretRoute.accessible as accessible, ArretRoute.macroDirection as macroDirection ");
-		requete.append("from ArretRoute, Arret, Direction ");
-		requete.append("where");
-		requete.append(" ArretRoute.ligneId = :ligneId");
-		requete.append(" and ArretRoute.arretId = Arret.id");
-		requete.append(" and Direction.id = ArretRoute.directionId");
+		final StringBuilder requete = new StringBuilder("select Arret.id as _id, Arret.nom as arretName, Direction.direction as direction, ArretRoute.accessible as accessible, ArretRoute.macroDirection as macroDirection from ArretRoute, Arret, Direction where  ArretRoute.ligneId = :ligneId and ArretRoute.arretId = Arret.id and Direction.id = ArretRoute.directionId");
 		if (currentDirection != null) {
 			requete.append(" and Direction.direction = :direction");
 			selectionArgs.add(currentDirection);
 		}
 		requete.append(" order by Direction.direction, ");
-		lastOrderDirection = ((AbstractListArret) getActivity()).isOrderDirection();
+		final boolean lastOrderDirection = ((AbstractListArret) getActivity()).isOrderDirection();
 		if (lastOrderDirection) {
 			requete.append("ArretRoute.sequence");
 		} else {
@@ -151,19 +112,14 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		}
 		construireCursor();
 		setupAdapter();
-		ListView lv = getListView();
+		final ListView lv = getListView();
 		lv.setFastScrollEnabled(true);
 		lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@SuppressWarnings({ "unchecked" })
-			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-				Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
-				Cursor cursor = (Cursor) arretAdapter.getItem(position);
-				Intent intent = new Intent(getActivity(), getDetailArret());
-				intent.putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id")));
-				intent.putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName")));
-				intent.putExtra("direction", cursor.getString(cursor.getColumnIndex("direction")));
-				intent.putExtra("macroDirection", cursor.getInt(cursor.getColumnIndex("macroDirection")));
-				intent.putExtra("ligne", myLigne);
+			@Override
+			public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+				final Adapter arretAdapter = ((AdapterView<ListAdapter>) adapterView).getAdapter();
+				final Cursor cursor = (Cursor) arretAdapter.getItem(position);
+				final Intent intent = new Intent(getActivity(), getDetailArret()).putExtra("idArret", cursor.getString(cursor.getColumnIndex("_id"))).putExtra("nomArret", cursor.getString(cursor.getColumnIndex("arretName"))).putExtra("direction", cursor.getString(cursor.getColumnIndex("direction"))).putExtra("macroDirection", cursor.getInt(cursor.getColumnIndex("macroDirection"))).putExtra("ligne", myLigne);
 				startActivity(intent);
 			}
 		});
@@ -173,13 +129,14 @@ public abstract class AbstractListArretFragment extends ListFragment {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(final Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		if (getArguments() != null && getArguments().containsKey("ligne")) {
 			myLigne = (Ligne) getArguments().getSerializable("ligne");
 		}
 		getView().findViewById(R.id.directionArretCourante).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
+			@Override
+			public void onClick(final View view) {
 				onDirectionClick();
 			}
 		});
@@ -189,9 +146,9 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		if (AbstractTransportsApplication.hasAlert(myLigne.nomCourt)) {
 			getView().findViewById(R.id.alerte).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.alerte).setOnClickListener(new View.OnClickListener() {
-				public void onClick(View view) {
-					Intent intent = new Intent(getActivity(), getListAlertsForOneLine());
-					intent.putExtra("ligne", myLigne);
+				@Override
+				public void onClick(final View view) {
+					final Intent intent = new Intent(getActivity(), getListAlertsForOneLine()).putExtra("ligne", myLigne);
 					startActivity(intent);
 				}
 			});
@@ -202,7 +159,7 @@ public abstract class AbstractListArretFragment extends ListFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
 		return inflater.inflate(getLayout(), null);
 	}
 
@@ -212,4 +169,22 @@ public abstract class AbstractListArretFragment extends ListFragment {
 		super.onDestroy();
 	}
 
+	private static final class StringComparator implements Comparator<String> {
+		private final String toutes;
+
+		private StringComparator(final String toutes) {
+			this.toutes = toutes;
+		}
+
+		@Override
+        public int compare(final String o1, final String o2) {
+            if (toutes.equals(o1)) {
+                return -1;
+            }
+            if (toutes.equals(o2)) {
+                return 1;
+            }
+            return o1.compareToIgnoreCase(o2);
+        }
+	}
 }

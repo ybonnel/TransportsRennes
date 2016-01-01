@@ -42,31 +42,28 @@ public class ListNotif extends BaseListActivity {
     private UpdateTimeUtil updateTimeUtil;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listnotif);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         setListAdapter(new NotifAdapter(getApplicationContext(), TransportsRennesApplication.getDataBaseHelper().selectAll(Notification.class)));
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Notification notification = (Notification) adapterView.getItemAtPosition(i);
-                Intent intent = new Intent(ListNotif.this, DetailArret.class);
-                Ligne ligne = Ligne.getLigne(notification.getLigneId());
-                Arret arret = Arret.getArret(notification.getArretId());
-                intent.putExtra("ligne", ligne);
-                intent.putExtra("idArret", notification.getArretId());
-                intent.putExtra("nomArret", arret.nom);
-                intent.putExtra("direction", notification.getDirection());
-                intent.putExtra("macroDirection", notification.getMacroDirection());
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
+                final Notification notification = (Notification) adapterView.getItemAtPosition(i);
+                final Ligne ligne = Ligne.getLigne(notification.getLigneId());
+                final Arret arret = Arret.getArret(notification.getArretId());
+                final Intent intent = new Intent(ListNotif.this, DetailArret.class).putExtra("ligne", ligne).putExtra("idArret", notification.getArretId()).putExtra("nomArret", arret.nom).putExtra("direction", notification.getDirection()).putExtra("macroDirection", notification.getMacroDirection());
                 startActivity(intent);
             }
         });
         registerForContextMenu(getListView());
         updateTimeUtil = new UpdateTimeUtil(new UpdateTime() {
 
-            public void update(Calendar calendar) {
+            @Override
+            public void update(final Calendar calendar) {
                 ((NotifAdapter) getListAdapter()).majCalendar();
-                ((NotifAdapter) getListAdapter()).notifyDataSetChanged();
+                ((BaseAdapter) getListAdapter()).notifyDataSetChanged();
             }
 
 			@Override
@@ -95,7 +92,7 @@ public class ListNotif extends BaseListActivity {
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(final ContextMenu menu, final View v, final ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         if (v.getId() == android.R.id.list) {
             menu.add(Menu.NONE, R.id.supprimerNotif, 0, getString(R.string.supprimerNotif));
@@ -104,11 +101,11 @@ public class ListNotif extends BaseListActivity {
 
 
     @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    public boolean onContextItemSelected(final MenuItem item) {
+        final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.supprimerNotif:
-                Notification notification = (Notification) getListAdapter().getItem(info.position);
+                final Notification notification = (Notification) getListAdapter().getItem(info.position);
                 TransportsRennesApplication.getDataBaseHelper().delete(notification);
                 ((NotifAdapter) getListAdapter()).getNotifications().clear();
                 ((NotifAdapter) getListAdapter()).getNotifications().addAll(TransportsRennesApplication.getDataBaseHelper().selectAll(Notification.class));

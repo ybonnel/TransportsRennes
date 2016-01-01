@@ -17,28 +17,28 @@
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="50dip"
         android:orientation="vertical" >
 
         <include layout="@layout/actionbar" />
 
         <ScrollView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
 
             <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical" >
 
                 <TextView
@@ -68,7 +68,7 @@
 
                 <TextView
                     android:id="@+id/textAdresseDepart"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/dateItineraire"
                     android:paddingLeft="5dip"
@@ -78,7 +78,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/adresseDepart"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textAdresseDepart"
                     android:background="@android:drawable/editbox_background"
@@ -89,7 +89,7 @@
 
                 <TextView
                     android:id="@+id/exempleAdresseDepart"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/adresseDepart"
                     android:text="@string/exempleAdresse"
@@ -97,7 +97,7 @@
 
                 <TextView
                     android:id="@+id/textAdresseArrivee"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/exempleAdresseDepart"
                     android:paddingLeft="5dip"
@@ -107,7 +107,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/adresseArrivee"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/textAdresseArrivee"
                     android:background="@android:drawable/editbox_background"
@@ -118,7 +118,7 @@
 
                 <TextView
                     android:id="@+id/exempleAdresseArrivee"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/adresseArrivee"
                     android:text="@string/exempleAdresse"
@@ -167,7 +167,7 @@
     <com.google.ads.AdView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/adView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         ads:adSize="BANNER"

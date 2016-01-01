@@ -19,27 +19,27 @@ import fr.ybo.opentripplanner.client.modele.Leg;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@SuppressWarnings("serial")
 public class Trajet implements Serializable {
 
     private List<PortionTrajet> portions;
     private Date endTime;
 
-    public List<PortionTrajet> getPortions() {
+    public Collection<PortionTrajet> getPortions() {
         if (portions == null) {
             portions = new ArrayList<PortionTrajet>();
         }
         return portions;
     }
 
-    public static Trajet convert(Itinerary itinerary) {
-        Trajet trajet = new Trajet();
+    public static Trajet convert(final Itinerary itinerary) {
+        final Trajet trajet = new Trajet();
         trajet.endTime = itinerary.endTime;
         if (itinerary.legs != null) {
-            for (Leg leg : itinerary.legs.leg) {
+            for (final Leg leg : itinerary.legs.leg) {
                 trajet.getPortions().add(PortionTrajet.convert(leg));
             }
         }

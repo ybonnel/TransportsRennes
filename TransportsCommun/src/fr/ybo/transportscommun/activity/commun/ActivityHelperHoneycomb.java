@@ -18,7 +18,6 @@ package fr.ybo.transportscommun.activity.commun;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Build;
 import android.view.Menu;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -30,11 +29,10 @@ import fr.ybo.transportscommun.R;
  */
 public class ActivityHelperHoneycomb extends ActivityHelper {
 
-	protected ActivityHelperHoneycomb(Activity activity) {
+	ActivityHelperHoneycomb(final Activity activity) {
 		super(activity);
 	}
 
-	/** {@inheritDoc} */
 	@Override
 	public void setupHomeActivity() {
 		super.setupHomeActivity();
@@ -49,7 +47,6 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 		}
 	}
 
-	/** {@inheritDoc} */
 	@Override
 	public void setupSubActivity() {
 		super.setupSubActivity();
@@ -68,27 +65,27 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 	private int resourceMenu = -1;
 
 	@Override
-	protected void addMenus(int resourceMenu) {
+	protected void addMenus(final int resourceMenu) {
 		this.resourceMenu = resourceMenu;
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		if (resourceMenu == -1) {
 			return false;
 		}
 		mActivity.getMenuInflater().inflate(resourceMenu, menu);
 		if (mActivity instanceof Searchable) {
-			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+			final SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
 			searchView.setOnQueryTextListener(new OnQueryTextListener() {
 
 				@Override
-				public boolean onQueryTextSubmit(String query) {
+				public boolean onQueryTextSubmit(final String query) {
 					return false;
 				}
 
 				@Override
-				public boolean onQueryTextChange(String newText) {
+				public boolean onQueryTextChange(final String newText) {
 					((Searchable) mActivity).updateQuery(newText);
 					return true;
 				}
@@ -98,7 +95,7 @@ public class ActivityHelperHoneycomb extends ActivityHelper {
 	}
 
     @Override
-    public void setupActionBar(int resourceMenuNormal, int resourceMenuNoir) {
+    public void setupActionBar(final int resourceMenuNormal, final int resourceMenuNoir) {
         super.setupActionBar(resourceMenuNormal, resourceMenuNoir);
         mActivity.getActionBar().setDisplayHomeAsUpEnabled(true);
     }

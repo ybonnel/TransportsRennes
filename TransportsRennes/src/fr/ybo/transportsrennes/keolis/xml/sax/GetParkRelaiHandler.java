@@ -50,10 +50,6 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	 */
 	private static final String CAR_PARK_CAPACITY = "carparkcapacity";
 	/**
-	 * LAST_UPDATE.
-	 */
-	private static final String LAST_UPDATE = "lastupdate";
-	/**
 	 * STATE.
 	 */
 	private static final String STATE = "state";
@@ -69,7 +65,7 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 	}
 
 	@Override
-	protected void remplirObjectKeolis(ParkRelai currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final ParkRelai currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(NAME)) {
 			currentObjectKeolis.name = contenuOfBalise;
 		} else if (baliseName.equals(LATITUDE)) {
@@ -80,8 +76,6 @@ public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 			currentObjectKeolis.carParkAvailable = Integer.parseInt(contenuOfBalise);
 		} else if (baliseName.equals(CAR_PARK_CAPACITY)) {
 			currentObjectKeolis.carParkCapacity = Integer.parseInt(contenuOfBalise);
-		} else if (baliseName.equals(LAST_UPDATE)) {
-			currentObjectKeolis.lastupdate = contenuOfBalise;
 		} else if (baliseName.equals(STATE)) {
 			currentObjectKeolis.state = Integer.parseInt(contenuOfBalise);
 		}

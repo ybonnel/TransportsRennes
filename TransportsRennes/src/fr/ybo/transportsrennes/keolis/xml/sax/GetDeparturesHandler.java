@@ -55,13 +55,13 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 
 
 	@Override
-	protected void remplirObjectKeolis(Departure currentObjectKeolis, String baliseName, String contenuOfBalise) {
+	protected void remplirObjectKeolis(final Departure currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
 		if (baliseName.equals(DEPARTURE)) {
-			Calendar calendar = Calendar.getInstance();
+			final Calendar calendar = Calendar.getInstance();
 			try {
 				calendar.setTime(dfm.parse(contenuOfBalise));
 				currentObjectKeolis.setTime(calendar);
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
 			}
 		}
@@ -77,17 +77,16 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 	 * .lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
 	@Override
-	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+	public void startElement(final String uri, final String localName, final String qName, final Attributes attributes) throws SAXException {
 		super.startElement(uri, localName, qName, attributes);
 		if (DEPARTURE.equals(localName)) {
 			currentObjetKeolis.setAccurate("1".equals(attributes.getValue("accurate")));
-			currentObjetKeolis.setHeadSign(attributes.getValue("headsign"));
 		}
 		if (DATA.equals(localName)) {
 			dateApi = Calendar.getInstance();
 			try {
 				dateApi.setTime(dfm.parse(attributes.getValue(LOCAL_DATETIME)));
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				throw new KeolisException("Erreur lors du parse de " + attributes.getValue(LOCAL_DATETIME), e);
 			}
 		}

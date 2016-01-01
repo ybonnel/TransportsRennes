@@ -25,8 +25,8 @@ import android.os.Bundle;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.alerts.ListAlertsForOneLine;
@@ -48,42 +48,35 @@ public class DetailArret extends AbstractDetailArret {
 
 	@Override
 	protected ListAdapter construireAdapter() {
-        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, null);
+        final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+		final List<DetailArretConteneur> horaires = Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, calendar, null);
 
 		
 		if (horaires.isEmpty()) {
 			String maxCalendrier = "00000000";
-			for (Calendrier calendrier : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
+			for (final Calendrier calendrier : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Calendrier.class)) {
 				if (calendrier.dateFin.compareTo(maxCalendrier) > 0) {
 					maxCalendrier = calendrier.dateFin;
 				}
 			}
-			String calendrierCourant = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+			final String calendrierCourant = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
 			if (maxCalendrier.compareTo(calendrierCourant) < 0) {
 				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageTbcEnRetard);
 			}
 		}
 
-        Calendar veille = Calendar.getInstance();
+        final Calendar veille = Calendar.getInstance();
         veille.setTime(calendar.getTime());
         veille.add(Calendar.DAY_OF_MONTH, -1);
         
-        for (DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille, null)) {
+        for (final DetailArretConteneur horaireVeille : Horaire.getAllHorairesAsList(favori.ligneId, favori.arretId, veille, null)) {
         	if (horaireVeille.getHoraire() > 24*60) {
         		horaireVeille.setHoraire(horaireVeille.getHoraire() - 24*60);
         		horaires.add(horaireVeille);
         	}
         }
         
-        Collections.sort(horaires, new Comparator<DetailArretConteneur>(){
-
-			@Override
-			public int compare(DetailArretConteneur lhs,
-					DetailArretConteneur rhs) {
-				return (lhs.getHoraire() < rhs.getHoraire()) ? -1 : ((lhs.getHoraire() == rhs.getHoraire()) ? 0 : 1);
-			}
-		});
+        Collections.sort(horaires, new DetailArretConteneurComparator());
 		
 		
 		return new DetailArretAdapter(getApplicationContext(), horaires, now, isToday(), favori.direction);
@@ -120,14 +113,14 @@ public class DetailArret extends AbstractDetailArret {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 
-	private Set<Integer> secondsToUpdate = new HashSet<Integer>();
+	private final Set<Integer> secondsToUpdate = new HashSet<Integer>();
 
 	/*
 	 * (non-Javadoc)
@@ -139,5 +132,14 @@ public class DetailArret extends AbstractDetailArret {
 	@Override
 	protected Set<Integer> getSecondsToUpdate() {
 		return secondsToUpdate;
+	}
+
+	private static class DetailArretConteneurComparator implements Comparator<DetailArretConteneur> {
+
+		@Override
+        public int compare(final DetailArretConteneur lhs,
+                final DetailArretConteneur rhs) {
+            return lhs.getHoraire() < rhs.getHoraire() ? -1 : lhs.getHoraire() == rhs.getHoraire() ? 0 : 1;
+        }
 	}
 }

@@ -19,51 +19,44 @@ import java.util.Calendar;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Departure implements Serializable {
 
 
-	private boolean accurate;
-	private String headSign;
-	private Calendar time;
+    private boolean accurate;
+    private Calendar time;
 
-	public boolean isAccurate() {
-		return accurate;
-	}
+    public boolean isAccurate() {
+        return accurate;
+    }
 
-	public void setAccurate(boolean accurate) {
-		this.accurate = accurate;
-	}
+    public void setAccurate(final boolean accurate) {
+        this.accurate = accurate;
+    }
 
-	public String getHeadSign() {
-		return headSign;
-	}
+    public Calendar getTime() {
+        return time;
+    }
 
-	public void setHeadSign(String headSign) {
-		this.headSign = headSign;
-	}
+    public void setTime(final Calendar time) {
+        this.time = time;
+    }
 
-	public Calendar getTime() {
-		return time;
-	}
+    private int horaire = -1;
 
-	public void setTime(Calendar time) {
-		this.time = time;
-	}
-
-	private int horaire = -1;
-
-	public int getHoraire() {
-		if (horaire == -1) {
-			horaire = time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
-		}
-		return horaire;
-	}
-
-	@Override
-	public String toString() {
-		return "Departure [accurate=" + accurate + ", headSign=" + headSign + ", time=" + time.getTime() + "]";
-	}
+    public int getHoraire() {
+        if (horaire == -1) {
+            horaire = time.get(Calendar.HOUR_OF_DAY) * 60 + time.get(Calendar.MINUTE);
+        }
+        return horaire;
+    }
 
 
+    @Override
+    public String toString() {
+        return "Departure{" +
+                "accurate=" + accurate +
+                ", time=" + time +
+                ", horaire=" + horaire +
+                '}';
+    }
 }

@@ -16,8 +16,8 @@ package fr.ybo.transportsbordeaux.activity.bus;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.fragments.bus.ListArretFragment;
@@ -46,10 +46,10 @@ public class ListArret extends AbstractListArret {
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
 	}
 }

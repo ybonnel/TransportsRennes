@@ -21,30 +21,30 @@ import android.app.Activity;
 
 public class UpdateTimeUtil {
 
-	private LogYbo LOG = new LogYbo(UpdateTimeUtil.class);
+    private static final LogYbo LOG = new LogYbo(UpdateTimeUtil.class);
 
-    private UpdateTime update;
-    private Activity activity;
+    private final UpdateTime update;
+    private final Activity activity;
 
     private int oldNow;
-	private int oldSecond;
+    private int oldSecond;
 
-    public UpdateTimeUtil(UpdateTime update, Activity activity, int now) {
+    private UpdateTimeUtil(final UpdateTime update, final Activity activity, final int now) {
         this.update = update;
         this.activity = activity;
         oldNow = now;
-		oldSecond = 0;
+        oldSecond = 0;
     }
 
-    public UpdateTimeUtil(UpdateTime update, Activity activity) {
+    public UpdateTimeUtil(final UpdateTime update, final Activity activity) {
         this.update = update;
         this.activity = activity;
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         oldNow = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-		oldSecond = calendar.get(Calendar.SECOND);
-	}
+        oldSecond = calendar.get(Calendar.SECOND);
+    }
 
-    private UpdateTimeThread updateTime = null;
+    private UpdateTimeThread updateTime;
 
     public void start() {
         if (updateTime == null) {
@@ -60,12 +60,12 @@ public class UpdateTimeUtil {
         }
     }
 
-    public static interface UpdateTime {
-        public void update(Calendar calendar);
+    public interface UpdateTime {
+        void update(Calendar calendar);
 
-		public boolean updateSecond();
+        boolean updateSecond();
 
-		public Set<Integer> secondesToUpdate();
+        Set<Integer> secondesToUpdate();
     }
 
     private class UpdateTimeThread extends Thread {
@@ -73,32 +73,33 @@ public class UpdateTimeUtil {
         public void run() {
             while (true) {
                 final Calendar calendar = Calendar.getInstance();
-                int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-				int second = calendar.get(Calendar.SECOND);
+                final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                final int second = calendar.get(Calendar.SECOND);
 
-				boolean mustUpdate = false;
-				if (now != oldNow) {
-					// changement de minute.
-					LOG.debug("now != oldNow : update");
-					LOG.debug("now : " + now);
-					LOG.debug("oldNow : " + oldNow);
-					mustUpdate = true;
-				}
-				if (!mustUpdate && update.updateSecond()) {
-					for (int secondToUpdate : update.secondesToUpdate()) {
-						if (oldSecond < secondToUpdate && secondToUpdate <= second) {
-							LOG.debug("Update for seconds");
-							LOG.debug("secondToUpdate : " + secondToUpdate);
-							LOG.debug("second : " + second);
-							LOG.debug("oldSecond : " + oldSecond);
-							mustUpdate = true;
-						}
-					}
-				}
-				if (mustUpdate) {
+                boolean mustUpdate = false;
+                if (now != oldNow) {
+                    // changement de minute.
+                    LOG.debug("now != oldNow : update");
+                    LOG.debug("now : " + now);
+                    LOG.debug("oldNow : " + oldNow);
+                    mustUpdate = true;
+                }
+                if (!mustUpdate && update.updateSecond()) {
+                    for (final int secondToUpdate : update.secondesToUpdate()) {
+                        if (oldSecond < secondToUpdate && secondToUpdate <= second) {
+                            LOG.debug("Update for seconds");
+                            LOG.debug("secondToUpdate : " + secondToUpdate);
+                            LOG.debug("second : " + second);
+                            LOG.debug("oldSecond : " + oldSecond);
+                            mustUpdate = true;
+                        }
+                    }
+                }
+                if (mustUpdate) {
                     oldNow = now;
-					oldSecond = second;
+                    oldSecond = second;
                     activity.runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             update.update(calendar);
                         }
@@ -106,7 +107,7 @@ public class UpdateTimeUtil {
                 }
                 try {
                     sleep(500);
-                } catch (InterruptedException e) {
+                } catch (final InterruptedException e) {
                     break;
                 }
             }

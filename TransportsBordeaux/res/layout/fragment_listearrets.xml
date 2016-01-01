@@ -16,8 +16,8 @@
       ybonnel - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <ImageView
@@ -31,7 +31,7 @@
         android:paddingTop="5dip" />
 
     <HorizontalScrollView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_toRightOf="@id/iconeLigne" >
 
@@ -71,7 +71,7 @@
 
     <HorizontalScrollView
         android:id="@+id/directionArretCouranteScroll"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="30dip"
         android:layout_below="@id/iconeLigne"
         android:layout_toRightOf="@id/directionEntete" >
@@ -92,8 +92,8 @@
 
     <ListView
         android:id="@id/android:list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/directionArretCouranteScroll"
         android:cacheColorHint="#00000000" />

@@ -23,8 +23,11 @@ import android.os.Build;
 /**
  * An assortment of UI helpers.
  */
-public class UIUtils {
+public final class UIUtils {
 
+
+    private UIUtils() {
+    }
 
     public static boolean isHoneycomb() {
         // Can use static final constants like HONEYCOMB, declared in later versions
@@ -32,13 +35,10 @@ public class UIUtils {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
-    public static boolean isTablet(Context context) {
+    public static boolean isTablet(final Context context) {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    public static boolean isHoneycombTablet(Context context) {
-        return isHoneycomb() && isTablet(context);
-    }
 }

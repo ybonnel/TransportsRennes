@@ -37,40 +37,44 @@ public class LigneAdapter extends BaseAdapter {
 
     private final List<Ligne> lignes;
 
-    public LigneAdapter(Context context, List<Ligne> lignes) {
+    public LigneAdapter(final Context context, final List<Ligne> lignes) {
         mInflater = LayoutInflater.from(context);
         this.lignes = lignes;
     }
 
+    @Override
     public int getCount() {
         return lignes.size();
     }
 
-    public Ligne getItem(int position) {
+    @Override
+    public Ligne getItem(final int position) {
         return lignes.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(final int position) {
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        LigneAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = mInflater.inflate(R.layout.ligne, null);
-            holder = new LigneAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
             holder.nomLong = (TextView) convertView1.findViewById(R.id.nomLong);
             convertView1.setTag(holder);
         } else {
-            holder = (LigneAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
-        Ligne ligne = lignes.get(position);
+        final Ligne ligne = lignes.get(position);
         holder.nomLong.setText(ligne.nomLong);
         try {
             holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(ligne.nomCourt));
-        } catch (Exception ignore) {
+        } catch (final Exception ignore) {
         }
         return convertView1;
     }

@@ -27,37 +27,38 @@ import fr.ybo.transportscommun.R;
 public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends AsyncTask<Params, Progress, Result>
 		implements OnCancelListener {
 
-	private String message;
+	private final String message;
 
 	private ProgressDialog myProgressDialog;
-	private Context context;
+	private final Context context;
 
-	private boolean cancellable = false;
+	private final boolean cancellable;
 
-	public TacheAvecProgressDialog(Context context, String message, boolean cancellable) {
+	public TacheAvecProgressDialog(final Context context, final String message, final boolean cancellable) {
 		this.message = message;
 		this.context = context;
 		this.cancellable = cancellable;
 	}
 
-	private boolean erreur = false;
+	private boolean erreur;
 
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		try {
 			myProgressDialog = ProgressDialog.show(context, "", message, true, cancellable, this);
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 
 		}
 	}
 
 	protected abstract void myDoBackground() throws ErreurReseau;
 
-	protected Result doInBackground(Params... params) {
+	@Override
+	protected Result doInBackground(final Params... params) {
 		try {
 			myDoBackground();
-		} catch (ErreurReseau erreurReseau) {
+		} catch (final ErreurReseau erreurReseau) {
 			erreurReseau.printStackTrace();
 			erreur = true;
 		}
@@ -65,18 +66,16 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 	}
 
     @Override
-	protected void onPostExecute(Result result) {
+	protected void onPostExecute(final Result result) {
 		try {
 			myProgressDialog.dismiss();
-		} catch (IllegalArgumentException ignore) {
+		} catch (final IllegalArgumentException ignore) {
 		}
 		if (erreur) {
-			Toast.makeText(context, context.getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+			Toast.makeText(context, R.string.erreurReseau, Toast.LENGTH_LONG).show();
 		}
 		super.onPostExecute(result);
 	}
-
-	boolean isCancelled = false;
 
 	/*
 	 * (non-Javadoc)
@@ -86,7 +85,7 @@ public abstract class TacheAvecProgressDialog<Params, Progress, Result> extends 
 	 * .DialogInterface)
 	 */
 	@Override
-	public void onCancel(DialogInterface dialog) {
-		this.cancel(true);
+	public void onCancel(final DialogInterface dialog) {
+		cancel(true);
 	}
 }

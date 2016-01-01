@@ -43,15 +43,9 @@ import fr.ybo.transportscommun.util.LogYbo;
 
 public class UpdateTimeService extends Service {
 
-	private static LogYbo LOG_YBO = new LogYbo(UpdateTimeService.class);
+	private static final LogYbo LOG_YBO = new LogYbo(UpdateTimeService.class);
 
-	/**
-	 * Used by the AppWidgetProvider to notify the Service that the views need
-	 * to be updated and redrawn.
-	 */
-	public static final String ACTION_UPDATE = "fr.ybo.transportsbordeaux.action.UPDATE";
-
-	private final static IntentFilter sIntentFilter;
+	private static final IntentFilter sIntentFilter;
 
 	static {
 		sIntentFilter = new IntentFilter();
@@ -62,48 +56,36 @@ public class UpdateTimeService extends Service {
 		sIntentFilter.addAction(Intent.ACTION_TIME_CHANGED);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		LOG_YBO.debug("onCreate");
         try {
-            PackageManager pm = getPackageManager();
+            final PackageManager pm = getPackageManager();
             if (pm != null) {
                 pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
                         PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
             }
-        } catch (Exception ignore) {}
+        } catch (final Exception ignore) {}
         registerReceiver(mTimeChangedReceiver, sIntentFilter);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		unregisterReceiver(mTimeChangedReceiver);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public void onStart(Intent intent, int startId) {
+	public void onStart(final Intent intent, final int startId) {
 		super.onStart(intent, startId);
-		if (intent != null && ACTION_UPDATE.equals(intent.getAction())) {
+		if (intent != null) {
 			update();
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public IBinder onBind(Intent intent) {
+	public IBinder onBind(final Intent intent) {
 		return null;
 	}
 
@@ -113,64 +95,59 @@ public class UpdateTimeService extends Service {
 	private void update() {
 		try {
 			LOG_YBO.debug("update");
-			for (int widgetId : TransportsWidget11Configure.getWidgetIds(getApplicationContext())) {
+			for (final int widgetId : TransportsWidget11Configure.getWidgetIds(getApplicationContext())) {
 				TransportsWidget11.updateAppWidget(getApplicationContext(),
 						AppWidgetManager.getInstance(getApplicationContext()), widgetId);
 			}
-			for (int widgetId : TransportsWidget21Configure.getWidgetIds(getApplicationContext())) {
+			for (final int widgetId : TransportsWidget21Configure.getWidgetIds(getApplicationContext())) {
 				TransportsWidget21.updateAppWidget(getApplicationContext(),
 						AppWidgetManager.getInstance(getApplicationContext()), widgetId);
 			}
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 		}
 	}
 
-	private Notification notifSelect = new Notification();
+	private final Notification notifSelect = new Notification();
 
 	private void updateNotifs() {
 		try {
 			// GestionNotif.
-			Calendar calendar = Calendar.getInstance();
-			int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+			final Calendar calendar = Calendar.getInstance();
+			final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
 			notifSelect.setHeure(now);
 			LOG_YBO.debug("Recherche des notif pour " + now);
-			for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+			for (final Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
 				createNotification(notification);
 			}
 			notifSelect.setHeure(now - 1);
-			for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+			for (final Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
 				createNotification(notification);
 			}
 			notifSelect.setHeure(now - 2);
-			for (Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
+			for (final Notification notification : TransportsBordeauxApplication.getDataBaseHelper().select(notifSelect)) {
 				createNotification(notification);
 			}
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 		}
 	}
 
-	private void createNotification(Notification notification) {
+	private void createNotification(final Notification notification) {
 		LOG_YBO.debug("Création d'une notif pour la ligne " + notification.getLigneId());
-		Ligne ligne = Ligne.getLigne(notification.getLigneId());
-		Arret arret = Arret.getArret(notification.getArretId());
-		int icon = IconeLigne.getIconeResource(ligne.nomCourt);
-		String texte = getResources().getString(R.string.notifText, ligne.nomCourt, arret.nom,
+		final Ligne ligne = Ligne.getLigne(notification.getLigneId());
+		final Arret arret = Arret.getArret(notification.getArretId());
+		final int icon = IconeLigne.getIconeResource(ligne.nomCourt);
+		final String texte = getResources().getString(R.string.notifText, ligne.nomCourt, arret.nom,
 				notification.getTempsAttente());
-		String shortText = getResources().getString(R.string.notifShortText, ligne.nomCourt, arret.nom);
-		String descriptionText = getResources()
+		final String shortText = getResources().getString(R.string.notifShortText, ligne.nomCourt, arret.nom);
+		final String descriptionText = getResources()
 				.getString(R.string.notifDescriptionText, notification.getTempsAttente());
-		Intent notificationIntent = new Intent(this, DetailArret.class);
-		notificationIntent.putExtra("ligne", ligne);
-		notificationIntent.putExtra("idArret", notification.getArretId());
-		notificationIntent.putExtra("nomArret", arret.nom);
-		notificationIntent.putExtra("direction", notification.getDirection());
+		final Intent notificationIntent = new Intent(this, DetailArret.class).putExtra("ligne", ligne).putExtra("idArret", notification.getArretId()).putExtra("nomArret", arret.nom).putExtra("direction", notification.getDirection());
 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		android.app.Notification notif = new android.app.Notification(icon, texte, System.currentTimeMillis());
-		notif.setLatestEventInfo(this, shortText, descriptionText, contentIntent);
+		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		final android.app.Notification notif = new android.app.Notification.Builder(this).setSmallIcon(icon).setTicker(texte).setWhen(System.currentTimeMillis()).setContentTitle(shortText).setContentText(descriptionText).setContentIntent(contentIntent).getNotification();
 		notif.defaults |= android.app.Notification.DEFAULT_ALL;
 		notif.flags |= android.app.Notification.FLAG_AUTO_CANCEL;
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(notification.getHeure(), notif);
 		TransportsBordeauxApplication.getDataBaseHelper().delete(notification);
 	}
@@ -184,7 +161,7 @@ public class UpdateTimeService extends Service {
 		private boolean screenOn = true;
 
 		@Override
-		public void onReceive(Context context, Intent intent) {
+		public void onReceive(final Context context, final Intent intent) {
 			final String action = intent.getAction();
 
 			if (Intent.ACTION_SCREEN_ON.equals(action)) {
@@ -193,7 +170,7 @@ public class UpdateTimeService extends Service {
 			if (Intent.ACTION_SCREEN_OFF.equals(action)) {
 				screenOn = false;
 			}
-			if (!UpdateDataBase.isMajDatabaseEncours()) {
+			if (UpdateDataBase.isMajDatabasePasEncours()) {
 				if (screenOn) {
 					update();
 				}

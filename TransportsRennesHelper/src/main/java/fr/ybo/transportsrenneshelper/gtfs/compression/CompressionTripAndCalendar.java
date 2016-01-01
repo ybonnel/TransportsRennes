@@ -66,8 +66,7 @@ public class CompressionTripAndCalendar {
 			});
 			StringBuilder keyBuilder = new StringBuilder();
 			for (StopTime stopTime : stopTimes) {
-				keyBuilder.append(stopTime.stopId);
-				keyBuilder.append(stopTime.heureDepart);
+				keyBuilder.append(stopTime.stopId).append(stopTime.heureDepart);
 			}
 			return keyBuilder.toString();
 		}

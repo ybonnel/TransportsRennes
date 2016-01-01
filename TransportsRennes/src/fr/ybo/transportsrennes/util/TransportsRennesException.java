@@ -23,15 +23,7 @@ public class TransportsRennesException extends RuntimeException {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TransportsRennesException(String detailMessage, Throwable throwable) {
-		super(detailMessage, throwable);
-	}
-
-	public TransportsRennesException(String detailMessage) {
-		super(detailMessage);
-	}
-
-	public TransportsRennesException(Throwable throwable) {
+	public TransportsRennesException(final Throwable throwable) {
 		super(throwable);
 	}
 

@@ -25,83 +25,47 @@ import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
  */
 public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 
-	/**
-	 * POS.
-	 */
-	private static final String POS = "pos";
-	/**
-	 * NAME.
-	 */
-	private static final String NAME = "name";
-	/**
-	 * TYPE.
-	 */
-	private static final String TYPE = "type";
-	/**
-	 * ADRESSE.
-	 */
-	private static final String ADRESSE = "address";
-	/**
-	 * CODE_POSTAL.
-	 */
-	private static final String CODE_POSTAL = "zipcode";
-	/**
-	 * VILLE.
-	 */
-	private static final String VILLE = "city";
-	/**
-	 * DISTRICT.
-	 */
-	private static final String DISTRICT = "district";
-	/**
-	 * TELEPHONE.
-	 */
-	private static final String TELEPHONE = "phone";
-	/**
-	 * SCHEDULE.
-	 */
-	private static final String SCHEDULE = "schedule";
-	/**
-	 * LATITUDE.
-	 */
-	private static final String LATITUDE = "latitude";
-	/**
-	 * LONGITUDE.
-	 */
-	private static final String LONGITUDE = "longitude";
+    /**
+     * POS.
+     */
+    private static final String POS = "pos";
+    /**
+     * NAME.
+     */
+    private static final String NAME = "name";
+    /**
+     * TELEPHONE.
+     */
+    private static final String TELEPHONE = "phone";
+    /**
+     * LATITUDE.
+     */
+    private static final String LATITUDE = "latitude";
+    /**
+     * LONGITUDE.
+     */
+    private static final String LONGITUDE = "longitude";
 
-	@Override
-	protected String getBaliseData() {
-		return POS;
-	}
+    @Override
+    protected String getBaliseData() {
+        return POS;
+    }
 
-	@Override
-	protected PointDeVente getNewObjetKeolis() {
-		return new PointDeVente();
-	}
+    @Override
+    protected PointDeVente getNewObjetKeolis() {
+        return new PointDeVente();
+    }
 
-	@Override
-	protected void remplirObjectKeolis(PointDeVente currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenuOfBalise;
-		} else if (baliseName.equals(TYPE)) {
-			currentObjectKeolis.type = contenuOfBalise;
-		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenuOfBalise;
-		} else if (baliseName.equals(CODE_POSTAL)) {
-			currentObjectKeolis.codePostal = contenuOfBalise;
-		} else if (baliseName.equals(VILLE)) {
-			currentObjectKeolis.ville = contenuOfBalise;
-		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenuOfBalise;
-		} else if (baliseName.equals(TELEPHONE)) {
-			currentObjectKeolis.telephone = contenuOfBalise;
-		} else if (baliseName.equals(SCHEDULE)) {
-			currentObjectKeolis.schedule = contenuOfBalise;
-		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
-		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
-		}
-	}
+    @Override
+    protected void remplirObjectKeolis(final PointDeVente currentObjectKeolis, final String baliseName, final String contenuOfBalise) {
+        if (baliseName.equals(NAME)) {
+            currentObjectKeolis.name = contenuOfBalise;
+        } else if (baliseName.equals(TELEPHONE)) {
+            currentObjectKeolis.telephone = contenuOfBalise;
+        } else if (baliseName.equals(LATITUDE)) {
+            currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
+        } else if (baliseName.equals(LONGITUDE)) {
+            currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
+        }
+    }
 }

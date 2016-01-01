@@ -34,7 +34,7 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
     private final List<Alert> alerts;
     private final LayoutInflater inflater;
 
-    public AlertAdapter(Context context, List<Alert> objects) {
+    public AlertAdapter(final Context context, final List<Alert> objects) {
         super(context, R.layout.alert, objects);
         alerts = objects;
         inflater = LayoutInflater.from(getContext());
@@ -46,18 +46,18 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        Alert alert = alerts.get(position);
-        AlertAdapter.ViewHolder holder;
+        final Alert alert = alerts.get(position);
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = inflater.inflate(R.layout.alert, null);
-            holder = new AlertAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.titreAlerte = (TextView) convertView1.findViewById(R.id.titreAlert);
             holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
             convertView1.setTag(holder);
         } else {
-            holder = (AlertAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 
         holder.titreAlerte.setText(alert.getTitleFormate());

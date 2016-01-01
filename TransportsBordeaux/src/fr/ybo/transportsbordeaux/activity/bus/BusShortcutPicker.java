@@ -36,14 +36,15 @@ import fr.ybo.transportscommun.util.IconeLigne;
 public class BusShortcutPicker extends BaseListActivity {
 
     private void constructionListe() {
-        List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");
+        final List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");
         setListAdapter(new LigneAdapter(this, lignes));
-        ListView lv = getListView();
+        final ListView lv = getListView();
         lv.setFastScrollEnabled(true);
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Ligne ligne = (Ligne) adapterView.getItemAtPosition(position);
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final Ligne ligne = (Ligne) adapterView.getItemAtPosition(position);
                 setupShortcut(ligne);
                 finish();
             }
@@ -52,24 +53,20 @@ public class BusShortcutPicker extends BaseListActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
         constructionListe();
     }
 
 
-    private void setupShortcut(Ligne ligne) {
+    private void setupShortcut(final Ligne ligne) {
         // First, set up the shortcut intent.
-        Intent shortcutIntent = new Intent(this, ListArret.class);
-        shortcutIntent.putExtra("ligneId", ligne.id);
+        final Intent shortcutIntent = new Intent(this, ListArret.class).putExtra("ligneId", ligne.id);
 
         // Then, set up the container intent (the response to the caller)
-        Intent intent = new Intent();
-        intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
-        intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.lineName, ligne.nomCourt));
-        Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, IconeLigne.getIconeResource(ligne.nomCourt));
-        intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
+        final Parcelable iconResource = Intent.ShortcutIconResource.fromContext(this, IconeLigne.getIconeResource(ligne.nomCourt));
+        final Intent intent = new Intent().putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent).putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.lineName, ligne.nomCourt)).putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, iconResource);
 
         // Now, return the result to the launcher
         setResult(RESULT_OK, intent);

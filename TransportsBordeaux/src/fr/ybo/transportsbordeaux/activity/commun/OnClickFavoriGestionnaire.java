@@ -19,11 +19,11 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget11Configure;
 import fr.ybo.transportsbordeaux.activity.widgets.TransportsWidget21Configure;
 import fr.ybo.transportsbordeaux.application.TransportsBordeauxApplication;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
@@ -35,15 +35,15 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
     private final String nomArret;
     private final String direction;
     private final ArretFavori myFavori = new ArretFavori();
-	private final Activity activity;
+    private final Activity activity;
 
-    public OnClickFavoriGestionnaire(Activity activity, Ligne ligne, String arretId, String nomArret, String direction) {
+    public OnClickFavoriGestionnaire(final Activity activity, final Ligne ligne, final String arretId, final String nomArret, final String direction) {
         this.ligne = ligne;
         this.nomArret = nomArret;
         this.direction = direction;
         myFavori.arretId = arretId;
         myFavori.ligneId = ligne.id;
-		this.activity = activity;
+        this.activity = activity;
     }
 
 
@@ -51,13 +51,12 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
     private void chargerLigne() {
 
-		myProgressDialog = ProgressDialog.show(activity, "",
-				activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
+        myProgressDialog = ProgressDialog.show(activity, "",
+                activity.getString(R.string.premierAccesLigne, ligne.nomCourt), true);
 
         new AsyncTask<Void, Void, Void>() {
 
-			private boolean erreurLigneNonTrouvee = false;
-            private boolean erreurNoSpaceLeft = false;
+            private boolean erreurNoSpaceLeft;
 
             @Override
             protected void onPreExecute() {
@@ -65,28 +64,22 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             }
 
             @Override
-            protected Void doInBackground(Void... pParams) {
+            protected Void doInBackground(final Void... pParams) {
                 try {
-					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
-                } catch (NoSpaceLeftException e) {
+                    UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
+                } catch (final NoSpaceLeftException e) {
                     erreurNoSpaceLeft = true;
-				} catch (LigneInexistanteException e) {
-					erreurLigneNonTrouvee = true;
                 }
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 myProgressDialog.dismiss();
-				if (erreurLigneNonTrouvee) {
-					Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
-							Toast.LENGTH_LONG).show();
-					activity.finish();
-				} else if (erreurNoSpaceLeft) {
-					Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
-					activity.finish();
+                if (erreurNoSpaceLeft) {
+                    Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
+                    activity.finish();
                 }
             }
 
@@ -94,8 +87,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
     }
 
-    public void onClick(View view) {
-        ImageView imageView = (ImageView) view;
+    @Override
+    public void onClick(final View view) {
+        final ImageView imageView = (ImageView) view;
         if (TransportsBordeauxApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
             ligne = TransportsBordeauxApplication.getDataBaseHelper().selectSingle(ligne);
             if (!ligne.isChargee()) {
@@ -106,21 +100,21 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             myFavori.nomLong = ligne.nomLong;
             myFavori.direction = direction;
             myFavori.nomArret = nomArret;
-			myFavori.macroDirection = 0;
-			myFavori.macroDirection = 0;
+            myFavori.macroDirection = 0;
+            myFavori.macroDirection = 0;
             TransportsBordeauxApplication.getDataBaseHelper().insert(myFavori);
             imageView.setImageResource(android.R.drawable.btn_star_big_on);
             imageView.invalidate();
         } else {
 
             // Supression d'un favori.
-			if (TransportsWidget11Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidget21Configure.isNotUsed(activity, myFavori)) {
+            if (TransportsWidget11Configure.isNotUsed(activity, myFavori)
+                    && TransportsWidget21Configure.isNotUsed(activity, myFavori)) {
                 TransportsBordeauxApplication.getDataBaseHelper().delete(myFavori);
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();
             } else {
-				Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, R.string.favoriUsedByWidget, Toast.LENGTH_LONG).show();
             }
 
             // Supression d'un favori.

@@ -29,31 +29,31 @@ public class DashboardLayout extends ViewGroup {
 
 	private static final int UNEVEN_GRID_PENALTY_MULTIPLIER = 10;
 
-	private int mMaxChildWidth = 0;
-	private int mMaxChildHeight = 0;
+	private int mMaxChildWidth;
+	private int mMaxChildHeight;
 
-	public DashboardLayout(Context context) {
+	public DashboardLayout(final Context context) {
 		super(context, null);
 	}
 
-	public DashboardLayout(Context context, AttributeSet attrs) {
+	public DashboardLayout(final Context context, final AttributeSet attrs) {
 		super(context, attrs, 0);
 	}
 
-	public DashboardLayout(Context context, AttributeSet attrs, int defStyle) {
+	public DashboardLayout(final Context context, final AttributeSet attrs, final int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
 	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+	protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
 		mMaxChildWidth = 0;
 		mMaxChildHeight = 0;
 
 		// Measure once to find the maximum child size.
 
-		int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
+		final int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
 				MeasureSpec.AT_MOST);
-		int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
+		final int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec),
 				MeasureSpec.AT_MOST);
 
 		final int count = getChildCount();
@@ -71,8 +71,8 @@ public class DashboardLayout extends ViewGroup {
 
 		// Measure again for each child to be exactly the same size.
 
-		childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxChildWidth, MeasureSpec.EXACTLY);
-		childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(mMaxChildHeight, MeasureSpec.EXACTLY);
+		final int childWidthMeasureSpec2 = MeasureSpec.makeMeasureSpec(mMaxChildWidth, MeasureSpec.EXACTLY);
+		final int childHeightMeasureSpec2 = MeasureSpec.makeMeasureSpec(mMaxChildHeight, MeasureSpec.EXACTLY);
 
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
@@ -80,7 +80,7 @@ public class DashboardLayout extends ViewGroup {
 				continue;
 			}
 
-			child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+			child.measure(childWidthMeasureSpec2, childHeightMeasureSpec2);
 		}
 
 		setMeasuredDimension(resolveSize(mMaxChildWidth, widthMeasureSpec),
@@ -88,7 +88,7 @@ public class DashboardLayout extends ViewGroup {
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
+	protected void onLayout(final boolean changed, final int l, final int t, final int r, final int b) {
 		int width = r - l;
 		int height = b - t;
 
@@ -116,8 +116,8 @@ public class DashboardLayout extends ViewGroup {
 		int spaceDifference;
 
 		// Horizontal and vertical space between items
-		int hSpace = 0;
-		int vSpace = 0;
+		int hSpace;
+		int vSpace;
 
 		int cols = 1;
 		int rows;
@@ -125,8 +125,8 @@ public class DashboardLayout extends ViewGroup {
 		while (true) {
 			rows = (visibleCount - 1) / cols + 1;
 
-			hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-			vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+			hSpace = (width - mMaxChildWidth * cols) / (cols + 1);
+			vSpace = (height - mMaxChildHeight * rows) / (rows + 1);
 
 			spaceDifference = Math.abs(vSpace - hSpace);
 			if (rows * cols != visibleCount) {
@@ -148,8 +148,8 @@ public class DashboardLayout extends ViewGroup {
 				// of cols and exit.
 				--cols;
 				rows = (visibleCount - 1) / cols + 1;
-				hSpace = ((width - mMaxChildWidth * cols) / (cols + 1));
-				vSpace = ((height - mMaxChildHeight * rows) / (rows + 1));
+				hSpace = (width - mMaxChildWidth * cols) / (cols + 1);
+				vSpace = (height - mMaxChildHeight * rows) / (rows + 1);
 				break;
 			}
 
@@ -168,8 +168,6 @@ public class DashboardLayout extends ViewGroup {
 		width = (width - hSpace * (cols + 1)) / cols;
 		height = (height - vSpace * (rows + 1)) / rows;
 
-		int left, top;
-		int col, row;
 		int visibleIndex = 0;
 		for (int i = 0; i < count; i++) {
 			final View child = getChildAt(i);
@@ -177,14 +175,14 @@ public class DashboardLayout extends ViewGroup {
 				continue;
 			}
 
-			row = visibleIndex / cols;
-			col = visibleIndex % cols;
+			final int row = visibleIndex / cols;
+			final int col = visibleIndex % cols;
 
-			left = hSpace * (col + 1) + width * col;
-			top = vSpace * (row + 1) + height * row;
+			final int left = hSpace * (col + 1) + width * col;
+			final int top = vSpace * (row + 1) + height * row;
 
-			child.layout(left, top, (hSpace == 0 && col == cols - 1) ? r : (left + width),
-					(vSpace == 0 && row == rows - 1) ? b : (top + height));
+			child.layout(left, top, hSpace == 0 && col == cols - 1 ? r : left + width,
+					vSpace == 0 && row == rows - 1 ? b : top + height);
 			++visibleIndex;
 		}
 	}

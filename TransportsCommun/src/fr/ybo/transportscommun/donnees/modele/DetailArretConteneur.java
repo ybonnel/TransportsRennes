@@ -17,14 +17,13 @@ package fr.ybo.transportscommun.donnees.modele;
 public class DetailArretConteneur {
 
     private int horaire;
-	private Integer secondes = null;
-    private int trajetId;
-    private int sequence;
-	private String direction;
+	private Integer secondes;
+    private final int trajetId;
+    private final int sequence;
+	private final String direction;
 
-	public DetailArretConteneur(int horaire, int trajetId, int sequence, String direction) {
-        super();
-        this.horaire = horaire;
+	public DetailArretConteneur(final int horaire, final int trajetId, final int sequence, final String direction) {
+		this.horaire = horaire;
         this.trajetId = trajetId;
         this.sequence = sequence;
 		this.direction = direction;
@@ -34,17 +33,17 @@ public class DetailArretConteneur {
         return horaire;
     }
 
-	public void setHoraire(int horaire) {
+	public void setHoraire(final int horaire) {
 		this.horaire = horaire;
 	}
 
-	private boolean accurate = false;
+	private boolean accurate;
 
 	public boolean isAccurate() {
 		return accurate;
 	}
 
-	public void setAccurate(boolean accurate) {
+	public void setAccurate(final boolean accurate) {
 		this.accurate = accurate;
 	}
 
@@ -52,7 +51,7 @@ public class DetailArretConteneur {
 		return secondes;
 	}
 
-	public void setSecondes(Integer secondes) {
+	public void setSecondes(final Integer secondes) {
 		this.secondes = secondes;
 	}
 
@@ -64,7 +63,7 @@ public class DetailArretConteneur {
         return sequence;
     }
 
-	public String getDirection() {
+	public CharSequence getDirection() {
 		return direction;
 	}
 }

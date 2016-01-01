@@ -29,23 +29,22 @@ import fr.ybo.transportscommun.donnees.modele.Horaire;
 import fr.ybo.transportscommun.util.IconeLigne;
 import fr.ybo.transportscommun.util.LogYbo;
 
-public class Widget21UpdateUtil {
+public final class Widget21UpdateUtil {
 
     private static final LogYbo LOG_YBO = new LogYbo(Widget11UpdateUtil.class);
 
     private Widget21UpdateUtil() {
     }
 
-    public static void updateAppWidget(Context context, RemoteViews views, ArretFavori favori, Calendar calendar) {
+    public static void updateAppWidget(final Context context, final RemoteViews views, final ArretFavori favori, final Calendar calendar) {
         views.setTextViewText(R.id.nomArret, favori.nomArret);
         views.setTextViewText(R.id.directionArret, "-> " + favori.direction);
         views.setImageViewResource(R.id.iconeLigne, IconeLigne.getIconeResource(favori.nomCourt));
-        Intent intent = new Intent(context, TransportsWidget21.class);
-        intent.setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        final Intent intent = new Intent(context, TransportsWidget21.class).setAction("YboClick_" + favori.arretId + '_' + favori.ligneId);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.widgetlayout, pendingIntent);
 
-        int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+        final int now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
         calendar.add(Calendar.MINUTE, -4);
         try {
 
@@ -57,7 +56,9 @@ public class Widget21UpdateUtil {
             LOG_YBO.debug("Prochains departs : " + prochainsDeparts);
 
             Integer prochainDepart = null;
-            if (prochainsDeparts.size() > 0) {
+            if (prochainsDeparts.isEmpty()) {
+                views.setTextViewText(R.id.tempsRestantPasse, "");
+            } else {
                 int heureProchain = prochainsDeparts.get(0).getHoraire();
                 if (heureProchain >= 24 * 60) {
                     heureProchain -= 24 * 60;
@@ -65,21 +66,19 @@ public class Widget21UpdateUtil {
 
                 LOG_YBO.debug("heureProchain : " + heureProchain);
                 LOG_YBO.debug("now : " + now);
-                if ((now - heureProchain) >= 0 && (now - heureProchain) < 30) {
+                if (now - heureProchain >= 0 && now - heureProchain < 30) {
                     views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.red));
                 } else {
                     prochainDepart = prochainsDeparts.get(0).getHoraire();
                     views.setTextColor(R.id.tempsRestantPasse, context.getResources().getColor(R.color.blanc));
                 }
                 views.setTextViewText(R.id.tempsRestantPasse,
-                        formatterCalendar(context, prochainsDeparts.get(0).getHoraire()));
+                        formatterCalendar(prochainsDeparts.get(0).getHoraire()));
 
-            } else {
-                views.setTextViewText(R.id.tempsRestantPasse, "");
             }
             if (prochainsDeparts.size() > 1) {
                 views.setTextViewText(R.id.tempsRestant,
-                        formatterCalendar(context, prochainsDeparts.get(1).getHoraire()));
+                        formatterCalendar(prochainsDeparts.get(1).getHoraire()));
                 if (prochainDepart == null) {
                     prochainDepart = prochainsDeparts.get(1).getHoraire();
                 }
@@ -88,59 +87,51 @@ public class Widget21UpdateUtil {
             }
 
             views.setTextViewText(R.id.tempsRestant,
-                    prochainsDeparts.size() < 2 ? "" : formatterCalendar(context, prochainsDeparts.get(1).getHoraire()));
+                    prochainsDeparts.size() < 2 ? "" : formatterCalendar(prochainsDeparts.get(1).getHoraire()));
             views.setTextViewText(R.id.tempsRestantFutur,
-                    prochainsDeparts.size() < 3 ? "" : formatterCalendar(context, prochainsDeparts.get(2).getHoraire()));
+                    prochainsDeparts.size() < 3 ? "" : formatterCalendar(prochainsDeparts.get(2).getHoraire()));
 
-            views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : (context.getString(R.string.prochain)
-                    + " " + formatterTempsRestant(context, prochainDepart, now)));
-        } catch (SQLiteException ignore) {
+            views.setTextViewText(R.id.prochainBus, prochainDepart == null ? "" : context.getString(R.string.prochain)
+                    + ' ' + formatterTempsRestant(context, prochainDepart, now));
+        } catch (final SQLiteException ignore) {
 
         }
     }
 
-    public static String formatterCalendar(Context context, int prochainDepart) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private static CharSequence formatterCalendar(final int prochainDepart) {
+        final StringBuilder stringBuilder = new StringBuilder();
 
         int heures = prochainDepart / 60;
-        int minutes = prochainDepart - heures * 60;
+        final int minutes = prochainDepart - heures * 60;
         if (heures >= 24) {
             heures -= 24;
         }
         if (heures < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(heures);
-        stringBuilder.append(':');
+        stringBuilder.append(heures).append(':');
         if (minutes < 10) {
             stringBuilder.append('0');
         }
-        stringBuilder.append(minutes);
-
-        return stringBuilder.toString();
+        return stringBuilder.append(minutes);
     }
 
-    public static String formatterTempsRestant(Context context, int prochainDepart, int now) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int tempsEnMinutes = prochainDepart - now;
+    private static CharSequence formatterTempsRestant(final Context context, final int prochainDepart, final int now) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        final int tempsEnMinutes = prochainDepart - now;
         if (tempsEnMinutes < 0) {
             stringBuilder.append(context.getString(R.string.tropTard));
         } else {
-            int heures = tempsEnMinutes / 60;
-            int minutes = tempsEnMinutes - heures * 60;
+            final int heures = tempsEnMinutes / 60;
+            final int minutes = tempsEnMinutes - heures * 60;
             boolean tempsAjoute = false;
             if (heures > 0) {
-                stringBuilder.append(heures);
-                stringBuilder.append(' ');
-                stringBuilder.append(context.getString(R.string.miniHeures));
-                stringBuilder.append(' ');
+                stringBuilder.append(heures).append(' ').append(context.getString(R.string.miniHeures)).append(' ');
                 tempsAjoute = true;
             }
             if (minutes > 0) {
                 if (heures <= 0) {
-                    stringBuilder.append(minutes);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(context.getString(R.string.miniMinutes));
+                    stringBuilder.append(minutes).append(' ').append(context.getString(R.string.miniMinutes));
                 } else {
                     if (minutes < 10) {
                         stringBuilder.append('0');
@@ -150,10 +141,9 @@ public class Widget21UpdateUtil {
                 tempsAjoute = true;
             }
             if (!tempsAjoute) {
-                stringBuilder.append("0 ");
-                stringBuilder.append(context.getString(R.string.miniMinutes));
+                stringBuilder.append("0 ").append(context.getString(R.string.miniMinutes));
             }
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 }

@@ -14,6 +14,7 @@
 package fr.ybo.transportsrennes.adapters.bus;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 
 import android.content.Context;
@@ -39,7 +40,7 @@ public class NotifAdapter extends BaseAdapter {
     private int now;
     private final Context myContext;
 
-    public NotifAdapter(Context context, List<Notification> notifications) {
+    public NotifAdapter(final Context context, final List<Notification> notifications) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
         this.notifications = notifications;
@@ -49,23 +50,26 @@ public class NotifAdapter extends BaseAdapter {
 
 
     public void majCalendar() {
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         now = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
     }
 
+    @Override
     public int getCount() {
         return notifications.size();
     }
 
-    public Notification getItem(int position) {
+    @Override
+    public Notification getItem(final int position) {
         return notifications.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(final int position) {
         return position;
     }
 
-    public List<Notification> getNotifications() {
+    public Collection<Notification> getNotifications() {
         return notifications;
     }
 
@@ -76,12 +80,13 @@ public class NotifAdapter extends BaseAdapter {
         TextView directionArret;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        NotifAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = mInflater.inflate(R.layout.notif, null);
-            holder = new NotifAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
             holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
             holder.tempsRestant = (TextView) convertView1.findViewById(R.id.tempsRestant);
@@ -89,7 +94,7 @@ public class NotifAdapter extends BaseAdapter {
 
             convertView1.setTag(holder);
         } else {
-            holder = (NotifAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 		holder.arret.setTextColor(TransportsRennesApplication.getTextColor(myContext));
 		holder.tempsRestant.setTextColor(TransportsRennesApplication.getTextColor(myContext));
@@ -106,27 +111,22 @@ public class NotifAdapter extends BaseAdapter {
     }
 
 
-    private CharSequence formatterCalendar(int prochainDepart, int now) {
-        StringBuilder stringBuilder = new StringBuilder();
+    private CharSequence formatterCalendar(final int prochainDepart, final int now) {
+        final StringBuilder stringBuilder = new StringBuilder();
         int tempsEnMinutes = prochainDepart - now;
         if (tempsEnMinutes < 0) {
             tempsEnMinutes += 24 * 60;
         }
-        int heures = tempsEnMinutes / 60;
-        int minutes = tempsEnMinutes - heures * 60;
+        final int heures = tempsEnMinutes / 60;
+        final int minutes = tempsEnMinutes - heures * 60;
         boolean tempsAjoute = false;
         if (heures > 0) {
-            stringBuilder.append(heures);
-            stringBuilder.append(' ');
-            stringBuilder.append(myContext.getString(R.string.miniHeures));
-            stringBuilder.append(' ');
+            stringBuilder.append(heures).append(' ').append(myContext.getString(R.string.miniHeures)).append(' ');
             tempsAjoute = true;
         }
         if (minutes > 0) {
             if (heures <= 0) {
-                stringBuilder.append(minutes);
-                stringBuilder.append(' ');
-                stringBuilder.append(myContext.getString(R.string.miniMinutes));
+                stringBuilder.append(minutes).append(' ').append(myContext.getString(R.string.miniMinutes));
             } else {
                 if (minutes < 10) {
                     stringBuilder.append('0');
@@ -136,10 +136,9 @@ public class NotifAdapter extends BaseAdapter {
             tempsAjoute = true;
         }
         if (!tempsAjoute) {
-            stringBuilder.append("0 ");
-            stringBuilder.append(myContext.getString(R.string.miniMinutes));
+            stringBuilder.append("0 ").append(myContext.getString(R.string.miniMinutes));
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
 }

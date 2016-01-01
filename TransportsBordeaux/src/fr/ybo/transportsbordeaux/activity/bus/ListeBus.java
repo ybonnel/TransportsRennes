@@ -22,8 +22,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.bus.LigneAdapter;
@@ -39,16 +39,16 @@ import fr.ybo.transportscommun.donnees.modele.Ligne;
 public class ListeBus extends BaseListActivity {
 
     private void constructionListe() {
-        List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");
+        final List<Ligne> lignes = TransportsBordeauxApplication.getDataBaseHelper().select(new Ligne(), "ordre");
         setListAdapter(new LigneAdapter(this, lignes));
-        ListView lv = getListView();
+        final ListView lv = getListView();
         lv.setFastScrollEnabled(true);
         lv.setTextFilterEnabled(true);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
-                Intent intent = new Intent(ListeBus.this, ListArret.class);
-                intent.putExtra("ligne", ligne);
+            @Override
+            public void onItemClick(final AdapterView<?> adapterView, final View view, final int position, final long id) {
+                final Serializable ligne = (Serializable) adapterView.getItemAtPosition(position);
+                final Intent intent = new Intent(ListeBus.this, ListArret.class).putExtra("ligne", ligne);
                 startActivity(intent);
             }
 
@@ -56,13 +56,13 @@ public class ListeBus extends BaseListActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bus);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
         constructionListe();
 
         // Look up the AdView as a resource and load a request.
-        ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+        ((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 }

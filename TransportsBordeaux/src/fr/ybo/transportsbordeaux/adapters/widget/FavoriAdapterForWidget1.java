@@ -33,7 +33,7 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
 
     private final List<ArretFavori> favoris;
 
-    private Integer favoriSelectionne = null;
+    private Integer favoriSelectionne;
 
     public ArretFavori getFavoriSelectionne() {
         if (favoriSelectionne == null) {
@@ -42,25 +42,28 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
         return favoris.get(favoriSelectionne);
     }
     
-    public void setFavoriSelectionne(Integer favoriSelectionne) {
+    public void setFavoriSelectionne(final Integer favoriSelectionne) {
 		this.favoriSelectionne = favoriSelectionne;
 	}
 
-    public FavoriAdapterForWidget1(Context context, List<ArretFavori> favoris) {
+    public FavoriAdapterForWidget1(final Context context, final List<ArretFavori> favoris) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
         this.favoris = favoris;
     }
 
+    @Override
     public int getCount() {
         return favoris.size();
     }
 
-    public ArretFavori getItem(int position) {
+    @Override
+    public ArretFavori getItem(final int position) {
         return favoris.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(final int position) {
         return position;
     }
 
@@ -71,13 +74,14 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
         CheckBox checkBox;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        FavoriAdapterForWidget1.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = mInflater.inflate(R.layout.favori_for_widget, null);
 
-            holder = new FavoriAdapterForWidget1.ViewHolder();
+            holder = new ViewHolder();
             holder.iconeLigne = (ImageView) convertView1.findViewById(R.id.iconeLigne);
             holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
             holder.direction = (TextView) convertView1.findViewById(R.id.directionArret);
@@ -85,10 +89,10 @@ public class FavoriAdapterForWidget1 extends BaseAdapter {
 
             convertView1.setTag(holder);
         } else {
-            holder = (FavoriAdapterForWidget1.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 
-        ArretFavori favori = favoris.get(position);
+        final ArretFavori favori = favoris.get(position);
 
         holder.arret.setText(favori.nomArret);
         holder.direction.setText(favori.direction);

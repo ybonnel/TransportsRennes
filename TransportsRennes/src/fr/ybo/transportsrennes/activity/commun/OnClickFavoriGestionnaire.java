@@ -19,7 +19,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
-import fr.ybo.transportscommun.donnees.manager.LigneInexistanteException;
+
 import fr.ybo.transportscommun.donnees.manager.gtfs.UpdateDataBase;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.Ligne;
@@ -39,8 +39,8 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
     private final ArretFavori myFavori = new ArretFavori();
     private final Activity activity;
 
-    public OnClickFavoriGestionnaire(Ligne ligne, String arretId, String nomArret, String direction, Activity activity,
-                                     int macroDirection) {
+    public OnClickFavoriGestionnaire(final Ligne ligne, final String arretId, final String nomArret, final String direction, final Activity activity,
+                                     final int macroDirection) {
         this.ligne = ligne;
         this.nomArret = nomArret;
         this.direction = direction;
@@ -59,8 +59,7 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
         new AsyncTask<Void, Void, Void>() {
 
-            private boolean erreurLigneNonTrouvee = false;
-			private boolean erreurNoSpaceLeft = false;
+            private boolean erreurNoSpaceLeft;
 
             @Override
             protected void onPreExecute() {
@@ -68,32 +67,26 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             }
 
             @Override
-            protected Void doInBackground(Void... pParams) {
+            protected Void doInBackground(final Void... pParams) {
                 try {
-					UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
-				} catch (NoSpaceLeftException e) {
-					erreurNoSpaceLeft = true;
-                } catch (LigneInexistanteException e) {
-                    erreurLigneNonTrouvee = true;
+                    UpdateDataBase.chargeDetailLigne(R.raw.class, ligne, activity.getResources());
+                } catch (final NoSpaceLeftException e) {
+                    erreurNoSpaceLeft = true;
                 }
                 return null;
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 try {
                     myProgressDialog.dismiss();
-                } catch (IllegalArgumentException ignore) {
+                } catch (final IllegalArgumentException ignore) {
 
                 }
-                if (erreurLigneNonTrouvee) {
-                    Toast.makeText(activity, activity.getString(R.string.erreurLigneInconue, ligne.nomCourt),
-                            Toast.LENGTH_LONG).show();
+                if (erreurNoSpaceLeft) {
+                    Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
                     activity.finish();
-				} else if (erreurNoSpaceLeft) {
-					Toast.makeText(activity, R.string.erreurNoSpaceLeft, Toast.LENGTH_LONG).show();
-					activity.finish();
                 }
             }
 
@@ -101,8 +94,9 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
 
     }
 
-    public void onClick(View view) {
-        ImageView imageView = (ImageView) view;
+    @Override
+    public void onClick(final View view) {
+        final ImageView imageView = (ImageView) view;
         if (TransportsRennesApplication.getDataBaseHelper().selectSingle(myFavori) == null) {
             ligne = TransportsRennesApplication.getDataBaseHelper().selectSingle(ligne);
             if (!ligne.isChargee()) {
@@ -120,13 +114,13 @@ public class OnClickFavoriGestionnaire implements View.OnClickListener {
             // Supression d'un favori.
             if (TransportsWidgetConfigure.isNotUsed(activity, myFavori)
                     && TransportsWidget11Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidget21Configure.isNotUsed(activity, myFavori)
-					&& TransportsWidgetLowResConfigure.isNotUsed(activity, myFavori)) {
+                    && TransportsWidget21Configure.isNotUsed(activity, myFavori)
+                    && TransportsWidgetLowResConfigure.isNotUsed(activity, myFavori)) {
                 TransportsRennesApplication.getDataBaseHelper().delete(myFavori);
                 imageView.setImageResource(android.R.drawable.btn_star_big_off);
                 imageView.invalidate();
             } else {
-                Toast.makeText(activity, activity.getString(R.string.favoriUsedByWidget), Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, R.string.favoriUsedByWidget, Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -15,8 +15,8 @@ package fr.ybo.transportsbordeaux.activity.alerts;
 
 import android.os.Bundle;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.fragments.alerts.ListAlerts;
@@ -25,19 +25,17 @@ import fr.ybo.transportscommun.donnees.modele.Ligne;
 
 public class ListAlertsForOneLine extends BaseFragmentActivity {
 
-    private Ligne ligne;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	@Override
+    protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
+		final Ligne ligne = (Ligne) getIntent().getExtras().getSerializable("ligne");
 		setContentView(R.layout.listalert);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
-		ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
+		final ListAlerts fragmentAlert = (ListAlerts) getSupportFragmentManager().findFragmentById(R.id.fragment_alerts);
 		fragmentAlert.setLigne(ligne);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
     }
 
 }

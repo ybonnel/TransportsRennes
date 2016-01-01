@@ -16,14 +16,14 @@
       ybonnel - initial API and implementation
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/widget_bg"
                 android:id="@+id/widgetlayout">
     <RelativeLayout
             android:id="@+id/layout_1arret"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="invisible">
 
         <ImageView android:id="@+id/iconeLigne_1arret"
@@ -101,11 +101,11 @@
     </RelativeLayout>
     <RelativeLayout
             android:id="@+id/layout_2arret"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="invisible">
         <RelativeLayout android:id="@+id/layout_2arret_1"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
             <ImageView android:id="@+id/iconeLigne1_2arret"
@@ -160,7 +160,7 @@
                       android:layout_alignParentLeft="true"/>
         </RelativeLayout>
         <RelativeLayout android:id="@+id/layout_2arret_2"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/layout_2arret_1">
 
@@ -221,11 +221,11 @@
 
     <RelativeLayout
             android:id="@+id/layout_3arret"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:visibility="invisible">
         <RelativeLayout android:id="@+id/layout_3arret_1"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
             <ImageView android:id="@+id/iconeLigne1_3arret"
@@ -268,7 +268,7 @@
                       android:layout_below="@id/iconeLigne1_3arret"/>
         </RelativeLayout>
         <RelativeLayout android:id="@+id/layout_3arret_2"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/layout_3arret_1">
 
@@ -312,7 +312,7 @@
                       android:layout_below="@id/iconeLigne2_3arret"/>
         </RelativeLayout>
         <RelativeLayout android:id="@+id/layout_3arret_3"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/layout_3arret_2">
 

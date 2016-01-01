@@ -28,23 +28,25 @@ public class ContextWithDatabasePath extends ContextWrapper {
 
     private static final LogYbo LOG_YBO = new LogYbo(ContextWithDatabasePath.class);
 
-    public ContextWithDatabasePath(Context context) {
+    public ContextWithDatabasePath(final Context context) {
         super(context);
     }
 
-    public File getDatabasePath(String name) {
+    @Override
+    public File getDatabasePath(final String name) {
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            File root = Environment.getExternalStorageDirectory();
-            File repertoire = new File(root, ".transportsbordeaux");
-            File outputFile = new File(repertoire, name);
+            final File root = Environment.getExternalStorageDirectory();
+            final File repertoire = new File(root, ".transportsbordeaux");
+            final File outputFile = new File(repertoire, name);
             LOG_YBO.debug("Répertoire pour la base de données : " + outputFile.getAbsolutePath());
             return outputFile;
         }
         throw new TcbException("Impossible de créer la base sur la carte.");
     }
 
-    public SQLiteDatabase openOrCreateDatabase(String name, int mode, CursorFactory factory) {
-        File dbFile = getDatabasePath(name);
+    @Override
+    public SQLiteDatabase openOrCreateDatabase(final String name, final int mode, final CursorFactory factory) {
+        final File dbFile = getDatabasePath(name);
         dbFile.getParentFile().mkdirs();
         return SQLiteDatabase.openOrCreateDatabase(dbFile, factory);
     }

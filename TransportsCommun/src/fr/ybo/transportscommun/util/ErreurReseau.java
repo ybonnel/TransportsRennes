@@ -23,11 +23,7 @@ public class ErreurReseau extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ErreurReseau(String detailMessage, Throwable throwable) {
-		super(detailMessage, throwable);
-	}
-
-	public ErreurReseau(String detailMessage) {
+	public ErreurReseau(final String detailMessage) {
 		super(detailMessage);
 	}
 
@@ -35,7 +31,7 @@ public class ErreurReseau extends Exception {
 		super("Erreur réseau détectée");
 	}
 
-	public ErreurReseau(Throwable throwable) {
+	public ErreurReseau(final Throwable throwable) {
 		super(throwable);
 	}
 

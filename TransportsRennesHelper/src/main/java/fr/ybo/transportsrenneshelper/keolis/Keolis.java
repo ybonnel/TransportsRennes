@@ -120,10 +120,6 @@ public final class Keolis {
 	 * @return l'url.
 	 */
 	private String getUrl(String commande) {
-		StringBuilder stringBuilder = new StringBuilder(URL);
-		stringBuilder.append("?version=").append(VERSION);
-		stringBuilder.append("&key=").append(KEY);
-		stringBuilder.append("&cmd=").append(commande);
-		return stringBuilder.toString();
+		return new StringBuilder(URL).append("?version=").append(VERSION).append("&key=").append(KEY).append("&cmd=").append(commande).toString();
 	}
 }

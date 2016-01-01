@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import fr.ybo.transportscommun.util.Formatteur;
 
@@ -31,13 +32,21 @@ import fr.ybo.transportscommun.util.Formatteur;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class Alert implements Serializable {
+
+
+    private static final Pattern NSBP1 = Pattern.compile(" &nbsp;");
+    private static final Pattern NSBP2 = Pattern.compile("&nbsp; ");
+    private static final Pattern NSBP3 = Pattern.compile(" &nbsp;");
+    private static final Pattern NSBP4 = Pattern.compile("&nbsp; ");
+    private static final Pattern NSBP5 = Pattern.compile("&nbsp;&nbsp;");
+    private static final Pattern NSBP6 = Pattern.compile("&nbsp;");
+
 
     public Alert() {
     }
 
-    public Alert(Alert alert) {
+    public Alert(final Alert alert) {
         title = alert.title;
         starttime = alert.starttime;
         endtime = alert.endtime;
@@ -78,17 +87,19 @@ public class Alert implements Serializable {
      */
     public String link;
 
-    public String getDetailFormatte(Iterable<String> arrets) {
+    public CharSequence getDetailFormatte(final Iterable<String> arrets) {
 		if (detail == null) {
 			return "";
 		}
-        String detailFormatte =
-                detail.replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;").replaceAll(" &nbsp;", "&nbsp;").replaceAll("&nbsp; ", "&nbsp;")
-                        .replaceAll("&nbsp;&nbsp;", "&nbsp;").replaceAll("&nbsp;", " ");
-        StringBuilder resultat = new StringBuilder();
+        final String detail1 = NSBP1.matcher(detail).replaceAll("&nbsp;");
+        final String detail2 = NSBP2.matcher(detail1).replaceAll("&nbsp;");
+        final String detail3 = NSBP3.matcher(detail2).replaceAll("&nbsp;");
+        final String detail4 = NSBP4.matcher(detail3).replaceAll("&nbsp;");
+        final String detail5 = NSBP5.matcher(detail4).replaceAll("&nbsp;");
+        final String detailFormatte = NSBP6.matcher(detail5).replaceAll("&nbsp;");
+        final StringBuilder resultat = new StringBuilder();
         char carOld = '\0';
-        for (char car : detailFormatte.toCharArray()) {
-            //noinspection OverlyComplexBooleanExpression
+        for (final char car : detailFormatte.toCharArray()) {
             if ((carOld >= '0' && carOld <= '9' || carOld >= 'a' && carOld <= 'z' || carOld == 'é') && car >= 'A' && car <= 'Z') {
                 // Minuscule suivie d'une majuscule, ça doit être un retour à la ligne qui manque.
                 resultat.append(".\n");
@@ -98,14 +109,14 @@ public class Alert implements Serializable {
         }
 
         String resultatChaine = resultat.toString();
-        for (String arretToBold : arrets) {
+        for (final String arretToBold : arrets) {
             resultatChaine = resultatChaine.replaceAll(arretToBold, "<b>" + arretToBold + "</b>");
         }
 
         // recherche des lignes à mettre en gras.
-        String[] champs = resultatChaine.split("\n");
-        StringBuilder stringBuilder = new StringBuilder();
-        for (String champ : champs) {
+        final String[] champs = resultatChaine.split("\n");
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (final String champ : champs) {
             if (champ.startsWith("Ligne")) {
                 stringBuilder.append("<br/><b>");
             }
@@ -115,7 +126,7 @@ public class Alert implements Serializable {
             }
             stringBuilder.append("<br/>");
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
     private static final Collection<Character> CARAC_TO_DELETE = new HashSet<Character>(11);
@@ -136,7 +147,7 @@ public class Alert implements Serializable {
 
     public CharSequence getTitleFormate() {
         String titleFormate = title;
-        while (titleFormate.length() > 0 && CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {
+        while (!titleFormate.isEmpty() && CARAC_TO_DELETE.contains(titleFormate.charAt(0))) {
             titleFormate = titleFormate.substring(1);
             if (titleFormate.startsWith("TTZ")) {
                 titleFormate = titleFormate.substring(3);

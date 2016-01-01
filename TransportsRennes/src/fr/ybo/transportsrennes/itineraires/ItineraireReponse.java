@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressWarnings("serial")
 public class ItineraireReponse implements Serializable {
     private List<Trajet> trajets;
 
@@ -32,13 +31,13 @@ public class ItineraireReponse implements Serializable {
         return trajets;
     }
 
-    public static ItineraireReponse convert(TripPlan tripPlan) {
+    public static Serializable convert(final TripPlan tripPlan) {
         if (tripPlan == null) {
             return null;
         }
-        ItineraireReponse itineraireReponse = new ItineraireReponse();
+        final ItineraireReponse itineraireReponse = new ItineraireReponse();
         if (tripPlan.itineraries != null) {
-            for (Itinerary itinerary : tripPlan.itineraries.itinerary) {
+            for (final Itinerary itinerary : tripPlan.itineraries.itinerary) {
                 itineraireReponse.getTrajets().add(Trajet.convert(itinerary));
             }
         }

@@ -17,8 +17,8 @@
 package fr.ybo.transportsbordeaux.util;
 
 import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -26,29 +26,30 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-public class Version {
+public final class Version {
 
-	public static final String URL_VERSION = "http://transports.ybonnel.fr/version/transports-bordeaux.version";
+	private static final String URL_VERSION = "http://transports.ybonnel.fr/version/transports-bordeaux.version";
+
+	private Version() {
+	}
 
 	/**
 	 * Nom de la version disponible sur le market
-	 * 
-	 * @param context
-	 *            Context
+	 *
 	 * @return Nom de la version disponible sur le market
 	 */
 	public static String getMarketVersion() {
 		String version = null;
 		BufferedReader reader = null;
 		try {
-			URL marketURL = new URL(URL_VERSION);
-			URLConnection connection = marketURL.openConnection();
+			final URL marketURL = new URL(URL_VERSION);
+			final URLConnection connection = marketURL.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
 			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			version = reader.readLine();
 
-        } catch (Exception ignore) {
+        } catch (final Exception ignore) {
 			ignore.printStackTrace();
 		} finally {
 			closeReader(reader);
@@ -62,24 +63,24 @@ public class Version {
 	 * @param reader
 	 *            Reader
 	 */
-	private static void closeReader(Reader reader) {
+	private static void closeReader(final Closeable reader) {
 		if (reader != null) {
 			try {
 				reader.close();
-			} catch (Exception ignore) {
+			} catch (final Exception ignore) {
 			}
 		}
 	}
 
-	private static String version = null;
+	private static String version;
 
-	public static String getVersionCourante(Context context) {
+	public static String getVersionCourante(final Context context) {
 		if (version == null) {
-			PackageManager manager = context.getPackageManager();
+			final PackageManager manager = context.getPackageManager();
 			try {
-				PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+				final PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
 				version = info.versionName;
-			} catch (PackageManager.NameNotFoundException ignore) {
+			} catch (final PackageManager.NameNotFoundException ignore) {
 			}
 		}
 		return version;

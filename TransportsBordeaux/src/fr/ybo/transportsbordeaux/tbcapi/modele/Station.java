@@ -14,16 +14,14 @@
 package fr.ybo.transportsbordeaux.tbcapi.modele;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-import fr.ybo.transportscommun.donnees.modele.IStation;
 import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 
 
-@SuppressWarnings("serial")
-public class Station extends ObjetWithDistance implements Serializable, IStation {
+public class Station extends ObjetWithDistance implements Serializable {
 	public int id;
     public String name;
-    public String address;
     public double longitude;
     public double latitude;
     public int availableBikes;
@@ -40,27 +38,10 @@ public class Station extends ObjetWithDistance implements Serializable, IStation
         return longitude;
     }
 
-	/* (non-Javadoc)
-	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getBikesAvailables()
-	 */
-	@Override
-	public int getBikesAvailables() {
-		return availableBikes;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getSlotsAvailables()
-	 */
-	@Override
-	public int getSlotsAvailables() {
-		return freeSlots;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.ybo.transportscommun.donnees.modele.IStation#getName()
-	 */
-	@Override
-	public String getName() {
-		return name;
+    public static class StationComparator implements Comparator<Station> {
+		@Override
+		public int compare(final Station o1, final Station o2) {
+			return o1.name.compareToIgnoreCase(o2.name);
+		}
 	}
 }

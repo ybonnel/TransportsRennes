@@ -6,9 +6,10 @@ import java.util.Comparator;
 
 public interface IParking {
 
-    public static class ComparatorDistance implements Comparator<IParking> {
+    class ComparatorDistance implements Comparator<IParking> {
 
-        public int compare(IParking o1, IParking o2) {
+        @Override
+		public int compare(final IParking o1, final IParking o2) {
             if (o1 == null || o2 == null || o1.getDistance() == null || o2.getDistance() == null) {
                 return 0;
             }

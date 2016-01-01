@@ -22,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.format.DateFormat;
 import android.text.method.LinkMovementMethod;
@@ -38,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.regex.Pattern;
 
 import fr.ybo.database.DataBaseException;
 import fr.ybo.database.DataBaseHelper;
@@ -59,7 +59,7 @@ public class TransportsRennes extends AccueilActivity {
 	private Theme currentTheme;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		currentTheme = TransportsRennesApplication.getTheme(getApplicationContext());
 		setContentView(R.layout.main);
@@ -78,25 +78,24 @@ public class TransportsRennes extends AccueilActivity {
 
 	private static final int DIALOG_A_PROPOS = 1;
 	private static final int DIALOG_UPGRADE = 2;
-
+	private static final Pattern DATE_GTFS = Pattern.compile("%DATE_GTFS%");
 	@Override
-	protected Dialog onCreateDialog(int id) {
+	protected Dialog onCreateDialog(final int id) {
 		if (id == DIALOG_A_PROPOS) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
-			TextView textView = (TextView) view.findViewById(R.id.textAPropos);
+			final View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
+			final TextView textView = (TextView) view.findViewById(R.id.textAPropos);
 			if (UIUtils.isHoneycomb()) {
 				textView.setTextColor(TransportsRennesApplication.getTextColor(this));
 			}
-            String dateGtfs = DateFormat.getDateFormat(this).format(
+            final String dateGtfs = DateFormat.getDateFormat(this).format(
                     GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update));
-			Spanned spanned = Html.fromHtml("<img src=\""
+			final Spanned spanned = Html.fromHtml("<img src=\""
                     + R.drawable.approuve
-                    + "\"/>" + getString(R.string.dialogAPropos).replace("%DATE_GTFS%", dateGtfs),
+                    + "\"/>" + DATE_GTFS.matcher(getString(R.string.dialogAPropos)).replaceFirst(dateGtfs),
                     new Html.ImageGetter() {
                         @Override
-                        public Drawable getDrawable(String s) {
-                            Drawable approuve = TransportsRennes.this.getResources()
+                        public Drawable getDrawable(final String s) {
+                            final Drawable approuve = getResources()
                                     .getDrawable(Integer.parseInt(s));
                             if (approuve != null) {
                                 approuve.setBounds(0, 0, approuve.getIntrinsicWidth()/2, approuve.getIntrinsicHeight()/2);
@@ -107,54 +106,42 @@ public class TransportsRennes extends AccueilActivity {
 
 			textView.setText(spanned, TextView.BufferType.SPANNABLE);
 			textView.setMovementMethod(LinkMovementMethod.getInstance());
-			builder.setView(view);
-			builder.setTitle(getString(R.string.titleTransportsRennes,
-					Version.getVersionCourante(getApplicationContext())));
-			builder.setCancelable(false);
-			builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
-			return builder.create();
+			return new AlertDialog.Builder(this).setView(view).setTitle(getString(R.string.titleTransportsRennes,
+					Version.getVersionCourante(getApplicationContext()))).setCancelable(false).setNeutralButton(R.string.Terminer, new TerminerClickListener()).create();
 		}
 		if (id == DIALOG_UPGRADE) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(getString(R.string.majDispo));
-			builder.setCancelable(false);
-			builder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
+			return new AlertDialog.Builder(this).setMessage(R.string.majDispo).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
+				@Override
+				public void onClick(final DialogInterface dialog, final int id) {
 					dialog.dismiss();
 					upgradeDatabase();
 				}
-			});
-			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
-			return builder.create();
+			}).setNegativeButton(R.string.non, new MyOnClickListener()).create();
 		}
 		return super.onCreateDialog(id);
 	}
 
 	private static class TerminerClickListener implements DialogInterface.OnClickListener {
-		public void onClick(DialogInterface dialogInterface, int i) {
+		@Override
+		public void onClick(final DialogInterface dialogInterface, final int i) {
 			dialogInterface.cancel();
 		}
 	}
 
 	private void upgradeDatabase() {
-		Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_UPGRADE_DATABASE);
 		startActivity(intent);
 	}
 
 	private void verifierUpgrade() {
-		DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
+		final DataBaseHelper dataBaseHelper = TransportsRennesApplication.getDataBaseHelper();
 		DernierMiseAJour dernierMiseAJour = null;
 		try {
 			dernierMiseAJour = dataBaseHelper.selectSingle(new DernierMiseAJour());
-		} catch (DataBaseException exception) {
+		} catch (final DataBaseException exception) {
 			dataBaseHelper.deleteAll(DernierMiseAJour.class);
 		}
-		Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
+		final Date dateDernierFichierKeolis = GestionZipKeolis.getLastUpdate(getResources(), R.raw.last_update);
 		if (dernierMiseAJour == null) {
 			upgradeDatabase();
 		} else if (dernierMiseAJour.derniereMiseAJour == null
@@ -171,23 +158,18 @@ public class TransportsRennes extends AccueilActivity {
 	private static final int MENU_TICKETS = 7;
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
-		item.setIcon(android.R.drawable.ic_menu_info_details);
-		MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
-		itemNotif.setIcon(android.R.drawable.ic_menu_agenda);
-		MenuItem itemLoadLines = menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines);
-		itemLoadLines.setIcon(android.R.drawable.ic_menu_save);
-		MenuItem itemShare = menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share);
-		itemShare.setIcon(android.R.drawable.ic_menu_share);
-		MenuItem itemPointDeVentes = menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets);
-		itemPointDeVentes.setIcon(R.drawable.ic_menu_tickets);
+		menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos).setIcon(android.R.drawable.ic_menu_info_details);
+		menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif).setIcon(android.R.drawable.ic_menu_agenda);
+		menu.add(GROUP_ID, MENU_LOAD_LINES, Menu.NONE, R.string.menu_loadLines).setIcon(android.R.drawable.ic_menu_save);
+		menu.add(GROUP_ID, MENU_SHARE, Menu.NONE, R.string.menu_share).setIcon(android.R.drawable.ic_menu_share);
+		menu.add(GROUP_ID, MENU_TICKETS, Menu.NONE, R.string.menu_tickets).setIcon(R.drawable.ic_menu_tickets);
 		return true;
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(final MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
 			case MENU_ID:
@@ -195,36 +177,25 @@ public class TransportsRennes extends AccueilActivity {
 				return true;
 			case R.id.menu_plan:
 				copieImageIfNotExists();
-				Intent intentMap = new Intent(Intent.ACTION_VIEW);
+				final Intent intentMap = new Intent(Intent.ACTION_VIEW);
 				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "plan_2014_2015.jpg")), "image/*");
 				startActivity(intentMap);
 				return true;
 			case MENU_TICKETS:
-				Intent intentTickets = new Intent(this, ListPointsDeVente.class);
+				final Intent intentTickets = new Intent(this, ListPointsDeVente.class);
 				startActivity(intentTickets);
 				return true;
 			case MENU_LOAD_LINES:
-				AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-				alertBuilder.setMessage(getString(R.string.loadAllLineAlert));
-				alertBuilder.setCancelable(false);
-				alertBuilder.setPositiveButton(getString(R.string.oui), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
+				new AlertDialog.Builder(this).setMessage(R.string.loadAllLineAlert).setCancelable(false).setPositiveButton(R.string.oui, new Dialog.OnClickListener() {
+					@Override
+					public void onClick(final DialogInterface dialog, final int id) {
 						dialog.dismiss();
 						loadAllLines();
 					}
-				});
-				alertBuilder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-				alertBuilder.show();
+				}).setNegativeButton(R.string.non, new MyOnClickListener()).show();
 				return true;
 			case MENU_SHARE:
-				Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-				shareIntent.setType("text/plain");
-				shareIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-				shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, getString(R.string.shareText));
+				final Intent shareIntent = new Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name)).putExtra(Intent.EXTRA_TEXT, getString(R.string.shareText));
 				startActivity(Intent.createChooser(shareIntent, getString(R.string.app_name)));
 				return true;
 			case MENU_NOTIF:
@@ -236,51 +207,53 @@ public class TransportsRennes extends AccueilActivity {
 
 	private void copieImageIfNotExists() {
 		boolean fichierExistant = false;
-		for (String nom : fileList()) {
+		for (final String nom : fileList()) {
             if ("plan_2014_2015.jpg".equals(nom)) {
                 fichierExistant = true;
-            } else if ("plan_2013_2014.jpg".equals(nom)) {
+            } else if ("plan_2013_2014.jpg".equals(nom) || "plan_2012_2013.jpg".equals(nom) || "rennes_urb_complet.jpg".equals(nom)) {
                 deleteFile(nom);
-            } else if ("plan_2012_2013.jpg".equals(nom)) {
-                deleteFile(nom);
-			} else if ("rennes_urb_complet.jpg".equals(nom)) {
-				deleteFile(nom);
-			}
+            }
 		}
 		if (!fichierExistant) {
-			InputStream inputStream = getResources().openRawResource(R.raw.plan_2014_2015);
+			final InputStream inputStream = getResources().openRawResource(R.raw.plan_2014_2015);
 			try {
-				OutputStream outputStream = openFileOutput("plan_2014_2015.jpg", Context.MODE_WORLD_READABLE);
+				final OutputStream outputStream = openFileOutput("plan_2014_2015.jpg", Context.MODE_WORLD_READABLE);
 				try {
-					byte[] buffre = new byte[50 * 1024];
+					final byte[] buffre = new byte[50 * 1024];
 					int result = inputStream.read(buffre);
 					while (result != -1) {
 						outputStream.write(buffre, 0, result);
 						result = inputStream.read(buffre);
 					}
-				} catch (IOException e) {
+				} catch (final IOException e) {
 
 					throw new KeolisException("Erreur lors de la copie de l'image", e);
 				} finally {
 					try {
 						outputStream.close();
-					} catch (IOException ignore) {
+					} catch (final IOException ignore) {
 					}
 				}
-			} catch (FileNotFoundException e) {
+			} catch (final FileNotFoundException e) {
 				throw new KeolisException("Erreur lors de la copie de l'image", e);
 			} finally {
 				try {
 					inputStream.close();
-				} catch (IOException ignore) {
+				} catch (final IOException ignore) {
 				}
 			}
 		}
 	}
 
 	private void loadAllLines() {
-		Intent intent = new Intent(this, LoadingActivity.class);
-		intent.putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
+		final Intent intent = new Intent(this, LoadingActivity.class).putExtra("operation", LoadingActivity.OPERATION_LOAD_ALL_LINES);
 		startActivity(intent);
+	}
+
+	private static class MyOnClickListener implements Dialog.OnClickListener {
+		@Override
+        public void onClick(final DialogInterface dialog, final int id) {
+            dialog.cancel();
+        }
 	}
 }

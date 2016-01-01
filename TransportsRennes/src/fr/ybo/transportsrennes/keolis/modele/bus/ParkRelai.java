@@ -21,7 +21,6 @@ import fr.ybo.transportscommun.donnees.modele.ObjetWithDistance;
 /**
  * @author ybonnel
  */
-@SuppressWarnings("serial")
 public class ParkRelai extends ObjetWithDistance implements Serializable, IParking {
 
     /**
@@ -44,10 +43,6 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
      * carParkCapacity.
      */
     public Integer carParkCapacity;
-    /**
-     * lastupdate.
-     */
-    public String lastupdate;
     /**
      * state.
      */
@@ -88,4 +83,9 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
 	public int getState() {
 		return state;
 	}
+
+    @Override
+    public Integer getDistance() {
+        return distance;
+    }
 }

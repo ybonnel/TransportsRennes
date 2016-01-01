@@ -28,9 +28,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
+import android.widget.Checkable;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.donnees.modele.DernierMiseAJour;
@@ -42,34 +43,33 @@ public class TransportsWidget11Configure extends ListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;
-	private FavoriAdapterForWidget1 adapter;
+    private FavoriAdapterForWidget1 adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-		AbstractTransportsApplication.majTheme(this);
+    protected void onCreate(final Bundle savedInstanceState) {
+        AbstractTransportsApplication.majTheme(this);
         super.onCreate(savedInstanceState);
-        Intent launchIntent = getIntent();
-        Bundle extras = launchIntent.getExtras();
+        final Intent launchIntent = getIntent();
+        final Bundle extras = launchIntent.getExtras();
         appWidgetId = extras.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
         // If they gave us an intent without the widget id, just bail.
         if (appWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
         }
 
-        Intent cancelResultValue = new Intent();
-        cancelResultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+        final Intent cancelResultValue = new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         setResult(RESULT_CANCELED, cancelResultValue);
 
         setContentView(R.layout.configurewidget11);
 
         if (TransportsRennesApplication.getDataBaseHelper().selectSingle(new DernierMiseAJour()) == null) {
-            Toast.makeText(this, getString(R.string.erreur_widgetBeforeLaunch), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetBeforeLaunch, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
         favoris = TransportsRennesApplication.getDataBaseHelper().select(new ArretFavori());
         if (favoris.isEmpty()) {
-            Toast.makeText(this, getString(R.string.erreur_widgetWithNoFavori), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.erreur_widgetWithNoFavori, Toast.LENGTH_LONG).show();
             finish();
             return;
         }
@@ -77,44 +77,41 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     private void construireListe() {
-    	adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
+        adapter = new FavoriAdapterForWidget1(getApplicationContext(), favoris);
         setListAdapter(adapter);
-        ListView lv = getListView();
+        final ListView lv = getListView();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 
-                CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkbox);
-                if (!checkBox.isChecked()) {
-                    if (adapter.getFavoriSelectionne() == null) {
-                    	adapter.setFavoriSelectionne(position);
-                    	checkBox.setChecked(true);
-                    } else {
-                    	
-                        Toast.makeText(TransportsWidget11Configure.this, getString(R.string.justOneFavori), Toast.LENGTH_SHORT).show();
-                        
-                    }
-                } else {
+                final Checkable checkBox = (Checkable) view.findViewById(R.id.checkbox);
+                if (checkBox.isChecked()) {
                     adapter.setFavoriSelectionne(null);
                     checkBox.setChecked(false);
+                } else {
+                    if (adapter.getFavoriSelectionne() == null) {
+                        adapter.setFavoriSelectionne(position);
+                        checkBox.setChecked(true);
+                    } else {
+                        Toast.makeText(TransportsWidget11Configure.this, R.string.justOneFavori, Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
         lv.setTextFilterEnabled(true);
         registerForContextMenu(lv);
         findViewById(R.id.terminerChoix).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
-                ArretFavori favoriSelectionne = favoriAdapter.getFavoriSelectionne();
+            @Override
+            public void onClick(final View view) {
+                final FavoriAdapterForWidget1 favoriAdapter = (FavoriAdapterForWidget1) getListAdapter();
+                final ArretFavori favoriSelectionne = favoriAdapter.getFavoriSelectionne();
                 if (favoriSelectionne == null) {
-                    Toast.makeText(TransportsWidget11Configure.this, getString(R.string.erreur_auMoinsUnFavori),
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TransportsWidget11Configure.this, R.string.erreur_auMoinsUnFavori, Toast.LENGTH_SHORT).show();
                 } else {
                     saveSettings(TransportsWidget11Configure.this, appWidgetId, favoriSelectionne);
-                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidget11Configure.this);
+                    final AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(TransportsWidget11Configure.this);
                     TransportsWidget11.updateAppWidget(TransportsWidget11Configure.this, appWidgetManager, appWidgetId);
-                    Intent resultValue = new Intent();
-                    resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+                    final Intent resultValue = new Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
                     setResult(RESULT_OK, resultValue);
                     finish();
                 }
@@ -122,35 +119,30 @@ public class TransportsWidget11Configure extends ListActivity {
         });
     }
 
-    private static void saveSettings(Context context, int appWidgetId, ArretFavori favori) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString("11ArretId_" + appWidgetId, favori.arretId);
-        edit.putString("11LigneId_" + appWidgetId, favori.ligneId);
-
-        edit.commit();
+    private static void saveSettings(final Context context, final int appWidgetId, final ArretFavori favori) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("11ArretId_" + appWidgetId, favori.arretId).putString("11LigneId_" + appWidgetId, favori.ligneId).apply();
     }
 
-    public static boolean isNotUsed(Context context, ArretFavori favori) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Map<Integer, ArretFavori> favorisWidget = new HashMap<Integer, ArretFavori>();
-        for (String key : sharedPreferences.getAll().keySet()) {
+    public static boolean isNotUsed(final Context context, final ArretFavori favori) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final Map<Integer, ArretFavori> favorisWidget = new HashMap<Integer, ArretFavori>();
+        for (final String key : sharedPreferences.getAll().keySet()) {
             if (key.startsWith("11ArretId_")) {
-                int widgetId = Integer.parseInt(key.split("_")[1]);
+                final int widgetId = Integer.parseInt(key.split("_")[1]);
                 if (!favorisWidget.containsKey(widgetId)) {
                     favorisWidget.put(widgetId, new ArretFavori());
                 }
                 favorisWidget.get(widgetId).arretId = sharedPreferences.getString(key, null);
             }
             if (key.startsWith("11LigneId_")) {
-                int widgetId = Integer.parseInt(key.split("_")[1]);
+                final int widgetId = Integer.parseInt(key.split("_")[1]);
                 if (!favorisWidget.containsKey(widgetId)) {
                     favorisWidget.put(widgetId, new ArretFavori());
                 }
                 favorisWidget.get(widgetId).ligneId = sharedPreferences.getString(key, null);
             }
         }
-        for (ArretFavori favoriWidget : favorisWidget.values()) {
+        for (final ArretFavori favoriWidget : favorisWidget.values()) {
             if (favori.arretId.equals(favoriWidget.arretId) && favori.ligneId.equals(favoriWidget.ligneId)) {
                 return false;
             }
@@ -158,10 +150,10 @@ public class TransportsWidget11Configure extends ListActivity {
         return true;
     }
 
-    public static Iterable<Integer> getWidgetIds(Context context) {
-        Collection<Integer> widgetIds = new ArrayList<Integer>(4);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        for (String key : sharedPreferences.getAll().keySet()) {
+    public static Iterable<Integer> getWidgetIds(final Context context) {
+        final Collection<Integer> widgetIds = new ArrayList<Integer>(4);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        for (final String key : sharedPreferences.getAll().keySet()) {
             if (key.startsWith("11ArretId_")) {
                 widgetIds.add(Integer.parseInt(key.split("_")[1]));
             }
@@ -169,9 +161,9 @@ public class TransportsWidget11Configure extends ListActivity {
         return widgetIds;
     }
 
-    static ArretFavori loadSettings(Context context, int appWidgetId) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        ArretFavori favori = new ArretFavori();
+    static ArretFavori loadSettings(final Context context, final int appWidgetId) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final ArretFavori favori = new ArretFavori();
         favori.arretId = sharedPreferences.getString("11ArretId_" + appWidgetId, null);
         favori.ligneId = sharedPreferences.getString("11LigneId_" + appWidgetId, null);
         if (favori.arretId == null || favori.ligneId == null) {
@@ -180,25 +172,20 @@ public class TransportsWidget11Configure extends ListActivity {
         return favori;
     }
 
-    static void deleteSettings(Context context, int appWidgetId) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.remove("11ArretId_" + appWidgetId);
-        edit.remove("11LigneId_" + appWidgetId);
-
-        edit.commit();
+    static void deleteSettings(final Context context, final int appWidgetId) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("11ArretId_" + appWidgetId).remove("11LigneId_" + appWidgetId).apply();
     }
 
-    static void deleteAllSettings(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Map<String, ?> allPrefs = sharedPreferences.getAll();
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-        for (String key : allPrefs.keySet()) {
+    static void deleteAllSettings(final Context context) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final Map<String, ?> allPrefs = sharedPreferences.getAll();
+        final SharedPreferences.Editor edit = sharedPreferences.edit();
+        for (final String key : allPrefs.keySet()) {
             if (key.startsWith("11ArretId") || key.startsWith("11LigneId")) {
                 edit.remove(key);
             }
         }
-        edit.commit();
+        edit.apply();
 
     }
 }

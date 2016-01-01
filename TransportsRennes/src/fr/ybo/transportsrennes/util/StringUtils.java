@@ -16,13 +16,9 @@
  */
 package fr.ybo.transportsrennes.util;
 
-public class StringUtils {
+final class StringUtils {
 
 	private StringUtils() {
-	}
-
-	public static boolean isNotBlank(CharSequence string) {
-		return string != null && string.length() > 0;
 	}
 
 }

@@ -16,13 +16,13 @@
       ybonnel - initial API and implementation
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent">
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent">
 	<include layout="@layout/actionbar"/>
 	<ScrollView android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
+		android:layout_width="match_parent" android:layout_height="match_parent">
 		<RelativeLayout android:orientation="vertical"
-		                android:layout_width="fill_parent"
+		                android:layout_width="match_parent"
 		                android:layout_height="wrap_content"
 		                android:isScrollContainer="true">
 		    <TextView android:id="@+id/dateItineraire"
@@ -46,7 +46,7 @@
 		              android:layout_alignParentRight="true"/>
 		    <TextView android:id="@+id/textAdresseDepart"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:textSize="20dip"
 		              android:paddingTop="10dip"
 		              android:paddingLeft="5dip"
@@ -55,7 +55,7 @@
 		              
 		    <AutoCompleteTextView android:id="@+id/adresseDepart"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:inputType="textNoSuggestions"
 		              android:imeOptions="normal"
 		              android:completionThreshold="6"
@@ -63,13 +63,13 @@
 		              android:layout_below="@id/textAdresseDepart"/>
 		    <TextView android:id="@+id/exempleAdresseDepart"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:textSize="12dip"
 		              android:text="@string/exempleAdresse"
 		              android:layout_below="@id/adresseDepart"/>
 		    <TextView android:id="@+id/textAdresseArrivee"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:textSize="20dip"
 		              android:paddingTop="20dip"
 		              android:paddingLeft="5dip"
@@ -77,7 +77,7 @@
 		              android:layout_below="@id/exempleAdresseDepart"/>
 		    <AutoCompleteTextView android:id="@+id/adresseArrivee"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:inputType="textNoSuggestions"
 		              android:imeOptions="normal"
 		              android:completionThreshold="6"
@@ -85,7 +85,7 @@
 		              android:layout_below="@id/textAdresseArrivee"/>
 		    <TextView android:id="@+id/exempleAdresseArrivee"
 		              android:layout_height="wrap_content"
-		              android:layout_width="fill_parent"
+		              android:layout_width="match_parent"
 		              android:textSize="12dip"
 		              android:text="@string/exempleAdresse"
 		              android:layout_below="@id/adresseArrivee"/>

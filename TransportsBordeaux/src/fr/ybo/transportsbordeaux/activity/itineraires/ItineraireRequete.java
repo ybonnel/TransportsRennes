@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,8 +42,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
@@ -51,8 +50,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.ads.Ad;
 import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderGeometry;
@@ -109,10 +109,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     private boolean bus = true;
     private boolean tram = true;
 
-	private List<Arret> arrets = new ArrayList<Arret>();
+	private final List<Arret> arrets = new ArrayList<Arret>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.itinerairerequete);
 		getActivityHelper().setupActionBar(R.menu.default_menu_items, R.menu.holo_default_menu_items);
@@ -121,17 +121,18 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         calendar = Calendar.getInstance();
         dateItineraire = (TextView) findViewById(R.id.dateItineraire);
         heureItineraire = (TextView) findViewById(R.id.heureItineraire);
-        AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
-		AdresseAdapter adapterDepart = new AdresseAdapter(this, arrets);
+        final AutoCompleteTextView adresseDepart = (AutoCompleteTextView) findViewById(R.id.adresseDepart);
+		final AdresseAdapter adapterDepart = new AdresseAdapter(this, arrets);
         adresseDepart.setAdapter(adapterDepart);
 		adresseDepart.setTextColor(AbstractTransportsApplication.getTextColor(this));
-        AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
-		AdresseAdapter adapterArrivee = new AdresseAdapter(this, arrets);
+        final AutoCompleteTextView adresseArrivee = (AutoCompleteTextView) findViewById(R.id.adresseArrivee);
+		final AdresseAdapter adapterArrivee = new AdresseAdapter(this, arrets);
         adresseArrivee.setAdapter(adapterArrivee);
 		adresseArrivee.setTextColor(AbstractTransportsApplication.getTextColor(this));
         adresseArrivee.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            @Override
+            public boolean onEditorAction(final TextView v, final int actionId, final KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     terminer();
                     return true;
@@ -141,27 +142,31 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         });
         majTextViews();
         dateItineraire.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            @Override
+            public void onClick(final View view) {
                 showDialog(DATE_DIALOG_ID);
             }
         });
         heureItineraire.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            @Override
+            public void onClick(final View view) {
                 showDialog(TIME_DIALOG_ID);
             }
         });
-        Button boutonTerminer = (Button) findViewById(R.id.itineraireTermine);
+        final View boutonTerminer = findViewById(R.id.itineraireTermine);
         boutonTerminer.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+            @Override
+            public void onClick(final View view) {
                 terminer();
             }
         });
         if (!locationUtil.activeGps()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.activeGps), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.activeGps, Toast.LENGTH_SHORT).show();
         }
-        CheckBox busCheckBox = (CheckBox) findViewById(R.id.busCheckBox);
+        final CompoundButton busCheckBox = (CompoundButton) findViewById(R.id.busCheckBox);
         busCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            @Override
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                 if (!tram && !isChecked) {
                     buttonView.setChecked(true);
                 } else {
@@ -169,9 +174,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 }
             }
         });
-        CheckBox tramCheckBox = (CheckBox) findViewById(R.id.tramCheckBox);
+        final CompoundButton tramCheckBox = (CompoundButton) findViewById(R.id.tramCheckBox);
         tramCheckBox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            @Override
+            public void onCheckedChanged(final CompoundButton buttonView, final boolean isChecked) {
                 if (!bus && !isChecked) {
                     buttonView.setChecked(true);
                 } else {
@@ -181,7 +187,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         });
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((Ad) findViewById(R.id.adView)).loadAd(new AdRequest());
 
 		new AsyncTask<Void, Void, Void>() {
 
@@ -195,16 +201,16 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 			}
 
 			@Override
-			protected Void doInBackground(Void... voids) {
+			protected Void doInBackground(final Void... voids) {
 				construireListeArrets();
 				return null;
 			}
 
 			@Override
-			protected void onPostExecute(Void result) {
+			protected void onPostExecute(final Void result) {
 				try {
 					myProgressDialog.dismiss();
-				} catch (IllegalArgumentException ignore) {
+				} catch (final IllegalArgumentException ignore) {
 				}
 				super.onPostExecute(result);
 			}
@@ -214,8 +220,8 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 	private void construireListeArrets() {
 		arrets.clear();
 
-		Map<String, Arret> mapArrets = new HashMap<String, Arret>();
-		for (Arret arret : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Arret.class)) {
+		final Map<String, Arret> mapArrets = new HashMap<String, Arret>();
+		for (final Arret arret : TransportsBordeauxApplication.getDataBaseHelper().selectAll(Arret.class)) {
 			arret.nom = StringOperation.sansAccents(arret.nom.toUpperCase());
 			if (!mapArrets.containsKey(arret.nom)) {
 				mapArrets.put(arret.nom, arret);
@@ -227,17 +233,17 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 
     private void terminer() {
         String adresseDepart = null;
-        Editable textDepart = ((EditText) findViewById(R.id.adresseDepart)).getText();
+        final Editable textDepart = ((EditText) findViewById(R.id.adresseDepart)).getText();
         if (textDepart.length() > 0) {
             adresseDepart = textDepart.toString();
         }
-        Editable textArrivee = ((EditText) findViewById(R.id.adresseArrivee)).getText();
+        final Editable textArrivee = ((EditText) findViewById(R.id.adresseArrivee)).getText();
         String adresseArrivee = null;
         if (textArrivee.length() > 0) {
             adresseArrivee = textArrivee.toString();
         }
         if ((adresseDepart == null || adresseArrivee == null)
-                && (locationUtil.getCurrentLocation() == null || locationUtil.getCurrentLocation().getAccuracy() > 50)) {
+                && (locationUtil.getCurrentBestLocation() == null || locationUtil.getCurrentBestLocation().getAccuracy() > 50)) {
             Toast.makeText(this, R.string.erreur_gpsPasPret, Toast.LENGTH_LONG).show();
         } else {
             geoCoderAdresse(adresseDepart, adresseArrivee);
@@ -258,11 +264,11 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                         getString(R.string.geocodageAdresseDepart), true);
             }
 
-			private GeocodeResponse arretToGeocodeResponse(Arret arret) {
-				GeocodeResponse response = new GeocodeResponse();
+			private GeocodeResponse arretToGeocodeResponse(final Arret arret) {
+				final GeocodeResponse response = new GeocodeResponse();
 				response.setStatus(GeocoderStatus.OK);
 				response.setResults(new ArrayList<GeocoderResult>());
-				GeocoderResult result = new GeocoderResult();
+				final GeocoderResult result = new GeocoderResult();
 				result.setGeometry(new GeocoderGeometry());
 				result.getGeometry().setLocation(
 						new LatLng(BigDecimal.valueOf(arret.getLatitude()), BigDecimal.valueOf(arret.getLongitude())));
@@ -271,22 +277,22 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
 			}
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Void doInBackground(final Void... voids) {
                 if (adresseDepart != null) {
 					// Recherche arrêts
 					reponseDepart = null;
-					String adresseDepartUpper = StringOperation.sansAccents(adresseDepart.toUpperCase());
-					for (Arret arret : arrets) {
+					final String adresseDepartUpper = StringOperation.sansAccents(adresseDepart.toUpperCase());
+					for (final Arret arret : arrets) {
 						if (arret.nom.equals(adresseDepartUpper)) {
 							reponseDepart = arretToGeocodeResponse(arret);
 							break;
 						}
 					}
 					if (reponseDepart == null) {
-						GeocoderRequest geocoderRequest =
+						final GeocoderRequest geocoderRequest =
 								new GeocoderRequestBuilder().setAddress(adresseDepart).setLanguage("fr")
 										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
-						reponseDepart = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
+						reponseDepart = Geocoder.geocode(geocoderRequest);
 						if (reponseDepart == null || reponseDepart.getStatus() != GeocoderStatus.OK) {
 							erreur = true;
 							return null;
@@ -295,23 +301,24 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                 }
                 if (adresseArrivee != null) {
                     runOnUiThread(new Runnable() {
+                        @Override
                         public void run() {
                             progressDialog.setMessage(getString(R.string.geocodageAdresseArrivee));
                         }
                     });
 					reponseArrivee = null;
-					String adresseArriveeUpper = StringOperation.sansAccents(adresseArrivee.toUpperCase());
-					for (Arret arret : arrets) {
+					final String adresseArriveeUpper = StringOperation.sansAccents(adresseArrivee.toUpperCase());
+					for (final Arret arret : arrets) {
 						if (arret.nom.equals(adresseArriveeUpper)) {
 							reponseArrivee = arretToGeocodeResponse(arret);
 							break;
 						}
 					}
 					if (reponseArrivee == null) {
-						GeocoderRequest geocoderRequest =
+						final GeocoderRequest geocoderRequest =
 								new GeocoderRequestBuilder().setAddress(adresseArrivee).setLanguage("fr")
 										.setBounds(TransportsBordeauxApplication.getBounds()).getGeocoderRequest();
-						reponseArrivee = TransportsBordeauxApplication.getGeocodeUtil().geocode(geocoderRequest);
+						reponseArrivee = Geocoder.geocode(geocoderRequest);
 						if (reponseArrivee == null || reponseArrivee.getStatus() != GeocoderStatus.OK) {
 							erreur = true;
 							return null;
@@ -322,7 +329,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 progressDialog.dismiss();
                 if (erreur) {
@@ -334,12 +341,11 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }.execute((Void) null);
     }
 
-	private void traiterReponseGeoCodage(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
-        StringBuilder stringBuilder = new StringBuilder();
+	private void traiterReponseGeoCodage(final GeocodeResponse reponseDepart, final GeocodeResponse reponseArrivee) {
+        final StringBuilder stringBuilder = new StringBuilder();
         boolean erreur = false;
         if (reponseDepart != null && reponseDepart.getResults().isEmpty()) {
-            stringBuilder.append(getString(R.string.erreur_pasAdresseDepart));
-            stringBuilder.append('\n');
+            stringBuilder.append(getString(R.string.erreur_pasAdresseDepart)).append('\n');
             erreur = true;
         }
         if (reponseArrivee != null && reponseArrivee.getResults().isEmpty()) {
@@ -347,7 +353,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             erreur = true;
         }
         if (erreur) {
-            Toast.makeText(this, stringBuilder.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, stringBuilder, Toast.LENGTH_LONG).show();
         } else {
             if (reponseDepart != null && reponseDepart.getResults().size() > 1 || reponseArrivee != null
                     && reponseArrivee.getResults().size() > 1) {
@@ -359,72 +365,66 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }
     }
 
-    private void traiterAdresseMultiple(GeocodeResponse reponseDepart, GeocodeResponse reponseArrivee) {
-        final GeocodeResponse reponseDepartTmp = reponseDepart;
-        final GeocodeResponse reponseArriveeTmp = reponseArrivee;
+    private void traiterAdresseMultiple(final GeocodeResponse reponseDepart, final GeocodeResponse reponseArrivee) {
         if (reponseDepart != null && reponseDepart.getResults().size() > 1) {
             // Choix de l'adresse de départ
-            List<String> adresses = new ArrayList<String>(reponseDepartTmp.getResults().size());
-            for (GeocoderResult result : reponseDepartTmp.getResults()) {
+            final List<String> adresses = new ArrayList<String>(reponseDepart.getResults().size());
+            for (final GeocoderResult result : reponseDepart.getResults()) {
                 adresses.add(result.getFormattedAddress());
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.textAdresseArrivee);
-            builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int item) {
-                    if (reponseArriveeTmp != null && reponseArriveeTmp.getResults().size() > 1) {
-                        GeocoderResult result = reponseDepartTmp.getResults().get(item);
-                        reponseDepartTmp.getResults().clear();
-                        reponseDepartTmp.getResults().add(result);
-                        traiterAdresseMultiple(reponseDepartTmp, reponseArriveeTmp);
+            new AlertDialog.Builder(this).setTitle(R.string.textAdresseArrivee).setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int item) {
+                    if (reponseArrivee != null && reponseArrivee.getResults().size() > 1) {
+                        final GeocoderResult result = reponseDepart.getResults().get(item);
+                        reponseDepart.getResults().clear();
+                        reponseDepart.getResults().add(result);
+                        traiterAdresseMultiple(reponseDepart, reponseArrivee);
                     } else {
-                        calculItineraire(reponseDepartTmp.getResults().get(item), reponseArriveeTmp == null ? null
-                                : reponseArriveeTmp.getResults().get(0));
+                        calculItineraire(reponseDepart.getResults().get(item), reponseArrivee == null ? null
+                                : reponseArrivee.getResults().get(0));
                     }
                 }
-            });
-            builder.create().show();
+            }).show();
         } else {
             // Choix de l'adresse de destination
-            List<String> adresses = new ArrayList<String>(reponseArriveeTmp.getResults().size());
-            for (GeocoderResult result : reponseArriveeTmp.getResults()) {
+            final List<String> adresses = new ArrayList<String>(reponseArrivee.getResults().size());
+            for (final GeocoderResult result : reponseArrivee.getResults()) {
                 adresses.add(result.getFormattedAddress());
             }
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.textAdresseArrivee);
-            builder.setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int item) {
-                    calculItineraire(reponseDepartTmp == null ? null : reponseDepartTmp.getResults().get(0),
-                            reponseArriveeTmp.getResults().get(item));
+            new AlertDialog.Builder(this).setTitle(R.string.textAdresseArrivee).setItems(adresses.toArray(new String[adresses.size()]), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(final DialogInterface dialog, final int item) {
+                    calculItineraire(reponseDepart == null ? null : reponseDepart.getResults().get(0),
+                            reponseArrivee.getResults().get(item));
                 }
-            });
-            builder.create().show();
+            }).show();
         }
     }
 
     private void calculItineraire(final GeocoderResult resultDepart, final GeocoderResult resultArrivee) {
-        double latitudeDepart;
-        double longitudeDepart;
-        double latitudeArrivee;
-        double longitudeArrivee;
+        final double latitudeDepart;
+        final double longitudeDepart;
+        final double latitudeArrivee;
+        final double longitudeArrivee;
         if (resultDepart != null) {
             latitudeDepart = resultDepart.getGeometry().getLocation().getLat().doubleValue();
             longitudeDepart = resultDepart.getGeometry().getLocation().getLng().doubleValue();
         } else {
-            latitudeDepart = locationUtil.getCurrentLocation().getLatitude();
-            longitudeDepart = locationUtil.getCurrentLocation().getLongitude();
+            latitudeDepart = locationUtil.getCurrentBestLocation().getLatitude();
+            longitudeDepart = locationUtil.getCurrentBestLocation().getLongitude();
         }
         if (resultArrivee != null) {
             latitudeArrivee = resultArrivee.getGeometry().getLocation().getLat().doubleValue();
             longitudeArrivee = resultArrivee.getGeometry().getLocation().getLng().doubleValue();
         } else {
-            latitudeArrivee = locationUtil.getCurrentLocation().getLatitude();
-            longitudeArrivee = locationUtil.getCurrentLocation().getLongitude();
+            latitudeArrivee = locationUtil.getCurrentBestLocation().getLatitude();
+            longitudeArrivee = locationUtil.getCurrentBestLocation().getLongitude();
         }
         final Request request = new Request(latitudeDepart, longitudeDepart, latitudeArrivee, longitudeArrivee,
                 calendar.getTime());
         request.setMaxWalkDistance(1500.0);
-        List<TraverseMode> modes = new ArrayList<TraverseMode>();
+        final List<TraverseMode> modes = new ArrayList<TraverseMode>();
         modes.add(TraverseMode.WALK);
         if (bus && tram) {
             modes.add(TraverseMode.TRANSIT);
@@ -437,7 +437,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         LOG_YBO.debug(request.constructUrl("http://transports-rennes.ic-s.org/bordeaux-api-webapp"));
         new AsyncTask<Void, Void, Void>() {
             private ProgressDialog progressDialog;
-            private Response reponse = null;
+            private Response reponse;
 
             @Override
             protected void onPreExecute() {
@@ -447,10 +447,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             }
 
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Void doInBackground(final Void... voids) {
                 try {
-                    reponse = CalculItineraires.getInstance().getItineraries(request);
-                } catch (OpenTripPlannerException e) {
+                    reponse = CalculItineraires.INSTANCE.getItineraries(request);
+                } catch (final OpenTripPlannerException e) {
                     if (e.getCause() != null
                             && (e.getCause() instanceof SocketException
                             || e.getCause() instanceof FileNotFoundException
@@ -467,11 +467,11 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
             }
 
             @Override
-            protected void onPostExecute(Void result) {
+            protected void onPostExecute(final Void result) {
                 super.onPostExecute(result);
                 progressDialog.dismiss();
                 if (reponse == null) {
-                    Toast.makeText(ItineraireRequete.this, getString(R.string.erreurReseau), Toast.LENGTH_LONG).show();
+                    Toast.makeText(ItineraireRequete.this, R.string.erreurReseau, Toast.LENGTH_LONG).show();
                 } else if (reponse.getError() != null) {
                     LOG_YBO.erreur(reponse.getError().getMsg());
                     int message = R.string.erreur_calculItineraires;
@@ -488,18 +488,16 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
                     }
                     Toast.makeText(ItineraireRequete.this, message, Toast.LENGTH_LONG).show();
                 } else {
-                    Intent intent = new Intent(ItineraireRequete.this, Itineraires.class);
-                    intent.putExtra("itineraireReponse", ItineraireReponse.convert(reponse.getPlan()));
-                    int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
-                    intent.putExtra("heureDepart", heureDepart);
+                    final int heureDepart = calendar.get(Calendar.HOUR_OF_DAY) * 60 + calendar.get(Calendar.MINUTE);
+                    final Intent intent = new Intent(ItineraireRequete.this, Itineraires.class).putExtra("itineraireReponse", ItineraireReponse.convert(reponse.getPlan())).putExtra("heureDepart", heureDepart);
                     startActivity(intent);
                 }
             }
         }.execute((Void) null);
     }
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
+    private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
 
     private void majTextViews() {
         dateItineraire.setText(DATE_FORMAT.format(calendar.getTime()));
@@ -509,9 +507,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     private static final int DATE_DIALOG_ID = 0;
     private static final int TIME_DIALOG_ID = 1;
 
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        @Override
+        public void onDateSet(final DatePicker view, final int year, final int monthOfYear, final int dayOfMonth) {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -519,9 +518,10 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }
     };
 
-    private TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
+    private final TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
 
-        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+        @Override
+        public void onTimeSet(final TimePicker timePicker, final int hourOfDay, final int minute) {
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             majTextViews();
@@ -529,18 +529,20 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
     };
 
     @Override
-    protected Dialog onCreateDialog(int id) {
+    protected Dialog onCreateDialog(final int id) {
         if (id == DATE_DIALOG_ID) {
             return new DatePickerDialog(this, mDateSetListener, calendar.get(Calendar.YEAR),
                     calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        } else if (id == TIME_DIALOG_ID) {
+        }
+        if (id == TIME_DIALOG_ID) {
             return new TimePickerDialog(this, timeSetListener, calendar.get(Calendar.HOUR_OF_DAY),
                     calendar.get(Calendar.MINUTE), true);
         }
         return null;
     }
 
-    public void updateLocation(Location location) {
+    @Override
+    public void updateLocation(final Location location) {
     }
 
 }

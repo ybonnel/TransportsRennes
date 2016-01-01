@@ -69,21 +69,21 @@ public class GenerateurParcours {
             
             // Parcours des trajets.
             for (Trip trip : tripByRouteId.get(route.id)) {
-                StringBuilder chaineBuilder = new StringBuilder();
+                final StringBuilder chaineBuilder = new StringBuilder();
                 for (StopTime stopTime : mapHorairesByTripId.get(trip.id)) {
                     if (!arretOfLigne.containsKey(stopTime.stopId)) {
                         arretOfLigne.put(stopTime.stopId, GestionnaireGtfs.getInstance().getMapStops().get(stopTime.stopId));
                     }
-                    chaineBuilder.append(stopTime.stopId);
-                    chaineBuilder.append(',');
+                    chaineBuilder.append(stopTime.stopId).append(',');
                 }
-                if (!countByChaine.containsKey(chaineBuilder.toString())) {
-                    countByChaine.put(chaineBuilder.toString(), 0);
-                    mapTrajetChaine.put(chaineBuilder.toString(), new ArrayList<Trip>());
-                    macroDirectionsParChaine.put(chaineBuilder.toString(), trip.directionId);
+                final String chaine = chaineBuilder.toString();
+                if (!countByChaine.containsKey(chaine)) {
+                    countByChaine.put(chaine, 0);
+                    mapTrajetChaine.put(chaine, new ArrayList<Trip>());
+                    macroDirectionsParChaine.put(chaine, trip.directionId);
                 }
-                countByChaine.put(chaineBuilder.toString(), countByChaine.get(chaineBuilder.toString()) + 1);
-                mapTrajetChaine.get(chaineBuilder.toString()).add(trip);
+                countByChaine.put(chaine, countByChaine.get(chaine) + 1);
+                mapTrajetChaine.get(chaine).add(trip);
             }
             Map<Integer, List<ArretParcours>> mapArretParcours = new HashMap<Integer, List<ArretParcours>>();
             // parcours des arrêts

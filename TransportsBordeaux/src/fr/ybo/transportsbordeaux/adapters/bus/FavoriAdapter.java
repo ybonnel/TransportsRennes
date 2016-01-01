@@ -46,7 +46,7 @@ public class FavoriAdapter extends BaseAdapter {
     private Calendar calendar;
     private final Context myContext;
 
-    public FavoriAdapter(Context context, List<ArretFavori> favoris) {
+    public FavoriAdapter(final Context context, final List<ArretFavori> favoris) {
         // Cache the LayoutInflate to avoid asking for a new one each time.
         mInflater = LayoutInflater.from(context);
         this.favoris = favoris;
@@ -56,7 +56,7 @@ public class FavoriAdapter extends BaseAdapter {
 
     public void majCalendar() {
         calendar = Calendar.getInstance();
-        Calendar calendarLaVeille = Calendar.getInstance();
+        final Calendar calendarLaVeille = Calendar.getInstance();
         calendarLaVeille.add(Calendar.DATE, -1);
         now = calendar.get(Calendar.HOUR_OF_DAY) * 60
                 + calendar.get(Calendar.MINUTE);
@@ -66,15 +66,18 @@ public class FavoriAdapter extends BaseAdapter {
         return favoris;
     }
 
+    @Override
     public int getCount() {
         return favoris.size();
     }
 
-    public ArretFavori getItem(int position) {
+    @Override
+    public ArretFavori getItem(final int position) {
         return favoris.get(position);
     }
 
-    public long getItemId(int position) {
+    @Override
+    public long getItemId(final int position) {
         return position;
     }
 
@@ -87,12 +90,13 @@ public class FavoriAdapter extends BaseAdapter {
         ImageView moveDown;
     }
 
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
         View convertView1 = convertView;
-        FavoriAdapter.ViewHolder holder;
+        final ViewHolder holder;
         if (convertView1 == null) {
             convertView1 = mInflater.inflate(R.layout.favori, null);
-            holder = new FavoriAdapter.ViewHolder();
+            holder = new ViewHolder();
             holder.iconeLigne = (ImageView) convertView1
                     .findViewById(R.id.iconeLigne);
             holder.arret = (TextView) convertView1.findViewById(R.id.nomArret);
@@ -106,7 +110,7 @@ public class FavoriAdapter extends BaseAdapter {
 
             convertView1.setTag(holder);
         } else {
-            holder = (FavoriAdapter.ViewHolder) convertView1.getTag();
+            holder = (ViewHolder) convertView1.getTag();
         }
 		holder.arret.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
 		holder.direction.setTextColor(AbstractTransportsApplication.getTextColor(myContext));
@@ -119,9 +123,10 @@ public class FavoriAdapter extends BaseAdapter {
         } else {
             holder.moveUp.setVisibility(View.VISIBLE);
             holder.moveUp.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
+                @Override
+                public void onClick(final View view) {
                     if (position > 0) {
-                        int autrePosition = position - 1;
+                        final int autrePosition = position - 1;
                         favoris.set(position, favoris.get(autrePosition));
                         favoris.set(autrePosition, favori);
                         favoris.get(position).ordre = position;
@@ -139,9 +144,10 @@ public class FavoriAdapter extends BaseAdapter {
         } else {
             holder.moveDown.setVisibility(View.VISIBLE);
             holder.moveDown.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
+                @Override
+                public void onClick(final View view) {
                     if (position < favoris.size() - 1) {
-                        int autrePosition = position + 1;
+                        final int autrePosition = position + 1;
                         favoris.set(position, favoris.get(autrePosition));
                         favoris.set(autrePosition, favori);
                         favoris.get(position).ordre = position;
@@ -160,40 +166,35 @@ public class FavoriAdapter extends BaseAdapter {
                 .getIconeResource(favori.nomCourt));
 
         try {
-            List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId,
+            final List<DetailArretConteneur> prochainsDepart = Horaire.getProchainHorairesAsList(favori.ligneId,
                     favori.arretId, 1, calendar, null);
 
             if (!prochainsDepart.isEmpty()) {
                 holder.tempsRestant.setText(formatterCalendar(prochainsDepart.get(0).getHoraire(), now));
             }
-        } catch (SQLiteException ignore) {
+        } catch (final SQLiteException ignore) {
             LOG_YBO.erreur("Erreur SQL", ignore);
         }
 
         return convertView1;
     }
 
-    private CharSequence formatterCalendar(int prochainDepart, int now) {
-        StringBuilder stringBuilder = new StringBuilder();
-        int tempsEnMinutes = prochainDepart - now;
+    private CharSequence formatterCalendar(final int prochainDepart, final int now) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        final int tempsEnMinutes = prochainDepart - now;
         if (tempsEnMinutes < 0) {
             stringBuilder.append(myContext.getString(R.string.tropTard));
         } else {
-            int heures = tempsEnMinutes / 60;
-            int minutes = tempsEnMinutes - heures * 60;
+            final int heures = tempsEnMinutes / 60;
+            final int minutes = tempsEnMinutes - heures * 60;
             boolean tempsAjoute = false;
             if (heures > 0) {
-                stringBuilder.append(heures);
-                stringBuilder.append(' ');
-                stringBuilder.append(myContext.getString(R.string.miniHeures));
-                stringBuilder.append(' ');
+                stringBuilder.append(heures).append(' ').append(myContext.getString(R.string.miniHeures)).append(' ');
                 tempsAjoute = true;
             }
             if (minutes > 0) {
                 if (heures <= 0) {
-                    stringBuilder.append(minutes);
-                    stringBuilder.append(' ');
-                    stringBuilder.append(myContext
+                    stringBuilder.append(minutes).append(' ').append(myContext
                             .getString(R.string.miniMinutes));
                 } else {
                     if (minutes < 10) {
@@ -204,11 +205,10 @@ public class FavoriAdapter extends BaseAdapter {
                 tempsAjoute = true;
             }
             if (!tempsAjoute) {
-                stringBuilder.append("0 ");
-                stringBuilder.append(myContext.getString(R.string.miniMinutes));
+                stringBuilder.append("0 ").append(myContext.getString(R.string.miniMinutes));
             }
         }
-        return stringBuilder.toString();
+        return stringBuilder;
     }
 
 }

@@ -3,10 +3,10 @@ package fr.ybo.transportscommun.util;
 public abstract class LoadingInfo {
 
 	private int nbEtape;
-	private int etapeCourante = 0;
+	private int etapeCourante;
 
-	public void setNbEtape(int nbEtape) {
-		this.nbEtape = nbEtape;
+	public void setNbEtape() {
+		nbEtape = 9;
 	}
 
 	public int getNbEtape() {

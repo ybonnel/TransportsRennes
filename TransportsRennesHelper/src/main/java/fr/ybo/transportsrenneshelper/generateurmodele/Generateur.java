@@ -394,29 +394,29 @@ public class Generateur {
 									arrets.get(horaire.arretId));
 						}
 					}
-					chaineBuilder.append(horaire.arretId);
-					chaineBuilder.append(',');
+					chaineBuilder.append(horaire.arretId).append(',');
 					terminus = horaire;
 				}
 				if (terminus == null) {
 					throw new IllegalArgumentException("Pas de terminus trouvé");
 				}
 				terminus.terminus = true;
-				if (!countByChaine.containsKey(chaineBuilder.toString())) {
-					countByChaine.put(chaineBuilder.toString(), 0);
-					mapTrajetChaine.put(chaineBuilder.toString(),
+				final String chaine = chaineBuilder.toString();
+				if (!countByChaine.containsKey(chaine)) {
+					countByChaine.put(chaine, 0);
+					mapTrajetChaine.put(chaine,
 							new ArrayList<Trajet>());
-					macroDirectionsParChaine.put(chaineBuilder.toString(),
+					macroDirectionsParChaine.put(chaine,
 							trajet.macroDirection);
 				}
-				if (!macroDirectionsParChaine.get(chaineBuilder.toString())
+				if (!macroDirectionsParChaine.get(chaine)
 						.equals(trajet.macroDirection)) {
 					System.err
 							.println("ALERTE : plusieurs macro direction trouvée pour un seule chaine");
 				}
-				countByChaine.put(chaineBuilder.toString(),
-						countByChaine.get(chaineBuilder.toString()) + 1);
-				mapTrajetChaine.get(chaineBuilder.toString()).add(trajet);
+				countByChaine.put(chaine,
+						countByChaine.get(chaine) + 1);
+				mapTrajetChaine.get(chaine).add(trajet);
 			}
 			// parcours des arrêts
 			for (Arret arret : arretOfLigne.values()) {

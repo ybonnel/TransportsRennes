@@ -30,38 +30,30 @@ import com.google.gson.reflect.TypeToken;
 
 import fr.ybo.transportscommun.util.ErreurReseau;
 
-public class GetTwitters {
-
-    private static GetTwitters instance;
+public final class GetTwitters {
 
     private GetTwitters() {
     }
 
-    public static synchronized GetTwitters getInstance() {
-        if (instance == null) {
-            instance = new GetTwitters();
-        }
-        return instance;
-    }
 
-    public Collection<MessageTwitter> getMessages() throws ErreurReseau {
+    public static Collection<MessageTwitter> getMessages() throws ErreurReseau {
         try {
-			URL myUrl = new URL("http://support-twitter.herokuapp.com/starbusmetro");
-			URLConnection connection = myUrl.openConnection();
+			final URL myUrl = new URL("http://support-twitter.herokuapp.com/starbusmetro");
+			final URLConnection connection = myUrl.openConnection();
             connection.setConnectTimeout(20000);
             connection.setReadTimeout(20000);
 			connection.addRequestProperty("Accept", "application/json");
-            Gson gson = new GsonBuilder().create();
-            Type listType = new TypeToken<List<MessageTwitter>>() {
+            final Gson gson = new GsonBuilder().create();
+            final Type listType = new TypeToken<List<MessageTwitter>>() {
             }.getType();
             return gson.fromJson(new InputStreamReader(connection.getInputStream()), listType);
-        } catch (SocketTimeoutException timeoutException) {
+        } catch (final SocketTimeoutException timeoutException) {
             throw new ErreurReseau(timeoutException);
-        } catch (UnknownHostException erreurReseau) {
+        } catch (final UnknownHostException erreurReseau) {
             throw new ErreurReseau(erreurReseau);
-        } catch (IOException exception) {
+        } catch (final IOException exception) {
             throw new ErreurReseau(exception);
-		} catch (JsonParseException exception) {
+		} catch (final JsonParseException exception) {
 			throw new ErreurReseau(exception);
         }
     }
