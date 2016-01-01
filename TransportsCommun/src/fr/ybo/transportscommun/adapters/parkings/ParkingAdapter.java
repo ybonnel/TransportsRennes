@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,13 @@ public class ParkingAdapter<T extends IParking> extends ArrayAdapter<T> {
 
 	private static final double SEUIL_ORANGE = 0.5;
 
-	private static final Map<Integer, String> MAP_STATES = new HashMap<Integer, String>(3);
+	private static final SparseArray<String> MAP_STATES = new SparseArray<String>(3);
 
 	private final LayoutInflater inflater;
 
 	public ParkingAdapter(final Context context, final List<T> objects) {
 		super(context, R.layout.dispoparkrelai, objects);
-		if (MAP_STATES.isEmpty()) {
+		if (MAP_STATES.size() == 0) {
 			MAP_STATES.put(1, context.getString(R.string.ferme));
 			MAP_STATES.put(2, context.getString(R.string.complet));
 			MAP_STATES.put(3, context.getString(R.string.indisponible));

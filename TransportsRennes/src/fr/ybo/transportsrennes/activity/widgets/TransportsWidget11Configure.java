@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Checkable;
@@ -125,24 +126,37 @@ public class TransportsWidget11Configure extends ListActivity {
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        final Map<Integer, ArretFavori> favorisWidget = new HashMap<Integer, ArretFavori>();
+        final SparseArray<ArretFavori> favorisWidget = new SparseArray<ArretFavori>();
         for (final String key : sharedPreferences.getAll().keySet()) {
             if (key.startsWith("11ArretId_")) {
                 final int widgetId = Integer.parseInt(key.split("_")[1]);
-                if (!favorisWidget.containsKey(widgetId)) {
-                    favorisWidget.put(widgetId, new ArretFavori());
+                final ArretFavori widget;
+                final ArretFavori existingWidget = favorisWidget.get(widgetId);
+                if (existingWidget == null) {
+                    widget = new ArretFavori();
+                    favorisWidget.put(widgetId, widget);
+                }else{
+                    widget = existingWidget;
                 }
-                favorisWidget.get(widgetId).arretId = sharedPreferences.getString(key, null);
+                widget.arretId = sharedPreferences.getString(key, null);
             }
             if (key.startsWith("11LigneId_")) {
                 final int widgetId = Integer.parseInt(key.split("_")[1]);
-                if (!favorisWidget.containsKey(widgetId)) {
-                    favorisWidget.put(widgetId, new ArretFavori());
+                final ArretFavori widget;
+                final ArretFavori existingWidget = favorisWidget.get(widgetId);
+                if (existingWidget == null) {
+                    widget = new ArretFavori();
+                    favorisWidget.put(widgetId, widget);
+                }else{
+                    widget = existingWidget;
                 }
-                favorisWidget.get(widgetId).ligneId = sharedPreferences.getString(key, null);
+                widget.ligneId = sharedPreferences.getString(key, null);
             }
         }
-        for (final ArretFavori favoriWidget : favorisWidget.values()) {
+        for(int i = 0; i < favorisWidget.size(); i++) {
+            int key = favorisWidget.keyAt(i);
+            // get the object by the key.
+            ArretFavori favoriWidget = favorisWidget.get(key);
             if (favori.arretId.equals(favoriWidget.arretId) && favori.ligneId.equals(favoriWidget.ligneId)) {
                 return false;
             }
