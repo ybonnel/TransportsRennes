@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="diffSecondsToHigh">
+        <item quantity="zero">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (0 seconde).</item>
+        <item quantity="one">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (1 seconde).</item>
+        <item quantity="other">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d secondes).</item>
+    </plurals>
+
+</resources>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This program is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License.
@@ -141,25 +140,16 @@
     <string name="supprimerNotif">Supprimer la notification</string>
     <string name="lineShortcut">Ligne de bus</string>
     <string name="lineName">Ligne %1$s</string>
-    
+
     <string name="chooseTheme">Choisissez un thème</string>
-    
+
     <string name="theme">Thème</string>
     <string name="debug">Debug</string>
     <string name="activateDebug">Activer les logs debugs.</string>
-    
+
     <string name="erreurTimeoNotFound">Erreur : aucun arrêt trouvé avec le code %1$s</string>
-    
+
     <string name="getRealTime">Récupération des horaires temps réel en cours.</string>
-    
-    <resources>
-        <plurals
-            name="diffSecondsToHigh">
-            <item quantity="zero">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d seconde).</item>
-            <item quantity="one">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d seconde).</item>
-            <item quantity="other">Vous avez plus de 30 secondes d\'écart avec l\'heure du STAR (%1$d secondes).</item>
-        </plurals>
-    </resources>
-    
+
     <string name="messageStarEnRetard">Les données des horaires ne sont plus valides, soit vous n\'avez pas mis à jour l\'application, soit le STAR n\'a pas encore fournit les horaires, et je n\'ai donc pas pu les intégrer…</string>
 </resources>

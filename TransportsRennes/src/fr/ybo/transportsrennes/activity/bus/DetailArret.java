@@ -109,11 +109,9 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 				final long apiTime = result.getApiTime().getTimeInMillis();
 				final long currentTime = Calendar.getInstance().getTimeInMillis();
 				final long diffMs = Math.abs(apiTime - currentTime);
-				final long diffSeconds = diffMs / 1000;
+				final int diffSeconds = (int) (diffMs / 1000);
 				if (diffSeconds > 30) {
-					Toast.makeText(getApplicationContext(),
-							getResources().getString(R.string.diffSecondsToHigh, diffSeconds), Toast.LENGTH_LONG)
-							.show();
+					Toast.makeText(getApplicationContext(),getResources().getQuantityString(R.plurals.diffSecondsToHigh, diffSeconds), Toast.LENGTH_LONG).show();
 				}
 			}
 			infoBar.setVisibility(View.INVISIBLE);

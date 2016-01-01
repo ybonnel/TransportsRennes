@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="diffSecondsToHigh">
+        <item quantity="one">There is more than 30 seconds between STAR\'s hour and your phone\'s hour (1 second).</item>
+        <item quantity="other">There is more than 30 seconds between STAR\'s hour and your phone\'s hour (%1$d seconds).</item>
+    </plurals>
+</resources>
