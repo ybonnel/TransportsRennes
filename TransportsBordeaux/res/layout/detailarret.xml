@@ -17,14 +17,14 @@
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/lib/com.google.ads"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="50dip"
         android:orientation="vertical" >
 
@@ -32,7 +32,7 @@
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <ImageView
@@ -46,14 +46,14 @@
                 android:paddingTop="5dip" />
 
             <HorizontalScrollView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="50dip"
                 android:layout_toRightOf="@id/iconeLigne" >
 
                 <TextView
                     android:id="@id/nomLong"
                     android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical|left"
                     android:padding="5dip"
                     android:textSize="20dip" />
@@ -84,7 +84,7 @@
 
             <HorizontalScrollView
                 android:id="@id/detailArret_scrolling"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/iconeLigne"
                 android:layout_toLeftOf="@id/imageCorrespondance"
@@ -104,13 +104,13 @@
 
             <ScrollView
                 android:id="@id/detailCorrespondance_scroll"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detailArret_scrolling" >
 
                 <LinearLayout
                     android:id="@id/detailCorrespondance"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="invisible" />
@@ -118,7 +118,7 @@
 
             <ListView
                 android:id="@id/android:list"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/detailCorrespondance_scroll"
@@ -126,8 +126,8 @@
 
             <TextView
                 android:id="@id/android:empty"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@id/separateur"
                 android:gravity="center"
@@ -140,7 +140,7 @@
     <com.google.ads.AdView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/adView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         ads:adSize="BANNER"

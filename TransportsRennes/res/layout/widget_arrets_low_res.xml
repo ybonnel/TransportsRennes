@@ -18,8 +18,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:background="@drawable/appwidget_dark_bg_clickable"
                 android:id="@+id/widgetlayout"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
         <ImageView android:id="@+id/iconeLigne"
                    android:layout_width="30dip"
@@ -51,7 +51,7 @@
                   android:layout_alignLeft="@id/nomArret"/>
 
         <TextView android:id="@+id/tempsRestant"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="42dip"
                   android:textColor="@color/red"
@@ -59,7 +59,7 @@
                   android:layout_below="@+id/directionArret"/>
 
         <TextView android:id="@+id/tempsRestantFutur"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="42dip"
                   android:textColor="#E1E1E1"

@@ -103,7 +103,7 @@ public class ActivityHelper {
         actionBarCompat.setBackgroundResource(((AbstractTransportsApplication) mActivity.getApplication())
                 .getActionBarBackground());
         final LinearLayout.LayoutParams springLayoutParams = new LinearLayout.LayoutParams(0,
-                ViewGroup.LayoutParams.FILL_PARENT);
+                ViewGroup.LayoutParams.MATCH_PARENT);
         springLayoutParams.weight = 1;
 
         final View.OnClickListener homeClickListener = new View.OnClickListener() {
@@ -217,13 +217,13 @@ public class ActivityHelper {
 
         // Create the separator
         final View separator = new ImageView(mActivity, null, R.attr.actionbarCompatSeparatorStyle);
-        separator.setLayoutParams(new ViewGroup.LayoutParams(2, ViewGroup.LayoutParams.FILL_PARENT));
+        separator.setLayoutParams(new ViewGroup.LayoutParams(2, ViewGroup.LayoutParams.MATCH_PARENT));
 
         // Create the button
         final ImageView actionButton = new ImageButton(mActivity, null, R.attr.actionbarCompatButtonStyle);
         actionButton.setId(id);
         actionButton.setLayoutParams(new ViewGroup.LayoutParams((int) mActivity.getResources().getDimension(
-                R.dimen.actionbar_compat_height), ViewGroup.LayoutParams.FILL_PARENT));
+                R.dimen.actionbar_compat_height), ViewGroup.LayoutParams.MATCH_PARENT));
         actionButton.setImageDrawable(icon);
         actionButton.setScaleType(ImageView.ScaleType.CENTER);
         actionButton.setContentDescription(title);

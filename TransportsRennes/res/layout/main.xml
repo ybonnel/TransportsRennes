@@ -18,13 +18,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/home_root"
     android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <include layout="@layout/actionbar" />
 
     <fragment android:name="fr.ybo.transportsrennes.fragments.DashboardFragment"
         android:id="@+id/fragment_dashboard"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" >
     </fragment>

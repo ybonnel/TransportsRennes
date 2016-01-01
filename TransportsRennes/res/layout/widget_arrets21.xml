@@ -17,8 +17,8 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetlayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/appwidget_dark_bg_clickable" >
 
     <ImageView
@@ -53,7 +53,7 @@
 
     <LinearLayout
         android:id="@+id/layoutTempsRestant"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/iconeLigne"
         android:orientation="horizontal"
@@ -89,7 +89,7 @@
 
     <TextView
         android:id="@+id/prochainBus"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/layoutTempsRestant"
         android:gravity="center_vertical|center_horizontal"

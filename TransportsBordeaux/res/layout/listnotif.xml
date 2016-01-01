@@ -13,14 +13,14 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical" android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent">
     <include layout="@layout/actionbar"/>
-    <ListView android:id="@id/android:list" android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+    <ListView android:id="@id/android:list" android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:cacheColorHint="#00000000"/>
     <TextView android:id="@id/android:empty"
-              android:layout_width="fill_parent" android:layout_height="fill_parent"
+              android:layout_width="match_parent" android:layout_height="match_parent"
               android:gravity="center"
               android:textSize="18dip"
               android:padding="10dip"

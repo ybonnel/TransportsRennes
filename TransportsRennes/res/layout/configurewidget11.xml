@@ -17,8 +17,8 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <Button
             android:id="@+id/terminerChoix"
@@ -40,15 +40,15 @@
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/terminerChoix"/>
 
-    <ImageView android:layout_width="fill_parent"
+    <ImageView android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:paddingTop="4dip"
                android:paddingBottom="4dip"
                android:src="@android:drawable/divider_horizontal_dim_dark"
                android:id="@+id/separateur"
                android:layout_below="@id/terminerChoix"/>
-    <ListView android:id="@id/android:list" android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+    <ListView android:id="@id/android:list" android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:divider="@android:drawable/divider_horizontal_dim_dark"
               android:layout_below="@id/separateur"/>
 </RelativeLayout>

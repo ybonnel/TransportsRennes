@@ -25,8 +25,8 @@
         style="@style/ItemSymbole"
         android:text="P"/>
 
-    <TextView android:layout_height="fill_parent"
-              android:layout_width="fill_parent"
+    <TextView android:layout_height="match_parent"
+              android:layout_width="match_parent"
               android:id="@+id/dispoparkrelai_text"
               android:paddingTop="25dip"
               android:gravity="center"

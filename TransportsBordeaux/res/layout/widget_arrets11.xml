@@ -17,7 +17,7 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:background="@drawable/appwidget_dark_bg_clickable"
-                android:id="@+id/widgetlayout" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                android:id="@+id/widgetlayout" android:layout_width="match_parent" android:layout_height="match_parent">
 
         <ImageView android:id="@+id/iconeLigne"
                    android:layout_width="15dip"
@@ -49,7 +49,7 @@
         <TextView android:id="@+id/tempsRestant"
                   android:paddingLeft="2dip"
                   android:paddingTop="2dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="18dip"
                   android:textColor="@color/red"
@@ -59,7 +59,7 @@
         <TextView android:id="@+id/tempsRestantFutur"
                   android:paddingLeft="2dip"
                   android:paddingTop="2dip"
-                  android:layout_width="fill_parent"
+                  android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="18dip"
                   android:textColor="#E1E1E1"

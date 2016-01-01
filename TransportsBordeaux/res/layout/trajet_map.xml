@@ -17,8 +17,8 @@
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/home_root"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <include layout="@layout/actionbar" />
@@ -26,32 +26,32 @@
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mainlayout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <ScrollView
             android:id="@+id/scrollTrajets"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="150dip"
             android:layout_alignParentBottom="true" >
 
             <LinearLayout
                 android:id="@+id/trajetDetail"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:orientation="vertical" >
             </LinearLayout>
         </ScrollView>
 
         <FrameLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/scrollTrajets" >
 
             <com.google.android.maps.MapView
                 android:id="@+id/mapview"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:apiKey="03l-WrraTStUsPyZBl4dKKLZZBEnnYHeVDoEspw"
                 android:clickable="true" />
