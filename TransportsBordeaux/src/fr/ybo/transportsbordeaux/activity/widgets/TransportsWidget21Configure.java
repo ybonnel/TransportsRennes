@@ -206,7 +206,7 @@ public class TransportsWidget21Configure extends ListActivity {
                 edit.remove(key);
             }
         }
-        edit.commit();
+        edit.apply();
 
     }
 }

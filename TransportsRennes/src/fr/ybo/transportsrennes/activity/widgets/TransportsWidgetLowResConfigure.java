@@ -120,7 +120,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
     }
 
     private static void saveSettings(final Context context, final int appWidgetId, final ArretFavori favori) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("LowResArretId_" + appWidgetId, favori.arretId).putString("LowResLigneId_" + appWidgetId, favori.ligneId).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("LowResArretId_" + appWidgetId, favori.arretId).putString("LowResLigneId_" + appWidgetId, favori.ligneId).apply();
     }
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
@@ -173,7 +173,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
     }
 
     static void deleteSettings(final Context context, final int appWidgetId) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("LowResArretId_" + appWidgetId).remove("LowResLigneId_" + appWidgetId).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("LowResArretId_" + appWidgetId).remove("LowResLigneId_" + appWidgetId).apply();
     }
 
     static void deleteAllSettings(final Context context) {
@@ -185,7 +185,7 @@ public class TransportsWidgetLowResConfigure extends ListActivity {
                 edit.remove(key);
             }
         }
-        edit.commit();
+        edit.apply();
 
     }
 }

@@ -120,7 +120,7 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     private static void saveSettings(final Context context, final int appWidgetId, final ArretFavori favori) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("11ArretId_" + appWidgetId, favori.arretId).putString("11LigneId_" + appWidgetId, favori.ligneId).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putString("11ArretId_" + appWidgetId, favori.arretId).putString("11LigneId_" + appWidgetId, favori.ligneId).apply();
     }
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
@@ -173,7 +173,7 @@ public class TransportsWidget11Configure extends ListActivity {
     }
 
     static void deleteSettings(final Context context, final int appWidgetId) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("11ArretId_" + appWidgetId).remove("11LigneId_" + appWidgetId).commit();
+        PreferenceManager.getDefaultSharedPreferences(context).edit().remove("11ArretId_" + appWidgetId).remove("11LigneId_" + appWidgetId).apply();
     }
 
     static void deleteAllSettings(final Context context) {
@@ -185,7 +185,7 @@ public class TransportsWidget11Configure extends ListActivity {
                 edit.remove(key);
             }
         }
-        edit.commit();
+        edit.apply();
 
     }
 }

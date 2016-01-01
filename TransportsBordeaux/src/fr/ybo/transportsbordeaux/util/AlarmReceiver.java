@@ -84,7 +84,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                         PreferenceManager.getDefaultSharedPreferences(context).getString("TransportsBordeauxVersion", null);
                 LOG_YBO.debug("Last Version : " + lastVersion);
                 if (!result.equals(lastVersion)) {
-                    PreferenceManager.getDefaultSharedPreferences(context).edit().putString("TransportsBordeauxVersion", result).commit();
+                    PreferenceManager.getDefaultSharedPreferences(context).edit().putString("TransportsBordeauxVersion", result).apply();
                     createNotification(context, result);
                 }
             }

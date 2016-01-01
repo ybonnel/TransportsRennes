@@ -126,7 +126,7 @@ public class TransportsWidgetConfigure extends ListActivity {
             edit.putString("ArretId" + count + '_' + appWidgetId, favori.arretId).putString("LigneId" + count + '_' + appWidgetId, favori.ligneId);
             count++;
         }
-        edit.commit();
+        edit.apply();
     }
 
     public static boolean isNotUsed(final Context context, final ArretFavori favori) {
@@ -232,7 +232,7 @@ public class TransportsWidgetConfigure extends ListActivity {
             edit.remove("ArretId" + count + '_' + appWidgetId).remove("LigneId" + count + '_' + appWidgetId);
             count++;
         }
-        edit.commit();
+        edit.apply();
     }
 
     static void deleteAllSettings(final Context context) {
@@ -244,7 +244,7 @@ public class TransportsWidgetConfigure extends ListActivity {
                 edit.remove(key);
             }
         }
-        edit.commit();
+        edit.apply();
 
     }
 }
