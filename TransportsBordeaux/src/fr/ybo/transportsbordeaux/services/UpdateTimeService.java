@@ -144,8 +144,7 @@ public class UpdateTimeService extends Service {
 		final Intent notificationIntent = new Intent(this, DetailArret.class).putExtra("ligne", ligne).putExtra("idArret", notification.getArretId()).putExtra("nomArret", arret.nom).putExtra("direction", notification.getDirection());
 
 		final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		final android.app.Notification notif = new android.app.Notification(icon, texte, System.currentTimeMillis());
-		notif.setLatestEventInfo(this, shortText, descriptionText, contentIntent);
+		final android.app.Notification notif = new android.app.Notification.Builder(this).setSmallIcon(icon).setTicker(texte).setWhen(System.currentTimeMillis()).setContentTitle(shortText).setContentText(descriptionText).setContentIntent(contentIntent).build();
 		notif.defaults |= android.app.Notification.DEFAULT_ALL;
 		notif.flags |= android.app.Notification.FLAG_AUTO_CANCEL;
 		final NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

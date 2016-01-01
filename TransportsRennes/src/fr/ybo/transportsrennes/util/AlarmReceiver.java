@@ -58,8 +58,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // the next two lines initialize the Notification, using the
         // configurations above
-        final Notification notification = new Notification(icon, tickerText, when);
-        notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+        final Notification notification = new Notification.Builder(context).setSmallIcon(icon).setTicker(tickerText).setWhen(when).setContentTitle(contentTitle).setContentText(contentText).setContentIntent(contentIntent).build();
         notification.defaults |= Notification.DEFAULT_ALL;
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
