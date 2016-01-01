@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.code.geocoder.model.LatLng;
@@ -63,106 +64,107 @@ import fr.ybo.transportsrennes.util.CalculItineraires;
  */
 public class TransportsRennesApplication extends AbstractTransportsApplication {
 
-	@Override
-	protected void initDonneesSpecifiques() {
-		donnesSpecifiques = new MyDonnesSpecifiques();
-	}
+    @Override
+    protected void initDonneesSpecifiques() {
+        donnesSpecifiques = new MyDonnesSpecifiques();
+    }
 
-	@Override
-	public void constructDatabase() {
-		databaseHelper = new TransportsRennesDatabase(this);
-	}
+    @Override
+    public void constructDatabase() {
+        databaseHelper = new TransportsRennesDatabase(this);
+    }
 
-	@Override
-	public void postCreate() {
-		RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
-				new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
-						R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.directions,
-						"directions.txt"), new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
-				new CoupleResourceFichier(R.raw.trajets, "trajets.txt"),
+    @Override
+    public void postCreate() {
+        RESOURCES_PRINCIPALE = Arrays.asList(new CoupleResourceFichier(R.raw.arrets, "arrets.txt"),
+                new CoupleResourceFichier(R.raw.arrets_routes, "arrets_routes.txt"), new CoupleResourceFichier(
+                        R.raw.calendriers, "calendriers.txt"), new CoupleResourceFichier(R.raw.directions,
+                        "directions.txt"), new CoupleResourceFichier(R.raw.lignes, "lignes.txt"),
+                new CoupleResourceFichier(R.raw.trajets, "trajets.txt"),
                 new CoupleResourceFichier(R.raw.calendriers_exceptions, "calendriers_exceptions.txt"));
 
-		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+        startService(new Intent(getApplicationContext(), UpdateTimeService.class));
         try {
             final PackageManager pm = getPackageManager();
             if (pm != null) {
                 pm.setComponentEnabledSetting(new ComponentName(this, UpdateTimeService.class),
                         PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
             }
-        } catch (final Exception ignore) {}
+        } catch (final Exception ignore) {
+        }
 
         final String dateCourante = new SimpleDateFormat("ddMMyyyy").format(new Date());
-		final Bounds boundsBdd = getDataBaseHelper().selectSingle(new Bounds());
-		if (boundsBdd != null) {
-			if (!dateCourante.equals(boundsBdd.getDate())) {
-				getDataBaseHelper().delete(boundsBdd);
-			}
-		}
+        final Bounds boundsBdd = getDataBaseHelper().selectSingle(new Bounds());
+        if (boundsBdd != null) {
+            if (!dateCourante.equals(boundsBdd.getDate())) {
+                getDataBaseHelper().delete(boundsBdd);
+            }
+        }
 
-		final AlertBdd alertBdd = getDataBaseHelper().selectSingle(new AlertBdd());
-		if (alertBdd != null) {
-			if (!dateCourante.equals(alertBdd.getDate())) {
-				getDataBaseHelper().delete(alertBdd);
-			}
-		}
+        final AlertBdd alertBdd = getDataBaseHelper().selectSingle(new AlertBdd());
+        if (alertBdd != null) {
+            if (!dateCourante.equals(alertBdd.getDate())) {
+                getDataBaseHelper().delete(alertBdd);
+            }
+        }
 
-		// Récupération des alertes
-		new VoidVoidVoidAsyncTask(dateCourante).execute((Void) null);
+        // Récupération des alertes
+        new VoidVoidVoidAsyncTask(dateCourante).execute((Void) null);
 
-		setRecurringAlarm(this);
-	}
+        setRecurringAlarm(this);
+    }
 
-	private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
+    private static final long INTERVAL_ALARM = AlarmManager.INTERVAL_HALF_DAY;
 
-	private void setRecurringAlarm(final Context context) {
-		final Intent alarm = new Intent(context, AlarmReceiver.class);
-		final PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
-		final AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    private void setRecurringAlarm(final Context context) {
+        final Intent alarm = new Intent(context, AlarmReceiver.class);
+        final PendingIntent recurringCheck = PendingIntent.getBroadcast(context, 0, alarm, PendingIntent.FLAG_CANCEL_CURRENT);
+        final AlarmManager alarms = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-		alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
-	}
+        alarms.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, INTERVAL_ALARM, recurringCheck);
+    }
 
-	@Override
-	public Class<? extends AccueilActivity> getAccueilActivity() {
-		return TransportsRennes.class;
-	}
+    @Override
+    public Class<? extends AccueilActivity> getAccueilActivity() {
+        return TransportsRennes.class;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(final MenuItem item, final Activity activity, final ActivityHelper helper) {
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item, final Activity activity, final ActivityHelper helper) {
 
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				// app icon in action bar clicked; go home
-				helper.goHome();
-				return true;
-			case R.id.menu_bus_favoris:
-				activity.startActivity(new Intent(activity, TabFavoris.class));
-				return true;
-			case R.id.menu_velo_favoris:
-				activity.startActivity(new Intent(activity, ListStationsFavoris.class));
-				return true;
-			case R.id.menu_prefs:
-				activity.startActivity(new Intent(activity, PreferencesRennes.class));
-				return true;
-			case R.id.menu_refresh:
-				if (activity instanceof Refreshable) {
-					((Refreshable) activity).refresh();
-				}
-				return true;
-			default:
-				return false;
-		}
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                helper.goHome();
+                return true;
+            case R.id.menu_bus_favoris:
+                activity.startActivity(new Intent(activity, TabFavoris.class));
+                return true;
+            case R.id.menu_velo_favoris:
+                activity.startActivity(new Intent(activity, ListStationsFavoris.class));
+                return true;
+            case R.id.menu_prefs:
+                activity.startActivity(new Intent(activity, PreferencesRennes.class));
+                return true;
+            case R.id.menu_refresh:
+                if (activity instanceof Refreshable) {
+                    ((Refreshable) activity).refresh();
+                }
+                return true;
+            default:
+                return false;
+        }
 
-	}
+    }
 
-	private static final class VoidVoidVoidAsyncTask extends AsyncTask<Void, Void, Void> {
-		private final String dateCourante;
+    private static final class VoidVoidVoidAsyncTask extends AsyncTask<Void, Void, Void> {
+        private final String dateCourante;
 
-		private VoidVoidVoidAsyncTask(final String dateCourante) {
-			this.dateCourante = dateCourante;
-		}
+        private VoidVoidVoidAsyncTask(final String dateCourante) {
+            this.dateCourante = dateCourante;
+        }
 
-		@Override
+        @Override
         protected Void doInBackground(final Void... voids) {
             try {
                 AlertBdd alertBdd = getDataBaseHelper().selectSingle(new AlertBdd());
@@ -200,35 +202,35 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
                 }
                 if (boundsBdd != null) {
                     setBounds(new LatLngBounds(new LatLng(BigDecimal.valueOf(boundsBdd.getMinLatitude()),
-							BigDecimal.valueOf(boundsBdd.getMinLongitude())), new LatLng(BigDecimal.valueOf(boundsBdd.getMaxLatitude()), BigDecimal.valueOf(boundsBdd.getMaxLongitude()))));
+                            BigDecimal.valueOf(boundsBdd.getMinLongitude())), new LatLng(BigDecimal.valueOf(boundsBdd.getMaxLatitude()), BigDecimal.valueOf(boundsBdd.getMaxLongitude()))));
                 }
             } catch (final OpenTripPlannerException ignore) {
             }
             return null;
         }
-	}
+    }
 
-	private static class MyDonnesSpecifiques implements DonnesSpecifiques {
+    private static class MyDonnesSpecifiques implements DonnesSpecifiques {
 
-		@Override
+        @Override
         public String getApplicationName() {
             return "TransportsRennes";
         }
 
-		@Override
+        @Override
         public int getCompactLogo() {
             return R.drawable.compact_icon;
         }
 
-		@Override
+        @Override
         public Class<?> getDrawableClass() {
             return R.drawable.class;
         }
 
-		@Override
+        @Override
         public int getIconeLigne() {
             return R.drawable.icone_bus;
         }
 
-	}
+    }
 }

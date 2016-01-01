@@ -37,7 +37,7 @@ public class TransportsWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(final Context context, final AppWidgetManager appWidgetManager, final int[] appWidgetIds) {
         LOG_YBO.debug("onUpdate");
-        context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+        context.startService(new Intent(context.getApplicationContext(), UpdateTimeService.class));
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 

@@ -24,7 +24,7 @@ import android.content.pm.PackageManager;
 public class UpdateTimeServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        context.startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+        context.startService(new Intent(context.getApplicationContext(), UpdateTimeService.class));
         try {
             final PackageManager pm = context.getPackageManager();
             pm.setComponentEnabledSetting(new ComponentName(context, UpdateTimeService.class),

@@ -110,7 +110,7 @@ public class TransportsBordeauxApplication extends AbstractTransportsApplication
 				new CoupleResourceFichier(R.raw.lignes, "lignes.txt"), new CoupleResourceFichier(R.raw.trajets,
 						"trajets.txt"));
 
-		startService(new Intent(UpdateTimeService.ACTION_UPDATE));
+		startService(new Intent(getApplicationContext(), UpdateTimeService.class));
         try {
             final PackageManager pm = getPackageManager();
             if (pm != null) {

@@ -45,12 +45,6 @@ public class UpdateTimeService extends Service {
 
 	private static final LogYbo LOG_YBO = new LogYbo(UpdateTimeService.class);
 
-	/**
-	 * Used by the AppWidgetProvider to notify the Service that the views need
-	 * to be updated and redrawn.
-	 */
-	public static final String ACTION_UPDATE = "fr.ybo.transportsbordeaux.action.UPDATE";
-
 	private static final IntentFilter sIntentFilter;
 
 	static {
@@ -85,7 +79,7 @@ public class UpdateTimeService extends Service {
 	@Override
 	public void onStart(final Intent intent, final int startId) {
 		super.onStart(intent, startId);
-		if (intent != null && ACTION_UPDATE.equals(intent.getAction())) {
+		if (intent != null) {
 			update();
 		}
 	}
