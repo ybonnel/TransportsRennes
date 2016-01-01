@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
 
 import android.content.res.Resources;
 import android.database.DatabaseUtils.InsertHelper;
@@ -41,7 +42,7 @@ import fr.ybo.transportscommun.util.NoSpaceLeftException;
 public final class GestionZipKeolis {
 
     private static final LogYbo LOG_YBO = new LogYbo(GestionZipKeolis.class);
-    private static final DateFormat SDF = new SimpleDateFormat("yyyyMMdd");
+    private static final DateFormat SDF = new SimpleDateFormat("yyyyMMdd", Locale.FRANCE);
 
     private static final String URL_STOP_TIMES = "horaires_";
 

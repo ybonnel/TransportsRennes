@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -35,7 +36,7 @@ public class GetDeparturesHandler extends KeolisHandler<Departure> {
 
 	private static final String LOCAL_DATETIME = "localdatetime";
 
-	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.FRANCE);
 
 	private Calendar dateApi;
 

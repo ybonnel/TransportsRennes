@@ -19,13 +19,14 @@ package fr.ybo.transportscommun.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Gestion des jours fériés.
  */
 public final class JoursFeries {
 
-	private static final DateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM");
+	private static final DateFormat SIMPLE_DATE_FORMAT_1ER_MAI = new SimpleDateFormat("ddMM", Locale.FRANCE);
 
 	private JoursFeries() {
 	}

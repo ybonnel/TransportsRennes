@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -93,7 +94,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
         } catch (final Exception ignore) {
         }
 
-        final String dateCourante = new SimpleDateFormat("ddMMyyyy").format(new Date());
+        final String dateCourante = new SimpleDateFormat("ddMMyyyy", Locale.FRANCE).format(new Date());
         final Bounds boundsBdd = getDataBaseHelper().selectSingle(new Bounds());
         if (boundsBdd != null) {
             if (!dateCourante.equals(boundsBdd.getDate())) {

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -454,8 +455,8 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         }.execute((Void) null);
     }
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
-    private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
+    private static final DateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 
     private void majTextViews() {
         dateItineraire.setText(DATE_FORMAT.format(calendar.getTime()));

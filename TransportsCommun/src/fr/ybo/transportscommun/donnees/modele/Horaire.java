@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -62,7 +63,7 @@ public class Horaire {
 
     private static final LogYbo LOG_YBO = new LogYbo(Horaire.class);
 
-	private static final DateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd");
+	private static final DateFormat FORMAT_DATE_CALENDRIER = new SimpleDateFormat("yyyyMMdd", Locale.FRANCE);
 
 	public static List<DetailArretConteneur> getProchainHorairesAsList(final String ligneId, final String arretId, final Integer limit,
 			final Calendar calendar, final Integer macroDirection) throws SQLiteException {

@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import fr.ybo.transportsrennes.keolis.modele.bus.DepartureMetro;
 
@@ -31,7 +32,7 @@ public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
 
     private static final String NEXT_TRAIN_2 = "nextTrain2Platform";
 
-	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
+	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.FRANCE);
 
     private final int plateform;
 

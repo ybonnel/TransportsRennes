@@ -29,6 +29,7 @@ import fr.ybo.transportsrennes.itineraires.Trajet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TrajetAdapter extends ArrayAdapter<Trajet> {
 
@@ -92,7 +93,7 @@ public class TrajetAdapter extends ArrayAdapter<Trajet> {
         return convertViewLocal;
     }
 
-    private static final DateFormat SDF_HEURE = new SimpleDateFormat("HH:mm");
+    private static final DateFormat SDF_HEURE = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 
     private static CharSequence formatHeure(final int time) {
         final StringBuilder stringBuilder = new StringBuilder();

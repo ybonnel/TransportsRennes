@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import android.os.AsyncTask;
@@ -149,7 +150,7 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 					maxCalendrier = calendrier.dateFin;
 				}
 			}
-			final String calendrierCourant = new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+			final String calendrierCourant = new SimpleDateFormat("yyyyMMdd", Locale.FRANCE).format(calendar.getTime());
 			if (maxCalendrier.compareTo(calendrierCourant) < 0) {
 				((TextView) findViewById(android.R.id.empty)).setText(R.string.messageStarEnRetard);
 			}
