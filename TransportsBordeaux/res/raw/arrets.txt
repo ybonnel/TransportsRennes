@@ -475,7 +475,6 @@ id,nom,latitude,longitude
 673b,Pressensé,44.856225,-0.602125
 4029b,Canteret,44.907117,-0.632383
 969b,La Grave,44.822038,-0.691783
-2053b,Général de Gaulle,44.908902,-0.638689
 4731b,Lormont Village,44.881629,-0.497388
 2565b,Brisson,44.945219,-0.539264
 3432b,Mairie de St Louis de Montferrand,44.953729,-0.534369
@@ -625,7 +624,6 @@ id,nom,latitude,longitude
 331b,Le B.E.C,44.793145,-0.617345
 176b,Rue de Macau,44.954244,-0.606726
 5917b,Fragonard,44.856845,-0.633666
-6377b,Luxembourg,44.908866,-0.643899
 7286b,Pablo Casals,44.846819,-0.666933
 2059b,Toutaud,44.893942,-0.516718
 814b,Vallon,44.820965,-0.62514
@@ -641,7 +639,6 @@ id,nom,latitude,longitude
 1348b,Primevères,44.765996,-0.639458
 7081b,Lénine,44.795967,-0.557733
 813b,Renaudel,44.869154,-0.615275
-6376b,Luxembourg,44.909021,-0.643858
 966b,Camparian,44.772069,-0.577248
 6671b,ZA Magellan,44.778527,-0.663971
 3281b,Parc d'Activité du Grand Port,44.81378,-0.540136
@@ -654,7 +651,6 @@ id,nom,latitude,longitude
 1103b,Rue de l'Union,44.850316,-0.520028
 174b,Route de Canéjan,44.78048,-0.614948
 3280b,Marché de Brienne (côté Anciens Abattoirs),44.825802,-0.54777
-6379b,Gilamon,44.911124,-0.645149
 965b,Capella,44.872741,-0.688135
 1089b,Jourdane,44.948438,-0.536941
 2242b,Vettiner (côté arceaux vélo),44.816417,-0.503646
@@ -668,7 +664,6 @@ id,nom,latitude,longitude
 1346b,Malbrède,44.983059,-0.481728
 1344b,Cigales,44.856665,-0.490802
 1906b,Les Prés de Jourdanne,44.944312,-0.533204
-6378b,Gilamon,44.911451,-0.645056
 811b,Hameau du Château,44.942682,-0.603051
 5916b,Pins-Francs,44.857282,-0.624166
 2455b,Bourranville,44.839365,-0.630217
