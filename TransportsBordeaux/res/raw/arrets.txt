@@ -59,7 +59,7 @@ id,nom,latitude,longitude
 532b,Labatut,44.835273,-0.632701
 758b,Tristan,44.898426,-0.710393
 688b,Président Wilson,44.839339,-0.63323
-3355b,Parc de Mussoville,44.793615,-0.559976
+3355b,Parc de Mussonville,44.793615,-0.559976
 6963b,Terres de Borde (rue d'Armagnac),44.822064,-0.554182
 2953b,Sirtema,44.884716,-0.656086
 5884b,Avenue d'Eysines,44.859734,-0.612843
@@ -162,7 +162,7 @@ id,nom,latitude,longitude
 5902b,Bontemps,44.806899,-0.57677
 2255b,Martyrs de la Libération,44.835534,-0.680827
 1983b,Tarrey,44.950898,-0.490784
-3202b,Parc de Mussoville,44.79389,-0.559829
+3202b,Parc de Mussonville,44.79389,-0.559829
 1110b,Ramond,44.893524,-0.743926
 6663b,Pacaris,44.797278,-0.578866
 321b,Roux,44.874703,-0.698506
@@ -263,7 +263,7 @@ id,nom,latitude,longitude
 5661b,Musée d'Aquitaine,44.834939,-0.574211
 2845b,Phénix Haut Brion,44.808073,-0.615888
 5989b,La Ramade,44.877382,-0.510572
-1849b,Ausone,44.89591,-0.509474
+1849b,Ausone,44.896318,-0.509424
 1570b,Cailleau,44.903261,-0.518405
 3295b,Palombes,44.864626,-0.533142
 6883b,Sirtema,44.88605,-0.657187
@@ -854,6 +854,7 @@ id,nom,latitude,longitude
 5679b,Quatre chemins,44.833216,-0.649237
 459b,Martinique,44.854418,-0.572423
 2573b,René Coty (Pasteur),44.927594,-0.49187
+7682b,Les Echoppes,44.810719,-0.621225
 3868b,Unitec,44.796645,-0.621393
 2949b,Mairie de St Médard,44.896498,-0.717912
 5783b,Jeunesse,44.849567,-0.637934
@@ -1128,7 +1129,7 @@ id,nom,latitude,longitude
 3087b,Allée des Bécasses,44.931565,-0.760095
 1551b,Le Télégraphe,44.784213,-0.606305
 7233b,Margaux,44.846567,-0.792108
-3017b,Maréchal Foch,44.855236,-0.534806
+3017b,Maréchal Foch,44.855192,-0.534182
 3216b,Galerie des Beaux Arts,44.838788,-0.581715
 5449b,Villabois,44.885181,-0.58687
 2227b,Lormont Village,44.881585,-0.497068
@@ -2033,8 +2034,8 @@ id,nom,latitude,longitude
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
-3719,Hôtel de Ville,44.837305,-0.577136
 928b,Place du 11 Novembre,44.829042,-0.64818
+3719,Hôtel de Ville,44.837305,-0.577136
 3173b,Camille Godard,44.855088,-0.574278
 3716,Sainte-Catherine,44.837635,-0.573332
 3715,Place du Palais,44.837901,-0.569257
@@ -2964,6 +2965,7 @@ id,nom,latitude,longitude
 553b,Jean Cocteau,44.875947,-0.50237
 3040b,Moulin de Gajac,44.889811,-0.706286
 2674b,Allard,44.877748,-0.591528
+7701b,Professeur Arnozan,44.808727,-0.587141
 6326b,Maréchal Juin,44.774074,-0.598809
 5754b,5 Chemins,44.860814,-0.696057
 3501b,Victoire (Somme),44.829836,-0.572303
@@ -3099,7 +3101,7 @@ id,nom,latitude,longitude
 5514b,11 Novembre,44.89491,-0.501196
 2600b,Bois des Ormes,44.91044,-0.67736
 2817b,Boulevard du Haut Livrac,44.798016,-0.673381
-5276b,Les Chênes,44.944859,-0.617062
+5276b,Les Chênes,44.944789,-0.616156
 5513b,11 Novembre,44.894849,-0.501128
 6653b,Hilsz,44.900282,-0.704492
 2740b,Barrière de Pessac,44.825567,-0.588672
