@@ -288,7 +288,7 @@ id,nom,latitude,longitude
 4224b,Lycée Sud Médoc,44.905344,-0.714554
 7441b,Lavignolle,44.883227,-0.566107
 2473b,Jean Macé,44.841772,-0.659813
-3297b,Avenue de la Boétie,44.909719,-0.671909
+3297b,Avenue de la Boétie (vers Cimetière du Taillan),44.909719,-0.671909
 461b,Cenon Marègue,44.848343,-0.507501
 3568b,Caserne Boudet,44.828092,-0.586124
 5773b,Clos St Pierre,44.925663,-0.482755
@@ -1648,6 +1648,7 @@ id,nom,latitude,longitude
 7586b,Debussy,44.757168,-0.571481
 2790b,Les Echoppes,44.810469,-0.620601
 1693b,Landegrand,44.952519,-0.609611
+7731b,Tourny,44.844294,-0.578392
 1702b,Château Rouquey,44.828105,-0.67193
 3090b,Avenue de Capeyron,44.867293,-0.71016
 500b,Courbet,44.855632,-0.596233
@@ -2034,8 +2035,8 @@ id,nom,latitude,longitude
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
-928b,Place du 11 Novembre,44.829042,-0.64818
 3719,Hôtel de Ville,44.837305,-0.577136
+928b,Place du 11 Novembre,44.829042,-0.64818
 3173b,Camille Godard,44.855088,-0.574278
 3716,Sainte-Catherine,44.837635,-0.573332
 3715,Place du Palais,44.837901,-0.569257
@@ -2371,7 +2372,7 @@ id,nom,latitude,longitude
 1275b,Daguin,44.812927,-0.56115
 921b,Martin,44.849005,-0.583481
 7521b,Faisan Doré,44.918741,-0.713945
-3827b,Eglise de St Aubin,44.911836,-0.723115
+3827b,Eglise de St Aubin,44.911871,-0.723955
 1038b,Nansouty,44.81985,-0.572035
 2915b,Brossolette,44.858434,-0.598187
 5329b,Darwin,44.859974,-0.726543
@@ -2383,7 +2384,6 @@ id,nom,latitude,longitude
 3187b,Collège Pablo Neruda,44.794184,-0.562455
 5958b,Frères Portmann,44.860566,-0.576312
 5624b,Lycée Daguin,44.837126,-0.649009
-2762b,Jaubert,44.807412,-0.627012
 3775,Place de la Bourse,44.84152,-0.569677
 3776,Quinconces,44.844027,-0.573827
 3773,Porte de Bourgogne,44.837137,-0.566384
@@ -2443,7 +2443,6 @@ id,nom,latitude,longitude
 2875b,Gare de Pessac Alouette,44.793185,-0.657598
 3771,Saint-Michel,44.834458,-0.563389
 3762,Grand Théâtre,44.842068,-0.575324
-2761b,Avenue Jean Jaurès,44.808976,-0.623822
 3763,Quinconces,44.844469,-0.573792
 5955b,Galerie Tatry,44.863414,-0.572933
 3764,Quinconces,44.844493,-0.573882
@@ -3213,7 +3212,6 @@ id,nom,latitude,longitude
 3990b,Lycée de la Plaine,44.875928,-0.664564
 1867b,Merle,44.959081,-0.507402
 3277b,Claudeville,44.873889,-0.577364
-2031b,Les Echoppes,44.810436,-0.620788
 316b,François de Sourdis,44.829233,-0.58707
 7543b,Ile de France,44.845849,-0.496844
 5494b,Joliot Curie,44.895206,-0.513779
