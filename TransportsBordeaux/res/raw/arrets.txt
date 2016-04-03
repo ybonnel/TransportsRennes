@@ -763,6 +763,7 @@ id,nom,latitude,longitude
 279b,Manège,44.83912,-0.587626
 1080b,Landiras,44.830107,-0.584834
 3134b,Maréchal Gallieni,44.8308,-0.617352
+7751b,Nigès,44.841233,-0.759467
 1673b,Eglise de Gradignan,44.772615,-0.614291
 7400,Parc de Mussonville,44.79397,-0.559594
 7402,Vaclav Havel,44.786628,-0.566228
@@ -849,6 +850,7 @@ id,nom,latitude,longitude
 7681b,Général de Gaulle,44.910087,-0.641048
 3869b,Barrière du Médoc,44.853256,-0.594447
 5677b,Mérignac Soleil,44.831208,-0.656288
+7752b,Nigès,44.841082,-0.758621
 7565b,Europe,44.9247,-0.497931
 5679b,Quatre chemins,44.833216,-0.649237
 459b,Martinique,44.854418,-0.572423
@@ -1211,6 +1213,7 @@ id,nom,latitude,longitude
 3080b,Allée du Nord,44.91398,-0.741651
 514b,Carnot,44.796028,-0.672732
 3193b,Duhamel,44.792938,-0.562262
+7741b,Dorgelès,44.843633,-0.653689
 5702b,Poumey,44.76604,-0.617461
 1829b,Croix Blanche,44.84359,-0.589292
 1716b,Nuyens,44.846049,-0.564746
@@ -2031,8 +2034,8 @@ id,nom,latitude,longitude
 3712,Porte de Bourgogne,44.837248,-0.56629
 3711,Stalingrad,44.840316,-0.55972
 3714,Place du Palais,44.837925,-0.569347
-1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 3713,Porte de Bourgogne,44.837186,-0.566273
+1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
