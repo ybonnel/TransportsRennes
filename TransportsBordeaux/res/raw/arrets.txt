@@ -572,7 +572,7 @@ id,nom,latitude,longitude
 3583b,Hôtel de Police,44.833896,-0.588369
 3077b,Pinsoles,44.935194,-0.7586
 1192b,André Ricard,44.859656,-0.53976
-5800b,Cenon Gare,44.85562,-0.534615
+5800b,Cenon Gare,44.856079,-0.533807
 5913b,Saint Saëns,44.852831,-0.633774
 2838b,Libre Service de Gros,44.890681,-0.548374
 3975b,Bois de Mont,44.898494,-0.706999
@@ -1220,7 +1220,7 @@ id,nom,latitude,longitude
 1400b,Bolivar,44.876228,-0.55054
 2711b,Château Pontac (vers Rocade),44.775494,-0.565206
 5795b,Billaudel,44.820576,-0.561229
-592b,Victor Hugo,44.851504,-0.532835
+592b,Victor Hugo,44.850839,-0.533059
 6933b,Collège Aliénor d'Aquitaine,44.846265,-0.77981
 2937b,Eysines Centre,44.884331,-0.650812
 3329b,Lavigne,44.847122,-0.563066
@@ -1394,7 +1394,6 @@ id,nom,latitude,longitude
 3455b,Aristide Briand,44.857893,-0.52438
 2078b,Quai Français,44.890111,-0.529511
 3341b,Piscine Chambéry,44.754866,-0.585842
-15040b,Gaviniès,44.833516,-0.594791
 2780b,Marne,44.788648,-0.67568
 1611b,Village 2,44.803074,-0.612453
 2704b,Pexotto,44.901087,-0.669112
@@ -1515,6 +1514,7 @@ id,nom,latitude,longitude
 3237b,Les Campanules,44.767698,-0.601728
 3236b,Les Campanules,44.767595,-0.601291
 1124b,L'Aiglon,44.865245,-0.670381
+3560b,Tourny,44.84498,-0.57779
 611b,Cabannes,44.820237,-0.519915
 7017b,Jean Jaurès (rue de la Morandière),44.871594,-0.678693
 202b,Blanc,44.880824,-0.640417
@@ -2034,8 +2034,8 @@ id,nom,latitude,longitude
 3712,Porte de Bourgogne,44.837248,-0.56629
 3711,Stalingrad,44.840316,-0.55972
 3714,Place du Palais,44.837925,-0.569347
-3713,Porte de Bourgogne,44.837186,-0.566273
 1809b,Lormont Bas (A. Briand),44.877037,-0.534506
+3713,Porte de Bourgogne,44.837186,-0.566273
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
@@ -3291,7 +3291,6 @@ id,nom,latitude,longitude
 7261b,Redon,44.917424,-0.662938
 2532b,Mimosas,44.884717,-0.526243
 760b,Laroque,44.874346,-0.570714
-15999b,Hôtel IBIS,44.836104,-0.583076
 2327b,Barrière d'Arès,44.835864,-0.598818
 199b,Livran,44.829744,-0.589927
 6426b,Hautefort,44.870268,-0.512965
@@ -3305,7 +3304,6 @@ id,nom,latitude,longitude
 5980b,Sirtema,44.885495,-0.656783
 2967b,Ferry,44.91069,-0.637498
 5400,Emile Counord,44.858674,-0.574887
-15998b,Nouaux,44.84594,-0.593826
 1224b,Bertin,44.816051,-0.565729
 1223b,Joliot Curie,44.841228,-0.652532
 763b,Roland Garros,44.829507,-0.687246
