@@ -560,7 +560,6 @@ id,nom,latitude,longitude
 4735b,La Cascade,44.870463,-0.502522
 3974b,Gare de Blanquefort,44.918789,-0.62492
 2942b,Avenue de la Boétie,44.909638,-0.67165
-7463,Montaigne-Montesquieu,44.796873,-0.617433
 6443b,Bègles Plage,44.801997,-0.538279
 2050b,Rue de l'Amitié,44.863311,-0.509805
 744b,Cante-Gric,44.910656,-0.687166
@@ -1409,7 +1408,6 @@ id,nom,latitude,longitude
 943b,Emile Zola,44.903738,-0.504461
 1067b,Louis Mie,44.831703,-0.58315
 2430b,Archimède,44.785271,-0.644225
-7372b,Pin Galant,44.845714,-0.654813
 7016b,Berles (rue de la Morandière),44.865969,-0.679262
 207b,Le Béquet,44.801759,-0.575189
 3233b,Les Airelles,44.766148,-0.596164
@@ -1514,7 +1512,6 @@ id,nom,latitude,longitude
 3237b,Les Campanules,44.767698,-0.601728
 3236b,Les Campanules,44.767595,-0.601291
 1124b,L'Aiglon,44.865245,-0.670381
-3560b,Tourny,44.84498,-0.57779
 611b,Cabannes,44.820237,-0.519915
 7017b,Jean Jaurès (rue de la Morandière),44.871594,-0.678693
 202b,Blanc,44.880824,-0.640417
@@ -2483,7 +2480,6 @@ id,nom,latitude,longitude
 715b,Bertrand de Goth,44.819123,-0.576408
 7172,Berges de la Garonne,44.885582,-0.541535
 563b,La Gravière,44.883907,-0.676483
-3823b,Palais de Justice,44.836233,-0.581286
 231b,Bagatelle,44.808542,-0.573912
 1881b,La Belle Etoile,44.823219,-0.500031
 7241b,Girard,44.837506,-0.781881
