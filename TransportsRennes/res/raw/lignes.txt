@@ -108,5 +108,4 @@ id,nom_court,nom_long,ordre
 0243,243,Pacé (Pie Neuve) <> Saint-Grégoire (Lycée Jean-Paul II),107
 0244,244,Pont-Péan (Mouton Blanc) <> Chartres-de-Bretagne (Collège Fontenay),108
 0803,API,Rennes (République) <> Rennes (Etangs d'Apigné),109
-0810,SP,Spécial,110
 1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie),0
