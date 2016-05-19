@@ -829,9 +829,9 @@ id,nom,latitude,longitude
 5780b,Gare de Bassens,44.90068,-0.524774
 2349b,Barrière de Toulouse,44.815429,-0.572451
 2948b,Le Burck,44.814502,-0.634801
-5260,Bassins à Flot,44.86073,-0.553247
+5260,La Cité du Vin,44.86073,-0.553247
 5675b,Logey,44.835544,-0.667464
-5261,Bassins à Flot,44.860733,-0.553159
+5261,La Cité du Vin,44.860733,-0.553159
 3139b,Barrière de Bègles,44.813263,-0.563032
 1670b,Hameau de la Reine,44.781556,-0.618953
 7601b,Sovi,44.776549,-0.530022
@@ -1165,7 +1165,7 @@ id,nom,latitude,longitude
 1140b,Sembat,44.815921,-0.608758
 2451b,Clinique Mutualiste,44.805265,-0.609391
 2630b,Collège Les Eyquems,44.827916,-0.645675
-6825b,Bassins à Flot,44.860585,-0.554125
+6825b,La Cité du Vin,44.860585,-0.554125
 3545b,Stalingrad (arrêt de Descente),44.840385,-0.560117
 2869b,Escarraguel (rue Cézanne),45.008923,-0.528985
 7631b,Chemin de Piétru,45.004442,-0.551139
@@ -2114,6 +2114,7 @@ id,nom,latitude,longitude
 3704,Galin,44.849757,-0.544394
 1875b,Martyrs de la Résistance,44.880771,-0.611422
 3705,Galin,44.849777,-0.544306
+16000b,Stade Euro,44.895136,-0.565735
 3708,Jardin Botanique,44.842987,-0.55543
 3709,Jardin Botanique,44.843007,-0.555343
 1054b,Jambes,44.929633,-0.509251
@@ -2551,7 +2552,7 @@ id,nom,latitude,longitude
 865b,Pierre Mendès France,44.829625,-0.640315
 5852b,Plaisance,44.864277,-0.506622
 1209b,La Grave,44.822046,-0.691517
-6835b,Bassins à Flot,44.85933,-0.555591
+6835b,La Cité du Vin,44.85933,-0.555591
 239b,Collège Lapierre,44.874026,-0.524354
 2286b,Allée de la Prairie,44.848733,-0.64386
 3530b,Hôpital St André,44.834391,-0.578331
@@ -2561,7 +2562,7 @@ id,nom,latitude,longitude
 5192b,Four à Chaux,44.917896,-0.66666
 6400b,Parc des Jalles,44.911421,-0.580621
 6332b,Bout du Parc,44.951959,-0.508035
-6836b,Bassins à Flot,44.859298,-0.555463
+6836b,La Cité du Vin,44.859298,-0.555463
 781b,Solarium,44.781391,-0.629256
 1529b,Macédo,44.80034,-0.668799
 125b,Fauvettes,44.859919,-0.497948
@@ -2996,6 +2997,7 @@ id,nom,latitude,longitude
 2271b,La Belle Etoile,44.822782,-0.500447
 1595b,Barrière d'Ornano,44.832074,-0.598398
 875b,Racine,44.861906,-0.615593
+6433b,La Cité du Vin,44.860647,-0.553039
 556b,Madran,44.804972,-0.657365
 3650b,Bordeaux Plage,44.877802,-0.575636
 1189b,Cazanove,44.820827,-0.694565
@@ -3074,6 +3076,7 @@ id,nom,latitude,longitude
 5511b,La Gardette (Bassens - Carbon Blanc),44.887895,-0.517568
 6651b,Hastignan Bourg,44.89766,-0.745293
 5278b,Grattequina,44.943968,-0.560644
+7772b,La Cité du Vin,44.861653,-0.548908
 3054b,Village de Cerillan,44.894327,-0.758816
 5757b,Racine,44.904866,-0.50098
 2895b,Maréchal Gallieni,44.81818,-0.601901
@@ -3376,6 +3379,7 @@ id,nom,latitude,longitude
 5279b,Dassault,44.783797,-0.652836
 2484b,Bénédigues,44.799129,-0.583503
 656b,Francisco Ferrer,44.825013,-0.612661
+7771b,La Jacquotte,44.820817,-0.531133
 3051b,Espace Aquatique (devant la Piscine),44.893995,-0.75026
 2685b,Mansencal,44.782898,-0.576824
 3409b,Jacques,44.912985,-0.653781
@@ -3400,6 +3404,7 @@ id,nom,latitude,longitude
 1754b,Libération,44.87041,-0.613797
 103b,Rond-Point,44.80518,-0.616715
 1585b,Lamartine,44.903676,-0.51242
+6423b,Du Bellay,44.873433,-0.51433
 5761b,Centre de Secours,44.905325,-0.503875
 5488,Lauriers,44.879105,-0.517917
 1503b,Gare de Blanquefort,44.916171,-0.627249
