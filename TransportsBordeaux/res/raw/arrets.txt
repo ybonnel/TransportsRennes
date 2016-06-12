@@ -1827,7 +1827,6 @@ id,nom,latitude,longitude
 3665b,Futaies,44.909118,-0.496477
 3397b,Salle de Breillan,44.917826,-0.634803
 1421b,Les Cares,44.888156,-0.660545
-5727b,Ducros (vers Lycée V. Havel),44.781657,-0.564989
 1373b,Frères Lumière,44.796484,-0.532856
 2993b,La Poudrerie,44.871166,-0.733891
 2093b,St Exupéry,45.0115,-0.539211
@@ -1840,7 +1839,6 @@ id,nom,latitude,longitude
 4610b,Parc Municipal,44.830508,-0.526803
 1724b,Lavoir,44.91445,-0.514846
 3243b,Facultés Droit et Lettres,44.798236,-0.619585
-5728b,Clemenceau (vers Lycée V. Havel),44.781195,-0.560012
 2150b,Domaine d'Hostein,44.927666,-0.478655
 1372b,Pacaris,44.797131,-0.57897
 1423b,Pauge,44.757632,-0.576671
