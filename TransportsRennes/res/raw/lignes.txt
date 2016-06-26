@@ -64,46 +64,27 @@ id,nom_court,nom_long,ordre
 0168,168,Gévezé (Cheval Blanc) <> Rennes (Villejean-Université),63
 0172,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne (Parc de Loisirs),64
 0173,173,Rennes (La Poterie) <> Saint-Armel <> Corps-Nuds (Corps-Nuds Gare),65
-0200,200,Acigné (Timonière) <> Rennes (Lycée Assomption),66
-0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Lycée Assomption),67
-0202,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption),68
-0204,204,Saint-Grégoire (Champ Daguet) <> Rennes (Collège Clotilde Vautier),69
-0205,205,Rennes (Villejean-Université) <> Rennes (Lande du Breil),70
-0206,206,Cesson-Sévigné (Métairies Chalotais) <> Rennes (Lycée Joliot-Curie),71
-0207,207,Rennes (Gares) <> Cesson-Sévigné (Lycée Ozanam),72
-0208,208,Rennes (Gares) <> Saint-Grégoire (MFR Rabinardières),73
-0210,210,L'Hermitage (Centre) <> Rennes (Lycée Basch),74
-0211,211,Chavagne (Croix Blanche) <> Rennes (Collège Cleunay),75
-0212,212,Saint-Erblon (Orgerblon) <> Rennes (Lycée Bréquigny),76
-0213,213,Bourgbarré (Moc Souris) <> Rennes (Lycée Bréquigny),77
-0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Ozanam),78
-0215,215,Rennes (Villejean-Université) <> Rennes (Lycée Chateaubriand),79
-0216,216,Cesson-Sévigné (Base de Loisirs) <> Rennes (Lycée Joliot-Curie),80
-0217,217,Cesson-Sévigné (Cormiers) <> Rennes (Lycée Joliot-Curie),81
-0220,220,Acigné (Timonière) <> Cesson-Sévigné (Lycée Sévigné),82
-0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Sévigné),83
-0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),84
-0223,223,Chevaigné (Pommiers) <> Saint-Grégoire (Lycée Jean-Paul II),85
-0224,224,Gévezé (Cheval Blanc) <> Saint-Grégoire (Lycée Jean-Paul II),86
-0225,225,Pacé (Pâtis Roussel) <> Saint-Grégoire (Lycée Jean-Paul II),87
-0226,226,Gévezé (Cheval Blanc) <> Pacé (Collèges de Pacé),88
-0227,227,Saint-Gilles (Île des Bois) <> Pacé (Collèges de Pacé),89
-0228,228,La Chapelle-des-Fougeretz (Besneraie) <> Rennes (Lycée Mendès-France),90
-0229,229,Chavagne (Croix Blanche) <> Bruz (Lycée Anita Conti),91
-0230,230,Chartres-de-Bretagne (Vieux Bourg) <> Bruz (Collège Saint-Joseph),92
-0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),93
-0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),94
-0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),95
-0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),96
-0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),97
-0236,236,Clayes (Clairville) <> Pacé (Collèges de Pacé),98
-0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),99
-0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),100
-0240,240,Saint-Gilles (Île des Bois) <> Le Rheu (Lycée Théodore Monod),101
-0241,241,Chavagne (Croix Blanche) <> Mordelles (Collège Saint-Yves),102
-0242,242,Miniac-sous-Bécherel (Eglise) <> Romillé (Collège Jacques Prévert),103
-0243,243,Pacé (Pie Neuve) <> Saint-Grégoire (Lycée Jean-Paul II),104
-0244,244,Pont-Péan (Mouton Blanc) <> Chartres-de-Bretagne (Collège Fontenay),105
-0803,API,Rennes (République) <> Rennes (Etangs d'Apigné),106
-0810,SP,Spécial,107
+0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Lycée Assomption),66
+0202,202,Chevaigné (Pommiers) <> Rennes (Lycée Assomption),67
+0204,204,Saint-Grégoire (Champ Daguet) <> Rennes (Collège Clotilde Vautier),68
+0205,205,Rennes (Villejean-Université) <> Rennes (Lande du Breil),69
+0207,207,Rennes (Gares) <> Cesson-Sévigné (Lycée Ozanam),70
+0211,211,Chavagne (Croix Blanche) <> Rennes (Collège Cleunay),71
+0214,214,Rennes (La Poterie) <> Cesson-Sévigné (Lycée Ozanam),72
+0221,221,Cesson-Sévigné (Château de Vaux) <> Cesson-Sévigné (Lycée Sévigné),73
+0222,222,Chevaigné (Pommiers) <> Betton (Collège François Truffaut),74
+0226,226,Gévezé (Cheval Blanc) <> Pacé (Collèges de Pacé),75
+0227,227,Saint-Gilles (Ile des Bois) <> Pacé (Collèges de Pacé),76
+0231,231,Laillé (Gingouillère) <> Bruz (Collège Saint-Joseph),77
+0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Andrée Récipon),78
+0233,233,Bourgbarré (Centre de Loisirs) <> Orgères (Collège Andrée Récipon),79
+0234,234,Laillé (Gingouillère) <> Orgères (Collège Andrée Récipon),80
+0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),81
+0236,236,Clayes (Clairville) <> Pacé (Collèges de Pacé),82
+0238,238,La Chapelle-Thouarault (Ville aux Archers) <> Le Rheu (Lycée Théodore Monod),83
+0239,239,Mordelles (Pâtis) <> Le Rheu (Lycée Théodore Monod),84
+0240,240,Saint-Gilles (Ile des Bois) <> Le Rheu (Lycée Théodore Monod),85
+0242,242,Miniac-sous-Bécherel (Eglise) <> Romillé (Collège Jacques Prévert),86
+0244,244,Pont-Péan (Mouton Blanc) <> Chartres-de-Bretagne (Collège Fontenay),87
+0803,API,Rennes (République) <> Rennes (Etangs d'Apigné),88
 1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie),0

@@ -358,7 +358,7 @@ id,nom,latitude,longitude
 6452b,Mérignac Soleil,44.830824,-0.65701
 5141b,Chemin du Sourd,44.888036,-0.511682
 467b,Cassin,44.833349,-0.696099
-1012b,Bernède,44.878317,-0.677891
+1012b,Bernède,44.878365,-0.678084
 5091b,RPA Gambetta,44.842324,-0.538667
 753b,Tillon,44.776735,-0.543964
 2614b,Collège G.Rayet,44.842107,-0.515459
@@ -475,6 +475,7 @@ id,nom,latitude,longitude
 673b,Pressensé,44.856225,-0.602125
 4029b,Canteret,44.907117,-0.632383
 969b,La Grave,44.822038,-0.691783
+2053b,Général de Gaulle,44.908902,-0.638689
 4731b,Lormont Village,44.881629,-0.497388
 2565b,Brisson,44.945219,-0.539264
 3432b,Mairie de St Louis de Montferrand,44.953729,-0.534369
@@ -713,8 +714,8 @@ id,nom,latitude,longitude
 5788b,Bosquets,44.853923,-0.65076
 3130b,Eglise St Augustin,44.832453,-0.61086
 1350b,Prieuré de Cayac,44.766786,-0.618356
-5360b,Pythagore,44.831371,-0.680782
 5789b,Bosquets,44.85402,-0.652186
+5360b,Pythagore,44.831371,-0.680782
 1564b,Port Garonne,44.797676,-0.530235
 3289b,Mairie de Bègles,44.808021,-0.542406
 3074b,Place du Mayne,44.873252,-0.682528
@@ -1489,6 +1490,7 @@ id,nom,latitude,longitude
 3951b,Dumas,44.932256,-0.636728
 1294b,Goillot,44.841938,-0.663536
 5938b,Centre Tour de Gassies,44.883409,-0.625587
+7729b,Rue d'Aviau,44.850818,-0.578428
 354b,Chevalier,44.84215,-0.593685
 3953b,Gilamon,44.911717,-0.645467
 1291b,14 Juillet,44.807653,-0.547712
@@ -1658,6 +1660,7 @@ id,nom,latitude,longitude
 2923b,Mairie du Bouscat,44.864782,-0.599773
 3116b,Avenue de l'Europe,44.877458,-0.614884
 3115b,Résidence Coppélia,44.804825,-0.582689
+7730b,Paul Doumer,44.851562,-0.574915
 1480b,Tout y Faut,44.864538,-0.489492
 2791b,Parc Haut Brion,44.812808,-0.613826
 1694b,Terrefort,44.924295,-0.634867
@@ -2029,8 +2032,8 @@ id,nom,latitude,longitude
 3712,Porte de Bourgogne,44.837248,-0.56629
 3711,Stalingrad,44.840316,-0.55972
 3714,Place du Palais,44.837925,-0.569347
-1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 3713,Porte de Bourgogne,44.837186,-0.566273
+1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
@@ -2188,6 +2191,7 @@ id,nom,latitude,longitude
 3671b,Triviaux,44.891964,-0.507719
 2298b,Mitterrand,44.834006,-0.519677
 1162b,Docteur Férié,44.900823,-0.711224
+7725b,Rue d'Aviau,44.85014,-0.576801
 3526b,Bordeaux Carreire,44.826703,-0.60089
 576b,La Fontaine,44.826886,-0.678512
 700b,Anita Conti,44.932781,-0.620381
@@ -2196,6 +2200,7 @@ id,nom,latitude,longitude
 644b,Lognac,44.838297,-0.611603
 2291b,Sembat,44.833379,-0.549807
 855b,Rives d'Arcins,44.794931,-0.534923
+7726b,St Maur,44.851913,-0.578574
 5730b,Pagnol,44.780905,-0.555565
 1169b,Mattéoti,44.83159,-0.544045
 2201b,Templiers,44.9283,-0.477134
@@ -2204,6 +2209,7 @@ id,nom,latitude,longitude
 3310b,Boulevard George V,44.824074,-0.587184
 2292b,République,44.826826,-0.533486
 856b,Dutertre,44.840996,-0.592585
+7727b,Mandron,44.854179,-0.581784
 135b,Avenue Gambetta,44.818588,-0.629203
 578b,Poirson,44.857444,-0.585908
 6349b,Baudon,44.883362,-0.629527
@@ -2247,6 +2253,7 @@ id,nom,latitude,longitude
 2670b,France-Les Castors,44.793476,-0.670591
 16b,La Morandière (av. de Magudas),44.858065,-0.678173
 6993b,Provinces,44.846965,-0.492619
+7798b,Beausite,44.852904,-0.527082
 4334b,rue des Graves,44.881788,-0.659597
 3032b,Herriot (Centre Commercial),44.883983,-0.690763
 5735b,Lycée Václav Havel (station Tram),44.786603,-0.566442
@@ -3202,7 +3209,6 @@ id,nom,latitude,longitude
 5978b,Allée de Curé,44.911647,-0.685265
 1254b,Bardanac,44.796602,-0.610011
 5493b,Joliot Curie,44.895272,-0.513707
-1657b,Gruet,44.84638,-0.579665
 4114b,Lycée Sud Médoc (Bois de Mont),44.904805,-0.71183
 5680b,INRA,44.7853,-0.577217
 3913b,Espagnet,44.945948,-0.537038
