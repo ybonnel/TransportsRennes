@@ -43,8 +43,5 @@ id,nom_court,nom_long,ordre
 0082,82,Rennes (Villejean-Université) <> Romillé <> Langan <> La Chapelle-Chaussée <> Bécherel <> Miniac-sous-Bécherel (Miniac Eglise),42
 0094,94,Saint-Sulpice-la-Forêt (Cropy) <> Chevaigné <> Betton (Betton Centre),43
 0095,95,Bruz (Bruz Centre) <> Laillé (Gingouillère),44
-0121,N1,Beaulieu Atalante <> J.F. Kennedy,45
-0122,N2,Maurepas / Gayeulles <> La Poterie,46
-0803,API,Rennes (République) <> Rennes (Etangs d'Apigné),47
-0810,SP,Spécial,48
+0803,API,Rennes (République) <> Rennes (Etangs d'Apigné),45
 1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie),0
