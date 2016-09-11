@@ -196,7 +196,7 @@ public class TransportsRennes extends AccueilActivity {
 			case R.id.menu_plan:
 				copieImageIfNotExists();
 				Intent intentMap = new Intent(Intent.ACTION_VIEW);
-				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "plan_2014_2015.jpg")), "image/*");
+				intentMap.setDataAndType(Uri.fromFile(new File(getFilesDir(), "plan_2016_2017.pdf")), "application/pdf");
 				startActivity(intentMap);
 				return true;
 			case MENU_TICKETS:
@@ -237,8 +237,10 @@ public class TransportsRennes extends AccueilActivity {
 	private void copieImageIfNotExists() {
 		boolean fichierExistant = false;
 		for (String nom : fileList()) {
-            if ("plan_2014_2015.jpg".equals(nom)) {
+            if ("plan_2016_2017.pdf".equals(nom)) {
                 fichierExistant = true;
+            } else if ("plan_2014_2015.jpg".equals(nom)) {
+                deleteFile(nom);
             } else if ("plan_2013_2014.jpg".equals(nom)) {
                 deleteFile(nom);
             } else if ("plan_2012_2013.jpg".equals(nom)) {
@@ -248,9 +250,9 @@ public class TransportsRennes extends AccueilActivity {
 			}
 		}
 		if (!fichierExistant) {
-			InputStream inputStream = getResources().openRawResource(R.raw.plan_2014_2015);
+			InputStream inputStream = getResources().openRawResource(R.raw.plan_2016_2017);
 			try {
-				OutputStream outputStream = openFileOutput("plan_2014_2015.jpg", Context.MODE_WORLD_READABLE);
+				OutputStream outputStream = openFileOutput("plan_2016_2017.pdf", Context.MODE_WORLD_READABLE);
 				try {
 					byte[] buffre = new byte[50 * 1024];
 					int result = inputStream.read(buffre);
