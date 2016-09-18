@@ -439,6 +439,7 @@ public class Generateur {
 				route.nomCourt = "0" + route.nomCourt;
 			}
 		}
+
 		// Tri.
 		Collections.sort(routes, new Comparator<Route>() {
 			public int compare(Route o1, Route o2) {
@@ -448,7 +449,15 @@ public class Generateur {
 				if (!isTram(o1) && isTram(o2)) {
 					return 1;
 				}
-				return o1.nomCourt.compareTo(o2.nomCourt);
+                String nomCourt1 = o1.nomCourt;
+                String nomCourt2 = o2.nomCourt;
+                if (nomCourt1.equals("5s") || nomCourt1.equals("5n")) {
+                    nomCourt1 = "0" + nomCourt1;
+                }
+                if (nomCourt2.equals("5s") || nomCourt2.equals("5n")) {
+                    nomCourt2 = "0" + nomCourt2;
+                }
+				return nomCourt1.compareTo(nomCourt2);
 			}
 		});
 
