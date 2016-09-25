@@ -24,7 +24,7 @@ id,nom,latitude,longitude
 52b,Roux,44.874558,-0.697723
 2577b,Beutre Antenne Sociale,44.816391,-0.700833
 180b,France-Les Castors,44.794151,-0.670609
-7835b,Berges de la Garonne,44.885568,-0.54142
+7835b,Berges de la Garonne,44.885579,-0.541637
 1466b,Vallon,44.82119,-0.625154
 5887b,Tassigny,44.856609,-0.61358
 5280b,Cazalet (Bd du Haut Livrac),44.798842,-0.672119
@@ -184,7 +184,7 @@ id,nom,latitude,longitude
 1917b,Lycée Sud Médoc,44.903338,-0.712025
 824b,Les 4 Saisons,44.869146,-0.475889
 5903b,Pelouse de Douet,44.827938,-0.61143
-2848b,Gare Routière (av. du Gal de Gaulle),44.896822,-0.721954
+2848b,Gare Routière (av du Gal de Gaulle),44.896822,-0.721954
 290b,Durandeau,44.957873,-0.512835
 1358b,Mozart,44.811937,-0.61677
 3969b,Berles (av. de Magudas),44.859506,-0.685263
@@ -877,7 +877,7 @@ id,nom,latitude,longitude
 4700b,Richaud,44.889273,-0.562789
 1408b,Imhotep,44.892047,-0.556119
 2416b,Virginia,44.850204,-0.625647
-31b,Gare Routière (av. du Gal de Gaulle),44.896636,-0.721865
+31b,Gare Routière (av du Gal de Gaulle),44.896636,-0.721865
 5221b,Clemenceau,44.851329,-0.508828
 1934b,4 Pavillons (vers Rocade),44.86527,-0.515124
 732b,Montfort,44.768865,-0.59549
@@ -1178,7 +1178,7 @@ id,nom,latitude,longitude
 1141b,Rue de la Paix,44.763957,-0.564967
 3083b,Jean Jaurès (av. République),44.872216,-0.679519
 406b,Pasteur,44.901212,-0.512824
-2452b,Rue du Médoc (av. Pasteur),44.877532,-0.680375
+2452b,Rue du Médoc (av Pasteur),44.877532,-0.680375
 483b,Acacias,44.885297,-0.529284
 3546b,Victoire (Somme),44.829617,-0.572378
 3949b,Cora Morton,44.934779,-0.634823
@@ -2265,7 +2265,7 @@ id,nom,latitude,longitude
 636b,Murat,44.847486,-0.62689
 17b,Gambetta,44.841092,-0.580139
 4335b,rue des Graves,44.881934,-0.659556
-3031b,Rue du Médoc (av. Pasteur),44.877877,-0.68112
+3031b,Rue du Médoc (av Pasteur),44.877877,-0.68112
 5959b,Trinité,44.860359,-0.579644
 5736b,Cité Chantecrit,44.864227,-0.564215
 1520b,Gaz de Bordeaux,44.883688,-0.55034
@@ -2787,7 +2787,7 @@ id,nom,latitude,longitude
 1979b,Rue de la Vieille Eglise,44.946318,-0.595428
 1390b,Edison,44.821253,-0.594969
 915b,Piscine Judaïque,44.840774,-0.590265
-5374b,Mouline,44.913333,-0.492834
+5374b,La Mouline,44.913333,-0.492834
 1663b,Mérignac Centre,44.841457,-0.64696
 2751b,Caserne Boudet,44.82726,-0.586476
 1440b,CAF,44.890485,-0.557604
@@ -3163,7 +3163,7 @@ id,nom,latitude,longitude
 903b,Le Bousquet,44.960601,-0.533672
 1014b,Tillet,44.821826,-0.572528
 2818b,Orée du Bois,44.788649,-0.695436
-1015b,Oscar Auriac,44.818235,-0.700131
+1015b,Oscar Auriac,44.818067,-0.700576
 65b,Perrin,44.780201,-0.651198
 5683b,Lycée Vaclav Havel,44.78743,-0.56733
 3918b,Treuil,44.935955,-0.488216
@@ -3445,7 +3445,7 @@ id,nom,latitude,longitude
 5763b,Grange Noire,44.848609,-0.679277
 194b,Seguineau,44.835017,-0.609897
 2489b,Place de l'Europe,44.859196,-0.582459
-5509b,Mouline,44.913253,-0.492791
+5509b,La Mouline,44.913253,-0.492791
 2537b,Clos de Hilde,44.799816,-0.530648
 545b,Puyo,44.89834,-0.746492
 1755b,Andrian,44.912395,-0.625305

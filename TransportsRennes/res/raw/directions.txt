@@ -269,10 +269,10 @@ id,direction
 260,Le Rheu
 261,Laillé
 266,Saint-Grégoire
-267,Bruz
+267,L'Hermitage Saint-Gilles
 264,République
 265,Chevaigné
 270,Saint-Armel Corps-Nuds
 271,Bruz
-268,L'Hermitage Saint-Gilles
+268,Bruz
 269,Chartres
