@@ -6,16 +6,17 @@ ordre,id,nom_court,nom_long
 5,02,02,Lianes 2
 6,03,03,Lianes 3
 7,04,04,Lianes 4
-8,05n,5n,Lianes 5 Nord
-9,05s,5s,Lianes 5 Sud
+8,05n,05n,Lianes 5 Nord
+9,05s,05s,Lianes 5 Sud
 10,06,06,Lianes 6
 11,07,07,Lianes 7
 12,08,08,Lianes 8
 13,09,09,Lianes 9
 14,10,10,Lianes 10
 15,11,11,Lianes 11
-17,15,15,Lianes 15
-18,16,16,Lianes 16
+16,15,15,Lianes 15
+17,16,16,Lianes 16
+18,18,18,Navette Stade Matmut Atlantique
 19,20,20,Ligne 20
 20,21,21,Ligne 21
 21,23,23,Ligne 23
@@ -82,4 +83,3 @@ ordre,id,nom_court,nom_long
 82,95,95,Spécifique 95
 83,96,96,Spécifique 96
 84,69,BAT³,BAT³
-85,18,EURO,Navette Stase Matmut Atlantique
