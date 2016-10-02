@@ -16,7 +16,6 @@ ordre,id,nom_court,nom_long
 15,11,11,Lianes 11
 16,15,15,Lianes 15
 17,16,16,Lianes 16
-18,18,18,Navette Stade Matmut Atlantique
 19,20,20,Ligne 20
 20,21,21,Ligne 21
 21,23,23,Ligne 23

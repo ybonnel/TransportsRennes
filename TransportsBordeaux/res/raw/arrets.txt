@@ -9,7 +9,6 @@ id,nom,latitude,longitude
 820b,Fontaudin,44.850092,-0.494042
 5889b,Eglise de Caudéran,44.852927,-0.614571
 608b,Pelleport,44.820779,-0.565839
-7833b,Claveau,44.878193,-0.543756
 2250b,Fayzeau,44.82537,-0.480651
 535b,Paulin de Nole,44.954842,-0.498353
 2041b,Treytins,44.879754,-0.634022
@@ -24,13 +23,11 @@ id,nom,latitude,longitude
 52b,Roux,44.874558,-0.697723
 2577b,Beutre Antenne Sociale,44.816391,-0.700833
 180b,France-Les Castors,44.794151,-0.670609
-7835b,Berges de la Garonne,44.885579,-0.541637
 1466b,Vallon,44.82119,-0.625154
 5887b,Tassigny,44.856609,-0.61358
 5280b,Cazalet (Bd du Haut Livrac),44.798842,-0.672119
 5888b,Eglise de Caudéran,44.851502,-0.614315
 1465b,St Romain,44.849181,-0.527685
-7834b,Berges de la Garonne,44.885568,-0.54142
 327b,Les Jalles,44.894979,-0.638901
 2042b,Courtefesse,44.949838,-0.511849
 2576b,Allée de Curé,44.911271,-0.685481
@@ -714,8 +711,8 @@ id,nom,latitude,longitude
 5788b,Bosquets,44.853923,-0.65076
 3130b,Eglise St Augustin,44.832453,-0.61086
 1350b,Prieuré de Cayac,44.766786,-0.618356
-5360b,Pythagore,44.831371,-0.680782
 5789b,Bosquets,44.85402,-0.652186
+5360b,Pythagore,44.831371,-0.680782
 1564b,Port Garonne,44.797676,-0.530235
 3289b,Mairie de Bègles,44.808021,-0.542406
 3074b,Place du Mayne,44.873252,-0.682528
@@ -2987,7 +2984,6 @@ id,nom,latitude,longitude
 2019b,Europe,44.924926,-0.496753
 5599b,Collège Chambéry,44.756672,-0.584338
 666b,Auriac,44.814728,-0.553034
-7781b,Stade MATMUT Atlantique,44.894535,-0.565646
 554b,Victor Hugo,44.895859,-0.735078
 4850b,St Vincent de Paul,44.954471,-0.468198
 2494b,Sarcignan,44.778421,-0.572831
@@ -3188,7 +3184,6 @@ id,nom,latitude,longitude
 7549b,Les Naturelles,44.852405,-0.482682
 3271b,Nénuphars,44.853481,-0.482572
 5492b,Calmette,44.892777,-0.513652
-5603b,Claveau,44.878568,-0.543602
 1969b,La Fontaine,44.811516,-0.66416
 3164b,Strélitzias,44.856439,-0.651798
 769b,Deveaux,44.847184,-0.622348
