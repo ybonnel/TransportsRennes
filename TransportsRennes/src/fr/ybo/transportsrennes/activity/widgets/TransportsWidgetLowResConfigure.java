@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.ListActivity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +32,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.ubikod.capptain.android.sdk.activity.CapptainListActivity;
 
 import fr.ybo.transportscommun.AbstractTransportsApplication;
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
@@ -40,7 +40,7 @@ import fr.ybo.transportsrennes.R;
 import fr.ybo.transportsrennes.adapters.widget.FavoriAdapterForWidget1;
 import fr.ybo.transportsrennes.application.TransportsRennesApplication;
 
-public class TransportsWidgetLowResConfigure extends CapptainListActivity {
+public class TransportsWidgetLowResConfigure extends ListActivity {
 
     private int appWidgetId;
     private List<ArretFavori> favoris;

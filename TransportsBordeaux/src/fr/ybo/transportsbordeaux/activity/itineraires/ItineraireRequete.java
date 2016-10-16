@@ -51,8 +51,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.code.geocoder.GeocoderRequestBuilder;
 import com.google.code.geocoder.model.GeocodeResponse;
 import com.google.code.geocoder.model.GeocoderGeometry;
@@ -181,7 +181,7 @@ public class ItineraireRequete extends BaseSimpleActivity implements UpdateLocat
         });
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest.Builder().build());
 
 		new AsyncTask<Void, Void, Void>() {
 

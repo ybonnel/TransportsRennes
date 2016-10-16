@@ -22,8 +22,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.adapters.bus.LigneAdapter;
@@ -63,6 +63,6 @@ public class ListeBus extends BaseListActivity {
         constructionListe();
 
         // Look up the AdView as a resource and load a request.
-        ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+        ((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest.Builder().build());
     }
 }

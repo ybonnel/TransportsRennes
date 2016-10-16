@@ -15,10 +15,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
-          android:versionCode="413"
-          android:versionName="4.1.3">
+          android:versionCode="414"
+          android:versionName="4.1.4">
     
-    <uses-sdk android:minSdkVersion="4"
+    <uses-sdk android:minSdkVersion="9"
               android:targetSdkVersion="18"/>
     
     <uses-permission android:name="android.permission.INTERNET"/>

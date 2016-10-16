@@ -66,7 +66,7 @@
         </TabHost>
     </LinearLayout>
 
-    <com.google.ads.AdView
+    <com.google.android.gms.ads.AdView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/adView"
         android:layout_width="fill_parent"

@@ -18,6 +18,7 @@ package fr.ybo.transportscommun.activity.commun;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.view.ActionProvider;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.SubMenu;
@@ -120,6 +121,36 @@ public class SimpleMenuItem implements MenuItem {
         return null;
     }
 
+    @Override
+    public MenuItem setActionProvider(ActionProvider actionProvider) {
+        return null;
+    }
+
+    @Override
+    public ActionProvider getActionProvider() {
+        return null;
+    }
+
+    @Override
+    public boolean expandActionView() {
+        return false;
+    }
+
+    @Override
+    public boolean collapseActionView() {
+        return false;
+    }
+
+    @Override
+    public boolean isActionViewExpanded() {
+        return false;
+    }
+
+    @Override
+    public MenuItem setOnActionExpandListener(OnActionExpandListener listener) {
+        return null;
+    }
+
     public MenuItem setIntent(Intent intent) {
         // Noop
         return this;
@@ -199,6 +230,11 @@ public class SimpleMenuItem implements MenuItem {
 
     public void setShowAsAction(int i) {
         // Noop
+    }
+
+    @Override
+    public MenuItem setShowAsActionFlags(int actionEnum) {
+        return this;
     }
 
     public MenuItem setActionView(View view) {

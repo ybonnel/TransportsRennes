@@ -17,8 +17,8 @@ import java.util.List;
 
 import android.os.Bundle;
 
-import com.google.ads.AdRequest;
-import com.google.ads.AdView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import fr.ybo.transportsbordeaux.R;
 import fr.ybo.transportsbordeaux.database.modele.Parking;
@@ -65,6 +65,6 @@ public class ListParkings extends AbstractListParkings<Parking> {
 		super.onCreate(savedInstanceState);
 
 		// Look up the AdView as a resource and load a request.
-		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest());
+		((AdView) this.findViewById(R.id.adView)).loadAd(new AdRequest.Builder().build());
 	}
 }
