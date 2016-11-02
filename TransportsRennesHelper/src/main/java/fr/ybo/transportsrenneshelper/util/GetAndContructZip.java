@@ -54,95 +54,16 @@ public class GetAndContructZip {
 	 * Format de la date dans le nom du fichier.
 	 */
 	private static final SimpleDateFormat SDF = new SimpleDateFormat("yyyyMMdd");
-	
-	/**
-	 * Taille du format de la date.
-	 */
-	private static final int TRAILLE_FORMAT_DATE = 8;
 
-	/**
-	 * Nombre de jours de recherche en mode brute-force.
-	 */
-	private static final int NB_JOURS_RECHERCHE = 200;
-
-	/**
-	 * Chemin de fichier GTFS.
-	 */
-	private static final String URL_RELATIVE = "fileadmin/OpenDataFiles/GTFS/GTFS-";
-	/**
-	 * Url du site Keolis.
-	 */
-	private static final String URL_KEOLIS = "http://data.keolis-rennes.com/";
 	/**
 	 * Url de base pour le fichier.
 	 */
-	private static final String BASE_URL = URL_KEOLIS + URL_RELATIVE;
-	/**
-	 * URL de la page des données téléchargeables.
-	 */
-	private static final String URL_DONNEES_TELECHARGEABLES = URL_KEOLIS
-			+ "fr/les-donnees/donnees-telechargeables.html";
+	private static final String BASE_URL = "http://ftp.keolis-rennes.com/opendata/tco-busmetro-horaires-gtfs-versions-td/attachments/GTFS-";
 	/**
 	 * Extension du fichier.
 	 */
 	private static final String EXTENSION_URL = ".zip";
 
-
-	/**
-	 * Récupère la date de dernière mise à jour du fichier Keolis.
-	 * @return la date trouvée.
-	 */
-	private Date getLastUpdate() {
-		try {
-			HttpURLConnection connection = (HttpURLConnection) new URL(URL_DONNEES_TELECHARGEABLES).openConnection();
-			connection.setRequestMethod("GET");
-			connection.setDoOutput(true);
-			connection.connect();
-			BufferedReader bufReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			try {
-				String ligne = bufReader.readLine();
-				String chaineRecherchee = URL_RELATIVE;
-				while (ligne != null) {
-					if (ligne.contains(chaineRecherchee)) {
-						String chaineDate = ligne.substring(
-								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length(),
-								ligne.indexOf(chaineRecherchee) + chaineRecherchee.length() + TRAILLE_FORMAT_DATE);
-						return SDF.parse(chaineDate);
-					}
-					ligne = bufReader.readLine();
-				}
-			} finally {
-				bufReader.close();
-			}
-			return getLastUpdateBruteForce();
-		} catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
-	/**
-	 * Récupère la date de dernière mise à jour Keolis en mode brute-force.
-	 * @return la date trouvée.
-	 */
-	private Date getLastUpdateBruteForce() {
-		GregorianCalendar calendar = new GregorianCalendar();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		int nbJours = 0;
-		while (nbJours < NB_JOURS_RECHERCHE) {
-			try {
-				HttpURLConnection connection = openHttpConnection(calendar.getTime());
-				connection.getInputStream();
-				return calendar.getTime();
-			} catch (IOException ignore) {
-				calendar.add(Calendar.DAY_OF_YEAR, -1);
-				nbJours++;
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * Récupère l'URL du fichier Keolis à partir d'une date donnée.
@@ -200,7 +121,7 @@ public class GetAndContructZip {
 	 */
 	public void getZipKeolis() {
 		try {
-			Date lastUpdate = dateDemandee == null ? getLastUpdate() : SDF.parse(dateDemandee);
+			Date lastUpdate = SDF.parse(dateDemandee);
 			System.out.println("Date du fichier : " + SDF.format(lastUpdate));
 			HttpURLConnection connection = openHttpConnection(lastUpdate);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());

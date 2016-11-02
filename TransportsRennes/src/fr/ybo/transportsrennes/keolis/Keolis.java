@@ -13,37 +13,33 @@
  */
 package fr.ybo.transportsrennes.keolis;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.xml.sax.SAXException;
 
 import fr.ybo.transportscommun.donnees.modele.ArretFavori;
 import fr.ybo.transportscommun.util.ErreurReseau;
 import fr.ybo.transportscommun.util.LogYbo;
-import fr.ybo.transportsrennes.keolis.modele.Answer;
 import fr.ybo.transportsrennes.keolis.modele.ParametreUrl;
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
-import fr.ybo.transportsrennes.keolis.modele.bus.DepartureMetro;
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
-import fr.ybo.transportsrennes.keolis.modele.bus.ResultDeparture;
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetAlertsHandler;
 import fr.ybo.transportsrennes.keolis.xml.sax.GetDeparturesHandler;
@@ -68,42 +64,6 @@ public final class Keolis {
      */
     private static Keolis instance;
 
-    /**
-     * URL d'accés au API Keolis.
-     */
-    private static final String URL = "http://data.keolis-rennes.com/xml/";
-
-    /**
-     * Version.
-     */
-    private static final String VERSION = "2.0";
-
-    /**
-     * Clé de l'application.
-     */
-    private static final String KEY = "G7JE45LI1RK3W1P";
-    /**
-     * Commande pour récupérer les stations.
-     */
-    private static final String COMMANDE_STATIONS = "getbikestations";
-    /**
-     * Commande pour récupérer les alerts.
-     */
-    private static final String COMMANDE_ALERTS = "getlinesalerts";
-    /**
-     * Commande pour récupérer les Park relais.
-     */
-    private static final String COMMANDE_PARK_RELAI = "getrelayparks";
-    /**
-     * Commande pour récupérer les points de vente.
-     */
-    private static final String COMMANDE_POS = "getpos";
-
-	private static final String COMMANDE_DEPARTURE = "getbusnextdepartures";
-
-    private static final String COMMANDE_DEPARTURE_METRO = "getmetronextdepartures";
-
-	private static final String VERSION_DEPARTURE = "2.2";
 
     /**
      * Retourne l'instance du singletton.
@@ -125,42 +85,67 @@ public final class Keolis {
 
     /**
      * @param <ObjetKeolis> type d'objet Keolis.
-     * @param url           url.
      * @param handler       handler.
      * @return liste d'objets Keolis.
      * @throws ErreurReseau    en cas d'erreur réseau.
      * @throws KeolisException en cas d'erreur lors de l'appel aux API Keolis.
      */
     @SuppressWarnings("unchecked")
-    private <ObjetKeolis> List<ObjetKeolis> appelKeolis(String url, KeolisHandler<ObjetKeolis> handler)
+    private <ObjetKeolis> List<ObjetKeolis> appelKeolis(KeolisHandler<ObjetKeolis> handler) throws ErreurReseau {
+        return appelKeolis(handler, null);
+    }
+
+    private <ObjetKeolis> List<ObjetKeolis> appelKeolis(KeolisHandler<ObjetKeolis> handler, String query)
             throws ErreurReseau {
-        LOG_YBO.debug("Appel d'une API Keolis sur l'url '" + url + '\'');
+        LOG_YBO.debug("Appel d'une API Keolis sur le dataset '" + handler.getDatasetid() + '\'');
         long startTime = System.nanoTime() / 1000;
         HttpClient httpClient = HttpUtils.getHttpClient();
-        HttpUriRequest httpPost = new HttpPost(url);
-        Answer<?> answer;
+
+        String urlParams = "";
+        if (query != null) {
+            try {
+                urlParams = "&q=" + URLEncoder.encode(query, "UTF-8");
+            } catch (UnsupportedEncodingException ignore) {
+            }
+        }
+
+        HttpUriRequest httpGet = new HttpGet(
+                "http://data.explore.star.fr/api/v2/catalog/datasets/" +
+                        handler.getDatasetid() +
+                        "/records?rows=-1&pretty=false&timezone=CET&apikey=e519de4f9d490b95947ad21716127633e2b8445dd7cd18644e446958"
+                        + urlParams
+        );
+        List<ObjetKeolis> result = new ArrayList<ObjetKeolis>();
         try {
-            HttpResponse reponse = httpClient.execute(httpPost);
-            ByteArrayOutputStream ostream = new ByteArrayOutputStream();
-            reponse.getEntity().writeTo(ostream);
-            SAXParserFactory factory = SAXParserFactory.newInstance();
-            SAXParser parser = factory.newSAXParser();
-            parser.parse(new ByteArrayInputStream(ostream.toByteArray()), handler);
-            answer = handler.getAnswer();
+            HttpResponse reponse = httpClient.execute(httpGet);
+            InputStream inputStream = reponse.getEntity().getContent();
+            // json is UTF-8 by default
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line).append('\n');
+            }
+            LOG_YBO.warn(sb.toString());
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray records = jsonObject.getJSONArray("records");
+
+            for (int index = 0; index < records.length(); index++) {
+                JSONObject record = records.getJSONObject(index).getJSONObject("record").getJSONObject("fields");
+                result.add(handler.fromJson(record));
+            }
+
         } catch (IOException socketException) {
             throw new ErreurReseau(socketException);
-        } catch (SAXException saxException) {
-            throw new ErreurReseau(saxException);
-        } catch (ParserConfigurationException exception) {
-            throw new KeolisException("Erreur lors de l'appel à l'API keolis", exception);
-        }
-        if (answer == null || answer.getStatus() == null || !"0".equals(answer.getStatus().getCode())) {
-            throw new ErreurReseau();
+        } catch (JSONException jsonException) {
+            throw new ErreurReseau(jsonException);
         }
         long elapsedTime = System.nanoTime() / 1000 - startTime;
         LOG_YBO.debug("Réponse de Keolis en " + elapsedTime + "µs");
-        return (List<ObjetKeolis>) answer.getData();
+        return result;
     }
+
 
     /**
      * Appel les API Keolis pour récupérer les alertes.
@@ -169,18 +154,17 @@ public final class Keolis {
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
     public Iterable<Alert> getAlerts() throws ErreurReseau {
-        return appelKeolis(getUrl(COMMANDE_ALERTS), new GetAlertsHandler());
+        return appelKeolis(new GetAlertsHandler());
     }
 
     /**
      * Appel aux API Keolis pour récupérer les stations.
      *
-     * @param url url à appeler.
      * @return la liste des stations.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    private List<Station> getStation(String url) throws ErreurReseau {
-        return appelKeolis(url, new GetStationHandler());
+    public List<Station> getStations() throws ErreurReseau {
+        return appelKeolis(new GetStationHandler());
     }
 
     /**
@@ -190,9 +174,8 @@ public final class Keolis {
      * @return la station.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    private Station getStationByNumber(String number) throws ErreurReseau {
-        ParametreUrl[] params = {new ParametreUrl("station", "number"), new ParametreUrl("value", number)};
-        List<Station> stations = getStation(getUrl(COMMANDE_STATIONS, params));
+    private Station getStationByNumber(int number) throws ErreurReseau {
+        List<Station> stations = appelKeolis(new GetStationHandler(), "idstation:" + number);
         if (stations.isEmpty()) {
             return null;
         }
@@ -207,30 +190,14 @@ public final class Keolis {
      * @return la station.
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
-    public Collection<Station> getStationByNumbers(Collection<String> numbers) throws ErreurReseau {
-        Collection<Station> stations = new ArrayList<Station>(5);
-        if (numbers.size() <= 2) {
-            for (String number : numbers) {
-                stations.add(getStationByNumber(number));
-            }
-        } else {
-            for (Station station : getStations()) {
-                if (numbers.contains(station.number)) {
-                    stations.add(station);
-                }
+    public Collection<Station> getStationByNumbers(Collection<Integer> numbers) throws ErreurReseau {
+        List<Station> stations = new ArrayList<Station>();
+        for (Station station : getStations()) {
+            if (numbers.contains(station.number)) {
+                stations.add(station);
             }
         }
         return stations;
-    }
-
-    /**
-     * Appel aux API Keolis pour récupérer les stations.
-     *
-     * @return la listes des stations.
-     * @throws ErreurReseau pour toutes erreurs réseaux.
-     */
-    public List<Station> getStations() throws ErreurReseau {
-        return getStation(getUrl(COMMANDE_STATIONS));
     }
 
     /**
@@ -238,7 +205,7 @@ public final class Keolis {
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
     public List<ParkRelai> getParkRelais() throws ErreurReseau {
-        return appelKeolis(getUrl(COMMANDE_PARK_RELAI), new GetParkRelaiHandler());
+        return appelKeolis(new GetParkRelaiHandler());
     }
 
     /**
@@ -246,113 +213,20 @@ public final class Keolis {
      * @throws ErreurReseau pour toutes erreurs réseaux.
      */
     public List<PointDeVente> getPointDeVente() throws ErreurReseau {
-        return appelKeolis(getUrl(COMMANDE_POS), new GetPointDeVenteHandler());
+        return appelKeolis(new GetPointDeVenteHandler());
     }
 
-	public ResultDeparture getDepartues(ArretFavori favori) throws ErreurReseau {
+    public List<Departure> getDepartues(ArretFavori favori) throws ErreurReseau {
         if (favori.nomCourt.equals("a")) {
             return getDeparturesForMetro(favori);
         }
-		ParametreUrl[] params =
-				{ new ParametreUrl("mode", "stopline"), new ParametreUrl("route][", favori.ligneId),
-						new ParametreUrl("direction][", Integer.toString(favori.macroDirection)),
-						new ParametreUrl("stop][", favori.arretId) };
-
-		GetDeparturesHandler handler = new GetDeparturesHandler();
-		List<Departure> departures = appelKeolis(getUrl(COMMANDE_DEPARTURE, params, VERSION_DEPARTURE), handler);
-		return new ResultDeparture(departures, handler.getDateApi());
-	}
-
-    public ResultDeparture getDeparturesForMetro(ArretFavori favori) throws ErreurReseau {
-        String arretId  = favori.arretId.substring(0, favori.arretId.length() - 1);
-        ParametreUrl[] params =
-                { new ParametreUrl("mode", "station"), new ParametreUrl("station", arretId) };
-
-        GetDeparturesMetroHandler handler = new GetDeparturesMetroHandler(favori.macroDirection + 1);
-        List<DepartureMetro> departuresMetro = appelKeolis(getUrl(COMMANDE_DEPARTURE_METRO, params, VERSION_DEPARTURE), handler);
-
-        List<Departure> departures = new ArrayList<Departure>();
-
-        if (!departuresMetro.isEmpty()) {
-            DepartureMetro departureMetro = departuresMetro.get(0);
-            if (departureMetro.getTime1() != null) {
-                Departure departure = new Departure();
-                departure.setAccurate(true);
-                departure.setHeadSign(favori.direction);
-                departure.setTime(departureMetro.getTime1());
-                departures.add(departure);
-            }
-            if (departureMetro.getTime2() != null) {
-                Departure departure = new Departure();
-                departure.setAccurate(true);
-                departure.setHeadSign(favori.direction);
-                departure.setTime(departureMetro.getTime2());
-                departures.add(departure);
-            }
-        }
-        return new ResultDeparture(departures, Calendar.getInstance());
+        return appelKeolis(new GetDeparturesHandler(),
+                "idarret:" + favori.arretId + " AND idligne:" + favori.ligneId + " AND sens:" + favori.macroDirection);
     }
 
-    /**
-     * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-     * commande à exécuter.
-     *
-     * @param commande commande à exécuter.
-     * @return l'url.
-     */
-    private String getUrl(String commande) {
-		return getUrl(commande, VERSION);
-	}
-
-	/**
-	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-	 * commande à exécuter.
-	 * 
-	 * @param commande
-	 *            commande à exécuter.
-	 * @return l'url.
-	 */
-	private String getUrl(String commande, String version) {
-        StringBuilder stringBuilder = new StringBuilder(URL);
-		stringBuilder.append("?version=").append(version);
-        stringBuilder.append("&key=").append(KEY);
-        stringBuilder.append("&cmd=").append(commande);
-        return stringBuilder.toString();
+    public List<Departure> getDeparturesForMetro(ArretFavori favori) throws ErreurReseau {
+        return appelKeolis(new GetDeparturesMetroHandler(), "idarret:" + favori.arretId + " AND sens:" + favori.macroDirection);
     }
 
-    /**
-     * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-     * commande à exécuter et d'un paramètre.
-     *
-     * @param commande commande à exécuter.
-     * @param params   liste de paramètres de l'url.
-     * @return l'url.
-     */
-    private String getUrl(String commande, ParametreUrl[] params) {
-		return getUrl(commande, params, VERSION);
-	}
-
-	/**
-	 * Permet de récupérer l'URL d'accés aux API Keolis en fonction de la
-	 * commande à exécuter et d'un paramètre.
-	 * 
-	 * @param commande
-	 *            commande à exécuter.
-	 * @param params
-	 *            liste de paramètres de l'url.
-	 * @return l'url.
-	 */
-	private String getUrl(String commande, ParametreUrl[] params, String version) {
-		StringBuilder stringBuilder = new StringBuilder(getUrl(commande, version));
-        for (ParametreUrl param : params) {
-
-            try {
-                stringBuilder.append("&param[").append(param.getName()).append("]=").append(URLEncoder.encode(param.getValue(), "utf-8"));
-            } catch (UnsupportedEncodingException e) {
-                throw new KeolisException("Erreur lors de la construction de l'URL", e);
-            }
-        }
-        return stringBuilder.toString();
-    }
 
 }

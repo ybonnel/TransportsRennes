@@ -16,6 +16,9 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
 
 /**
@@ -25,65 +28,22 @@ import fr.ybo.transportsrennes.keolis.modele.bus.ParkRelai;
  */
 public class GetParkRelaiHandler extends KeolisHandler<ParkRelai> {
 
-	/**
-	 * RELAY_PARK.
-	 */
-	private static final String RELAY_PARK = "relaypark";
-	/**
-	 * NAME.
-	 */
-	private static final String NAME = "name";
-	/**
-	 * LATITUDE.
-	 */
-	private static final String LATITUDE = "latitude";
-	/**
-	 * LONGITUDE.
-	 */
-	private static final String LONGITUDE = "longitude";
-	/**
-	 * CAR_PARK_AVAILABLE.
-	 */
-	private static final String CAR_PARK_AVAILABLE = "carparkavailable";
-	/**
-	 * CAR_PARK_CAPACITY.
-	 */
-	private static final String CAR_PARK_CAPACITY = "carparkcapacity";
-	/**
-	 * LAST_UPDATE.
-	 */
-	private static final String LAST_UPDATE = "lastupdate";
-	/**
-	 * STATE.
-	 */
-	private static final String STATE = "state";
-
 	@Override
-	protected String getBaliseData() {
-		return RELAY_PARK;
+	public String getDatasetid() {
+		return "tco-parcsrelais-etat-tr";
 	}
 
 	@Override
-	protected ParkRelai getNewObjetKeolis() {
-		return new ParkRelai();
-	}
-
-	@Override
-	protected void remplirObjectKeolis(ParkRelai currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenuOfBalise;
-		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
-		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
-		} else if (baliseName.equals(CAR_PARK_AVAILABLE)) {
-			currentObjectKeolis.carParkAvailable = Integer.parseInt(contenuOfBalise);
-		} else if (baliseName.equals(CAR_PARK_CAPACITY)) {
-			currentObjectKeolis.carParkCapacity = Integer.parseInt(contenuOfBalise);
-		} else if (baliseName.equals(LAST_UPDATE)) {
-			currentObjectKeolis.lastupdate = contenuOfBalise;
-		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.state = Integer.parseInt(contenuOfBalise);
-		}
+	public ParkRelai fromJson(JSONObject json) throws JSONException {
+		ParkRelai parkRelai = new ParkRelai();
+		parkRelai.isOpen = json.getJSONArray("etat").length() >= 1
+				&& json.getJSONArray("etat").getString(0).equals("Ouvert");
+		parkRelai.name = json.getString("nom");
+		parkRelai.carParkAvailable = json.getInt("nombreplacesdisponibles");
+		parkRelai.carParkCapacity = json.getInt("capaciteactuelle");
+		parkRelai.lastupdate = json.getString("lastupdate");
+		parkRelai.latitude = json.getJSONObject("coordonnees").getDouble("lat");
+		parkRelai.longitude = json.getJSONObject("coordonnees").getDouble("lon");
+		return parkRelai;
 	}
 }

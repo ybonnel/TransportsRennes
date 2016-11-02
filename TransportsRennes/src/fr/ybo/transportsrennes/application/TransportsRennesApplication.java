@@ -143,7 +143,7 @@ public class TransportsRennesApplication extends AbstractTransportsApplication {
 						alertBdd.setDate(dateCourante);
 						Set<String> lignes = new HashSet<String>();
 						for (Alert alert : Keolis.getInstance().getAlerts()) {
-							lignes.addAll(alert.lines);
+							lignes.add(alert.line);
 						}
 						StringBuilder stringBuilder = new StringBuilder();
 						for (String ligne : lignes) {

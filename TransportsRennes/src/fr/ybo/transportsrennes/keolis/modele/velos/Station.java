@@ -28,15 +28,11 @@ public class Station extends ObjetWithDistance implements Serializable, IStation
     /**
      * Numéro de la station.
      */
-    public String number;
+    public int number;
     /**
      * Nom de la station.
      */
     public String name;
-    /**
-     * adresse de la station.
-     */
-    public String adresse;
 
     /**
      * Etat de la station.
@@ -60,14 +56,6 @@ public class Station extends ObjetWithDistance implements Serializable, IStation
      * Vélos libres.
      */
     public int bikesavailable;
-    /**
-     * Position.
-     */
-    public boolean pos;
-    /**
-     * Nom du district.
-     */
-    public String district;
     /**
      * Date de dernière mise à jour.
      */

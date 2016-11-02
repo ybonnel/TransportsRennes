@@ -92,11 +92,7 @@ public class VeloAdapter extends ArrayAdapter<Station> {
         holder.dispoVeloText.setText(station.bikesavailable + " / " + placesTotales);
         holder.dispoVeloStation.setText(Formatteur.formatterChaine(station.name));
         holder.dispoVeloDistance.setText(station.formatDistance());
-        if (station.pos) {
-            holder.iconeCb.setVisibility(View.VISIBLE);
-        } else {
-            holder.iconeCb.setVisibility(View.INVISIBLE);
-        }
+        holder.iconeCb.setVisibility(View.INVISIBLE);
         return convertView1;
     }
 }

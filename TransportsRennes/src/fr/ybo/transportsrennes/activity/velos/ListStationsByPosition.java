@@ -223,7 +223,7 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
 			Station station = (Station) getListAdapter().getItem(info.position);
 			VeloFavori veloFavori = new VeloFavori();
-			veloFavori.number = station.number;
+			veloFavori.number = Integer.toString(station.number);
 			veloFavori = TransportsRennesApplication.getDataBaseHelper().selectSingle(veloFavori);
 			menu.setHeaderTitle(Formatteur.formatterChaine(station.name));
 			menu.add(Menu.NONE, veloFavori == null ? R.id.ajoutFavori : R.id.supprimerFavori, 0,
@@ -240,13 +240,13 @@ public class ListStationsByPosition extends BaseListActivity implements UpdateLo
 			case R.id.ajoutFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
-				veloFavori.number = station.number;
+				veloFavori.number = Integer.toString(station.number);
 				TransportsRennesApplication.getDataBaseHelper().insert(veloFavori);
 				return true;
 			case R.id.supprimerFavori:
 				station = (Station) getListAdapter().getItem(info.position);
 				veloFavori = new VeloFavori();
-				veloFavori.number = station.number;
+				veloFavori.number = Integer.toString(station.number);
 				TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
 				return true;
 			default:

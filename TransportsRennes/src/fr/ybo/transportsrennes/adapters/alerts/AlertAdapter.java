@@ -61,9 +61,7 @@ public class AlertAdapter extends ArrayAdapter<Alert> {
         }
 
         holder.titreAlerte.setText(alert.getTitleFormate());
-        if (!alert.lines.isEmpty()) {
-            holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
-        }
+        holder.iconeLigne.setImageResource(IconeLigne.getIconeResource(alert.line));
         return convertView1;
     }
 }

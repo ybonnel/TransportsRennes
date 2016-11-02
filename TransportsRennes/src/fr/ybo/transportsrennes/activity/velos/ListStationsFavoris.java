@@ -86,9 +86,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
             protected void myDoBackground() throws ErreurReseau {
                 List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
                         .select(new VeloFavori());
-                Collection<String> numbers = new ArrayList<String>(10);
+                Collection<Integer> numbers = new ArrayList<Integer>(10);
                 for (VeloFavori favori : velosFavoris) {
-                    numbers.add(favori.number);
+                    numbers.add(Integer.parseInt(favori.number));
                 }
                 Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
 				if (isCancelled()) {
@@ -122,9 +122,9 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
 			protected void myDoBackground() throws ErreurReseau {
 				List<VeloFavori> velosFavoris = TransportsRennesApplication.getDataBaseHelper()
 						.select(new VeloFavori());
-				Collection<String> numbers = new ArrayList<String>(10);
+				Collection<Integer> numbers = new ArrayList<Integer>(10);
 				for (VeloFavori favori : velosFavoris) {
-					numbers.add(favori.number);
+					numbers.add(Integer.parseInt(favori.number));
 				}
 				Collection<Station> stationsTmp = keolis.getStationByNumbers(numbers);
 				if (isCancelled()) {
@@ -171,7 +171,7 @@ public class ListStationsFavoris extends BaseListActivity implements Refreshable
             case R.id.supprimerFavori:
                 station = (Station) getListAdapter().getItem(info.position);
                 veloFavori = new VeloFavori();
-                veloFavori.number = station.number;
+                veloFavori.number = Integer.toString(station.number);
                 TransportsRennesApplication.getDataBaseHelper().delete(veloFavori);
                 ((VeloAdapter) getListAdapter()).getStations().remove(station);
                 ((BaseAdapter) getListAdapter()).notifyDataSetChanged();

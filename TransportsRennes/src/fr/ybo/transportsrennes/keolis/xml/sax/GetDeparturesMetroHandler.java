@@ -16,59 +16,35 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
-import java.text.DateFormat;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
-import fr.ybo.transportsrennes.keolis.KeolisException;
+import fr.ybo.transportsrennes.keolis.modele.bus.Departure;
 import fr.ybo.transportsrennes.keolis.modele.bus.DepartureMetro;
 
-public class GetDeparturesMetroHandler extends KeolisHandler<DepartureMetro> {
+public class GetDeparturesMetroHandler extends KeolisHandler<Departure> {
 
-	private static final String STATION = "station";
-
-    private static final String NEXT_TRAIN_1 = "nextTrain1Platform";
-
-    private static final String NEXT_TRAIN_2 = "nextTrain2Platform";
-
-	private static final DateFormat dfm = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz");
-
-    private int plateform;
-
-    public GetDeparturesMetroHandler(int plateform) {
-        this.plateform = plateform;
+    @Override
+    public String getDatasetid() {
+        return "tco-metro-circulation-passages-tr";
     }
 
-	@Override
-	protected String getBaliseData() {
-		return STATION;
-	}
-
-	@Override
-	protected DepartureMetro getNewObjetKeolis() {
-		return new DepartureMetro();
-	}
-
-
-	@Override
-	protected void remplirObjectKeolis(DepartureMetro currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(NEXT_TRAIN_1 + plateform)) {
-			Calendar calendar = Calendar.getInstance();
-			try {
-				calendar.setTime(dfm.parse(contenuOfBalise));
-				currentObjectKeolis.setTime1(calendar);
-			} catch (ParseException e) {
-				//throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
-			}
-		} else if (baliseName.equals(NEXT_TRAIN_2 + plateform)) {
-            Calendar calendar = Calendar.getInstance();
-            try {
-                calendar.setTime(dfm.parse(contenuOfBalise));
-                currentObjectKeolis.setTime2(calendar);
-            } catch (ParseException e) {
-                //throw new KeolisException("Erreur lors du parse de " + contenuOfBalise, e);
-            }
+    @Override
+    public Departure fromJson(JSONObject json) throws JSONException {
+        Departure departure = new Departure();
+        departure.setAccurate(json.getJSONArray("precision").getString(0).equals("Temps réel"));
+        departure.setHeadSign(json.getString("destination"));
+        try {
+            departure.setTime(toCalendar(json.getString("depart")));
+        } catch (ParseException e) {
+            throw new JSONException(e.getMessage());
         }
-	}
+        return departure;
+    }
 }

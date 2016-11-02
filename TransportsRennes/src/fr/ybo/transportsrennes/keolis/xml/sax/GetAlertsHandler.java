@@ -16,6 +16,9 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
 
 /**
@@ -25,65 +28,21 @@ import fr.ybo.transportsrennes.keolis.modele.bus.Alert;
  */
 public class GetAlertsHandler extends KeolisHandler<Alert> {
 
-	/**
-	 * TITLE.
-	 */
-	private static final String TITLE = "title";
-	/**
-	 * STARTTIME.
-	 */
-	private static final String STARTTIME = "starttime";
-	/**
-	 * ENDTIME.
-	 */
-	private static final String ENDTIME = "endtime";
-	/**
-	 * LINE.
-	 */
-	private static final String LINE = "line";
-	/**
-	 * MAJORDISTURBANCE.
-	 */
-	private static final String MAJORDISTURBANCE = "majordisturbance";
-	/**
-	 * DETAIL.
-	 */
-	private static final String DETAIL = "detail";
-	/**
-	 * LINK.
-	 */
-	private static final String LINK = "link";
-	/**
-	 * ALERT.
-	 */
-	private static final String ALERT = "alert";
 
 	@Override
-	protected String getBaliseData() {
-		return ALERT;
+	public String getDatasetid() {
+		return "tco-busmetro-trafic-alertes-tr";
 	}
 
 	@Override
-	protected Alert getNewObjetKeolis() {
-		return new Alert();
-	}
-
-	@Override
-	protected void remplirObjectKeolis(Alert currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(TITLE)) {
-			currentObjectKeolis.title = contenuOfBalise;
-		} else if (baliseName.equals(STARTTIME)) {
-			currentObjectKeolis.starttime = contenuOfBalise;
-		} else if (baliseName.equals(ENDTIME)) {
-			currentObjectKeolis.endtime = contenuOfBalise;
-		} else if (baliseName.equals(LINE)) {
-			currentObjectKeolis.lines.add(contenuOfBalise);
-		} else if (baliseName.equals(MAJORDISTURBANCE)) {
-			currentObjectKeolis.majordisturbance = Boolean.parseBoolean(contenuOfBalise);
-		} else if (baliseName.equals(DETAIL)) {
-			currentObjectKeolis.detail = contenuOfBalise;
-		} else if (baliseName.equals(LINK)) {
-			currentObjectKeolis.link = contenuOfBalise;
-		}
+	public Alert fromJson(JSONObject json) throws JSONException {
+		Alert alert = new Alert();
+		alert.detail = json.getString("description");
+		alert.starttime = json.getString("debutvalidite");
+		alert.line = json.getString("nomcourtligne");
+		alert.endtime = json.getString("finvalidite");
+		alert.title = json.getString("titre");
+		alert.link = json.getString("url");
+		return alert;
 	}
 }

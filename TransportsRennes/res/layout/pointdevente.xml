@@ -29,7 +29,7 @@
               android:gravity="center_vertical|left"
               android:marqueeRepeatLimit="marquee_forever"/>
 
-    <TextView android:id="@+id/pointdevente_telephone"
+    <TextView android:id="@+id/pointdevente_adresse"
               android:paddingLeft="5dip"
               android:paddingBottom="8dip"
               android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
               android:layout_height="38dip"
               android:textSize="18dip"
               android:gravity="center_vertical|right"
-              android:layout_toRightOf="@id/pointdevente_telephone"
+              android:layout_toRightOf="@id/pointdevente_adresse"
               android:layout_below="@id/pointdevente_nom"
               android:layout_alignParentRight="true"/>
 </RelativeLayout>

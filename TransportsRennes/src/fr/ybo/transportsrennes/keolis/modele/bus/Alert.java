@@ -37,15 +37,6 @@ public class Alert implements Serializable {
     public Alert() {
     }
 
-    public Alert(Alert alert) {
-        title = alert.title;
-        starttime = alert.starttime;
-        endtime = alert.endtime;
-        majordisturbance = alert.majordisturbance;
-        detail = alert.detail;
-        link = alert.link;
-    }
-
     /**
      * title.
      */
@@ -61,12 +52,7 @@ public class Alert implements Serializable {
     /**
      * lines.
      */
-    public final List<String> lines = new ArrayList<String>(4);
-
-    /**
-     * majordisturbance.
-     */
-    public boolean majordisturbance;
+    public String line;
 
     /**
      * detail.

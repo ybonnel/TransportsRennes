@@ -48,10 +48,8 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
      * lastupdate.
      */
     public String lastupdate;
-    /**
-     * state.
-     */
-    public Integer state;
+
+    public boolean isOpen;
 
     /**
      * @return the latitude
@@ -86,6 +84,6 @@ public class ParkRelai extends ObjetWithDistance implements Serializable, IParki
 
 	@Override
 	public int getState() {
-		return state;
+		return isOpen ? 0 : 1;
 	}
 }

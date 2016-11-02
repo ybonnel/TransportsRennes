@@ -67,19 +67,8 @@ public class ListAlerts extends ListFragment {
 			protected Void doInBackground(Void... params) {
 				try {
 					for (Alert alerte : keolis.getAlerts()) {
-						while (alerte.lines.size() > 1) {
-							Alert newAlerte = new Alert(alerte);
-							newAlerte.lines.add(alerte.lines.remove(0));
-							if (ligne != null) {
-								if (ligne.nomCourt.equals(newAlerte.lines.get(0))) {
-									alertsTmp.add(newAlerte);
-								}
-							} else {
-								alertsTmp.add(newAlerte);
-							}
-						}
 						if (ligne != null) {
-							if (ligne.nomCourt.equals(alerte.lines.get(0))) {
+							if (ligne.nomCourt.equals(alerte.line)) {
 								alertsTmp.add(alerte);
 							}
 						} else {

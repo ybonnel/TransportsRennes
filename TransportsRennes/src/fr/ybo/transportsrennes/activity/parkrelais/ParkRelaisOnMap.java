@@ -88,8 +88,8 @@ public class ParkRelaisOnMap extends BaseMapActivity {
                 maxLongitude = longitude;
             }
             String description = parkRelai.carParkAvailable + " / " + parkRelai.carParkCapacity;
-            if (parkRelai.state != 0) {
-                description = MAP_STATES.get(parkRelai.state);
+            if (parkRelai.getState() != 0) {
+                description = MAP_STATES.get(parkRelai.getState());
             }
             OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(parkRelai.name), description);
             itemizedoverlay.addOverlay(overlayitem, parkRelai);

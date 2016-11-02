@@ -16,7 +16,9 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
-import fr.ybo.transportscommun.util.LogYbo;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.ybo.transportsrennes.keolis.modele.velos.Station;
 
 /**
@@ -26,89 +28,23 @@ import fr.ybo.transportsrennes.keolis.modele.velos.Station;
  */
 public class GetStationHandler extends KeolisHandler<Station> {
 
-	/**
-	 * Nom de la balise station.
-	 */
-	private static final String STATION = "station";
-	/**
-	 * Nom de la balise number.
-	 */
-	private static final String NUMBER = "number";
-	/**
-	 * Nom de la balise name.
-	 */
-	private static final String NAME = "name";
-	/**
-	 * Nom de la balise address.
-	 */
-	private static final String ADRESSE = "address";
-	/**
-	 * Nom de la balise state.
-	 */
-	private static final String STATE = "state";
-	/**
-	 * Nom de la balise latitude.
-	 */
-	private static final String LATITUDE = "latitude";
-	/**
-	 * Nom de la balise longitude.
-	 */
-	private static final String LONGITUDE = "longitude";
-	/**
-	 * Nom de la balise slotsavailable.
-	 */
-	private static final String SLOTSAVAILABLE = "slotsavailable";
-	/**
-	 * Nom de la balise bikesavailable.
-	 */
-	private static final String BIKESAVAILABLE = "bikesavailable";
-	/**
-	 * Nom de la balise pos.
-	 */
-	private static final String POS = "pos";
-	/**
-	 * Nom de la balise district.
-	 */
-	private static final String DISTRICT = "district";
-	/**
-	 * Nom de la balise lastupdate.
-	 */
-	private static final String LASTUPDATE = "lastupdate";
-
 	@Override
-	protected String getBaliseData() {
-		return STATION;
+	public String getDatasetid() {
+		return "vls-stations-etat-tr";
 	}
 
 	@Override
-	protected Station getNewObjetKeolis() {
-		return new Station();
-	}
-
-	@Override
-	protected void remplirObjectKeolis(Station currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(NUMBER)) {
-			currentObjectKeolis.number = contenuOfBalise;
-		} else if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenuOfBalise;
-		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenuOfBalise;
-		} else if (baliseName.equals(STATE)) {
-			currentObjectKeolis.state = "1".equals(contenuOfBalise);
-		} else if (baliseName.equals(LATITUDE)) {
-            currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise.replace(',', '.'));
-		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise.replace(',', '.'));
-		} else if (baliseName.equals(SLOTSAVAILABLE)) {
-			currentObjectKeolis.slotsavailable = Integer.parseInt(contenuOfBalise);
-		} else if (baliseName.equals(BIKESAVAILABLE)) {
-			currentObjectKeolis.bikesavailable = Integer.parseInt(contenuOfBalise);
-		} else if (baliseName.equals(POS)) {
-			currentObjectKeolis.pos = "1".equals(contenuOfBalise);
-		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenuOfBalise;
-		} else if (baliseName.equals(LASTUPDATE)) {
-			currentObjectKeolis.lastupdate = contenuOfBalise;
-		}
+	public Station fromJson(JSONObject json) throws JSONException {
+		Station station = new Station();
+		station.state = json.getJSONArray("etat").length() >= 1
+				&& json.getJSONArray("etat").getString(0).equals("En fonctionnement");
+		station.name = json.getString("nom");
+		station.bikesavailable = json.getInt("nombrevelosdisponibles");
+		station.slotsavailable = json.getInt("nombreemplacementsdisponibles");
+		station.lastupdate = json.getString("lastupdate");
+		station.latitude = json.getJSONObject("coordonnees").getDouble("lat");
+		station.longitude = json.getJSONObject("coordonnees").getDouble("lon");
+		station.number = json.getInt("idstation");
+		return station;
 	}
 }

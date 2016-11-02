@@ -80,7 +80,7 @@ public class PointsDeVentesOnMap extends BaseMapActivity {
                     maxLongitude = longitude;
                 }
             }
-            OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(pointDeVente.name), pointDeVente.telephone);
+            OverlayItem overlayitem = new OverlayItem(geoPoint, Formatteur.formatterChaine(pointDeVente.name), pointDeVente.adresse);
             itemizedoverlay.addOverlay(overlayitem, pointDeVente);
         }
         mapOverlays.add(itemizedoverlay);

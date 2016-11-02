@@ -43,7 +43,7 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
 
     private static class ViewHolder {
         TextView nom;
-        TextView telephone;
+        TextView adresse;
         TextView distance;
     }
 
@@ -55,7 +55,7 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
             convertView1 = inflater.inflate(R.layout.pointdevente, null);
             holder = new PointDeVenteAdapter.ViewHolder();
             holder.nom = (TextView) convertView1.findViewById(R.id.pointdevente_nom);
-            holder.telephone = (TextView) convertView1.findViewById(R.id.pointdevente_telephone);
+            holder.adresse = (TextView) convertView1.findViewById(R.id.pointdevente_adresse);
             holder.distance = (TextView) convertView1.findViewById(R.id.pointdevente_distance);
             convertView1.setTag(holder);
         } else {
@@ -64,16 +64,7 @@ public class PointDeVenteAdapter extends ArrayAdapter<PointDeVente> {
         PointDeVente pointDeVente = pointsDeVente.get(position);
 
         holder.nom.setText(pointDeVente.name);
-        holder.telephone.setText(pointDeVente.telephone);
-        final String tel = pointDeVente.telephone;
-
-        holder.telephone.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Uri uri = Uri.parse("tel:" + tel);
-                getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            }
-        });
+        holder.adresse.setText(pointDeVente.adresse);
         holder.distance.setText(pointDeVente.formatDistance());
         return convertView1;
     }

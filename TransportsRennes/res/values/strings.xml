@@ -22,6 +22,7 @@
     <string name="widgetlowres_name">Transports Rennes 2x2 LowRes</string>
     <!-- Messages -->
     <string name="titleTransportsRennes">Bienvenue dans l\'application Transports Rennes %1$s</string>
+    <string name="titleConcours">Concours, un abonnement à gagner!</string>
     <string name="majDispo">Une mise à jour des données du STAR est disponible, voulez-vous l\'effectuer maintenant?
         Attention, vous devrez charger à
         nouveau les horaires que vous avez déjà chargés.
@@ -32,6 +33,13 @@
     <string name="dialogRequeteTwitter">Interrogation de Twitter.</string>
     <string name="dialogRequeteParkRelais">Interrogation du STAR.</string>
     <string name="dialogRequetePointsDeVente">Interrogation du STAR.</string>
+    <string name="dialogConcours">En tant que développeur de l\'application labellisée "Transports Rennes", j\'ai le droit à un abonnement gratuit au STAR.&lt;br/&gt;
+        N\'habitant plus à Rennes, j\'ai décidé de vous le faire gagner.&lt;br/&gt;
+        Le concours se terminera le 30 novembre, et j\'effectuerai le tirage au sort début décembre.&lt;br/&gt;
+        J\'enverrai un email au gagnant, les autres emails ne seront pas utilisés ni communiqués à qui que ce soit.&lt;br/&gt;
+        Les emails seront bien évidement dédoublonner avant le tirage au sort.&lt;br/&gt;
+        Ce message peut être afficher à tout moment via le menu de l\'application.
+    </string>
     <string name="dialogAPropos">Transports Rennes est une application
         &lt;a href="http://data.keolis-rennes.com/fr/le-projet/labellisation.html"&gt;approuvée STAR&lt;/a&gt;,
         label qui garantit à l\'utilisateur la qualité et l\'exactitude de l\'information qu\'elle véhicule,
@@ -85,6 +93,7 @@
     <string name="menu_selectDay">Choisir une date</string>
     <string name="menu_refresh">Rafraîchir</string>
     <string name="menu_apropos">A propos</string>
+    <string name="menu_concours">Concours</string>
     <string name="menu_carte">Carte</string>
     <string name="menu_loadLines">Charger toutes les lignes</string>
     <string name="btn_itineraires">Calcul d\'itinéraires</string>
@@ -94,6 +103,8 @@
     <!-- Génériques -->
     <string name="Terminer">Terminer</string>
     <string name="oui">Oui</string>
+    <string name="participer">Participer</string>
+    <string name="pas_participer">Ne pas participer</string>
     <string name="non">Non</string>
     <string name="prochain">Prochain :</string>
     <string name="erreur_widgetBeforeLaunch">Vous n\'avez pas encore lancé l\'application, veuillez la lancer avant

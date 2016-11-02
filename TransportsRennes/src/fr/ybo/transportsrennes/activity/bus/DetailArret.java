@@ -59,13 +59,13 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 
 	private List<Departure> departures = new ArrayList<Departure>();
 
-	private class GetDeparture extends AsyncTask<Void, Void, ResultDeparture> {
+	private class GetDeparture extends AsyncTask<Void, Void, List<Departure>> {
 		protected void onPreExecute() {
 			infoBar.setVisibility(View.VISIBLE);
 		};
 
 		@Override
-		protected ResultDeparture doInBackground(Void... params) {
+		protected List<Departure> doInBackground(Void... params) {
 			try {
 				return Keolis.getInstance().getDepartues(favori);
 			} catch (ErreurReseau e) {
@@ -74,14 +74,14 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 			}
 		}
 
-		protected void onPostExecute(ResultDeparture result) {
+		protected void onPostExecute(List<Departure> result) {
 			if (result == null) {
 				Toast.makeText(getApplicationContext(), R.string.erreurReseau, Toast.LENGTH_LONG).show();
 			} else {
 				Set<Integer> secondsToUpdateTmp = new HashSet<Integer>();
 				synchronized (departures) {
 					departures.clear();
-					for (Departure departure : result.getDepartures()) {
+					for (Departure departure : result) {
 						LOG.debug(departure.toString());
 						departures.add(departure);
 						secondsToUpdateTmp.add(departure.getTime().get(Calendar.SECOND));
@@ -93,15 +93,6 @@ public class DetailArret extends AbstractDetailArret implements Refreshable {
 					secondsToUpdate.addAll(secondsToUpdateTmp);
 				}
 				updateTime.update(Calendar.getInstance());
-				long apiTime = result.getApiTime().getTimeInMillis();
-				long currentTime = Calendar.getInstance().getTimeInMillis();
-				long diffMs = Math.abs(apiTime - currentTime);
-				long diffSeconds = diffMs / 1000;
-				if (diffSeconds > 30) {
-					Toast.makeText(getApplicationContext(),
-							getResources().getString(R.string.diffSecondsToHigh, diffSeconds), Toast.LENGTH_LONG)
-							.show();
-				}
 			}
 			infoBar.setVisibility(View.INVISIBLE);
 		}

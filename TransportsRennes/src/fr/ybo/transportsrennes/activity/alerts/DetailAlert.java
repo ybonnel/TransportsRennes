@@ -43,21 +43,17 @@ public class DetailAlert extends BaseSimpleActivity {
         Alert alert = (Alert) getIntent().getExtras().getSerializable("alert");
 
         ((TextView) findViewById(R.id.titreAlert)).setText(alert.getTitleFormate());
-        if (!alert.lines.isEmpty()) {
-            ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.lines.iterator().next()));
-        }
+        ((ImageView) findViewById(R.id.iconeLigne)).setImageResource(IconeLigne.getIconeResource(alert.line));
         Collection<String> arretsToBold = new HashSet<String>(20);
-        for (String line : alert.lines) {
-            StringBuilder requete = new StringBuilder();
-            requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
-            requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
-            requete.append("and Arret.id = ArretRoute.arretId");
-            Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(line));
-            while (cursor.moveToNext()) {
-                arretsToBold.add(cursor.getString(0));
-            }
-            cursor.close();
+        StringBuilder requete = new StringBuilder();
+        requete.append("select Arret.nom from Arret, Ligne, ArretRoute ");
+        requete.append("where Ligne.nomCourt = :nomCourt and ArretRoute.ligneId = Ligne.id ");
+        requete.append("and Arret.id = ArretRoute.arretId");
+        Cursor cursor = TransportsRennesApplication.getDataBaseHelper().executeSelectQuery(requete.toString(), Collections.singletonList(alert.line));
+        while (cursor.moveToNext()) {
+            arretsToBold.add(cursor.getString(0));
         }
+        cursor.close();
         ((TextView) findViewById(R.id.detailAlert_Detail)).setText(Html.fromHtml(alert.getDetailFormatte(arretsToBold)));
     }
 

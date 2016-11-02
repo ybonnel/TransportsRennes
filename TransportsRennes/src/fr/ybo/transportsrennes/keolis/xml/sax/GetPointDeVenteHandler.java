@@ -16,6 +16,9 @@
  */
 package fr.ybo.transportsrennes.keolis.xml.sax;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
 
 /**
@@ -25,83 +28,51 @@ import fr.ybo.transportsrennes.keolis.modele.bus.PointDeVente;
  */
 public class GetPointDeVenteHandler extends KeolisHandler<PointDeVente> {
 
-	/**
-	 * POS.
-	 */
-	private static final String POS = "pos";
-	/**
-	 * NAME.
-	 */
-	private static final String NAME = "name";
-	/**
-	 * TYPE.
-	 */
-	private static final String TYPE = "type";
-	/**
-	 * ADRESSE.
-	 */
-	private static final String ADRESSE = "address";
-	/**
-	 * CODE_POSTAL.
-	 */
-	private static final String CODE_POSTAL = "zipcode";
-	/**
-	 * VILLE.
-	 */
-	private static final String VILLE = "city";
-	/**
-	 * DISTRICT.
-	 */
-	private static final String DISTRICT = "district";
-	/**
-	 * TELEPHONE.
-	 */
-	private static final String TELEPHONE = "phone";
-	/**
-	 * SCHEDULE.
-	 */
-	private static final String SCHEDULE = "schedule";
-	/**
-	 * LATITUDE.
-	 */
-	private static final String LATITUDE = "latitude";
-	/**
-	 * LONGITUDE.
-	 */
-	private static final String LONGITUDE = "longitude";
 
 	@Override
-	protected String getBaliseData() {
-		return POS;
+	public String getDatasetid() {
+		return "mkt-titres-pointsvente-partenaires-td";
 	}
 
-	@Override
-	protected PointDeVente getNewObjetKeolis() {
-		return new PointDeVente();
-	}
+	/*
+	"nom": "Le Nerval",
+          "nomcommune": "Rennes",
+          "horairesjeudi": "07:30-20:00",
+          "horairesmercredi": "07:30-20:00",
+          "horairesvendredi": "07:30-20:00",
+          "adressenumero": "123",
+          "coordonnees": {
+            "lat": 48.119807,
+            "lon": -1.680941
+          },
+          "horairesdimanche": "Fermé",
+          "adressevoie": "Rue de Dinan",
+          "horairessamedi": "08:00-20:00",
+          "horairesmardi": "07:30-20:00",
+          "horaireslundi": "07:30-20:00",
+          "type": [
+            "Dépositaire"
+          ],
+          "id": "1013",
+          "codeinseecommune": "35238"
+	 */
 
 	@Override
-	protected void remplirObjectKeolis(PointDeVente currentObjectKeolis, String baliseName, String contenuOfBalise) {
-		if (baliseName.equals(NAME)) {
-			currentObjectKeolis.name = contenuOfBalise;
-		} else if (baliseName.equals(TYPE)) {
-			currentObjectKeolis.type = contenuOfBalise;
-		} else if (baliseName.equals(ADRESSE)) {
-			currentObjectKeolis.adresse = contenuOfBalise;
-		} else if (baliseName.equals(CODE_POSTAL)) {
-			currentObjectKeolis.codePostal = contenuOfBalise;
-		} else if (baliseName.equals(VILLE)) {
-			currentObjectKeolis.ville = contenuOfBalise;
-		} else if (baliseName.equals(DISTRICT)) {
-			currentObjectKeolis.district = contenuOfBalise;
-		} else if (baliseName.equals(TELEPHONE)) {
-			currentObjectKeolis.telephone = contenuOfBalise;
-		} else if (baliseName.equals(SCHEDULE)) {
-			currentObjectKeolis.schedule = contenuOfBalise;
-		} else if (baliseName.equals(LATITUDE)) {
-			currentObjectKeolis.latitude = Double.parseDouble(contenuOfBalise);
-		} else if (baliseName.equals(LONGITUDE)) {
-			currentObjectKeolis.longitude = Double.parseDouble(contenuOfBalise);
-		}
+	public PointDeVente fromJson(JSONObject json) throws JSONException {
+		PointDeVente pointDeVente = new PointDeVente();
+		pointDeVente.adresse = (json.getString("adressenumero") == null ? "" : (json.getString("adressenumero") + " ")) + json.getString("adressevoie");
+		pointDeVente.latitude = json.getJSONObject("coordonnees").getDouble("lat");
+		pointDeVente.longitude = json.getJSONObject("coordonnees").getDouble("lon");
+		pointDeVente.name = json.getString("nom");
+		pointDeVente.schedule = "Lundi : " + json.getString("horaireslundi") + "\n" +
+				"Mardi : " + json.getString("horairesmardi") + "\n" +
+				"Mercredi : " + json.getString("horairesmercredi") + "\n" +
+				"Jeudi : " + json.getString("horairesjeudi") + "\n" +
+				"Vendredi : " + json.getString("horairesvendredi") + "\n" +
+				"Samedi : " + json.getString("horairessamedi") + "\n" +
+				"Dimanche : " + json.getString("horairesdimanche");
+		pointDeVente.type = json.getJSONArray("type").getString(0);
+		pointDeVente.ville = json.getString("nomcommune");
+		return pointDeVente;
 	}
 }
