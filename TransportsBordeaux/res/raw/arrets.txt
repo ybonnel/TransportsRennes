@@ -496,8 +496,8 @@ id,nom,latitude,longitude
 5245,Camponac Médiathèque,44.800289,-0.634793
 1109b,Ducourneau,44.868548,-0.591751
 3611b,Dubedout,44.846974,-0.511457
-281b,Fauré,44.8166,-0.61859
 4027b,Lycée Agricole,44.917671,-0.633473
+281b,Fauré,44.8166,-0.61859
 2728b,Collège Pont de la Maye,44.780651,-0.569076
 2350b,Jean Hameau,44.868134,-0.570775
 968b,Nouaux,44.855251,-0.531208
@@ -1051,7 +1051,6 @@ id,nom,latitude,longitude
 5332b,Sieyès,44.860721,-0.723906
 7003b,Pas de la Côte,44.780774,-0.536007
 954b,Bretagne,44.79507,-0.682327
-7421b,Beausite,44.852734,-0.527895
 6364b,Landille,44.912668,-0.631297
 2412b,Gabriel Delaunay,44.845393,-0.592892
 2449b,Facultés Droit et Lettres,44.79852,-0.619717
@@ -2226,6 +2225,7 @@ id,nom,latitude,longitude
 1270b,Radio,44.785073,-0.683166
 3030b,Rue du Stade,44.875454,-0.679427
 1146b,Grands Moulins,44.854091,-0.553131
+7864b,Centre Administratif,44.86649,-0.596574
 2161b,Gare d'Orléans,44.842426,-0.56335
 7796b,Centre Nautique,44.891825,-0.589323
 7526b,Collège Albert Camus (rue du Moulin à Vent),44.885481,-0.643508

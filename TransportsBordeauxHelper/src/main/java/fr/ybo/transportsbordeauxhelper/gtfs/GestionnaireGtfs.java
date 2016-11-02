@@ -172,11 +172,13 @@ public final class GestionnaireGtfs {
 			System.out.println("Merge routes");
 			for (Route route : (List<Route>) mapTram.get(Route.class)) {
 				if (route.id != null) {
+                    route.id = route.id.toLowerCase();
 					routes.put(route.id, route);
 				}
 			}
 			for (Route route : (List<Route>) mapBus.get(Route.class)) {
 				if (route.id != null) {
+                    route.id = route.id.toLowerCase();
 					routes.put(route.id, route);
 				}
 			}
@@ -210,6 +212,7 @@ public final class GestionnaireGtfs {
 					if (trips.containsKey(trip.id)) {
 						System.err.println("Trip déjà connu : " + trip.id);
 					}
+                    trip.routeId = trip.routeId.toLowerCase();
 					trips.put(trip.id, trip);
 				}	
 			}
@@ -217,7 +220,8 @@ public final class GestionnaireGtfs {
 				if (trip.id != null) {
 					if (trips.containsKey(trip.id)) {
 						System.err.println("Trip déjà connu : " + trip.id);
-					}	
+					}
+                    trip.routeId = trip.routeId.toLowerCase();
 					trips.put(trip.id, trip);
 				}
 			}
