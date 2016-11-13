@@ -14,7 +14,7 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsbordeaux" android:installLocation="auto"
-          android:versionCode="327" android:versionName="3.2.7">
+          android:versionCode="328" android:versionName="3.2.8">
 
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="18"/>
@@ -192,20 +192,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Cappbrain -->
-        <meta-data android:name="capptain:reportLocation" android:value="true"/>
-
-        <service android:name="com.ubikod.capptain.android.service.CapptainService"
-                 android:label="TransportsBordeauxService" android:process=":Capptain"
-                 android:exported="false">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="com.ubikod.capptain.ICapptainService"/>
-                <data android:scheme="capptain"/>
-            </intent-filter>
-            <meta-data android:name="capptain:api:level" android:value="21"/>
-        </service>
-        <!-- Cappbrain -->
         <activity android:name="com.google.android.gms.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
 
