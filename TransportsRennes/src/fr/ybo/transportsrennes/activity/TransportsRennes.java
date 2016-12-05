@@ -83,7 +83,6 @@ public class TransportsRennes extends AccueilActivity {
 
 	private static final int DIALOG_A_PROPOS = 1;
 	private static final int DIALOG_UPGRADE = 2;
-	private static final int DIALOG_CONCOURS = 3;
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -118,35 +117,6 @@ public class TransportsRennes extends AccueilActivity {
 					Version.getVersionCourante(getApplicationContext())));
 			builder.setCancelable(false);
 			builder.setNeutralButton(getString(R.string.Terminer), new TransportsRennes.TerminerClickListener());
-			return builder.create();
-		}
-		if (id == DIALOG_CONCOURS) {
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			View view = LayoutInflater.from(this).inflate(R.layout.infoapropos, null);
-			TextView textView = (TextView) view.findViewById(R.id.textAPropos);
-			if (UIUtils.isHoneycomb()) {
-				textView.setTextColor(TransportsRennesApplication.getTextColor(this));
-			}
-			Spanned spanned = Html.fromHtml(getString(R.string.dialogConcours),
-					null, null);
-
-			textView.setText(spanned, TextView.BufferType.SPANNABLE);
-			textView.setMovementMethod(LinkMovementMethod.getInstance());
-			builder.setView(view);
-			builder.setTitle(getString(R.string.titleConcours));
-			builder.setCancelable(false);
-			builder.setPositiveButton(getString(R.string.participer), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.dismiss();
-					Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLSc79opT3v9Be4G4vrUoYJiBMagV8ke08U9teJ0zkSMuqA1OUw/viewform"));
-					startActivity(browserIntent);
-				}
-			});
-			builder.setNegativeButton(getString(R.string.non), new Dialog.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-				}
-			});
 			return builder.create();
 		}
 		if (id == DIALOG_UPGRADE) {
@@ -196,15 +166,6 @@ public class TransportsRennes extends AccueilActivity {
 		} else if (dernierMiseAJour.derniereMiseAJour == null
 				|| dateDernierFichierKeolis.after(dernierMiseAJour.derniereMiseAJour)) {
 			showDialog(DIALOG_UPGRADE);
-		} else if (calendar.get(Calendar.YEAR) == 2016 && calendar.get(Calendar.MONTH) < 12) {
-			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-			boolean alreadyDisplayed = prefs.getBoolean("concours.already.displayed", false);
-			if (!alreadyDisplayed) {
-				SharedPreferences.Editor editor = prefs.edit();
-				editor.putBoolean("concours.already.displayed", true);
-				editor.commit();
-				showDialog(DIALOG_CONCOURS);
-			}
 		}
 	}
 
@@ -214,17 +175,10 @@ public class TransportsRennes extends AccueilActivity {
 	private static final int MENU_SHARE = 5;
 	private static final int MENU_LOAD_LINES = 6;
 	private static final int MENU_TICKETS = 7;
-	private static final int MENU_CONCOURS = 8;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
-		Calendar now = Calendar.getInstance();
-		if (now.get(Calendar.YEAR) == 2016 && now.get(Calendar.MONTH) < Calendar.DECEMBER) {
-			MenuItem itemConcours = menu.add(GROUP_ID, MENU_CONCOURS, Menu.NONE, R.string.menu_concours);
-			itemConcours.setIcon(android.R.drawable.ic_dialog_email);
-		}
-
 		MenuItem item = menu.add(GROUP_ID, MENU_ID, Menu.NONE, R.string.menu_apropos);
 		item.setIcon(android.R.drawable.ic_menu_info_details);
 		MenuItem itemNotif = menu.add(GROUP_ID, MENU_NOTIF, Menu.NONE, R.string.notif);
@@ -244,9 +198,6 @@ public class TransportsRennes extends AccueilActivity {
 		switch (item.getItemId()) {
 			case MENU_ID:
 				showDialog(DIALOG_A_PROPOS);
-				return true;
-			case MENU_CONCOURS:
-				showDialog(DIALOG_CONCOURS);
 				return true;
 			case R.id.menu_plan:
 				copieImageIfNotExists();

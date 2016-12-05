@@ -15,8 +15,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="fr.ybo.transportsrennes"
           android:installLocation="auto"
-          android:versionCode="417"
-          android:versionName="4.1.7">
+          android:versionCode="418"
+          android:versionName="4.1.8">
     
     <uses-sdk android:minSdkVersion="9"
               android:targetSdkVersion="18"/>

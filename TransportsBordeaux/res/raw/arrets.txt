@@ -2937,7 +2937,7 @@ id,nom,latitude,longitude
 268b,Cornier,44.843202,-0.51302
 907b,Galgon (che de Leyran),44.775098,-0.538762
 2333b,Médoc (Place St Martial),44.859056,-0.5658
-445b,Bouthier,44.851965,-0.557342
+445b,Bouthier,44.852231,-0.556903
 396b,Avenue du Coteau (vers Pl Vettiner),44.814058,-0.5016
 551b,Arsonval,44.779681,-0.658491
 5407b,Piscine Grand Parc,44.857663,-0.579967
@@ -3230,7 +3230,7 @@ id,nom,latitude,longitude
 5302b,Les Fauvettes,44.825381,-0.663266
 3786b,Dupas,44.828082,-0.539872
 3276b,Z.A Haut-Vigneau,44.771603,-0.63118
-1868b,La Vache,44.873375,-0.590767
+1868b,La Vache,44.872762,-0.591045
 5606b,Camping International,44.89833,-0.579075
 3169b,Eglise de Caudéran,44.852193,-0.613865
 5976b,Caychac La Rivière,44.93007,-0.621145

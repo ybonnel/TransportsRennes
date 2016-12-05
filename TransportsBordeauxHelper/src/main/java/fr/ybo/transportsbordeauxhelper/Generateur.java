@@ -451,10 +451,10 @@ public class Generateur {
 				}
                 String nomCourt1 = o1.nomCourt;
                 String nomCourt2 = o2.nomCourt;
-                if (nomCourt1.equals("5s") || nomCourt1.equals("5n")) {
+                if (nomCourt1.equalsIgnoreCase("5s") || nomCourt1.equalsIgnoreCase("5n")) {
                     nomCourt1 = "0" + nomCourt1;
                 }
-                if (nomCourt2.equals("5s") || nomCourt2.equals("5n")) {
+                if (nomCourt2.equalsIgnoreCase("5s") || nomCourt2.equalsIgnoreCase("5n")) {
                     nomCourt2 = "0" + nomCourt2;
                 }
 				return nomCourt1.compareTo(nomCourt2);
