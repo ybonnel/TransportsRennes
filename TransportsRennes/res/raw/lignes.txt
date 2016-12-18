@@ -17,95 +17,36 @@ id,nom_court,nom_long,ordre
 0036,36,Saint-Grégoire (Edonia) <> Rennes (Place Hoche),16
 0037,37,Rennes (Henri Fréville) <> Saint-Jacques-de-la-Lande (Morinais),17
 0038,38,Cesson-Sévigné (Monniais) <> Cesson-Sévigné (Ménouriais),18
-0040,40,Rennes (Clos Courtel) <> Rennes (République),19
-0041,41,Cesson-Sévigné (Champs Blancs) <> Rennes (Gares),20
-0044,44,Rennes (Joliot-Curie) <> Rennes (République),21
-0050,50,Thorigné-Fouillard (Landelles) <> Rennes (République),22
-0051,51,Betton (Champ Devant) <> Rennes (Place Hoche),23
-0052,52,La Chapelle-des-Fougeretz (Besneraie) <> Montgermont <> Rennes <> Pacé <> Saint-Gilles (Ile des Bois),24
-0053,53,Rennes (République) <> Vezin-le-Coquet <> L'Hermitage <> La Chapelle-Thouarault (Ville aux Archers),25
-0054,54,Rennes (Charles de Gaulle) <> Le Rheu <> Cintré (Chêne Vert),26
-0055,55,Rennes (Charles de Gaulle) <> Mordelles <> Le Verger (Le Verger Eglise),27
-0056,56,Rennes (Charles de Gaulle) <> Chavagne (Croix Blanche),28
-0057,57,Rennes (République) <> Saint-Jacques-de-la-Lande <> Bruz (Bruz Centre),29
-0059,59,Rennes (Henri Fréville) <> Bruz (Bruz Gare),30
-0061,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche <> Saint-Erblon (Parc d'Activités),31
-0062,62,Rennes (La Poterie) <> Vern-sur-Seiche (Croix Malinge),32
-0064,64,Acigné (Timonière) <> Rennes (République),33
-0065,65,Rennes (Villejean-Université) <> Pacé <> Parthenay-de-Bretagne (Parthenay Fontaine),34
-0067,67,Brécé (Anjou) <> Cesson-Sévigné <> Rennes (République),35
-0068,68,Gévezé (Cheval Blanc) <> Rennes (Villejean-Université),36
-0070,70,Saint-Sulpice-la-Forêt (Cropy) <> Rennes (Place Hoche),37
-0071,71,Chevaigné (Pommiers) <> Rennes (Place Hoche),38
-0072,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne <> Pont-Péan <> Laillé (Gingouillère),39
-0073,73,Rennes (La Poterie) <> Vern-sur-Seiche <> Saint-Armel <> Corps-Nuds (Corps-Nuds Gare),40
-0074,74,Rennes (Henri Fréville) <> Orgères <> Bourgbarré (Centre de Loisirs),41
-0075,75,Nouvoitou (Parc des Sports) <> Vern-sur-Seiche <> Rennes (La Poterie),42
-0076,76,Rennes (Lycée Basch) <> Vezin-le-Coquet <> Le Rheu <> Mordelles (Mordelles Pâtis),43
-0077,77,Rennes (Villejean-Université) <> Pacé (Pâtis Roussel),44
-0078,78,Betton (Betton Centre) <> Saint-Grégoire <> Rennes (Villejean-Université),45
-0079,79,Rennes (Henri Fréville) <> Pont-Péan <> Laillé (Gingouillère),46
-0081,81,Rennes (Villejean-Université) <> Clayes <> Romillé (Romillé Collège),47
-0082,82,Rennes (Villejean-Université) <> Romillé <> Langan <> La Chapelle-Chaussée <> Bécherel <> Miniac-sous-Bécherel (Miniac Eglise),48
-0091,91,Noyal-Châtillon-sur-Seiche (Petite Saudrais) <> Chartres-de-Bretagne <> Bruz (Pont-Réan / Cicé Blossac),49
-0094,94,Saint-Sulpice-la-Forêt (Cropy) <> Chevaigné <> Betton (Betton Centre),50
-0121,N1,Rennes (Clos Courtel) <> Rennes (Kennedy Guyenne),51
-0122,N2,Rennes (Gayeulles) <> Rennes (La Poterie),52
-0150,150,Thorigné-Fouillard (Landelles) <> Rennes (République),53
-0151,151,Betton (Champ Devant) <> Rennes (Place Hoche),54
-0152,152,Rennes (Lycée Basch) <> Pacé <> Saint-Gilles (Ile des Bois),55
-0153,153,Rennes (République) <> Vezin-le-Coquet <> L'Hermitage <> La Chapelle-Thouarault (Ville aux Archers),56
-0154,154,Rennes (République) <> Le Rheu <> Cintré (Chêne Vert),57
-0155,155,Rennes (République) <> Mordelles (Mordelles Pâtis),58
-0156,156,Rennes (République) <> Chavagne (Croix Blanche),59
-0157,157,Rennes (République) <> Bruz (Bruz Centre),60
-0158,KL,Rennes (République) <> Bruz (Schuman),61
-0159,159,Bruz (Bruz Gare) <> Rennes (Henri Fréville),62
-0161,161,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche <> Saint-Erblon <> Bourgbarré (Centre de Loisirs),63
-0164,164,Acigné (Timonière) <> Rennes (République),64
-0167,167,Brécé (Anjou) <> Cesson-Sévigné <> Rennes (République),65
-0168,168,Gévezé (Cheval Blanc) <> Rennes (Villejean-Université),66
-0172,172,Rennes (Henri Fréville) <> Chartres-de-Bretagne (Parc de Loisirs),67
-0173,173,Rennes (La Poterie) <> Saint-Armel <> Corps-Nuds (Corps-Nuds Gare),68
-0200,200,Acigné (Timonière) <> Rennes (Assomption),69
-0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Assomption),70
-0202,202,Chevaigné (Pommiers) <> Betton <> Rennes (Assomption),71
-0203,203,Rennes (Joliot-Curie) <> Rennes (Gares),72
-0204,204,Saint-Grégoire (Champ Daguet) <> Rennes (Assomption),73
-0205,205,Rennes (Lycée St-Exupéry) <> Rennes (Villejean-Université),74
-0206,206,Cesson-Sévigné (Métairies Chalotais) <> Rennes (Joliot-Curie),75
-0207,207,Cesson-Sévigné (Lycée Ozanam) <> Rennes (Gares),76
-0208,208,Saint-Grégoire (MFR Rabinardières) <> Rennes (Gares),77
-0211,211,Rennes (Collège Cleunay) <> Chavagne (Croix Blanche),78
-0212,212,Rennes (Coubertin) <> Noyal-Châtillon-sur-Seiche <> Saint Erblon (Champ Mulon),79
-0213,213,Rennes (Coubertin) <> Orgères <> Bourgbarré (Télégraphe),80
-0214,214,Cesson-Sévigné (Lycée Ozanam) <> Rennes (La Poterie),81
-0215,215,Rennes (Lycée Chateaubriand) <> Rennes (Villejean-Université),82
-0216,216,Cesson-Sévigné (Stade Dézerseul) <> Rennes (Joliot-Curie),83
-0217,217,Cesson-Sévigné (Cormier) <> Rennes (Joliot-Curie),84
-0220,220,Acigné (Timonière) <> Cesson-Sévigné (Chalotais),85
-0221,221,Cesson-Sévigné (Château de Vaux) <> Thorigné-Fouillard <> Cesson Sévigné (Lycée Sévigné),86
-0222,222,Chevaigné (Pommiers) <> Betton (Champ Devant),87
-0223,223,Chevaigné (Pommiers) <> Betton <> Saint Grégoire (Jean-Paul II),88
-0224,224,Saint-Grégoire (Jean-Paul II) <> Montgermont <> La Chapelle-des-Fougeretz <> Gévezé (Cheval Blanc),89
-0225,225,Saint-Grégoire (Jean-Paul II) <> Pacé (Pie Neuve),90
-0226,226,Gévezé (Cheval Blanc) <> La Chapelle-des-Fougeretz <> Montgermont <> Pacé (Collèges de Pacé),91
-0227,227,Saint-Gilles (Ile des Bois) <> Vezin-le-Coquet <> Pacé (Collèges de Pacé),92
-0228,228,La Chapelle-des-Fougeretz (Besneraie) <> Montgermont <> Rennes (Lycée Mendès France),93
-0229,229,Bruz (Anita Conti) <> Chavagne (Croix Blanche),94
-0230,230,Chartres (Vieux Bourg) <> Bruz (Aire du 8 Mai),95
-0231,231,Bruz (Brossolette) <> Pont Péan <> Laillé (Gingouillère),96
-0232,232,Saint-Erblon (Leuzières) <> Orgères (Collège Récipon),97
-0233,233,Bourgbarré (Centre de Loisirs) <> Orgères <> Saint-Erblon (Collège Saint-Paul),98
-0234,234,Orgères (Collège Récipon) <> Laillé (Gingouillère),99
-0235,235,Pont-Péan (Mouton Blanc) <> Orgères (L'Hermitière Village),100
-0236,236,Pacé (Collèges de Pacé) <> Parthenay-de-Bretagne <> Clayes (Clayes Centre),101
-0237,237,Le Rheu (Collège Brassens) <> Chavagne (Croix Blanche),102
-0238,238,Le Rheu (Collège Brassens) <> L'Hermitage <> La Chapelle-Thouarault (Ville aux Archers),103
-0239,239,Le Rheu (Lycée Monod) <> Mordelles (Mordelles Pâtis),104
-0240,240,Saint-Gilles (Ile des Bois) <> L'Hermitage <> Le Rheu (Lycée Monod),105
-0241,241,Chavagne (Croix Blanche) <> Mordelles (Collège St-Yves),106
-0242,242,Miniac-sous-Bécherel (Miniac Eglise) <> Bécherel <> La Chapelle-Chaussée <> Romillé (Romillé Collège),107
-0243,243,Saint-Grégoire (Jean-Paul II) <> Montgermont <> Pacé (Pie Neuve),108
-0244,244,Chartres-de-Bretagne (Collège Fontenay) <> Pont-Péan (Bois Esnault),109
+0041,41,Cesson-Sévigné (Champs Blancs) <> Rennes (Gares),19
+0050,50,Thorigné-Fouillard (Landelles) <> Rennes (République),20
+0051,51,Betton (Champ Devant) <> Rennes (Place Hoche),21
+0052,52,La Chapelle-des-Fougeretz (Besneraie) <> Montgermont <> Rennes <> Pacé <> Saint-Gilles (Ile des Bois),22
+0053,53,Rennes (République) <> Vezin-le-Coquet <> L'Hermitage <> La Chapelle-Thouarault (Ville aux Archers),23
+0054,54,Rennes (Charles de Gaulle) <> Le Rheu <> Cintré (Chêne Vert),24
+0055,55,Rennes (Charles de Gaulle) <> Mordelles <> Le Verger (Le Verger Eglise),25
+0056,56,Rennes (Charles de Gaulle) <> Chavagne (Croix Blanche),26
+0057,57,Rennes (République) <> Saint-Jacques-de-la-Lande <> Bruz (Bruz Centre),27
+0059,59,Rennes (Henri Fréville) <> Bruz (Bruz Gare),28
+0061,61,Rennes (Henri Fréville) <> Noyal-Châtillon-sur-Seiche <> Saint-Erblon (Parc d'Activités),29
+0062,62,Rennes (La Poterie) <> Vern-sur-Seiche (Croix Malinge),30
+0064,64,Acigné (Timonière) <> Rennes (République),31
+0065,65,Rennes (Villejean-Université) <> Pacé <> Parthenay-de-Bretagne (Parthenay Fontaine),32
+0067,67,Brécé (Anjou) <> Cesson-Sévigné <> Rennes (République),33
+0068,68,Gévezé (Cheval Blanc) <> Rennes (Villejean-Université),34
+0070,70,Saint-Sulpice-la-Forêt (Cropy) <> Rennes (Place Hoche),35
+0071,71,Chevaigné (Pommiers) <> Rennes (Place Hoche),36
+0072,72,Rennes (Henri Fréville) <> Chartres-de-Bretagne <> Pont-Péan <> Laillé (Gingouillère),37
+0073,73,Rennes (La Poterie) <> Vern-sur-Seiche <> Saint-Armel <> Corps-Nuds (Corps-Nuds Gare),38
+0074,74,Rennes (Henri Fréville) <> Orgères <> Bourgbarré (Centre de Loisirs),39
+0075,75,Nouvoitou (Parc des Sports) <> Vern-sur-Seiche <> Rennes (La Poterie),40
+0076,76,Rennes (Lycée Basch) <> Vezin-le-Coquet <> Le Rheu <> Mordelles (Mordelles Pâtis),41
+0077,77,Rennes (Villejean-Université) <> Pacé (Pâtis Roussel),42
+0078,78,Betton (Betton Centre) <> Saint-Grégoire <> Rennes (Villejean-Université),43
+0079,79,Rennes (Henri Fréville) <> Pont-Péan <> Laillé (Gingouillère),44
+0081,81,Rennes (Villejean-Université) <> Clayes <> Romillé (Romillé Collège),45
+0082,82,Rennes (Villejean-Université) <> Romillé <> Langan <> La Chapelle-Chaussée <> Bécherel <> Miniac-sous-Bécherel (Miniac Eglise),46
+0091,91,Noyal-Châtillon-sur-Seiche (Petite Saudrais) <> Chartres-de-Bretagne <> Bruz (Pont-Réan / Cicé Blossac),47
+0094,94,Saint-Sulpice-la-Forêt (Cropy) <> Chevaigné <> Betton (Betton Centre),48
+0121,N1,Rennes (Clos Courtel) <> Rennes (Kennedy Guyenne),49
+0122,N2,Rennes (Gayeulles) <> Rennes (La Poterie),50
 1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie),0
