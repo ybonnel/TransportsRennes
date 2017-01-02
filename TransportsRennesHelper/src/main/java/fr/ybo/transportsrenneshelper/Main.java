@@ -46,7 +46,7 @@ import fr.ybonnel.csvengine.model.EngineParameters;
  */
 public final class Main {
 
-	private static final boolean OPTIMIZE_CALENDARS = true;
+	private static final boolean OPTIMIZE_CALENDARS = false;
 
 	/**
 	 * Constructeur privé pour empécher l'instanciation.
