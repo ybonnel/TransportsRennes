@@ -108,5 +108,4 @@ id,nom_court,nom_long,ordre
 0242,242,Miniac-sous-Bécherel (Miniac Eglise) <> Bécherel <> La Chapelle-Chaussée <> Romillé (Romillé Collège),107
 0243,243,Saint-Grégoire (Jean-Paul II) <> Montgermont <> Pacé (Pie Neuve),108
 0244,244,Chartres-de-Bretagne (Collège Fontenay) <> Pont-Péan (Bois Esnault),109
-0810,SP,Spécial,110
 1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie),0
