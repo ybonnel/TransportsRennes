@@ -33,7 +33,7 @@ ordre,id,nom_court,nom_long
 32,35,35,Corol 35
 33,36,36,Corol 36
 34,37,37,Corol 37
-35,38,38,Flexo 38 / ResaGO
+35,38,38,Flexo 38 / Resago
 36,40,40,Citéis 40
 37,41,41,Citéis 41
 38,42,42,Citéis 42
