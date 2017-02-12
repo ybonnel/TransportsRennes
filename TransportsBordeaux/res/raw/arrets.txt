@@ -194,6 +194,7 @@ id,nom,latitude,longitude
 5207b,Goya,44.85347,-0.508949
 1981b,Domaine de Pelus,44.830692,-0.684955
 1118b,Castelneau,44.842647,-0.669359
+3626b,Jean Jaurès,44.857574,-0.532406
 185b,Tillet,44.821568,-0.572411
 681b,Hôpital Pellegrin (entrée Est),44.828635,-0.602724
 2469b,Barrière d'Arès,44.836586,-0.598243
@@ -850,7 +851,7 @@ id,nom,latitude,longitude
 2572b,La Hontan,44.76671,-0.549695
 6731b,Paludate,44.827447,-0.55128
 526b,Racine,44.792859,-0.584824
-3869b,Barrière du Médoc (av d'Eysines),44.853256,-0.594447
+3869b,Barrière du Médoc (av d'Eysines),44.853351,-0.594871
 7815b,Forum,44.809945,-0.591283
 5677b,Mérignac Soleil,44.831208,-0.656288
 7752b,Nigès,44.841082,-0.758621
@@ -1094,6 +1095,7 @@ id,nom,latitude,longitude
 3605b,Stalingrad (arrêt de Montée),44.839951,-0.559862
 490b,Boncour,44.813031,-0.664955
 2446b,Cité Chantecrit,44.864202,-0.564429
+7965b,Gaussens,44.879841,-0.612287
 5926b,Alfonséa,44.825972,-0.52748
 1936b,Avenue de Grandjean,44.942752,-0.5102
 1330b,Marronniers,44.843869,-0.679802
@@ -1464,7 +1466,7 @@ id,nom,latitude,longitude
 2420b,Cité administrative,44.841509,-0.600383
 2709b,Soors,44.77261,-0.56439
 3238b,Barthès,44.76887,-0.602815
-691b,Général Leclerc,44.854495,-0.599049
+691b,Parc Bordelais,44.854495,-0.599049
 155b,Parc Industriel,44.780151,-0.648334
 3801b,Victoire (A. Briand),44.831009,-0.573645
 4155b,Victoire (Marne),44.830671,-0.571837
@@ -1956,7 +1958,7 @@ id,nom,latitude,longitude
 5942b,Forum des Associations,44.885053,-0.6208
 2906b,Pins-Francs,44.858438,-0.624101
 6916b,Hestigeac,44.843443,-0.737558
-2159b,Frères Lumière (Rte de Pauillac),44.891136,-0.637916
+2159b,Frères Lumière,44.891136,-0.637916
 363b,Chardons Bleus,44.835622,-0.63964
 250b,Gelès,44.889676,-0.74282
 2808b,Arago (Médiathèque),44.797777,-0.644605
@@ -2022,8 +2024,8 @@ id,nom,latitude,longitude
 3712,Porte de Bourgogne,44.837248,-0.56629
 3711,Stalingrad,44.840316,-0.55972
 3714,Place du Palais,44.837925,-0.569347
-1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 3713,Porte de Bourgogne,44.837186,-0.566273
+1809b,Lormont Bas (A. Briand),44.877037,-0.534506
 5188b,Genêts,44.927502,-0.756841
 3710,Stalingrad,44.840314,-0.559783
 4770b,Hameaux de l'Alouette,44.784348,-0.690876
@@ -2048,6 +2050,7 @@ id,nom,latitude,longitude
 3747,Barrière Saint-Genès,44.820771,-0.583136
 3746,Roustaing,44.816948,-0.585691
 3745,Roustaing,44.816941,-0.585639
+7933b,19 Mars 1962,44.87748,-0.643154
 3744,Forum,44.811965,-0.590981
 3170b,Dauphine,44.851734,-0.611074
 3749,Bergonié,44.825031,-0.578216
@@ -2061,11 +2064,13 @@ id,nom,latitude,longitude
 244b,Quai Numa Sensine,44.875157,-0.53582
 1059b,Bechade,44.868211,-0.670638
 1870b,Templiers,44.928217,-0.47718
+7934b,19 Mars 1962,44.878181,-0.641589
 3750,Bergonié,44.82502,-0.578278
 3730,Montaigne - Montesquieu,44.796801,-0.617454
 1807b,Mattéoti,44.831139,-0.545181
 3734,Doyen Brus,44.800272,-0.609665
 3733,Doyen Brus,44.800274,-0.609614
+7932b,Biblanque,44.879446,-0.646958
 3736,François Bordes,44.803494,-0.60677
 3735,François Bordes,44.803504,-0.60672
 3738,Arts & Métiers,44.805999,-0.602348
@@ -2345,6 +2350,7 @@ id,nom,latitude,longitude
 5470b,Les Aubiers (station Tram),44.873709,-0.57483
 3037b,Gadret,44.888161,-0.702259
 1277b,Le Vigean,44.881617,-0.630796
+7939b,Le Grand Caillou,44.883004,-0.636337
 1301b,Combelongue,44.77692,-0.701195
 5951b,Bois Gramond,44.872836,-0.64488
 5327b,Vignalot,44.860755,-0.728534
@@ -2377,6 +2383,7 @@ id,nom,latitude,longitude
 376b,Ruet,44.870454,-0.675018
 2988b,Coubertin,44.862,-0.644683
 5623b,Vigneau,44.831244,-0.665321
+7937b,Le Derby,44.87532,-0.638678
 7522b,Moulin à Vent,44.885923,-0.638846
 3187b,Collège Pablo Neruda,44.794184,-0.562455
 5958b,Frères Portmann,44.860566,-0.576312
@@ -2394,6 +2401,7 @@ id,nom,latitude,longitude
 89b,Capdeville,44.844285,-0.586753
 2877b,Résistance,44.792708,-0.705842
 2764b,Le Monteil (Cité Le Corbusier),44.802408,-0.646577
+7938b,Le Grand Caillou,44.882938,-0.6367
 2987b,Coubertin,44.862339,-0.645326
 5625b,St Aubin Cimetière,44.91274,-0.732435
 7523b,Mairie de St Aubin,44.91284,-0.723284
@@ -2404,6 +2412,7 @@ id,nom,latitude,longitude
 927b,Ste Germaine,44.872696,-0.616099
 374b,Brossolette,44.834303,-0.622125
 6903b,Stalingrad (Parlier),44.84153,-0.563471
+7935b,19 Mars 1962,44.876684,-0.641593
 3829b,Pic Vert,44.912613,-0.713628
 1305b,Lamartine,44.903643,-0.49663
 1631b,Le B.E.C,44.792976,-0.618094
@@ -2431,6 +2440,7 @@ id,nom,latitude,longitude
 2918b,Lavigne,44.866657,-0.60642
 3828b,Van Gogh,44.910485,-0.714185
 1306b,La Morlette,44.854849,-0.518057
+7936b,Le Derby,44.875608,-0.639229
 3770,Saint-Michel,44.834494,-0.563379
 2989b,Antoune,44.86293,-0.654768
 3772,Porte de Bourgogne,44.837191,-0.5664
@@ -2494,14 +2504,16 @@ id,nom,latitude,longitude
 5479b,Zone de Fret,44.894487,-0.603987
 916b,Rochefort,44.776269,-0.611135
 1884b,La Prairie,44.867262,-0.498013
+7942b,Blanc,44.881008,-0.640568
 7302b,Les Pins (av Magudas),44.857298,-0.659647
 717b,Crébadin,44.948354,-0.616552
 5633b,Dourout,44.808773,-0.582928
 3825b,Porte de Bourgogne (Pl Bir Hakeim),44.836585,-0.566184
-382b,Général Leclerc,44.854718,-0.599393
+382b,Parc Bordelais,44.854718,-0.599393
 1309b,Jaubert,44.807523,-0.626627
 1048b,8 Mai 1945,44.851974,-0.511504
 561b,Racine,44.861733,-0.615392
+7941b,Blanc,44.88133,-0.640386
 6403b,Place Florale Terminus,44.868834,-0.636369
 2554b,Avenue du Stade,44.909762,-0.692092
 6482b,Breillan,44.918327,-0.663454
@@ -2510,6 +2522,7 @@ id,nom,latitude,longitude
 1042b,Lièges,44.846714,-0.629577
 381b,Goujon,44.871242,-0.707962
 5960b,Trinité,44.8602,-0.578709
+7940b,Sirtema,44.883911,-0.655362
 6404b,Aéroport (arrêt de Descente),44.831466,-0.701485
 5473b,Nungesser,44.925124,-0.619696
 235b,Dumont,44.883786,-0.647924
@@ -3247,7 +3260,7 @@ id,nom,latitude,longitude
 1252b,Edison,44.82033,-0.596214
 7544b,Ile de France,44.845878,-0.496795
 2961b,Horizons Bleus,44.888641,-0.637311
-2962b,Frères Lumière (Rte de Pauillac),44.890605,-0.637869
+2962b,Frères Lumière,44.890605,-0.637869
 5975b,Caychac La Rivière,44.930747,-0.620859
 5682b,Les Peupliers,44.786443,-0.571949
 3787b,Monte-Cristo,44.825239,-0.53578
@@ -3320,6 +3333,7 @@ id,nom,latitude,longitude
 1022b,Pacaris,44.797146,-0.580186
 433b,Frères Robinson,44.849794,-0.656523
 4971b,Epis,44.872926,-0.502422
+7921b,Eglise de Gradignan,44.771896,-0.611739
 5981b,Lénine,44.79626,-0.558169
 3402b,Montaigne,44.916885,-0.642619
 1225b,Les Erables,44.812887,-0.62301
