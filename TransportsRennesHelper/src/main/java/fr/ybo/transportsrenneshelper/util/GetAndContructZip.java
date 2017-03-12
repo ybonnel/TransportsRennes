@@ -58,7 +58,7 @@ public class GetAndContructZip {
 	/**
 	 * Url de base pour le fichier.
 	 */
-	private static final String BASE_URL = "http://ftp.keolis-rennes.com/opendata/tco-busmetro-horaires-gtfs-versions-td/attachments/GTFS-";
+	private static final String BASE_URL = "http://ftp.keolis-rennes.com/opendata/tco-busmetro-horaires-gtfs-versions-td/attachments/";
 	/**
 	 * Extension du fichier.
 	 */
@@ -71,8 +71,8 @@ public class GetAndContructZip {
 	 * @return l'url.
 	 * @throws MalformedURLException ne doit pas arriver.
 	 */
-	private URL getUrlKeolisFromDate(Date date) throws MalformedURLException {
-		return new URL(BASE_URL + SDF.format(date) + EXTENSION_URL);
+	private URL getUrlKeolisFromDate(String date) throws MalformedURLException {
+		return new URL(BASE_URL + date + EXTENSION_URL);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class GetAndContructZip {
 	 * @param dateFileKeolis la date.
 	 * @return la connection http.
 	 */
-	private HttpURLConnection openHttpConnection(Date dateFileKeolis) {
+	private HttpURLConnection openHttpConnection(String dateFileKeolis) {
 		try {
 			HttpURLConnection connection = (HttpURLConnection) getUrlKeolisFromDate(dateFileKeolis).openConnection();
 			connection.setRequestMethod("GET");
@@ -121,9 +121,7 @@ public class GetAndContructZip {
 	 */
 	public void getZipKeolis() {
 		try {
-			Date lastUpdate = SDF.parse(dateDemandee);
-			System.out.println("Date du fichier : " + SDF.format(lastUpdate));
-			HttpURLConnection connection = openHttpConnection(lastUpdate);
+			HttpURLConnection connection = openHttpConnection(dateDemandee);
 			ZipInputStream zipInputStream = new ZipInputStream(connection.getInputStream());
 			//ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream("C:/ybonnel/GTFS-20110118.zip"));
 			try {
