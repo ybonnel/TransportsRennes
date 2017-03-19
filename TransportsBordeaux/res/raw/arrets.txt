@@ -1171,6 +1171,7 @@ id,nom,latitude,longitude
 2630b,Collège Les Eyquems,44.827916,-0.645675
 6825b,La Cité du Vin,44.860585,-0.554125
 3545b,Stalingrad (arrêt de Descente),44.840385,-0.560117
+3877b,Victoire (Pasteur),44.831317,-0.573335
 2869b,Escarraguel (rue Cézanne),45.008923,-0.528985
 5798b,Curie,44.836505,-0.533209
 7631b,Chemin de Piétru,45.004442,-0.551139
@@ -1204,7 +1205,6 @@ id,nom,latitude,longitude
 5010b,Manaud,44.876246,-0.581964
 3081b,Jean Jaurès (av. République),44.871807,-0.678238
 1822b,Ausone,44.801017,-0.616941
-2939b,Sirtema Terminus,44.885824,-0.656932
 3947b,Peybois,44.939916,-0.632898
 2229b,Le Tillac,44.91989,-0.494409
 5797b,Curie,44.836638,-0.53385
@@ -1799,8 +1799,8 @@ id,nom,latitude,longitude
 1530b,Liberté,44.939686,-0.49223
 7875b,Gare de Blanquefort,44.917716,-0.624114
 7515b,Le Plateau,44.88498,-0.647254
-5836b,Lauriers Terminus,44.87836,-0.518403
 2884b,Le Trinquet,44.801903,-0.66352
+5836b,Lauriers Terminus,44.87836,-0.518403
 1726b,André Ricard,44.85955,-0.539703
 646b,Place Meignan,44.902313,-0.505919
 2003b,Luxembourg,44.908702,-0.644231
@@ -2123,7 +2123,7 @@ id,nom,latitude,longitude
 1648b,Lycée des Graves,44.761463,-0.622112
 1258b,Europarc,44.781074,-0.655329
 4835b,Cholet,44.941684,-0.528571
-2656b,Mendès France,44.925891,-0.485827
+2656b,Mendès France,44.925882,-0.485839
 2209b,Martyrs de la Résistance,44.880664,-0.61111
 3922b,St Denis,44.953957,-0.496699
 570b,Victor Hugo,44.895797,-0.735049
@@ -2580,7 +2580,7 @@ id,nom,latitude,longitude
 7791b,Stade Suzon,44.812074,-0.577568
 1732b,La Galliasse,44.991913,-0.486203
 238b,Pagneau,44.814136,-0.700076
-1376b,Cimetière d' Ambès,45.013591,-0.534413
+1376b,Cimetière d'Ambès,45.013591,-0.534413
 5191b,Mathyadeux,44.919598,-0.678164
 6335b,Jean Prat,44.932659,-0.502171
 1378b,Le Poteau,44.865402,-0.473718
@@ -3148,7 +3148,6 @@ id,nom,latitude,longitude
 7885b,Fongravey,44.914583,-0.630064
 2894b,Croix de Monjous,44.776785,-0.593883
 3163b,Henri Barbusse,44.856265,-0.642283
-1652b,Parc Bordelais,44.852261,-0.59902
 7546b,Taris,44.85358,-0.493486
 3274b,La Route Bleue,44.821205,-0.501299
 6971b,Carnot,44.958364,-0.603069

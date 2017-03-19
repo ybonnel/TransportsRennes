@@ -46,7 +46,7 @@ import fr.ybonnel.csvengine.model.EngineParameters;
  */
 public final class Main {
 
-	private static final boolean OPTIMIZE_CALENDARS = true;
+	private static final boolean OPTIMIZE_CALENDARS = false;
 
 	/**
 	 * Constructeur privé pour empécher l'instanciation.
@@ -63,7 +63,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException, CsvErrorsExceededException {
-		genereGtfs(false, OPTIMIZE_CALENDARS, "GTFS_2016.7.1_2017-03-13_2017-03-19");
+		genereGtfs(false, OPTIMIZE_CALENDARS, "GTFS_2016.7.2_2017-03-20_2017-04-09");
 		// genereParcoursBus("20120912");
 	}
 
