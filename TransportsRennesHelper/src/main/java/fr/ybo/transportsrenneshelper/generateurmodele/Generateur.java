@@ -142,7 +142,7 @@ public class Generateur {
 		int maxDirectionLength = 0;
 		Direction directionLongue = null;
 		for (Direction direction : directions.values()) {
-			if (direction.direction.length() > maxDirectionLength) {
+            if (direction.direction.length() > maxDirectionLength) {
 				maxDirectionLength = direction.direction.length();
 				directionLongue = direction;
 			}
@@ -602,8 +602,7 @@ public class Generateur {
 						direction.direction = direction.direction.substring(1);
 					}
 				} else {
-					System.err.println("Problème sur la direction : "
-							+ headSign.getKey());
+                    direction.direction = headSign.getKey();
 				}
 				directions.put(direction.id, direction);
 			}
