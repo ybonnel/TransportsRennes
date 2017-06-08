@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':TransportsCommun')
 }
 
@@ -10,7 +10,7 @@ tasks.withType(JavaCompile) {
 }
 
 android {
-    compileSdkVersion "Google Inc.:Google APIs:18"
+    compileSdkVersion 'Google Inc.:Google APIs:18'
     buildToolsVersion '25.0.2'
 
     lintOptions {
