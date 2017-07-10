@@ -52,7 +52,7 @@ ordre,id,nom_court,nom_long
 51,57,57,Flexo 57
 52,58,58,Ligne 58
 53,62,62,Ligne 62
-54,63,63,Ligne 63
+54,63,63,Citéis 63
 55,64,64,Ligne 64
 56,67,67,Ligne 67
 57,68,68,Flexo 68
@@ -81,4 +81,6 @@ ordre,id,nom_court,nom_long
 80,95,95,Spécifique 95
 81,96,96,Spécifique 96
 82,69,BAT³,BAT³
-83,66,Navette,Navette Travaux Barrière du Médoc
+83,13,Bus B,Navette Relais Tram B
+84,66,Navette,Navette Travaux Barrière du Médoc
+85,18,Stade,Navette Stade Matmut Atlantique

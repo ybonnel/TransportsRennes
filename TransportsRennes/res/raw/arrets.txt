@@ -1,7 +1,6 @@
 id,nom,latitude,longitude
 3880,Morvan Lebesque,48.071465,-1.841111
 3881,Collège St-Yves,48.073566,-1.851712
-1220,Kerviler,48.109162,-1.706366
 1462,Combes,48.093478,-1.670045
 1461,Clemenceau,48.093659,-1.673762
 1460,Argonautes,48.091308,-1.674159
@@ -26,9 +25,7 @@ id,nom,latitude,longitude
 1452,Bréquigny Piscine,48.089851,-1.690987
 2541,Egalité,48.094422,-1.795931
 2309,Schuman,48.044622,-1.746502
-1219,Papeteries,48.108274,-1.703743
 2308,Croix Madame,48.041413,-1.754424
-1218,Guilloux Lorient,48.109099,-1.697997
 2307,Gavrinis,48.031275,-1.759442
 1231,Robinot de St-Cyr,48.103369,-1.723283
 1473,Pont de Strasbourg,48.110761,-1.655608
@@ -413,6 +410,7 @@ id,nom,latitude,longitude
 3037,Chantepie Eglise,48.087406,-1.616535
 3036,Landes,48.090683,-1.618807
 4381,Collège Saint-Paul,48.018026,-1.661279
+4379,Collège Saint-Paul,48.017946,-1.660456
 4151,Anjou,48.109864,-1.481103
 4152,Mainguère,48.108998,-1.47848
 4153,Saules,48.107127,-1.479136
@@ -461,6 +459,7 @@ id,nom,latitude,longitude
 2805,Camus,48.159128,-1.681343
 2804,Ricoquais,48.159112,-1.676618
 2803,La Plesse,48.137419,-1.68861
+9210,Charles de Gaulle,48.105402,-1.676002
 9211,Charles de Gaulle,48.105227,-1.67644
 2812,Forge,48.150852,-1.685834
 3902,Caliorne,48.006505,-1.69847
@@ -473,9 +472,11 @@ id,nom,latitude,longitude
 3907,Fontaine Blanche,48.016278,-1.705639
 3908,Renaissance,48.019925,-1.706935
 3909,Renaissance,48.01986,-1.707123
+9209,Vallès,48.104725,-1.709712
 2819,Forge,48.151493,-1.685839
 2818,Haut Trait,48.146946,-1.686104
 2817,CHP Saint-Grégoire,48.142967,-1.686622
+9208,Chèques Postaux,48.108268,-1.69307
 2816,La Plesse,48.138233,-1.686336
 2815,La Plesse,48.13715,-1.686401
 2814,CHP Saint-Grégoire,48.143099,-1.686451
@@ -826,7 +827,6 @@ id,nom,latitude,longitude
 2201,Morinais,48.075489,-1.716264
 1111,Docteur Quentin,48.120189,-1.65077
 1353,Torigné,48.084535,-1.657962
-1595,Charles de Gaulle,48.105833,-1.6773
 2209,Commeurec,48.095716,-1.694313
 2208,Commeurec,48.095802,-1.694528
 1374,Longs Prés,48.133162,-1.65696
@@ -1205,6 +1205,7 @@ id,nom,latitude,longitude
 4058,Viennais,48.173991,-1.735178
 4062,La Brosse,48.176749,-1.722096
 6001,Frères Aubert,48.216915,-1.89045
+6000,Romillé Collège,48.218676,-1.893365
 4066,Quatre Vents,48.168594,-1.742983
 6003,Romillé Mairie,48.214912,-1.892418
 4067,Quatre Vents,48.168976,-1.74251
@@ -1216,7 +1217,6 @@ id,nom,latitude,longitude
 4059,Mairie,48.17669,-1.732757
 4070,Besneraie,48.183016,-1.726386
 6006,Mettrie Templiers,48.212334,-1.890901
-6021,Romillé Collège,48.218585,-1.895739
 2909,Taillebois,48.036817,-1.712545
 2908,Callouët,48.041413,-1.712515
 2907,Croix aux Potiers,48.045659,-1.710498
