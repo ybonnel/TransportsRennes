@@ -50,25 +50,35 @@ ordre,id,nom_court,nom_long
 49,54,54,Flexo 54
 50,55,55,Flexo 55
 51,57,57,Flexo 57
-52,62,62,Ligne 62
-53,63,63,Citéis 63
-54,64,64,Ligne 64
-55,67,67,Ligne 67
-56,68,68,Flexo 68
-57,71,71,Ligne 71
-58,72,72,Citéis 72
-59,73,73,Ligne 73
-60,76,76,Ligne 76
-61,80,80,Ligne 80
-62,83,83,Ligne 83
-63,87,87,Ligne 87
-64,89,89,Citéis 89
-65,90,90,Ligne 90
-66,91,91,Ligne 91
-67,92,92,Ligne 92
-68,93,93,Ligne 93
-69,69,BAT³,BAT³
-70,12,Bus A,Navette Relais Tram A
-71,14,Bus C,Navette Relais Tram C
-72,66,Navette,Navette Travaux Barrière du Médoc
-73,18,Stade,Navette Stade Matmut Atlantique
+52,58,58,Ligne 58
+53,62,62,Ligne 62
+54,63,63,Citéis 63
+55,64,64,Ligne 64
+56,67,67,Ligne 67
+57,68,68,Flexo 68
+58,71,71,Ligne 71
+59,72,72,Citéis 72
+60,73,73,Ligne 73
+61,74,74,Spécifique 74
+62,76,76,Ligne 76
+63,77,77,Spécifique 77
+64,78,78,Spécifique 78
+65,79,79,Spécifique 79
+66,80,80,Ligne 80
+67,81,81,Spécifique 81
+68,82,82,Spécifique 82
+69,83,83,Ligne 83
+70,85,85,Spécifique 85
+71,86,86,Spécifique 86
+72,87,87,Ligne 87
+73,88,88,Spécifique 88
+74,89,89,Citéis 89
+75,90,90,Ligne 90
+76,91,91,Ligne 91
+77,92,92,Ligne 92
+78,93,93,Ligne 93
+79,94,94,Spécifique 94
+80,95,95,Spécifique 95
+81,96,96,Spécifique 96
+82,69,BAT³,BAT³
+85,66,Navette,Navette Travaux Barrière du Médoc
