@@ -893,7 +893,7 @@ id,nom,latitude,longitude
 1381,Malakoff,48.105128,-1.696468
 2229,Croix Verte,48.089432,-1.697947
 3318,Pâtis du Moulinet,48.140911,-1.573502
-4408,Le Verger Eglise,48.070227,-1.932356
+4408,Le Verger Eglise,48.07003,-1.93229
 1139,Sacrés Coeurs,48.096914,-1.678484
 2228,Pigeon Blanc,48.089797,-1.693146
 3317,Pâtis du Moulinet,48.141094,-1.573652
@@ -918,7 +918,7 @@ id,nom,latitude,longitude
 1375,Gast,48.130103,-1.656774
 2222,Pommerais,48.066422,-1.720279
 3311,Fouillard,48.160618,-1.585461
-4401,Le Verger Eglise,48.070078,-1.932395
+4401,Le Verger Eglise,48.069918,-1.932427
 4402,Bouvrais,48.070241,-1.928997
 4403,Bouvrais,48.070056,-1.930273
 3319,Pâtis du Moulinet,48.141665,-1.577357
@@ -1163,7 +1163,7 @@ id,nom,latitude,longitude
 2075,Mare Pavée,48.123363,-1.611301
 2074,Mare Pavée,48.123547,-1.611239
 2073,Victoire,48.145118,-1.608407
-3162,Centre scolaire Pacé,48.152582,-1.771502
+3162,Centre scolaire Pacé,48.152311,-1.771231
 2072,Calendrou,48.140592,-1.616329
 2071,Calendrou,48.140415,-1.616907
 2068,Métairies Chalotais,48.123149,-1.60173

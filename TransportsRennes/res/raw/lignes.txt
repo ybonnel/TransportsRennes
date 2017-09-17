@@ -110,5 +110,4 @@ ordre,id,nom_court,nom_long
 109,0243,243,Saint-Grégoire (Jean-Paul II) <> Montgermont <> Pacé (Pie Neuve)
 110,0244,244,Chartres-de-Bretagne (Collège Pôle Sud) <> Pont-Péan (Bois Esnault)
 111,0804,TTZ,Rennes <> Noyal-Châtillon-sur-Seiche (Touche Tizon)
-112,0810,NAV,Navettes - Evènementiel
 0,1001,a,Rennes (J.F. Kennedy) <> Rennes (La Poterie)
