@@ -81,5 +81,4 @@ ordre,id,nom_court,nom_long
 80,95,95,Spécifique 95
 81,96,96,Spécifique 96
 82,69,BAT³,BAT³
-83,66,Navette,Navette Travaux Barrière du Médoc
-84,18,Stade,Navette Stade Matmut Atlantique
+85,66,Navette,Navette Travaux Barrière du Médoc

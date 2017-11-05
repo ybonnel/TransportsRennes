@@ -12,7 +12,7 @@ tasks.withType(JavaCompile) {
 
 android {
     compileSdkVersion 'Google Inc.:Google APIs:18'
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
 
     lintOptions {
         abortOnError false
