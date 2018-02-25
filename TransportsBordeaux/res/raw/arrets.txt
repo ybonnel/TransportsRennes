@@ -160,7 +160,7 @@ id,nom,latitude,longitude
 2268b,Floirac Libération,44.838972,-0.531578
 3331b,Corbiac,44.874045,-0.703102
 5683b,Lycée Vaclav Havel,44.78743,-0.56733
-5550b,Mounic,44.924644,-0.731452
+5550b,Mounic,44.924424,-0.731006
 1067b,Louis Mie,44.831703,-0.58315
 1370b,La Jacquotte,44.820174,-0.531535
 2929b,Général de Gaulle,44.874735,-0.619082
@@ -193,6 +193,8 @@ id,nom,latitude,longitude
 982b,Mazeau,44.870856,-0.710078
 4224b,Lycée Sud Médoc,44.905344,-0.714554
 7512b,Bedat,44.846649,-0.649679
+8181b,Gabriel Delaunay,44.846178,-0.593981
+2263b,Pôle emploi Bastide,44.837771,-0.557608
 3158b,Eglise de Caudéran,44.852364,-0.615536
 3025b,Parc Bordelais,44.849596,-0.6017
 5553b,Tronquet,44.915576,-0.745107
@@ -1088,6 +1090,7 @@ id,nom,latitude,longitude
 7229b,La Chênaie,44.849786,-0.780985
 7798b,Beausite,44.852904,-0.527082
 3223b,Montherlant,44.796856,-0.581345
+40b,Gambetta Mériadeck,44.841417,-0.584036
 3356b,Cimetière de Saint Médard,44.895419,-0.72616
 870b,Soubiras,44.863501,-0.618928
 1131b,France Alouette,44.799604,-0.662446
@@ -2101,6 +2104,7 @@ id,nom,latitude,longitude
 281b,Fauré,44.8166,-0.61859
 3197b,Liberté,44.807743,-0.55363
 2965b,Pericot,44.903247,-0.744778
+8131b,Stalingrad (quai Deschamps),44.839135,-0.559455
 811b,Hameau du Château,44.942682,-0.603051
 1501b,Jean Moulin,44.912416,-0.63624
 1634b,Lycée Victor Louis,44.802941,-0.593253
@@ -2734,6 +2738,7 @@ id,nom,latitude,longitude
 2376b,Calmette,44.851803,-0.517182
 3007b,Place Ravezies (côté Parc Relais),44.866552,-0.575971
 88b,Lou Licot,44.757345,-0.736578
+3441b,Eglise de Gradignan,44.772649,-0.613812
 3005b,Berges du Lac,44.878951,-0.568472
 5212,La Morlette,44.855024,-0.51822
 5355b,Marronniers,44.844657,-0.681577

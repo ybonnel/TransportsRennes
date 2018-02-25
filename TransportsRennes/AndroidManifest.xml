@@ -13,10 +13,10 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="fr.ybo.transportsrennes"
-          android:installLocation="auto"
-          android:versionCode="445"
-          android:versionName="4.4.5">
+    package="fr.ybo.transportsrennes"
+    android:installLocation="auto"
+    android:versionCode="446"
+    android:versionName="4.4.6">
     
     <uses-sdk android:minSdkVersion="9"
               android:targetSdkVersion="18"/>
