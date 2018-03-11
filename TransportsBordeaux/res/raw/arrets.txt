@@ -2219,7 +2219,7 @@ id,nom,latitude,longitude
 1293b,Les As,44.809581,-0.658362
 7081b,Lénine,44.795967,-0.557733
 2491b,Château Pontac (devant Centre Cial),44.775601,-0.564681
-4016b,Jossomme,44.897126,-0.748542
+4016b,Jossomme,44.897242,-0.748042
 1957b,Ste Bernadette,44.823061,-0.624427
 6982b,Avenue Ausone,44.870462,-0.593039
 819b,La Hutte,44.884801,-0.606115
@@ -3033,6 +3033,7 @@ id,nom,latitude,longitude
 5837b,Fontaine d'Arlac,44.826114,-0.625599
 3309b,Banlin,44.865656,-0.538694
 3581b,Domaine de Lucatet (côté Parc Mérisud),44.821185,-0.665867
+8171b,Avenue du Phare,44.850881,-0.692831
 3278b,Gambetta,44.841372,-0.580119
 5542b,St Louis,44.864071,-0.567386
 5675b,Logey,44.835544,-0.667464
