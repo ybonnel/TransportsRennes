@@ -553,7 +553,7 @@ id,nom,latitude,longitude
 112b,Cerema,44.886488,-0.74139
 681b,Hôpital Pellegrin (entrée Est),44.828635,-0.602724
 2099b,La Gorp,44.929724,-0.495783
-1868b,La Vache,44.872762,-0.591045
+1868b,La Vache,44.873375,-0.590754
 378b,Les Aubiers,44.873991,-0.575584
 1735b,Jeanne d'Arc,44.802908,-0.54559
 245b,Route de Pessac,44.772267,-0.621619
@@ -681,6 +681,7 @@ id,nom,latitude,longitude
 423b,Esplanade F. Mitterrand,44.874179,-0.515542
 1913b,Le Bousquet,44.960213,-0.533686
 7522b,Moulin à Vent,44.885923,-0.638846
+8191b,La Jacquotte,44.820853,-0.531135
 3342b,Malartic (côté Eau Bourde),44.771126,-0.599683
 30b,Bobet,44.783007,-0.593231
 5563b,Buttinière,44.864245,-0.524703
@@ -801,7 +802,7 @@ id,nom,latitude,longitude
 1247b,Quarante Journaux (côté Ginko),44.883246,-0.570583
 6450b,La Belle Rose,44.811597,-0.552329
 2444b,Gambetta,44.840862,-0.581137
-3206b,Capucins,44.829259,-0.5681
+3206b,Capucins,44.829108,-0.568052
 39b,Fraternité,44.818485,-0.615255
 5916b,Pins-Francs,44.857282,-0.624166
 2880b,Serpent,44.791797,-0.632928
@@ -1416,7 +1417,6 @@ id,nom,latitude,longitude
 2291b,Sembat,44.833379,-0.549807
 1757b,Barrière de Pessac (Bd George V),44.825936,-0.590089
 5767b,Mairie de Saint Vincent,44.957207,-0.468913
-7728b,Barrière du Médoc (rue Johnston),44.853013,-0.591377
 1094b,Barrière St Augustin,44.83432,-0.598896
 2823b,Yvan Bric,44.947835,-0.600082
 2956b,Route de Pauillac,44.884458,-0.634872
@@ -1572,7 +1572,6 @@ id,nom,latitude,longitude
 622b,Lafontaine,44.826575,-0.567499
 1578b,Mathieu,44.894572,-0.607733
 7232b,Margaux,44.846395,-0.792375
-2642b,Barrière du Médoc,44.853239,-0.592203
 7498b,Gambetta Mériadeck,44.839561,-0.583183
 59b,Granet,44.769895,-0.641204
 5936b,Jean Villar,44.888327,-0.61684
@@ -2105,7 +2104,7 @@ id,nom,latitude,longitude
 3197b,Liberté,44.807743,-0.55363
 2965b,Pericot,44.903247,-0.744778
 8131b,Stalingrad (quai Deschamps),44.839135,-0.559455
-811b,Hameau du Château,44.942682,-0.603051
+811b,Hameau du Château,44.942613,-0.602412
 1501b,Jean Moulin,44.912416,-0.63624
 1634b,Lycée Victor Louis,44.802941,-0.593253
 1767b,Village 2,44.803029,-0.612753
@@ -2208,7 +2207,6 @@ id,nom,latitude,longitude
 3987b,Moulineau,44.870707,-0.66165
 7242b,St Jacques,44.839887,-0.79898
 5813b,Ste Bernadette,44.823123,-0.624481
-5946b,Parc Rivière,44.853512,-0.587938
 3121b,Rue des Ecoles,44.880653,-0.591714
 5784b,Jeunesse,44.850185,-0.637784
 1160b,Lucassot,44.824778,-0.684453
@@ -2521,7 +2519,7 @@ id,nom,latitude,longitude
 2978b,Pins-Francs,44.858072,-0.622899
 294b,Le Dôme,44.792365,-0.59145
 3075b,Allée du Nord,44.914318,-0.742587
-2712b,Pont de la Maye Poste (vers Bordeaux),44.782849,-0.566039
+2712b,Pont de la Maye Poste (vers Bordeaux),44.783818,-0.566151
 5951b,Bois Gramond,44.872836,-0.64488
 8142b,Stalingrad,44.840139,-0.559342
 1514b,Europe,44.924681,-0.497105
@@ -2738,7 +2736,6 @@ id,nom,latitude,longitude
 2376b,Calmette,44.851803,-0.517182
 3007b,Place Ravezies (côté Parc Relais),44.866552,-0.575971
 88b,Lou Licot,44.757345,-0.736578
-3441b,Eglise de Gradignan,44.772649,-0.613812
 3005b,Berges du Lac,44.878951,-0.568472
 5212,La Morlette,44.855024,-0.51822
 5355b,Marronniers,44.844657,-0.681577
@@ -3022,7 +3019,6 @@ id,nom,latitude,longitude
 3081b,Jean Jaurès (av. République),44.871873,-0.678445
 6902b,Quinconces (Jean Jaurès),44.843068,-0.569155
 1786b,Renaudel,44.86881,-0.615873
-1653b,Labottière,44.852577,-0.590095
 3878b,Collège Victor Louis,44.798243,-0.591952
 179b,Laffargue,44.833229,-0.529102
 5704b,Boulevard du Haut Livrac,44.798668,-0.677095
@@ -3125,7 +3121,7 @@ id,nom,latitude,longitude
 1409b,Clos des Bruyères,44.815416,-0.690892
 7812b,Thales,44.848604,-0.701107
 2737b,Pont de l'Orient,44.805605,-0.64857
-7509b,Dumont,44.883048,-0.647902
+7509b,Dumont,44.8828,-0.648025
 95b,Racine,44.793488,-0.584042
 5984b,Montaigne,44.87102,-0.515674
 3272b,Rousseau,44.895719,-0.72287

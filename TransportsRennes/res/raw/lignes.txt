@@ -68,7 +68,7 @@ ordre,id,nom_court,nom_long
 67,0167,167ex,Brécé (Anjou) <> Cesson-Sévigné <> Rennes (République)
 68,0168,168ex,Gévezé (Cheval Blanc) <> Rennes (Villejean-Université)
 69,0172,172ex,Rennes (Henri Fréville) <> Chartres-de-Bretagne (Parc de Loisirs)
-70,0173,173ex,Rennes (La Poterie) <> Saint-Armel <> Corps-Nuds (Corps-Nuds Gare)
+70,0173,173ex,Rennes (La Poterie) <> Saint-armel <> Corps-Nuds (Corps-Nuds Gare)
 71,0200,200,Acigné (Timonière) <> Rennes (Assomption)
 72,0201,201,Thorigné-Fouillard (Landelles) <> Rennes (Assomption)
 73,0202,202,Chevaigné (Pommiers) <> Betton <>  Saint-Grégoire <> Rennes (Assomption)
