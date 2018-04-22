@@ -83,7 +83,7 @@ id,nom,latitude,longitude
 3698,Carnot - Mairie de Cenon,44.857754,-0.531581
 3699,Carnot - Mairie de Cenon,44.857765,-0.531493
 1191b,Castés,44.84013,-0.516982
-2920b,Desmaison,44.869219,-0.609398
+2920b,Desmaison,44.868986,-0.608242
 3283b,Collège G. Rayet,44.842214,-0.515492
 1722b,Professeur Vincent,44.8858,-0.521101
 3947b,Peybois,44.939916,-0.632898
@@ -1662,7 +1662,7 @@ id,nom,latitude,longitude
 2466b,Marx Dormoy,44.839335,-0.63608
 3228b,Croix de Monjous,44.776797,-0.593517
 7238b,Martignas Centre,44.839416,-0.77793
-2517b,Le Grand Louis,44.861132,-0.641205
+2517b,Le Grand Louis,44.861059,-0.640668
 1091b,Plein Ciel,44.849295,-0.644023
 2820b,Blayais,44.768286,-0.719478
 5623b,Vigneau,44.831244,-0.665321

@@ -63,7 +63,7 @@ public final class Main {
 	 *             problème d'entrée/sortie.
 	 */
 	public static void main(String[] args) throws IOException, CsvErrorsExceededException {
-		genereGtfs(false, OPTIMIZE_CALENDARS, "GTFS_2017.7.1_2018-04-02_2018-04-22");
+		genereGtfs(false, OPTIMIZE_CALENDARS, "GTFS_2017.8.0.1_2018-04-23_2018-05-13");
 		// genereParcoursBus("20120912");
 	}
 
