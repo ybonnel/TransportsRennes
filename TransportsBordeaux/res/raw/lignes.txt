@@ -82,6 +82,4 @@ ordre,id,nom_court,nom_long
 81,96,96,Spécifique 96
 82,19,Arena,Navette Arena
 83,69,BAT³,BAT³
-84,12,Bus A,Navette Festival Animasia
-86,66,Navette,Navette Travaux Barrière du Médoc
-87,18,Stade,Navette Stade Matmut Atlantique
+84,66,Navette,Navette Travaux Barrière du Médoc

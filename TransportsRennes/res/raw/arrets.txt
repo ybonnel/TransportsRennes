@@ -477,6 +477,7 @@ id,nom,latitude,longitude
 2416,Haye Renaud Gare,48.180198,-1.634708
 1568,Kennedy Guyenne,48.121028,-1.713571
 2415,Marronniers,48.176867,-1.637055
+1567,Charles de Gaulle,48.106213,-1.677425
 2414,Housset,48.172685,-1.637284
 1566,Lycée Basch,48.125304,-1.692431
 2413,Enseigne Abbaye,48.171155,-1.641673
@@ -872,7 +873,6 @@ id,nom,latitude,longitude
 3801,Centre de Loisirs,47.990142,-1.613855
 1625,Armorique,48.13073,-1.675781
 3802,Bourgbarré Mairie,47.994926,-1.614233
-9129,Beaulieu Chimie,48.115911,-1.632906
 3814,Rue de Rennes,47.997686,-1.619187
 1634,Painlevé,48.123688,-1.660475
 3815,Rue de Rennes,47.997466,-1.618795
@@ -888,9 +888,6 @@ id,nom,latitude,longitude
 3811,Sept Fours,47.959332,-1.637267
 1637,Lycée Chateaubriand,48.123062,-1.651491
 1636,Haut Sancé,48.095933,-1.637156
-9136,Beaulieu Chimie,48.115439,-1.633372
-9134,Clos Courtel,48.126581,-1.628649
-9130,Beaulieu INSA,48.119925,-1.6314
 1646,Italie,48.086632,-1.668834
 3825,Le Rocher,48.001653,-1.608574
 3826,Les Cruaux,48.004143,-1.602784
@@ -1006,7 +1003,6 @@ id,nom,latitude,longitude
 4715,Bossardière,47.94162,-1.696275
 3880,Morvan Lebesque,48.071465,-1.841111
 3881,Collège St-Yves,48.073566,-1.851712
-1220,Kerviler,48.109162,-1.706366
 1217,Chèques Postaux,48.108292,-1.694376
 4727,La Feutelais,47.968975,-1.708507
 1216,Le Mail,48.109176,-1.690514
@@ -1022,10 +1018,8 @@ id,nom,latitude,longitude
 4721,Château d'Eau,47.974425,-1.697982
 4722,Château d'Eau,47.974626,-1.698507
 3877,Les Hautes Barres,48.079977,-1.865968
-1219,Papeteries,48.108274,-1.703743
 3878,Ville Noublée,48.086226,-1.854402
 4725,La Corbinais,47.956723,-1.737802
-1218,Guilloux Lorient,48.109099,-1.697997
 3879,Ville Noublée,48.086488,-1.854118
 4740,Le Nid,47.98519,-1.718862
 1231,Robinot de St-Cyr,48.103369,-1.723283
@@ -1241,6 +1235,7 @@ id,nom,latitude,longitude
 4381,Collège Saint-Paul,48.018026,-1.661279
 4378,Haie à la Dame,48.023896,-1.659173
 4379,Collège Saint-Paul,48.017946,-1.660456
+9214,Village Collectivités,48.131734,-1.597325
 3902,Caliorne,48.006505,-1.69847
 3903,Mouton Blanc,48.010649,-1.700885
 3904,Chemin Vert,48.012935,-1.702976
@@ -1520,6 +1515,7 @@ id,nom,latitude,longitude
 3115,Pacé Cimetière,48.148099,-1.769731
 2267,Auriol,48.075278,-1.729484
 3114,Carré Dumaine,48.146022,-1.770492
+2266,Parc Expo,48.056515,-1.732068
 3113,Le Ponant,48.143401,-1.770386
 4460,La Cour aux Pages,48.178058,-1.852853
 3134,Nominoë,48.141622,-1.770457
