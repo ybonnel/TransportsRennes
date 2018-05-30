@@ -24,7 +24,7 @@ public class ItineraireReponse implements Serializable {
 		}
 		ItineraireReponse itineraireReponse = new ItineraireReponse();
 		if (tripPlan.itineraries != null) {
-			for (Itinerary itinerary : tripPlan.itineraries.itinerary) {
+			for (Itinerary itinerary : tripPlan.itineraries) {
 				itineraireReponse.getTrajets().add(Trajet.convert(itinerary));
 			}
 		}

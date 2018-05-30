@@ -39,7 +39,7 @@ public class Trajet implements Serializable {
         Trajet trajet = new Trajet();
         trajet.endTime = itinerary.endTime;
         if (itinerary.legs != null) {
-            for (Leg leg : itinerary.legs.leg) {
+            for (Leg leg : itinerary.legs) {
                 trajet.getPortions().add(PortionTrajet.convert(leg));
             }
         }

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
@@ -56,6 +57,7 @@ public class AdresseAdapter extends ArrayAdapter<String> {
                 GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(constraint.toString())
                         .setLanguage("fr").setBounds(TransportsRennesApplication.getBounds()).getGeocoderRequest();
                 GeocodeResponse reponseResult = null;
+                Log.d("YBO", geocoderRequest.toString());
                 try {
                     reponseResult = TransportsRennesApplication.getGeocodeUtil().geocode(geocoderRequest);
                 } catch (Exception ignore) {
