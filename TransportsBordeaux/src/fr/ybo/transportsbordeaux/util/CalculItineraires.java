@@ -20,7 +20,7 @@ import fr.ybo.opentripplanner.client.ClientOpenTripPlanner;
 
 public class CalculItineraires {
 
-	private static final String URL_OTP = "http://109.238.11.47:8080";
+	private static final String URL_OTP = "http://transports-new.ybonnel.fr";
 
 	private static ClientOpenTripPlanner instance;
 
